@@ -9,6 +9,7 @@
  */
 import { Scale, FileText, Lightbulb, Scale3d } from "lucide-react";
 import { ADVICE_BY_PURPOSE } from "@/content/visaApplicationAdvice";
+import { routeAdviceFor } from "@/content/routeAdvice";
 import { PURPOSE_LABEL, type Purpose, type VisaStatus } from "@/lib/types";
 import { nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
@@ -36,8 +37,15 @@ export function VisaApplicationAdvice({
   )
     return null;
 
-  const advice = ADVICE_BY_PURPOSE[purpose];
+  // Route-specific copy (hand-written for high-traffic routes) wins over
+  // the generic per-purpose fallback. A Canadian going to Australia for
+  // study sees AUD$1,600 fee, OSHC, RCMP police-check — not generic
+  // 'destination publishes a maintenance figure' language.
+  const advice =
+    routeAdviceFor(passportIso2, destinationIso2, purpose) ?? ADVICE_BY_PURPOSE[purpose];
   if (!advice) return null;
+
+  const isRouteSpecific = routeAdviceFor(passportIso2, destinationIso2, purpose) !== null;
 
   const destName = nameFor(destinationIso2);
   const passportAdj = nationalityFor(passportIso2);
@@ -52,9 +60,19 @@ export function VisaApplicationAdvice({
   return (
     <section className="mt-10 mb-2 rounded-2xl border-2 border-emerald-200 dark:border-emerald-900 bg-emerald-50/30 dark:bg-emerald-950/15 overflow-hidden">
       <header className="px-5 sm:px-6 pt-5 sm:pt-6 pb-4">
-        <p className="text-[11px] font-semibold tracking-[0.16em] uppercase text-emerald-700 dark:text-emerald-300 mb-1">
-          Make your case
-        </p>
+        <div className="flex items-center gap-2 mb-1">
+          <p className="text-[11px] font-semibold tracking-[0.16em] uppercase text-emerald-700 dark:text-emerald-300">
+            Make your case
+          </p>
+          {isRouteSpecific && (
+            <span
+              className="inline-flex items-center gap-1 text-[10px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-emerald-600 text-white"
+              title="Specifically researched for this passport → destination pair"
+            >
+              ★ Hand-written for this route
+            </span>
+          )}
+        </div>
         <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-emerald-950 dark:text-emerald-50 leading-tight">
           Tailored guidance — {passportAdj} applying for a {PURPOSE_LABEL[purpose].toLowerCase()} visa to {destName}
         </h2>

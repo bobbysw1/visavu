@@ -24,6 +24,7 @@
     "refresh-rates": "tsx src/scripts/refreshExchangeRates.ts",
     "refresh": "tsx src/scripts/refresh.ts",
     "fetch:heroes": "tsx --env-file=.env src/scripts/fetchCountryHeroes.ts",
+    "verify-sources": "tsx src/scripts/verifyManualSources.ts",
     "test": "vitest run"
   },
   "dependencies": {

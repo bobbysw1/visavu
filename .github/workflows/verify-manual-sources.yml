@@ -1,0 +1,76 @@
+name: Monthly manual-source verifier
+
+# Hand-encoded visa records (total_coverage_* adapters, top_destination_gaps,
+# and the per-programme adapters like us_h1b / uk_skilled_worker etc.) ship
+# data that doesn't get touched by the nightly scraper-refresh job. This
+# workflow runs the verifier monthly:
+#
+#   1. Fetches every distinct primary_source_url in the database
+#   2. Hashes the page text and compares to the prior baseline
+#   3. Posts a Slack alert listing changed pages — for human review
+#   4. Commits the updated hash file so the next run has a fresh baseline
+#
+# Why monthly: gov pages don't change daily, and respecting rate limits
+# on a few hundred URLs is easier with a slower cadence. Run manually
+# whenever you've just shipped a new batch of manual adapters.
+
+on:
+  schedule:
+    # 06:00 UTC on the 1st of each month
+    - cron: "0 6 1 * *"
+  workflow_dispatch:
+    inputs:
+      update_baseline:
+        description: "Accept current hashes as the new baseline (use after a manual review)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - run: npm ci
+
+      - name: Bootstrap PGlite from the bundled snapshot
+        run: |
+          # The DB client auto-loads src/data/pglite-dump.tar.gz in memory
+          # mode on Vercel; locally we need .pglite/data populated. Easiest
+          # path: extract the bundled snapshot.
+          mkdir -p .pglite/data
+          tar -xzf src/data/pglite-dump.tar.gz -C .pglite/data
+
+      - name: Run verifier
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          if [ "${{ inputs.update_baseline }}" = "true" ]; then
+            npm run verify-sources -- --slack --update-baseline
+          else
+            # Don't fail the job on changes — we want the report + commit
+            npm run verify-sources -- --slack || true
+          fi
+
+      - name: Commit updated hash baseline
+        run: |
+          if git diff --quiet HEAD -- src/data/manual_source_hashes.json; then
+            echo "No hash changes to commit."
+          else
+            git config user.name "visa-data-bot"
+            git config user.email "data@visavu.com"
+            git add src/data/manual_source_hashes.json
+            git commit -m "data: monthly manual-source verification ($(date -u +%Y-%m-%d))" \
+              -m "Workflow run: $GITHUB_RUN_URL"
+            git push
+          fi

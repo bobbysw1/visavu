@@ -10,7 +10,7 @@
  * Returns zero-counts cleanly when no data exists yet, so the UI renders
  * an empty state rather than crashing pre-bootstrap.
  */
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, inArray, sql } from "drizzle-orm";
 import { db, schema } from "@/db/client";
 import type { VisaStatus, Purpose } from "./types";
 
@@ -222,7 +222,7 @@ export async function destinationSummariesForPassport(
           optional: schema.feeComponents.optional,
         })
         .from(schema.feeComponents)
-        .where(sql`${schema.feeComponents.visaOptionId} IN ${ids}`)
+        .where(inArray(schema.feeComponents.visaOptionId, ids))
     : [];
   const feesByOpt = new Map<number, DestinationSummaryForPassport["fees"]>();
   for (const f of feeRows) {
@@ -416,7 +416,7 @@ export async function originSummariesForDestination(
           optional: schema.feeComponents.optional,
         })
         .from(schema.feeComponents)
-        .where(sql`${schema.feeComponents.visaOptionId} IN ${ids}`)
+        .where(inArray(schema.feeComponents.visaOptionId, ids))
     : [];
   const feesByOpt = new Map<number, OriginSummaryForDestination["fees"]>();
   for (const f of feeRows) {

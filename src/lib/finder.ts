@@ -157,7 +157,7 @@ export async function findDestinations(
           optional: schema.feeComponents.optional,
         })
         .from(schema.feeComponents)
-        .where(sql`${schema.feeComponents.visaOptionId} IN ${ids}`)
+        .where(inArray(schema.feeComponents.visaOptionId, ids))
     : [];
   const feesByOpt = new Map<number, { amount: number; currency: string }>();
   for (const f of feeRows) {

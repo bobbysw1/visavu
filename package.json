@@ -16,7 +16,7 @@
     "seed": "tsx src/seed/run.ts",
     "scrape": "tsx src/scrapers/runOnce.ts",
     "bootstrap": "tsx src/scripts/bootstrap.ts",
-    "db:snapshot": "tar -czf src/data/pglite-dump.tar.gz -C .pglite/data .",
+    "db:snapshot": "tsx src/scripts/buildPgliteSnapshot.ts",
     "check-sources": "tsx src/scripts/checkSources.ts",
     "check-links": "tsx src/scripts/checkLinks.ts",
     "cross-check": "tsx src/scripts/crossCheckWikipedia.ts",

@@ -6,6 +6,7 @@ import { VisaCategoryNav } from "@/components/VisaCategoryNav";
 import { DifficultyHeatMap } from "@/components/DifficultyHeatMap";
 import { NationalityHero } from "@/components/NationalityHero";
 import { PassportSidebar } from "@/components/PassportSidebar";
+import { CountrySilhouette } from "@/components/CountrySilhouette";
 import { COUNTRY_LIST, TOP_DESTINATIONS, nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
 import { SITE, absoluteUrl } from "@/lib/site";
@@ -180,7 +181,12 @@ export default async function PassportIndex({ params }: { params: Promise<Params
           <article className="lg:col-span-8 space-y-10">
             {/* OPENING NARRATIVE — curated where available, generated otherwise.
                 This is the SEO-critical unique content per country. */}
-            <section className="editorial-body">
+            <section className="editorial-body relative">
+              {/* Country silhouette as a decorative anchor — sourced from
+                  the open-source djaiss/mapsicon library (CC-BY 4.0). */}
+              <div className="absolute top-0 right-0 -translate-y-2 pointer-events-none opacity-[0.10] dark:opacity-[0.18]">
+                <CountrySilhouette iso2={upper} size={180} tone="default" />
+              </div>
               <h2 className="text-2xl font-bold tracking-tight mb-4">
                 Travel from {name}: the picture in 2026
               </h2>

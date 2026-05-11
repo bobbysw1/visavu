@@ -9,6 +9,7 @@
 import Link from "next/link";
 import { Globe2, MapPin, Users, Banknote, Languages, Phone, ScrollText, TrendingUp, AlertCircle, Plane } from "lucide-react";
 import { PassportCover } from "./PassportCover";
+import { CountrySilhouette } from "./CountrySilhouette";
 import { Flag } from "./Flag";
 import { nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
@@ -70,6 +71,28 @@ export function PassportSidebar({
       {/* PASSPORT COVER */}
       <div className="flex justify-center bg-neutral-50 dark:bg-neutral-900/40 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6">
         <PassportCover iso2={upper} width={200} height={280} />
+      </div>
+
+      {/* COUNTRY OUTLINE — the silhouette cutout you asked for. */}
+      <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5">
+        <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-neutral-500 dark:text-neutral-400 mb-3">
+          {name} on the map
+        </p>
+        <div className="flex items-center justify-center bg-neutral-50 dark:bg-neutral-900/40 rounded-lg p-4 min-h-[160px]">
+          <CountrySilhouette iso2={upper} size={180} tone="default" className="dark:invert" />
+        </div>
+        <p className="text-[10px] text-neutral-400 dark:text-neutral-500 mt-2 text-center">
+          Outline from{" "}
+          <a
+            href="https://github.com/djaiss/mapsicon"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="underline hover:no-underline"
+          >
+            mapsicon
+          </a>{" "}
+          (CC-BY 4.0)
+        </p>
       </div>
 
       {/* MOBILITY RANKING */}

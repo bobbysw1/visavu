@@ -17,6 +17,7 @@ import { AlertOptIn } from "@/components/AlertOptIn";
 import { ResultBannerStack } from "@/components/ResultBannerStack";
 import { RouteHero } from "@/components/RouteHero";
 import { VisaPrepTimeline } from "@/components/VisaPrepTimeline";
+import { VisaApplicationAdvice } from "@/components/VisaApplicationAdvice";
 import { getCountryPhoto } from "@/lib/pexels";
 import { policyChangesFor } from "@/content/recentPolicyChanges";
 import { assessRealism } from "@/lib/realism";
@@ -528,6 +529,11 @@ export default async function Page({
             status={primary?.status ?? (category === "long_stay" ? "embassy_visa" : "e_visa")}
           />
         )}
+
+        {/* Free application advice for high-stakes purposes (family, work,
+            study). Includes a personal-statement skeleton, money-saving
+            tips, and when to spend on a real immigration lawyer. */}
+        <VisaApplicationAdvice purpose={purpose} />
 
         {showDualHint && easierPassports.length > 0 && (
           <DualPassportHint destinationIso2={d} options={easierPassports} />

@@ -45,6 +45,7 @@ import { totalCoverageAncestryAdapter } from "./total_coverage_ancestry";
 import { totalCoveragePropertyAdapter } from "./total_coverage_property";
 import { totalCoverageCheapPrAdapter } from "./total_coverage_cheap_pr";
 import { totalCoverageTerritoriesAdapter } from "./total_coverage_territories";
+import { totalCoverageStudyAdapter } from "./total_coverage_study";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -95,6 +96,7 @@ export const ADAPTERS: Adapter[] = [
   totalCoveragePropertyAdapter,
   totalCoverageCheapPrAdapter,
   totalCoverageTerritoriesAdapter,
+  totalCoverageStudyAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

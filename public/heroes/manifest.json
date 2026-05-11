@@ -746,15 +746,6 @@
     "alt": "A breathtaking aerial photograph of Tbilisi featuring iconic landmarks and lush surroundings.",
     "fetchedAt": "2026-05-11T02:32:30.251Z"
   },
-  "DE": {
-    "file": "/heroes/de.jpg",
-    "pexelsId": 37120347,
-    "photographer": "Claudia  Solano",
-    "photographerUrl": "https://www.pexels.com/@imagenesclau",
-    "pexelsUrl": "https://www.pexels.com/photo/brandenburg-gate-in-berlin-iconic-landmark-37120347/",
-    "alt": "The historic Brandenburg Gate in Berlin, a symbol of Germany's unity and history.",
-    "fetchedAt": "2026-05-11T02:32:31.143Z"
-  },
   "GH": {
     "file": "/heroes/gh.jpg",
     "pexelsId": 3561109,
@@ -1960,5 +1951,302 @@
     "pexelsUrl": "https://www.pexels.com/photo/breathtaking-sunset-over-l-ng-s-n-mountains-30144943/",
     "alt": "Serene sunset view over Lạng Sơn's majestic mountains reflecting in a tranquil lake.",
     "fetchedAt": "2026-05-11T02:35:31.503Z"
+  },
+  "EC": {
+    "file": "/heroes/ec.jpg",
+    "pexelsId": 30785364,
+    "photographer": "DΛVΞ GΛRCIΛ",
+    "photographerUrl": "https://www.pexels.com/@davegarcia",
+    "pexelsUrl": "https://www.pexels.com/photo/scenic-view-of-quito-with-cotopaxi-volcano-30785364/",
+    "alt": "Explore Quito with the majestic backdrop of Cotopaxi Volcano under a clear blue sky.",
+    "fetchedAt": "2026-05-11T20:01:31.074Z"
+  },
+  "DE": {
+    "file": "/heroes/de.jpg",
+    "pexelsId": 15999576,
+    "photographer": "Miguel Andres Parra",
+    "photographerUrl": "https://www.pexels.com/@miguel-andres-parra-2794758",
+    "pexelsUrl": "https://www.pexels.com/photo/city-of-cologne-with-gothic-cathedral-15999576/",
+    "alt": "A breathtaking view of Cologne Cathedral at sunrise, surrounded by urban cityscape.",
+    "fetchedAt": "2026-05-11T20:01:32.381Z"
+  },
+  "CH": {
+    "file": "/heroes/ch.jpg",
+    "pexelsId": 32496435,
+    "photographer": "Jean-Paul Wettstein",
+    "photographerUrl": "https://www.pexels.com/@jean-paul-wettstein-677916508",
+    "pexelsUrl": "https://www.pexels.com/photo/scenic-view-of-swiss-alps-near-zermatt-32496435/",
+    "alt": "Breathtaking view of the Swiss Alps with clear blue skies near Zermatt, Switzerland.",
+    "fetchedAt": "2026-05-11T20:01:34.327Z"
+  },
+  "SY": {
+    "file": "/heroes/sy.jpg",
+    "pexelsId": 36713867,
+    "photographer": "Baraa Obied",
+    "photographerUrl": "https://www.pexels.com/@baraa-obied-2157551361",
+    "pexelsUrl": "https://www.pexels.com/photo/artist-painting-the-umayyad-mosque-in-damascus-36713867/",
+    "alt": "An artist paints the iconic Umayyad Mosque in Damascus while seated outdoors, capturing architectural details.",
+    "fetchedAt": "2026-05-11T20:01:35.924Z"
+  },
+  "TW": {
+    "file": "/heroes/tw.jpg",
+    "pexelsId": 9363391,
+    "photographer": "Timo Volz",
+    "photographerUrl": "https://www.pexels.com/@timo-volz-837240",
+    "pexelsUrl": "https://www.pexels.com/photo/city-near-body-of-water-under-blue-sky-9363391/",
+    "alt": "Aerial view of a vibrant Taiwanese cityscape with lush greenery and a striking island in the background.",
+    "fetchedAt": "2026-05-11T20:01:37.055Z"
+  },
+  "TJ": {
+    "file": "/heroes/tj.jpg",
+    "pexelsId": 18251297,
+    "photographer": "Kokyo K",
+    "photographerUrl": "https://www.pexels.com/@kokyo-k-244418001",
+    "pexelsUrl": "https://www.pexels.com/photo/blue-crystal-lake-in-rocky-mountains-18251297/",
+    "alt": "Scenic view of a mountain road with a stunning turquoise alpine lake and rocky terrain.",
+    "fetchedAt": "2026-05-11T20:01:39.028Z"
+  },
+  "TZ": {
+    "file": "/heroes/tz.jpg",
+    "pexelsId": 35981578,
+    "photographer": "Charmain Jansen van Rensburg",
+    "photographerUrl": "https://www.pexels.com/@charmain",
+    "pexelsUrl": "https://www.pexels.com/photo/majestic-zebra-grazing-in-serengeti-plains-35981578/",
+    "alt": "A zebra stands amidst tall grass in a serene African savanna landscape.",
+    "fetchedAt": "2026-05-11T20:01:39.966Z"
+  },
+  "TH": {
+    "file": "/heroes/th.jpg",
+    "pexelsId": 11104933,
+    "photographer": "Maksim Romashkin",
+    "photographerUrl": "https://www.pexels.com/@maksim-romashkin",
+    "pexelsUrl": "https://www.pexels.com/photo/buddhist-temple-exterior-11104933/",
+    "alt": "Beautiful capture of Grand Palace temple's intricate architecture and golden pagoda in Bangkok, Thailand.",
+    "fetchedAt": "2026-05-11T20:01:42.175Z"
+  },
+  "TL": {
+    "file": "/heroes/tl.jpg",
+    "pexelsId": 9771342,
+    "photographer": "Yosi Azwan",
+    "photographerUrl": "https://www.pexels.com/@yosiazwan",
+    "pexelsUrl": "https://www.pexels.com/photo/a-verdant-countryside-9771342/",
+    "alt": "Beautiful aerial view of verdant tea fields in Indonesia's countryside.",
+    "fetchedAt": "2026-05-11T20:01:44.847Z"
+  },
+  "TK": {
+    "file": "/heroes/tk.jpg",
+    "pexelsId": 31451558,
+    "photographer": "Dax Dexter Delada",
+    "photographerUrl": "https://www.pexels.com/@dax-dexter-delada-2150239947",
+    "pexelsUrl": "https://www.pexels.com/photo/scenic-misty-mountains-in-davao-region-31451558/",
+    "alt": "Captivating view of misty mountains in Davao City, highlighting lush greenery and tranquil morning ambiance.",
+    "fetchedAt": "2026-05-11T20:01:45.968Z"
+  },
+  "TO": {
+    "file": "/heroes/to.jpg",
+    "pexelsId": 28408402,
+    "photographer": "Asad Photo Maldives",
+    "photographerUrl": "https://www.pexels.com/@asadphoto",
+    "pexelsUrl": "https://www.pexels.com/photo/serene-white-sand-beach-and-turquoise-water-28408402/",
+    "alt": "Tranquil scene of waves on a white sand beach, clear turquoise waters.",
+    "fetchedAt": "2026-05-11T20:01:46.714Z"
+  },
+  "TT": {
+    "file": "/heroes/tt.jpg",
+    "pexelsId": 31703687,
+    "photographer": "Dominik Gryzbon",
+    "photographerUrl": "https://www.pexels.com/@gryziu",
+    "pexelsUrl": "https://www.pexels.com/photo/colorful-rainbow-over-trinidad-and-tobago-beach-31703687/",
+    "alt": "Vibrant rainbow stretches over a lush green hill by a sandy beach in Trinidad and Tobago.",
+    "fetchedAt": "2026-05-11T20:01:47.680Z"
+  },
+  "TN": {
+    "file": "/heroes/tn.jpg",
+    "pexelsId": 33802287,
+    "photographer": "Mahmoud Yahyaoui",
+    "photographerUrl": "https://www.pexels.com/@mahmoud-yahyaoui",
+    "pexelsUrl": "https://www.pexels.com/photo/historic-abandoned-building-by-the-sea-in-tunisia-33802287/",
+    "alt": "Striking image of a historic, abandoned building on the coast of La Marsa, Tunisia, surrounded by the blue sea.",
+    "fetchedAt": "2026-05-11T20:01:50.398Z"
+  },
+  "TR": {
+    "file": "/heroes/tr.jpg",
+    "pexelsId": 18805994,
+    "photographer": "Abdurahman Yarichev",
+    "photographerUrl": "https://www.pexels.com/@rasul70",
+    "pexelsUrl": "https://www.pexels.com/photo/halic-in-istanbul-18805994/",
+    "alt": "A scenic aerial view of Istanbul's skyline along the Bosphorus, capturing urban sprawl and a prominent mosque.",
+    "fetchedAt": "2026-05-11T20:01:51.130Z"
+  },
+  "TM": {
+    "file": "/heroes/tm.jpg",
+    "pexelsId": 11758221,
+    "photographer": "Massimo",
+    "photographerUrl": "https://www.pexels.com/@massimo-47136440",
+    "pexelsUrl": "https://www.pexels.com/photo/aerial-footage-of-a-dessert-11758221/",
+    "alt": "A breathtaking view of golden sand dunes in Abu Dhabi, capturing the serene desert landscape.",
+    "fetchedAt": "2026-05-11T20:01:52.654Z"
+  },
+  "TC": {
+    "file": "/heroes/tc.jpg",
+    "pexelsId": 7425282,
+    "photographer": "Dominik Ruhl",
+    "photographerUrl": "https://www.pexels.com/@dominikruhl",
+    "pexelsUrl": "https://www.pexels.com/photo/aerial-view-of-a-tropical-island-7425282/",
+    "alt": "Stunning aerial shot capturing the vibrant turquoise waters and beautiful sandbars around Mauritius.",
+    "fetchedAt": "2026-05-11T20:01:56.846Z"
+  },
+  "TV": {
+    "file": "/heroes/tv.jpg",
+    "pexelsId": 28408402,
+    "photographer": "Asad Photo Maldives",
+    "photographerUrl": "https://www.pexels.com/@asadphoto",
+    "pexelsUrl": "https://www.pexels.com/photo/serene-white-sand-beach-and-turquoise-water-28408402/",
+    "alt": "Tranquil scene of waves on a white sand beach, clear turquoise waters.",
+    "fetchedAt": "2026-05-11T20:01:57.599Z"
+  },
+  "VI": {
+    "file": "/heroes/vi.jpg",
+    "pexelsId": 31364644,
+    "photographer": "Jesus Rivera Rosa",
+    "photographerUrl": "https://www.pexels.com/@jesus-rivera-rosa-2150857897",
+    "pexelsUrl": "https://www.pexels.com/photo/aerial-view-of-st-croix-s-coastline-in-the-u-s-virgin-islands-31364644/",
+    "alt": "Vivid aerial shot of St. Croix's rugged coastline and clear blue waters under a bright sky.",
+    "fetchedAt": "2026-05-11T20:01:59.130Z"
+  },
+  "UG": {
+    "file": "/heroes/ug.jpg",
+    "pexelsId": 36836973,
+    "photographer": "Muwanguzi Isaac",
+    "photographerUrl": "https://www.pexels.com/@muwanguzi-isaac-459197912",
+    "pexelsUrl": "https://www.pexels.com/photo/foggy-road-in-kabale-uganda-with-motorcycle-36836973/",
+    "alt": "A lone motorcycle travels on a misty road in Kabale, Uganda, surrounded by fog.",
+    "fetchedAt": "2026-05-11T20:02:02.215Z"
+  },
+  "UA": {
+    "file": "/heroes/ua.jpg",
+    "pexelsId": 11756413,
+    "photographer": "Nextvoyage",
+    "photographerUrl": "https://www.pexels.com/@nextvoyage",
+    "pexelsUrl": "https://www.pexels.com/photo/cars-and-buildings-in-city-kiev-ukraine-11756413/",
+    "alt": "A bustling daytime scene at Independence Square in Kyiv, Ukraine, showcasing historical architecture and city life.",
+    "fetchedAt": "2026-05-11T20:02:03.220Z"
+  },
+  "AE": {
+    "file": "/heroes/ae.jpg",
+    "pexelsId": 31692141,
+    "photographer": "Subbu Rayan",
+    "photographerUrl": "https://www.pexels.com/@subbu-rayan-1007049269",
+    "pexelsUrl": "https://www.pexels.com/photo/scenic-view-of-dubai-marina-skyline-and-waterfront-31692141/",
+    "alt": "Breathtaking view of Dubai Marina's skyline with luxurious boats and clear waters during daytime.",
+    "fetchedAt": "2026-05-11T20:02:04.953Z"
+  },
+  "GB": {
+    "file": "/heroes/gb.jpg",
+    "pexelsId": 30847168,
+    "photographer": "AXP Photography",
+    "photographerUrl": "https://www.pexels.com/@axp-photography-500641970",
+    "pexelsUrl": "https://www.pexels.com/photo/stunning-london-city-skyline-with-skyscrapers-30847168/",
+    "alt": "A dramatic view of London's city skyline featuring iconic modern skyscrapers.",
+    "fetchedAt": "2026-05-11T20:02:06.491Z"
+  },
+  "UM": {
+    "file": "/heroes/um.jpg",
+    "pexelsId": 31260373,
+    "photographer": "Robert So",
+    "photographerUrl": "https://www.pexels.com/@robertkso",
+    "pexelsUrl": "https://www.pexels.com/photo/scenic-view-of-green-hills-and-urban-landscape-31260373/",
+    "alt": "Beautiful panoramic view of green rolling hills and a vibrant town beneath a clear blue sky.",
+    "fetchedAt": "2026-05-11T20:02:08.074Z"
+  },
+  "UY": {
+    "file": "/heroes/uy.jpg",
+    "pexelsId": 30681696,
+    "photographer": "Camila  Galdo",
+    "photographerUrl": "https://www.pexels.com/@camila-galdo-2149565357",
+    "pexelsUrl": "https://www.pexels.com/photo/cabo-polonio-lighthouse-on-rocky-coastline-30681696/",
+    "alt": "Scenic view of Cabo Polonio lighthouse with rocky coastline under a clear blue sky in Uruguay.",
+    "fetchedAt": "2026-05-11T20:02:09.128Z"
+  },
+  "UZ": {
+    "file": "/heroes/uz.jpg",
+    "pexelsId": 19227959,
+    "photographer": "AXP Photography",
+    "photographerUrl": "https://www.pexels.com/@axp-photography-500641970",
+    "pexelsUrl": "https://www.pexels.com/photo/courtyard-of-tilya-kori-madrasa-19227959/",
+    "alt": "Beautiful courtyard view of Tilya-Kori Madrasa in Samarkand, showcasing stunning Islamic architecture.",
+    "fetchedAt": "2026-05-11T20:02:10.989Z"
+  },
+  "VU": {
+    "file": "/heroes/vu.jpg",
+    "pexelsId": 12921445,
+    "photographer": "Alex Arcuri",
+    "photographerUrl": "https://www.pexels.com/@alex-arcuri-275586511",
+    "pexelsUrl": "https://www.pexels.com/photo/birds-eye-view-of-an-island-in-vanuatu-12921445/",
+    "alt": "A breathtaking aerial view of the lush green coastline of Vanuatu, surrounded by crystal clear waters.",
+    "fetchedAt": "2026-05-11T20:02:11.881Z"
+  },
+  "VA": {
+    "file": "/heroes/va.jpg",
+    "pexelsId": 19248421,
+    "photographer": "Özgür KAYA",
+    "photographerUrl": "https://www.pexels.com/@ozgur-kaya-575422504",
+    "pexelsUrl": "https://www.pexels.com/photo/vatican-city-19248421/",
+    "alt": "Crowds gather at St. Peter's Basilica, a landmark of Vatican City, under the daytime sky.",
+    "fetchedAt": "2026-05-11T20:02:12.860Z"
+  },
+  "VE": {
+    "file": "/heroes/ve.jpg",
+    "pexelsId": 18125391,
+    "photographer": "Arturo Añez.",
+    "photographerUrl": "https://www.pexels.com/@arturoaez225",
+    "pexelsUrl": "https://www.pexels.com/photo/a-group-of-people-walking-on-a-trail-in-the-mountains-18125391/",
+    "alt": "Explore the rugged beauty of Mérida's mountain range with hikers on a scenic trail.",
+    "fetchedAt": "2026-05-11T20:02:15.859Z"
+  },
+  "WF": {
+    "file": "/heroes/wf.jpg",
+    "pexelsId": 15946790,
+    "photographer": "Cheap  Gear  Photography",
+    "photographerUrl": "https://www.pexels.com/@katherine",
+    "pexelsUrl": "https://www.pexels.com/photo/woods-on-hills-15946790/",
+    "alt": "Breathtaking aerial view of green forests, rolling hills, and a distant ocean horizon under a clear blue sky.",
+    "fetchedAt": "2026-05-11T20:02:18.995Z"
+  },
+  "EH": {
+    "file": "/heroes/eh.jpg",
+    "pexelsId": 30099211,
+    "photographer": "Fives TM",
+    "photographerUrl": "https://www.pexels.com/@fives-tm-990299524",
+    "pexelsUrl": "https://www.pexels.com/photo/mesmerizing-dunes-at-sunrise-in-merzouga-30099211/",
+    "alt": "Beautiful sunrise over the sand dunes of Merzouga, Morocco, with footprints in the foreground.",
+    "fetchedAt": "2026-05-11T20:02:20.539Z"
+  },
+  "YE": {
+    "file": "/heroes/ye.jpg",
+    "pexelsId": 28506304,
+    "photographer": "abdullah alallah",
+    "photographerUrl": "https://www.pexels.com/@abdullah-alallah-314142096",
+    "pexelsUrl": "https://www.pexels.com/photo/architectural-beauty-in-historic-al-balad-jeddah-28506304/",
+    "alt": "Explore the traditional wooden architecture of Al-Balad in Jeddah, showcasing its historical charm.",
+    "fetchedAt": "2026-05-11T20:02:21.609Z"
+  },
+  "ZM": {
+    "file": "/heroes/zm.jpg",
+    "pexelsId": 27878405,
+    "photographer": "BabijaPhoto JB",
+    "photographerUrl": "https://www.pexels.com/@babijaphoto",
+    "pexelsUrl": "https://www.pexels.com/photo/an-aerial-view-of-the-victoria-falls-in-zimbabwe-27878405/",
+    "alt": "Breathtaking aerial view of Victoria Falls surrounded by lush greenery during summer day.",
+    "fetchedAt": "2026-05-11T20:02:22.656Z"
+  },
+  "ZW": {
+    "file": "/heroes/zw.jpg",
+    "pexelsId": 27878405,
+    "photographer": "BabijaPhoto JB",
+    "photographerUrl": "https://www.pexels.com/@babijaphoto",
+    "pexelsUrl": "https://www.pexels.com/photo/an-aerial-view-of-the-victoria-falls-in-zimbabwe-27878405/",
+    "alt": "Breathtaking aerial view of Victoria Falls surrounded by lush greenery during summer day.",
+    "fetchedAt": "2026-05-11T20:02:23.455Z"
   }
 }

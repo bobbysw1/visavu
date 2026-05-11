@@ -19,13 +19,24 @@ import Link from "next/link";
 import { Languages } from "lucide-react";
 import { languageFor, IN_HOUSE_LOCALES } from "@/lib/countryLanguages";
 
-/** Build a Google-Translate URL that translates our public site into the
- *  target language without touching our codebase. `sl=auto` lets Google
- *  detect the source. */
+/** Build a Google-Translate proxy URL. The legacy `translate.google.com/translate?u=...`
+ *  format Google deprecated years ago no longer proxies the page — it just
+ *  renders Google's own "type a URL" landing page. The modern format uses
+ *  the `*.translate.goog` proxy domain that ACTUALLY translates the live page.
+ *
+ *  Example: https://visavu-com.translate.goog/passport/jp?_x_tr_sl=en&_x_tr_tl=ja
+ */
 function googleTranslateUrl(targetUrl: string, targetLang: string): string {
-  return `https://translate.google.com/translate?sl=auto&tl=${encodeURIComponent(
-    targetLang,
-  )}&u=${encodeURIComponent(targetUrl)}`;
+  try {
+    const u = new URL(targetUrl);
+    // Convert visavu.com → visavu-com.translate.goog
+    const proxyHost = `${u.hostname.replace(/\./g, "-")}.translate.goog`;
+    const path = `${u.pathname}${u.search ? u.search : ""}`;
+    const sep = u.search ? "&" : "?";
+    return `https://${proxyHost}${path}${sep}_x_tr_sl=auto&_x_tr_tl=${encodeURIComponent(targetLang)}&_x_tr_hl=${encodeURIComponent(targetLang)}`;
+  } catch {
+    return `https://translate.google.com/?sl=auto&tl=${encodeURIComponent(targetLang)}&op=translate&text=${encodeURIComponent(targetUrl)}`;
+  }
 }
 
 export function HeroLanguageToggle({

@@ -61,7 +61,7 @@ export function NationalityHero({
     // Photographic hero — two-column on desktop (content + photo), stacked
     // on mobile (photo above content for visual hook).
     return (
-      <section className="relative overflow-hidden rounded-2xl mb-6 sm:mb-8 border border-neutral-200/60 dark:border-neutral-800 bg-white dark:bg-neutral-950">
+      <section className="relative overflow-hidden rounded-2xl mb-6 sm:mb-8 border border-neutral-200/60 dark:border-neutral-800 bg-white">
         {/* Language toggle floats above both columns in the top-right of the
             hero (over the photo). */}
         <div className="absolute top-3 right-3 z-10">

@@ -35,7 +35,7 @@ const QUERY_OVERRIDES: Record<string, string> = {
   FR: "paris eiffel",
   IT: "rome colosseum",
   ES: "barcelona architecture",
-  DE: "berlin brandenburg gate",
+  DE: "cologne cathedral germany",
   JP: "tokyo cityscape",
   CN: "great wall of china",
   IN: "taj mahal",

@@ -38,6 +38,7 @@ import { thailandSuiteAdapter } from "./thailand_suite";
 import { vietnamSuiteAdapter } from "./vietnam_suite";
 import { topDestinationGapsAdapter } from "./top_destination_gaps";
 import { totalCoverageUkUsAdapter } from "./total_coverage_uk_us";
+import { totalCoverageCaAuNzAdapter } from "./total_coverage_ca_au_nz";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -81,6 +82,7 @@ export const ADAPTERS: Adapter[] = [
   vietnamSuiteAdapter,
   topDestinationGapsAdapter,
   totalCoverageUkUsAdapter,
+  totalCoverageCaAuNzAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

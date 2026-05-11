@@ -30,17 +30,31 @@ async function buildDb(): Promise<DrizzleDb> {
   }
 
   // No DATABASE_URL → PGlite fallback. This keeps `next build` succeeding
-  // without any external infra (PGlite supplies an in-process Postgres). Real
-  // deployments are expected to set DATABASE_URL at runtime; if they don't,
-  // the app still serves with empty data rather than crashing on boot.
+  // without any external infra and lets the site boot on Vercel even when
+  // the DB env hasn't been wired up yet (visa lookups just return empty
+  // until DATABASE_URL is set).
   const { PGlite } = await import("@electric-sql/pglite");
   const { drizzle: drizzlePglite } = await import("drizzle-orm/pglite");
   const { mkdirSync } = await import("node:fs");
   const path = await import("node:path");
-  const dataDir = process.env.PGLITE_DIR ?? "./.pglite/data";
-  // PGlite creates the leaf dir but not parents; pre-create the chain so a
-  // fresh checkout's first run succeeds without manual setup.
-  mkdirSync(path.dirname(dataDir), { recursive: true });
+  const os = await import("node:os");
+
+  // On serverless platforms (Vercel / Lambda) the working dir is read-only;
+  // only /tmp is writable. Use the OS temp dir there. Local dev keeps the
+  // project-relative path so the data persists across `npm run dev` restarts.
+  const isServerless =
+    !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME;
+  const dataDir =
+    process.env.PGLITE_DIR ??
+    (isServerless ? path.join(os.tmpdir(), "visavu-pglite/data") : "./.pglite/data");
+
+  try {
+    // PGlite creates the leaf dir but not parents; pre-create the chain.
+    mkdirSync(path.dirname(dataDir), { recursive: true });
+  } catch {
+    // Even /tmp can fail in exotic sandboxes — fall through and let PGlite
+    // surface its own error if it can't initialise.
+  }
   const pg = new PGlite(dataDir);
   return drizzlePglite(pg, { schema }) as unknown as DrizzleDb;
 }

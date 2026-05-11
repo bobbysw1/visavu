@@ -29,31 +29,59 @@ async function buildDb(): Promise<DrizzleDb> {
     return drizzlePg(client, { schema }) as DrizzleDb;
   }
 
-  // No DATABASE_URL → PGlite fallback. This keeps `next build` succeeding
-  // without any external infra and lets the site boot on Vercel even when
-  // the DB env hasn't been wired up yet (visa lookups just return empty
-  // until DATABASE_URL is set).
+  // No DATABASE_URL → PGlite fallback.
+  //
+  // Two modes:
+  //
+  //  - **Local dev** (no Vercel env): persistent filesystem PGlite at
+  //    ./.pglite/data. Data survives `npm run dev` restarts. Bootstrap is a
+  //    one-time `npm run bootstrap`.
+  //
+  //  - **Vercel / serverless** (VERCEL=1 env): memory-mode PGlite, seeded
+  //    on cold start from the bundled snapshot at src/data/pglite-dump.tar.gz
+  //    (~24 MB compressed, ~96 MB live). This lets the entire site run with
+  //    no external database — all data is committed into the repo via the
+  //    snapshot, generated locally by `npm run bootstrap && npm run db:snapshot`.
+  //
+  //    The snapshot path is referenced via require.resolve so Next.js's file
+  //    tracer includes it in the function bundle.
   const { PGlite } = await import("@electric-sql/pglite");
   const { drizzle: drizzlePglite } = await import("drizzle-orm/pglite");
-  const { mkdirSync } = await import("node:fs");
-  const path = await import("node:path");
-  const os = await import("node:os");
 
-  // On serverless platforms (Vercel / Lambda) the working dir is read-only;
-  // only /tmp is writable. Use the OS temp dir there. Local dev keeps the
-  // project-relative path so the data persists across `npm run dev` restarts.
   const isServerless =
     !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME;
-  const dataDir =
-    process.env.PGLITE_DIR ??
-    (isServerless ? path.join(os.tmpdir(), "visavu-pglite/data") : "./.pglite/data");
 
+  if (isServerless) {
+    const { readFileSync } = await import("node:fs");
+    const path = await import("node:path");
+    // The dump path is resolved relative to the running file. Next.js's file
+    // tracer reads `process.cwd()/src/data/...` paths reliably in App-Router
+    // server modules.
+    const dumpPath = path.join(process.cwd(), "src/data/pglite-dump.tar.gz");
+    try {
+      const buf = readFileSync(dumpPath);
+      const blob = new Blob([new Uint8Array(buf)]);
+      // In-memory PGlite seeded from the bundled snapshot. Each cold start
+      // reloads the snapshot — fast (~1s for 96 MB) and stateless.
+      const pg = new PGlite({ dataDir: "memory://", loadDataDir: blob });
+      return drizzlePglite(pg, { schema }) as unknown as DrizzleDb;
+    } catch {
+      // No snapshot bundled — fall through to an empty in-memory DB so the
+      // site at least boots. Visa lookups will return empty until a snapshot
+      // is committed, but the page itself won't 500.
+      const pg = new PGlite({ dataDir: "memory://" });
+      return drizzlePglite(pg, { schema }) as unknown as DrizzleDb;
+    }
+  }
+
+  // Local dev: filesystem mode, persistent.
+  const { mkdirSync } = await import("node:fs");
+  const path = await import("node:path");
+  const dataDir = process.env.PGLITE_DIR ?? "./.pglite/data";
   try {
-    // PGlite creates the leaf dir but not parents; pre-create the chain.
     mkdirSync(path.dirname(dataDir), { recursive: true });
   } catch {
-    // Even /tmp can fail in exotic sandboxes — fall through and let PGlite
-    // surface its own error if it can't initialise.
+    // Already exists — fine.
   }
   const pg = new PGlite(dataDir);
   return drizzlePglite(pg, { schema }) as unknown as DrizzleDb;

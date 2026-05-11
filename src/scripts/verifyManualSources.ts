@@ -106,6 +106,10 @@ async function collectManualUrls(): Promise<UniqueUrl[]> {
     FROM visa_options
     WHERE primary_source_url IS NOT NULL
       AND primary_source_url <> ''
+      -- Skip Wikipedia / community-edited sources — they change daily by
+      -- design and we explicitly don't verify them as primary sources.
+      AND primary_source_url NOT LIKE '%wikipedia.org%'
+      AND primary_source_url NOT LIKE '%wikidata.org%'
       AND label NOT ILIKE '%(wikipedia%'
       AND label NOT ILIKE '%visa requirements for%'
     GROUP BY primary_source_url

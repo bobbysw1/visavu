@@ -16,6 +16,15 @@ export const metadata = {
   alternates: { canonical: absoluteUrl("/finder") },
 };
 
+// Vercel cold-starts can take a few seconds to load the bundled PGlite
+// snapshot. The finder pulls a wider set of rows than per-route pages,
+// so give it more execution headroom than the 10s default.
+export const maxDuration = 60;
+// Run on Node.js (not Edge) — PGlite + WASM is too heavy for Edge.
+export const runtime = "nodejs";
+// Don't statically pre-render; render per request.
+export const dynamic = "force-dynamic";
+
 const GOALS: FinderGoal[] = [
   "visit",
   "remote_work",
@@ -73,7 +82,19 @@ export default async function FinderPage({
   const validPassport = passport && validIso.has(passport) ? passport : null;
   const invalidPassportSubmitted = !!passport && !validPassport;
 
-  const results = validPassport && goal ? await findDestinations(validPassport, goal, { limit: 60 }) : [];
+  // Defensive: any database hiccup falls back to an empty-results state with
+  // a friendly inline note instead of cascading to a 500. We log the error
+  // server-side so Vercel logs still surface the cause for triage.
+  let results: Awaited<ReturnType<typeof findDestinations>> = [];
+  let lookupError: string | null = null;
+  if (validPassport && goal) {
+    try {
+      results = await findDestinations(validPassport, goal, { limit: 60 });
+    } catch (e) {
+      lookupError = e instanceof Error ? e.message : "lookup failed";
+      console.error("[finder] findDestinations failed", { passport: validPassport, goal, error: e });
+    }
+  }
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-8">
@@ -171,7 +192,21 @@ export default async function FinderPage({
         </section>
       )}
 
-      {validPassport && goal && (
+      {lookupError && (
+        <div className="mb-6 rounded-lg border border-amber-300 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-800 p-4 text-sm">
+          <p className="font-medium text-amber-900 dark:text-amber-200 mb-1">
+            Lookup is temporarily unavailable.
+          </p>
+          <p className="text-amber-900/80 dark:text-amber-200/80">
+            Try again in a moment, or browse via{" "}
+            <Link href={validPassport ? `/passport/${validPassport.toLowerCase()}` : "/"} className="underline">
+              the {validPassport ? `${nationalityFor(validPassport)} ` : ""}passport overview
+            </Link>{" "}
+            instead.
+          </p>
+        </div>
+      )}
+      {validPassport && goal && !lookupError && (
         <Suspense fallback={<p className="text-sm text-neutral-500">Looking up your options…</p>}>
           <ResultsBlock passport={validPassport} goal={goal} results={results} />
         </Suspense>

@@ -1,766 +1,434 @@
 {
   "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A02018R1806-20240520": {
     "hash": "bc74bf86fbc31be6",
-    "verifiedAt": "2026-05-11T06:52:10.293Z"
+    "verifiedAt": "2026-05-11T07:51:42.473Z"
   },
   "https://www.thaievisa.go.th/": {
     "hash": "75620570c9876f54",
-    "verifiedAt": "2026-05-11T06:52:12.238Z"
+    "verifiedAt": "2026-05-11T07:51:46.757Z"
   },
   "https://www.gob.mx/inm": {
     "hash": "68f2f4ba5344b122",
-    "verifiedAt": "2026-05-11T06:52:13.284Z"
+    "verifiedAt": "2026-05-11T07:51:47.952Z"
   },
   "https://travel.state.gov/content/travel/en/us-visas.html": {
     "hash": "7934e5e86bc015f0",
-    "verifiedAt": "2026-05-11T06:52:14.565Z"
+    "verifiedAt": "2026-05-11T07:51:49.308Z"
   },
   "https://immi.homeaffairs.gov.au/": {
     "hash": "80eaaddc4a6ee2d2",
-    "verifiedAt": "2026-05-11T06:52:15.197Z"
+    "verifiedAt": "2026-05-11T07:51:50.017Z"
   },
   "https://www.xuatnhapcanh.gov.vn/": {
     "hash": "e3b0c44298fc1c14",
-    "verifiedAt": "2026-05-11T06:52:16.897Z"
+    "verifiedAt": "2026-05-11T07:51:52.554Z"
   },
   "https://www.argentina.gob.ar/interior/migraciones": {
     "hash": "99696214bcc3c43e",
-    "verifiedAt": "2026-05-11T06:52:17.987Z"
+    "verifiedAt": "2026-05-11T07:51:53.351Z"
   },
   "https://u.ae/en/information-and-services/visa-and-emirates-id/residence-visas": {
     "hash": "dbc8e28ed7c4f035",
-    "verifiedAt": "2026-05-11T06:52:20.907Z"
-  },
-  "https://english.www.gov.cn/services/visasandimmigration/": {
-    "hash": "7c0b0d242fc2c812",
-    "verifiedAt": "2026-05-11T06:52:26.605Z"
-  },
-  "https://evisa.xuatnhapcanh.gov.vn/": {
-    "hash": "487c1064db5e2fb2",
-    "verifiedAt": "2026-05-11T06:52:37.676Z"
-  },
-  "https://evisa.imigrasi.go.id/": {
-    "hash": "4edfdb850fc317fa",
-    "verifiedAt": "2026-05-11T06:52:38.424Z"
-  },
-  "https://indianvisaonline.gov.in/": {
-    "hash": "4b9383ee28a07b32",
-    "verifiedAt": "2026-05-11T06:52:41.582Z"
-  },
-  "https://www.ease.gov.cv/": {
-    "hash": "db40d36bdbbeb785",
-    "verifiedAt": "2026-05-11T06:52:45.146Z"
-  },
-  "https://vistos.mne.gov.pt/en/national-visas/general-information": {
-    "hash": "4ee7fd511241b17c",
-    "verifiedAt": "2026-05-11T06:52:52.212Z"
-  },
-  "https://www.visa.go.kr/openPage.do?MENU_ID=10301": {
-    "hash": "8a9c9b3e89889b75",
-    "verifiedAt": "2026-05-11T06:52:54.577Z"
-  },
-  "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html": {
-    "hash": "e2dbe20e7643fde7",
-    "verifiedAt": "2026-05-11T06:52:55.955Z"
-  },
-  "https://www.gov.uk/guidance/apply-for-an-electronic-travel-authorisation-eta": {
-    "hash": "73276fcb7892bc9c",
-    "verifiedAt": "2026-05-11T06:52:56.505Z"
-  },
-  "https://www.migracion.gob.pa/": {
-    "hash": "c4b79f042edf4438",
-    "verifiedAt": "2026-05-11T06:53:05.959Z"
-  },
-  "https://vistoperitalia.esteri.it/": {
-    "hash": "4f4c263efdfaf5fc",
-    "verifiedAt": "2026-05-11T06:53:09.496Z"
-  },
-  "https://serviciomigraciones.cl/": {
-    "hash": "90a9effcffb8aa96",
-    "verifiedAt": "2026-05-11T06:53:11.813Z"
-  },
-  "https://www.gub.uy/ministerio-relaciones-exteriores/": {
-    "hash": "a77c5a5ea5d01ccc",
-    "verifiedAt": "2026-05-11T06:53:16.237Z"
-  },
-  "https://www.bmeia.gv.at/en/travel-stay/entrance-and-residence-in-austria/visa": {
-    "hash": "d65d84ef4dce60cb",
-    "verifiedAt": "2026-05-11T06:53:26.774Z"
-  },
-  "https://www.politsei.ee/en/instructions/visa-and-extending-period-of-stay/long-term-visa": {
-    "hash": "5210621b969e7d0b",
-    "verifiedAt": "2026-05-11T06:53:29.396Z"
-  },
-  "https://www.imigrasi.go.id/": {
-    "hash": "8e9562108d501fcf",
-    "verifiedAt": "2026-05-11T06:53:35.557Z"
-  },
-  "https://www.migraciones.gov.py/": {
-    "hash": "e9942cccd813f057",
-    "verifiedAt": "2026-05-11T06:53:42.670Z"
-  },
-  "https://pra.gov.ph/": {
-    "hash": "83a0db851423c0b6",
-    "verifiedAt": "2026-05-11T06:53:45.076Z"
-  },
-  "https://www.moj.go.jp/isa/applications/procedures/16-3.html": {
-    "hash": "f40ee413be8be98b",
-    "verifiedAt": "2026-05-11T06:53:52.193Z"
-  },
-  "https://www.moj.go.jp/isa/applications/procedures/16-2.html": {
-    "hash": "764619035de987b3",
-    "verifiedAt": "2026-05-11T06:53:52.686Z"
-  },
-  "https://www.mofa.gov.sa/en/": {
-    "hash": "9e26275d268ad0cd",
-    "verifiedAt": "2026-05-11T06:53:58.469Z"
-  },
-  "https://www.mofa.go.jp/j_info/visit/visa/index.html": {
-    "hash": "44d44b885337ba93",
-    "verifiedAt": "2026-05-11T06:53:58.967Z"
-  },
-  "https://www.mineduc.cl/": {
-    "hash": "2c19b697c1e7ff4e",
-    "verifiedAt": "2026-05-11T06:54:05.881Z"
+    "verifiedAt": "2026-05-11T07:51:57.858Z"
   },
   "https://www.mid.ru/en/": {
-    "hash": "1fb55826c2565970",
-    "verifiedAt": "2026-05-11T06:54:09.190Z"
-  },
-  "https://www.mfa.gr/en/visas/visas-for-foreigners-traveling-to-greece/national-visas-type-d/digital-nomad-visa.html": {
-    "hash": "f08a4f1dc463c853",
-    "verifiedAt": "2026-05-11T06:54:10.713Z"
-  },
-  "https://www.immigration.govt.nz/visas/skilled-migrant-category-resident-visa/": {
-    "hash": "4e7804c12d5b1705",
-    "verifiedAt": "2026-05-11T06:54:17.510Z"
-  },
-  "https://www.immigration.govt.nz/": {
-    "hash": "13f80852cf24b811",
-    "verifiedAt": "2026-05-11T06:54:21.230Z"
-  },
-  "https://www.imi.gov.my/": {
-    "hash": "c3439118f65dff0c",
-    "verifiedAt": "2026-05-11T06:54:32.315Z"
+    "hash": "3fb4feea5d90986b",
+    "verifiedAt": "2026-05-11T07:52:02.688Z"
   },
   "https://www.ica.gov.sg/": {
     "hash": "dc0140202e14fc1f",
-    "verifiedAt": "2026-05-11T06:54:32.822Z"
-  },
-  "https://www.greekcitizenship.gr/": {
-    "hash": "dce01c23aecc60a0",
-    "verifiedAt": "2026-05-11T06:54:35.373Z"
-  },
-  "https://www.government.pn/immigration/": {
-    "hash": "ff6816ad98238fcc",
-    "verifiedAt": "2026-05-11T06:54:37.957Z"
-  },
-  "https://www.gov.uk/uk-family-visa/partner-spouse": {
-    "hash": "1cb637883005f94a",
-    "verifiedAt": "2026-05-11T06:54:40.107Z"
-  },
-  "https://www.gov.uk/student-visa": {
-    "hash": "de4c3dc16c252291",
-    "verifiedAt": "2026-05-11T06:54:42.431Z"
-  },
-  "https://www.gov.uk/standard-visitor/business-or-academic": {
-    "hash": "87eb93e66ac7d507",
-    "verifiedAt": "2026-05-11T06:54:45.699Z"
-  },
-  "https://www.gov.uk/skilled-worker-visa": {
-    "hash": "bc4eb0d365ee234d",
-    "verifiedAt": "2026-05-11T06:54:48.278Z"
-  },
-  "https://www.gov.uk/marriage-visa": {
-    "hash": "80e281997778134b",
-    "verifiedAt": "2026-05-11T06:54:50.055Z"
-  },
-  "https://www.gov.uk/innovator-founder-visa": {
-    "hash": "5e6c663e54cb6d02",
-    "verifiedAt": "2026-05-11T06:54:52.256Z"
-  },
-  "https://www.gov.uk/high-potential-individual-visa": {
-    "hash": "a9ab613638e20265",
-    "verifiedAt": "2026-05-11T06:54:54.736Z"
-  },
-  "https://www.gov.uk/health-care-worker-visa": {
-    "hash": "c453a7bdc2dea3ef",
-    "verifiedAt": "2026-05-11T06:54:57.274Z"
-  },
-  "https://www.gov.uk/graduate-visa": {
-    "hash": "ae40dd714a68b933",
-    "verifiedAt": "2026-05-11T06:54:59.732Z"
-  },
-  "https://www.gov.uk/global-talent": {
-    "hash": "c3b3fb9224c11873",
-    "verifiedAt": "2026-05-11T06:55:04.237Z"
-  },
-  "https://www.gov.tc/immigration/": {
-    "hash": "03d64fe1bb7b894f",
-    "verifiedAt": "2026-05-11T06:55:07.542Z"
-  },
-  "https://www.gov.im/immigration/": {
-    "hash": "2afa139c5dbe1dd4",
-    "verifiedAt": "2026-05-11T06:55:15.926Z"
-  },
-  "https://www.gov.gs/": {
-    "hash": "e9620222bd5061fe",
-    "verifiedAt": "2026-05-11T06:55:25.539Z"
-  },
-  "https://www.gov.gg/immigration": {
-    "hash": "84795e878695371e",
-    "verifiedAt": "2026-05-11T06:55:29.045Z"
-  },
-  "https://www.fws.gov/refuge/midway-atoll": {
-    "hash": "bca86a83a563f040",
-    "verifiedAt": "2026-05-11T06:55:35.246Z"
-  },
-  "https://www.exteriores.gob.es/en/Paginas/index.aspx": {
-    "hash": "69b0ea01f53ff8ce",
-    "verifiedAt": "2026-05-11T06:55:40.852Z"
-  },
-  "https://www.educ.ar/": {
-    "hash": "0ac40e90fbf53d97",
-    "verifiedAt": "2026-05-11T06:55:54.295Z"
-  },
-  "https://www.dfa.ie/citizenship/born-abroad/registering-a-foreign-birth/": {
-    "hash": "962f89c33614ea58",
-    "verifiedAt": "2026-05-11T06:56:02.501Z"
-  },
-  "https://www.curacao.com/en/discover/at-home-in-curacao/": {
-    "hash": "200caba4a561a2f2",
-    "verifiedAt": "2026-05-11T06:56:04.560Z"
-  },
-  "https://www.consulat.ma/": {
-    "hash": "3fb4feea5d90986b",
-    "verifiedAt": "2026-05-11T06:56:06.507Z"
-  },
-  "https://www.campusfrance.org/en": {
-    "hash": "022082f625124756",
-    "verifiedAt": "2026-05-11T06:58:29.885Z"
-  },
-  "https://www.boi.go.th/en/ltr": {
-    "hash": "e3b0c44298fc1c14",
-    "verifiedAt": "2026-05-11T06:58:32.242Z"
-  },
-  "https://www.barbadoswelcomestamp.bb/": {
-    "hash": "9ddc4784c52203f4",
-    "verifiedAt": "2026-05-11T06:58:38.863Z"
-  },
-  "https://www.antarctica.gov.au/": {
-    "hash": "cfab59b2bc21f5b2",
-    "verifiedAt": "2026-05-11T06:58:40.735Z"
-  },
-  "https://u.ae/en/information-and-services/visa-and-emirates-id/residence-visas/golden-visa": {
-    "hash": "496ee6584479b25a",
-    "verifiedAt": "2026-05-11T06:58:47.282Z"
-  },
-  "https://u.ae/en/information-and-services/education/higher-education": {
-    "hash": "424d8874a042f0c6",
-    "verifiedAt": "2026-05-11T06:58:49.047Z"
-  },
-  "https://travel.state.gov/content/travel/en/us-visas/study/student-visa.html": {
-    "hash": "ff9343da11b8f9f6",
-    "verifiedAt": "2026-05-11T06:58:50.471Z"
-  },
-  "https://travel.state.gov/content/travel/en/us-visas/business.html": {
-    "hash": "5e9d7a8428a809ff",
-    "verifiedAt": "2026-05-11T06:58:53.546Z"
-  },
-  "https://studyintaiwan.org/": {
-    "hash": "d3fcf7e26a029ef8",
-    "verifiedAt": "2026-05-11T06:58:55.049Z"
-  },
-  "https://studyinhongkong.edu.hk/": {
-    "hash": "0105852e20338443",
-    "verifiedAt": "2026-05-11T06:58:59.056Z"
-  },
-  "https://stipendiumhungaricum.hu/": {
-    "hash": "33d523b0d18eb9e5",
-    "verifiedAt": "2026-05-11T06:59:01.264Z"
-  },
-  "https://smart-visa.boi.go.th/": {
-    "hash": "e3b0c44298fc1c14",
-    "verifiedAt": "2026-05-11T06:59:05.405Z"
-  },
-  "https://oif.gov.hu/index.php?option=com_k2&view=item&layout=item&id=988": {
-    "hash": "29e8bd4916c087c9",
-    "verifiedAt": "2026-05-11T06:59:10.112Z"
-  },
-  "https://nomad.residencymalta.gov.mt/": {
-    "hash": "fefad0ab2f561705",
-    "verifiedAt": "2026-05-11T06:59:14.084Z"
-  },
-  "https://nawa.gov.pl/en/foreigners": {
-    "hash": "41f5bdf9d24b3a49",
-    "verifiedAt": "2026-05-11T06:59:19.088Z"
-  },
-  "https://mup.gov.hr/aliens-281621/temporary-stay-of-digital-nomads/286833": {
-    "hash": "a5fb04a523a914e8",
-    "verifiedAt": "2026-05-11T06:59:21.876Z"
-  },
-  "https://migri.fi/en/home": {
-    "hash": "5ec645d50f987d6a",
-    "verifiedAt": "2026-05-11T06:59:24.985Z"
-  },
-  "https://mdec.my/derantau": {
-    "hash": "49f9b2fea598131d",
-    "verifiedAt": "2026-05-11T06:59:25.722Z"
-  },
-  "https://ltr.boi.go.th/": {
-    "hash": "dfaa344435f9282a",
-    "verifiedAt": "2026-05-11T06:59:27.130Z"
-  },
-  "https://kemenkopmk.go.id/": {
-    "hash": "e5e072a76c7421c3",
-    "verifiedAt": "2026-05-11T06:59:28.898Z"
-  },
-  "https://j1visa.state.gov/": {
-    "hash": "bffcc96996840cb6",
-    "verifiedAt": "2026-05-11T06:59:32.557Z"
-  },
-  "https://ivisitanguilla.com/work-from-anguilla/": {
-    "hash": "759cbca64c706436",
-    "verifiedAt": "2026-05-11T06:59:36.513Z"
-  },
-  "https://goldcard.nat.gov.tw/en/": {
-    "hash": "55fe88de985b602d",
-    "verifiedAt": "2026-05-11T06:59:37.761Z"
-  },
-  "https://www.uscis.gov/working-in-the-united-states/temporary-workers/o-1-visa-individuals-with-extraordinary-ability-or-achievement": {
-    "hash": "599f3b2f74177dec",
-    "verifiedAt": "2026-05-11T06:59:38.880Z"
-  },
-  "https://www.uscis.gov/working-in-the-united-states/permanent-workers/eb-5-immigrant-investor-program": {
-    "hash": "1096a3ef667d4675",
-    "verifiedAt": "2026-05-11T06:59:39.453Z"
-  },
-  "https://www.uscis.gov/working-in-the-united-states/h-1b-specialty-occupations": {
-    "hash": "448ca296c6c5e38d",
-    "verifiedAt": "2026-05-11T06:59:40.029Z"
-  },
-  "https://www.uscis.gov/family/family-of-us-citizens": {
-    "hash": "7b97a75451eb0add",
-    "verifiedAt": "2026-05-11T06:59:40.706Z"
-  },
-  "https://www.udi.no/en/word-definitions/svalbard/": {
-    "hash": "b299c66855196e50",
-    "verifiedAt": "2026-05-11T06:59:42.863Z"
-  },
-  "https://www.wallis-et-futuna.gouv.fr/": {
-    "hash": "5f007990b119230f",
-    "verifiedAt": "2026-05-11T06:59:47.946Z"
-  },
-  "https://www.taaf.fr/": {
-    "hash": "e2d08faceed781ef",
-    "verifiedAt": "2026-05-11T07:00:00.415Z"
-  },
-  "https://e-resident.gov.ee/nomadvisa/": {
-    "hash": "498f20e3eab3e0bb",
-    "verifiedAt": "2026-05-11T07:00:06.134Z"
-  },
-  "https://educacionsuperior.sep.gob.mx/": {
-    "hash": "03e513de1aac6ce2",
-    "verifiedAt": "2026-05-11T07:00:08.500Z"
-  },
-  "https://educationmalaysia.gov.my/": {
-    "hash": "f0087e5aea64a20c",
-    "verifiedAt": "2026-05-11T07:00:11.519Z"
-  },
-  "https://www.studyinthailand.org/": {
-    "hash": "5c775636da0417dc",
-    "verifiedAt": "2026-05-11T07:00:17.554Z"
-  },
-  "https://www.studyinnorway.no/": {
-    "hash": "8cd366f89453d295",
-    "verifiedAt": "2026-05-11T07:00:24.330Z"
-  },
-  "https://www.studyinkorea.go.kr/": {
-    "hash": "ccf0d4a6ab049339",
-    "verifiedAt": "2026-05-11T07:00:29.152Z"
-  },
-  "https://www.studyinjapan.go.jp/en/": {
-    "hash": "c52b2f5b6f5e166f",
-    "verifiedAt": "2026-05-11T07:00:31.297Z"
-  },
-  "https://www.studyinfinland.fi/": {
-    "hash": "1087c30234844663",
-    "verifiedAt": "2026-05-11T07:00:33.892Z"
-  },
-  "https://www.studyindenmark.dk/": {
-    "hash": "a0f2b2c20407c1b8",
-    "verifiedAt": "2026-05-11T07:00:39.811Z"
-  },
-  "https://www.studyinbelgium.be/": {
-    "hash": "c9d616d697e82eee",
-    "verifiedAt": "2026-05-11T07:00:44.218Z"
-  },
-  "https://www.studyinaustria.at/": {
-    "hash": "c1c73d3694771088",
-    "verifiedAt": "2026-05-11T07:00:50.028Z"
-  },
-  "https://www.startupportugal.com/": {
-    "hash": "34838fe987f00aab",
-    "verifiedAt": "2026-05-11T07:00:54.496Z"
-  },
-  "https://www.ssw.go.jp/en/": {
-    "hash": "87f6497d331df0bf",
-    "verifiedAt": "2026-05-11T07:00:56.698Z"
-  },
-  "https://www.sintmaartengov.org/": {
-    "hash": "89047b8fcb63ce4d",
-    "verifiedAt": "2026-05-11T07:00:59.409Z"
-  },
-  "https://www.sainthelena.gov.sh/visiting/immigration/": {
-    "hash": "6121e643a4003942",
-    "verifiedAt": "2026-05-11T07:01:07.119Z"
-  },
-  "https://www.polynesie-francaise.pref.gouv.fr/": {
-    "hash": "bbeece10b8190b34",
-    "verifiedAt": "2026-05-11T07:01:11.926Z"
-  },
-  "https://www.mom.gov.sg/passes-and-permits/s-pass": {
-    "hash": "6e9d14f419cf8ad5",
-    "verifiedAt": "2026-05-11T07:01:14.179Z"
-  },
-  "https://www.mom.gov.sg/passes-and-permits/entrepass": {
-    "hash": "3ebb3c0499499736",
-    "verifiedAt": "2026-05-11T07:01:15.077Z"
-  },
-  "https://www.mom.gov.sg/passes-and-permits/employment-pass": {
-    "hash": "491b36afca55f84e",
-    "verifiedAt": "2026-05-11T07:01:15.652Z"
+    "verifiedAt": "2026-05-11T07:52:03.399Z"
+  },
+  "https://english.www.gov.cn/services/visasandimmigration/": {
+    "hash": "7c0b0d242fc2c812",
+    "verifiedAt": "2026-05-11T07:52:06.700Z"
+  },
+  "https://www.irishimmigration.ie/": {
+    "hash": "f7c6f19702db2bf6",
+    "verifiedAt": "2026-05-11T07:52:08.927Z"
+  },
+  "https://evisa.xuatnhapcanh.gov.vn/": {
+    "hash": "487c1064db5e2fb2",
+    "verifiedAt": "2026-05-11T07:52:11.093Z"
+  },
+  "https://evisa.imigrasi.go.id/": {
+    "hash": "4edfdb850fc317fa",
+    "verifiedAt": "2026-05-11T07:52:11.906Z"
+  },
+  "https://indianvisaonline.gov.in/": {
+    "hash": "4b9383ee28a07b32",
+    "verifiedAt": "2026-05-11T07:52:14.440Z"
+  },
+  "https://www.ease.gov.cv/": {
+    "hash": "db40d36bdbbeb785",
+    "verifiedAt": "2026-05-11T07:52:17.850Z"
+  },
+  "https://vistos.mne.gov.pt/en/national-visas/general-information": {
+    "hash": "4ee7fd511241b17c",
+    "verifiedAt": "2026-05-11T07:52:24.673Z"
+  },
+  "https://www.visa.go.kr/openPage.do?MENU_ID=10301": {
+    "hash": "8a9c9b3e89889b75",
+    "verifiedAt": "2026-05-11T07:52:26.997Z"
+  },
+  "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html": {
+    "hash": "e2dbe20e7643fde7",
+    "verifiedAt": "2026-05-11T07:52:28.382Z"
+  },
+  "https://www.gov.uk/guidance/apply-for-an-electronic-travel-authorisation-eta": {
+    "hash": "73276fcb7892bc9c",
+    "verifiedAt": "2026-05-11T07:52:30.292Z"
+  },
+  "https://www.migracion.gob.pa/": {
+    "hash": "c4b79f042edf4438",
+    "verifiedAt": "2026-05-11T07:52:39.150Z"
+  },
+  "https://vistoperitalia.esteri.it/": {
+    "hash": "4f4c263efdfaf5fc",
+    "verifiedAt": "2026-05-11T07:52:42.938Z"
+  },
+  "https://serviciomigraciones.cl/": {
+    "hash": "90a9effcffb8aa96",
+    "verifiedAt": "2026-05-11T07:52:45.233Z"
+  },
+  "https://www.gub.uy/ministerio-relaciones-exteriores/": {
+    "hash": "a77c5a5ea5d01ccc",
+    "verifiedAt": "2026-05-11T07:52:48.777Z"
   },
   "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en": {
     "hash": "ab69563d909ec75e",
-    "verifiedAt": "2026-05-11T07:01:19.441Z"
+    "verifiedAt": "2026-05-11T07:52:52.518Z"
   },
-  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600": {
-    "hash": "3a04418cc958ba89",
-    "verifiedAt": "2026-05-11T07:01:22.267Z"
+  "https://www.gov.pl/web/diplomacy/visas-and-passports": {
+    "hash": "aa581a4e31bd346c",
+    "verifiedAt": "2026-05-11T07:53:00.248Z"
   },
-  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500": {
-    "hash": "b0827810f18ca050",
-    "verifiedAt": "2026-05-11T07:01:22.685Z"
+  "https://www.bmeia.gv.at/en/travel-stay/entrance-and-residence-in-austria/visa": {
+    "hash": "d65d84ef4dce60cb",
+    "verifiedAt": "2026-05-11T07:53:04.085Z"
   },
-  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skills-in-demand-visa-subclass-482": {
-    "hash": "2b7341eb6660897d",
-    "verifiedAt": "2026-05-11T07:01:23.097Z"
+  "https://www.politsei.ee/en/instructions/visa-and-extending-period-of-stay/long-term-visa": {
+    "hash": "5210621b969e7d0b",
+    "verifiedAt": "2026-05-11T07:53:06.640Z"
   },
-  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skilled-work-regional-provisional-491": {
-    "hash": "9cb90473d94b277a",
-    "verifiedAt": "2026-05-11T07:01:23.518Z"
+  "https://www.imigrasi.go.id/": {
+    "hash": "8e9562108d501fcf",
+    "verifiedAt": "2026-05-11T07:53:08.813Z"
   },
-  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skilled-nominated-190": {
-    "hash": "4fc647802bebf536",
-    "verifiedAt": "2026-05-11T07:01:23.922Z"
+  "https://www.migraciones.gov.py/": {
+    "hash": "0270137cea7fb408",
+    "verifiedAt": "2026-05-11T07:53:20.316Z"
   },
-  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skilled-independent-189": {
-    "hash": "53d100bd774a3c73",
-    "verifiedAt": "2026-05-11T07:01:24.334Z"
+  "https://pra.gov.ph/": {
+    "hash": "83a0db851423c0b6",
+    "verifiedAt": "2026-05-11T07:53:24.349Z"
   },
-  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/business-innovation-and-investment-188": {
-    "hash": "df617efde31a9699",
-    "verifiedAt": "2026-05-11T07:01:24.931Z"
+  "https://e-resident.gov.ee/nomadvisa/": {
+    "hash": "498f20e3eab3e0bb",
+    "verifiedAt": "2026-05-11T07:53:50.510Z"
+  },
+  "https://educacionsuperior.sep.gob.mx/": {
+    "hash": "03e513de1aac6ce2",
+    "verifiedAt": "2026-05-11T07:53:52.165Z"
+  },
+  "https://educationmalaysia.gov.my/": {
+    "hash": "f0087e5aea64a20c",
+    "verifiedAt": "2026-05-11T07:53:55.155Z"
+  },
+  "https://goldcard.nat.gov.tw/en/": {
+    "hash": "55fe88de985b602d",
+    "verifiedAt": "2026-05-11T07:53:57.659Z"
   },
   "https://iaato.org/": {
     "hash": "d73d1e06e44c86ae",
-    "verifiedAt": "2026-05-11T07:01:26.738Z"
+    "verifiedAt": "2026-05-11T07:54:00.151Z"
   },
-  "https://immigration.gov.sb/visas/": {
-    "hash": "6d8afa7c55a9e562",
-    "verifiedAt": "2026-05-11T07:01:28.706Z"
+  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/business-innovation-and-investment-188": {
+    "hash": "df617efde31a9699",
+    "verifiedAt": "2026-05-11T07:54:01.038Z"
   },
-  "https://evisa.gouv.cd/": {
-    "hash": "a5c7d88acac5459c",
-    "verifiedAt": "2026-05-11T07:01:30.094Z"
+  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skilled-independent-189": {
+    "hash": "53d100bd774a3c73",
+    "verifiedAt": "2026-05-11T07:54:02.230Z"
   },
-  "https://anrpts.gov.mr/visa/requestvisa": {
-    "hash": "1f9e7788ccbc620b",
-    "verifiedAt": "2026-05-11T07:01:34.026Z"
+  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skilled-nominated-190": {
+    "hash": "4fc647802bebf536",
+    "verifiedAt": "2026-05-11T07:54:02.689Z"
   },
-  "https://cancilleriadigital.mppre.gob.ve/": {
-    "hash": "07fc4eab87b1357a",
-    "verifiedAt": "2026-05-11T07:01:37.096Z"
+  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skilled-work-regional-provisional-491": {
+    "hash": "9cb90473d94b277a",
+    "verifiedAt": "2026-05-11T07:54:03.172Z"
   },
-  "https://diplomatiemdc.gouv.ml/": {
-    "hash": "ea6e6a6a2a86e3ce",
-    "verifiedAt": "2026-05-11T07:01:44.521Z"
+  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skills-in-demand-visa-subclass-482": {
+    "hash": "2b7341eb6660897d",
+    "verifiedAt": "2026-05-11T07:54:03.656Z"
   },
-  "https://e-visa.gov.uz/": {
-    "hash": "55dc1263e63eecfb",
-    "verifiedAt": "2026-05-11T07:01:47.577Z"
+  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500": {
+    "hash": "b0827810f18ca050",
+    "verifiedAt": "2026-05-11T07:54:04.123Z"
   },
-  "https://eservices.immigration.go.tz/": {
-    "hash": "4efb0abdeebebb8c",
-    "verifiedAt": "2026-05-11T07:01:50.725Z"
+  "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600": {
+    "hash": "3a04418cc958ba89",
+    "verifiedAt": "2026-05-11T07:54:04.575Z"
   },
-  "https://eservices.iss.gov.gy/visitor-visa": {
-    "hash": "00d70110129cc866",
-    "verifiedAt": "2026-05-11T07:01:54.210Z"
+  "https://ivisitanguilla.com/work-from-anguilla/": {
+    "hash": "759cbca64c706436",
+    "verifiedAt": "2026-05-11T07:54:10.804Z"
   },
-  "https://eservices.zambiaimmigration.gov.zm/": {
-    "hash": "aeccd00daef154c3",
-    "verifiedAt": "2026-05-11T07:01:58.063Z"
+  "https://j1visa.state.gov/": {
+    "hash": "bffcc96996840cb6",
+    "verifiedAt": "2026-05-11T07:54:12.741Z"
   },
-  "https://evisa.bj/": {
-    "hash": "a92eb98f58ed271c",
-    "verifiedAt": "2026-05-11T07:01:59.847Z"
+  "https://kemenkopmk.go.id/": {
+    "hash": "e5e072a76c7421c3",
+    "verifiedAt": "2026-05-11T07:54:16.282Z"
   },
-  "https://evisa.gov.mw/": {
-    "hash": "5450ae4b82fa2c25",
-    "verifiedAt": "2026-05-11T07:02:05.569Z"
+  "https://ltr.boi.go.th/": {
+    "hash": "dfaa344435f9282a",
+    "verifiedAt": "2026-05-11T07:54:18.603Z"
   },
-  "https://evisa.gov.sz/": {
-    "hash": "7eba7cdb0390ddf8",
-    "verifiedAt": "2026-05-11T07:02:10.135Z"
+  "https://mdec.my/derantau": {
+    "hash": "49f9b2fea598131d",
+    "verifiedAt": "2026-05-11T07:54:19.800Z"
   },
-  "https://evisa.moip.gov.mm/": {
-    "hash": "983b3ac609d3fa92",
-    "verifiedAt": "2026-05-11T07:02:14.839Z"
-  },
-  "https://evisa.rop.gov.om/": {
-    "hash": "65110900108ee3b1",
-    "verifiedAt": "2026-05-11T07:02:17.708Z"
-  },
-  "https://evisacam.cm/": {
-    "hash": "2de108be46221ffd",
-    "verifiedAt": "2026-05-11T07:02:24.566Z"
-  },
-  "https://evisamada-mg.com/en/home": {
-    "hash": "aa9bd07e5c834566",
-    "verifiedAt": "2026-05-11T07:02:28.263Z"
-  },
-  "https://identita.gov.mt/": {
-    "hash": "fef2cf4b42107dca",
-    "verifiedAt": "2026-05-11T07:02:35.013Z"
-  },
-  "https://immigration.gov.bb/pages/visa_requirements.aspx": {
-    "hash": "908441c8bcd3c02d",
-    "verifiedAt": "2026-05-11T07:02:38.214Z"
-  },
-  "https://immigration.gov.bz/visa/visa-requirements/": {
-    "hash": "4fa0e79d53c427fe",
-    "verifiedAt": "2026-05-11T07:02:41.427Z"
-  },
-  "https://immigration.gov.so/en/visa/": {
-    "hash": "b5764c85a4538ff2",
-    "verifiedAt": "2026-05-11T07:02:45.063Z"
-  },
-  "https://immigration.gov.vu/visit/": {
-    "hash": "b0745699d06ad933",
-    "verifiedAt": "2026-05-11T07:02:45.740Z"
-  },
-  "https://imuga.immigration.gov.mv/": {
-    "hash": "ffbf3ee23571ed64",
-    "verifiedAt": "2026-05-11T07:02:46.854Z"
-  },
-  "https://island.is/en/do-you-need-a-visa": {
-    "hash": "5e7ca75a91ae1dd3",
-    "verifiedAt": "2026-05-11T07:02:49.009Z"
-  },
-  "https://laoevisa.gov.la/": {
-    "hash": "72189ee604f268e6",
-    "verifiedAt": "2026-05-11T07:02:50.308Z"
-  },
-  "https://mae.gouv.ht/": {
-    "hash": "babce3d9b68edbf2",
-    "verifiedAt": "2026-05-11T07:02:52.793Z"
-  },
-  "https://maee.gouvernement.lu/en/services-aux-citoyens/visa-immigration.html": {
-    "hash": "7cff06c485e1658c",
-    "verifiedAt": "2026-05-11T07:02:59.370Z"
-  },
-  "https://mfa.gov.by/en/visa/": {
-    "hash": "2022f5e714a0fc0d",
-    "verifiedAt": "2026-05-11T07:03:02.133Z"
-  },
-  "https://migri.fi/en/": {
+  "https://migri.fi/en/home": {
     "hash": "5ec645d50f987d6a",
-    "verifiedAt": "2026-05-11T07:03:07.284Z"
+    "verifiedAt": "2026-05-11T07:54:21.252Z"
   },
-  "https://mofa.gov.bs/evisa-online-services/": {
-    "hash": "18ae6f96ecdb0040",
-    "verifiedAt": "2026-05-11T07:03:12.986Z"
+  "https://mup.gov.hr/aliens-281621/temporary-stay-of-digital-nomads/286833": {
+    "hash": "a5fb04a523a914e8",
+    "verifiedAt": "2026-05-11T07:54:23.281Z"
   },
-  "https://mofaic.gov.ss/visas/": {
-    "hash": "f50b647098ad8222",
-    "verifiedAt": "2026-05-11T07:03:15.970Z"
+  "https://nawa.gov.pl/en/foreigners": {
+    "hash": "41f5bdf9d24b3a49",
+    "verifiedAt": "2026-05-11T07:54:27.691Z"
   },
-  "https://moi.gov.af/": {
-    "hash": "709e02da5b8d05bd",
-    "verifiedAt": "2026-05-11T07:03:18.005Z"
+  "https://nomad.residencymalta.gov.mt/": {
+    "hash": "fefad0ab2f561705",
+    "verifiedAt": "2026-05-11T07:54:32.305Z"
   },
-  "https://mvep.gov.hr/consular-information/visa-system/visa-applications/229": {
-    "hash": "1bf5679f31ebf4ed",
-    "verifiedAt": "2026-05-11T07:03:23.402Z"
+  "https://oif.gov.hu/index.php?option=com_k2&view=item&layout=item&id=988": {
+    "hash": "29e8bd4916c087c9",
+    "verifiedAt": "2026-05-11T07:54:34.942Z"
   },
-  "https://republic-congo.com/en/apply-for-a-visa/application/": {
-    "hash": "9ed231201437501b",
-    "verifiedAt": "2026-05-11T07:03:32.647Z"
-  },
-  "https://security.gov.vc/security/index.php?option=com_content&view=article&id=53&Itemid=106": {
-    "hash": "309f88ae3e7c8985",
-    "verifiedAt": "2026-05-11T07:03:37.317Z"
-  },
-  "https://visa2egypt.gov.eg/": {
+  "https://smart-visa.boi.go.th/": {
     "hash": "e3b0c44298fc1c14",
-    "verifiedAt": "2026-05-11T07:03:39.229Z"
+    "verifiedAt": "2026-05-11T07:54:49.995Z"
   },
-  "https://vistos.mne.gov.pt/en/": {
-    "hash": "09724d7cd823785e",
-    "verifiedAt": "2026-05-11T07:03:52.651Z"
+  "https://stipendiumhungaricum.hu/": {
+    "hash": "33d523b0d18eb9e5",
+    "verifiedAt": "2026-05-11T07:54:54.904Z"
   },
-  "https://voyage.gouv.tg/": {
-    "hash": "84a20b0d37b87526",
-    "verifiedAt": "2026-05-11T07:03:54.453Z"
+  "https://studyinhongkong.edu.hk/": {
+    "hash": "0105852e20338443",
+    "verifiedAt": "2026-05-11T07:54:59.819Z"
   },
-  "https://www.auswaertiges-amt.de/en/visa-service": {
-    "hash": "fea6cec391c607e3",
-    "verifiedAt": "2026-05-11T07:03:56.711Z"
+  "https://studyintaiwan.org/": {
+    "hash": "447b6cbd84d68cd7",
+    "verifiedAt": "2026-05-11T07:55:01.343Z"
   },
-  "https://www.diplomatie.gouv.sn/visiter-le-senegal": {
-    "hash": "5f0697472ea8e6c3",
-    "verifiedAt": "2026-05-11T07:04:00.946Z"
+  "https://travel.state.gov/content/travel/en/us-visas/business.html": {
+    "hash": "5e9d7a8428a809ff",
+    "verifiedAt": "2026-05-11T07:55:02.607Z"
   },
-  "https://www.evisa.e-gov.kg/": {
-    "hash": "fa3ad541672d2ca7",
-    "verifiedAt": "2026-05-11T07:04:03.336Z"
+  "https://travel.state.gov/content/travel/en/us-visas/study/student-visa.html": {
+    "hash": "ff9343da11b8f9f6",
+    "verifiedAt": "2026-05-11T07:55:05.901Z"
   },
-  "https://www.evisa.gouv.dj/": {
-    "hash": "486ea4896ffe9137",
-    "verifiedAt": "2026-05-11T07:04:07.444Z"
+  "https://u.ae/en/information-and-services/education/higher-education": {
+    "hash": "424d8874a042f0c6",
+    "verifiedAt": "2026-05-11T07:55:09.124Z"
   },
-  "https://www.evisa.gov.bh/": {
-    "hash": "238757b62f2b28ea",
-    "verifiedAt": "2026-05-11T07:04:08.529Z"
+  "https://u.ae/en/information-and-services/visa-and-emirates-id/residence-visas/golden-visa": {
+    "hash": "496ee6584479b25a",
+    "verifiedAt": "2026-05-11T07:55:12.584Z"
   },
-  "https://www.evisa.gov.et/": {
-    "hash": "dd6f318595dbe589",
-    "verifiedAt": "2026-05-11T07:04:14.867Z"
+  "https://u.ae/en/information-and-services/visa-and-emirates-id/transit-visa": {
+    "hash": "34aa8a9bcc531dce",
+    "verifiedAt": "2026-05-11T07:55:15.298Z"
   },
-  "https://www.evisa.gov.ge/": {
-    "hash": "5f680fa98ced1210",
-    "verifiedAt": "2026-05-11T07:04:19.715Z"
+  "https://www.antarctica.gov.au/": {
+    "hash": "5c9d04891443f709",
+    "verifiedAt": "2026-05-11T07:55:21.089Z"
   },
-  "https://www.evisa.gov.tr/en/": {
+  "https://www.barbadoswelcomestamp.bb/": {
+    "hash": "9ddc4784c52203f4",
+    "verifiedAt": "2026-05-11T07:55:29.550Z"
+  },
+  "https://www.boi.go.th/en/ltr": {
     "hash": "e3b0c44298fc1c14",
-    "verifiedAt": "2026-05-11T07:04:31.873Z"
+    "verifiedAt": "2026-05-11T07:55:30.541Z"
   },
-  "https://www.evisa.gov.zw/": {
-    "hash": "02ea9096ad1138de",
-    "verifiedAt": "2026-05-11T07:04:33.902Z"
+  "https://www.campusfrance.org/en": {
+    "hash": "9b9f63b334c62f74",
+    "verifiedAt": "2026-05-11T07:55:34.840Z"
   },
-  "https://www.evisa.sl/": {
-    "hash": "cf61cc52d7030c8a",
-    "verifiedAt": "2026-05-11T07:04:36.662Z"
+  "https://www.consulat.ma/": {
+    "hash": "3fb4feea5d90986b",
+    "verifiedAt": "2026-05-11T07:57:57.713Z"
   },
-  "https://www.exteriores.gob.es/es/EmbajadasConsulados/Paginas/index.aspx": {
-    "hash": "e1c193aea6cff5d0",
-    "verifiedAt": "2026-05-11T07:04:43.147Z"
+  "https://www.curacao.com/en/discover/at-home-in-curacao/": {
+    "hash": "200caba4a561a2f2",
+    "verifiedAt": "2026-05-11T07:57:59.762Z"
   },
-  "https://www.gis.gov.gh/": {
-    "hash": "24706df663505892",
-    "verifiedAt": "2026-05-11T07:04:53.440Z"
+  "https://www.dfa.ie/citizenship/born-abroad/registering-a-foreign-birth/": {
+    "hash": "962f89c33614ea58",
+    "verifiedAt": "2026-05-11T07:58:02.222Z"
   },
-  "https://www.gob.pe/migraciones": {
-    "hash": "217705adfda38ef3",
-    "verifiedAt": "2026-05-11T07:04:56.323Z"
+  "https://www.dges.gov.pt/en": {
+    "hash": "bce60ecf3658f210",
+    "verifiedAt": "2026-05-11T07:58:07.647Z"
   },
-  "https://www.gov.bw/visa-applications/visa-application-tourism-visa": {
-    "hash": "20d9cf891d02e035",
-    "verifiedAt": "2026-05-11T07:04:59.902Z"
+  "https://www.educ.ar/": {
+    "hash": "0ac40e90fbf53d97",
+    "verifiedAt": "2026-05-11T07:58:14.375Z"
   },
-  "https://www.gov.cy/mfa/": {
-    "hash": "d8cc09f979bbd018",
-    "verifiedAt": "2026-05-11T07:05:08.546Z"
+  "https://www.exteriores.gob.es/en/Paginas/index.aspx": {
+    "hash": "69b0ea01f53ff8ce",
+    "verifiedAt": "2026-05-11T07:58:32.611Z"
   },
-  "https://www.gov.gd/documents/immigration": {
-    "hash": "2d9fbd7db1de2b33",
-    "verifiedAt": "2026-05-11T07:05:09.864Z"
+  "https://www.fws.gov/refuge/midway-atoll": {
+    "hash": "bca86a83a563f040",
+    "verifiedAt": "2026-05-11T07:58:39.293Z"
   },
-  "https://www.govt.lc/services/apply-for-saint-lucia-non-immigrant-visa": {
-    "hash": "62d46de7bd995ae8",
-    "verifiedAt": "2026-05-11T07:05:13.095Z"
+  "https://www.gov.gg/immigration": {
+    "hash": "84795e878695371e",
+    "verifiedAt": "2026-05-11T07:58:52.287Z"
   },
-  "https://www.homeaffairs.gov.ls/e-visa/": {
-    "hash": "90572055b1b3617e",
-    "verifiedAt": "2026-05-11T07:05:22.847Z"
+  "https://www.gov.gs/": {
+    "hash": "e9620222bd5061fe",
+    "verifiedAt": "2026-05-11T07:58:58.727Z"
   },
-  "https://www.ica.gov.sg/enter-depart/entry_requirements": {
-    "hash": "6f2847570f09fd66",
-    "verifiedAt": "2026-05-11T07:05:23.706Z"
+  "https://www.gov.im/immigration/": {
+    "hash": "2afa139c5dbe1dd4",
+    "verifiedAt": "2026-05-11T07:59:09.922Z"
   },
-  "https://www.immigration.gov.bn/en/": {
-    "hash": "fc650540843b7840",
-    "verifiedAt": "2026-05-11T07:05:26.214Z"
+  "https://www.gov.pl/web/mswia-en/confirmation-of-polish-citizenship": {
+    "hash": "aa581a4e31bd346c",
+    "verifiedAt": "2026-05-11T07:59:54.199Z"
   },
-  "https://www.mfa.bg/en/services-travel/consular-services/travel-bulgaria/visa-bulgaria": {
-    "hash": "2d93629d822f695f",
-    "verifiedAt": "2026-05-11T07:05:29.037Z"
+  "https://www.gov.tc/immigration/": {
+    "hash": "03d64fe1bb7b894f",
+    "verifiedAt": "2026-05-11T08:00:03.601Z"
   },
-  "https://www.mfa.gov.ki/visa/": {
-    "hash": "ea5c5d7bb0bdfc29",
-    "verifiedAt": "2026-05-11T07:05:33.873Z"
+  "https://www.gov.uk/global-talent": {
+    "hash": "c3b3fb9224c11873",
+    "verifiedAt": "2026-05-11T08:00:08.890Z"
   },
-  "https://www.mfa.gov.lv/en/applying-visa": {
-    "hash": "1ba02cbd97472bdb",
-    "verifiedAt": "2026-05-11T07:05:35.633Z"
+  "https://www.gov.uk/graduate-visa": {
+    "hash": "ae40dd714a68b933",
+    "verifiedAt": "2026-05-11T08:00:14.403Z"
   },
-  "https://www.mfa.gov.tm/en/articles/57": {
-    "hash": "9fc2730507cfa36b",
-    "verifiedAt": "2026-05-11T07:05:38.566Z"
+  "https://www.gov.uk/health-care-worker-visa": {
+    "hash": "c453a7bdc2dea3ef",
+    "verifiedAt": "2026-05-11T08:00:17.662Z"
   },
-  "https://www.mfa.gr/en/visas/": {
+  "https://www.gov.uk/high-potential-individual-visa": {
+    "hash": "a9ab613638e20265",
+    "verifiedAt": "2026-05-11T08:00:19.359Z"
+  },
+  "https://www.gov.uk/innovator-founder-visa": {
+    "hash": "5e6c663e54cb6d02",
+    "verifiedAt": "2026-05-11T08:00:21.377Z"
+  },
+  "https://www.gov.uk/marriage-visa": {
+    "hash": "80e281997778134b",
+    "verifiedAt": "2026-05-11T08:00:24.292Z"
+  },
+  "https://www.gov.uk/skilled-worker-visa": {
+    "hash": "bc4eb0d365ee234d",
+    "verifiedAt": "2026-05-11T08:00:28.040Z"
+  },
+  "https://www.gov.uk/standard-visitor/business-or-academic": {
+    "hash": "87eb93e66ac7d507",
+    "verifiedAt": "2026-05-11T08:00:32.121Z"
+  },
+  "https://www.gov.uk/student-visa": {
+    "hash": "de4c3dc16c252291",
+    "verifiedAt": "2026-05-11T08:00:35.502Z"
+  },
+  "https://www.gov.uk/uk-family-visa/partner-spouse": {
+    "hash": "1cb637883005f94a",
+    "verifiedAt": "2026-05-11T08:00:38.734Z"
+  },
+  "https://www.government.pn/immigration/": {
+    "hash": "ff6816ad98238fcc",
+    "verifiedAt": "2026-05-11T08:00:47.235Z"
+  },
+  "https://www.greekcitizenship.gr/": {
+    "hash": "dce01c23aecc60a0",
+    "verifiedAt": "2026-05-11T08:00:53.626Z"
+  },
+  "https://www.imi.gov.my/": {
+    "hash": "c3439118f65dff0c",
+    "verifiedAt": "2026-05-11T08:01:08.933Z"
+  },
+  "https://www.immigration.govt.nz/": {
+    "hash": "13f80852cf24b811",
+    "verifiedAt": "2026-05-11T08:01:20.837Z"
+  },
+  "https://www.immigration.govt.nz/visas/skilled-migrant-category-resident-visa/": {
+    "hash": "4e7804c12d5b1705",
+    "verifiedAt": "2026-05-11T08:01:36.058Z"
+  },
+  "https://www.mfa.gr/en/visas/visas-for-foreigners-traveling-to-greece/national-visas-type-d/digital-nomad-visa.html": {
     "hash": "f08a4f1dc463c853",
-    "verifiedAt": "2026-05-11T07:05:39.682Z"
+    "verifiedAt": "2026-05-11T08:01:50.990Z"
   },
-  "https://www.migracao.gov.tl/html/sub0301.php": {
-    "hash": "361a656d7703c51c",
-    "verifiedAt": "2026-05-11T07:05:43.295Z"
+  "https://www.mineduc.cl/": {
+    "hash": "2c19b697c1e7ff4e",
+    "verifiedAt": "2026-05-11T08:02:01.133Z"
   },
-  "https://www.migration.gov.rw/visa/": {
-    "hash": "a1dd2750667a29e0",
-    "verifiedAt": "2026-05-11T07:05:46.278Z"
+  "https://www.moet.gov.vn/": {
+    "hash": "e218306874187ec9",
+    "verifiedAt": "2026-05-11T08:02:11.107Z"
   },
-  "https://www.mofa.go.jp/j_info/visit/visa/": {
+  "https://www.mofa.go.jp/": {
+    "hash": "861571971d3eb7b1",
+    "verifiedAt": "2026-05-11T08:02:14.782Z"
+  },
+  "https://www.mofa.go.jp/j_info/visit/visa/index.html": {
     "hash": "44d44b885337ba93",
-    "verifiedAt": "2026-05-11T07:05:47.516Z"
+    "verifiedAt": "2026-05-11T08:02:16.432Z"
   },
-  "https://www.mre.gov.py/visas/": {
-    "hash": "eb987515a9a07c8b",
-    "verifiedAt": "2026-05-11T07:06:00.298Z"
+  "https://www.mofa.gov.sa/en/": {
+    "hash": "3966ba4662bfded7",
+    "verifiedAt": "2026-05-11T08:02:21.580Z"
   },
-  "https://www.nauru.gov.nr/about-nauru/visiting-nauru/visa-requirements.aspx": {
-    "hash": "11eb80b57dd7ec95",
-    "verifiedAt": "2026-05-11T07:06:05.128Z"
+  "https://www.moj.go.jp/isa/applications/procedures/16-2.html": {
+    "hash": "764619035de987b3",
+    "verifiedAt": "2026-05-11T08:02:25.322Z"
   },
-  "https://www.sem.admin.ch/sem/en/home.html": {
-    "hash": "60cf4d6599fd4ba8",
-    "verifiedAt": "2026-05-11T07:06:25.265Z"
+  "https://www.moj.go.jp/isa/applications/procedures/16-3.html": {
+    "hash": "f40ee413be8be98b",
+    "verifiedAt": "2026-05-11T08:02:26.623Z"
   },
-  "https://www.smevisa.gov.ao/": {
-    "hash": "ffe95d15607c83f8",
-    "verifiedAt": "2026-05-11T07:06:32.853Z"
+  "https://www.mom.gov.sg/passes-and-permits/employment-pass": {
+    "hash": "491b36afca55f84e",
+    "verifiedAt": "2026-05-11T08:02:34.683Z"
   },
-  "https://www.udi.no/en/": {
-    "hash": "1f13376d0e4e4971",
-    "verifiedAt": "2026-05-11T07:06:34.898Z"
+  "https://www.mom.gov.sg/passes-and-permits/entrepass": {
+    "hash": "3ebb3c0499499736",
+    "verifiedAt": "2026-05-11T08:02:36.138Z"
   },
-  "https://www.vaticanstate.va/en/": {
-    "hash": "6ff4e9a3d8ff0ec8",
-    "verifiedAt": "2026-05-11T07:06:36.884Z"
+  "https://www.mom.gov.sg/passes-and-permits/s-pass": {
+    "hash": "6e9d14f419cf8ad5",
+    "verifiedAt": "2026-05-11T08:02:40.039Z"
   },
-  "https://www.vmp.gov.kz/": {
-    "hash": "6c893648f1cddab2",
-    "verifiedAt": "2026-05-11T07:06:41.614Z"
+  "https://www.nia.gov.cn/": {
+    "hash": "251307eafd7f2dac",
+    "verifiedAt": "2026-05-11T08:02:45.986Z"
   },
-  "https://electronic-visa.kdmid.ru/": {
-    "hash": "a4db55c97369e699",
-    "verifiedAt": "2026-05-11T07:06:49.046Z"
+  "https://www.polynesie-francaise.pref.gouv.fr/": {
+    "hash": "bbeece10b8190b34",
+    "verifiedAt": "2026-05-11T08:03:00.825Z"
   },
-  "https://migration.gov.bi/Apply/step1/3": {
-    "hash": "82ffe1ba327ffbf9",
-    "verifiedAt": "2026-05-11T07:07:04.976Z"
+  "https://www.sainthelena.gov.sh/visiting/immigration/": {
+    "hash": "6121e643a4003942",
+    "verifiedAt": "2026-05-11T08:03:09.522Z"
+  },
+  "https://www.ssw.go.jp/en/": {
+    "hash": "87f6497d331df0bf",
+    "verifiedAt": "2026-05-11T08:03:15.326Z"
   }
 }

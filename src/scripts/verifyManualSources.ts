@@ -37,6 +37,7 @@ import { sql } from "drizzle-orm";
 const HASHES_PATH = path.resolve(process.cwd(), "src/data/manual_source_hashes.json");
 const UPDATE_BASELINE = process.argv.includes("--update-baseline");
 const POST_SLACK = process.argv.includes("--slack");
+const WRITE_VERIFICATIONS = process.argv.includes("--write-verifications");
 const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK_URL;
 
 type HashMap = Record<string, { hash: string; verifiedAt: string }>;
@@ -132,6 +133,9 @@ async function main() {
   const updated: HashMap = {};
   const changes: { url: string; programs: string[]; oldHash?: string; newHash: string; verifiedAt?: string }[] = [];
   const failures: { url: string; programs: string[] }[] = [];
+  /** URLs whose content matched the prior baseline → safe to bump their
+   *  associated visa records' lastVerifiedAt timestamp. */
+  const stillFreshUrls: string[] = [];
 
   for (const [i, item] of urls.entries()) {
     const progress = `[${i + 1}/${urls.length}]`;
@@ -146,11 +150,15 @@ async function main() {
 
     if (!prior) {
       console.log(`${progress}  ✓ ${item.url}  (NEW — hash baseline ${hash})`);
+      stillFreshUrls.push(item.url);
     } else if (prior.hash === hash) {
       console.log(`${progress}  = ${item.url}  (unchanged since ${prior.verifiedAt.split("T")[0]})`);
+      stillFreshUrls.push(item.url);
     } else {
       changes.push({ url: item.url, programs: item.programs, oldHash: prior.hash, newHash: hash, verifiedAt: prior.verifiedAt });
       console.log(`${progress}  ⚠ ${item.url}  (CHANGED since ${prior.verifiedAt.split("T")[0]})`);
+      // DON'T bump lastVerifiedAt — verification is in doubt until a human
+      // reviews the page and refreshes the affected records.
     }
     updated[item.url] = { hash, verifiedAt: new Date().toISOString() };
 
@@ -184,6 +192,36 @@ async function main() {
     console.log(`\nNot updating baseline (use --update-baseline after manually reviewing the changes).`);
   } else {
     saveHashes(updated);
+  }
+
+  // Bump lastVerifiedAt on visa_options whose primary_source_url still
+  // matches the baseline. Unchanged-source records get a freshness
+  // refresh; changed-source records stay at their previous date until
+  // a human reviews. This is what surfaces "Verified <recent date>" on
+  // the result-card footer.
+  if (WRITE_VERIFICATIONS && stillFreshUrls.length > 0) {
+    console.log(`\nWriting verification timestamps for ${stillFreshUrls.length} unchanged URLs…`);
+    // PGlite doesn't expose UPDATE rowCount the same way postgres-js does,
+    // so we count before-and-after via COUNT(*) WHERE last_verified_at = now.
+    const now = new Date();
+    for (let i = 0; i < stillFreshUrls.length; i += 100) {
+      const chunk = stillFreshUrls.slice(i, i + 100);
+      await db.execute(sql`
+        UPDATE visa_options
+        SET last_verified_at = ${now}
+        WHERE primary_source_url IN (${sql.join(chunk.map((u) => sql`${u}`), sql`, `)})
+      `);
+    }
+    // Count how many rows now carry this timestamp.
+    const verifyResult = await db.execute<{ count: number }>(sql`
+      SELECT COUNT(*)::int AS count
+      FROM visa_options
+      WHERE last_verified_at >= ${now}
+    `);
+    const rows = ((verifyResult as unknown as { rows?: { count: number }[] }).rows
+      ?? (verifyResult as unknown as { count: number }[]));
+    const rowsUpdated = Number(rows[0]?.count ?? 0);
+    console.log(`✓ Refreshed last_verified_at on ${rowsUpdated} visa_option rows`);
   }
 
   if (POST_SLACK && SLACK_WEBHOOK && (changes.length > 0 || failures.length > 0)) {

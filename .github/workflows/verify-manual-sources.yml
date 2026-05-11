@@ -56,20 +56,28 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
           if [ "${{ inputs.update_baseline }}" = "true" ]; then
-            npm run verify-sources -- --slack --update-baseline
+            npm run verify-sources -- --slack --update-baseline --write-verifications
           else
             # Don't fail the job on changes — we want the report + commit
-            npm run verify-sources -- --slack || true
+            npm run verify-sources -- --slack --write-verifications || true
           fi
 
-      - name: Commit updated hash baseline
+      - name: Re-snapshot PGlite with refreshed verification timestamps
         run: |
-          if git diff --quiet HEAD -- src/data/manual_source_hashes.json; then
-            echo "No hash changes to commit."
+          # The verifier bumped last_verified_at on records whose source
+          # URLs are still unchanged. Re-bundle the snapshot so Vercel
+          # picks up the fresher timestamps at the next cold start.
+          npx tsx src/scripts/compactSnapshot.ts || true
+          npm run db:snapshot
+
+      - name: Commit verification artefacts
+        run: |
+          git add src/data/manual_source_hashes.json src/data/pglite-dump.tar.gz
+          if git diff --staged --quiet; then
+            echo "No verification changes to commit."
           else
             git config user.name "visa-data-bot"
             git config user.email "data@visavu.com"
-            git add src/data/manual_source_hashes.json
             git commit -m "data: monthly manual-source verification ($(date -u +%Y-%m-%d))" \
               -m "Workflow run: $GITHUB_RUN_URL"
             git push

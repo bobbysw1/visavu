@@ -523,6 +523,7 @@ export default async function Page({
         {purpose !== "diplomatic" && primary?.status !== "refused" && (
           <VisaPrepTimeline
             destinationIso2={d}
+            passportIso2={p}
             purpose={purpose}
             status={primary?.status ?? (category === "long_stay" ? "embassy_visa" : "e_visa")}
           />

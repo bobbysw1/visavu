@@ -5,10 +5,14 @@ import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { VisaCategoryNav } from "@/components/VisaCategoryNav";
 import { CoverageStats } from "@/components/CoverageStats";
 import { DestinationDifficultyBucketGrid } from "@/components/DifficultyBucketGrid";
-import { COUNTRY_LIST, TOP_ORIGINS, flagEmoji, nameFor } from "@/lib/countries";
+import { NationalityHero } from "@/components/NationalityHero";
+import { CountryFactsBox } from "@/components/CountryFactsBox";
+import { COUNTRY_LIST, TOP_ORIGINS, nameFor } from "@/lib/countries";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { coverageForDestination, originSummariesForDestination } from "@/lib/coverage";
 import { scoreOriginsForDestination } from "@/lib/scoring";
+import { getCountryPhoto } from "@/lib/pexels";
+import { factsFor } from "@/content/countryFacts";
 
 type Params = { iso: string };
 
@@ -25,14 +29,17 @@ export async function generateMetadata({
   if (!isValid(iso)) return { title: "Not found" };
   const upper = iso.toUpperCase();
   const name = nameFor(upper);
-  const title = `${name} visa requirements: tourist, work, study, partner & diplomatic`;
+  const facts = factsFor(upper);
+  const title = `${name} visa & travel — tourism, work, study, family`;
   return {
     title,
-    description: `Find out who needs a visa to enter ${name} for tourism, work, study, partner/family or diplomatic travel — sourced from official sources with primary-source links.`,
+    description: facts
+      ? `${name} (pop. ${(facts.population / 1_000_000).toFixed(1)}M, capital ${facts.capital}). Visa rules for every passport, plus government portal links, embassy directory and travel advisories.`
+      : `Visa requirements for ${name} — by passport, by purpose, with government-source links and embassy details.`,
     alternates: { canonical: absoluteUrl(`/destination/${upper.toLowerCase()}`) },
     openGraph: {
       title,
-      description: `Visa requirements for travel to ${name}, organised by passport country and purpose.`,
+      description: `Travel to ${name}: visa types, passport requirements, government portal, travel advisories.`,
       url: absoluteUrl(`/destination/${upper.toLowerCase()}`),
     },
   };
@@ -53,11 +60,17 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
     // DB unavailable — render zero state.
   }
 
+  const photo = await getCountryPhoto(upper);
+  const facts = factsFor(upper);
+
   const crumbs = [
     { href: "/", label: "Home" },
     { href: `/destination/${upper.toLowerCase()}`, label: `Travel to ${name}` },
   ];
 
+  // FAQ schema — written generically because the same FAQ structure holds
+  // for every destination. The /[passport]/[destination] route handles the
+  // per-pair specifics.
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -67,15 +80,15 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
         name: `Do I need a visa to enter ${name}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Whether you need a visa to enter ${name} depends on your passport and the purpose of your trip. Pick your passport below and select your purpose (tourism, work, study, family) to see the visa type, cost, and stay length.`,
+          text: `Visa requirements depend on your passport and purpose. Pick your passport on this page and select tourism, work, study, or family to see the exact rules — every answer cites a primary government source.`,
         },
       },
       {
         "@type": "Question",
-        name: `Does ${name} offer work visas?`,
+        name: `Does ${name} have a work visa programme?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `${name} typically offers work visa routes for skilled workers with a sponsoring employer. Pick your passport and select &ldquo;Work&rdquo; to see eligibility, salary thresholds, and processing details.`,
+          text: `Most countries offer skilled-worker visas tied to a sponsoring employer. Pick your passport and choose "Work" to see ${name}'s eligibility criteria and processing times.`,
         },
       },
       {
@@ -83,15 +96,7 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
         name: `What's ${name}'s student visa policy?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `${name} typically issues student visas to applicants with a confirmed acceptance letter from an accredited institution and proof of sufficient funds. Pick your passport and select &ldquo;Study&rdquo; for the specific requirements.`,
-        },
-      },
-      {
-        "@type": "Question",
-        name: `Can I get a partner or family visa for ${name}?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `Most countries offer partner or family visa routes for spouses, civil partners, and dependent children of citizens or residents. Pick your passport and select &ldquo;Partner / Family&rdquo; to see ${name}'s relationship eligibility, sponsor requirements, and processing times.`,
+          text: `Student visas typically require an acceptance letter from an accredited institution and proof of funds. Select "Study" on this page for the specific requirements.`,
         },
       },
     ],
@@ -111,17 +116,14 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
       <main className="mx-auto max-w-5xl px-4 py-8">
         <Breadcrumbs crumbs={crumbs} />
 
-        <header className="flex items-center gap-4 mb-3">
-          <span className="text-5xl" aria-hidden>{flagEmoji(upper)}</span>
-          <div>
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-              Travel to {name}
-            </h1>
-            <p className="text-neutral-600 dark:text-neutral-400">
-              Tourist, work, study, family and diplomatic visa requirements for entering {name}.
-            </p>
-          </div>
-        </header>
+        <NationalityHero
+          iso2={upper}
+          photo={photo}
+          visaFreeCount={coverage ? coverage.byStatus.visa_free + coverage.byStatus.visa_free_with_eta : undefined}
+          totalDestinations={coverage?.totalDestinationsCovered}
+        />
+
+        <CountryFactsBox iso2={upper} mode="destination" />
 
         {coverage && <CoverageStats snapshot={coverage} context="destination" />}
 
@@ -139,18 +141,24 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
 
         <section className="mt-10">
           <h2 className="text-lg font-semibold mb-4">From popular origin countries</h2>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
+            Pick your passport to see the exact rules for travel to {name}.
+          </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-            {TOP_ORIGINS.filter((p) => p !== upper).map((origin) => (
-              <Link
-                key={origin}
-                href={`/${origin.toLowerCase()}/${upper.toLowerCase()}`}
-                prefetch={false}
-                className="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-600 hover:bg-blue-50/40 dark:hover:bg-blue-950/30 transition text-sm"
-              >
-                <span className="text-lg" aria-hidden>{flagEmoji(origin)}</span>
-                <span className="truncate">{nameFor(origin)}</span>
-              </Link>
-            ))}
+            {TOP_ORIGINS.filter((p) => p !== upper).map((origin) => {
+              const country = COUNTRY_LIST.find((c) => c.iso2 === origin);
+              return (
+                <Link
+                  key={origin}
+                  href={`/${origin.toLowerCase()}/${upper.toLowerCase()}`}
+                  prefetch={false}
+                  className="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-600 hover:bg-blue-50/40 dark:hover:bg-blue-950/30 transition text-sm"
+                >
+                  <span className="text-lg" aria-hidden>{country?.flag ?? "🏳️"}</span>
+                  <span className="truncate">{nameFor(origin)}</span>
+                </Link>
+              );
+            })}
           </div>
         </section>
 
@@ -169,22 +177,6 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
               </Link>
             ))}
           </div>
-        </section>
-
-        <section className="mt-12 prose prose-sm dark:prose-invert max-w-none">
-          <h2>Visiting or moving to {name}: what to know</h2>
-          <p>
-            {name}&apos;s visa policy varies by your nationality, your purpose (short visit, work,
-            study, family reunification, diplomatic), and sometimes by your point of departure. We
-            pull data from {name}&apos;s ministry of foreign affairs and immigration services where
-            available, and supplement with embassy guidance and regional bloc primary documents.
-          </p>
-          <p>
-            Pick your passport above and your purpose to see the specific visa type, cost, stay
-            length, processing time, and required documents — along with a direct link to the
-            official application portal. Every answer carries a confidence indicator and the date
-            we last verified it against the source.
-          </p>
         </section>
       </main>
     </>

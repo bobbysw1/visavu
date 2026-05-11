@@ -14,6 +14,28 @@ import Link from "next/link";
 import { nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
 import { type Purpose, PURPOSE_LABEL } from "@/lib/types";
+
+/** What the destination's portal usually labels this purpose. Helps the user
+ *  find the right section once they click through. */
+function purposeKeyword(purpose: Purpose): string {
+  switch (purpose) {
+    case "tourism":
+      return "tourist / visitor visa";
+    case "business":
+      return "business / commercial visa";
+    case "transit":
+      return "transit visa";
+    case "work":
+      return "work permit / employment visa";
+    case "study":
+      return "student visa / study permit";
+    case "family":
+      return "family reunification / partner / spouse visa";
+    case "diplomatic":
+      return "diplomatic / official visa";
+  }
+}
+
 import {
   resourcesFor,
   generalAdvisoriesFor,
@@ -37,12 +59,12 @@ export function EmptyStateCard({
     <section className="rounded-xl border border-neutral-200 dark:border-neutral-800 p-6 mb-8">
       <header className="mb-5">
         <h2 className="text-xl font-semibold mb-1">
-          Start here — three places to check for {nationalityFor(passportIso2)} travellers visiting{" "}
-          {nameFor(destinationIso2)}.
+          {PURPOSE_LABEL[purpose]} from {nationalityFor(passportIso2)} to {nameFor(destinationIso2)}
         </h2>
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          We don&apos;t have a structured record for this route yet, so we point you straight at
-          the destination&apos;s own ministry. They have final say.
+        <p className="text-sm text-neutral-700 dark:text-neutral-300">
+          We don&apos;t have a structured visa record for this exact route yet. Until we do, the
+          authoritative answer lives on {nameFor(destinationIso2)}&apos;s government portal —
+          linked below. Look for the {purposeKeyword(purpose)} section.
         </p>
       </header>
 

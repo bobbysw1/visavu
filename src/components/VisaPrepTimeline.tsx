@@ -19,8 +19,10 @@
 import { ListChecks, Hourglass, AlertCircle } from "lucide-react";
 import { documentsFor } from "@/content/visaPrep";
 import { DOCUMENTS, formatLeadDays, type VisaDocument } from "@/content/visaDocuments";
+import { PASSPORT_DOC_OVERRIDES } from "@/content/passportSpecificDocs";
 import { PURPOSE_LABEL, type Purpose, type VisaStatus } from "@/lib/types";
 import { nameFor } from "@/lib/countries";
+import { nationalityFor } from "@/lib/nationalities";
 
 function sortByLeadDesc(a: VisaDocument, b: VisaDocument): number {
   // Most-urgent (longest-lead) items first. Tie-break on `mustOrderFirst`.
@@ -42,18 +44,38 @@ const CATEGORY_LABEL: Record<VisaDocument["category"], string> = {
 
 export function VisaPrepTimeline({
   destinationIso2,
+  passportIso2,
   purpose,
   status,
 }: {
   destinationIso2: string;
+  /** The applicant's passport. Document advice is rewritten to use that
+   *  country's actual police-check / passport-renewal channels instead of
+   *  the generic "from each country lived in" copy. */
+  passportIso2: string;
   purpose: Purpose;
   status: VisaStatus;
 }) {
   const ids = documentsFor(destinationIso2, purpose, status);
   if (ids.length <= 2) return null; // visa-free → nothing useful here
 
+  const passport = passportIso2.toUpperCase();
+
+  // Apply passport-specific overrides: the same `police_certificate` doc
+  // points at FBI/ACRO/AFP depending on who's reading it.
   const docs = ids
-    .map((id) => DOCUMENTS[id])
+    .map((id) => {
+      const base = DOCUMENTS[id];
+      if (!base) return null;
+      const ov = PASSPORT_DOC_OVERRIDES[`${passport}:${id}` as const];
+      if (!ov) return base;
+      return {
+        ...base,
+        howToObtain: ov.howToObtain ?? base.howToObtain,
+        leadDaysMin: ov.leadDaysMin ?? base.leadDaysMin,
+        leadDaysMax: ov.leadDaysMax ?? base.leadDaysMax,
+      };
+    })
     .filter((d): d is VisaDocument => Boolean(d))
     .sort(sortByLeadDesc);
 
@@ -82,6 +104,9 @@ export function VisaPrepTimeline({
             <h2 className="text-xl sm:text-2xl font-semibold tracking-tight leading-tight">
               {PURPOSE_LABEL[purpose]} visa for {nameFor(destinationIso2)}
             </h2>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+              Specific to <strong className="font-semibold text-neutral-700 dark:text-neutral-300">{nationalityFor(passport)} passport holders</strong>.
+            </p>
             <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1 flex items-center gap-1.5">
               <Hourglass size={13} aria-hidden="true" />
               Start <strong className="font-semibold">~{overallWindow}</strong> before your

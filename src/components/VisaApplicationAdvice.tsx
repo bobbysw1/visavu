@@ -9,15 +9,45 @@
  */
 import { Scale, FileText, Lightbulb, Scale3d } from "lucide-react";
 import { ADVICE_BY_PURPOSE } from "@/content/visaApplicationAdvice";
-import { PURPOSE_LABEL, type Purpose } from "@/lib/types";
+import { PURPOSE_LABEL, type Purpose, type VisaStatus } from "@/lib/types";
+import { nameFor } from "@/lib/countries";
+import { nationalityFor } from "@/lib/nationalities";
 
 export function VisaApplicationAdvice({
   purpose,
+  passportIso2,
+  destinationIso2,
+  primaryStatus,
 }: {
   purpose: Purpose;
+  passportIso2: string;
+  destinationIso2: string;
+  /** Skip the panel for routes where no visa is actually needed
+   *  (same-country travel, visa-free destinations). */
+  primaryStatus?: VisaStatus | null;
 }) {
+  // Same-country: no visa needed, no advice useful.
+  if (passportIso2.toUpperCase() === destinationIso2.toUpperCase()) return null;
+  // Visa-free / eTA / refused: advice doesn't apply.
+  if (
+    primaryStatus === "visa_free" ||
+    primaryStatus === "visa_free_with_eta" ||
+    primaryStatus === "refused"
+  )
+    return null;
+
   const advice = ADVICE_BY_PURPOSE[purpose];
   if (!advice) return null;
+
+  const destName = nameFor(destinationIso2);
+  const passportAdj = nationalityFor(passportIso2);
+  /** Replace generic placeholders in advice copy with the actual route
+   *  parties — turns 'destination' into 'Australia', etc. */
+  const fillIn = (text: string): string =>
+    text
+      .replace(/\{destination\}/g, destName)
+      .replace(/\{passport\}/g, passportAdj)
+      .replace(/\{passportLower\}/g, passportAdj.toLowerCase());
 
   return (
     <section className="mt-10 mb-2 rounded-2xl border-2 border-emerald-200 dark:border-emerald-900 bg-emerald-50/30 dark:bg-emerald-950/15 overflow-hidden">
@@ -26,12 +56,13 @@ export function VisaApplicationAdvice({
           Make your case
         </p>
         <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-emerald-950 dark:text-emerald-50 leading-tight">
-          Free guidance for your {PURPOSE_LABEL[purpose].toLowerCase()} application
+          Tailored guidance — {passportAdj} applying for a {PURPOSE_LABEL[purpose].toLowerCase()} visa to {destName}
         </h2>
         <p className="text-sm sm:text-base text-emerald-900/80 dark:text-emerald-100/80 mt-1.5 leading-relaxed">
           The same things a £1,000 immigration consultation would tell you — what evidence
-          caseworkers actually weight, a personal-statement skeleton you can adapt, common
-          mistakes that get applications refused, and when it&apos;s worth hiring a lawyer.
+          {destName}&apos;s caseworkers actually weight, a personal-statement skeleton you can
+          adapt to {destName}&apos;s framing, common mistakes that get {passportAdj.toLowerCase()}{" "}
+          applications refused, and when it&apos;s worth hiring a lawyer.
         </p>
       </header>
 
@@ -54,7 +85,7 @@ export function VisaApplicationAdvice({
                   {w.label}
                 </p>
                 <p className="text-sm text-neutral-700 dark:text-neutral-300 mt-0.5 leading-snug">
-                  {w.why}
+                  {fillIn(w.why)}
                 </p>
               </div>
             </li>
@@ -81,7 +112,7 @@ export function VisaApplicationAdvice({
                 {p.heading}
               </p>
               <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-snug">
-                {p.prompt}
+                {fillIn(p.prompt)}
               </p>
             </li>
           ))}
@@ -104,7 +135,7 @@ export function VisaApplicationAdvice({
           {advice.moneySavingTips.map((tip) => (
             <li key={tip} className="flex items-start gap-2 text-sm text-neutral-700 dark:text-neutral-300 leading-snug">
               <span aria-hidden="true" className="shrink-0 mt-[7px] w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400" />
-              <span>{tip}</span>
+              <span>{fillIn(tip)}</span>
             </li>
           ))}
         </ul>
@@ -126,7 +157,7 @@ export function VisaApplicationAdvice({
             <ul className="space-y-1.5">
               {advice.lawyerTriggers.diy.map((t) => (
                 <li key={t} className="text-sm text-emerald-950 dark:text-emerald-100 leading-snug">
-                  • {t}
+                  • {fillIn(t)}
                 </li>
               ))}
             </ul>
@@ -138,7 +169,7 @@ export function VisaApplicationAdvice({
             <ul className="space-y-1.5">
               {advice.lawyerTriggers.getALawyer.map((t) => (
                 <li key={t} className="text-sm text-amber-950 dark:text-amber-100 leading-snug">
-                  • {t}
+                  • {fillIn(t)}
                 </li>
               ))}
             </ul>

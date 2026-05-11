@@ -49,7 +49,7 @@ export const ADVICE_BY_PURPOSE: Record<Purpose, AdviceBlock | null> = {
       {
         label: "Financial-requirement compliance",
         why:
-          "The sponsor's income / savings test is binary — you meet it or you don't. Most refused partner-visa applications fail here before the caseworker even reads the relationship evidence. Calculate the threshold for your destination + visa class precisely; UK's £29,000 minimum-income rule has hard-coded ways of evidencing salary, self-employment, savings, and pension income — they don't substitute freely.",
+          "The sponsor's income / savings test is binary — you meet it or you don't. Most refused partner-visa applications fail here before the caseworker even reads the relationship evidence. Calculate the threshold for {destination}'s partner / spouse visa precisely (it's in the visa fee + processing details above). Most countries have hard-coded ways of evidencing salary, self-employment, savings, and pension income — they don't substitute freely.",
       },
       {
         label: "Personal statement / letter of intent",
@@ -96,13 +96,13 @@ export const ADVICE_BY_PURPOSE: Record<Purpose, AdviceBlock | null> = {
       {
         heading: "6. Long-term intent",
         prompt:
-          "A line on your intent to live together in the destination long-term, raise a family, contribute economically, etc. Match the language to the destination's policy framing — UK 'genuine and subsisting', Canada 'bona-fide marriage', etc.",
+          "A line on your intent to live together in {destination} long-term, raise a family, contribute economically, etc. Match the wording to {destination}'s own policy language — Anglophone destinations use phrases like 'genuine and subsisting relationship' or 'bona-fide marriage'; lifting that exact phrase signals you've read the rules.",
       },
     ],
     moneySavingTips: [
       "Don't pay for translations of documents already in the destination's official language — many applicants over-translate. Check what's mandatory.",
       "Police certificates: use the FAST channel (FBI Channeler / ACRO Premium / AFP urgent) for ~$20-50 extra rather than the standard mail-in route that can take 8-12 weeks; missing a visa appointment because your police check was delayed costs far more.",
-      "If your sponsor's income is just below the threshold, savings can substitute (UK: £62,500 of savings = £29k income equivalent). Combining sources is permitted in narrow ways — get this right before paying the application fee.",
+      "If your sponsor's income is just below {destination}'s threshold, savings can usually substitute (the exact ratio varies by country — typically 2-3x the annual income requirement held in cash for 6+ months). Combining sources is permitted in narrow ways — get this right before paying the application fee.",
       "Don't pay for a translation of WhatsApp / iMessage screenshots in English to the destination's English-speaking immigration service. People do this.",
       "Time your application to your visit, not to a deadline — most partner visas are valid 30 days from issue. Apply too early and you'll re-pay if you can't enter in time.",
       "Premium / priority processing is rarely worth it for partner visas (a few extra weeks) but often worth it for student / Skilled Worker visas with semester / contract start dates.",
@@ -134,7 +134,7 @@ export const ADVICE_BY_PURPOSE: Record<Purpose, AdviceBlock | null> = {
       {
         label: "Salary at or above the role's threshold",
         why:
-          "Like family routes, this is the binary first filter. UK Skilled Worker £38,700 / £29,000 (Health & Care). US H-1B prevailing wage. Australia Subclass 482 TSMIT (now ~AUD$70k). Genuine offers below threshold get refused before merit review.",
+          "Like family routes, this is the binary first filter. Every skilled-worker visa publishes a minimum salary (or a 'prevailing wage' for that occupation) — {destination}'s figure is in the visa details above. Genuine offers below threshold get refused before merit review, no matter how strong the rest of the application.",
       },
       {
         label: "Qualifications matching the role",
@@ -144,7 +144,7 @@ export const ADVICE_BY_PURPOSE: Record<Purpose, AdviceBlock | null> = {
       {
         label: "Maintenance funds + dependents",
         why:
-          "If the employer doesn't certify maintenance, you need the destination's required savings. £1,270 (UK) / CAD$13-22k (Canada) / AUD$5k+ (Australia) per person.",
+          "If the employer doesn't certify your living costs, you need to show {destination}'s required maintenance savings in your own account — typically held for 28+ consecutive days before you apply. The exact amount varies by destination and family size; check the visa details above.",
       },
       {
         label: "Police certificates + medicals (long-stay only)",
@@ -175,11 +175,11 @@ export const ADVICE_BY_PURPOSE: Record<Purpose, AdviceBlock | null> = {
       },
     ],
     moneySavingTips: [
-      "Don't pay for a priority visa unless you have a contract start date you genuinely can't move. The standard service is usually 2-6 weeks; priority is +£500-1000 and gets you 1-2 weeks. Negotiate a flexible start with the employer instead.",
-      "Health surcharge fees compound — UK Skilled Worker holders pay £1,035/year × 5 = £5,175. If you're a long-term planner, ILR + naturalisation in 5+1 years gets you out faster than visa-stacking.",
-      "For US H-1B: employer should pay all USCIS fees — accepting any reimbursement clawback is a refusal trigger and federal labor violation.",
-      "Sponsorship certificate / CoS fees are non-refundable. Get the offer in writing AND check the sponsor's licence is in good standing before paying.",
-      "If your destination uses a points-based system (UK Skilled Worker, Australia 189/190, Canada Express Entry), getting language test scores 1 band higher could be worth more than 10 points — IELTS 8.0 vs 7.0 changes invitation rounds materially. Re-take if it's tight.",
+      "Don't pay for priority processing unless you have a contract start date you genuinely can't move. Standard service is usually 2-6 weeks; priority gets you 1-2 weeks for a few hundred extra. Negotiate a flexible start with the employer instead.",
+      "Many countries charge a separate health-system levy on work visas (UK Immigration Health Surcharge, AU Health Care Levy, etc.) that compounds annually — long-term planners get out faster by pursuing settlement / naturalisation when eligible rather than visa-stacking.",
+      "For sponsor-paid fee schemes (most countries' employer-sponsored routes), the employer should pay all government fees. Accepting any reimbursement clawback is usually a refusal trigger AND a labour-law violation in {destination}.",
+      "Sponsorship certificate fees are non-refundable. Get the offer in writing AND check the sponsor's licence is in good standing with {destination}'s immigration authority before paying anything.",
+      "If {destination} uses a points-based system, getting language test scores 1 band higher could be worth more than 10 points — IELTS 8.0 vs 7.0 changes invitation rounds materially. Re-take if it's tight.",
     ],
     lawyerTriggers: {
       diy: [
@@ -190,8 +190,8 @@ export const ADVICE_BY_PURPOSE: Record<Purpose, AdviceBlock | null> = {
       getALawyer: [
         "Multi-country tax residency or split-payroll arrangements",
         "Sponsor compliance issues — recent license action, recent refusals on related roles",
-        "Switching visa categories from inside the country (e.g. UK Student → Skilled Worker)",
-        "Treaty Trader / Investor (US E-2, UK Innovator Founder) — investment-based routes have multiplied technicality",
+        "Switching visa categories from inside {destination} (e.g. student → skilled-worker switch-in-country)",
+        "Treaty Trader / Investor visas — investment-based routes have layered technicality and {destination}'s rules change often",
         "Recent refusal in your or your sponsor's history",
         "Director / shareholder of the sponsoring company (genuineness test is harder)",
       ],
@@ -208,7 +208,7 @@ export const ADVICE_BY_PURPOSE: Record<Purpose, AdviceBlock | null> = {
       {
         label: "Funds threshold + tuition deposit",
         why:
-          "Like family / work, financial requirements are binary. UK Student maintenance: £1,334/month London / £1,023 elsewhere × course length. Canada Study Permit: CAD$22,895/year (single, outside Quebec). Money has to be there for a specified period BEFORE you apply, not 'about to arrive'.",
+          "Like family / work, financial requirements are binary. {destination} publishes a per-month or per-year maintenance figure for students (check the visa details above for your exact threshold). Money has to be there for a specified period BEFORE you apply — usually 28 consecutive days held in your own account, with the equivalent of one year's costs visible — not 'about to arrive'.",
       },
       {
         label: "English / language proficiency",
@@ -225,7 +225,7 @@ export const ADVICE_BY_PURPOSE: Record<Purpose, AdviceBlock | null> = {
       {
         heading: "1. Why this specific course",
         prompt:
-          "Don't just say 'I want to study computer science' — say WHY this course at THIS institution. Cite faculty names, research strengths, employer outcomes specific to the programme. 'Imperial's MSc Computer Science Specialism in Visual Information Processing is the only programme in the UK to combine [X] with [Y]' beats 'computer science at Imperial is well-known.'",
+          "Don't just say 'I want to study computer science' — say WHY this course at THIS institution. Cite faculty names, research strengths, employer outcomes specific to the programme. 'X University's MSc in [Specialism] is the only programme in {destination} to combine [A] with [B]' beats 'computer science at X is well-known.'",
       },
       {
         heading: "2. Why this country (rather than at home)",
@@ -245,12 +245,12 @@ export const ADVICE_BY_PURPOSE: Record<Purpose, AdviceBlock | null> = {
       {
         heading: "5. Post-study plans",
         prompt:
-          "Will you use the destination's post-study work permit (UK Graduate Route, Canada PGWP, Australia Subclass 485, US OPT)? Or return home? Both are valid — caseworkers DON'T penalise post-study work intent as long as you're honest about it. The fatal answer is being vague.",
+          "Will you use {destination}'s post-study work permit (most countries offer one — UK Graduate Route, Canada PGWP, Australia Subclass 485, US OPT, NZ Post-Study Work Visa, etc.)? Or return home? Both are valid — caseworkers DON'T penalise post-study work intent as long as you're honest about it. The fatal answer is being vague.",
       },
     ],
     moneySavingTips: [
       "If your funds are family-sponsored, get the sponsor letter notarised BEFORE the bank statements — re-doing it adds 2-3 weeks.",
-      "Many UK universities accept a tuition deposit of £4,000-£8,000 (rather than full first year) — pay only what's required to trigger CAS issuance.",
+      "Many universities in {destination} accept a tuition deposit (rather than full first year) — pay only the minimum required to trigger your acceptance letter / CoE / CAS / I-20.",
       "Priority student visa: usually worth it if your course start date is within 6 weeks. Standard 8-week processing has missed thousands of September starts.",
       "Skip the agent fee if your home country offers free guidance through the destination's official student-information service (British Council, Campus France, DAAD, Education NZ, EduCanada, etc.).",
       "Some destinations (Germany, France, Italy, Norway, parts of Sweden) have no tuition fees for non-EU students at PUBLIC universities — much cheaper than US/UK/AU/CA. The visa class is the same, the wallet impact is 5-10x.",

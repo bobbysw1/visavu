@@ -15,6 +15,24 @@ const config: NextConfig = {
     "/**/*": ["./src/data/pglite-dump.tar.gz"],
   },
 
+  // Clean share URLs — internally we still render the result page from the
+  // /[passport]/[destination] route reading ?purpose= from the query, but
+  // we expose /[passport]/[destination]/[purpose] as the canonical
+  // shareable URL. Some messaging clients (WhatsApp, FB Messenger, certain
+  // mail clients) strip ?-style query params during URL preview / repost,
+  // which left users sharing 'visavu.com/study' with no country context.
+  // A path-form URL survives every clipboard stack intact.
+  async rewrites() {
+    return [
+      // ALPHA-2 country codes are exactly 2 chars. Purpose values are one of
+      // tourism/business/transit/work/study/family/diplomatic. Match those.
+      {
+        source: "/:passport((?:[A-Za-z]{2}))/:destination((?:[A-Za-z]{2}))/:purpose(tourism|business|transit|work|study|family|diplomatic)",
+        destination: "/:passport/:destination?purpose=:purpose",
+      },
+    ];
+  },
+
   async headers() {
     return [
       {

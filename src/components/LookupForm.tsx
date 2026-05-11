@@ -73,9 +73,12 @@ export function LookupForm({
   function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!passport || !destination) return;
-    const qs = subId ? `?purpose=${purpose}&sub=${subId}` : `?purpose=${purpose}`;
+    // Path-form URL (clean and shareable). Sub-purpose remains a query
+    // param since it modifies the resolved cell, not the route's identity.
+    const base = `/${passport.toLowerCase()}/${destination.toLowerCase()}/${purpose}`;
+    const url = subId ? `${base}?sub=${subId}` : base;
     startTransition(() => {
-      router.push(`/${passport.toLowerCase()}/${destination.toLowerCase()}${qs}`);
+      router.push(url);
     });
   }
 

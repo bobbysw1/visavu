@@ -150,7 +150,14 @@ export async function generateMetadata({
   const purpose = purposeFrom(sp.purpose);
   const title = titleFor(p, d, purpose);
   const description = descriptionFor(p, d, purpose);
-  const canonical = absoluteUrl(`/${p.toLowerCase()}/${d.toLowerCase()}`);
+  // Canonical path-form URL — /us/jp/study is shareable and survives every
+  // messaging-app URL preview. Tourism is the default purpose so we keep
+  // its canonical as the bare /us/jp form.
+  const canonical = absoluteUrl(
+    purpose === "tourism"
+      ? `/${p.toLowerCase()}/${d.toLowerCase()}`
+      : `/${p.toLowerCase()}/${d.toLowerCase()}/${purpose}`,
+  );
 
   return {
     title,
@@ -532,8 +539,16 @@ export default async function Page({
 
         {/* Free application advice for high-stakes purposes (family, work,
             study). Includes a personal-statement skeleton, money-saving
-            tips, and when to spend on a real immigration lawyer. */}
-        <VisaApplicationAdvice purpose={purpose} />
+            tips, and when to spend on a real immigration lawyer. The
+            component skips itself when the route is same-country or
+            visa-free, and substitutes the destination/passport into
+            illustrative copy. */}
+        <VisaApplicationAdvice
+          purpose={purpose}
+          passportIso2={p}
+          destinationIso2={d}
+          primaryStatus={primary?.status ?? null}
+        />
 
         {showDualHint && easierPassports.length > 0 && (
           <DualPassportHint destinationIso2={d} options={easierPassports} />

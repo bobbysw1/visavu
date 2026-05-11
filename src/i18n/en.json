@@ -1,0 +1,44 @@
+{
+  "status.visa_free": "Visa-free",
+  "status.visa_free_with_eta": "Visa-free with eTA",
+  "status.visa_on_arrival": "Visa on arrival",
+  "status.e_visa": "e-Visa",
+  "status.embassy_visa": "Embassy visa",
+  "status.restricted": "Restricted (case-by-case)",
+  "status.refused": "Entry generally refused",
+
+  "purpose.tourism": "Tourism",
+  "purpose.business": "Business",
+  "purpose.transit": "Transit",
+  "purpose.work": "Work",
+  "purpose.study": "Study",
+  "purpose.family": "Partner & family",
+  "purpose.diplomatic": "Diplomatic",
+
+  "confidence.high": "Verified by us",
+  "confidence.medium": "Mostly verified",
+  "confidence.low": "Community-curated",
+  "confidence.unverified": "Needs verification",
+
+  "realism.likely": "Approval is likely",
+  "realism.uncertain": "Approval depends on you",
+  "realism.unlikely": "Approval is uncertain",
+  "realism.headline": "Will they let you in?",
+
+  "difficulty.easy": "Easy",
+  "difficulty.moderate": "Moderate",
+  "difficulty.hard": "Hard",
+  "difficulty.headline": "Procedural difficulty",
+
+  "ui.apply_on_official_site": "Apply on official site",
+  "ui.view_primary_source": "View primary source",
+  "ui.verified": "Verified",
+  "ui.last_fetched": "Last fetched",
+  "ui.not_independently_verified": "community-curated, not cross-checked",
+  "ui.report_incorrect_info": "Report incorrect info",
+  "ui.your_application_checklist": "Your application checklist",
+  "ui.print_this_checklist": "Print this checklist",
+  "ui.what_you_need": "What you need",
+  "ui.empty_state_headline": "We don't have a verified record yet. Here's where to look.",
+  "ui.dual_passport_headline": "Hold dual citizenship? Your other passport may have an easier route."
+}

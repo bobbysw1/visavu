@@ -1,0 +1,44 @@
+{
+  "status.visa_free": "Без визы",
+  "status.visa_free_with_eta": "Без визы, с электронным разрешением",
+  "status.visa_on_arrival": "Виза по прибытии",
+  "status.e_visa": "Электронная виза",
+  "status.embassy_visa": "Виза в консульстве",
+  "status.restricted": "Ограничено (индивидуально)",
+  "status.refused": "Въезд, как правило, запрещён",
+
+  "purpose.tourism": "Туризм",
+  "purpose.business": "Бизнес",
+  "purpose.transit": "Транзит",
+  "purpose.work": "Работа",
+  "purpose.study": "Учёба",
+  "purpose.family": "Супруг и семья",
+  "purpose.diplomatic": "Дипломатический",
+
+  "confidence.high": "Высокая надёжность",
+  "confidence.medium": "Средняя надёжность",
+  "confidence.low": "Низкая надёжность",
+  "confidence.unverified": "Не проверено",
+
+  "realism.likely": "Вероятно",
+  "realism.uncertain": "Неопределённо",
+  "realism.unlikely": "Маловероятно",
+  "realism.headline": "Вероятность одобрения",
+
+  "difficulty.easy": "Легко",
+  "difficulty.moderate": "Умеренно",
+  "difficulty.hard": "Сложно",
+  "difficulty.headline": "Сложность процедуры",
+
+  "ui.apply_on_official_site": "Подать заявку на официальном сайте",
+  "ui.view_primary_source": "Посмотреть первоисточник",
+  "ui.verified": "Проверено",
+  "ui.last_fetched": "Последняя проверка",
+  "ui.not_independently_verified": "независимо не проверено",
+  "ui.report_incorrect_info": "Сообщить об ошибке",
+  "ui.your_application_checklist": "Ваш чек-лист подачи",
+  "ui.print_this_checklist": "Распечатать чек-лист",
+  "ui.what_you_need": "Что вам понадобится",
+  "ui.empty_state_headline": "У нас пока нет проверенной записи. Вот где искать.",
+  "ui.dual_passport_headline": "Есть второе гражданство? С другим паспортом маршрут может быть проще."
+}

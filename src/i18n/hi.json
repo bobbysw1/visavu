@@ -1,0 +1,44 @@
+{
+  "status.visa_free": "वीज़ा-मुक्त",
+  "status.visa_free_with_eta": "वीज़ा-मुक्त, इलेक्ट्रॉनिक यात्रा प्राधिकरण के साथ",
+  "status.visa_on_arrival": "आगमन पर वीज़ा",
+  "status.e_visa": "ई-वीज़ा",
+  "status.embassy_visa": "दूतावास वीज़ा",
+  "status.restricted": "सीमित (मामला-दर-मामला)",
+  "status.refused": "प्रवेश आम तौर पर अस्वीकृत",
+
+  "purpose.tourism": "पर्यटन",
+  "purpose.business": "व्यवसाय",
+  "purpose.transit": "पारगमन",
+  "purpose.work": "कार्य",
+  "purpose.study": "अध्ययन",
+  "purpose.family": "साथी और परिवार",
+  "purpose.diplomatic": "राजनयिक",
+
+  "confidence.high": "उच्च विश्वास",
+  "confidence.medium": "मध्यम विश्वास",
+  "confidence.low": "कम विश्वास",
+  "confidence.unverified": "असत्यापित",
+
+  "realism.likely": "संभावित",
+  "realism.uncertain": "अनिश्चित",
+  "realism.unlikely": "असंभावित",
+  "realism.headline": "अनुमोदन की संभावना",
+
+  "difficulty.easy": "आसान",
+  "difficulty.moderate": "मध्यम",
+  "difficulty.hard": "कठिन",
+  "difficulty.headline": "प्रक्रिया की कठिनाई",
+
+  "ui.apply_on_official_site": "आधिकारिक साइट पर आवेदन करें",
+  "ui.view_primary_source": "मूल स्रोत देखें",
+  "ui.verified": "सत्यापित",
+  "ui.last_fetched": "अंतिम जाँच",
+  "ui.not_independently_verified": "स्वतंत्र रूप से सत्यापित नहीं",
+  "ui.report_incorrect_info": "गलत जानकारी की रिपोर्ट करें",
+  "ui.your_application_checklist": "आपकी आवेदन जाँच-सूची",
+  "ui.print_this_checklist": "यह सूची प्रिंट करें",
+  "ui.what_you_need": "आपको क्या चाहिए",
+  "ui.empty_state_headline": "हमारे पास अभी इस संयोजन का सत्यापित रिकॉर्ड नहीं है। यहाँ देखें।",
+  "ui.dual_passport_headline": "क्या आपके पास दोहरी नागरिकता है? आपका दूसरा पासपोर्ट आसान रास्ता दे सकता है।"
+}

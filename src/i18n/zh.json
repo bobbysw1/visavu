@@ -1,0 +1,44 @@
+{
+  "status.visa_free": "免签",
+  "status.visa_free_with_eta": "免签 + 电子旅行授权",
+  "status.visa_on_arrival": "落地签",
+  "status.e_visa": "电子签证",
+  "status.embassy_visa": "大使馆签证",
+  "status.restricted": "限制(逐案审查)",
+  "status.refused": "通常拒绝入境",
+
+  "purpose.tourism": "旅游",
+  "purpose.business": "商务",
+  "purpose.transit": "过境",
+  "purpose.work": "工作",
+  "purpose.study": "学习",
+  "purpose.family": "配偶和家庭",
+  "purpose.diplomatic": "外交",
+
+  "confidence.high": "高可信度",
+  "confidence.medium": "中等可信度",
+  "confidence.low": "低可信度",
+  "confidence.unverified": "未验证",
+
+  "realism.likely": "可能",
+  "realism.uncertain": "不确定",
+  "realism.unlikely": "不太可能",
+  "realism.headline": "批准可能性",
+
+  "difficulty.easy": "简单",
+  "difficulty.moderate": "中等",
+  "difficulty.hard": "困难",
+  "difficulty.headline": "申请流程难度",
+
+  "ui.apply_on_official_site": "在官方网站申请",
+  "ui.view_primary_source": "查看官方来源",
+  "ui.verified": "已验证",
+  "ui.last_fetched": "最后获取",
+  "ui.not_independently_verified": "未经独立验证",
+  "ui.report_incorrect_info": "报告错误信息",
+  "ui.your_application_checklist": "您的申请清单",
+  "ui.print_this_checklist": "打印此清单",
+  "ui.what_you_need": "您需要的材料",
+  "ui.empty_state_headline": "我们尚未有此组合的已验证记录。请参考以下来源。",
+  "ui.dual_passport_headline": "持有双重国籍?您的另一本护照可能有更轻松的路径。"
+}

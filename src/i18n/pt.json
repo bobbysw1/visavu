@@ -1,0 +1,44 @@
+{
+  "status.visa_free": "Sem visto",
+  "status.visa_free_with_eta": "Sem visto, com autorização eletrónica",
+  "status.visa_on_arrival": "Visto à chegada",
+  "status.e_visa": "e-Visto",
+  "status.embassy_visa": "Visto consular",
+  "status.restricted": "Restringido (caso a caso)",
+  "status.refused": "Entrada geralmente recusada",
+
+  "purpose.tourism": "Turismo",
+  "purpose.business": "Negócios",
+  "purpose.transit": "Trânsito",
+  "purpose.work": "Trabalho",
+  "purpose.study": "Estudos",
+  "purpose.family": "Cônjuge e família",
+  "purpose.diplomatic": "Diplomático",
+
+  "confidence.high": "Confiança alta",
+  "confidence.medium": "Confiança média",
+  "confidence.low": "Confiança baixa",
+  "confidence.unverified": "Não verificado",
+
+  "realism.likely": "Provável",
+  "realism.uncertain": "Incerto",
+  "realism.unlikely": "Improvável",
+  "realism.headline": "Probabilidade de aprovação",
+
+  "difficulty.easy": "Fácil",
+  "difficulty.moderate": "Moderado",
+  "difficulty.hard": "Difícil",
+  "difficulty.headline": "Dificuldade do processo",
+
+  "ui.apply_on_official_site": "Candidatar no site oficial",
+  "ui.view_primary_source": "Ver fonte oficial",
+  "ui.verified": "Verificado",
+  "ui.last_fetched": "Última consulta",
+  "ui.not_independently_verified": "não verificado de forma independente",
+  "ui.report_incorrect_info": "Reportar informação incorreta",
+  "ui.your_application_checklist": "A sua lista de verificação",
+  "ui.print_this_checklist": "Imprimir esta lista",
+  "ui.what_you_need": "O que precisa",
+  "ui.empty_state_headline": "Ainda não temos um registo verificado. Aqui estão as fontes a consultar.",
+  "ui.dual_passport_headline": "Tem dupla nacionalidade? O seu outro passaporte pode ter uma rota mais fácil."
+}

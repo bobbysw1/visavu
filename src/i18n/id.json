@@ -1,0 +1,44 @@
+{
+  "status.visa_free": "Bebas visa",
+  "status.visa_free_with_eta": "Bebas visa dengan otorisasi perjalanan elektronik",
+  "status.visa_on_arrival": "Visa saat kedatangan",
+  "status.e_visa": "e-Visa",
+  "status.embassy_visa": "Visa kedutaan",
+  "status.restricted": "Dibatasi (per kasus)",
+  "status.refused": "Masuk umumnya ditolak",
+
+  "purpose.tourism": "Wisata",
+  "purpose.business": "Bisnis",
+  "purpose.transit": "Transit",
+  "purpose.work": "Kerja",
+  "purpose.study": "Studi",
+  "purpose.family": "Pasangan dan keluarga",
+  "purpose.diplomatic": "Diplomatik",
+
+  "confidence.high": "Kepercayaan tinggi",
+  "confidence.medium": "Kepercayaan sedang",
+  "confidence.low": "Kepercayaan rendah",
+  "confidence.unverified": "Belum diverifikasi",
+
+  "realism.likely": "Kemungkinan besar",
+  "realism.uncertain": "Tidak pasti",
+  "realism.unlikely": "Kecil kemungkinan",
+  "realism.headline": "Kemungkinan persetujuan",
+
+  "difficulty.easy": "Mudah",
+  "difficulty.moderate": "Sedang",
+  "difficulty.hard": "Sulit",
+  "difficulty.headline": "Tingkat kesulitan prosedur",
+
+  "ui.apply_on_official_site": "Ajukan di situs resmi",
+  "ui.view_primary_source": "Lihat sumber resmi",
+  "ui.verified": "Terverifikasi",
+  "ui.last_fetched": "Pengambilan terakhir",
+  "ui.not_independently_verified": "tidak diverifikasi secara independen",
+  "ui.report_incorrect_info": "Laporkan informasi yang salah",
+  "ui.your_application_checklist": "Daftar periksa pengajuan Anda",
+  "ui.print_this_checklist": "Cetak daftar ini",
+  "ui.what_you_need": "Yang Anda butuhkan",
+  "ui.empty_state_headline": "Kami belum memiliki catatan terverifikasi. Berikut tempat mencari.",
+  "ui.dual_passport_headline": "Punya kewarganegaraan ganda? Paspor Anda yang lain mungkin punya jalur lebih mudah."
+}

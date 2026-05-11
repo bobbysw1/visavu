@@ -1,0 +1,44 @@
+{
+  "status.visa_free": "Sans visa",
+  "status.visa_free_with_eta": "Sans visa, avec autorisation électronique",
+  "status.visa_on_arrival": "Visa à l'arrivée",
+  "status.e_visa": "e-Visa",
+  "status.embassy_visa": "Visa consulaire",
+  "status.restricted": "Restreint (au cas par cas)",
+  "status.refused": "Entrée généralement refusée",
+
+  "purpose.tourism": "Tourisme",
+  "purpose.business": "Affaires",
+  "purpose.transit": "Transit",
+  "purpose.work": "Travail",
+  "purpose.study": "Études",
+  "purpose.family": "Conjoint et famille",
+  "purpose.diplomatic": "Diplomatique",
+
+  "confidence.high": "Confiance élevée",
+  "confidence.medium": "Confiance modérée",
+  "confidence.low": "Confiance faible",
+  "confidence.unverified": "Non vérifié",
+
+  "realism.likely": "Probable",
+  "realism.uncertain": "Incertain",
+  "realism.unlikely": "Peu probable",
+  "realism.headline": "Probabilité d'approbation",
+
+  "difficulty.easy": "Facile",
+  "difficulty.moderate": "Modéré",
+  "difficulty.hard": "Difficile",
+  "difficulty.headline": "Difficulté de la procédure",
+
+  "ui.apply_on_official_site": "Faire la demande sur le site officiel",
+  "ui.view_primary_source": "Voir la source officielle",
+  "ui.verified": "Vérifié",
+  "ui.last_fetched": "Dernière consultation",
+  "ui.not_independently_verified": "non vérifié indépendamment",
+  "ui.report_incorrect_info": "Signaler une information incorrecte",
+  "ui.your_application_checklist": "Votre liste de contrôle",
+  "ui.print_this_checklist": "Imprimer cette liste",
+  "ui.what_you_need": "Ce dont vous avez besoin",
+  "ui.empty_state_headline": "Nous n'avons pas encore de fiche vérifiée. Voici où chercher.",
+  "ui.dual_passport_headline": "Vous avez la double nationalité ? Votre autre passeport pourrait offrir une voie plus facile."
+}

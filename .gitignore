@@ -1,0 +1,21 @@
+node_modules/
+.next/
+out/
+.env
+.env.local
+.env.*.local
+*.log
+.DS_Store
+.vercel
+.turbo
+drizzle/meta/
+.pglite/
+.scrape-reports/
+
+# Wikipedia long-tail fixture is ~12 MB — auto-fetched on bootstrap if missing.
+# Refresh with: npx tsx src/scripts/buildWikipediaFixture.ts
+src/scrapers/sources/__fixtures__/wikipedia_long_tail.json
+
+# Country hero photos (Pexels) live in public/heroes/. They're tracked in
+# git so Vercel can serve them — ~22 MB total, fine for the repo size.
+# Re-fetch missing ones with: npm run fetch:heroes

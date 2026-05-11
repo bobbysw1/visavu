@@ -1,0 +1,51 @@
+{
+  "name": "visa-lookup",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "seed": "tsx src/seed/run.ts",
+    "scrape": "tsx src/scrapers/runOnce.ts",
+    "bootstrap": "tsx src/scripts/bootstrap.ts",
+    "check-sources": "tsx src/scripts/checkSources.ts",
+    "check-links": "tsx src/scripts/checkLinks.ts",
+    "cross-check": "tsx src/scripts/crossCheckWikipedia.ts",
+    "check-prod": "tsx src/scripts/checkProductionReadiness.ts",
+    "refresh-rates": "tsx src/scripts/refreshExchangeRates.ts",
+    "refresh": "tsx src/scripts/refresh.ts",
+    "fetch:heroes": "tsx --env-file=.env src/scripts/fetchCountryHeroes.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.2.15",
+    "cheerio": "^1.0.0",
+    "drizzle-orm": "^0.38.4",
+    "lucide-react": "^1.14.0",
+    "next": "^15.1.6",
+    "postgres": "^3.4.5",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "drizzle-kit": "^0.30.2",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^4.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}

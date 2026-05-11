@@ -1,0 +1,44 @@
+{
+  "status.visa_free": "بدون تأشيرة",
+  "status.visa_free_with_eta": "بدون تأشيرة مع تصريح سفر إلكتروني",
+  "status.visa_on_arrival": "تأشيرة عند الوصول",
+  "status.e_visa": "تأشيرة إلكترونية",
+  "status.embassy_visa": "تأشيرة من السفارة",
+  "status.restricted": "مقيد (حسب الحالة)",
+  "status.refused": "الدخول مرفوض عمومًا",
+
+  "purpose.tourism": "سياحة",
+  "purpose.business": "أعمال",
+  "purpose.transit": "عبور",
+  "purpose.work": "عمل",
+  "purpose.study": "دراسة",
+  "purpose.family": "الزوج والعائلة",
+  "purpose.diplomatic": "دبلوماسي",
+
+  "confidence.high": "ثقة عالية",
+  "confidence.medium": "ثقة متوسطة",
+  "confidence.low": "ثقة منخفضة",
+  "confidence.unverified": "غير محقق",
+
+  "realism.likely": "محتمل",
+  "realism.uncertain": "غير مؤكد",
+  "realism.unlikely": "غير محتمل",
+  "realism.headline": "احتمالية الموافقة",
+
+  "difficulty.easy": "سهل",
+  "difficulty.moderate": "متوسط",
+  "difficulty.hard": "صعب",
+  "difficulty.headline": "صعوبة الإجراءات",
+
+  "ui.apply_on_official_site": "تقديم الطلب على الموقع الرسمي",
+  "ui.view_primary_source": "عرض المصدر الرسمي",
+  "ui.verified": "تم التحقق",
+  "ui.last_fetched": "آخر استعلام",
+  "ui.not_independently_verified": "لم يتم التحقق منه بشكل مستقل",
+  "ui.report_incorrect_info": "الإبلاغ عن معلومات خاطئة",
+  "ui.your_application_checklist": "قائمة التحقق الخاصة بطلبك",
+  "ui.print_this_checklist": "طباعة هذه القائمة",
+  "ui.what_you_need": "ما تحتاج إليه",
+  "ui.empty_state_headline": "لا يوجد لدينا سجل محقق بعد. إليك أين تبحث.",
+  "ui.dual_passport_headline": "هل تحمل جنسية مزدوجة؟ قد يوفر جواز سفرك الآخر طريقًا أسهل."
+}

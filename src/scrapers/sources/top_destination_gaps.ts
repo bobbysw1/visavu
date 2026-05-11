@@ -375,6 +375,50 @@ export const topDestinationGapsAdapter: Adapter = {
             "Far easier than the Parents and Grandparents (PGP) sponsorship lottery — Super Visa has no annual cap, no lottery, and lets parents stay continuously for up to 5 years per entry.",
         });
       }
+
+      // ---------- Bahamas Student Permit ----------
+      // Issued by the Department of Immigration. Required for non-Bahamian
+      // students enrolled at recognised Bahamian institutions (University
+      // of The Bahamas, BTVI, Eugene Dupuch Law School, etc.). Renewable
+      // annually per academic year. Bahamian dollar is pegged 1:1 with USD.
+      // Source: https://www.bahamas.gov.bs/wps/portal/public/gov/government/services/immigration
+      if (passport !== "BS") {
+        records.push({
+          passportIso2: passport,
+          destinationIso2: "BS",
+          purpose: "study",
+          status: "embassy_visa",
+          label: "Student Permit — The Bahamas",
+          maxStayDays: 365,
+          validityDays: 365,
+          entriesAllowed: "multiple",
+          passportValidityMonthsRequired: 6,
+          onwardTicketRequired: false,
+          proofOfFundsRequired: true,
+          proofOfAccommodationRequired: true,
+          biometricsRequired: false,
+          requirements: [
+            "Letter of acceptance from a recognised Bahamian institution (UB, BTVI, Eugene Dupuch Law School, etc.)",
+            "Proof of funds covering tuition + living costs for the academic year",
+            "Police clearance (good-conduct certificate) from each country resided in 5+ years",
+            "Medical examination certificate (TB clearance) from a registered physician",
+            "Two passport-size photographs",
+            "Valid passport (6+ months validity beyond expected stay)",
+            "Renewable annually for the duration of the programme",
+          ],
+          processingTimeDaysMin: 28,
+          processingTimeDaysMax: 56,
+          applicationUrl:
+            "https://www.bahamas.gov.bs/wps/portal/public/gov/government/services/immigration/student%20permit",
+          primarySourceUrl:
+            "https://www.bahamas.gov.bs/wps/portal/public/gov/government/services/immigration",
+          fees: [
+            { kind: "base", amountMinor: 10000, currency: "BSD", asOf: "2026-05-11", label: "Student Permit application fee", optional: false },
+          ],
+          notes:
+            "The Bahamas operates a Student Permit system rather than a separate Study Visa. CARICOM nationals may instead study under the Skilled National regime; nationals who need a visitor visa must obtain that first and convert on arrival.",
+        });
+      }
     }
     return { records };
   },

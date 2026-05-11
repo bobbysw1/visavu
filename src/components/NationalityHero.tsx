@@ -77,14 +77,15 @@ export function NationalityHero({
               loading="eager"
               decoding="async"
             />
-            {/* Subtle overlay so text below stays legible if it wraps under
-                the image on mobile, and adds an editorial finish. */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+            {/* Stronger overlay near the bottom-right so the photographer
+                credit chip stays readable on bright photos (snowy peaks,
+                white-building cityscapes, etc.). */}
+            <div className="absolute inset-0 bg-gradient-to-tl from-black/55 via-transparent to-transparent" />
             <a
               href={photo.pexelsUrl}
               target="_blank"
               rel="noreferrer noopener"
-              className="absolute bottom-2 right-2 text-[10px] uppercase tracking-wider font-semibold text-white/90 bg-black/35 backdrop-blur px-2 py-0.5 rounded hover:bg-black/55 transition"
+              className="absolute bottom-2 right-2 text-[10px] uppercase tracking-wider font-semibold text-white bg-black/70 backdrop-blur px-2 py-1 rounded shadow-md hover:bg-black/85 transition"
             >
               Photo: {photo.photographer} · Pexels
             </a>
@@ -104,10 +105,10 @@ export function NationalityHero({
                 {adjective} passport
               </p>
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] text-slate-900 dark:text-slate-50 mb-3">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] text-slate-900 mb-3">
               Where can you go on a {name} passport?
             </h1>
-            <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-snug">
+            <p className="text-base sm:text-lg text-slate-700 leading-snug">
               Visa rules, fees, and stay limits for every destination — sourced from official
               government data, with a direct link to each country&apos;s portal.
             </p>
@@ -115,7 +116,7 @@ export function NationalityHero({
               <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm">
                 {typeof visaFreeCount === "number" && (
                   <div className="inline-flex items-baseline gap-1.5">
-                    <dt className="text-slate-600 dark:text-slate-400">Visa-free or eTA:</dt>
+                    <dt className="text-slate-600">Visa-free or eTA:</dt>
                     <dd className="font-semibold tabular-nums text-emerald-700 dark:text-emerald-300">
                       {visaFreeCount}
                     </dd>
@@ -123,8 +124,8 @@ export function NationalityHero({
                 )}
                 {typeof totalDestinations === "number" && (
                   <div className="inline-flex items-baseline gap-1.5">
-                    <dt className="text-slate-600 dark:text-slate-400">Destinations covered:</dt>
-                    <dd className="font-semibold tabular-nums text-slate-900 dark:text-slate-100">
+                    <dt className="text-slate-600">Destinations covered:</dt>
+                    <dd className="font-semibold tabular-nums text-slate-900">
                       {totalDestinations}
                     </dd>
                   </div>
@@ -172,10 +173,10 @@ export function NationalityHero({
           <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-emerald-700 dark:text-emerald-300 mb-1.5">
             {adjective} passport
           </p>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] text-slate-900 dark:text-slate-50 mb-3">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] text-slate-900 mb-3">
             Where can you go on a {name} passport?
           </h1>
-          <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-snug max-w-2xl">
+          <p className="text-base sm:text-lg text-slate-700 leading-snug max-w-2xl">
             Visa rules, fees, and stay limits for every destination — sourced from official
             government data, with a direct link to each country&apos;s portal.
           </p>
@@ -183,7 +184,7 @@ export function NationalityHero({
             <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm">
               {typeof visaFreeCount === "number" && (
                 <div className="inline-flex items-baseline gap-1.5">
-                  <dt className="text-slate-600 dark:text-slate-400">Visa-free or eTA:</dt>
+                  <dt className="text-slate-600">Visa-free or eTA:</dt>
                   <dd className="font-semibold tabular-nums text-emerald-700 dark:text-emerald-300">
                     {visaFreeCount}
                   </dd>
@@ -191,8 +192,8 @@ export function NationalityHero({
               )}
               {typeof totalDestinations === "number" && (
                 <div className="inline-flex items-baseline gap-1.5">
-                  <dt className="text-slate-600 dark:text-slate-400">Destinations covered:</dt>
-                  <dd className="font-semibold tabular-nums text-slate-900 dark:text-slate-100">
+                  <dt className="text-slate-600">Destinations covered:</dt>
+                  <dd className="font-semibold tabular-nums text-slate-900">
                     {totalDestinations}
                   </dd>
                 </div>

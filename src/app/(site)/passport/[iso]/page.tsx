@@ -3,17 +3,19 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { VisaCategoryNav } from "@/components/VisaCategoryNav";
-import { CoverageStats } from "@/components/CoverageStats";
-import { DifficultyBucketGrid } from "@/components/DifficultyBucketGrid";
 import { DifficultyHeatMap } from "@/components/DifficultyHeatMap";
 import { NationalityHero } from "@/components/NationalityHero";
-import { COUNTRY_LIST, TOP_DESTINATIONS, flagEmoji, nameFor } from "@/lib/countries";
+import { PassportSidebar } from "@/components/PassportSidebar";
+import { COUNTRY_LIST, TOP_DESTINATIONS, nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { coverageForPassport, destinationSummariesForPassport } from "@/lib/coverage";
-import { scoreDestinationsForPassport } from "@/lib/scoring";
 import { passportIntroFor } from "@/content/passportIntros";
+import { factsFor } from "@/content/countryFacts";
 import { getCountryPhoto } from "@/lib/pexels";
+
+export const maxDuration = 60;
+export const runtime = "nodejs";
 
 type Params = { iso: string };
 
@@ -30,14 +32,19 @@ export async function generateMetadata({
   if (!isValid(iso)) return { title: "Not found" };
   const upper = iso.toUpperCase();
   const adjective = nationalityFor(upper);
-  const title = `${adjective} passport: visa requirements for tourist, work, study & family travel`;
+  const name = nameFor(upper);
+  const facts = factsFor(upper);
+  const title = `${adjective} passport — visa requirements, mobility, country guide`;
+  const desc = facts
+    ? `Where can ${adjective} citizens travel? ${name} (pop. ${(facts.population / 1_000_000).toFixed(1)}M, ${facts.region}). Visa rules for every destination, mobility ranking, embassy directory, and a one-stop ${adjective.toLowerCase()} travel guide.`
+    : `Where can ${adjective} citizens travel? Visa rules for every destination — tourism, work, study, family — with primary government sources, mobility ranking, and embassy details.`;
   return {
     title,
-    description: `Visa requirements for ${adjective} passport holders. Tourist, business, transit, work, study, partner and diplomatic visa rules — sourced from official government data with primary-source links.`,
+    description: desc,
     alternates: { canonical: absoluteUrl(`/passport/${upper.toLowerCase()}`) },
     openGraph: {
       title,
-      description: `Where ${adjective} passport holders can travel — visa-free countries, eTA destinations, work visa eligibility, and study & family routes.`,
+      description: `Visa requirements and travel guide for ${adjective} passport holders.`,
       url: absoluteUrl(`/passport/${upper.toLowerCase()}`),
     },
   };
@@ -48,6 +55,7 @@ export default async function PassportIndex({ params }: { params: Promise<Params
   if (!isValid(iso)) notFound();
   const upper = iso.toUpperCase();
   const name = nameFor(upper);
+  const adjective = nationalityFor(upper);
 
   let coverage = null;
   let summaries: Awaited<ReturnType<typeof destinationSummariesForPassport>> = [];
@@ -55,19 +63,23 @@ export default async function PassportIndex({ params }: { params: Promise<Params
     coverage = await coverageForPassport(upper);
     summaries = await destinationSummariesForPassport(upper);
   } catch {
-    // DB unavailable (no DATABASE_URL or PGlite not bootstrapped) — render zero state.
+    // DB unavailable — render zero state.
   }
 
-  // Hero photo via Pexels. Returns null when PEXELS_API_KEY isn't set or
-  // the API can't be reached — NationalityHero falls back to the gradient.
   const photo = await getCountryPhoto(upper);
+  const intro = passportIntroFor(upper);
+  const facts = factsFor(upper);
 
   const crumbs = [
     { href: "/", label: "Home" },
     { href: `/passport/${upper.toLowerCase()}`, label: `${name} passport` },
   ];
 
-  const intro = passportIntroFor(upper);
+  // Top visa types used from this passport — aggregate the most-common
+  // statuses across destinations for the editorial section.
+  const mobilityScore = coverage
+    ? coverage.byStatus.visa_free + coverage.byStatus.visa_free_with_eta
+    : null;
 
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -78,7 +90,18 @@ export default async function PassportIndex({ params }: { params: Promise<Params
         name: `How many countries can ${name} passport holders visit visa-free?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Visa-free access depends on bilateral agreements and policy changes. Use our ${name} passport directory to see current requirements for each destination, with the date we last verified each entry.`,
+          text:
+            mobilityScore !== null
+              ? `${name} passport holders can enter approximately ${mobilityScore} countries visa-free or with a simple electronic travel authorisation (eTA). The remaining countries require an embassy-issued visa or e-Visa applied for in advance.`
+              : `Visa-free access depends on bilateral agreements and policy changes. Use our ${name} passport directory to see current requirements for each destination.`,
+        },
+      },
+      {
+        "@type": "Question",
+        name: `What is the strongest passport in the world?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `As of 2026 the most powerful passports are Japan, Singapore, South Korea and Germany — each offering visa-free or eTA access to ~190 destinations. The ${adjective} passport ranks separately depending on bilateral agreements and EU/Schengen membership.`,
         },
       },
       {
@@ -86,7 +109,7 @@ export default async function PassportIndex({ params }: { params: Promise<Params
         name: `Can ${name} passport holders work abroad?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `${name} passport holders can apply for work visas in many countries. Eligibility typically depends on having a confirmed job offer from a licensed sponsor and meeting salary or skill thresholds. Pick a destination and select &ldquo;Work&rdquo; to see the specific requirements.`,
+          text: `${name} passport holders can apply for work visas in many countries — typically requiring a sponsoring employer and skills assessment. Long-stay routes include the UK Skilled Worker, Australia Subclass 482, Canada Express Entry, and Germany's EU Blue Card. Pick a destination and select 'Work' for the specific rules.`,
         },
       },
       {
@@ -94,22 +117,12 @@ export default async function PassportIndex({ params }: { params: Promise<Params
         name: `What's the difference between visa-free and visa-free with an eTA?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `&ldquo;Visa-free&rdquo; means no advance authorisation is required before boarding. &ldquo;Visa-free with eTA&rdquo; means you don't need a visa, but you must obtain an electronic travel authorisation (e.g. ESTA, Canada eTA, UK ETA) before travelling. Airlines will deny boarding without it.`,
-        },
-      },
-      {
-        "@type": "Question",
-        name: `Where can ${name} passport holders study or join a partner abroad?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `Most countries offer student and partner/family visa routes. Pick a destination and select &ldquo;Study&rdquo; or &ldquo;Partner / Family&rdquo; to see the specific eligibility, financial requirements, and processing times.`,
+          text: `Visa-free means no advance authorisation is required before boarding. Visa-free with eTA means you don't need a visa, but you must obtain an electronic travel authorisation (e.g. ESTA, Canada eTA, UK ETA) before travelling. Airlines will deny boarding without it.`,
         },
       },
     ],
   };
 
-  // ItemList of popular destinations — gives Google a structured signal of
-  // the top routes from this passport. Helps surface site links in SERPs.
   const itemListJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -125,7 +138,7 @@ export default async function PassportIndex({ params }: { params: Promise<Params
   const collectionPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: `${nationalityFor(upper)} passport — visa requirements directory`,
+    name: `${adjective} passport — visa requirements directory`,
     url: absoluteUrl(`/passport/${upper.toLowerCase()}`),
     isPartOf: { "@type": "WebSite", name: SITE.name, url: SITE.url },
     about: { "@type": "Country", name },
@@ -150,100 +163,148 @@ export default async function PassportIndex({ params }: { params: Promise<Params
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageJsonLd) }}
       />
 
-      <main className="mx-auto max-w-5xl px-4 py-8">
+      <main className="mx-auto max-w-6xl px-4 py-8">
         <Breadcrumbs crumbs={crumbs} />
 
         <NationalityHero
           iso2={upper}
-          visaFreeCount={
-            coverage
-              ? coverage.byStatus.visa_free + coverage.byStatus.visa_free_with_eta
-              : undefined
-          }
+          visaFreeCount={mobilityScore ?? undefined}
           totalDestinations={coverage?.totalDestinationsCovered}
           photo={photo}
         />
 
-        {coverage && <CoverageStats snapshot={coverage} context="passport" />}
+        {/* 12-column split: editorial main + slender info rail.
+            Stacks on mobile (sidebar moves below content). */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* MAIN COLUMN */}
+          <article className="lg:col-span-8 space-y-10">
+            {/* OPENING NARRATIVE — curated where available, generated otherwise.
+                This is the SEO-critical unique content per country. */}
+            <section className="editorial-body">
+              <h2 className="text-2xl font-bold tracking-tight mb-4">
+                Travel from {name}: the picture in 2026
+              </h2>
+              {intro ? (
+                <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+                  {intro}
+                </p>
+              ) : (
+                <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+                  The {adjective.toLowerCase()} passport opens approximately{" "}
+                  <strong>{mobilityScore ?? "—"}</strong> destinations
+                  {coverage?.totalDestinationsCovered
+                    ? ` of the ${coverage.totalDestinationsCovered} we cover`
+                    : ""}{" "}
+                  visa-free or with an electronic travel authorisation. For everything else, an
+                  embassy visa, e-Visa, or sponsored long-stay permit applies — costs, processing
+                  times, and the actual government link sit on every destination page below. The
+                  highest-traffic routes for {adjective.toLowerCase()} travellers tend to be
+                  tourism within the region, study at universities in the US, UK, Canada, Australia
+                  and the EU, and work routes via employer-sponsored skilled-worker programmes.
+                </p>
+              )}
+            </section>
 
-        {summaries.length > 0 && <DifficultyHeatMap passportIso2={upper} summaries={summaries} />}
+            {/* DIFFICULTY HEAT MAP — visual signal of where it's easy / hard */}
+            {summaries.length > 0 && (
+              <section>
+                <h2 className="text-xl font-bold tracking-tight mb-2">
+                  Where it&apos;s easy and where it&apos;s hard
+                </h2>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
+                  Continent-grouped view. Click any country to see the full visa rules from{" "}
+                  {name}.
+                </p>
+                <DifficultyHeatMap passportIso2={upper} summaries={summaries} />
+              </section>
+            )}
 
-        {summaries.length > 0 && (
-          <DifficultyBucketGrid
-            passportIso2={upper}
-            scored={scoreDestinationsForPassport(upper, summaries)}
-          />
-        )}
+            {/* VISA TYPE BROWSE */}
+            <section>
+              <h2 className="text-xl font-bold tracking-tight mb-2">
+                Browse by what you want to do
+              </h2>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
+                Pick a purpose to see the {adjective.toLowerCase()}-specific rules.
+              </p>
+              <VisaCategoryNav iso={upper} mode="passport" />
+            </section>
 
-        {intro && (
-          <section className="mt-8 prose prose-sm dark:prose-invert max-w-none">
-            <p className="text-base leading-relaxed text-neutral-700 dark:text-neutral-300">
-              {intro}
-            </p>
-          </section>
-        )}
+            {/* POPULAR DESTINATIONS */}
+            <section>
+              <h2 className="text-xl font-bold tracking-tight mb-2">
+                Most-searched routes from {name}
+              </h2>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
+                Clicking through pulls the {adjective.toLowerCase()}-specific rules, your
+                merged-photo route hero, and a step-by-step prep checklist tailored to{" "}
+                {adjective.toLowerCase()} applicants.
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {TOP_DESTINATIONS.filter((d) => d !== upper).map((dest) => {
+                  const country = COUNTRY_LIST.find((c) => c.iso2 === dest);
+                  return (
+                    <Link
+                      key={dest}
+                      href={`/${upper.toLowerCase()}/${dest.toLowerCase()}`}
+                      prefetch={false}
+                      className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-600 hover:bg-blue-50/40 dark:hover:bg-blue-950/30 transition text-sm"
+                    >
+                      <span className="text-base" aria-hidden>{country?.flag ?? "🏳️"}</span>
+                      <span className="truncate">{nameFor(dest)}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
 
-        <section className="mt-8 mb-2">
-          <h2 className="text-base font-semibold mb-3">Browse by visa type</h2>
-          <VisaCategoryNav iso={upper} mode="passport" />
-        </section>
+            {/* FULL A-Z LIST (collapsed feel — secondary content) */}
+            <details className="group">
+              <summary className="cursor-pointer list-none">
+                <div className="flex items-center justify-between gap-2 px-4 py-3 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition">
+                  <h2 className="text-base font-semibold">
+                    Every destination, A → Z
+                  </h2>
+                  <span className="text-xs text-neutral-500 group-open:rotate-180 transition-transform">
+                    ▼
+                  </span>
+                </div>
+              </summary>
+              <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-1">
+                {COUNTRY_LIST.filter((c) => c.iso2 !== upper).map((c) => (
+                  <Link
+                    key={c.iso2}
+                    href={`/${upper.toLowerCase()}/${c.iso2.toLowerCase()}`}
+                    prefetch={false}
+                    className="flex items-center gap-2 px-2.5 py-1.5 rounded text-sm hover:bg-neutral-50 dark:hover:bg-neutral-900 transition"
+                  >
+                    <span className="text-sm" aria-hidden>{c.flag}</span>
+                    <span className="truncate">{c.name}</span>
+                  </Link>
+                ))}
+              </div>
+            </details>
 
-        <section className="mt-10">
-          <h2 className="text-lg font-semibold mb-4">Popular destinations</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-            {TOP_DESTINATIONS.filter((d) => d !== upper).map((dest) => (
-              <Link
-                key={dest}
-                href={`/${upper.toLowerCase()}/${dest.toLowerCase()}`}
-                prefetch={false}
-                className="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-600 hover:bg-blue-50/40 dark:hover:bg-blue-950/30 transition text-sm"
-              >
-                <span className="text-lg" aria-hidden>{flagEmoji(dest)}</span>
-                <span className="truncate">{nameFor(dest)}</span>
-              </Link>
-            ))}
+            {/* HONEST CAVEAT */}
+            <section className="border-l-4 border-amber-300 dark:border-amber-700 bg-amber-50/40 dark:bg-amber-950/20 pl-5 py-4 pr-4 rounded-r-lg text-sm text-amber-900 dark:text-amber-100">
+              <p className="font-semibold mb-1">Before you book</p>
+              <p>
+                A valid visa lets you travel — entry is still at the immigration officer&apos;s
+                discretion. For work, study and family routes especially, double-check the
+                destination&apos;s embassy guidance before signing leases or quitting jobs. Every
+                page on Visavu links straight at the government source so you can verify in two
+                clicks.
+              </p>
+            </section>
+          </article>
+
+          {/* SIDEBAR */}
+          <div className="lg:col-span-4">
+            <div className="sticky top-20">
+              <PassportSidebar iso2={upper} coverage={coverage} summaries={summaries} />
+            </div>
           </div>
-        </section>
-
-        <section className="mt-10">
-          <h2 className="text-lg font-semibold mb-4">All destinations (A–Z)</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1">
-            {COUNTRY_LIST.filter((c) => c.iso2 !== upper).map((c) => (
-              <Link
-                key={c.iso2}
-                href={`/${upper.toLowerCase()}/${c.iso2.toLowerCase()}`}
-                prefetch={false}
-                className="flex items-center gap-2 px-2 py-1.5 rounded text-sm hover:bg-neutral-50 dark:hover:bg-neutral-900 transition"
-              >
-                <span className="text-base" aria-hidden>{c.flag}</span>
-                <span className="truncate">{c.name}</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        <section className="mt-12 prose prose-sm dark:prose-invert max-w-none">
-          <h2>About travel from {name}</h2>
-          <p>
-            Visa requirements for {name} passport holders vary by destination, purpose, and
-            policies that change without notice. We pull from official government sources where
-            possible — embassy and ministry-of-foreign-affairs pages — and surface the date we
-            last verified each requirement, plus a direct link to the primary source on every
-            answer.
-          </p>
-          <p>
-            For each destination, you&apos;ll find tourist, business, transit, work, study,
-            partner/family and diplomatic visa routes (where applicable). Each shows the visa
-            type, maximum stay, typical cost, processing time, and the official application URL.
-          </p>
-          <p>
-            <strong>Important:</strong> a valid visa permits entry subject to officer discretion
-            at the border. Always verify with the destination&apos;s embassy or consulate before
-            booking travel, accepting employment, or making relocation plans — particularly for
-            long-stay routes (work, study, family) where the consequences of incorrect information
-            are severe.
-          </p>
-        </section>
+        </div>
       </main>
     </>
   );

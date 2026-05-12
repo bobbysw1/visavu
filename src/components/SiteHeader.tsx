@@ -27,14 +27,20 @@ export async function SiteHeader() {
         </Link>
         <nav className="flex items-center gap-3 text-sm">
           <Link
-            href="/finder"
+            href="/find-my-visa"
             className="px-3 py-1.5 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-semibold whitespace-nowrap"
+          >
+            Find my visa
+          </Link>
+          <Link
+            href="/finder"
+            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hidden md:inline"
           >
             Where can I go?
           </Link>
           <Link
             href="/passport/us"
-            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hidden sm:inline"
+            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hidden lg:inline"
           >
             By passport
           </Link>

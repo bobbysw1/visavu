@@ -3599,6 +3599,378 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // CANADIAN → UK — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "CA:GB:work": {
+    whatCarriesWeight: [
+      {
+        label: "Skilled Worker visa OR Youth Mobility Scheme OR UK Ancestry — Canadians have multiple routes",
+        why: "Canadians have unusually rich UK options. Standard Skilled Worker (sponsor licence + £38,700 general threshold from April 2024, £29,000 for Health & Care Worker / shortage). Youth Mobility Scheme — Canadians 18-35 (extended from 30 in 2024), 3-year visa (extended from 2), no sponsor needed, ballot system at the start of each year. UK Ancestry — UK-born grandparent, 5-year visa, full work rights, no sponsor, route to ILR (popular for English / Scottish / Welsh / Northern Irish heritage Canadians).",
+      },
+      {
+        label: "Certificate of Sponsorship + RCIC vs OISC immigration adviser comparison",
+        why: "For Skilled Worker visa your UK employer must hold sponsor licence (check on gov.uk register). Tech (Revolut, Wise, DeepMind, ARM, Monzo, Starling, Octopus Energy), finance (HSBC, Barclays, Lloyds, NatWest, Standard Chartered), NHS Trusts, and consultancies (Big Four, MBB, top law firms) actively recruit Canadians. RCIC (Canadian Immigration Consultant) cannot represent on UK matters; you need an OISC-regulated adviser or a solicitor regulated by SRA / Law Society Scotland / Law Society Northern Ireland.",
+      },
+      {
+        label: "WES / ECCTIS Statement of Comparability + Canadian degree mapping",
+        why: "Canadian degrees are recognised by UK ECCTIS (formerly UK NARIC) — get a Statement of Comparability for your BSc/BA/professional designation (~£140, 15 working days). Most Canadian Bachelor's (3-year and 4-year) map to UK Level 6; honours mapping varies by institution. For regulated professions: NMC (nurses, OSCE/CBT route), GMC (doctors, PLAB or MTR via College of Physicians Canada), Law Society (solicitor qualifying via SQE — Canadian common-law lawyers have streamlined route under QLTS replaced by SQE since 2021), ICAEW / ACA for accountants.",
+      },
+      {
+        label: "Canadian Police Certificate + UK TB test exemption",
+        why: "Canada is on the UK 'no TB test' country list — no TB clearance needed. Canadian Police Certificate from RCMP (Royal Canadian Mounted Police) Civil Fingerprinting Service — CAD$60-100, 60-120 working days. Several Canadian fingerprinting agencies (Commissionaires, Industrial Security Centres) can fingerprint and ship to RCMP — choose accredited only. Provincial criminal record checks insufficient for UK Home Office — must be RCMP federal-level.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route choice — Skilled Worker, YMS, or UK Ancestry",
+        prompt: "Canadians have multiple routes — state explicitly which: Skilled Worker (sponsor needed, longer-term, route to ILR after 5 years), Youth Mobility Scheme (no sponsor, 3 years post-2024, ballot January annually), UK Ancestry (UK-born grandparent, 5 years, no sponsor, route to ILR), HPI (High Potential Individual if your degree is from one of top-50 world universities — UofT, McGill, UBC, McMaster, Alberta, Western, Waterloo have qualified previously). Show research — picking right route is half the application.",
+      },
+      {
+        heading: "Your Canadian work history — verifiable",
+        prompt: "List every Canadian employer chronologically with month-precision dates, role, salary in CAD, supervisor name + contact. Include any Canadian professional designations: P.Eng (EGBC, PEO, APEGA), CPA, CFA, MD, LLB/JD + bar admission (Ontario, BC, Quebec, etc.), RN. Canadian universities (UofT, UBC, McGill, Waterloo, McMaster, Queen's, Western, Alberta) are well-known to UK Home Office — they don't need much explanation.",
+      },
+      {
+        heading: "Family + 'plan' — including UK Ancestry angle",
+        prompt: "If you have UK-born ancestry (grandparent born in England / Scotland / Wales / Northern Ireland — Ireland post-1922 doesn't count, ROI pre-1922 also doesn't count), mention it even if not applying via Ancestry route. Document Canadian residence (provincial driver's licence, lease, mortgage, Canadian property), planned UK housing (London / Manchester / Edinburgh / Bristol / Glasgow), and integration plan. Many Canadians use UK as 2-3 year temporary stay then return — that's fine for Skilled Worker, YMS, and even Ancestry visas.",
+      },
+      {
+        heading: "Long-term plan — ILR, dual citizenship, or temporary",
+        prompt: "Skilled Worker / Health & Care Worker / UK Ancestry are 5-year routes to ILR. Canada permits dual citizenship with UK; UK permits dual citizenship. Most Canadians who naturalise British retain Canadian citizenship without issue. Mention Life in the UK test + B1 English (most Canadians are at C1/native English from school).",
+      },
+    ],
+    moneySavingTips: [
+      "UK Ancestry Visa has NO sponsor requirement (saves SOC wage scrutiny entirely) — if you have a UK-born grandparent, almost always the best route at £637 + IHS £1,035/year (or £776/year student rate if studying alongside)",
+      "Youth Mobility Scheme: Canadians 18-35 qualify post-2024; ballot is competitive (~10,000 places vs ~50,000 applicants); £298 fee + IHS; NO sponsor needed, 3-year stay (post-2024), route to switch into Skilled Worker after gaining UK experience",
+      "Health & Care Worker visa is IHS-exempt (saves £5,175 over 5 years per applicant)",
+      "RCMP Police Certificate: CAD$60-100 if you go to a fingerprinting agency yourself; consultant agencies charge CAD$300+; allow 60-120 working days",
+      "ECCTIS Statement of Comparability £140 standard / £210 urgent (5-day) — order early, avoid rush price",
+      "Don't use 'RCIC + UK partner' agencies charging CAD$5,000+ — RCIC have NO authority on UK matters; use OISC-regulated UK adviser directly (around £1,500-3,000 for full Skilled Worker process), or DIY if straightforward",
+      "Open Wise GBP, Revolut UK, Monzo, Starling Bank UK accounts before flying — most accept Canadian passport with Canadian address pre-arrival",
+      "UK-Canada tax treaty (1978, protocol 2014) preserves RRSP tax deferral while UK-resident; consult both UK and Canadian tax advisers re ISA/TFSA equivalence (TFSA is NOT tax-free in UK; ISA contributions don't get Canadian tax relief)",
+      "Negotiate UK relocation package — typically £3,000-£8,000 for Canadian hires given higher logistics + airfare cost vs EU hires",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Skilled Worker / Health & Care Worker visa with NHS Trust / named UK employer CoS",
+        "UK Ancestry Visa with UK-born grandparent (clear documentary chain — civil registration birth certificate)",
+        "Youth Mobility Scheme ballot win (process is straightforward — IHS + fee + biometric)",
+        "Dependent visa applications (spouse + children) concurrent with main applicant",
+        "ILR after 5 years continuous qualifying residence",
+        "HPI visa from top-50 university Canadian degree",
+      ],
+      getALawyer: [
+        "Past UK visa refusal",
+        "Past UK overstay or removal",
+        "Canadian criminal record (even minor, even dismissed under Criminal Records Act records suspension)",
+        "UK Ancestry application where grandparent's birth was in Republic of Ireland post-1922 (does NOT count; pre-1922 also doesn't count)",
+        "Dual Canadian-other non-Commonwealth passport (visa application from wrong passport)",
+        "Bringing 18+ dependent or adult dependent relative",
+        "HPI visa where university ranking dropped off eligible list since you graduated — eligibility uses ranking from graduation year",
+        "Past US visa refusal flagged on Five Eyes database affecting UK application",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // AUSTRALIAN → UK — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "AU:GB:work": {
+    whatCarriesWeight: [
+      {
+        label: "Skilled Worker / Health & Care Worker visa OR Youth Mobility Scheme OR UK Ancestry",
+        why: "Australians have multiple UK routes. Standard Skilled Worker (sponsor licence + £38,700 general / £29,000 Health & Care / £30,960 New Entrant from April 2024). Youth Mobility Scheme — Australians 18-35 (extended from 30 in 2024), 3-year visa (extended from 2), no sponsor needed, ballot replaced by direct grant in 2024 for Australians (35,000 places annually). UK Ancestry — UK-born grandparent, 5-year visa, full work rights, no sponsor, route to ILR (very popular — large Australian populace has British heritage).",
+      },
+      {
+        label: "Certificate of Sponsorship + Australian degree recognition (mostly seamless)",
+        why: "For Skilled Worker your UK sponsor must hold a sponsor licence. Australian Big 4 banks (ANZ, NAB, CommBank, Westpac), tech (Atlassian London, Canva London, Afterpay/Block London), NHS Trusts (Australian doctors and nurses on shortage occupation list), and Australian consultancies with UK presence (PwC, Deloitte, KPMG, EY, McKinsey, BCG, Bain) actively transfer Australians. Australian degrees from Group of Eight (Melbourne, ANU, Sydney, UNSW, Monash, UQ, UWA, Adelaide) and most other Australian universities are well-known to UK Home Office — Bachelor (3 or 4-year) maps to UK Level 6; Honours / Masters straightforward.",
+      },
+      {
+        label: "ECCTIS optional for unregulated; required for regulated professions",
+        why: "ECCTIS Statement of Comparability (~£140, 15 working days) only needed for regulated professions in UK. For nursing: NMC OSCE/CBT (Australian RNs qualify via direct route in 2024 — APR Code Practice). For doctors: GMC PLAB or MTR via Royal Australian College — Australian medical degrees are well-recognised; specialist registration via CCT-equivalent route. For solicitors: SQE (replaced QLTS in 2021) — Australian lawyers have streamlined route. For chartered accountants: ICAEW / ACCA — Australian CAs have streamlined entry via mutual recognition.",
+      },
+      {
+        label: "Australian Federal Police check + UK TB test exemption",
+        why: "Australia is on the UK 'no TB test' country list — no TB clearance needed. Australian Federal Police National Police Check — AUD$42-65 via afp.gov.au online portal, 10-15 working days. Provincial / State Police Check (NSW Police, VicPol, QPS) is insufficient for UK Home Office — must be AFP federal-level (Code: National Police Check Code 33 - Visa Australia for UK).",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route choice — Skilled Worker, YMS, or UK Ancestry",
+        prompt: "Australians have multiple routes — state explicitly which: Skilled Worker (sponsor needed, route to ILR after 5 years), Youth Mobility Scheme (no sponsor, 3 years post-2024, direct grant 35,000/year for Australians — no ballot anymore), UK Ancestry (UK-born grandparent, 5 years, route to ILR), HPI (High Potential Individual from top-50 university — Melbourne, ANU, Sydney, UNSW, Monash, UQ have qualified previously). Show research — picking the right route is half the application.",
+      },
+      {
+        heading: "Your Australian work history — verifiable",
+        prompt: "List every Australian employer chronologically with month-precision dates, role, salary in AUD, supervisor name + contact. Include any Australian professional designations: CPA (CPA Australia), CA (CAANZ), RN (AHPRA-NMBA), MD (AHPRA-MBA), Lawyer (LPA admission), Engineer (Engineers Australia), Surveyor, Architect. Australian universities are well-known to UK Home Office.",
+      },
+      {
+        heading: "Family + 'plan' — including UK Ancestry angle",
+        prompt: "If you have UK-born ancestry (grandparent born in England / Scotland / Wales / Northern Ireland — Ireland post-1922 doesn't count), mention it even if not applying via Ancestry route. Australian-British heritage is common — over 1 million Australians have UK-born grandparent eligible. Document Australian residence (state driver's licence, lease, mortgage, Australian property), planned UK housing, integration plan. Many Australians use UK as 'gap year' / 2-3 year temporary stay then return — fine for Skilled Worker / YMS / Ancestry.",
+      },
+      {
+        heading: "Long-term plan — ILR, dual citizenship, or temporary",
+        prompt: "Skilled Worker / Health & Care Worker / UK Ancestry are 5-year routes to ILR. Australia permits dual citizenship with UK; UK permits dual citizenship. Most Australians who naturalise British retain Australian citizenship. Mention Life in the UK test + B1 English (most Australians are at C1/native English).",
+      },
+    ],
+    moneySavingTips: [
+      "UK Ancestry Visa has NO sponsor requirement — if you have a UK-born grandparent, almost always best route at £637 + IHS £1,035/year (or £776/year student rate)",
+      "Youth Mobility Scheme: Australians 18-35 qualify post-2024; DIRECT GRANT (no ballot) — 35,000 places/year; £298 fee + IHS; NO sponsor needed, 3-year stay (post-2024), route to switch into Skilled Worker after gaining UK experience",
+      "Health & Care Worker visa is IHS-exempt (saves £5,175 over 5 years per applicant) — NHS Trusts also offer £25,000 relocation bonus",
+      "AFP National Police Check: AUD$42-65 direct via afp.gov.au; consultant agencies charge AUD$200+ for no extra value",
+      "ECCTIS Statement of Comparability £140 standard / £210 urgent (5-day) — order early; many unregulated UK roles don't require it at all",
+      "Don't use 'MARA + UK partner' agencies charging AUD$5,000+ — MARA agents have NO authority on UK matters; use OISC-regulated UK adviser directly (around £1,500-3,000 for full Skilled Worker process)",
+      "Open Wise GBP, Revolut UK, Monzo, Starling Bank UK accounts before flying — most accept Australian passport + Australian address pre-arrival",
+      "UK-Australia tax treaty (2003) preserves super tax deferral while UK-resident (with caveats; consult both tax advisers); ISA vs Super are not directly comparable for tax purposes",
+      "QROPS pension transfer from UK to Australian super: complex — wait for ILR/UK citizenship before transferring; HMRC has specific overseas pension scheme requirements",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Skilled Worker / Health & Care Worker visa with NHS Trust / named UK employer CoS",
+        "UK Ancestry Visa with UK-born grandparent (clear civil registration documents)",
+        "Youth Mobility Scheme direct-grant (post-2024 process — no ballot)",
+        "Dependent visa applications concurrent with main applicant",
+        "ILR after 5 years continuous qualifying residence",
+        "HPI visa from Group of Eight or top-50 university degree",
+      ],
+      getALawyer: [
+        "Past UK visa refusal",
+        "Past UK overstay or removal",
+        "Australian criminal record (even spent / suspended under Spent Convictions Scheme)",
+        "UK Ancestry application where grandparent's birth was in Republic of Ireland post-1922",
+        "Dual Australian-other non-Commonwealth passport (visa application from wrong passport)",
+        "Bringing 18+ dependent or adult dependent relative",
+        "HPI visa where university ranking dropped off eligible list since you graduated",
+        "Past Five Eyes visa refusal flagged on UKVI database",
+        "QROPS-related complex pension transfer needing UK-AU coordination",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // NEPALESE → UK — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "NP:GB:work": {
+    whatCarriesWeight: [
+      {
+        label: "Certificate of Sponsorship + Gurkha veteran route OR standard Skilled Worker",
+        why: "Nepalese have a unique UK pathway: Gurkha veterans (and their immediate family) who retired from Brigade of Gurkhas after 1 July 1997 qualify under the Tribunal Service of UK Borders Agency Gurkha Settlement scheme — settled status route, with families. For non-Gurkha Nepalese, standard Skilled Worker visa applies: £38,700 general threshold OR £29,000 for Health & Care Worker / shortage list. Nepalese nurses, healthcare workers, hospitality staff, and IT professionals are increasingly recruited; care sector recruitment from Nepal has expanded since 2022.",
+      },
+      {
+        label: "Nepali educational certificates + Tribhuvan University / Kathmandu University verification",
+        why: "Nepali SLC / SEE (10-grade), +2 (12-grade), and Bachelor / Master / Doctorate degrees from Tribhuvan University (largest Nepali university), Kathmandu University, Pokhara University, Purbanchal University, Mid-Western University, Far-Western University, Lumbini Buddhist University, Agriculture and Forestry University need: 1) issuing institution certificate, 2) MOE (Ministry of Education) attestation in Kathmandu, 3) Nepali MOFA attestation, 4) UK ECCTIS Statement of Comparability (£140 standard, £210 urgent 5-day). Most Nepali Bachelor's degrees (3 or 4-year) map to UK Level 6.",
+      },
+      {
+        label: "TB clearance at IOM Kathmandu + Nepal Police Clearance",
+        why: "All Nepalese applying for UK Student / Skilled Worker / Family visa for 6+ months need TB clearance from IOM Kathmandu (Tahachal Marg, just below Kalimati) — NPR 7,500-9,500, valid 6 months. Nepal Police Clearance from local district police via online portal (NPR 100-300, 7-21 days) — required for UK Home Office. For every country you've spent 6+ months in (including Gulf states, India, Malaysia, Korea for Nepali workers), additional police certificate required.",
+      },
+      {
+        label: "IELTS UKVI / OET + £1,270 maintenance funds",
+        why: "UK Skilled Worker visa requires IELTS UKVI Academic 4.0+ minimum (B1 CEFR) OR PTE Academic UKVI / Cambridge English Advanced / IELTS Life Skills B1. For NMC nursing registration: OET / IELTS 7.0 minimum. Test at British Council Kathmandu (Lainchaur), Pokhara, or IDP centres in Kathmandu. £1,270 maintenance must be held 28 consecutive days in your or sponsor's name (or employer A-rated cover). Nepali bank statements (Nepal Bank, Rastriya Banijya Bank, Himalayan Bank, Standard Chartered Nepal, Everest Bank, Nepal Investment Mega Bank).",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route choice — Gurkha, Skilled Worker, or Health & Care Worker",
+        prompt: "If you are a Gurkha veteran or family member, state the Gurkha route explicitly — different documentation chain (military service record, discharge certificate from Brigade of Gurkhas, family relationship documents). For non-Gurkha applicants, state Skilled Worker vs Health & Care Worker route based on your role. Highlight specific UK employer, NHS Trust, or care provider, and your specific role + SOC code mapping.",
+      },
+      {
+        heading: "Your Nepali work history — exact, verifiable, professional body numbers",
+        prompt: "List every Nepali employer with month-precision dates, role, salary in NPR, supervisor name + contact (mobile + email). Include any Nepali professional body registrations: Nepal Medical Council (doctors), Nepal Nursing Council (nurses), Nepal Engineering Council (engineers), ICAN (chartered accountants). UK cross-checks these registers. Document past Gulf experience: Saudi, Qatar, UAE, Malaysia, Korea contracts are common for Nepali workers — attach Iqama / QID / labour-card records.",
+      },
+      {
+        heading: "Maintenance funds + family plan",
+        prompt: "Skilled Worker requires £1,270 maintenance OR employer A-rated cover certificate. For Health & Care Worker the £1,270 is usually waived. Document NPR source-of-funds: Nepal Bank, RBB, NIC Asia, Himalayan Bank, Standard Chartered Nepal, NMB Bank, Everest, Civil Bank. Dependent visa for spouse + each child <18 adds £285/£315 maintenance. For Gurkha-route family reunification, different financial requirements apply — primary residence and pension considerations.",
+      },
+      {
+        heading: "Future plan — ILR settlement or temporary",
+        prompt: "Skilled Worker visa is a 5-year route to ILR. State your settlement plan including Life in the UK test prep and B1 English. Gurkha route is direct settlement (ILR from grant) for veteran + immediate family. If you want to return to Nepal after fixed period, state openly — Skilled Worker doesn't require settlement intent. Mention any UK family (Nepali Gurkha diaspora is concentrated in Aldershot / Folkestone / Kent / South London; non-Gurkha Nepali community in Reading / Birmingham / Manchester) but note: family are not 'maintenance providers' unless legally sponsoring.",
+      },
+    ],
+    moneySavingTips: [
+      "Health & Care Worker visa is IHS-exempt (saves £5,175 over 5 years) — NHS Trusts also offer £2,000-5,000 relocation bonus for international hires",
+      "Gurkha veterans: settlement application is free under Tribunal Service Gurkha settlement scheme — don't pay 'Gurkha advisors' charging NPR 500,000+; Gurkha Welfare Society (gurkha.org.uk) and British Gurkha Welfare Council provide free advice",
+      "British Council Kathmandu for IELTS UKVI: NPR 22,000-25,000; multi-attempt packages available",
+      "ECCTIS Statement of Comparability £140 standard / £210 urgent (5-day) — order early to avoid rush price",
+      "Apply for Police Clearance online at Nepal Police portal — NPR 100-300; don't pay agents NPR 5,000+",
+      "IOM Kathmandu TB test: book early — slot availability is the bottleneck; NHS Trusts pre-pay IOM fees for some recruitment programmes",
+      "Avoid Nepali 'visa agents' charging NPR 300,000-1,500,000 — UK Home Office is the only fee-charging party; your UK employer's HR handles CoS at no cost to you",
+      "Family in UK can act as your sponsor for £1,270 maintenance via signed Undertaking from named UK citizen / settled person — common in Gurkha diaspora communities",
+      "Open Wise GBP, Revolut UK, Monzo account before flying — most accept Nepali passport with UK CoS letter pre-arrival",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Skilled Worker / Health & Care Worker visa with NHS Trust / named UK employer CoS",
+        "Gurkha veteran settlement application via Tribunal Service Gurkha scheme",
+        "Dependent visa applications concurrent with main applicant",
+        "ILR after 5 years continuous qualifying residence",
+        "Switching between sponsored employers within UK",
+      ],
+      getALawyer: [
+        "Prior UK visa refusal (study, visit, work)",
+        "Care sector role with sponsor under CQC investigation / recent licence revocation (2024 affected Nepalese care workers)",
+        "Past UK overstay or removal",
+        "Nepali criminal record (even minor — disclosure to Home Office mandatory)",
+        "Bringing 18+ dependent or adult dependent relative",
+        "Maoist insurgency-era political affiliation history (2006-2008 conflict period)",
+        "Past Gulf state work history (KSA, UAE, Qatar) with kafala-system disputes / overstay flags",
+        "Gurkha veteran with complex family reunification including non-immediate family (siblings, adult children) — Tribunal Service rules need careful navigation",
+        "Indian-Nepali border issue affecting documentation (Madhesi community origin documents)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // SRI LANKAN → UK — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "LK:GB:work": {
+    whatCarriesWeight: [
+      {
+        label: "Certificate of Sponsorship + Skilled Worker vs Health & Care Worker",
+        why: "Sri Lankans enter through Skilled Worker (£38,700 general from April 2024, £29,000 Health & Care Worker / shortage, £30,960 New Entrant). Sri Lankan nurses, doctors, IT engineers, hospitality professionals, and accountants are well-recruited by UK. NHS Trusts, CQC-registered care providers, and tech employers (Revolut, Wise, Monzo, ARM Cambridge) actively hire Sri Lankans. Sri Lanka has strong English-medium education tradition, giving applicants linguistic advantage.",
+      },
+      {
+        label: "University of Colombo / Sri Lankan university transcripts + ECCTIS evaluation",
+        why: "Sri Lankan G.C.E. O/L (Ordinary Level), G.C.E. A/L (Advanced Level), and Bachelor / Master / Doctorate degrees from University of Colombo, University of Peradeniya, University of Sri Jayewardenepura, University of Moratuwa (tech), University of Kelaniya, Open University of Sri Lanka, SLIIT, NSBM, IIT, NIBM — need: 1) issuing university stamp, 2) Sri Lankan UGC (University Grants Commission) attestation if local, 3) Sri Lankan MFA attestation, 4) UK ECCTIS Statement of Comparability (£140 standard, £210 urgent). Sri Lankan 3-year Bachelor's typically maps to UK Level 6.",
+      },
+      {
+        label: "Sri Lankan Police Clearance + UK TB test at IOM Colombo",
+        why: "Sri Lankan Police Clearance from Police Headquarters Colombo or via online portal (LKR 500-1,000, 14-30 days). UK TB clearance at IOM Colombo (Bauddhaloka Mawatha) — LKR 10,000-15,000, valid 6 months. For every country you've spent 6+ months in (Middle East common for Sri Lankans — Saudi, UAE, Qatar, Kuwait, Oman, Maldives), additional police certificate required.",
+      },
+      {
+        label: "Income proof + £1,270 maintenance + dependent considerations",
+        why: "Skilled Worker requires £1,270 maintenance held 28 consecutive days. For Health & Care Worker, £1,270 waived if employer certifies cover. Document via Sri Lankan banks: Bank of Ceylon, People's Bank, Commercial Bank of Ceylon, Hatton National, Sampath Bank, DFCC Bank. The LKR/GBP rate experienced significant volatility during the 2022 economic crisis — show equivalent of £1,500-£2,000 to provide buffer. Each dependent adds £285/£315 maintenance.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role + why UK employer chose you",
+        prompt: "UK Home Office scrutinises Sri Lankan applications — be specific: how you found the role (UK-Sri Lanka recruitment partnership, NHS Trust direct, Sri Lankan diaspora referral, online job board), what makes you the right fit. Name the Trust, the team, the line manager. 'General nursing in the UK' fails; 'Band 5 staff nurse, paediatric ward, [named NHS Trust]' passes. Sri Lankan English-medium education gives you advantage — leverage it.",
+      },
+      {
+        heading: "Sri Lankan work history — SLMC/SLNC/CSSL numbers, exact dates",
+        prompt: "List every Sri Lankan employer (Asiri Hospital Group, Nawaloka, Lanka Hospitals, Hemas Hospitals, Durdans Hospital, Commercial Bank, NTB, Sampath, DFCC, John Keells, Hayleys, Hatton National, named NGO, named pharma) with month-precision dates, role, salary in LKR, supervisor + contact. Include professional body registrations: SLMC (Sri Lanka Medical Council), Sri Lanka Nursing Council, CSSL (Computer Society of Sri Lanka), CA Sri Lanka (chartered accountants), IESL (Institution of Engineers Sri Lanka). UK cross-checks these registers.",
+      },
+      {
+        heading: "Maintenance funds + family plan",
+        prompt: "Skilled Worker £1,270 maintenance OR employer A-rated cover. For Health & Care Worker the £1,270 is typically waived. Document Sri Lankan bank statements (BoC, People's, ComBank, NTB, HNB, Sampath, DFCC) with NIC (National Identity Card) number. Dependent visa for spouse + children <18 adds £285/£315 per dependent. Sri Lanka has large UK diaspora — family in London, Reading, Manchester, Birmingham can support but cannot substitute for required maintenance.",
+      },
+      {
+        heading: "Future plan — ILR or return",
+        prompt: "Skilled Worker is 5-year route to ILR. State settlement plan with Life in the UK test prep + B1 English (most Sri Lankan professionals are at C1/native English from medium-of-instruction). If you want to return after fixed period, state openly — Skilled Worker doesn't require settlement intent. UK Sri Lankan diaspora is large; integration story is straightforward.",
+      },
+    ],
+    moneySavingTips: [
+      "Health & Care Worker visa is IHS-exempt (saves £5,175 over 5 years) — NHS Trusts also offer £2,000-5,000 relocation bonus",
+      "British Council Colombo for IELTS UKVI: LKR 35,000-45,000; multi-attempt packages available",
+      "ECCTIS Statement of Comparability £140 standard / £210 urgent (5-day)",
+      "Police Clearance via online portal at police.lk: LKR 500-1,000; don't pay agents LKR 5,000+",
+      "IOM Colombo TB test: book early; NHS Trusts pre-pay IOM fees for some recruitment programmes",
+      "Avoid Sri Lankan 'visa agents' charging LKR 300,000-1,000,000 — UK Home Office is the only fee-charging party",
+      "Family in UK can act as your sponsor for £1,270 maintenance via signed Undertaking from named UK citizen / settled person",
+      "Open Wise GBP, Revolut UK, Monzo before flying — most accept Sri Lankan passport with UK CoS pre-arrival",
+      "Use Wise LKR/GBP, MoneyGram, or LankaPay for remittance back to Sri Lanka — competitive vs ComBank international transfer",
+      "Sri Lankan tax: if you're tax-resident (>183 days/year in Sri Lanka), worldwide income taxable; UK earnings exempt under DTAA — file Sri Lankan tax return as non-resident once UK-resident",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Skilled Worker / Health & Care Worker visa with NHS Trust / named UK employer CoS",
+        "Dependent visa applications concurrent with main applicant",
+        "ILR after 5 years continuous qualifying residence",
+        "Switching between sponsored employers within UK",
+      ],
+      getALawyer: [
+        "Prior UK visa refusal (study, visit, work)",
+        "Care sector role with sponsor under CQC investigation / recent licence revocation",
+        "Past UK overstay or removal",
+        "Sri Lankan criminal record (even minor — disclosure to Home Office mandatory)",
+        "Bringing 18+ dependent or adult dependent relative",
+        "LTTE-era political affiliation history (2009 civil war end period) — even peripheral connection (family member, geographic origin in Jaffna / Vanni / Mullaitivu) can trigger questions",
+        "Past Gulf state work history (KSA, UAE, Qatar, Kuwait, Oman) with kafala-system disputes / overstay flags",
+        "Tamil-Sinhala communal violence-related family member history",
+        "Buddhist monk family member with prior political exposure",
+        "Past UK Tier 4 student visa during 2010-2015 era with TOEIC fraud allegation (mass scandal affecting Sri Lankans)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // GHANAIAN → UK — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "GH:GB:work": {
+    whatCarriesWeight: [
+      {
+        label: "Certificate of Sponsorship + Skilled Worker vs Health & Care Worker",
+        why: "Ghanaians enter through Skilled Worker (£38,700 general from April 2024) or Health & Care Worker (£29,000, IHS-exempt). Ghanaian nurses (NMC OSCE/CBT route), doctors (GMC PLAB), care workers, IT professionals, and finance roles dominate UK Ghanaian recruitment. The 2024 care-sector tightening means individual care providers can no longer sponsor — only larger CQC-registered groups. Ghana has strong English-medium education and Commonwealth heritage, both advantages.",
+      },
+      {
+        label: "WAEC/Ghanaian degree certificates + ECCTIS Statement of Comparability",
+        why: "Ghanaian WASSCE (West African Senior School Certificate Examination — successor to WAEC O/L A/L) and Bachelor / Master / Doctorate degrees from University of Ghana (Legon), KNUST (Kumasi), University of Cape Coast, GIMPA, Ashesi, Central University — need: 1) issuing university stamp, 2) NAB (National Accreditation Board) Ghana attestation, 3) Ghanaian MOFA attestation, 4) UK ECCTIS Statement of Comparability (£140 standard, £210 urgent). Ghanaian 4-year Bachelor's typically maps to UK Level 6.",
+      },
+      {
+        label: "Ghana Police Service Certificate + UK TB test at IOM Accra",
+        why: "Ghana Police Service Certificate from CID Headquarters Accra or via online portal (GHS 50-200, 14-30 days). UK TB clearance from IOM Accra (Lampten Avenue) — GHS 700-1,200, valid 6 months. For every country you've spent 6+ months in, additional police certificate required.",
+      },
+      {
+        label: "Income proof + £1,270 maintenance",
+        why: "Skilled Worker requires £1,270 maintenance held 28 consecutive days. For Health & Care Worker, £1,270 typically waived. Document via Ghanaian banks: Ghana Commercial Bank (GCB), Ecobank Ghana, Stanbic Bank Ghana, Zenith Bank Ghana, Absa Ghana, Standard Chartered Ghana, Fidelity Bank, Republic Bank. GHS/GBP volatility means hold equivalent of £1,500-£2,000 buffer. Each dependent adds £285/£315 maintenance.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role + why UK employer chose you",
+        prompt: "UK Home Office scrutinises Ghanaian applications. Be specific: how you found the role, what makes you the right fit, your salary level vs going rate for SOC code. Name the Trust, team, line manager. 'General nursing in the UK' fails; 'Band 5 staff nurse, A&E, [named NHS Trust]' passes. Ghana's English-medium education gives advantage — leverage it.",
+      },
+      {
+        heading: "Ghanaian work history — NMC GH / GMA / GIBA / ICAG / IES numbers, exact dates",
+        prompt: "List every Ghanaian employer with month-precision dates, role, salary in GHS, supervisor + contact. Include professional body registrations: Nursing and Midwifery Council Ghana, Ghana Medical Association, GIBA (Ghana Institute of Bankers), ICAG (Institute of Chartered Accountants Ghana), GhIE (Ghana Institution of Engineers). UK cross-checks these registers.",
+      },
+      {
+        heading: "Maintenance funds + family plan",
+        prompt: "Skilled Worker £1,270 maintenance OR employer A-rated cover. Document Ghanaian bank statements with Ghana Card (national ID) number. Dependent visa for spouse + children <18 adds £285/£315 per dependent. Ghanaian UK diaspora is large — family in London (Tottenham, Croydon, Stratford, Lewisham), Manchester, Reading can support but cannot substitute required maintenance.",
+      },
+      {
+        heading: "Future plan — ILR or return",
+        prompt: "Skilled Worker is 5-year route to ILR. State settlement plan with Life in the UK test + B1 English (most Ghanaian professionals are at C1/native English). If you want to return after fixed period, state openly. UK Ghanaian diaspora is large; integration narrative straightforward.",
+      },
+    ],
+    moneySavingTips: [
+      "Health & Care Worker visa is IHS-exempt (saves £5,175 over 5 years)",
+      "British Council Accra for IELTS UKVI: GHS 1,950-2,300",
+      "ECCTIS Statement of Comparability £140 standard / £210 urgent (5-day)",
+      "Police Certificate via online portal: GHS 50-200; don't pay agents GHS 2,000+",
+      "IOM Accra TB test: book early; NHS Trusts may pre-pay IOM fees",
+      "Avoid Ghanaian 'visa agents' charging GHS 30,000-100,000 — Home Office is the only fee-charging party",
+      "Family in UK can act as sponsor for £1,270 maintenance via signed Undertaking",
+      "Open Wise GBP, Revolut UK, Monzo before flying",
+      "Use Wise GHS/GBP, World Remit, or LemFi for remittance — competitive vs Ecobank international transfer",
+      "Ghana tax: if you're tax-resident (>183 days/year), worldwide income taxable; UK earnings exempt under Ghana-UK DTAA",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Skilled Worker / Health & Care Worker visa with NHS Trust / named UK employer CoS",
+        "Dependent visa applications concurrent with main applicant",
+        "ILR after 5 years continuous qualifying residence",
+        "Switching between sponsored employers within UK",
+      ],
+      getALawyer: [
+        "Prior UK visa refusal (study, visit, work)",
+        "Care sector role with sponsor under CQC investigation / recent licence revocation",
+        "Past UK overstay or removal",
+        "Ghanaian criminal record (even minor — disclosure mandatory)",
+        "Bringing 18+ dependent or adult dependent relative",
+        "Past Gulf state work history (KSA, UAE, Qatar, Lebanon) with kafala-system disputes",
+        "Family member with prior UK asylum claim from Ghana",
+        "Re-entering UK after prior Tier 2 / Tier 4 transition without smooth visa history",
+        "Same-sex partner accompanying — Ghana criminalises same-sex relations; UK recognises same-sex marriage but documentation chain may not exist",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

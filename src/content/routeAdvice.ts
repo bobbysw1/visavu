@@ -4346,6 +4346,384 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // BRAZILIAN → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "BR:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from a SEVP-certified US school + SEVIS I-901 paid",
+        why: "Brazil sends ~16,000 students to the US annually — Latin America's largest cohort. Your US institution issues Form I-20 (F-1) or DS-2019 (J-1) once admitted and proof-of-funds verified. Pay SEVIS I-901 fee ($350 F-1 / $220 J-1) before booking DS-160. Brazilian applicants book at US Embassy Brasília, US Consulate General São Paulo (Rua Henri Dunant), Rio de Janeiro (Avenida Presidente Wilson — fast slot turnover), Recife, or Porto Alegre based on jurisdiction. São Paulo handles highest F-1 volume.",
+      },
+      {
+        label: "Strong source-of-funds + Brazilian banking culture",
+        why: "Show 1st-year tuition + living costs ($40-80k). Document Brazilian bank statements (Itaú, Bradesco, Banco do Brasil, Santander Brasil, Caixa Econômica Federal, BTG Pactual, Inter) with USD-equivalent at BCB PTAX rate. Brazilian families often demonstrate funds via multiple accounts (current + investment + family business CNPJ) — this is fine if documented coherently. Avoid lump-sum deposits within 90 days of interview. For family business sponsorship: CNPJ (Cadastro Nacional da Pessoa Jurídica), 3 years of Receita Federal tax filings, bank statements showing genuine cashflow.",
+      },
+      {
+        label: "Strong 214(b) ties to Brazil + Apostille via Cartório (Hague Convention since 2016)",
+        why: "F-1 is non-immigrant. Strong Brazilian ties: family home with Cartório de Registro de Imóveis title in parents' name, parents' employment, Brazilian property (São Paulo / Rio / Brasília / Belo Horizonte / Porto Alegre / Curitiba / Florianópolis), expected return job, family business succession. Brazilian documents apostilled at Cartório (notary public) — Brazil joined Hague Apostille Convention 2016, simplified process. Cost BRL 30-100/document, same-day at most cartórios.",
+      },
+      {
+        label: "TOEFL / IELTS / Duolingo English Test + portuguese-language interview support",
+        why: "TOEFL iBT 80+ or IELTS Academic 6.5+ typical for US undergrad/grad admission. Duolingo English Test (DET) 105+ accepted by 4,000+ US universities — cheaper ($59) and faster (15 min) than TOEFL ($225). Visa interview is in English but consular officers at São Paulo / Rio / Brasília often speak Portuguese — they can switch if needed but practice English answers. Avoid memorised scripts.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this specific US programme over Brazilian or alternative destinations",
+        prompt: "Brazil has elite universities (USP Universidade de São Paulo, UNICAMP, UFRJ, FGV, INSPER, IBMEC, UFMG, UFRGS, PUC). Explain why your US programme offers something unique — research lab, specific professor, industry network (Silicon Valley for CS, Wall Street for finance, Boston for biotech, Miami for Latin business). Reference faculty publications, course offerings, industry pipeline.",
+      },
+      {
+        heading: "Funding — Brazilian family / business / scholarship",
+        prompt: "Quantify: tuition $X, living $Y, total Year 1 $Z. Then show coverage: family contribution BRL X (with bank statement, CNPJ if business-owner, 3-year Receita Federal IRPF/IRPJ filings, salary slips), scholarship $Y (CNPq for grad students, CAPES, FAPESP, Lemann Foundation, Fulbright Brazil), savings $Z. Brazilian banks issue 'Comprovação de Renda' (income statement) for visa support — standard documentation.",
+      },
+      {
+        heading: "Post-graduation plan — your return to Brazil",
+        prompt: "F-1 requires intent to return. State which Brazilian sector: Itaú / Bradesco / BB / Santander Brasil banking, Petrobras / Vale / Eletrobras energy, JBS / BRF / Marfrig agribusiness, Embraer aerospace, Magazine Luiza / Mercado Livre / iFood / Nubank tech, Globo / Record / SBT media, family business succession. Brazilian return is genuinely common — Brazilian economy is large and absorbs US-educated graduates.",
+      },
+      {
+        heading: "Family ties + future plan",
+        prompt: "List parents (occupation, location), siblings, partner. Mention Brazilian property — family apartment / casa with Cartório registration, Brazilian bank accounts, Brazilian CPF (Cadastro de Pessoas Físicas — Brazilian tax ID). For male applicants, military service status (Serviço Militar Obrigatório — 12 months at 18; deferral via Certificado de Dispensa de Incorporação CDI).",
+      },
+    ],
+    moneySavingTips: [
+      "F-1 visa fee is $185; pay via Banco do Brasil or Citibank Brasil with MRV barcode — both accept BRL at BCB rate",
+      "Apostille via Cartório de Notas: BRL 30-100/document, same-day; don't use 'document services' charging BRL 500+",
+      "DET (Duolingo English Test) $59 is cheaper than TOEFL $225 — most US universities accept it; book multi-attempt if first try is borderline",
+      "Brazilian applicants are eligible for Fulbright Brazil (~$30,000 + tuition), CAPES PrInt for grad students, CNPq Bolsista, Lemann Foundation Fellowship (50+ Brazilians/year at Stanford / Yale / Harvard / Princeton — fully-funded master's), FAPESP for São Paulo state researchers",
+      "Many US universities have Brazilian-origin scholarship endowments — Stanford, MIT, Harvard, Yale, Columbia, USC, Texas, FIU all have named Brazilian-heritage funds",
+      "Don't pay 'agência de visto' BRL 5,000-25,000 — DS-160 is free online, US Embassy is straightforward",
+      "Use Wise USD/BRL, Western Union, Remessa Online, or BB Cards for tuition transfers — competitive vs BB international transfer; BCB educational outflow has no annual cap with admission proof",
+      "Brazilian-American Chamber of Commerce + EducationUSA São Paulo / Rio / Brasília offer free advising",
+      "CONFEA-CREA + COREN + CRA Brazilian professional body documents can be apostilled cheaply at state cartório (BRL 30-80) — useful for US licensure later",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with clean record, clear funding, strong programme fit",
+        "Standard Fulbright Brazil / Lemann Foundation / CAPES PrInt application",
+        "Renewal of existing F-1 at any of 6 Brazilian consulates / US Embassy during winter / summer breaks",
+        "OPT or STEM OPT application during or after the programme",
+      ],
+      getALawyer: [
+        "Prior US visa refusal (B1/B2 refusal is red flag for F-1)",
+        "Brazilian criminal record (Lei Antidrogas, fraud — disclosure to USCIS mandatory)",
+        "Past US overstay or visa flag",
+        "Funding from a sponsor outside Brazil / immediate family",
+        "Brazilian asylum-related case (rare; political opposition or environmental defender persecution)",
+        "Past Lava Jato / Operation Car Wash investigation connection (family member involved in corruption scandal)",
+        "Transfer from UK / Canadian / Australian student visa to US F-1",
+        "Same-sex partner accompanying — Brazil recognises same-sex marriage (2011); US recognises; derivative visas straightforward",
+        "Unresolved Brazilian military obligation (males 18-45 with CDI deferral approaching expiry)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // MEXICAN → US — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "MX:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "TN Visa under USMCA (former NAFTA) — Mexico's unique fast-track work visa",
+        why: "Mexicans (and Canadians) qualify for the TN Visa under USMCA (replaced NAFTA in 2020). Available for ~60 specified professional occupations (engineer, scientist, accountant, lawyer, teacher, registered nurse, pharmacist, physical therapist, social worker, computer systems analyst, etc.) requiring Bachelor's degree (state licensure for regulated). TN is faster than H-1B (no lottery, no PERM, processable in days at US border / consulate), renewable in 3-year increments indefinitely. Mexican applicants apply at US Consulate Tijuana / Ciudad Juárez / Monterrey / Guadalajara / Mexico City / Hermosillo / Matamoros / Nogales / Nuevo Laredo via DS-160. Initial entry can also be at land border with proper documents.",
+      },
+      {
+        label: "H-1B Specialty Occupation OR L-1 intracompany OR E-2 Treaty Investor",
+        why: "Beyond TN, Mexicans qualify for H-1B (cap-subject lottery, ~35-40% win rate), L-1A/B (intracompany transfer from Mexican parent — Telmex/America Movil, Cemex, Grupo Bimbo, Walmart de México, Banamex/Citibanamex, FEMSA, Liverpool, Soriana have well-trodden L-1 paths), and E-2 Treaty Investor (under 1994 NAFTA, continued under USMCA — substantial Mexican investment in US business, ~$100,000+ typical). Mexico-US treaty relationship is one of the deepest in the world.",
+      },
+      {
+        label: "DS-160 + Apostilled Mexican degrees + WES/ECE/AICE credential evaluation",
+        why: "DS-160 online application, then book interview at US Consulate. Mexican degree certificates (Licenciatura, Maestría, Doctorado) need Apostille via Secretaría de Educación Pública (SEP) authentication first (for the university degree validity within Mexico), then apostille via Secretaría de Relaciones Exteriores (SRE — Mexico is Hague signatory since 1995). Cost MXN 600-1,500 per document. WES, ECE, or AICE foreign credential evaluation for US employer petition or licensure. Mexican Licenciatura (4-5 years) typically maps to US Bachelor's; Maestría to US Master's.",
+      },
+      {
+        label: "Mexican Carta de Antecedentes No Penales + medical considerations",
+        why: "Mexican Federal Carta de Antecedentes No Penales (criminal record certificate) at INM (Instituto Nacional de Migración) or at Federal Republican Court — free, 7-21 days. State-level antecedentes also available. For visa interview, having this in hand isn't always required but accelerates the process. Mexican medical examinations at US-designated panel physicians in Mexico (most border cities have IOM-equivalent panel physicians) — required for some adjustment-of-status categories but not for TN/H-1B/L-1 at consular stage.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route — TN, H-1B, L-1, or E-2",
+        prompt: "Mexicans have unusually many routes. State explicitly: TN (USMCA professional list — fast-track, no PERM, renewable indefinitely — Mexico's unique advantage), H-1B (cap-subject lottery — only worthwhile if TN doesn't apply to your role), L-1A/B (intracompany transfer with 12+ months qualifying employment at Mexican parent), E-2 Treaty Investor (substantial Mexican investment). Show research — TN is dramatically easier than H-1B for Mexican applicants whose role qualifies.",
+      },
+      {
+        heading: "Your Mexican employer / academic credentials",
+        prompt: "List Mexican employer chronologically, role, salary in MXN with USD equivalent, supervisor name + contact. Mexican universities (UNAM, ITESM Tecnológico de Monterrey, IPN, UAM Universidad Autónoma Metropolitana, UDLAP Universidad de las Américas Puebla, ITAM, UAA Universidad Anáhuac) are well-known to US Consulates Mexico. For L-1, document the 12+ month qualifying employment at Mexican parent.",
+      },
+      {
+        heading: "Long-term plan — TN renewal forever vs H-1B + green card",
+        prompt: "TN is non-immigrant (no dual intent officially) — can't openly state green-card plans on TN. However, TN holders can switch to H-1B during cap season for dual-intent. H-1B and L-1 allow dual intent — open green-card plans (EB-1/EB-2/EB-3 via PERM). State honest plan: temporary TN with indefinite renewal, longer-term US career via H-1B transition + PERM, or E-2 indefinite renewal. Mexico permits dual citizenship; US permits dual citizenship.",
+      },
+      {
+        heading: "Family + dependants + Mexican school year",
+        prompt: "Spouse on TN: TD (no work authorization). Spouse on H-1B: H-4 with EAD if H-1B principal is in I-140 approved stage. Spouse on L-1: L-2 with automatic work auth since 2023. Spouse on E-2: E-2D with full work rights. Mexican school year (August-July) timing: arrival before US August school start. International schools in Mexico (American School Mexico City, ASF, Greengates) ease US school transition.",
+      },
+    ],
+    moneySavingTips: [
+      "TN visa application is dramatically cheaper than H-1B: $185 DS-160 + no employer petition fee (TN is direct consular / port-of-entry process)",
+      "TN renewable indefinitely in 3-year increments — no annual lottery, no PERM costs, no green-card-bridging fees",
+      "Apply at US Consulate in your Mexican city of residence — Tijuana / Juárez / Monterrey / Guadalajara / Mexico City / Hermosillo are major TN/H-1B processing centres",
+      "Use WES iGPA Calculator (free online) before paying for full evaluation",
+      "Apostille via SRE: MXN 600-1,500/document, ~5 working days; SEP authentication: MXN 600-1,000",
+      "Open a US-domiciled bank account with Wise USD, Mercury Business, or Banamex Miami (Citibanamex US branches), BBVA Compass (Mexico-friendly) before relocation",
+      "Mexican Embassy DC + Consulates (Atlanta, Boston, Chicago, Houston, LA, Miami, NY, SF, Albuquerque, Anchorage, Austin, Boise, Dallas, Denver, Detroit, Fresno, Indianapolis, Kansas City, Las Vegas, Little Rock, McAllen, Milwaukee, Minneapolis, Nashville, New Orleans, Oklahoma City, Omaha, Orlando, Philadelphia, Phoenix, Portland, Raleigh, Sacramento, Salt Lake City, San Antonio, San Bernardino, San Diego, San Jose, Seattle, St Paul, Tucson, Yuma) — 50+ Mexican consulates in US, more than any other country",
+      "Avoid Mexican 'asesores migratorios' charging MXN 30,000-150,000 for TN — TN is one of the simplest US visas; DIY is realistic for cooperative employers",
+      "USMCA-related tax implications: file Form 8854 if expatriating from Mexico; US tax treaty with Mexico (1992) prevents double-taxation; Mexican Resico simplified regime affects post-departure income",
+      "Use Banamex, BBVA México, Santander México, or Banorte for tuition / large remittance — competitive vs Wise for high-volume transfers",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard TN visa application at US Consulate or land border with cooperating US employer support letter",
+        "H-1B / L-1 with named US employer, clean record, clear Mexican degree mapping",
+        "DS-160 interview prep at any of 9 Mexican US Consulates",
+        "Spouse / dependent derivative applications (TD, H-4, L-2, E-2D)",
+        "TN renewal in 3-year increments via consulate or port-of-entry",
+        "PERM-based EB-2 / EB-3 green card (Mexicans are CURRENT — no per-country backlog as of 2025)",
+      ],
+      getALawyer: [
+        "TN role outside USMCA's 60-occupation list (some roles are borderline — e.g., 'data scientist' isn't listed but 'computer systems analyst' is)",
+        "E-2 Treaty Investor — substantiality, source-of-funds, 'real and operating' enterprise tests",
+        "EB-1A / EB-1B / O-1 — extraordinary ability for Mexican researchers / executives / artists / chefs / athletes",
+        "Concurrent Mexican exit tax considerations on substantial holdings",
+        "Prior US visa refusal or US overstay (B1/B2 overstay common for Mexicans)",
+        "Mexican criminal record (drug-related cases — disclosure to USCIS / DOS mandatory; cartel-region cases sensitive)",
+        "Past unauthorised US entry / border crossing (significant legal implications for future TN/H-1B eligibility)",
+        "Same-sex spouse — Mexico recognises same-sex marriage federally (2022); US recognises; derivative visas straightforward",
+        "Dual Mexican-other passport (Mexican-Spanish, Mexican-Italian, Mexican-Lebanese — apply via Mexican passport)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // INDONESIAN → SAUDI ARABIA — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "ID:SA:work": {
+    whatCarriesWeight: [
+      {
+        label: "Kafala-reformed Work Permit via HRSD + Indonesian-Saudi labour migration framework",
+        why: "Indonesians are Saudi's 4th-largest expat group (~1.8 million), with strong representation in domestic work, hospitality, construction, and recently growing in professional/technical sectors. Your Saudi employer applies to HRSD for Work Permit, then issues your iqama within 90 days of arrival. The March 2021 Labour Reform Initiative + Indonesia-Saudi MOU on migrant workers (2024 updated) allow easier job switching, fairer recruitment, and protection from passport-holding. Iqama fee SAR 9,600/year — paid by employer for skilled workers.",
+      },
+      {
+        label: "Indonesian educational certificates attested via Kemenkumham + Saudi Embassy Jakarta",
+        why: "Indonesian degree certificates need attestation: 1) issuing university stamp, 2) Kemendikbudristek (Ministry of Education) for graduate-level / Kemenag for Islamic studies, 3) Kemenkumham Apostille (Indonesia joined Hague Convention 2022) — IDR 50,000-150,000 per document, 4) Saudi Embassy Jakarta (Jl. M.T. Haryono Kav. 27) attestation IDR 1,000,000-3,000,000, 5) Saudi MOFA on arrival. Allow 4-8 weeks. Indonesian Islamic university degrees (UIN, IAIN — including from Al-Azhar Egyptian campuses, Madinah University Indonesian graduates) are especially valued for religious / educational roles in Saudi.",
+      },
+      {
+        label: "BP2MI overseas worker registration + Saudi recruitment quotas",
+        why: "Indonesia's BP2MI (Badan Pelindungan Pekerja Migran Indonesia, formerly BNP2TKI) requires registration for all overseas workers — issues BNP2TKI/BP2MI Certificate and TKI (Tenaga Kerja Indonesia) Pass. Documentation includes pre-departure orientation (Pembekalan Akhir Pemberangkatan PAP) at BLK Luar Negeri training centre, medical clearance, language proficiency (basic Arabic for non-professional roles), and insurance. Saudi imposes quotas on Indonesian domestic workers — only certain agencies are licensed and quotas reset periodically.",
+      },
+      {
+        label: "GAMCA medical + Indonesian Police Clearance + Indonesian passport endorsement",
+        why: "Indonesians must complete GAMCA medical at authorised Indonesian centres before flying — Jakarta (RS Medika), Surabaya, Medan, Makassar — IDR 1,500,000-3,500,000. TB, HIV, Hep B/C screening. Indonesian Police Clearance Certificate (SKCK — Surat Keterangan Catatan Kepolisian) from local Polsek/Polres/Polda — IDR 30,000, 7-14 days. Indonesian passport must be endorsed (TKI status stamp) at airport immigration on departure — failure to do so triggers smuggling charges on return.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role, your Saudi employer, BP2MI registration, and Nitaqat tier",
+        prompt: "Saudi doesn't ask personal-statement narrative at consular stage. For Indonesians: Saudi employer CR number, HRSD Nitaqat classification, role + salary band (SAR 4,000-25,000/month range for most Indonesians), specific region (Riyadh / Jeddah / Dammam / Khobar / Madinah / Makkah — religious-sector workers concentrate in Madinah/Makkah). Document BP2MI registration with TKI Pass / OEC reference number. Highlight Indonesian Islamic university credentials if applying for religious / educational role.",
+      },
+      {
+        heading: "Your Indonesian work history — NIK, NPWP, BPJS, exact dates",
+        prompt: "List every Indonesian employer with month-precision dates, role, salary in IDR, supervisor name + WhatsApp. Include NIK (Nomor Induk Kependudukan — national ID), NPWP (Nomor Pokok Wajib Pajak — tax number), and BPJS Ketenagakerjaan (employment insurance) registration — Saudi attestation occasionally requires these. Past Gulf experience (UAE, Qatar, Kuwait, Malaysia) strengthens applications.",
+      },
+      {
+        heading: "Family + sponsorship + Indonesian school year",
+        prompt: "Dependent iqama tied to your sponsorship. Threshold: SAR 4,000-6,000/month + housing allowance for spouse/children. Indonesian spouse + children carry Indonesian passports — separate attestation chain (Indonesian Kemenkumham Apostille + Saudi Embassy Jakarta) needed. Indonesian school year (July-June) timing: Indonesian schools in Saudi (Sekolah Indonesia Riyadh, Sekolah Indonesia Jeddah, Sekolah Indonesia Mekkah) follow Indonesian Kurikulum Merdeka curriculum.",
+      },
+      {
+        heading: "Long-term plan — Premium Residency, return to Indonesia, or rotation",
+        prompt: "Saudi naturalisation for Indonesian workers is extremely rare. State plan: Premium Residency target (SAR 100,000/year or SAR 800,000 permanent), temporary contract with planned Indonesia return (most common for Indonesian TKI), or onward migration (rare for Indonesians vs Indian/Pakistani who progress to UK/Canada). Tax: Indonesian tax-resident if you maintain residence ties + spend >183 days; OFW-style exemption for TKI status; Saudi has no personal income tax.",
+      },
+    ],
+    moneySavingTips: [
+      "Employer typically pays iqama fees for skilled workers — clarify at offer stage",
+      "Indonesian degree attestation via Kemenkumham Apostille portal: IDR 50,000-150,000/document",
+      "Saudi Embassy Jakarta attestation: IDR 1,000,000-3,000,000/document",
+      "GAMCA medical at authorised Indonesian centres: IDR 1,500,000-3,500,000 — standardised, all GAMCA-accredited equally accepted",
+      "BP2MI registration is FREE — don't pay 'agensi TKI' IDR 2,000,000-10,000,000 for registration",
+      "Pre-departure orientation (PAP) is FREE at BLK Luar Negeri centres — don't pay for 'expedited PAP'",
+      "SKCK (Indonesian Police Clearance): IDR 30,000 at local Polsek — don't pay calo (touts) IDR 200,000+",
+      "Open Al Rajhi, SNB, Riyad Bank, or Alinma salary account in Saudi — Indonesian diaspora-friendly with IDR remittance discounts",
+      "Apply for Indonesian Tax Residency Certificate at DJP if you'll be Saudi-resident >183 days/year — exempts Saudi income from Indonesian global-income tax",
+      "Use Western Union, MoneyGram, Al Rajhi Tahweel, or Wise IDR/SAR for remittance to Indonesia",
+      "End of Service Gratuity calculation: 0.5 month salary/year for first 5 years, 1 month/year after — keep records of basic salary",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard employer-led Work Permit + iqama + dependent iqama",
+        "BP2MI / TKI registration + pre-departure orientation",
+        "GAMCA medical, biometric, iqama issuance (employer-facilitated)",
+        "Iqama renewal via Absher app",
+        "Premium Residency application via online portal",
+        "End of Service Gratuity calculation",
+      ],
+      getALawyer: [
+        "Past Saudi 'huroob' (absconder) status",
+        "Indonesian criminal record (UU Narkotika narcotics, terrorism-related — Saudi rigorously checks)",
+        "Previous Gulf labour dispute (Malaysia, UAE, Qatar passport-holding case, Kuwait sponsor-side issues)",
+        "Domestic worker visa (Tadbeer system) — separate visa category with different protections",
+        "Switching Saudi sponsor mid-contract — easier under 2021 Labour Reform but edge cases benefit from lawyer",
+        "Real estate Premium Residency application",
+        "Family member with prior Saudi conviction or labour ban",
+        "Past TKI overstay on previous Saudi contract",
+        "Indonesian Christian / Buddhist religious affiliation — Saudi forbids non-Muslim worship publicly; some Indonesian gatherings flagged",
+        "JI / FPI / extremist political affiliation flag (Indonesian Special Branch / Densus 88 record)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // RUSSIAN → UAE — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "RU:AE:work": {
+    whatCarriesWeight: [
+      {
+        label: "MOHRE Work Permit + Russian tech / finance migration surge post-2022",
+        why: "Russian migration to UAE accelerated dramatically after February 2022 (Ukraine war) — estimated 100,000+ Russians relocated to UAE 2022-2024, concentrated in Dubai (tech, finance, real estate, crypto). Your UAE employer applies to MOHRE for Work Permit, GDRFA (Dubai) / ICA (Abu Dhabi) for Entry Permit. Russians benefit from UAE's neutrality on Russia sanctions and absence of personal income tax. UAE doesn't recognise OFAC/EU sanctions extraterritorially for individual residency.",
+      },
+      {
+        label: "Russian educational certificates attested via Konsulskaya Legalizatsiya + UAE Embassy Moscow",
+        why: "Russian degree certificates (Bakalavr, Magistr, Spetsialist, Kandidat Nauk, Doktor Nauk) need attestation chain: 1) issuing institution stamp + Rosobrnadzor verification, 2) Russian Ministry of Foreign Affairs (Konsulskaya Legalizatsiya — Russia is NOT Hague Apostille signatory for educational documents going to UAE; full legalisation required), 3) UAE Embassy Moscow (Mamonovskiy Pereulok 3 building 1) attestation, 4) UAE MOFA on arrival. Cost RUB 5,000-15,000 + AED 150-300. Allow 4-8 weeks. Russian elite universities (MGU, MFTI, MGIMO, HSE, ITMO, SPbGU) are well-known to UAE employers.",
+      },
+      {
+        label: "Salary tier + Golden Visa potential + Russian Premium Residency popularity",
+        why: "UAE work visa tiers: Standard / Skilled / Highly Skilled / Golden Visa. Russian professionals earning AED 30,000+/month (typically tech leads, finance professionals, real estate investors, crypto / fintech operators) qualify for Golden Visa directly. Real estate investors with AED 2M+ Dubai property qualify — Russian investment in Dubai real estate accelerated post-2022 (UAE doesn't apply sanctions on individual property ownership). Russians have become one of the largest Golden Visa cohorts.",
+      },
+      {
+        label: "Medical fitness + Russian sanctions / SWIFT banking considerations",
+        why: "Within 60 days of Entry Permit: medical fitness at DHA / SEHA / MOHAP (AED 320-750). TB, HIV, Hep B/C screening. Banking: Russian-issued credit cards (Mir, MTS, etc.) don't work internationally; SWIFT-sanctioned Russian banks (Sberbank, VTB, Alfa-Bank, Gazprombank, Otkritie) cannot transfer to UAE banks under most circumstances. Russians typically open UAE accounts (ENBD, ADCB, FAB, HSBC UAE) with cash deposits or third-country (Kazakhstan, Georgia, Armenia, Türkiye, Serbia) bank transfers as workaround.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role, your UAE employer, sanctions compliance, salary tier",
+        prompt: "UAE doesn't ask personal-statement narrative at consular stage (employer-led via MOHRE). For Russians: UAE employer Trade Licence number, MOHRE establishment registration, role + salary band (AED 4,000+/month minimum), specific emirate (Dubai for tech/finance/crypto; Abu Dhabi for energy/oil/gas). Highlight prior international work experience (Russian multinationals like Yandex, VK, Tinkoff, Sberbank — though sanctioned status of some affects employer-side compliance), Russian elite university credentials, and language skills (Russian-Arabic-English combinations are valuable).",
+      },
+      {
+        heading: "Your Russian work history — INN, SNILS, exact dates",
+        prompt: "List every Russian employer with month-precision dates, role, salary in RUB, supervisor name + email. Include INN (Individual Tax Number from Federal Tax Service FNS), SNILS (Social Security Insurance Account Number), and any Russian professional body memberships. For Russians who left during 2022 mobilisation wave, document the timeline carefully — UAE doesn't require this but UAE employer may. Past international work (Türkiye / Serbia / Armenia / Georgia / Kazakhstan / UAE-stop-then-continue) needs documentation.",
+      },
+      {
+        heading: "Family + sponsorship + Russian school options in UAE",
+        prompt: "Dependent Residence visas tied to your sponsorship. Threshold: AED 4,000/month + accommodation for spouse/children. Russian spouse + children carry Russian passports — separate attestation chain via Konsulskaya Legalizatsiya + UAE Embassy Moscow. Russian schools in UAE (Russian Embassy School Abu Dhabi, Russian School Dubai, Lermontov School Sharjah, RIIS Russian International Innovative School) follow Russian Federation curriculum.",
+      },
+      {
+        heading: "Long-term plan — Golden Visa, return to Russia, or onward migration",
+        prompt: "UAE work visas don't lead to UAE citizenship. State plan: Golden Visa (significant Russian cohort using this route), temporary contract with planned Russia return (rare for post-2022 emigres), or onward migration (Russians often progress to Cyprus / Israel / Türkiye / Serbia / Georgia / Armenia, with UAE as professional springboard). Russian tax: tax-resident if you spend >183 days/year in Russia; UAE has no personal income tax; CRS reporting affects future tax compliance.",
+      },
+    ],
+    moneySavingTips: [
+      "Employer MUST pay all work visa costs per UAE Labour Law — refuse 'visa fee deduction'",
+      "Russian degree attestation via UAE Embassy Moscow: queue manageable — book online via embassy portal",
+      "MFA Konsulskaya Legalizatsiya: RUB 5,000-15,000/document",
+      "Medical fitness: DHA Dubai centres AED 320-450; cheaper than SEHA premium",
+      "Open ENBD, ADCB, FAB, HSBC UAE, or Mashreq salary account — corporate sponsor often gets fee waivers; bring cash deposits (USD/EUR) for initial funding given Russian banking restrictions",
+      "Russian payment workaround: open Kazakhstan / Armenia / Georgia / Türkiye / Serbia bank account first, transfer to UAE later — these third countries serve as financial intermediaries given Russia-EU/US banking sanctions",
+      "Russian tax residency: if leaving Russia, file Russian tax return for partial year; CRS automatically reports UAE account balances to Russian Federal Tax Service (FNS), affecting eventual return",
+      "UAE Golden Visa fee AED 2,800-3,800 (5-year) — apply via ICA / GDRFA portal direct",
+      "Use Wise GBP/EUR/USD (with non-Russian sender accounts), Western Union, or LuLu Money for remittance to UAE — direct Russian bank transfer is severely restricted post-2022",
+      "Avoid 'Russian-UAE migration consultancies' charging USD 5,000-30,000 — UAE employer's PRO handles MOHRE; Russian-side attestation is largely self-service",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard employer-led work permit + entry permit + residence visa with attested certificates",
+        "Medical fitness, Emirates ID biometric, visa stamping (employer-facilitated)",
+        "Dependent visa for spouse + children once residence visa + qualifying salary established",
+        "Golden Visa application via salary or property route",
+        "End of Service Gratuity calculation",
+      ],
+      getALawyer: [
+        "Sanctioned-employer history (Sberbank, VTB, Alfa-Bank, Gazprombank, Rosneft, Lukoil — UAE employer may have compliance concerns)",
+        "OFAC SDN List individual sanctions (some Russian oligarchs face individual sanctions affecting Golden Visa)",
+        "Russian military / FSB / Wagner / mercenary background — UAE employer-side compliance significant",
+        "Past UAE labour ban",
+        "Russian criminal record (politicheski statia 282-280 'political' charges complicate)",
+        "Past Türkiye / Serbia / Cyprus / Israel migration history needing reconciliation",
+        "Switching UAE sponsor mid-contract",
+        "Real estate Golden Visa with crypto-funded purchase (UAE accepts but documentation chain matters)",
+        "Same-sex partner — Russia criminalises 'gay propaganda' (2023 'extremist movement' law); UAE doesn't recognise same-sex marriage; documentation chain doesn't exist",
+        "Pending Russian conscription / mobilisation order — affects future Russian re-entry",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // KOREAN → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "KR:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from a SEVP-certified US school + SEVIS I-901 paid",
+        why: "Korea sends ~43,000 students to the US annually — among the top-5 globally. Your US institution issues Form I-20 (F-1) or DS-2019 (J-1) once admitted and proof-of-funds verified. Pay SEVIS I-901 fee ($350 F-1 / $220 J-1) before booking DS-160. Korean applicants book at US Embassy Seoul (Sejong-daero, Jongno-gu — Gwanghwamun) — single consulate handles all of Korea. Slots open daily early morning; book through US Visa Information Service Korea portal.",
+      },
+      {
+        label: "Strong source-of-funds + Korean banking efficiency",
+        why: "Show 1st-year tuition + living costs ($40-80k). Document Korean bank statements (KB Kookmin, Shinhan, Woori, Hana, NH NongHyup, KEB Hana, Industrial Bank of Korea) with USD-equivalent at Bank of Korea rate. Korean families typically have multiple bank accounts and investment products (Hong-tong joong-keum CMA, ELS, beneficial ownership of small business) — document each clearly. Avoid lump-sum deposits within 90 days. Korean low refusal rates (~5-10%) mean documentation efficiency matters more than narrative.",
+      },
+      {
+        label: "Korean academic transcripts + Apostille (Korea joined Hague Convention 2007)",
+        why: "Korean 학교생활기록부 (high school record), 졸업증명서 (graduation certificate), 성적증명서 (transcript) need: 1) school stamp / certified copy, 2) Apostille via Korean MOFA (외교부) at Anguk-dong Tower Tokyo (Tokyo office serves diaspora) or provincial Education Offices — Korea is Hague Apostille signatory since 2007. Cost KRW 1,000-2,000 per Apostille, 2-3 working days. WES, ECE, or AICE foreign credential evaluation for some US universities.",
+      },
+      {
+        label: "Korean male military service status (males 18-35) — Byeong-mu-cheong + 출국허가",
+        why: "All Korean males 18-35 must show resolved military obligation. Hyeong-yeok (completed active duty), Bo-chung-yeok (supplementary service), Yegun (reserves), Myeon-yeok (exempt), or Yeon-gi (deferral with study abroad approval through 교육부 or 내무부 entry-exit permit 출국허가). 兵務廳 (Byeong-mu-cheong / MMA — Military Manpower Administration) certificate attached to DS-160. Recent change: Korea extended conscription period back to longer durations affecting timing of overseas study. Without proper deferral, future return triggers immediate conscription.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this specific US programme over Korean SKY universities or alternatives",
+        prompt: "Korea has elite universities (SKY = Seoul National 서울대, Korea 고려대, Yonsei 연세대; plus KAIST, POSTECH, Sungkyunkwan 성균관, Hanyang 한양). Explain why your US programme offers something unique — research lab, specific professor, industry network (Silicon Valley for CS, Wall Street for finance, Boston for biotech, LA for entertainment / K-pop crossover), specialised programme. Reference faculty publications, course offerings.",
+      },
+      {
+        heading: "Funding — Korean family / chaebol scholarship / Fulbright Korea",
+        prompt: "Quantify: tuition $X, living $Y, total Year 1 $Z. Then show coverage: family contribution KRW X (with bank statement, parents' Korean income certificate, family business 사업자등록증 if business-owner), scholarship (Fulbright Korea, KGSP Korean Government Scholarship Program for returning Koreans, Hyundai/Samsung/LG/SK/Lotte Foundation scholarships, Asan Foundation, Posco TJ Park Foundation). Korean banks issue 'Verification of Funds' (잔액증명서) — standard at US consular interviews.",
+      },
+      {
+        heading: "Post-graduation plan — your return to Korea + military service plan",
+        prompt: "F-1 requires intent to return. State which Korean sector: Samsung Electronics / Samsung SDS / Samsung Bioepis, LG Electronics / LG Display / LG Energy Solution, SK Hynix / SK Telecom / SK Innovation, Hyundai Motor / Hyundai Mobis / Kia, POSCO, Naver / Kakao / Coupang / Krafton (gaming) — Korea has world-class tech/automotive/entertainment sectors that absorb US-educated graduates. For male applicants, include military service plan: complete service before US study OR defer with 출국허가 and serve after graduation.",
+      },
+      {
+        heading: "Family ties + Korean cultural context",
+        prompt: "List parents (occupation, location — Seoul / Busan / Daegu / Incheon / Daejeon / Gwangju / Suwon district level), siblings, partner. Mention Korean property — family apartment with 등기 (registered title), Korean bank accounts, Korean phone number for SMS-OTP. For male applicants, military service status explicitly with 병적증명서 (military record) attached.",
+      },
+    ],
+    moneySavingTips: [
+      "F-1 visa fee is $185; pay via Citibank Korea or Standard Chartered Korea — no reciprocity fee for Koreans",
+      "Apostille via Korean MOFA: KRW 1,000-2,000/document, 2-3 working days",
+      "Don't pay 'visa consultancy' agencies KRW 1-3M — DS-160 is free, US Embassy Seoul is efficient, agencies don't influence consular decisions",
+      "Korean applicants are eligible for Fulbright Korea (~$30,000 + tuition for grad students), Korean Government Scholarship Program (KGSP — for returning Koreans), Samsung / LG / SK / Hyundai / Hanwha / Posco Foundation scholarships (chaebol scholarships are highly competitive)",
+      "Many US universities have Korean-origin scholarship endowments — Harvard, MIT, Stanford, Yale, Columbia, USC, Texas, NYU all have named Korean-heritage funds",
+      "KB Kookmin, Shinhan, Hana, Woori student remittance for tuition transfers — competitive vs retail; BOK educational outflow has no annual cap with admission proof",
+      "Use Wise USD/KRW, Western Union, or BOK-approved educational remittance — Korean banks have streamlined educational outflow process",
+      "Korean Embassy DC + Consulates (LA, NYC, SF, Chicago, Houston, Atlanta, Boston, Seattle, Honolulu) offer free notarisation for Korean citizens",
+      "K-ETA reciprocity: US citizens currently visa-exempt for Korean entry under K-ETA; Korean students don't need US ESTA (have F-1)",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with clean record, clear funding, strong programme fit",
+        "Standard Fulbright Korea or KGSP scholarship F-1 / J-1 application",
+        "Renewal of existing F-1 at US Embassy Seoul during winter / summer breaks",
+        "OPT or STEM OPT application during or after the programme",
+        "Future transition from F-1 to H-1B / O-1",
+      ],
+      getALawyer: [
+        "Prior US visa refusal (any category)",
+        "Korean criminal record (DUI, drug under 마약류 관리법 are absolute disqualifier)",
+        "Unresolved Korean military obligation (males 18-35 with active 출국허가 approaching expiry)",
+        "STEM field with potential SAO sensitivity (nuclear, aerospace, advanced AI, advanced materials, dual-use biotech)",
+        "Family member in Korean military / NIS / nuclear establishment",
+        "Past US overstay or visa flag",
+        "Funding from a sponsor outside Korea / immediate family",
+        "Transfer from UK/Canadian/Australian/Japanese student visa to US F-1",
+        "Same-sex partner accompanying — Korea doesn't recognise same-sex marriage; US recognises; F-2 derivative for same-sex spouse needs careful documentation",
+        "Dual Korean-other passport (Korean-American adoptee with US citizenship — apply via US passport, not Korean)",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { Landmark, UserX, Ban } from "lucide-react";
+import { HeroDestinationSearch } from "@/components/HeroDestinationSearch";
 import { LookupForm } from "@/components/LookupForm";
 import { RouteCard } from "@/components/RouteCard";
 import { AllCountriesGrid } from "@/components/AllCountriesGrid";
@@ -54,97 +55,46 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
 
-      {/* Hero — wizard-led. The most aspirational moment on the site is
-          picking your dream destination, not retrieving a known answer. */}
+      {/* Hero — destination-led. Most homepage visitors already have a
+          country in mind, so the destination input is the visual centre
+          and the passport input is a smaller optional companion. Discovery
+          ("where can I move?") is a deliberate secondary path below. */}
       <section className="hero-gradient relative overflow-hidden">
         <div className="hero-globe" aria-hidden="true" />
         <div className="relative mx-auto max-w-4xl px-4 pt-16 pb-20 sm:pt-24 sm:pb-28">
-          <div className="text-center mb-10">
+          <div className="text-center mb-8">
             <p className="inline-block text-[11px] font-semibold tracking-[0.18em] uppercase px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 ring-1 ring-emerald-200/60 dark:ring-emerald-900/60 mb-6">
               Every passport · Every destination · No middleman
             </p>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-6 text-slate-900 dark:text-slate-50">
-              Where can you go
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-5 text-slate-900 dark:text-slate-50">
+              What visa do you need
               <span className="bg-gradient-to-br from-blue-600 to-emerald-600 bg-clip-text text-transparent">?</span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-              Pick your nationality and what you want to do. We&apos;ll show every country open to
-              you, ranked easiest first — sourced from each destination&apos;s government portal.
+              Instant answers, sourced directly from each destination&apos;s government portal —
+              not a middleman or a content farm.
             </p>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 card-elev p-6 sm:p-8">
-            <form method="GET" action="/finder" className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="hero-passport" className="block text-sm font-semibold mb-2">
-                  Your nationality
-                </label>
-                <select
-                  id="hero-passport"
-                  name="passport"
-                  required
-                  defaultValue=""
-                  className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2.5 text-sm"
-                >
-                  <option value="" disabled>Select a nationality…</option>
-                  {COUNTRY_LIST.map((c) => (
-                    <option key={c.iso2} value={c.iso2}>
-                      {c.flag} {NATIONALITY[c.iso2] ?? c.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label htmlFor="hero-goal" className="block text-sm font-semibold mb-2">
-                  What do you want to do?
-                </label>
-                <select
-                  id="hero-goal"
-                  name="goal"
-                  required
-                  defaultValue=""
-                  className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2.5 text-sm"
-                >
-                  <option value="" disabled>Pick a goal…</option>
-                  <option value="visit">Visit short-term (tourism)</option>
-                  <option value="remote_work">Work remotely (digital nomad)</option>
-                  <option value="work_temporary">Work and travel for a year (Working Holiday)</option>
-                  <option value="live_work">Move there to live and work</option>
-                  <option value="study">Study at a foreign university</option>
-                  <option value="retire">Retire abroad</option>
-                  <option value="invest">Invest for residency / citizenship</option>
-                </select>
-              </div>
-              <div className="md:col-span-2 flex flex-wrap items-center gap-3">
-                <button
-                  type="submit"
-                  className="plausible-event-name=HeroFinderSubmitted px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold"
-                >
-                  Show me where I can go →
-                </button>
-                <span className="text-xs text-neutral-500">
-                  Or already know the destination?{" "}
-                  <Link href="#direct" className="underline hover:no-underline">
-                    Direct lookup ↓
-                  </Link>
-                </span>
-              </div>
-            </form>
-          </div>
+          <HeroDestinationSearch />
 
-          <div className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-neutral-500 dark:text-neutral-400">
-            <span className="inline-flex items-center gap-1.5">
-              <Landmark size={14} aria-hidden="true" className="text-emerald-600 dark:text-emerald-400" />
-              Every link goes to the government, not a middleman
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <UserX size={14} aria-hidden="true" className="text-emerald-600 dark:text-emerald-400" />
-              No account needed
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <Ban size={14} aria-hidden="true" className="text-emerald-600 dark:text-emerald-400" />
-              We never sell visa services
-            </span>
+          {/* Three short value props — what / how fast / why */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto text-center">
+            <ValueProp
+              icon={Landmark}
+              title="Straight from the source"
+              body="Every Apply button links to the destination's government portal — never a middleman."
+            />
+            <ValueProp
+              icon={UserX}
+              title="Instant, no signup"
+              body="Answers in seconds. No account, no email, no waiting for a consultant."
+            />
+            <ValueProp
+              icon={Ban}
+              title="No service fees"
+              body="Government portals are free. We never charge to fill out a form you can fill yourself."
+            />
           </div>
 
           {stats && stats.totalRecords > 0 && (
@@ -332,6 +282,24 @@ function Stat({ n, label }: { n: number; label: string }) {
         {new Intl.NumberFormat("en").format(n)}
       </p>
       <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-0.5">{label}</p>
+    </div>
+  );
+}
+
+function ValueProp({
+  icon: Icon,
+  title,
+  body,
+}: {
+  icon: typeof Landmark;
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="p-4 rounded-xl bg-white/70 dark:bg-neutral-900/50 backdrop-blur border border-neutral-200/70 dark:border-neutral-800">
+      <Icon size={18} aria-hidden className="text-emerald-600 dark:text-emerald-400 mx-auto mb-2" />
+      <p className="text-sm font-semibold mb-0.5">{title}</p>
+      <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-snug">{body}</p>
     </div>
   );
 }

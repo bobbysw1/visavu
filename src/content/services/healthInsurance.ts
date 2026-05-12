@@ -18,6 +18,9 @@ export const HEALTH_INSURANCE: RelocationService[] = [
     badge: "recommended",
     purposes: ["work", "study", "family", "tourism"],
     cta: "Get a quote",
+    rating: 3.6,
+    reviewCount: 4_200,
+    city: "Bloomfield CT · Geneva",
   },
   {
     id: "hi-allianz-care",

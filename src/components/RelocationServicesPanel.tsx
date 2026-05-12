@@ -192,6 +192,7 @@ const BADGE_TONE: Record<NonNullable<RelocationService["badge"]>, string> = {
   official: "bg-blue-100 text-blue-900 dark:bg-blue-900/40 dark:text-blue-200",
   value: "bg-violet-100 text-violet-900 dark:bg-violet-900/40 dark:text-violet-200",
   global: "bg-neutral-100 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-200",
+  sponsored: "bg-amber-100 text-amber-900 dark:bg-amber-900/40 dark:text-amber-200",
 };
 
 const BADGE_LABEL: Record<NonNullable<RelocationService["badge"]>, string> = {
@@ -199,6 +200,7 @@ const BADGE_LABEL: Record<NonNullable<RelocationService["badge"]>, string> = {
   official: "Official",
   value: "Value pick",
   global: "Global",
+  sponsored: "Sponsored",
 };
 
 export function ServiceCard({
@@ -220,51 +222,124 @@ export function ServiceCard({
         campaign: service.category,
       })
     : service.url;
+  const bookingHref = service.bookingUrl
+    ? affiliateUrl(service.bookingUrl, {
+        passportIso2,
+        destinationIso2,
+        purpose,
+        campaign: `${service.category}_booking`,
+      })
+    : null;
+
+  // Sponsored overrides the rendered badge so the commercial relationship
+  // is unambiguous to the user.
+  const displayBadge: NonNullable<RelocationService["badge"]> | null = service.sponsored
+    ? "sponsored"
+    : service.badge ?? null;
 
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel={service.affiliate ? "noreferrer noopener sponsored" : "noreferrer noopener"}
-      className="plausible-event-name=ServiceClicked block p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-600 transition bg-white dark:bg-neutral-950"
-      data-event-category={service.category}
-      data-event-provider={service.id}
-      data-event-affiliate={service.affiliate ? "yes" : "no"}
-      data-event-destination={destinationIso2 ?? ""}
-      data-event-passport={passportIso2 ?? ""}
-      data-event-purpose={purpose ?? ""}
+    <div
+      className={`p-4 rounded-lg border transition bg-white dark:bg-neutral-950 ${
+        service.sponsored
+          ? "border-amber-300 dark:border-amber-800 ring-1 ring-amber-200/60 dark:ring-amber-900/40"
+          : "border-neutral-200 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-600"
+      }`}
       title={service.description}
     >
       <div className="flex items-start justify-between gap-2 mb-1.5">
         <p className="font-semibold text-sm leading-tight">{service.provider}</p>
-        {service.badge && (
+        {displayBadge && (
           <span
-            className={`shrink-0 text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded ${BADGE_TONE[service.badge]}`}
+            className={`shrink-0 text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded ${BADGE_TONE[displayBadge]}`}
           >
-            {BADGE_LABEL[service.badge]}
+            {BADGE_LABEL[displayBadge]}
           </span>
         )}
       </div>
+
+      {service.rating != null && (service.reviewCount ?? 0) >= 25 && (
+        <div
+          className="flex items-center gap-1.5 mb-1.5 text-[11px] text-neutral-700 dark:text-neutral-300"
+          aria-label={`Rated ${service.rating} out of 5 by ${service.reviewCount} reviewers`}
+        >
+          <Stars rating={service.rating} />
+          <span className="font-semibold tabular-nums">{service.rating.toFixed(1)}</span>
+          <span className="text-neutral-500 dark:text-neutral-400">({(service.reviewCount ?? 0).toLocaleString()})</span>
+        </div>
+      )}
+
       <p className="text-xs text-neutral-600 dark:text-neutral-400 mb-2 leading-snug line-clamp-3">
         {service.description}
       </p>
-      <div className="flex items-center justify-between gap-2 text-xs">
-        <span
-          className={`font-medium ${
-            service.affiliate
-              ? "text-neutral-500 dark:text-neutral-400"
-              : "text-neutral-500 dark:text-neutral-400"
-          }`}
-        >
+      <div className="flex items-center justify-between gap-2 text-xs mb-2">
+        <span className="font-medium text-neutral-500 dark:text-neutral-400">
           {service.affiliate ? "Sponsored" : "Information"}
           {service.feeNote && (
             <span className="ml-1.5 text-neutral-400 dark:text-neutral-500">· {service.feeNote}</span>
           )}
-        </span>
-        <span className="text-blue-700 dark:text-blue-400 font-medium">
-          {service.cta ?? "Open service"} →
+          {service.city && (
+            <span className="ml-1.5 text-neutral-400 dark:text-neutral-500">· HQ {service.city}</span>
+          )}
         </span>
       </div>
-    </a>
+
+      <div className="flex flex-wrap gap-2">
+        <a
+          href={href}
+          target="_blank"
+          rel={service.affiliate ? "noreferrer noopener sponsored" : "noreferrer noopener"}
+          className="plausible-event-name=ServiceClicked flex-1 text-center text-xs font-semibold px-3 py-1.5 rounded-md bg-blue-600 hover:bg-blue-700 text-white"
+          data-event-category={service.category}
+          data-event-provider={service.id}
+          data-event-affiliate={service.affiliate ? "yes" : "no"}
+          data-event-destination={destinationIso2 ?? ""}
+          data-event-passport={passportIso2 ?? ""}
+          data-event-purpose={purpose ?? ""}
+        >
+          {service.cta ?? "Open service"} →
+        </a>
+        {bookingHref && (
+          <a
+            href={bookingHref}
+            target="_blank"
+            rel="noreferrer noopener sponsored"
+            className="plausible-event-name=ServiceBookingClicked text-center text-xs font-semibold px-3 py-1.5 rounded-md border border-blue-600 text-blue-700 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-950/40"
+            data-event-category={service.category}
+            data-event-provider={service.id}
+            data-event-destination={destinationIso2 ?? ""}
+            data-event-passport={passportIso2 ?? ""}
+          >
+            Book appointment
+          </a>
+        )}
+      </div>
+    </div>
   );
+}
+
+function Stars({ rating }: { rating: number }) {
+  // Render five stars with partial fills for fractional ratings.
+  const full = Math.floor(rating);
+  const half = rating - full >= 0.25 && rating - full < 0.75;
+  const stars = [] as React.ReactNode[];
+  for (let i = 0; i < 5; i++) {
+    const filled = i < full || (i === full && rating - full >= 0.75);
+    const partial = i === full && half;
+    stars.push(
+      <span
+        key={i}
+        aria-hidden
+        className={
+          filled
+            ? "text-amber-500"
+            : partial
+            ? "text-amber-500/70"
+            : "text-neutral-300 dark:text-neutral-700"
+        }
+      >
+        ★
+      </span>,
+    );
+  }
+  return <span className="leading-none">{stars}</span>;
 }

@@ -21,6 +21,9 @@ export const TRAVEL_INSURANCE: RelocationService[] = [
     badge: "global",
     feeNote: "From ~$45/4 weeks",
     cta: "Compare plans",
+    rating: 4.4,
+    reviewCount: 7400,
+    city: "San Francisco · Oslo",
   },
   {
     id: "ti-worldnomads",
@@ -33,6 +36,9 @@ export const TRAVEL_INSURANCE: RelocationService[] = [
     globalAvailable: true,
     badge: "recommended",
     cta: "Get a quote",
+    rating: 3.7,
+    reviewCount: 12_000,
+    city: "Sydney",
   },
   {
     id: "ti-allianz",

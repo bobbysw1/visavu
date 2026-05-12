@@ -103,7 +103,7 @@ export const CATEGORY_META: Record<
   },
 };
 
-export type ServiceBadge = "recommended" | "official" | "value" | "global" | null;
+export type ServiceBadge = "recommended" | "official" | "value" | "global" | "sponsored" | null;
 
 export type RelocationService = {
   id: string;
@@ -131,6 +131,25 @@ export type RelocationService = {
   feeNote?: string;
   /** Optional CTA label override (defaults to "Open service"). */
   cta?: string;
+
+  // ---- Monetisation layer (#12) ----
+  /** When true, the card is pinned to the top of its category and rendered
+   *  with the "Sponsored" badge regardless of its normal `badge` value.
+   *  Use sparingly — we still curate for utility first. */
+  sponsored?: boolean;
+  /** Aggregate rating 1.0–5.0. When set, a star strip renders next to
+   *  the provider name. Source the number from public review aggregates
+   *  (Trustpilot, Google) and update annually. */
+  rating?: number;
+  /** Number of reviews used to compute the rating. Hides the strip when
+   *  small (< 25) to avoid misleading users. */
+  reviewCount?: number;
+  /** Optional appointment-booking deep-link. When present a secondary
+   *  "Book appointment" button renders alongside the primary CTA. */
+  bookingUrl?: string;
+  /** Optional headquartered city — surfaced in tile metadata when
+   *  geolocation isn't available, helps users gauge proximity. */
+  city?: string;
 };
 
 /**
@@ -190,10 +209,13 @@ export function servicesFor(all: RelocationService[], q: ServiceLookup): Relocat
 
 function serviceRank(s: RelocationService, q: ServiceLookup): number {
   // Lower rank sorts first.
-  // Country-specific match for the queried destination/passport beats global.
+  // Sponsored partners pin to the top — but only WITHIN the country-
+  // specific tier so they can't bury a more relevant official source.
   const countrySpecificHit =
     (q.destinationIso2 && s.destinationIso2List?.includes(q.destinationIso2)) ||
     (q.passportIso2 && s.passportIso2List?.includes(q.passportIso2));
+  if (s.sponsored && countrySpecificHit) return -1;
+  if (s.sponsored && s.globalAvailable) return 0.5;
   if (s.badge === "official") return countrySpecificHit ? 0 : 1;
   if (s.badge === "recommended") return countrySpecificHit ? 1 : 2;
   if (countrySpecificHit) return 3;

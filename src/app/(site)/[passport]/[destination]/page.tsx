@@ -29,10 +29,11 @@ import {
   type Locale,
   isRtl,
 } from "@/i18n/t";
-import { resolveUserCurrency } from "@/lib/userCurrency";
+import { resolveUserCurrency, secondaryCurrencyFor } from "@/lib/userCurrency";
 import { SourcesPanel } from "@/components/SourcesPanel";
 import { TravelAdjacentRail } from "@/components/TravelAdjacentRail";
 import { RelocationServicesPanel } from "@/components/RelocationServicesPanel";
+import { EmbassyLocator } from "@/components/EmbassyLocator";
 import { CountryMetricsDashboard } from "@/components/CountryMetricsDashboard";
 import { assessDifficulty } from "@/lib/difficulty";
 import { ProfileFilter } from "@/components/ProfileFilter";
@@ -406,12 +407,18 @@ export default async function Page({
     locale = resolveLocaleFromAcceptLanguage(hdrs.get("accept-language"));
   }
 
-  // Resolve user currency: ?currency= > cookie > Accept-Language → region → currency.
+  // Resolve user currency: ?currency= > cookie > Accept-Language → region/language → currency.
   const userCurrency = resolveUserCurrency({
     queryParam: sp.currency ?? null,
     cookie: cookieJar.get("vl_currency")?.value ?? null,
     acceptLanguage: hdrs.get("accept-language"),
   });
+  // De-facto secondary currency for the visitor's home market (e.g. an
+  // Albanian visitor sees fees in ALL primary + EUR secondary). Computed
+  // from the Accept-Language → country resolution. Null when none applies.
+  const userSecondaryCurrency = secondaryCurrencyFor(
+    hdrs.get("accept-language")?.split(",")[0]?.split("-")[1] ?? null,
+  );
 
   let options: ResolvedVisaOption[] = [];
   let alternatives: Awaited<ReturnType<typeof resolveRoute>>["alternatives"] = [];
@@ -652,6 +659,7 @@ export default async function Page({
                           baselineTourismStatus={baselineTourismStatus}
                           locale={locale}
                           userCurrency={userCurrency}
+                          secondaryCurrency={userSecondaryCurrency}
                         />
                       ))}
                     </div>
@@ -681,6 +689,7 @@ export default async function Page({
                               baselineTourismStatus={baselineTourismStatus}
                               locale={locale}
                               userCurrency={userCurrency}
+                          secondaryCurrency={userSecondaryCurrency}
                             />
                           ))}
                         </div>
@@ -758,6 +767,13 @@ export default async function Page({
             <SourcesPanel passportIso2={p} destinationIso2={d} options={options} />
           </div>
         </details>
+
+        {/* Embassy + VAC locator — only when the visa actually requires
+            an in-person step. Visa-free / eTA / online e-Visa routes
+            don't need it. */}
+        {(primary?.status === "embassy_visa" || primary?.status === "restricted") && (
+          <EmbassyLocator passportIso2={p} destinationIso2={d} />
+        )}
 
         {/* Comprehensive seven-category relocation services panel: travel /
             health insurance, vaccinations, biometrics, medical checks,

@@ -81,6 +81,7 @@ export function ResultCard({
   baselineTourismStatus = null,
   locale = DEFAULT_LOCALE,
   userCurrency = null,
+  secondaryCurrency = null,
 }: {
   option: ResolvedVisaOption;
   /** The passport's tourism baseline access to the destination. Drives the
@@ -90,6 +91,10 @@ export function ResultCard({
   /** User's preferred currency (e.g. GBP, EUR). When set, fees are shown
    *  alongside an approximate conversion in their currency. */
   userCurrency?: string | null;
+  /** Optional de-facto secondary currency widely used in the visitor's
+   *  market (e.g. EUR for an Albanian visitor). Renders as a third line
+   *  below the primary local conversion. */
+  secondaryCurrency?: string | null;
 }) {
   const totalFees = option.fees
     .filter((f) => !f.optional)
@@ -210,6 +215,11 @@ export function ResultCard({
             sub={
               totalFees && userCurrency
                 ? formatFeeLocalised(totalFees.amountMinor, totalFees.currency, userCurrency).local ?? undefined
+                : undefined
+            }
+            sub2={
+              totalFees && secondaryCurrency && secondaryCurrency !== (totalFees.currency ?? "") && secondaryCurrency !== userCurrency
+                ? formatFeeLocalised(totalFees.amountMinor, totalFees.currency, secondaryCurrency).local ?? undefined
                 : undefined
             }
           />
@@ -404,7 +414,7 @@ export function ResultCard({
   );
 }
 
-function Stat({ label, value, sub }: { label: string; value: string; sub?: string }) {
+function Stat({ label, value, sub, sub2 }: { label: string; value: string; sub?: string; sub2?: string }) {
   return (
     <div>
       <dt className="text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 mb-1">
@@ -412,7 +422,8 @@ function Stat({ label, value, sub }: { label: string; value: string; sub?: strin
       </dt>
       <dd className="font-semibold text-base">
         {value}
-        {sub && <span className="text-xs font-normal text-neutral-500 ml-1">{sub}</span>}
+        {sub && <span className="block text-xs font-normal text-neutral-500">{sub}</span>}
+        {sub2 && <span className="block text-xs font-normal text-neutral-400 dark:text-neutral-500">{sub2}</span>}
       </dd>
     </div>
   );

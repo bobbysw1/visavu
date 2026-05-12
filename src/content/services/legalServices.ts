@@ -24,6 +24,10 @@ export const LEGAL_SERVICES: RelocationService[] = [
     badge: "recommended",
     feeNote: "From $995 + USCIS fees",
     cta: "Start a case",
+    rating: 4.5,
+    reviewCount: 3_100,
+    bookingUrl: "https://www.boundless.com/free-consultation/",
+    city: "Seattle",
   },
   {
     id: "ls-velocity-global",

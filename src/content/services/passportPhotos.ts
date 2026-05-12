@@ -18,6 +18,9 @@ export const PASSPORT_PHOTOS: RelocationService[] = [
     badge: "recommended",
     feeNote: "~$10 digital / ~$15 with prints",
     cta: "Take a photo",
+    rating: 4.6,
+    reviewCount: 30_000,
+    city: "Warsaw",
   },
   {
     id: "pp-ivisaphotos",

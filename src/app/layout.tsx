@@ -35,6 +35,13 @@ export const metadata: Metadata = {
   applicationName: SITE.name,
   authors: [{ name: SITE.name }],
   robots: { index: true, follow: true },
+  // Google Search Console verification — token comes from Vercel env var.
+  // Add GOOGLE_SITE_VERIFICATION in Vercel → Settings → Environment Variables.
+  // Until set, the meta tag is omitted (rather than rendering an empty value
+  // which Google rejects).
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
   openGraph: {
     type: "website",
     siteName: SITE.name,

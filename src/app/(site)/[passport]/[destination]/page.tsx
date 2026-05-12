@@ -32,6 +32,7 @@ import {
 import { resolveUserCurrency } from "@/lib/userCurrency";
 import { SourcesPanel } from "@/components/SourcesPanel";
 import { TravelAdjacentRail } from "@/components/TravelAdjacentRail";
+import { RelatedRoutesRail } from "@/components/RelatedRoutesRail";
 import { obstaclesFor } from "@/content/obstacles";
 import { COUNTRY_LIST, flagEmoji, nameFor } from "@/lib/countries";
 import { Flag } from "@/components/Flag";
@@ -563,6 +564,11 @@ export default async function Page({
           destinationIso2={d}
           alternatives={alternatives}
         />
+
+        {/* Cross-pair internal linking — surfaces ~20 related country pairs
+            so PageRank flows through the deep route graph (Google would
+            otherwise only discover these via the sitemap). */}
+        <RelatedRoutesRail passportIso2={p} destinationIso2={d} purpose={purpose} />
 
         {/* Sources & references — appears on EVERY result page, even when we
             don't have scraped data, because primary-source links ARE the value. */}

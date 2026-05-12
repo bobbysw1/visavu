@@ -1306,6 +1306,488 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // AUSTRALIAN → NEW ZEALAND — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "AU:NZ:work": {
+    whatCarriesWeight: [
+      {
+        label: "Trans-Tasman Travel Arrangement — no work visa required",
+        why: "Under the 1973 Trans-Tasman Travel Arrangement, Australian citizens are issued a Resident Visa (Class TT) on arrival in New Zealand with full work rights. You don't apply for a work visa — you just turn up with a valid Australian passport. The 'visa' is a single-entry stamp granted at the border, but legally you are a resident from day one.",
+      },
+      {
+        label: "Permanent residency unlocks after time, not application",
+        why: "After holding Resident Visa status for 24 months continuously in NZ (not just visits — actual residency), you qualify for Permanent Resident Visa. From PRV you can apply for NZ citizenship after 5 years' residence including 240 days/year physical presence.",
+      },
+      {
+        label: "IRD number + KiwiSaver enrolment on arrival",
+        why: "Apply for an Inland Revenue Department (IRD) tax number within the first week — your NZ employer can't run payroll without it. KiwiSaver auto-enrols you (3% min contribution); you can opt out within 56 days if you want to keep contributing to Australian super instead. The 2013 Trans-Tasman portability arrangement lets you transfer retirement balances both ways (Australian super ↔ KiwiSaver) without tax penalty.",
+      },
+      {
+        label: "Medicare reciprocity vs ACC",
+        why: "Australia-NZ has Reciprocal Health Agreement — emergency public care is free, but it doesn't cover long-stay primary care or prescriptions. Most working Australians enrol with a Primary Health Organisation (PHO) for subsidised GP visits. ACC (Accident Compensation Corporation) is the NZ equivalent of workers' comp — covers all injuries regardless of fault, funded by levies on your salary.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Resident Visa is automatic — no personal statement needed at the border",
+        prompt: "Unlike most visa applications, Trans-Tasman entry requires no narrative or documentation beyond your passport. However, if you're applying for PRV after 24 months you'll need to show genuine residence (not visits) — keep utility bills, employment records, IRD records, lease/mortgage from day one to evidence continuous presence.",
+      },
+      {
+        heading: "Future PRV application — your residence story",
+        prompt: "Outline why you settled in NZ (job, partner, lifestyle), how you maintained continuous residence (with documented absences — Australia trips are fine but must be temporary), and your intention to remain. PRV requires you to be 'commitment to New Zealand' — show ties: NZ employer, NZ home address, NZ tax filings, community/family ties.",
+      },
+      {
+        heading: "Citizenship application — what 'good character' means in NZ",
+        prompt: "For citizenship after 5 years, write a brief covering letter explaining your residence history, employment, community ties (volunteering, sports clubs, neighbours), and any time outside NZ. Disclose every traffic infringement, every Australian conviction (however minor) — NZ Internal Affairs cross-checks with Australian federal police data and undisclosed records sink applications.",
+      },
+      {
+        heading: "Super / KiwiSaver portability — what you're transferring",
+        prompt: "If you want to consolidate retirement savings, list every Australian super fund you hold, contact details, current balances, and your intention (transfer to KiwiSaver, or leave in Australia). Note: the transfer is one-way once executed within a given fund, and Australian super preservation rules still apply to the transferred amount.",
+      },
+    ],
+    moneySavingTips: [
+      "There is no visa fee — Resident Visa is granted free at the border on arrival",
+      "Don't pay for an 'immigration lawyer' for Trans-Tasman entry — there is no application to make",
+      "Open an NZ bank account before arriving if possible (ANZ, ASB, Westpac NZ, BNZ all have Australian-resident pre-arrival account opening) — saves a week of cashflow gymnastics",
+      "Don't transfer all your super to KiwiSaver immediately — keep some in Australia for currency/tax flexibility; the transfer can be done partially and at any time",
+      "Get your NZ driver's licence within 12 months — Australian licence is accepted for short visits but for residence you swap (no test required, just paperwork — NZD$48 fee)",
+      "Apply for an IRD number through the IR742 form online — free, takes 8-10 working days; without it your employer applies emergency tax of 45%+",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Trans-Tasman entry — just travel with passport",
+        "Routine IRD / KiwiSaver enrolment",
+        "PRV application after 24 months continuous residence (Immigration NZ has a clear online form)",
+        "Australian super → KiwiSaver transfer (use the receiving fund's standard form)",
+      ],
+      getALawyer: [
+        "Any Australian criminal conviction (even spent / suspended) — NZ Immigration character requirements can refuse entry",
+        "Prior NZ visa overstay or removal (Trans-Tasman doesn't override exclusion periods)",
+        "Bankruptcy or unresolved Australian tax debt over AUD$10,000",
+        "Bringing non-Australian-citizen partner or dependants (they need separate visas — Partner of NZ Resident or Dependent Child)",
+        "Complex super arrangements (SMSF transfer to KiwiSaver has specific compliance steps)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // ITALIAN → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "IT:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from a SEVP-certified US school + SEVIS I-901 fee paid",
+        why: "Your US institution issues Form I-20 (or DS-2019 for J-1 exchange) once admitted and proof-of-funds confirmed. Pay the SEVIS I-901 fee (US$350 for F-1 / US$220 for J-1) before booking your DS-160 interview — without the SEVIS receipt the consulate will reject the appointment. Roman / Milanese applicants book through the US Embassy Rome or US Consulate General Milan/Naples/Florence depending on residence.",
+      },
+      {
+        label: "Proof of funds in EUR with US dollar equivalent",
+        why: "Show 1st-year tuition + living costs (typically US$40-80k depending on school). Italian bank statements are accepted but the consular officer at the DS-160 interview wants to see the equivalent in USD at the day's BCE/Federal Reserve rate. A family member's bank statement counts if accompanied by Form I-134 Affidavit of Support (notarised + apostilled per the Hague Convention — Italy is signatory).",
+      },
+      {
+        label: "Strong ties to Italy — the 214(b) presumption",
+        why: "F-1 is a non-immigrant visa with the 214(b) presumption: the officer assumes you intend to immigrate unless you prove otherwise. Italian applicants do well by showing: family in Italy (parents, siblings), property or rental in Italy, military service obligation if applicable, expected return job (employment letter committing to rehire post-graduation), Italian fiancé(e)/partner. Speak Italian during the interview if more comfortable — many SF-Rome consular officers are fluent.",
+      },
+      {
+        label: "Schengen / Italian academic transcripts — apostilled and translated",
+        why: "Italian high-school maturità diploma, university transcripts, and any degree certificates need Italian-state apostille (Procura della Repubblica) plus certified translation into English. WES, Educational Perspectives, or SpanTran do credential evaluations US schools want — order at the same time as your DS-160.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this specific US programme over Italian or other EU options",
+        prompt: "Italy has free or low-cost public universities (Bologna, La Sapienza, Politecnico di Milano). Explain why your US programme offers something unique — research lab, specific professor, industry network (Silicon Valley for CS, Wall Street for finance, Hollywood for film). Reference concrete elements: a publication by the faculty, a specific course not offered in Europe, an internship pipeline. Vague 'American education is the best' is a 214(b) refusal trigger.",
+      },
+      {
+        heading: "Funding — the BCE rate and your family's situation",
+        prompt: "Quantify: tuition $X, living $Y, total Year 1 $Z. Then show coverage: family contribution €X (with bank statement and Affidavit of Support), scholarship $Y, savings $Z. Italian family members are eligible sponsors — explain the relationship clearly, since US officers may not assume family financial support like Italian universities do.",
+      },
+      {
+        heading: "Post-graduation plan — your return to Italy",
+        prompt: "F-1 visas explicitly require intent to return to Italy. State which Italian sector you'll return to (research, family business, banking, design), name potential employers if possible (Italian multinationals like Pirelli, Ferrari, Generali, Intesa Sanpaolo, Luxottica do hire US-educated graduates). If you want OPT (Optional Practical Training) after graduation, mention it briefly — it's allowed — but emphasise return.",
+      },
+      {
+        heading: "Family ties remaining in Italy",
+        prompt: "List parents (occupation, location), siblings, grandparents, partner. Mention property (family home, ownership share), Italian military service if applicable (leva is suspended but reservist obligations may exist), Italian bank accounts you're maintaining. These are the 'binding ties' that satisfy 214(b).",
+      },
+    ],
+    moneySavingTips: [
+      "Apply through US Embassy Rome OR US Consulate General Milan — Milan often has faster appointment slots than Rome",
+      "F-1 visa fee is US$185 (was $160 pre-2023); pay via Italian bank deposit at UniCredit or Intesa Sanpaolo — quicker than wire transfer",
+      "Don't pay for visa-prep consultancies — the DS-160 is online and the questions are straightforward. The interview is the bottleneck, not the form",
+      "Get your CIE (Carta d'Identità Elettronica) before applying — US officers accept it as a secondary ID and it speeds appointment booking",
+      "Apply for the Erasmus+ Worldwide grants (now Erasmus Mundus Joint Masters) — funds Italian students for US degrees with €25,000+ stipend",
+      "Italian-American Studies Foundation, NIAF (National Italian American Foundation), and the Sons of Italy Foundation offer Italian-heritage scholarships of $2,000-25,000",
+      "Use FORLE / DIRE / Italian state low-cost tuition loans (Cassa Depositi e Prestiti backs them) — interest 0.5-2% vs US 6-8% private loans",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 application with clean record and standard funding",
+        "Standard exchange-programme J-1 through Fulbright Italy or accredited Italian university partnership",
+        "Renewal of existing F-1 (re-issuance in Italy during winter / summer breaks)",
+        "OPT or STEM OPT application during or after the programme",
+      ],
+      getALawyer: [
+        "Prior US visa refusal (any category — B1/B2 tourist refusal is a red flag for F-1)",
+        "Schengen / Italian criminal record (even minor — DUI from Erasmus year, drug possession in NL/DE)",
+        "Italian conscientious-objector status flagged in passport (clears up easily but with right advice)",
+        "Dual Italian-other citizenship and you're applying with the non-EU passport (consular jurisdiction issues)",
+        "Funding from a sponsor outside Italy / EU (Russian, Chinese, MENA sponsors face additional scrutiny)",
+        "Transfer from another country's F-1 status (SEVIS transfer within US is fine, country-to-country needs care)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // FILIPINO → CANADA — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "PH:CA:work": {
+    whatCarriesWeight: [
+      {
+        label: "LMIA-backed job offer in a high-wage stream OR LMIA-exempt category",
+        why: "Most Filipino workers enter through the Temporary Foreign Worker Program: your Canadian employer obtains a Labour Market Impact Assessment (LMIA, CAD$1,000 fee paid by employer) proving no Canadian could fill the role. Healthcare and caregiving roles route through the Home Care Worker Immigration Pilots launched 2024 (replaced the closed Home Child Care Provider / Home Support Worker pilots). High-wage LMIAs over the provincial median attract priority processing — typically 8-12 weeks vs 4+ months for low-wage.",
+      },
+      {
+        label: "WES Educational Credential Assessment + IELTS General CLB 5+",
+        why: "Canadian employers and Express Entry assessments demand WES (World Education Services), ICAS, or IQAS evaluation of your Philippine degree — Filipino BS Nursing maps to Canadian Bachelor; TESDA NC-II maps to Canadian college diploma. IELTS General (not Academic) with CLB 5 minimum (Reading 4.0, Writing 5.0, Listening 5.0, Speaking 5.0) is the bare floor; CLB 7+ unlocks Express Entry CRS points and the new category-based draws for healthcare and skilled trades.",
+      },
+      {
+        label: "NBI Clearance + provincial police checks from anywhere you've lived 6+ months",
+        why: "Philippines National Bureau of Investigation clearance is mandatory and must be obtained within 6 months of submission. If you worked in KSA, UAE, HK, or Singapore for 6+ months, you also need that country's police certificate. IRCC frequently refuses applications where Filipino OFWs forget to disclose a Gulf-state work stint — disclose every country, even if 'just visiting family'.",
+      },
+      {
+        label: "Filipino-specific medical exam through IOM Manila / Cebu",
+        why: "IRCC requires the Immigration Medical Exam through a designated panel physician — in PH that's IOM Manila (St. Luke's BGC, Makati Medical) or IOM Cebu. Cost ~PHP 8,000-12,000. Active TB screening is the most common failure point — even latent TB requires preventive treatment before visa issuance. The medical is valid 12 months from exam date — time your application accordingly.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why Canada specifically — and which province",
+        prompt: "Canadian provinces have wildly different nominee programs. Saskatchewan, Manitoba, Alberta, and the Atlantic provinces actively recruit Filipino nurses, caregivers, and trades. Mention your target province by name and why (existing Filipino community in Winnipeg/Calgary/Saskatoon, lower cost of living than Toronto/Vancouver, specific employer). Show you've researched the Provincial Nominee Program route, not just generic 'Canada'.",
+      },
+      {
+        heading: "Your work history — Philippine + overseas",
+        prompt: "List every employer chronologically with month-precision dates, role, supervisor name, supervisor contact. If you worked overseas (KSA, UAE, HK, SG, JP), note the contract length, sponsor employer, and whether you returned to PH between contracts. IRCC cross-checks POEA records — undeclared OFW deployments will surface.",
+      },
+      {
+        heading: "Settlement plan + funds — proof of CAD$13,757 (1 adult) or more",
+        prompt: "Even with a Canadian job offer, IRCC wants to see proof you can survive landing — minimum CAD$13,757 for 1 person, CAD$17,127 for 2, scaling up. Document Philippine bank statements (BPI, BDO, Metrobank, Landbank, RCBC), property in PH, and remittance plans. Many Filipino workers also note family in Canada who'll provide initial accommodation — include their letter of invitation.",
+      },
+      {
+        heading: "Permanent-residence intent vs temporary work permit",
+        prompt: "If applying for an LMIA-backed work permit, you can express intent to apply for PR through Express Entry or PNP — Canadian work permits are 'dual intent' permitted. State your target program (Canadian Experience Class after 12 months CRS-eligible work, Provincial Nominee Program, Home Care Worker Pilot direct-PR pathway). This actually strengthens the application — Canada actively wants long-term immigrants.",
+      },
+    ],
+    moneySavingTips: [
+      "Use the POEA-licensed agency only for the contract verification step — DON'T pay them for 'visa processing'; you apply to IRCC directly online for CAD$155 work-permit fee",
+      "NBI Clearance: PHP 130 if you have a renewable previous clearance, PHP 155 for first-time — pay through GCash/Maya at NBI portal",
+      "IELTS General: book through British Council or IDP — PHP 12,650 (cheaper than re-taking; aim for CLB 7+ first attempt to avoid retake costs and Express Entry score jump)",
+      "WES costs CAD$237 (basic) or CAD$329 (course-by-course needed for nursing); pay in CAD via international card not via remittance to avoid double FX",
+      "Avoid 'visa consultants' charging PHP 50,000+ — ICCRC-licensed representatives are the only legally recognised paid representatives in Canada (verify at college-ic.ca)",
+      "Use the Canadian Employer's RCIC if they have one — under PH POEA rules they can't charge you (employer pays), and they're CICC-regulated",
+      "Get your degree apostilled at DFA-OCA Aseana while still in PH (PHP 200/document, same-day) — once you leave PH the Philippine consulate route is slower and costs more",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard LMIA-backed work permit with clean record and clear credentials",
+        "Home Care Worker Pilot direct application with HCSA-recognised caregiving experience",
+        "Express Entry profile creation and CRS optimisation (online tool is straightforward)",
+        "Family reunification once you have PR — sponsor parent/spouse via straightforward IRCC application",
+      ],
+      getALawyer: [
+        "Previous Canadian visa refusal (visitor, study, or work) — refusal grounds carry forward",
+        "Past US B1-B2 refusal or overstay (IRCC shares data with USCIS)",
+        "Unresolved OFW labour cases / blacklist from a Gulf employer",
+        "Philippine criminal conviction (even if dismissed under probation or RA 9344 juvenile)",
+        "Family member with TB / hepatitis history in last 5 years (medical admissibility nuance)",
+        "Job offer in a regulated profession (nursing — NNAS / provincial licensing is separate from IRCC and the order matters)",
+        "Self-employed or business-owner applicant claiming experience without traditional payslips (proving genuine self-employment to IRCC needs strategic documentation)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // AMERICAN → GERMANY — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "US:DE:work": {
+    whatCarriesWeight: [
+      {
+        label: "EU Blue Card OR Skilled Worker Aufenthaltserlaubnis — both pay-threshold driven",
+        why: "The German EU Blue Card (Blaue Karte EU) requires a German employment contract and salary at or above €48,300 (2024 general threshold) or €43,759 in shortage occupations (IT, STEM, medicine, math). The non-Blue-Card Skilled Worker Residence Permit (§18a/b AufenthG) accepts any salary meeting the position's market rate but processing is slower (12+ weeks vs Blue Card's 4-6 weeks at German consulates Boston/NYC/SF/LA/Chicago/Houston/Miami).",
+      },
+      {
+        label: "Anerkennung — recognition of your US qualification",
+        why: "Germany requires formal recognition (Anerkennung) of your degree through the Anabin database. Most US Bachelor's from regionally-accredited universities map as H+ (recognised); some flagship state universities are H+, while others require ZAB (Zentralstelle für ausländisches Bildungswesen) individual assessment at €200. Without H+ status the Blue Card threshold is harder to defend. For regulated professions (medicine, law, engineering, teaching) the Anerkennung is granted by the relevant Länder Anerkennungsstelle.",
+      },
+      {
+        label: "German health insurance + pension portability under the Totalization Agreement",
+        why: "From day one you need German health insurance — public (gesetzliche Krankenversicherung — TK, AOK, Barmer) costs ~14.6% of gross salary split with employer; private (PKV) is only available above €69,300 salary threshold (Versicherungspflichtgrenze 2024). The US-Germany Totalization Agreement (1979) means you can stay on US Social Security for up to 5 years on a certificate of coverage (CoC) from SSA — avoiding the 9.3% German Rentenversicherung contribution, useful for short assignments.",
+      },
+      {
+        label: "Anmeldung within 14 days + Steuer-ID + bank account opening race",
+        why: "After arrival you have 14 days to register your address (Anmeldung) at the local Bürgeramt — without this you can't get a Steueridentifikationsnummer (tax ID), without which payroll can't be set up. Bürgeramt slots in Berlin / Munich / Hamburg are notoriously hard to book — start the search before you fly. Mietvertrag (rental contract) is required; AirBnB doesn't count for Anmeldung. Banks like N26, Commerzbank, and DKB will open accounts with just your passport but full IBAN-with-Schufa needs Anmeldung.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why Germany — not Netherlands, Ireland, or remote",
+        prompt: "Germany has specific differentiators: Mittelstand engineering depth, Berlin/Munich/Hamburg startup ecosystems, automotive R&D (Stuttgart for Mercedes/Porsche, Munich for BMW, Wolfsburg for VW), pharma in Frankfurt/Rhein-Main. Tie your career trajectory to a specific region or industry cluster. American applicants who can name their target company (Siemens, SAP, BioNTech, Rocket Internet, Helsing) and explain why score higher than 'I want to live in Europe'.",
+      },
+      {
+        heading: "Your German language status — be honest",
+        prompt: "Blue Card doesn't require German (your role is English-conducted), but settlement permit (Niederlassungserlaubnis after 21 months on Blue Card with A1 German, or 33 months without German) does. State your current level (A1/A2/B1) or your plan (Volkshochschule courses, Goethe-Institut, Babbel). Don't oversell — German officers can switch to German mid-interview if you claim B2.",
+      },
+      {
+        heading: "US tax filing while German tax-resident",
+        prompt: "Mention you understand US citizens are taxed worldwide regardless of residence. State your plan: file US 1040 + Form 2555 (Foreign Earned Income Exclusion) or Form 1116 (Foreign Tax Credit), plus FBAR / FinCEN 114 for German accounts over $10k. Germany taxes worldwide income too once you're resident, but the US-Germany tax treaty prevents double-tax on most income.",
+      },
+      {
+        heading: "Family / settlement plan",
+        prompt: "If bringing spouse — they get a derived residence permit with full work rights (one of Germany's best perks for trailing spouses). If single — explain your community integration plan (language courses, Vereine, neighbourhood). German caseworkers reward integration commitment heavily for later Niederlassungserlaubnis and Einbürgerung (citizenship after 5 years per the 2024 reform, 3 years with C1 German + civic integration).",
+      },
+    ],
+    moneySavingTips: [
+      "Blue Card visa fee at German consulates is €75 — pay in USD cash or card; don't use a third-party 'visa service' charging $300+",
+      "Use Schufa-Auskunft (online €29.95) before any rental application — landlords demand it and it's the bottleneck on Anmeldung",
+      "Open N26 or Commerzbank account before flying (online with US passport accepted) — you'll need an IBAN for the employment contract finalisation",
+      "Don't break your US 401(k) early — Germany doesn't tax US-sourced retirement accounts under the treaty; rolling over to a German Riester or Rürup is rarely worth the tax friction",
+      "Get a Wohnberechtigungsschein if your income is below ~€14k single / €21k couple (after Werbungskosten) — entitles to affordable housing waiting lists",
+      "Use the Berlin Welcome Center, Munich International Office, or Frankfurt Mainova Welcome Service — free Anmeldung assistance and translator help",
+      "Health insurance: public TK costs the same regardless of provider for the same income — don't pay for 'health insurance brokers'; sign up direct at tk.de",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Blue Card with German employment contract above the salary threshold",
+        "Skilled Worker Residence Permit with H+ rated Bachelor's and clean record",
+        "Spouse / dependent applications via family reunification (Familiennachzug) when primary is approved",
+        "Permanent residence (Niederlassungserlaubnis) after qualifying period with documented A1/B1 German",
+      ],
+      getALawyer: [
+        "Schufa issues from prior US debt or unpaid German invoices from a previous stay",
+        "Regulated profession recognition (medicine, dentistry, pharmacy, teaching, lawyer) — Anerkennung process is Länder-specific and easy to misroute",
+        "US tax compliance gaps (unfiled returns, missing FBARs) — comes up during Niederlassungserlaubnis financial check",
+        "Cannabis-related US conviction (legal in many US states but still admissibility concern under German §54 AufenthG depending on quantity)",
+        "Switch from Blue Card to self-employment / Freiberufler — different residence-permit category with its own evidentiary requirements",
+        "Niederlassungserlaubnis with extended absences from Germany (US business travel can break the residence chain)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // GERMAN → US — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "DE:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "Visa class fit — H-1B vs L-1 vs O-1 vs E-2",
+        why: "Germans use multiple US work routes. H-1B (cap-subject lottery in March, 85k slots, $215 registration + $780+ filing) requires a US employer petition and Bachelor's-degree-equivalent role. L-1A/B (intracompany transfer) bypasses the lottery — useful if you've worked 1+ years at a German parent company with a US subsidiary. E-2 Treaty Investor (under the 1954 US-Germany Treaty of Friendship) needs a substantial German investment in a US business (~$100k+ typical, no statutory minimum). O-1 (extraordinary ability) is for senior scientists/executives — Max Planck, Fraunhofer, or DAX board members are typical fits.",
+      },
+      {
+        label: "PERM Labor Certification for green card sponsorship",
+        why: "Most Germans aim for EB-2 or EB-3 green cards through PERM — the US employer recruits the role for 30 days proving no qualified US worker. PERM processing currently 6-12 months (PERM Online filing FY2024). Germans are 'current' in EB categories with no per-country backlog — unlike Indian or Chinese applicants, you can adjust status as soon as PERM and I-140 are approved.",
+      },
+      {
+        label: "DS-160 + German Apostille + ZAB-equivalence for US credential",
+        why: "DS-160 online application, then book DS-160 interview at US Consulate General Frankfurt (largest in Europe), Munich, or Berlin. German degree certificates need Apostille from the issuing state's Bezirksregierung (Hague Convention). For US licensure (medicine, nursing, teaching) use WES, ECE, or AICE foreign credential evaluations; ZAB-equivalence is German-side, not accepted by US licensing boards.",
+      },
+      {
+        label: "US-Germany Totalization & tax treaty — keep Rentenversicherung clean",
+        why: "Under the 1979 Totalization Agreement get a Bescheinigung von der Deutschen Rentenversicherung (CoC) before assignment if temporary (<5 years) — keeps you on Rentenversicherung, exempt from US Social Security. Beyond 5 years you flip to US Social Security with German-paid contributions counted toward eventual US benefits. Tax treaty (1989, protocol 2007) prevents double-tax on salary; file Form 8833 to claim treaty benefits and Form 8938 for German account reporting once a US tax resident.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why the US over remaining in EU / DACH region",
+        prompt: "Concrete reasons US officers reward: specific industry depth (Silicon Valley for AI/biotech, NYC for finance, Boston for pharma, LA for entertainment, Houston for energy), specific employer (FAANG, named startup, named research institution), specific funding (named US VC, named angel for E-2). Germans applying with 'better salary' as the only reason get scrutinised — talk about market access, US capital markets, or specific projects.",
+      },
+      {
+        heading: "Your German employer / project history",
+        prompt: "List your German employer chronologically, role, salary band (in EUR with USD equivalent at filing date), German social insurance number (Sozialversicherungsnummer) — needed for some petition supporting documents. If transferring within a company (L-1) document the German parent-US subsidiary relationship (Qualifying Organization).",
+      },
+      {
+        heading: "US-tied funding (E-2) or US-tied sponsor (H-1B/L-1)",
+        prompt: "For E-2: source-of-funds trail in EUR converted to USD — German salary savings, family gifts (with notarised Schenkungsvertrag), business sale proceeds. For H-1B/L-1: US employer is the petitioner; describe the role, the team, the specific reason your German background is essential vs hiring a US worker.",
+      },
+      {
+        heading: "Family + dependants",
+        prompt: "Spouse on L-2 gets automatic work authorisation (no EAD wait since 2023 rule change). H-4 spouse needs EAD; H-4 children under 21 are dependent only. State whether spouse is EU citizen (faster paperwork) or third-country national (separate H-4/L-2 derivative). For E-2, dependants get E-2D with similar work rights for spouse.",
+      },
+    ],
+    moneySavingTips: [
+      "Apply at US Consulate Frankfurt — slot availability is usually faster than Munich or Berlin; you can apply at any of the 4 German consulates regardless of residence",
+      "DS-160 fee is $185 (H-1B/L-1) or $315 (E-2 treaty); reciprocity fee is $0 for Germans (treaty country) — don't fall for 'visa expediters' charging $500",
+      "Use the WES iGPA Calculator (free) to estimate US-equivalent grades before paying for the full evaluation; some US employers accept self-attested transcripts at offer stage",
+      "Don't break out of Rentenversicherung when leaving DE — under the Totalization Agreement you can reactivate it later, and the contribution years count toward German Altersrente even if you naturalise as American",
+      "Open a US-domiciled bank account with Wise USD or Mercury before relocation — avoids SWIFT remittance fees on your first US payroll",
+      "Use the German Embassy's free notary service in DC, SF, NYC, Boston, Houston, Atlanta, Chicago, LA, Miami for any German power-of-attorney needed for German banking / property — saves $200+ at US public notaries",
+      "Defer German pension partial-withdrawal until you confirm US tax residency — early withdrawal triggers DE Vorruhestand penalty and US ordinary income tax",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard H-1B with named US employer, clean record, clear Bachelor's",
+        "L-1 intracompany transfer with documented 12-month qualifying employment at the German parent",
+        "DS-160 interview prep and document gathering",
+        "Spouse / dependent derivative applications (H-4, L-2, E-2D)",
+        "Renewal of existing H-1B / L-1 at any of the 4 German consulates during home leave",
+      ],
+      getALawyer: [
+        "E-2 Treaty Investor — substantiality, source-of-funds, and 'real and operating' enterprise tests are highly evidentiary",
+        "EB-1A / EB-1B / O-1 — 'extraordinary ability' criteria need strategic petition drafting",
+        "PERM with prevailing wage challenges or recruitment results showing qualified US workers",
+        "Prior US visa refusal (any type) or US overstay (even <180 days carries 3-year bar implications)",
+        "German criminal record — Führungszeugnis disclosure to USCIS / DOS, even if minor, needs framing",
+        "Concurrent EU and US tax residency (Wegzugsbesteuerung exit tax implications if leaving DE with substantial holdings)",
+        "Spouse from a third country (not US or EU) — derivative visa coordination across jurisdictions",
+        "Active asylum / refugee status in Germany — disclose to US consulate carefully",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // AMERICAN → JAPAN — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "US:JP:work": {
+    whatCarriesWeight: [
+      {
+        label: "Status of Residence (在留資格) + Certificate of Eligibility (在留資格認定証明書)",
+        why: "Japan's work visas are status-based: Engineer/Specialist in Humanities/International Services (技術・人文知識・国際業務 — by far the most common for Americans), Highly Skilled Professional (高度専門職), Intra-company Transferee, Skilled Labour, Business Manager, Instructor (for ALTs), Specified Skilled Worker (新在留資格). Your Japanese employer applies to the regional Immigration Bureau for a Certificate of Eligibility (COE) BEFORE you apply for the visa at a US consulate. No COE = no visa.",
+      },
+      {
+        label: "Bachelor's degree (or 10+ years relevant experience) and role-degree match",
+        why: "Engineer/Specialist requires a Bachelor's where the major is relevant to the role — Computer Science degree for software roles, Liberal Arts for translation/marketing, etc. If you have no degree, 10+ years of documented experience in the field (with reference letters) is acceptable. The role-degree fit is rigid — a Music BA applying for engineering roles will be refused.",
+      },
+      {
+        label: "Salary at 'same as Japanese national' level + market rate",
+        why: "Immigration checks your contracted salary against the prevailing wage for the role in the region (Tokyo 23 wards vs prefectural average). For Engineer/Specialist roles in Tokyo this typically means JPY 4,000,000+/year minimum. Highly Skilled Professional uses a points table: salary, age, education, Japanese language ability (N1/N2 JLPT adds points) — 70+ points qualifies for HSP-i (1-year fast-track to PR), 80+ for HSP-ii (immediate PR pathway).",
+      },
+      {
+        label: "Apostilled background check + degree certificate translated into Japanese",
+        why: "FBI Identity History Summary Check (Channeler-processed in 1-3 business days, $50-$70) is required. Apostille via US State Department or the relevant US state authority. Translate certificates into Japanese — most employers handle this via their immigration lawyer, but you can do it yourself or use a sworn translator (gyoseishoshi) in Japan.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why Japan specifically and your role-employer match",
+        prompt: "Japan immigration officers want to see clear fit between your education, your previous experience, and the role offered. Reference specific Japanese industry strengths: automotive (Toyota, Honda, Nissan), gaming (Nintendo, Sony, Square Enix), trading houses (Mitsubishi, Mitsui, Sumitomo), pharma (Takeda, Astellas, Daiichi-Sankyo), tech (Rakuten, LINE Yahoo, Mercari). For ALT/Eikaiwa roles, name the specific Board of Education or company (JET Programme, Interac, AEON, ECC, Berlitz).",
+      },
+      {
+        heading: "Japanese language level — honest assessment",
+        prompt: "If you have JLPT certification (N5 to N1), state it. If you don't have JLPT but can self-assess (Genki I/II completed, 1 year of study, AnkiWeb daily, etc.), describe honestly. For Engineer/Specialist visa the language requirement is officially 'sufficient' which is not tested — but Highly Skilled Professional awards 10 points for N2, 15 for N1, making language a real PR accelerator.",
+      },
+      {
+        heading: "Long-term plan — temporary or settlement",
+        prompt: "Japan doesn't require non-immigrant intent like the US does, but officers like to see realistic plans. Either: clear settlement intent (Japanese spouse, family ties, learning Japanese seriously, will apply for PR after 10 years / HSP fast-track) or clear temporary intent (specific project, secondment, will return to US). Be consistent — don't claim 'lifelong commitment' if your CV shows 1-2 year job hops.",
+      },
+      {
+        heading: "Funding + housing on arrival",
+        prompt: "Cite your savings (yen-equivalent), the Japanese employer's relocation package (most cover first month's rent + key money + agent fees + flight), and your housing plan (company dorm, gaijin house, leopalace, Suumo search). Tokyo / Osaka rentals require guarantor companies (hoshōnin gaisha) and 4-6 months upfront — budget JPY 800k-1.2M for initial setup.",
+      },
+    ],
+    moneySavingTips: [
+      "COE application has no fee; visa-issuance fee is JPY 3,000 (single-entry) / JPY 6,000 (multiple) at the Japanese consulate — paid in USD equivalent in cash",
+      "Apply at the Japanese consulate covering your US state of residence — LA, NY, SF, Chicago, Houston, Atlanta, Boston, Denver, Honolulu, Detroit, Miami, Seattle, Anchorage, Hagåtña, Portland (OR) all have jurisdictions",
+      "Don't pay for FBI background check 'expedited services' — channeler companies (Accurate Biometrics, Fieldprint, Identogo) deliver in 1-3 days for $25-$60",
+      "Use the Highly Skilled Professional points calculator (Japan Immigration Bureau website) before applying — re-roll your timing if you're 1-2 points short of a threshold (waiting for JLPT result, finishing a degree, etc.)",
+      "Get the My Number Card immediately after arrival — replaces Residence Card photocopy for many services and is free",
+      "Open Japan Post Bank (yucho) account first — no minimum balance, accepts foreigners with valid Residence Card, then graduate to a city bank (MUFG, SMBC, Mizuho) when you need international transfers",
+      "JET Programme participants get a sweet deal — Board of Education pays apartment key money, ALT salary is JPY 3.36M Year 1 (HSP-points qualifying), pension lump-sum withdrawal on departure",
+      "Skip the 'visa consultants' — Japanese employers' in-house gyoseishoshi (administrative scrivener) handles immigration paperwork at no cost to you",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Engineer/Specialist visa with degree-matched role and clean record",
+        "JET Programme application (USJ Embassy and Board of Education handle most paperwork)",
+        "Status of Residence renewal at regional Immigration Bureau (Shinagawa, Yokohama, Nagoya, Osaka, Fukuoka)",
+        "Change of Status (e.g., Student to Engineer) when you have a clear Japanese employer offer",
+        "Permanent Residence application via HSP fast-track (1-3 years) with documented points",
+      ],
+      getALawyer: [
+        "Business Manager visa (経営・管理) — substantial-investment threshold (JPY 5M+ in actual operations), office space, two employees, real business plan",
+        "Spouse of Japanese National visa (日本人の配偶者等) — genuineness of marriage scrutinised, especially if recent marriage / age gap / international meeting circumstance",
+        "Past entry refusal, deportation, or overstay in Japan",
+        "US criminal record (DUI, drug, theft, anything beyond minor traffic) — Japan immigration is strict; even old/sealed records discovered through FBI check matter",
+        "Self-employment via Specified Activities or freelance through Business Manager — needs strategic visa-class selection",
+        "Bringing a same-sex partner — Japan doesn't recognise same-sex marriage federally so dependent visa is unavailable; alternative routes through Designated Activities require lawyer",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // BANGLADESHI → UK — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "BD:GB:work": {
+    whatCarriesWeight: [
+      {
+        label: "Certificate of Sponsorship from a UK Home Office licensed sponsor",
+        why: "Bangladeshi workers come predominantly through the Health & Care Worker visa (immigration-health-surcharge-exempt, fee £304-£551) or the standard Skilled Worker visa (IHS £1,035/year). Your UK employer must hold a sponsor licence (verify on gov.uk register) and issue a defined CoS with role SOC code, salary, and Certificate of Sponsorship Number. NHS Trusts, care homes (CQC-registered for care visas only), and Tier 1 tech employers (Revolut, Wise, Deliveroo, ARM) are the main Bangladeshi-friendly licensees.",
+      },
+      {
+        label: "Salary thresholds — £38,700 general, £29,000 healthcare, £23,200 transitional",
+        why: "From April 2024 the Skilled Worker general threshold rose to £38,700/year. Health & Care Worker remains at £29,000 (or 70th-percentile rate for the SOC code). New Entrants (under 26 / recent graduates / shortage occupation) qualify at £30,960. The actual minimum is whichever is higher: threshold OR the going rate for your specific SOC code. Bangladesh-origin nurses, doctors, software engineers, finance, and academic posts most often qualify.",
+      },
+      {
+        label: "IELTS UKVI Academic / OET + ECCTIS/NARIC degree assessment",
+        why: "Bangladeshi degrees are recognised by UK ECCTIS (formerly UK NARIC) — get a Statement of Comparability for your BSc/MBBS/BBA before applying (~£140, 15 working days). English: IELTS UKVI Academic 4.0+ minimum (B1 CEFR) for Skilled Worker, 7.0 for nursing/midwifery NMC registration. Schedule IELTS at British Council Dhaka, Chittagong, or Sylhet centres.",
+      },
+      {
+        label: "Bangladesh Police Clearance + UK TB test + medical exam",
+        why: "Bangladesh Police Clearance from Dhaka Metropolitan Police HQ or Special Branch (BDT 500, 7-15 days). UK TB clearance certificate from IOM Dhaka, IOM Sylhet, or IOM Chittagong (BDT 8,500-12,500, valid 6 months). For care workers, additional DBS check via your UK employer (Disclosure & Barring Service equivalent for the Bangladesh period — comes via Bangladesh Police).",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role and why this UK employer chose you",
+        prompt: "UK caseworkers scrutinise Bangladeshi applications more closely after a 2024 spike in care-visa fraud — be specific about how you found the role (recruitment agency, family connection, NHS Trust direct), what made you the right fit, and your salary level vs the going rate. Name the UK employer, the team, the line manager. Vague 'general nursing in the UK' gets refused; 'Band 5 staff nurse, oncology ward, [named NHS Trust]' gets approved.",
+      },
+      {
+        heading: "Your Bangladeshi work history — exact and verifiable",
+        prompt: "List every employer in Bangladesh (Sadar Hospital, Square Hospital, BRAC Bank, Grameenphone, Robi Axiata, ICDDR,B, named pharma) with exact dates, role, salary in BDT, supervisor name + WhatsApp/email contact. UK Home Office cross-checks with named referees. Avoid 'private practice' or 'self-employed' without strong documentary support (trade licence, tax return TIN/BIN, NBR e-payment records).",
+      },
+      {
+        heading: "Funds and dependent plan",
+        prompt: "Skilled Worker requires £1,270 maintenance (28-day consecutive bank balance in personal name) OR employer A-rated certification of cover. For Health & Care Worker the £1,270 is waived if employer certifies cover. Document Bangladesh source-of-funds: salary slips, BRAC/Eastern/Standard Chartered bank statements, family gift Affidavit (notarised). Dependent visa for spouse + each child <18 requires additional £285/£315 maintenance per dependent.",
+      },
+      {
+        heading: "Future plan — ILR or return",
+        prompt: "Skilled Worker visa is a 5-year route to Indefinite Leave to Remain (ILR) — you can state your settlement intent, including Life in the UK test prep, English level (B1+ for ILR, C1 for Citizenship). For Health & Care Worker, the ILR route is identical but the IHS-exemption makes the 5-year cost dramatically lower. If you want to return to Bangladesh after a fixed period, state that — Skilled Worker doesn't require settlement intent.",
+      },
+    ],
+    moneySavingTips: [
+      "Health & Care Worker visa avoids the IHS (£1,035/year x 5 years = £5,175 saved per applicant)",
+      "Bangladesh-origin care workers can claim £25k flat NHS recruitment bonus from many Trusts — negotiate at offer stage",
+      "Use the British Council Dhaka or Mirpur centres for IELTS UKVI (BDT 25,500) — IDP charges slightly more; book multi-attempt packages if uncertain on first sitting",
+      "ECCTIS Statement of Comparability is £140 (standard) or £210 (urgent 5-day) — order well in advance to avoid the £400 'rush' price",
+      "Bangladesh Police Clearance via online application at dmp.gov.bd or sb.police.gov.bd — BDT 500, don't pay BDT 5,000 to dalals (touts) outside the Special Branch office",
+      "IOM Dhaka medical: book early — the slot availability is the bottleneck on full applications, not the visa fee itself",
+      "Avoid Bangladeshi 'visa consultants' charging BDT 200,000+ for nothing — UK Home Office is the only fee-charging party; your UK employer's HR handles CoS",
+      "Family in the UK can act as your sponsor for £1,270 maintenance via an Undertaking (signed letter from named UK citizen / settled person)",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Skilled Worker or Health & Care Worker visa with NHS Trust CoS, clean record",
+        "Dependent applications (spouse + children) submitted concurrently with main applicant",
+        "ILR application after 5 years continuous qualifying residence with B1 English and Life in the UK",
+        "Switching between sponsors within UK (within 60 days of leaving previous sponsored role)",
+      ],
+      getALawyer: [
+        "Prior UK visa refusal (study, visit, work) — refusal reasons carry forward and need addressing in fresh application",
+        "Care-sector role with a sponsor under CQC investigation or recent licence revocation (2024 saw mass revocations affecting Bangladeshi care workers)",
+        "Past UK overstay (even <30 days) or prior removal",
+        "Bangladesh criminal conviction (even minor, even dismissed under 1898 CRPC) — disclosure to Home Office is mandatory",
+        "Bringing 18+ dependent child (adult dependent relative is one of UK's hardest visa categories)",
+        "Religious/political asylum concern from Bangladesh (BNP / Awami League / Jamaat affiliation history scrutinised case-by-case)",
+        "Re-entering UK after prior Tier 2 / Tier 4 transition without smooth visa history",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

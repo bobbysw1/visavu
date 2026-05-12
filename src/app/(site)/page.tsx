@@ -158,31 +158,30 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Find-my-visa CTA — the questionnaire flow that produces a
-          personalised relocation roadmap. The hero finder above answers
-          "where can I go?"; this answers "what visa should I pick given
-          my whole situation?" */}
+      {/* "Tell us about you" CTA — optional profile enrichment that the
+          rest of the site reads to tailor every visa search. Framed as
+          "make your results sharper", not "lost beginner pathway". */}
       <section className="mx-auto max-w-5xl px-4 pt-12">
         <div className="rounded-2xl border border-blue-200 dark:border-blue-900 bg-gradient-to-br from-blue-50 via-white to-emerald-50/40 dark:from-blue-950/40 dark:via-neutral-950 dark:to-emerald-950/20 p-6 sm:p-8 flex flex-wrap items-center gap-6 justify-between">
           <div className="flex-1 min-w-[260px]">
             <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-blue-700 dark:text-blue-300 mb-2">
-              Personalised
+              Optional · sharpens every result
             </p>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">
-              Don&apos;t know where to start?
+              Tell us a bit about you.
             </h2>
             <p className="text-base text-slate-700 dark:text-slate-300 max-w-xl leading-relaxed">
-              Twelve quick questions about your passport, occupation, capital, family, timeline,
-              and long-term goals. We&apos;ll return a ranked dashboard of best-fit pathways,
-              easiest countries, fastest approvals, cheapest routes, and the shortest paths to
-              permanent residency.
+              Your occupation, capital, family, timeline, and long-term goals all change which
+              visas you actually qualify for. Fill in what you&apos;re comfortable sharing — we
+              remember it locally and use it to prioritise routes everywhere on the site, from
+              direct lookups to comparisons. Skip it entirely and Visavu still works.
             </p>
           </div>
           <Link
             href="/find-my-visa"
             className="plausible-event-name=FindMyVisaClicked inline-flex items-center px-5 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold shadow-md"
           >
-            Start the questionnaire →
+            Add your details →
           </Link>
         </div>
       </section>

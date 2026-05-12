@@ -47,22 +47,24 @@ export function RecommendationResults({
       <header className="mb-8 flex flex-wrap items-start gap-4 justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.18em] text-blue-700 dark:text-blue-300 font-semibold mb-2">
-            Your relocation roadmap
+            Saved · tailoring every result on the site
           </p>
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">
-            Personalised visa recommendations
+            Visa matches tuned for you
           </h1>
           <p className="text-neutral-700 dark:text-neutral-300 max-w-2xl">
             Sorted for <strong>{profileMeta.emoji} {profileMeta.label}</strong> seeking{" "}
             <strong>{GOAL_LABEL[goalToQuestionnaireGoal(results.goal)].label.toLowerCase()}</strong>{" "}
-            — pulled from every visa rule in our database, ranked by fit.
+            — pulled from every visa rule in our database, ranked by fit. We remember your
+            profile locally so the filter pre-applies on every direct route lookup too;
+            <em> clear or update any time</em>.
           </p>
         </div>
         <button
           onClick={onRestart}
           className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-900"
         >
-          Start a new questionnaire
+          Clear &amp; start over
         </button>
       </header>
 

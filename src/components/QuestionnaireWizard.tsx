@@ -39,6 +39,9 @@ import type { Recommendations } from "@/lib/findMyVisa";
 import { nameFor } from "@/lib/countries";
 
 const STORAGE_KEY = "visavu:find-my-visa:v1";
+/** Separate key for the bit other pages read — just the inferred profile +
+ *  passport. Stable so it survives wizard-state schema changes. */
+const PROFILE_STORAGE_KEY = "visavu:saved-profile:v1";
 
 const EDUCATION_OPTIONS: { value: EducationLevel; label: string }[] = [
   { value: "high_school", label: "High school" },
@@ -186,6 +189,7 @@ export function QuestionnaireWizard() {
           setPos(0);
           try {
             window.localStorage.removeItem(STORAGE_KEY);
+            window.localStorage.removeItem(PROFILE_STORAGE_KEY);
           } catch {
             /* ignore */
           }
@@ -229,6 +233,20 @@ export function QuestionnaireWizard() {
       try {
         const r = await runQuestionnaire(answers as QuestionnaireAnswers);
         setResults(r);
+        // Remember the inferred profile so every other page on the site
+        // (ProfileFilter on result pages, comparison, etc.) can use it.
+        try {
+          window.localStorage.setItem(
+            PROFILE_STORAGE_KEY,
+            JSON.stringify({
+              profile: r.profile,
+              passportIso2: answers.passportIso2 ?? null,
+              savedAt: new Date().toISOString(),
+            }),
+          );
+        } catch {
+          /* ignore quota / safari private */
+        }
         window.scrollTo({ top: 0, behavior: "smooth" });
       } catch {
         setError("Couldn't generate recommendations. Please try again.");
@@ -240,15 +258,16 @@ export function QuestionnaireWizard() {
     <main className="mx-auto max-w-3xl px-4 py-8">
       <header className="mb-6">
         <p className="text-xs uppercase tracking-[0.18em] text-blue-700 dark:text-blue-300 font-semibold mb-2">
-          Find my visa
+          Optional · sharpens every result
         </p>
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">
-          Personalised relocation roadmap
+          Tell us about you, get sharper visa matches.
         </h1>
         <p className="text-neutral-700 dark:text-neutral-300 text-base">
-          Twelve quick questions — we run the answers against every visa rule we&apos;ve indexed
-          and return a ranked list of best fits, fastest approvals, cheapest routes, and the
-          shortest paths to PR. Like a relocation consultant, but free and on-demand.
+          Visa eligibility is shaped by who you are — occupation, capital, family, timeline,
+          long-term goals. Share what you&apos;re comfortable with and we&apos;ll prioritise the
+          visas you actually qualify for, on this page <em>and</em> on every direct route lookup
+          you do afterwards. Skip any question you&apos;d rather not answer.
         </p>
       </header>
 

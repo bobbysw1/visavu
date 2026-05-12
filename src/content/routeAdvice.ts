@@ -2857,6 +2857,370 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // INDIAN → AUSTRALIA — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "IN:AU:study": {
+    whatCarriesWeight: [
+      {
+        label: "Subclass 500 Student Visa + Confirmation of Enrolment (CoE)",
+        why: "India is Australia's 2nd-largest international student source (~125,000 enrolments after the 2024 surge). Your Australian institution issues CoE via PRISMS once you accept the offer and pay initial fees. Subclass 500 fee raised to AUD$1,600 from 1 July 2024. Indian applicants are 'Assessment Level 2' under SSVF — middle scrutiny tier, more documentation than Indonesians/Malaysians but less than Pakistanis or Nepalese. Verified-trustworthy institutions (Group of Eight + most large public universities) get smoother CoE processing.",
+      },
+      {
+        label: "Genuine Student (GS) requirement — replaced GTE in March 2024, plus tightened source-of-funds",
+        why: "From 23 March 2024 GTE was replaced by Genuine Student test. Indian applications face heightened scrutiny — Department of Home Affairs has flagged 'cookie-cutter' applications from Punjab/Haryana/Telangana agents. In 2024 Australia introduced 'Migration Strategy' caps on dodgy private VET colleges; choose CRICOS-listed institutions with strong reputations. Show 12+ months of consistent family income/assets, not lump-sum 'demonstration deposits' 30 days before application.",
+      },
+      {
+        label: "OSHC + financial capacity AUD$29,710/year + IELTS 6.0+ / PTE 50+",
+        why: "Overseas Student Health Cover from Bupa, Medibank, Allianz, NIB, AHM (single ~AUD$700-850/year, family AUD$3,500-5,000/year). Financial capacity from 10 May 2024: AUD$29,710/year living costs + tuition + AUD$2,500 travel. English: IELTS Academic 6.0+ (no band below 5.5) for most UG, 6.5+ for PG; PTE Academic 50+ / 58+ accepted; TOEFL iBT 60+ / 79+ accepted. Universities often have 'English Language Bridge' pathway for marginal scorers.",
+      },
+      {
+        label: "Indian academic documents — apostilled via MEA + WES/credential evaluation",
+        why: "Indian 10+2 (CBSE / ICSE / state board), Bachelor's (3-year or 4-year), and Master's transcripts need apostille via MEA (Ministry of External Affairs India) e-Sanad portal — India is a Hague Convention signatory since 2005. Cost INR 50-200 per document, 3-7 working days. Some 3-year Indian Bachelor's may not meet Australian PG entry requirements — universities often require 'bridging' or accept Indian 4-year tech / honours / professional degrees directly. WES is requested for some PG programmes (separate from the visa application).",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why Australia, why this institution",
+        prompt: "Many Indian students choose Australia for Group of Eight prestige (Melbourne, ANU, Sydney, UNSW, Monash, UQ, UWA, Adelaide) and the lifestyle, plus the Subclass 485 Temporary Graduate Visa pathway. Explain specifically why your chosen programme over Indian top universities (IIT, IIM, NIT, IISc, IIIT, BITS, NLU) or alternative destinations (US, UK, Canada). Reference specific elements: faculty research area, course coursework, industry placement, regional advantage.",
+      },
+      {
+        heading: "Course-career link — pathway honesty under GS test",
+        prompt: "Map your Indian background to the Australian course to your career. Be specific: 'IIT Madras B.Tech Computer Science → UNSW Master of Information Technology → return to Bangalore/Hyderabad tech sector at Microsoft / Google / Amazon / Adobe / Flipkart, OR pursue Subclass 485 for 2-3 years Australian work first.' GS test allows expression of pathway intent — don't pretend you have no Australian work intent if your CV and family conversation suggest otherwise. Indian agents have trained applicants to lie; visa officers cross-check.",
+      },
+      {
+        heading: "Funding — Indian family / education loan / scholarship",
+        prompt: "Quantify: tuition AUD$X, living AUD$29,710, total Year 1 AUD$Z. Then show coverage: family contribution INR X (with bank statement, parents' Income Tax Return for last 3 years, family business GST filings if business-owner), education loan from HDFC Credila / Avanse / SBI / Axis Bank / Punjab National Bank (Indian banks accept Australian CoE for INR 40 lakh-1.5 crore education loans at 9-12% interest). Australia Awards scholarships are not available to Indian citizens; Charles Sturt, Deakin, Monash, UTS have institutional scholarships.",
+      },
+      {
+        heading: "Family ties + future plan",
+        prompt: "List parents (occupation, location — Mumbai / Delhi / Bangalore / Hyderabad / Chennai / Kolkata / Ahmedabad metro level), siblings, partner. Mention Indian property — family home with Khata / Patta / Bhulekh / 7/12 utara in parents' name, agricultural land, Indian bank accounts, expected return-job opportunity (named Indian employer or family business). For male applicants, post-graduation plan should bridge Australian work intent (485 visa) with eventual Indian return OR PR pathway — don't oversell either direction.",
+      },
+    ],
+    moneySavingTips: [
+      "Subclass 500 visa fee is AUD$1,600 — no discount; each dependent adds AUD$440 (under 18) or AUD$1,190 (over 18)",
+      "Don't pay 'IDP' or 'Y-Axis' or 'Aussizz' agents INR 2-5 lakh for what's a free DHA ImmiAccount online application — these agencies overcharge for university placement (often free from universities directly)",
+      "Group of Eight scholarships — Melbourne International Scholarship, UNSW International Scholarship, USyd India Excellence, UQ India Excellence, ANU India, Monash Indian Excellence; all open to high-performing Indians (15-50% tuition waivers)",
+      "HDFC Credila, Avanse, ICICI, SBI Global Ed Vantage offer education loans at 9-12% with Australian CoE as collateral; tax benefits under Section 80E for the interest paid",
+      "OSHC: compare directly at privatehealth.gov.au — Bupa and Medibank single student covers at AUD$650-850/year; don't bundle through agent",
+      "PTE Academic test in India is INR 17,000 (Pearson Vue centres in Delhi, Mumbai, Bangalore, Chennai, Hyderabad, Pune, Kolkata) — slightly cheaper than IELTS (INR 17,000-17,800)",
+      "Use HDFC Forex, ICICI Forex, or Axis Forex Online for tuition transfers — Forex cards lock in rate; RBI educational outflow under LRS allows USD 250,000/year with admission proof",
+      "Apostille via MEA e-Sanad portal directly (INR 50-200/document) — don't use 'apostille agencies' charging INR 1,500-3,000/document",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Subclass 500 with Go8 / top-50 university CoE, clean record, clear funding via education loan or family",
+        "Dependent visa applications (spouse + children) concurrent with main applicant",
+        "Subclass 485 Temporary Graduate Visa application after 2+ years study completion",
+        "Course change or institution change within same visa (notify provider)",
+        "OSHC switch / renewal during visa term",
+      ],
+      getALawyer: [
+        "Prior Australian visa refusal (visitor, study, work) — refusal grounds carry forward to GS assessment",
+        "Past Australian student visa cancellation (attendance below 80%, course non-progression)",
+        "Indian criminal record (even minor — narcotics under NDPS Act is absolute disqualifier)",
+        "Funding from a sponsor outside immediate family (distant relatives, business sponsor, third-country sponsor — common Indian application red flag)",
+        "Application from Punjab / Haryana / Andhra-Telangana with private VET / private college CoE (DHA has flagged this combination)",
+        "Past Five Eyes visa refusal (US, UK, Canada, NZ) flagged on Australian database",
+        "Family member with prior Australian asylum claim from India",
+        "Switching from non-CRICOS course to CRICOS course mid-stream",
+        "Application after Subclass 482 sponsored employer's licence revocation (rare but increasingly common in care sector)",
+        "Pre-existing partner / fiancée in Australia (combined Subclass 500 + 309 considerations)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // UKRAINIAN → POLAND — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "UA:PL:work": {
+    whatCarriesWeight: [
+      {
+        label: "PESEL UKR Temporary Protection — the dominant Ukrainian pathway since March 2022",
+        why: "Following Russia's February 2022 invasion, Poland implemented EU Council Directive 2001/55/EC granting Ukrainians 'Temporary Protection' (Ochrona czasowa). Initially called UKR status, formalised via PESEL UKR registration at any Polish municipal office (urząd gminy). Status currently extended until 4 March 2026 (EU-wide decision). Grants: full work rights without separate work permit, access to public healthcare (NFZ), education, social benefits including 800+ program (child benefit), and free residence card issuance. Apply at any urząd gminy with Ukrainian passport — typically same-day PESEL number issued.",
+      },
+      {
+        label: "Karta Pobytu (Residence Card) for longer-term Ukrainian residents",
+        why: "Beyond Temporary Protection, Ukrainians can apply for Karta Pobytu (residence card) on standard grounds: Tymczasowy Karta Pobytu (Temporary Residence — 3 years renewable) tied to work / family / study / Pole's Card (Karta Polaka), or Stała Karta Pobytu (Permanent Residence) after 5+ years legal residence including UKR period (case law evolving — confirm with Polish lawyer). The Tymczasowy Karta is typically tied to a Zezwolenie na pracę (work permit type A) granted on employer application via voivode (wojewoda).",
+      },
+      {
+        label: "Karta Polaka — fastest route to settlement for Polish-heritage Ukrainians",
+        why: "Western Ukrainians (Lviv, Ivano-Frankivsk, Ternopil oblasts, Galician roots) often qualify for Karta Polaka under the 2007 Karta Polaka Act — requires documented Polish ancestry (grandparent or great-grandparent), basic Polish language, and connection to Polish culture. Karta Polaka holder gets: free long-term visa, free residence card, full work rights, free education, partial social benefits, and 6-month fast-track to Polish citizenship after Karta Pobytu Stałego (which is itself granted to Karta Polaka holders after 1 year of residence). Apply at Polish consulate Lviv, Lutsk, Kyiv, Kharkiv, Odessa (when consulates are operational).",
+      },
+      {
+        label: "ZUS social-security registration + Ukrainian-Polish credential mapping",
+        why: "Once employed, you're registered with ZUS (Zakład Ubezpieczeń Społecznych) social insurance — contributions 9.76% pension + 1.5% invalid pension + various smaller funds (employer pays ~20% additional). NFZ health insurance follows automatically. Ukrainian education credentials: Bachelor's (бакалавр), Specialist (спеціаліст), Master's (магістр) recognised under the 1996 Lisbon Recognition Convention which both countries signed. For regulated professions (medicine — лікар, nursing — медсестра, engineering — інженер), nostrification (nostrifikacja) at Polish ministry — 6-12 months process. Ukrainian medical doctors face Polish Medical Chamber (Naczelna Izba Lekarska) verification + Polish language requirement.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Status choice — Temporary Protection (UKR) vs Karta Pobytu vs Karta Polaka",
+        prompt: "Most Ukrainians use UKR Temporary Protection (fastest, easiest, free, until March 2026). Karta Polaka is best if you have Polish ancestry. Karta Pobytu Tymczasowy is best if you have stable long-term employment and want to build toward permanent residence and eventual citizenship. State which route, why, and what evidence supports it (Ukrainian passport for UKR; ancestry documents + Polish language for Karta Polaka; work contract for Karta Pobytu).",
+      },
+      {
+        heading: "Polish work plan — employer / sector / city",
+        prompt: "Ukrainian work permits are tied to specific employer and role. Document: Polish employer name + NIP/REGON, role, salary in PLN (Polish living wage 2024: ~PLN 4,300 gross/month for full-time), city (Warsaw / Kraków / Wrocław / Gdańsk / Poznań / Lublin / Rzeszów — last three have largest Ukrainian diaspora). Sectors with strong Ukrainian recruitment: construction, logistics, manufacturing, agriculture, hospitality, IT (in Warsaw / Kraków / Wrocław tech hubs), healthcare (nursing assistants, after Polish nostrification for full nurse role).",
+      },
+      {
+        heading: "Family situation — children's school, ZUS, NFZ",
+        prompt: "Many Ukrainian families remain in Poland under UKR status. State: spouse status (also UKR, or working with separate Karta Pobytu), children's age and school enrolment (Polish state schools accept UKR-status children free with ZUS-issued PESEL), elderly dependants if any (parents over 60 are eligible for UKR with full healthcare). For children, mention Polish language acquisition progress and any Ukrainian Saturday school participation.",
+      },
+      {
+        heading: "Long-term plan — return to Ukraine, Polish citizenship, or onward EU",
+        prompt: "Polish citizenship after 3 years Karta Pobytu Stałego (which is itself after 5 years tymczasowy) — total ~8 years residence, with B1 Polish language requirement. Karta Polaka holders fast-track to citizenship in ~2 years after Karta Pobytu Stałego. Some Ukrainians intend to return to Ukraine after war ends; others plan onward EU mobility via Polish citizenship. State your honest plan — Polish authorities don't penalise return intent under Temporary Protection.",
+      },
+    ],
+    moneySavingTips: [
+      "UKR Temporary Protection registration is FREE at any urząd gminy — bring only your Ukrainian passport; same-day PESEL UKR number, free residence document",
+      "Free Polish language courses for UKR-status Ukrainians at municipal language schools (urząd gminy) and at NGOs like Caritas Polska, Polski Czerwony Krzyż, Fundacja Ocalenie, Fundacja Polskie Forum Migracyjne",
+      "800+ program (child benefit) is PLN 800/month per child under 18 — apply at ZUS office with Ukrainian birth certificate translated + PESEL UKR",
+      "Free public healthcare (NFZ) for UKR-status — including dental for children (very rare in EU); register with any GP (lekarz rodzinny) using your PESEL UKR",
+      "Don't pay 'visa agents' PLN 1,500-3,000 for UKR Temporary Protection — it's free at urząd gminy and the registration is straightforward; only Karta Polaka or complex Karta Pobytu cases may benefit from licensed adwokat help",
+      "Karta Polaka application is free at Polish consulates in Ukraine (when operational) — don't pay private 'ancestry research' agencies UAH 30,000-100,000 unless your family records are genuinely lost",
+      "NFZ-funded medical translation services at many hospitals — Ukrainian-Polish translators available free of charge",
+      "ZUS social insurance contributions match other Polish workers (no Ukrainian-specific deductions) — full pension/healthcare/family benefit entitlement applies",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "PESEL UKR Temporary Protection registration at any urząd gminy",
+        "Standard work-permit-backed Karta Pobytu Tymczasowy via cooperating Polish employer",
+        "Karta Polaka application at Polish consulate when ancestry documents are clear (great-grandparent or grandparent Polish birth certificate + Polish-language basics)",
+        "Family member family-reunification within Poland (spouse + children of UKR-status primary)",
+        "Renewal of UKR status (automatic until 4 March 2026)",
+      ],
+      getALawyer: [
+        "Complex ancestry case for Karta Polaka (lost records, Soviet-era name changes, Polish-Jewish heritage)",
+        "Past Polish entry ban or Schengen overstay flagged on Polish border database",
+        "Ukrainian criminal record (even minor — Polish authorities are checking)",
+        "Karta Pobytu Stała application combining UKR period + tymczasowy + Karta Polaka residence times (case law evolving)",
+        "Family member with prior Polish asylum claim or Ukrainian wanted list status",
+        "Bringing extended family (parents over 60, adult dependent siblings) — separate analysis for each",
+        "Russian-Ukrainian dual citizenship (Russian Federation passport + Ukrainian passport — Russian passport disclosure to Polish authorities affects status)",
+        "Polish citizenship application after the qualifying period — language test and ceremony require legal coordination if any documentation is missing",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // TAIWANESE → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "TW:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from a SEVP-certified US school + SEVIS I-901 paid + E-1/E-2 future option",
+        why: "Taiwan sends ~22,000 students to the US annually. Your US institution issues Form I-20 (F-1) or DS-2019 (J-1) once admitted and proof-of-funds verified. Pay SEVIS I-901 fee ($350 F-1 / $220 J-1) before booking DS-160. Apply at American Institute in Taiwan (AIT) Taipei (Xinyi Section 3) or AIT Kaohsiung. AIT functions as the de facto US consulate (no formal diplomatic relations since 1979). Taiwan is on the Visa Waiver Program for tourism (90-day ESTA), but study still requires F-1. Notably: Taiwan is treaty-eligible for E-1/E-2 — a future career consideration.",
+      },
+      {
+        label: "Strong source-of-funds + Taiwan's smooth interview profile",
+        why: "Show 1st-year tuition + living costs ($40-80k). Document Taiwanese bank statements (Cathay United, Mega International, CTBC, First Commercial, Bank of Taiwan, ESun, Taishin, Fubon) with USD-equivalent at CBC rate. Taiwan has historically had the lowest F-1 refusal rates among East Asian sources (~5-10%) — applications process smoothly when documentation is complete. Family business funding: attach 統一編號 (Tax ID), 公司登記 (company registration), and 3 years of 報稅 (tax filings).",
+      },
+      {
+        label: "Taiwanese degrees + apostille-equivalent — TECRO/TECO authentication",
+        why: "Taiwan isn't a Hague Apostille signatory (and isn't UN-member). Authentication chain: Taiwanese MOFA (外交部) authentication at Taipei or regional offices, then TECRO/TECO (Taipei Economic and Cultural Representative Office) authentication at the nearest US office (TECRO Washington DC, TECO LA/SF/NY/Chicago/Houston/Atlanta/Boston/Honolulu/Miami/Seattle/Denver/Guam) when you arrive in US. Cost NTD 400/document at MOFA, USD 15-50 at TECO. Most US schools accept MOFA-authenticated copies + sworn translation.",
+      },
+      {
+        label: "Taiwanese male military service status (substitute service or completed conscription)",
+        why: "All Taiwanese males 18-36 must show resolved military obligation. Taiwan extended conscription from 4 months back to 1 year (Tiao Tsi Yi Chiao 條子役 service) effective 2024 birth cohorts. Show 役男 status: 已服役 (completed), 替代役 (substitute service done), 延期 (deferral with study abroad approval through 教育部 or 內政部 entry/exit permit). Without proper deferral, your future return to Taiwan triggers immediate conscription. Apply for 出境核准 (departure approval) at 內政部移民署 before flying.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this specific US programme over Taiwanese or alternative destinations",
+        prompt: "Taiwan has elite universities (NTU 台大, NTHU 清華, NCTU 交大 / NYCU after merger, NCKU 成大, NTNU 師大, Yang Ming Chiao Tung 陽明交大). Explain why your US programme offers something unique — research lab, specific professor, industry network (Silicon Valley for CS / semiconductor, NYC for finance, Boston for biotech, LA for entertainment), specialised programme. Vague 'American education is high quality' is a 214(b) refusal trigger.",
+      },
+      {
+        heading: "Funding — Taiwanese family / business / scholarship structure",
+        prompt: "Quantify: tuition $X, living $Y, total Year 1 $Z. Then show coverage: family contribution NTD X (with bank statement, parents' 報稅資料 last 3 years, family business 公司登記 if business-owner). Taiwan MOE Scholarship (教育部公費留學) is the most prestigious: NTD 2.4-3.2 million/year for selected fields — apply via MOE annual cycle. Foundation scholarships: Lin Tian-Cu Memorial, Frank Hawkins Kenan Institute, Fulbright Taiwan.",
+      },
+      {
+        heading: "Post-graduation plan — your return to Taiwan",
+        prompt: "F-1 visas require intent to return. State which Taiwanese sector you'll return to: TSMC, UMC, MediaTek, ASE, AUO, Hon Hai, Quanta, Pegatron, Asus, Acer, Gigabyte (semiconductor + electronics — Taiwan's strongest sectors), Chinatrust, Fubon, Cathay United, Mega Financial (banking), Eva Air / China Airlines / Starlux (aviation), or family business succession. If you want OPT briefly mention but emphasise return.",
+      },
+      {
+        heading: "Family ties remaining in Taiwan + military status",
+        prompt: "List parents (occupation, location — Taipei / New Taipei / Taichung / Kaohsiung / Hsinchu / Tainan district level), siblings, partner. Mention Taiwanese property — family home with 房屋登記 in parents' name, expected return-job, Taiwanese bank accounts. For males 18-36, explicitly state military service status with 兵單 (conscription notice) or 退伍令 (discharge order) attached.",
+      },
+    ],
+    moneySavingTips: [
+      "Apply at AIT Taipei OR AIT Kaohsiung — Kaohsiung has shorter wait times than Taipei during peak student-visa season (May-August)",
+      "F-1 visa fee is $185; pay via NTD-USD bank transfer at CTBC, Cathay United, or Mega International — both AIT offices accept the MRV receipt from any major bank",
+      "Don't pay 'visa consultancy' agencies NTD 50,000-150,000 — AIT is straightforward, DS-160 is free, and visa agencies don't influence consular decisions",
+      "Taiwan MOE Government Scholarship for Overseas Study (公費留學) covers tuition + living + flights for selected programmes — apply via Ministry of Education annual cycle (deadline typically February)",
+      "Fulbright Taiwan (~$30,000 + tuition for grad students) — applications open August-September via Foundation for Scholarly Exchange (FSE) Taipei office",
+      "Yushan Scholarship for Younger Scholars / Distinguished Scholars — for academic-track students returning to Taiwanese universities post-PhD",
+      "Use Cathay United or Mega International student remittance for tuition — lower FX fees than retail; CBC educational outflow has no annual cap with admission proof",
+      "MOFA authentication: NTD 400/document at MOFA Taipei (Section 3 Heping E Road) or regional offices (Taichung, Kaohsiung, Hualien) — don't use 'document services' charging NTD 3,000+",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with clean record, clear funding, strong programme fit",
+        "Standard Fulbright Taiwan or MOE scholarship F-1 application",
+        "Renewal of existing F-1 at AIT Taipei / Kaohsiung during winter / summer breaks",
+        "OPT or STEM OPT application during or after the programme",
+        "Future transition from F-1 to H-1B / O-1 / E-2 (Taiwan's E-2 eligibility is a long-term advantage)",
+      ],
+      getALawyer: [
+        "Prior US visa refusal (any category — B1/B2 tourist refusal is a red flag for F-1)",
+        "Taiwanese criminal record (drug under 毒品危害防制條例 is absolute disqualifier)",
+        "Unresolved Taiwanese military obligation (males 18-36 with active 兵單 approaching expiry)",
+        "Family member with prior US asylum claim (rare for Taiwanese, but Tiananmen / 1989 era applications exist)",
+        "Funding from a sponsor in mainland China — extra US scrutiny on Cross-Strait funding sources",
+        "Past visa overstay in any country",
+        "Dual Taiwan-mainland China passport / household registration (highly unusual but creates complex disclosure issues)",
+        "Hong Kong-born Taiwanese or Macau-born Taiwanese — different consular jurisdiction (HKSAR / Macau passport vs Taiwan passport) affects visa filing",
+        "Transfer from UK/Canadian/Australian student visa to US F-1",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // BANGLADESHI → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "BD:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from a SEVP-certified US school + SEVIS I-901 paid",
+        why: "Bangladesh sends ~13,500 students to the US annually — growing rapidly. Your US institution issues Form I-20 (F-1) or DS-2019 (J-1) once admitted and proof-of-funds verified. Pay SEVIS I-901 fee ($350 F-1 / $220 J-1) before booking DS-160. Bangladeshi applicants book at US Embassy Dhaka (Madani Avenue, Baridhara — relocated from Diplomatic Enclave in 2017). DS-160 interview slots are competitive; book on the official US Visa Information Service Bangladesh portal — slots release Mondays 8am.",
+      },
+      {
+        label: "Source-of-funds — strict scrutiny + bank statement seasoning",
+        why: "Bangladesh historically had ~30-45% F-1 refusal rates due to funding documentation issues. Show 1st-year tuition + living costs ($40-80k). Document Bangladeshi bank statements (Eastern Bank, BRAC Bank, Dutch-Bangla Bank, City Bank, Prime Bank, Mutual Trust Bank, Standard Chartered Bangladesh) with USD-equivalent at Bangladesh Bank interbank rate. Avoid lump-sum deposits within 90 days of interview — visa officers question recent deposits. For family business sponsorship: trade licence (Trade Licence), TIN/BIN, IRC (Import Registration Certificate), 3 years of tax returns.",
+      },
+      {
+        label: "Strong 214(b) ties to Bangladesh + clean WAEC-equivalent SSC/HSC certificates",
+        why: "F-1 is non-immigrant — officer assumes overstay intent unless you prove otherwise. Strong Bangladeshi ties: family home with 'porcha' (RS / SA / BS record), agricultural land in your village, parents' employment (govt, military, banking, professional services, family business), expected return job, Bangladeshi bank accounts. SSC (10th-grade) and HSC (12th-grade) certificates from Bangladesh Education Boards (Dhaka / Chittagong / Rajshahi / Sylhet / Comilla / Barishal / Jessore / Dinajpur / Madrassah / Technical) need verification through online portals before US school admission.",
+      },
+      {
+        label: "DS-160 form accuracy + interview confidence in English",
+        why: "Bangladeshi applicants face close DS-160 scrutiny on travel history, family ties, and prior visa applications. Be completely truthful — disclose every prior US visa application (including refusals), every prior travel (India, Malaysia, Saudi Arabia, UAE, Singapore visits), and every family member who has emigrated. Practice interview answers in English — most Bangladeshi medium-of-instruction is Bangla, so practice the standard F-1 questions ('Why this school?', 'How will you pay?', 'What will you do after graduation?') aloud in clear English.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this specific US programme over Bangladeshi or alternative destinations",
+        prompt: "Bangladesh has strong universities (BUET, IUT, DU University of Dhaka, BRAC University, NSU North South University, IUB Independent University, AIUB) and many Bangladeshis study in UK (Oxford-Bangladesh scholarships, LSE, UCL), Australia, Canada, or Malaysia. Explain why your US programme offers something unique — research lab, specific professor, industry network (Silicon Valley for CS, Wall Street for finance, Texas for energy, Boston for biotech), specialised programme. Reference faculty, coursework, lab.",
+      },
+      {
+        heading: "Funding — Bangladeshi family / business / sponsor structure",
+        prompt: "Quantify: tuition $X, living $Y, total Year 1 $Z. Then show coverage: family contribution BDT X (with bank statement, NBR TIN registration, family business Trade Licence + IRC if applicable, parent salary slip if salaried). Document AT LEAST 12 months of consistent income — F-1 officers know which Bangladeshi sectors (RMG / pharma / shipping / banking / telecoms) throw off real cashflow vs paper-only. Avoid lump-sum deposits in the 90 days before interview.",
+      },
+      {
+        heading: "Post-graduation plan — your return to Bangladesh",
+        prompt: "F-1 visas explicitly require intent to return. State which Bangladeshi sector you'll return to: Bangladeshi banks (DBBL, BRAC Bank, Eastern, City, Prime, Mutual Trust), RMG (Beximco, Square, DBL Group, Mohammadi, Hameem), pharma (Square Pharma, Beximco Pharma, Incepta, Renata, ACI), telecoms (Grameenphone, Robi Axiata, Banglalink, Teletalk), MNCs in Bangladesh (Unilever Bangladesh, BAT Bangladesh, Standard Chartered Bangladesh, HSBC Bangladesh), or family business succession. If you want OPT briefly mention but emphasise return.",
+      },
+      {
+        heading: "Family ties remaining in Bangladesh",
+        prompt: "List parents (occupation, location — Dhaka / Chittagong / Sylhet district / upazila level), siblings, partner. Mention Bangladeshi property — family home with porcha record, agricultural land in original district (gram bari), Bangladeshi bank accounts you'll maintain. Avoid mentioning extensive US-based family — Bangladeshi-American extended family in NYC / Detroit / LA / Houston is a 214(b) concern. If you do have relatives in US, note their legal status (citizen / GC holder / professional visa).",
+      },
+    ],
+    moneySavingTips: [
+      "F-1 visa fee is $185; pay via Standard Chartered Bangladesh or Eastern Bank counter with MRV barcode — both accept USD cash or BDT at BB rate",
+      "Don't pay 'visa consultancy' agencies BDT 100,000-500,000 — DS-160 is free online, interview is the bottleneck, agents don't influence US consular decisions",
+      "Bangladeshi applicants are eligible for Fulbright Bangladesh (~$30,000 + tuition for grad students — USEFB runs application cycle February-May), EMK Center scholarships, US-Bangladesh Education Foundation, Open Society Foundation",
+      "Many US universities have Bangladeshi-origin scholarship endowments — Harvard South Asian Studies, Yale, Stanford, MIT, Columbia, UPenn all have need-based aid or named Bangladeshi-heritage funds; ask the international admissions office",
+      "Eastern Bank (EBL), BRAC Bank, Dutch-Bangla Bank student remittance for tuition transfers — lower FX fees than retail money changers; Bangladesh Bank educational outflow allowance is USD 30,000/academic year with admission proof, renewable",
+      "USEFB EducationUSA Dhaka offers free advising for US admissions and visa preparation — open Sunday-Thursday at Bashundhara R/A; far better than paid consultancies",
+      "SSC/HSC certificate verification: free at the respective Education Board's online portal — don't pay 'verification agents' BDT 5,000+",
+      "If your STEM application triggers 221(g) administrative processing, don't pay 'expediters' — they have no influence; just wait for SAO clearance",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with clean record, clear funding, strong programme fit",
+        "Standard Fulbright, USEFB, or named-scholarship F-1 / J-1 application",
+        "Renewal of existing F-1 at US Embassy Dhaka during winter / summer breaks",
+        "OPT or STEM OPT application during or after the programme",
+      ],
+      getALawyer: [
+        "Prior US visa refusal (any category — B1/B2 tourist refusal is a major red flag for F-1)",
+        "Bangladeshi criminal record (including Special Powers Act / ATA detention) — even minor, even dismissed",
+        "STEM field with potential SAO sensitivity (nuclear, aerospace, advanced AI, advanced materials, biotech dual-use)",
+        "Family member in Bangladeshi military / intelligence / nuclear / political opposition (additional security review)",
+        "Funding from a sponsor outside Bangladesh / immediate family (Gulf-based relative, business sponsor, third-country sponsor)",
+        "Family member with prior US asylum claim from Bangladesh (BNP / Awami League opposition / Hindu minority / Christian minority / religious minority protection)",
+        "Past visa overstay in any country (Saudi Arabia, UAE, Malaysia, Singapore common destinations for Bangladeshis)",
+        "Transfer from UK/Canadian/Australian student visa to US F-1 — country-to-country SEVIS transfer needs handling",
+        "SSC/HSC certificate dispute (re-take or appeal pending, name mismatch on documents)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // COLOMBIAN → US — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "CO:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "H-1B Specialty Occupation OR L-1 intracompany OR E-2 (post-2022 Colombia eligibility)",
+        why: "Colombia became an E-2 Treaty Investor country in May 2022 (Treaty signed 2006, implementation delayed) — a major route for Colombian entrepreneurs. E-2 requires substantial Colombian investment in a US business (~$100k+ typical, no statutory minimum). H-1B is cap-subject (March lottery, 85k slots — Colombian win rate ~35-40%) requiring a US employer petition for Bachelor's-degree-equivalent role. L-1A/B (intracompany transfer) bypasses the lottery if you've worked 1+ year at a Colombian parent (Bancolombia, Grupo Sura, EPM, Ecopetrol, Avianca, Cencosud Colombia, Almacenes Éxito) with US subsidiary.",
+      },
+      {
+        label: "DS-160 + Apostilled Colombian degrees + WES/ECE/AICE credential evaluation",
+        why: "DS-160 online application, then book interview at US Embassy Bogotá (Calle 24 Bis 48-50) — handles all Colombian applicants. Colombian degree certificates (Pregrado / Maestría / Doctorado) need Apostille via Cancillería de Colombia (Ministry of Foreign Affairs) — Colombia is Hague signatory since 2002. Cost COP 35,000-80,000 per document, 5 working days. For US licensure (medicine, accounting, engineering PE) WES, ECE, or AICE foreign credential evaluation. Pregrado typically maps to US Bachelor's; Especialización + Maestría to US Master's.",
+      },
+      {
+        label: "Colombian Pasado Judicial (Procuraduría + Personería certificates)",
+        why: "US Embassy Bogotá requires Pasado Judicial (judicial background certificate) for some visa categories — three separate certificates: Procuraduría General de la Nación (administrative/disciplinary), Personería Distrital (criminal), Contraloría General (fiscal). All free at the respective offices' online portals (gov.co system). DAS Migración (immigration record) for some categories. These are not always demanded at DS-160 interview but having them ready accelerates the process.",
+      },
+      {
+        label: "Colombian-US tax treaty implications (no treaty currently)",
+        why: "Colombia and the US do not have a bilateral income tax treaty (negotiations ongoing, not yet ratified as of 2025). This means: no Totalization Agreement (you'll potentially pay both Colombian and US Social Security if not careful), no preferential treaty rates on dividends/interest, full US worldwide income taxation once you're tax-resident. Plan with both Colombian and US tax advisers. Foreign Tax Credit (Form 1116) is the primary double-taxation mitigation tool, not treaty articles.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why the US — sector and employer specificity",
+        prompt: "Colombian applicants benefit from specificity: tech (Silicon Valley, Austin, Miami — large Colombian-American tech community), finance (Miami especially for Latin American banking, NYC, Chicago), oil & gas (Houston — Ecopetrol US ops, Schlumberger, Halliburton), pharma (NJ, Boston, Bay Area), entertainment (Miami for Latin music — Sony Music Latin, Universal Music Latin, LA for Spanish-language productions). Name your target US employer.",
+      },
+      {
+        heading: "Your Colombian employer / academic credentials",
+        prompt: "List your Colombian employer chronologically, role, salary in COP with USD equivalent, supervisor name + contact. Colombian universities are well-known to US Embassy Bogotá: Universidad de los Andes (Uniandes), Universidad Nacional, Universidad Javeriana, Universidad del Rosario, Universidad EAFIT, Universidad de Antioquia, Universidad Externado, ICESI, Universidad de la Sabana. Major Colombian employers (Bancolombia, EPM, Ecopetrol, Grupo Sura, Argos, Avianca, Davivienda, BAVARIA, Postobón) have well-trodden L-1 paths.",
+      },
+      {
+        heading: "Long-term plan — H-1B → green card OR temporary OR E-2 indefinite",
+        prompt: "H-1B and L-1 allow dual intent — you can openly state green-card plans (EB-1/EB-2/EB-3 via PERM). E-2 is non-immigrant but renewable indefinitely while the Colombian investment substantially operates. State your honest plan. Colombian applicants who want long-term US residence + maintain Colombian ties (dual citizenship is permitted by Colombia and US) should mention this — Colombian American community is large in Miami, NJ, NYC, Houston.",
+      },
+      {
+        heading: "Family + dependants + Colombian school year",
+        prompt: "Spouse on L-2 has automatic work authorisation since 2023; H-4 spouse needs EAD (limited categories). E-2 spouse gets E-2D with full work rights. Colombian spouse + children under 21 are derivative. Mention Colombian school year (February-November) when timing relocation — children in Colombian schools benefit from arrival before US August/September school start. International schools in Bogotá / Medellín / Cali (Colegio Nueva Granada, Colegio Anglo Colombiano) ease US school transition.",
+      },
+    ],
+    moneySavingTips: [
+      "DS-160 fee $185 (H-1B/L-1) or $315 (E-2); pay in COP at Citibank Colombia, Bancolombia, or Banco de Bogotá counters with MRV barcode — no reciprocity fee for Colombians",
+      "Use WES iGPA Calculator (free online) before paying for full evaluation; many US employers accept Colombian-certified transcripts at offer stage",
+      "Apostille at Cancillería de Colombia online portal: COP 35,000-80,000/document — don't use 'apostille agencies' charging COP 200,000+",
+      "Open a US-domiciled bank account with Wise USD, Mercury Business, or Bancolombia US (Miami / NYC branches — Colombian diaspora friendly) before relocation",
+      "Colombian Embassy DC + Consulates (Atlanta, Boston, Chicago, Houston, LA, Miami, New Orleans, NYC, SF, Newark, Orlando, Washington) offer free notarisation and apostille assistance for Colombian citizens",
+      "Avoid Colombian 'asesores migratorios' charging COP 8-25M for H-1B/L-1 — US-based immigration attorneys with Latin American desks at Fragomen, Berry Appleman, BAL, Wilson Elser have flat-fee Spanish-language Colombian services at $2,500-3,500",
+      "Plan Colombian tax exit carefully: file final Colombian Declaración de Renta as resident for the year of departure; from following year file as non-resident (only Colombian-source income taxed); no exit tax in Colombia (advantage vs many other LatAm countries)",
+      "Use ICETEX Crédito Educativo or family loans rather than US private loans for any pre-arrival capital needs — Colombian student loan rates ~10-15% vs US private 8-12%",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard H-1B / L-1 with named US employer, clean record, clear Colombian degree mapping",
+        "DS-160 interview prep and document gathering at US Embassy Bogotá",
+        "Spouse / dependent derivative applications (H-4, L-2, E-2D)",
+        "Renewal of existing H-1B / L-1 at US Embassy Bogotá during home leave",
+        "PERM-based EB-2 / EB-3 green card with cooperating US employer (Colombians are current — no per-country backlog)",
+      ],
+      getALawyer: [
+        "E-2 Treaty Investor (post-2022 Colombia eligibility) — substantiality, source-of-funds, and 'real and operating' enterprise tests benefit from specialist drafting; Colombian capital outflow regulations need DIAN/Banco de la República coordination",
+        "EB-1A / EB-1B / O-1 — extraordinary ability for Colombian researchers / executives / artists / athletes",
+        "Concurrent Colombian capital outflow reporting (registration of foreign investment with Banco de la República for amounts >USD 100,000)",
+        "Prior US visa refusal or US overstay",
+        "Colombian criminal record (drug-related cases are absolute disqualifier under US INA 212(a)(2); even peace deals / amnesty arrangements need careful framing)",
+        "Past FARC / ELN / paramilitary affiliation history (even as victim) requires careful documentation",
+        "Asylum-related family member (Venezuelan migrants who acquired Colombian status — separate analysis)",
+        "Same-sex spouse — Colombia recognised same-sex marriage 2016; US recognises it; derivative visas straightforward",
+        "Dual Colombian-other passport (Colombian-Spanish, Colombian-Italian, Colombian-Lebanese common combinations — apply via Colombian passport)",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

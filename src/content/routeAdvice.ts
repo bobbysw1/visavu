@@ -3221,6 +3221,384 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // INDIAN → UAE — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "IN:AE:work": {
+    whatCarriesWeight: [
+      {
+        label: "Employer Work Permit + Entry Permit via MOHRE — Indians are UAE's largest expat group",
+        why: "Indians are the largest expat population in UAE (~3.5 million, ~30% of UAE population). Your UAE employer applies to MOHRE for a Work Permit and to GDRFA (Dubai) / ICA (Abu Dhabi / Sharjah / other emirates) for the 60-day Entry Permit. On arrival you complete medical fitness test, Emirates ID biometric, and visa stamping (now mostly digital). Employer pays AED 3,000-7,000 total per UAE Labour Law (Cabinet Resolution 21 of 2020) — refuse any 'visa fee deduction' from your first salary.",
+      },
+      {
+        label: "Indian educational certificates attested via MEA Apostille + UAE Embassy New Delhi",
+        why: "All Indian degree certificates need attestation chain: 1) issuing university stamp, 2) State HRD or AICTE if technical, 3) MEA Apostille (India is Hague signatory since 2005) via e-Sanad portal, 4) UAE Embassy New Delhi attestation in Chanakyapuri OR UAE Consulate General Mumbai (BKC) OR Hyderabad / Kerala consulates, 5) UAE MOFA on arrival. Cost INR 1,500-4,000 + AED 150-300 total. Allow 3-6 weeks. For salaries below AED 12,000/month, MOHRE checks degree-occupation fit rigorously.",
+      },
+      {
+        label: "Salary tier determines visa category + Golden Visa potential for senior Indian professionals",
+        why: "UAE work visa tiers: Standard (most workers, 2-year visa renewable), Skilled Professional (AED 12,000-25,000/month), Highly Skilled (AED 25,000+/month), Golden Visa (5 or 10 years, no sponsor, family included). Indian professionals earning AED 30,000+/month (CFOs, doctors, senior managers at multinationals, tech leaders) qualify for Golden Visa directly. Investors with AED 2M property in UAE or AED 2M public investment also qualify. Indians dominate Golden Visa issuance — over 100,000 issued to Indian nationals as of 2024.",
+      },
+      {
+        label: "Medical fitness test + tuberculosis / HIV screening — pre-test in India to avoid airfare loss",
+        why: "Within 60 days of Entry Permit issuance you must complete medical fitness at DHA-approved centres (Dubai), SEHA (Abu Dhabi), or MOHAP (other emirates). TB, HIV, and Hepatitis B/C screening — positive results lead to immediate non-issuance of residence visa and deportation back to India. Costs AED 320-750. Pre-test in India at authorised IOM labs (IOM Mumbai, IOM Chennai, IOM Kerala) or NABL-accredited labs — saves the airfare loss if results would disqualify.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role, your UAE employer, salary tier, and Golden Visa eligibility",
+        prompt: "UAE doesn't ask personal-statement-style narrative at the consular stage (processing is employer-led through MOHRE portal). For Indian applicants, important documentation: UAE employer Trade Licence number, MOHRE establishment registration, role per AED 4,000+/month minimum (for sponsor-eligible salary), specific emirate (Dubai vs Abu Dhabi vs Sharjah have different SEHA/DHA/MOHAP processes). Highlight Indian qualifications and prior Gulf experience — Indian engineers, doctors, nurses, accountants, IT professionals, and finance roles dominate UAE white-collar workforce.",
+      },
+      {
+        heading: "Your Indian work history — PAN, EPF UAN, exact dates",
+        prompt: "List every Indian employer with month-precision dates, role, salary in INR, supervisor name + contact. Include PAN number (Permanent Account Number from Income Tax Department) and EPFO UAN (Universal Account Number — Employee Provident Fund) — UAE attestation occasionally requires these. Past Gulf experience (Saudi, Qatar, Kuwait, Oman, Bahrain) strengthens applications — document each Gulf contract by employer, dates, and reason for leaving (including any End of Service Gratuity received).",
+      },
+      {
+        heading: "Family + sponsorship + Indian school year considerations",
+        prompt: "If bringing dependants (spouse, children, parents) — they need separate Dependent Residence visas tied to your sponsorship. Threshold: AED 4,000/month + accommodation for spouse/children; AED 6,000-12,000/month for parents (varies by emirate). Indian spouse + children carry Indian passports — separate attestation chain (Indian marriage cert + birth certs via state-level Notary Public + MEA Apostille + UAE Embassy New Delhi) needed. Indian school year (April-March) timing: most expat-Indian schools in UAE (DPS Dubai, GEMS, Delhi Private School, Indian High School) follow Indian curriculum (CBSE/ICSE) for smooth transition.",
+      },
+      {
+        heading: "Long-term plan — Golden Visa or rotation back to India",
+        prompt: "UAE work visas aren't a path to UAE citizenship (UAE doesn't naturalise foreign workers in practice). State either: Golden Visa target (if income/investment qualifying — Indians are the largest Golden Visa applicant cohort), or temporary contract (3-5 years) with planned return to India. Indian tax: Indian resident if you spend >182 days/year in India OR 60 days + 365 days in 4 prior years. UAE has no personal income tax. Plan carefully to avoid Indian global-income tax during transition years.",
+      },
+    ],
+    moneySavingTips: [
+      "Employer MUST pay all work visa costs per UAE Labour Law (MOHRE Resolution 30 of 2013) — refuse any 'visa fee deduction'; report to MOHRE call centre 800-665 if pressured",
+      "Indian degree attestation via MEA e-Sanad portal: INR 50-200/document direct (Hague Apostille route) — don't pay agencies INR 2,000-5,000/document; UAE Embassy New Delhi attestation INR 1,500-3,000",
+      "Medical fitness: DHA-approved centres in Dubai (Al Maktoum, Karama, Bur Dubai) are cheaper (AED 320-450) than SEHA premium services (AED 750)",
+      "Open ENBD, FAB, ADCB, or HSBC Premier UAE salary account — corporate sponsor often gets fee waivers; ask about salary-transfer-based account opening before paying account opening fees",
+      "Don't use 'free zone PRO services' charging AED 5,000+ for what your employer's PRO handles free — clarify at offer stage who processes your Emirates ID",
+      "Apply for Indian Tax Residency Certificate at Income Tax Department if you'll be UAE-resident >182 days/year — exempts UAE-source income from Indian global-income tax",
+      "Indian apostille via state-level MEA collection centres (CMM Mumbai, ROCC Chennai, OPC Hyderabad, MEA Delhi) — same fee, faster than agency routing",
+      "UAE Golden Visa application fee AED 2,800-3,800 (5-year) or AED 4,300-5,300 (10-year) — apply yourself via ICA / GDRFA portal; don't use 'Golden Visa consultancies' charging AED 15,000+",
+      "Use Wise USD/INR/AED, Revolut, or LuLu Money for remittance — cheaper than ENBD international transfer; RBI's LRS allows USD 250,000/year outbound from India to UAE",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard employer-led work permit + entry permit + residence visa with attested certificates",
+        "Medical fitness, Emirates ID biometric, and visa stamping (all employer-facilitated)",
+        "Dependent visa for spouse + children once you have residence visa and qualifying salary",
+        "Golden Visa application via salary or property route (online via ICA / GDRFA portal)",
+        "End of Service Gratuity calculation and Pension Plan registration",
+      ],
+      getALawyer: [
+        "Past UAE labour ban (1-year, 6-month, or lifetime — issued for absconding, breach of contract, or criminal case)",
+        "Indian criminal record (NDPS narcotics, dowry, communal cases — UAE rigorously checks)",
+        "Previous Gulf labour dispute (kafala-system unpaid wages, employer-side passport-holding case)",
+        "Switching from one UAE sponsor to another mid-contract without sponsor NOC (now easier under 2022 Labour Law, but edge cases benefit from PRO/lawyer)",
+        "Free zone visa vs mainland visa selection (DMCC, JAFZA, ADGM, DIFC have different rules; investment thresholds vary)",
+        "Real estate Golden Visa application (AED 2M property qualifier — title deed in your sole name, not shared)",
+        "Family member with prior UAE conviction or labour ban (affects your sponsorship eligibility)",
+        "Indian PAN/Aadhaar-Aadhaar based ITR delinquency — UAE residence visa renewal can be affected if Indian tax authorities flag Section 195 TDS issues",
+        "Dual Indian-OCI status of spouse complicating dependent visa documentation",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // PAKISTANI → UAE — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "PK:AE:work": {
+    whatCarriesWeight: [
+      {
+        label: "Employer Work Permit + Entry Permit via MOHRE — Pakistanis are UAE's 3rd-largest expat group",
+        why: "Pakistanis are UAE's 3rd-largest expat community (~1.7 million, after Indians and Bangladeshis). Your UAE employer applies to MOHRE for a Work Permit, and to GDRFA / ICA for the 60-day Entry Permit. On arrival: medical fitness test, Emirates ID biometric, visa stamping. Employer pays AED 3,000-7,000 per UAE Labour Law — refuse any 'visa fee deduction' from first salary; report to MOHRE 800-665. Pakistanis with prior Gulf experience (Saudi, Kuwait) are smoothly processed.",
+      },
+      {
+        label: "Pakistani educational certificates attested via MOFA + UAE Embassy Islamabad",
+        why: "Pakistani degree certificates need attestation chain: 1) issuing university stamp, 2) HEC (Higher Education Commission) attestation — required for all degrees, free at HEC offices in Islamabad/Lahore/Karachi/Peshawar/Quetta, 3) Pakistani MOFA (Foreign Office) Islamabad attestation, 4) UAE Embassy Islamabad (Plot 158-159 Diplomatic Enclave I, Sector G-5) attestation, 5) UAE MOFA on arrival. Pakistan IS Hague Apostille signatory since 2023 — simplified process replacing the older multi-step chain, but in practice many UAE entities still require full embassy attestation. Cost PKR 6,000-15,000 + AED 150-300 total. Allow 4-8 weeks.",
+      },
+      {
+        label: "Salary tier determines visa + Pakistani Golden Visa eligibility",
+        why: "UAE work visa tiers identical to other nationalities (Standard / Skilled / Highly Skilled / Golden). Pakistani professionals earning AED 25,000+/month qualify for Golden Visa directly. Investors with AED 2M property in UAE also qualify regardless of nationality. Pakistani doctors, IT professionals, engineers, accountants, and finance roles dominate white-collar Pakistani UAE workforce; blue-collar Pakistanis concentrate in construction, security, hospitality, and driving (especially Sharjah, Ajman, Ras Al Khaimah).",
+      },
+      {
+        label: "Medical fitness test + pre-test in Pakistan + Police Character Certificate",
+        why: "Within 60 days of Entry Permit: medical fitness at DHA-approved (Dubai), SEHA (Abu Dhabi), or MOHAP (other emirates). TB, HIV, Hepatitis B/C screening — positive results = immediate deportation back to Pakistan. Costs AED 320-750. Pre-test in Pakistan at IOM Islamabad / Karachi / Lahore — saves airfare loss if disqualifying. Pakistani Police Character Certificate from your Tehsil Police Station (PKR 200-500, 14-30 days) — required for some UAE employer onboarding.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role, your UAE employer, salary tier, and Golden Visa eligibility",
+        prompt: "UAE doesn't ask personal-statement narrative at consular stage (employer-led via MOHRE portal). For Pakistani applicants, important: UAE employer Trade Licence number, MOHRE establishment registration, role per AED 4,000+/month minimum, specific emirate. Highlight Pakistani qualifications (PEC for engineers, PMDC for doctors, PSC for civil engineers, ICAP for chartered accountants) and prior Gulf experience — Saudi, Kuwait, Qatar contracts are particularly valued by UAE employers because of similar regulatory environment.",
+      },
+      {
+        heading: "Your Pakistani work history — CNIC, NTN, EOBI, exact dates",
+        prompt: "List every Pakistani employer with month-precision dates, role, salary in PKR, supervisor name + WhatsApp/email. Include CNIC (Computerized National Identity Card) number, NTN (National Tax Number from FBR), and EOBI (Employees Old-Age Benefits Institution) registration number — UAE attestation occasionally requires these. Past Gulf experience documents: contract copy, Iqama (Saudi residence permit) or QID (Qatari ID) record, End of Service Gratuity receipt.",
+      },
+      {
+        heading: "Family + sponsorship + Pakistani school year considerations",
+        prompt: "If bringing dependants — Dependent Residence visas tied to your sponsorship. Threshold: AED 4,000/month + accommodation for spouse/children; AED 6,000-12,000/month for parents (varies by emirate). Pakistani spouse + children carry Pakistani passports — separate attestation chain (Pakistani NADRA marriage cert + birth certs via Provincial Notary + MOFA + UAE Embassy Islamabad) needed. Pakistani school year (March-February for private; August-June for English-medium colonial-pattern schools) timing: Pakistani schools in UAE (Pakistan Education Academy, Pakistan Education Centre, Pakistan Islamia School) follow Federal Board curriculum.",
+      },
+      {
+        heading: "Long-term plan — Golden Visa, return to Pakistan, or onward migration",
+        prompt: "UAE work visas don't lead to UAE citizenship. State plan: Golden Visa (if salary/property qualifying — Pakistanis are 4th-largest Golden Visa cohort), temporary contract with planned Pakistan return, or onward migration to Canada / UK / Australia / US (UAE-based Pakistani diaspora often uses UAE residency as intermediate step). Tax: Pakistani resident if you spend >183 days/year in Pakistan; UAE has no personal income tax. Plan to avoid Pakistani global-income tax during transition years.",
+      },
+    ],
+    moneySavingTips: [
+      "Employer MUST pay all work visa costs per UAE Labour Law (MOHRE Resolution 30 of 2013) — refuse any 'visa fee deduction'; report to MOHRE 800-665",
+      "Pakistani degree attestation: HEC attestation is FREE (just appointment booking at HEC website) — pay agencies only for inter-city transport, not 'attestation expediting'",
+      "MOFA Islamabad attestation: PKR 1,000-2,000/document; UAE Embassy Islamabad attestation: PKR 5,000-15,000/document; don't pay 'document services' charging PKR 30,000+",
+      "Medical fitness: DHA-approved centres in Dubai (AED 320-450) cheaper than SEHA premium (AED 750)",
+      "Open HBL UAE, MCB UAE, Bank Alfalah UAE, or ENBD salary account — Pakistani diaspora-friendly with rupee remittance discounts to Pakistan",
+      "Don't pay 'PRO services' or 'free zone consultants' AED 5,000+ for what your employer's PRO handles free",
+      "Police Character Certificate: PKR 200-500 at local Tehsil HQ — don't pay dalals (touts) PKR 5,000+",
+      "Apply for Pakistani Tax Residency Certificate at FBR if you'll be UAE-resident >183 days/year — exempts UAE income from Pakistani global-income tax",
+      "UAE Golden Visa fee AED 2,800-3,800 (5-year) — apply via ICA / GDRFA portal; don't use consultancies charging AED 15,000+",
+      "Use Wise PKR/AED, Western Union, or Habib Express for remittance — cheaper than HBL/MCB international transfer",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard employer-led work permit + entry permit + residence visa with HEC + MOFA + UAE Embassy attested certificates",
+        "Medical fitness, Emirates ID biometric, visa stamping (employer-facilitated)",
+        "Dependent visa for spouse + children once residence visa + qualifying salary established",
+        "Golden Visa application via salary or property route",
+        "End of Service Gratuity calculation",
+      ],
+      getALawyer: [
+        "Past UAE labour ban (1-year, 6-month, or lifetime)",
+        "Pakistani criminal record (Anti-Terrorism Act, NDPS narcotics, Hudood Ordinance — UAE rigorously checks)",
+        "Previous Gulf labour dispute (Saudi kafala unpaid wages, Qatar QID-related issues, Kuwait sponsor-side passport-holding)",
+        "Switching UAE sponsor mid-contract without NOC (now easier under 2022 Labour Law but edge cases benefit from lawyer)",
+        "Real estate Golden Visa application (AED 2M property in sole name)",
+        "Family member with prior UAE conviction / labour ban",
+        "Tax delinquency at FBR Pakistan (UAE residence visa renewal can be affected)",
+        "Past Saudi 'huroob' (absconder) status flagged in GCC databases",
+        "Pakistani military / ISI background — additional UAE security review",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // FILIPINO → UAE — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "PH:AE:work": {
+    whatCarriesWeight: [
+      {
+        label: "POEA / DMW deployment clearance + UAE employer Work Permit via MOHRE",
+        why: "Filipinos must go through Department of Migrant Workers (DMW, formerly POEA) for overseas deployment — even private hires require DMW clearance, OEC (Overseas Employment Certificate, valid 60 days), and PDOS (Pre-Departure Orientation Seminar) attendance. Skipping this triggers DMW 'illegal recruitment' charges on return. UAE employer also applies to MOHRE for Work Permit and to GDRFA / ICA for Entry Permit. Two-track compliance: DMW + MOHRE. About 750,000 Filipinos work in UAE (4th-largest expat group).",
+      },
+      {
+        label: "Job role determines visa category + Golden Visa for Filipino professionals",
+        why: "UAE work visa tiers: Standard (most Filipino workers — nurses, hospitality, retail, drivers), Skilled Professional (AED 12,000-25,000/month), Highly Skilled (AED 25,000+/month), Golden Visa. Filipino nurses (largest Filipino white-collar cohort in UAE) often hit Highly Skilled at AED 8,000-15,000 with DOH/DHA/MOHRE licensing. Filipino doctors, IT professionals, hotel managers, F&B managers, and finance roles can qualify for Golden Visa at AED 25,000+/month or via Specialised Talent (cultural/arts/sports).",
+      },
+      {
+        label: "PRC (Professional Regulation Commission) Licensure + DOH/DHA/MOHRE conversion",
+        why: "For licensed professions, your Philippine licence requires UAE conversion. Nurses: DOH-DHA Dataflow + Prometric exam (DHA / HAAD / MOH) + PRC verification + UAE Ministry of Health approval. Doctors: same process but with longer assessment. Pharmacists: DHA verification + Prometric. Accountants: ICAEW/ACCA conversion via UAE branch. Allow 3-6 months for full licensure conversion — many Filipinos work as 'admin staff' or 'nursing assistant' (lower-tier) while waiting for full conversion.",
+      },
+      {
+        label: "Medical fitness + NBI Clearance + Philippine document attestation",
+        why: "Within 60 days of Entry Permit: medical fitness at DHA / SEHA / MOHAP (AED 320-750). NBI Clearance from Philippines (PHP 130-155, valid 6 months) attested via DFA Manila Authentication Office + UAE Embassy Manila. Philippine documents (PSA birth/marriage cert, TOR, diploma) need DFA Apostille (Philippines joined Hague Convention May 2019) + UAE MOFA legalisation on arrival — replacing the older multi-step legalisation chain.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role, UAE employer, salary tier, and DMW clearance status",
+        prompt: "UAE doesn't ask personal-statement narrative at consular stage (employer-led + DMW-led). For Filipinos: UAE employer Trade Licence number, MOHRE establishment registration, role + salary band (AED 4,000+/month minimum for sponsor-eligible salary), PRC licence if regulated profession, DMW OEC reference, balikbayan box / luggage allowance noted. Highlight prior Gulf experience (KSA, Qatar, Kuwait) — Filipino nurses, hospitality workers, and domestic workers often have multi-Gulf careers.",
+      },
+      {
+        heading: "Your Philippine work history — TIN, SSS, Pag-IBIG, PhilHealth, PRC numbers",
+        prompt: "List every Philippine employer with month-precision dates, role, salary in PHP, supervisor name. Include TIN (BIR Tax Identification Number), SSS (Social Security System), Pag-IBIG (HDMF housing fund), PhilHealth, and PRC licence number — UAE attestation occasionally requires these. Past Gulf experience documents: previous contracts, Iqama/QID records, OEC reference numbers, repatriation history.",
+      },
+      {
+        heading: "Family + dependants + Filipino school year",
+        prompt: "Dependent Residence visas tied to your sponsorship. Threshold: AED 4,000/month + accommodation for spouse/children; AED 6,000-12,000/month for parents. Philippine spouse + children carry Philippine passports — separate attestation chain (PSA marriage cert + birth certs via DFA Apostille + UAE Embassy Manila) needed. Philippine school year (June-March) timing: Philippine schools in UAE (PSAS Philippine School in Abu Dhabi, Philippine Cultural Centre) follow K-12 DepEd curriculum.",
+      },
+      {
+        heading: "Long-term plan — Golden Visa, return to Philippines, or onward migration",
+        prompt: "UAE work visas don't lead to UAE citizenship. State plan: Golden Visa (for Filipino professionals at AED 25,000+/month), temporary OFW contract with planned Philippine return, or onward migration to Canada / Australia / US (UAE-based Filipinos often use UAE residency as professional springboard). Philippine tax: Filipino tax-resident if you maintain residency / dependants in Philippines + spend >180 days; OFW status exempts certain income types. UAE has no personal income tax.",
+      },
+    ],
+    moneySavingTips: [
+      "Employer MUST pay all UAE work visa costs (MOHRE Resolution 30 of 2013) — refuse 'visa fee deduction'; report to MOHRE 800-665. Separately, employer must also pay DMW processing fees per RA 11641 Migrant Workers and Overseas Filipinos Act 1995",
+      "POEA / DMW OEC: PHP 100 (online via DMW e-Services portal) — don't pay 'recruiter facilitation' PHP 2,000-5,000",
+      "PDOS (Pre-Departure Orientation Seminar): free at DMW-accredited NGOs (typically OWWA, BLAS, NGO partners) — don't pay 'expedited PDOS' charging PHP 1,500+",
+      "DFA Apostille at consular offices: PHP 200-400/document — don't use 'apostille services' charging PHP 2,000+",
+      "Medical fitness: DHA-approved centres in Dubai (AED 320-450) cheaper than SEHA premium (AED 750)",
+      "Open ENBD, FAB, ADCB, or HSBC UAE salary account — Filipino-friendly with PHP remittance discounts; PNB UAE branch services Filipino diaspora",
+      "PRC licensure conversion (Dataflow + Prometric + UAE MOH): PHP 30,000-50,000 total — pay direct, don't use 'agency packages' charging PHP 100,000+",
+      "Apply for Philippine Tax Residency Certificate at BIR if you'll be UAE-resident as OFW",
+      "Use Wise PHP/AED, Western Union, Cebuana Lhuillier, M Lhuillier, BDO Remit, or LBC Express for remittance — vastly cheaper than ENBD international transfer; OFW Pag-IBIG and SSS contributions can continue voluntarily from abroad",
+      "Avoid Philippine 'visa consultancies' charging PHP 80,000+ — UAE employer's PRO handles paperwork; DMW clearance is straightforward via Migrant Workers offices in Manila / Cebu / Davao",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard employer-led work permit + entry permit + DMW OEC + medical + Emirates ID",
+        "Dependent visa for spouse + children once residence visa + qualifying salary established",
+        "PRC licence conversion (DHA / HAAD / MOH process)",
+        "Golden Visa application via salary or specialised talent route",
+        "End of Service Gratuity calculation and SSS/Pag-IBIG continuation",
+      ],
+      getALawyer: [
+        "Past UAE labour ban or 'huroob' (absconder) status",
+        "Philippine criminal record (Comprehensive Dangerous Drugs Act, illegal recruitment victim case, family case)",
+        "Previous Gulf labour dispute (Saudi kafala unpaid wages, Qatar passport-holding case, Kuwait recruiter-side issues)",
+        "Switching UAE sponsor without NOC mid-contract (now easier under 2022 Labour Law)",
+        "Domestic worker visa (Tadbeer system) — separate visa category with different protections",
+        "Real estate Golden Visa application (AED 2M property in sole name)",
+        "Family member with prior UAE conviction or labour ban",
+        "Past TESDA / NSTI training certificate dispute",
+        "Filipino dual citizenship via marriage to US/Australian/Canadian — apply via Philippine passport (not foreign)",
+        "Past Hong Kong / Singapore domestic worker contract complications affecting UAE deployment",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // EGYPTIAN → SAUDI ARABIA — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "EG:SA:work": {
+    whatCarriesWeight: [
+      {
+        label: "Kafala (sponsorship) reformed: Saudi Labour Law amendments + iqama system",
+        why: "Egyptians are Saudi Arabia's 2nd-largest expat group (~2.9 million), after Indians. The kafala (kafil) sponsorship system was significantly reformed in March 2021 — workers can now change employers more easily and exit the country without sponsor permission, BUT iqama (residence permit) is still tied to employer. Your Saudi employer applies to Ministry of Human Resources & Social Development (HRSD, formerly MOHRSD) for Work Permit, then issues your iqama within 90 days of arrival. Iqama fee SAR 9,600/year (~USD 2,560) — typically paid by employer for skilled workers, by worker for some sectors.",
+      },
+      {
+        label: "Egyptian educational certificates attested through MOFA + Saudi Embassy Cairo + Saudi MOFA",
+        why: "Egyptian degree certificates need full attestation chain: 1) issuing Egyptian university stamp, 2) Ministry of Higher Education Egypt (Cairo HQ in Mounira), 3) Egyptian MOFA (Tahrir Square or Mogamma El-Tahrir or 6 October City office), 4) Saudi Embassy Cairo (Garden City, Sharia el-Sad el-Aali), 5) Saudi MOFA Riyadh on arrival. Total cost EGP 2,000-5,000 + SAR 200-400. Attestation typically 3-6 weeks. For salaries above SAR 10,000/month, HRSD checks degree-occupation fit more rigorously. Saudi has Nitaqat (Saudisation) quotas affecting Egyptian applications in certain sectors.",
+      },
+      {
+        label: "Saudi Premium Residency (Iqama Mumayyaza) — newer route for Egyptian professionals",
+        why: "Launched 2019 and expanded 2024, Saudi Premium Residency (Iqama Mumayyaza) is the Saudi equivalent of UAE Golden Visa. Permanent option SAR 800,000 (~USD 213,000) or annual option SAR 100,000 (USD 26,700). Grants: no kafil/sponsor needed, can own residential real estate, can sponsor family, full work rights in any sector, exit/re-entry without permit. Egyptian professionals earning SAR 30,000+/month or with substantial investment qualify. Apply via Premium Residency Centre online portal — separate from regular iqama path.",
+      },
+      {
+        label: "Medical fitness test + GAMCA + Saudi-specific clearances",
+        why: "Egyptians must complete GAMCA (Gulf Approved Medical Centres Association) medical at an authorised Egyptian centre before flying — chest X-ray, blood tests for HIV/Hep B/C/HIV, urine analysis. Cost EGP 1,200-2,500. On arrival in Saudi, no second medical (unlike UAE). However, Egyptians face specific extra clearances for some roles: Saudi Police Clearance (after iqama), Cultural Attaché clearance for academic/teaching roles, HRSD background check.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role, your Saudi employer, and Saudisation impact",
+        prompt: "Saudi doesn't ask personal-statement narrative at consular stage (employer-led + HRSD-led). For Egyptians: Saudi employer CR (Commercial Registration) number, HRSD establishment classification (Platinum / Green / Yellow / Red — Nitaqat tier), role + salary band, specific region (Riyadh / Jeddah / Dammam / Khobar / Makkah / Madinah / Tabuk). Highlight Egyptian qualifications (Cairo University, Ain Shams, Alexandria, AUC, MUST, AAST) and prior Gulf experience.",
+      },
+      {
+        heading: "Your Egyptian work history — TIN, social insurance, exact dates",
+        prompt: "List every Egyptian employer with month-precision dates, role, salary in EGP, supervisor name. Include TIN (Egyptian Tax Authority) and Social Insurance Number from National Organisation for Social Insurance — Saudi attestation occasionally requires these. Past Gulf experience (UAE, Qatar, Kuwait, Bahrain, Oman) strengthens applications — document each contract with employer, dates, reason for leaving (including any End of Service Gratuity received).",
+      },
+      {
+        heading: "Family + sponsorship + Egyptian school year",
+        prompt: "Dependent iqama tied to your sponsorship. Threshold: SAR 4,000-6,000/month + housing allowance for spouse/children. Egyptian spouse + children carry Egyptian passports — separate attestation chain (Egyptian marriage cert + birth certs via Egyptian MOFA + Saudi Embassy Cairo) needed. Egyptian school year (September-June) timing: Egyptian schools in Saudi (Egyptian Embassy Schools in Riyadh, Jeddah, Dammam) follow Egyptian Thanawiya Amma curriculum.",
+      },
+      {
+        heading: "Long-term plan — Premium Residency, return to Egypt, or rotation",
+        prompt: "Saudi naturalisation for Egyptian workers is extremely rare (different from UAE — Saudi has occasionally granted citizenship to long-resident Egyptian professionals under Vision 2030 talent programmes, but it's exceptional). State plan: Premium Residency target (if income/investment qualifying), temporary contract with planned Egyptian return, or onward migration. Tax: Egypt taxes worldwide income for tax-resident Egyptians (>183 days/year); Saudi has no personal income tax. Plan to avoid Egyptian worldwide-income tax during transition years.",
+      },
+    ],
+    moneySavingTips: [
+      "Employer typically pays iqama fees for skilled workers — clarify at offer stage; refuse 'iqama deduction' from first salary unless clearly stated in contract",
+      "Egyptian degree attestation: do all 5 steps yourself (~EGP 1,500-3,000) instead of agencies charging EGP 8,000-15,000",
+      "Saudi Embassy Cairo attestation queue: book online at Saudi MOFA portal — avoids 4-6 hour in-person waits",
+      "GAMCA medical at authorised Egyptian centres (e.g., El-Mokattam, Heliopolis, Mohandiseen) — EGP 1,200-2,500; standardised pricing, all centres equally accepted",
+      "Open Al Rajhi, NCB-SNB, Riyad Bank, or Alinma salary account in Saudi — sponsor often gets fee waivers; Egyptian-Saudi diaspora-friendly with EGP remittance options",
+      "Don't use 'mu'aqib' (chase-up) services charging SAR 1,500+ for iqama renewal — most government services are now digital via Absher app",
+      "Apply for Egyptian Tax Residency Certificate if you'll be Saudi-resident >183 days/year — exempts Saudi income from Egyptian tax",
+      "Premium Residency fee SAR 100,000 (annual) or SAR 800,000 (permanent) — apply yourself via Premium Residency Centre portal; don't use 'consultancies' charging SAR 30,000+ premium",
+      "Use Western Union, MoneyGram, NCB QuickPay, or Tahweel Al Rajhi for remittance to Egypt — competitive rates, especially for EGP",
+      "End of Service Gratuity calculation: 0.5 month salary/year for first 5 years, then 1 month/year after — keep records of all monthly basic salary (not total package) — many employers miscalculate",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard employer-led Work Permit + iqama + dependent iqama for spouse + children",
+        "GAMCA medical, biometric, and iqama issuance (employer-facilitated)",
+        "Iqama renewal via Absher app",
+        "Premium Residency application via online portal",
+        "End of Service Gratuity calculation upon contract end",
+      ],
+      getALawyer: [
+        "Past Saudi 'huroob' (absconder) status — flagged in GCC databases, affects future re-entry",
+        "Egyptian criminal record (military case, drugs, debt, currency violation — Saudi rigorously checks)",
+        "Previous Gulf labour dispute (UAE labour ban, Qatar passport-holding case, Kuwait sponsor-side issues)",
+        "Switching Saudi sponsor mid-contract — easier under 2021 Labour Law reform but edge cases benefit from lawyer (especially for non-Sunni Muslim or Coptic Egyptians where sponsor relationships can be sensitive)",
+        "Coptic Christian Egyptians: religious affiliation doesn't bar work visa but documentation chain (church-issued marriage cert) needs separate attestation",
+        "Family member with prior Saudi conviction or labour ban",
+        "Premium Residency real estate application (residential property in sole name)",
+        "Currency-control violations on prior Egyptian salary remittances back to Saudi-resident account",
+        "Past Israeli passport stamp or Israeli travel history — Saudi has formalised certain travel relations under Abraham Accords framework but old stamps can complicate",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // INDIAN → SAUDI ARABIA — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "IN:SA:work": {
+    whatCarriesWeight: [
+      {
+        label: "Kafala-reformed Work Permit + iqama via HRSD — Indians are Saudi's largest expat group",
+        why: "Indians are Saudi Arabia's largest expat community (~2.6 million), slightly ahead of Egyptians. Your Saudi employer applies to Ministry of Human Resources & Social Development (HRSD) for Work Permit, then issues your iqama within 90 days of arrival. Iqama fee SAR 9,600/year — typically paid by employer for skilled workers (white-collar, technical), often partially deducted from blue-collar workers' salaries (legally questionable but common practice). The March 2021 Labour Reform Initiative allows job switching after first contract year without sponsor NOC under most conditions — major improvement for Indians.",
+      },
+      {
+        label: "Indian educational certificates attested via MEA Apostille + Saudi Embassy New Delhi",
+        why: "Indian degree certificates need attestation chain: 1) issuing university stamp, 2) State HRD or AICTE if technical, 3) MEA Apostille (India is Hague signatory since 2005) — free or INR 50-200 via e-Sanad portal, 4) Saudi Embassy New Delhi (50-D, Shantipath, Chanakyapuri) OR Saudi Consulate General Mumbai (Hill Road, Bandra West) attestation INR 5,000-8,000, 5) Saudi MOFA on arrival. Allow 4-6 weeks. For salaries above SAR 10,000/month, HRSD checks degree-occupation fit rigorously. Saudi Vision 2030 has expanded Indian professional intake in oil, healthcare, tech, NEOM construction, and Riyadh financial sector.",
+      },
+      {
+        label: "Saudi Nitaqat (Saudisation) classification + Indian recruitment quotas",
+        why: "Saudi Nitaqat programme classifies employers by Saudisation percentage (Platinum 24%+, Green 15-23%, Yellow 6-14%, Red <6%). Yellow/Red establishments face restrictions on hiring Indians and other foreigners. Your potential employer's Nitaqat tier affects your work permit approval speed — Platinum employers (Saudi Aramco, SABIC, Maaden, STC, Riyad Bank, NCB, Saudi Telecom, ADNOC subsidiaries) get fastest processing. Indian recruitment via DGE&T-recognised agencies in Mumbai, Delhi, Chennai, Hyderabad, Kerala — POE (Protector of Emigrants) clearance required for blue-collar workers under Indian Emigration Act 1983; white-collar/professional Indian workers are exempt from POE.",
+      },
+      {
+        label: "GAMCA medical + Indian Police Clearance + emigration documentation",
+        why: "Indians must complete GAMCA (Gulf Approved Medical Centres Association) medical at authorised Indian centres before flying — chest X-ray, blood tests for HIV/Hep B/C/Syphilis/Malaria, urine analysis. Cost INR 3,500-7,500. Indian Police Clearance Certificate (PCC) from local district SP / online via passport seva portal — INR 500, 7-21 days. For blue-collar workers requiring POE clearance, additional emigration check at Indian airport — white-collar Indians on E-Mig clearance pass through without check.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role, your Saudi employer, and Nitaqat tier impact",
+        prompt: "Saudi doesn't ask personal-statement narrative at consular stage (employer-led + HRSD-led). For Indians: Saudi employer CR number, HRSD Nitaqat classification, role + salary band, specific city/region (Riyadh / Jeddah / Dammam / Khobar / Makkah / Madinah / Tabuk / NEOM project area). Highlight Indian qualifications (IIT/NIT/IIIT/IIMs/BITS/NLU recognised brands; PEC/AICTE technical qualifications) and any prior Gulf experience (UAE / Qatar / Kuwait especially valuable).",
+      },
+      {
+        heading: "Your Indian work history — PAN, EPF UAN, Aadhaar, exact dates",
+        prompt: "List every Indian employer with month-precision dates, role, salary in INR, supervisor name + contact. Include PAN (Permanent Account Number), EPFO UAN (Employees Provident Fund), Aadhaar (UIDAI), and TIN — Saudi attestation occasionally requires these. Past Gulf experience: previous contracts, iqama / QID / labour-card records, End of Service Gratuity receipts. For technical/professional roles, attach PEC/MCI/PCI/ICAI/ICAEW Indian professional body membership numbers.",
+      },
+      {
+        heading: "Family + sponsorship + Indian school year",
+        prompt: "Dependent iqama tied to your sponsorship. Threshold: SAR 4,000-6,000/month + housing allowance for spouse/children. Indian spouse + children carry Indian passports — separate attestation chain (Indian state-level Notary + MEA Apostille + Saudi Embassy New Delhi) needed. Indian school year (April-March) timing: Indian schools in Saudi (International Indian School Riyadh / Jeddah / Dammam, Delhi Public School Jeddah, Embassy of India schools) follow CBSE curriculum.",
+      },
+      {
+        heading: "Long-term plan — Premium Residency, return to India, or onward migration",
+        prompt: "Saudi naturalisation for Indian workers is extremely rare (different from UAE Golden Visa — Saudi has Premium Residency Iqama Mumayyaza programme). State plan: Premium Residency target (SAR 100,000/year or SAR 800,000 permanent option), temporary contract with planned India return, or onward migration (Saudi-based Indians often progress to Canada / UK / Australia / US later). Indian tax: tax-resident if you maintain Indian assets / dependants + spend >182 days; Saudi has no personal income tax. Plan to avoid Indian global-income tax during transition years.",
+      },
+    ],
+    moneySavingTips: [
+      "Employer typically pays iqama fees for skilled / professional workers — clarify at offer stage; refuse 'iqama deduction' unless clearly stated in contract; for blue-collar, ICAEW labour-rights advice recommended",
+      "Indian degree attestation via MEA e-Sanad portal: INR 50-200/document direct (Hague Apostille route)",
+      "Saudi Embassy New Delhi attestation: INR 5,000-8,000/document at counter — don't use 'attestation services' charging INR 15,000+",
+      "GAMCA medical at authorised Indian centres (Mumbai, Delhi, Chennai, Kolkata, Hyderabad, Bangalore, Kochi): INR 3,500-7,500 — standardised pricing, all GAMCA centres equally accepted",
+      "Open Al Rajhi, SNB (Saudi National Bank, formerly NCB+Samba), Riyad Bank, or Alinma salary account in Saudi — Indian diaspora-friendly with INR remittance discounts",
+      "Don't use 'mu'aqib' (chase-up agents) for iqama renewal — Absher app handles most government services digitally",
+      "Apply for Indian Tax Residency Certificate at Income Tax Department if you'll be Saudi-resident >183 days/year — exempts Saudi income from Indian global-income tax",
+      "Premium Residency fee SAR 100,000 (annual) or SAR 800,000 (permanent) — apply via Premium Residency Centre portal direct; consultancies charge SAR 30,000+ premium",
+      "Use Western Union, MoneyGram, Al Rajhi Tahweel, NCB QuickPay, or Wise for remittance to India — competitive rates; RBI's LRS allows USD 250,000/year outbound from India",
+      "End of Service Gratuity calculation: 0.5 month salary/year for first 5 years, then 1 month/year after — keep records of basic salary (not total package) to dispute miscalculations",
+      "Use POE-exempt status: for emigration-check-not-required (ECNR) passport holders (white-collar / professionals), no Indian airport emigration check needed — speeds departure",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard employer-led Work Permit + iqama + dependent iqama for spouse + children",
+        "GAMCA medical + biometric + iqama issuance (employer-facilitated)",
+        "Iqama renewal via Absher app",
+        "Premium Residency application via online portal",
+        "End of Service Gratuity calculation upon contract end",
+        "POE clearance for blue-collar emigration check (Indian side)",
+      ],
+      getALawyer: [
+        "Past Saudi 'huroob' (absconder) status — flagged in GCC databases",
+        "Indian criminal record (NDPS narcotics, dowry, dowry death, communal cases, criminal breach of trust — Saudi rigorously checks)",
+        "Previous Gulf labour dispute (UAE labour ban, Qatar passport-holding, Kuwait recruiter-side issues)",
+        "Switching Saudi sponsor mid-contract — easier under 2021 Labour Reform Initiative but edge cases benefit from lawyer",
+        "POE clearance dispute for blue-collar Indian workers (illegal recruitment, fake offer letter cases)",
+        "Family member with prior Saudi conviction or labour ban",
+        "Premium Residency real estate application (residential property in sole name)",
+        "Indian PAN/Aadhaar-based ITR delinquency — Saudi iqama renewal can be affected if Indian tax authorities flag Section 195 TDS issues",
+        "Dual Indian-OCI status of spouse complicating dependent iqama documentation",
+        "Past Saudi non-Muslim religious activity flag (Christian, Hindu, Sikh — Saudi forbids public non-Muslim worship; some Indian diaspora gatherings have been flagged)",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

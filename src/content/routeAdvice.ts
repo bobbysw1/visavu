@@ -1788,6 +1788,357 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // FRENCH → US — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "FR:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "E-1 / E-2 Treaty Trader / Investor via the France-US 1853 Treaty",
+        why: "France's treaty relationship with the US (Treaty of Commerce 1853, plus 1959 Convention) makes E-1 (substantial trade between US and France) and E-2 (substantial investment in a US business) routes especially attractive. E-2 has no statutory minimum but $100k+ in a real US enterprise is the practical floor; many French entrepreneurs use it to launch US subsidiaries of French startups (Veepee, Doctolib, Mirakl pattern). No PERM, renewable indefinitely while the business operates.",
+      },
+      {
+        label: "H-1B Specialty Occupation OR L-1 intracompany via French parent",
+        why: "H-1B is cap-subject (March lottery, 85k slots — French success rate similar to other Western Europeans at ~30%). L-1A (executive/manager) and L-1B (specialised knowledge) bypass the lottery if you've worked 1+ year at a French parent company (BNP Paribas, AXA, Sanofi, Capgemini, Atos, Dassault, Airbus, LVMH, Hermès have well-trodden L-1 paths to US subs). DS-160 interview at US Embassy Paris or US Consulate Strasbourg.",
+      },
+      {
+        label: "Apostilled French diplomas + ECE/WES credential evaluation",
+        why: "French degrees (Licence, Master, Doctorat, Grandes Écoles diplomas like ENA, HEC, Polytechnique, Centrale, Sciences Po) need Apostille from the local Cour d'Appel or Ministère des Affaires Étrangères. WES, ECE, or AICE foreign credential evaluation maps to US bachelor's/master's equivalency. Master 2 typically maps to US Master's; Licence 3 maps to US Bachelor's; Grande École engineering diploma maps to US Master's of Engineering.",
+      },
+      {
+        label: "France-US Totalization Agreement (1987) + tax treaty considerations",
+        why: "Get a Certificat d'Affiliation from CLEISS before leaving — keeps you on French Sécurité Sociale for up to 5 years, exempt from US Social Security/Medicare. Beyond 5 years you switch to US system with French quarters counted toward eventual French Retraite. France-US tax treaty (1994, protocols 2009) prevents double-taxation on salary; CSG/CRDS contributions are NOT US-foreign-tax-creditable (French Bank case — only impôt sur le revenu qualifies). File Form 8833 to claim treaty benefits.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why the US for your career — and which sector",
+        prompt: "French applicants benefit from specificity. Tech (SF Bay, NYC, Boston, Austin), finance (NYC, Chicago), pharma (Boston, NJ, Bay Area), fashion (NYC, LA), wine/spirits (NY, Miami, Houston), aerospace (Seattle, LA, Wichita), luxury hospitality (Las Vegas, Miami, NYC). Name your target US employer or sector — French expat business networks (French-American Chamber, La French Tech NYC/Boston/SF) are legitimate ties to mention.",
+      },
+      {
+        heading: "Your French employer / Grande École network",
+        prompt: "List your French employer (with French SIRET if mentioning a small company), your role, your degree-issuing institution (Grandes Écoles are well-known to US Embassy Paris — name them clearly). For L-1, document the qualifying employment year-by-year with role progression. For E-2, document your French source-of-funds (PEA, livret, family gift via Don manuel notarié, business sale via SCI / SASU).",
+      },
+      {
+        heading: "Settlement vs return-to-France intent",
+        prompt: "H-1B and L-1 allow dual intent — you can openly state PR plans (EB-1/EB-2/EB-3 green card via PERM or self-petition). E-2 is non-immigrant; if you have PR intent state it through a different route (parallel EB-1A or marriage). French applicants who openly plan to keep French citizenship plus apply for US naturalisation are welcome — dual nationality is fully recognised by both countries.",
+      },
+      {
+        heading: "Family + dependants",
+        prompt: "Spouse on L-2 has automatic work authorisation since 2023; H-4 spouse needs EAD (limited categories). E-2 spouse gets E-2D with full work rights. Children under 21 are derivative. State whether spouse is French (faster paperwork), EU citizen (still derivative), or third-country (separate considerations). Mention if any child is in CP/CE1/CE2 — US school placement around the French academic year matters.",
+      },
+    ],
+    moneySavingTips: [
+      "DS-160 fee $185 (H-1B/L-1) or $315 (E-2); pay in EUR cash/card at US Embassy Paris — no reciprocity fee for French citizens",
+      "Use WES iGPA Calculator (free online) before paying for the full evaluation; many US employers accept self-attested transcripts at offer stage and only require WES for petition filing",
+      "Don't withdraw your PEA early — France-US tax treaty preserves PEA tax advantages while you're US-resident if you don't make taxable events",
+      "Open a US-domiciled bank account with Wise USD or Mercury Business before relocation — avoids SEPA→SWIFT remittance fees on your first US payroll",
+      "French Embassy Washington DC + Consulates (Atlanta, Boston, Chicago, Houston, LA, Miami, New Orleans, NYC, SF) offer free apostille and notarisation for French citizens — saves $200+ vs US public notaries",
+      "Use La French Tech NYC / Boston / SF community discounts on relocation services — typically 15-30% off otherwise list-price quotes",
+      "Avoid French 'avocat américain' charging €5,000+ for an H-1B — US-based immigration attorneys at major firms (Fragomen, Berry Appleman, Erickson) often have flat-fee French desks at €2,500-3,500",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard H-1B / L-1 with named US employer, clean record, clear French degree mapping",
+        "DS-160 interview prep and document gathering at US Embassy Paris",
+        "Spouse / dependent derivative applications (H-4, L-2, E-2D)",
+        "Renewal of existing H-1B / L-1 at the US Embassy in Paris during home leave",
+        "PERM-based EB-2 / EB-3 green card with cooperating US employer (Frenchies are current — no per-country backlog)",
+      ],
+      getALawyer: [
+        "E-2 Treaty Investor — France's investment threshold scrutiny is rigorous; source-of-funds, 'substantiality', and 'real and operating' tests benefit from specialist drafting",
+        "EB-1A / EB-1B / O-1 — extraordinary ability petitions for French researchers / executives",
+        "Concurrent French Wegzugsbesteuerung-equivalent (Exit Tax under Article 167 bis CGI) when leaving France with substantial holdings >€800k",
+        "Prior US visa refusal or US overstay (even <180 days has 3-year bar implications)",
+        "French criminal record (peines / TIG) — disclosure to USCIS / DOS even if amnistied requires careful framing",
+        "DALF C1/C2 not held by spouse + spouse from non-EU third country — derivative coordination",
+        "PACS partner accompanying — not US-recognised for visa purposes; need plan (convert to marriage, separate visa)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // KENYAN → UK — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "KE:GB:work": {
+    whatCarriesWeight: [
+      {
+        label: "Certificate of Sponsorship + sponsor on the Home Office register",
+        why: "Kenyans predominantly enter through the Health & Care Worker visa (IHS-exempt, fee £304-£551) or the standard Skilled Worker route (IHS £1,035/year, fees £719-£1,500). Your UK sponsor must hold a valid sponsor licence (check on gov.uk register). NHS Trusts, CQC-registered care providers, and select tech employers actively recruit Kenyan applicants. The April 2024 care-sector rule tightening means individual care providers can no longer sponsor — only larger CQC-registered groups can.",
+      },
+      {
+        label: "Salary thresholds — £38,700 general / £29,000 healthcare / £23,200 transitional",
+        why: "From 4 April 2024 Skilled Worker general threshold is £38,700/year (was £26,200). Health & Care Worker remains £29,000 or the SOC code going rate. New Entrants (under 26, recent graduate, PhD STEM, shortage occupation list) qualify at £30,960. Kenyan nurses, doctors, IT engineers, finance professionals, and academics most often hit healthcare/shortage rates.",
+      },
+      {
+        label: "KCSE / KNEC verification + ECCTIS Statement of Comparability",
+        why: "Kenya National Examinations Council certificate (KCSE) and KNEC degree certificates need verification via KNEC's portal. ECCTIS (formerly UK NARIC) Statement of Comparability maps Kenyan Bachelor's (4-year, KCSE-entry) to UK Level 6 (~£140, 15 days). For nursing, NMC OSCE/CBT registration is the gating step — book at Mater Misericordiae or Aga Khan Hospital Nairobi for CBT.",
+      },
+      {
+        label: "Kenya Police Clearance + IOM TB test (Nairobi or Mombasa)",
+        why: "Certificate of Good Conduct from DCI Nairobi (KES 1,050, online via eCitizen, 7-14 days). UK TB clearance from IOM Nairobi (Westlands) or IOM Mombasa — KES 6,500-9,500, valid 6 months. Provide every country you've spent 6+ months in for the last 10 years — common Kenyan applicant oversight is forgetting a stint in Tanzania, Uganda, Rwanda, or the Gulf.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role + why this UK employer chose you",
+        prompt: "UK Home Office tightened scrutiny on East African applications after 2024 care-visa abuses. Be specific: how you found the role (UK-Kenya recruitment partnership, NHS Trust direct, family network, online job board), what makes you the right fit, your salary level vs the going rate for the SOC code. Name the Trust, the team, the line manager. 'General nursing in the UK' fails; 'Band 5 staff nurse, paediatric ward, [named NHS Trust]' passes.",
+      },
+      {
+        heading: "Kenyan work history — exact, verifiable, ICPAK/NCK/EBK numbers",
+        prompt: "List every Kenyan employer (Kenyatta National Hospital, Aga Khan, Nairobi Hospital, MP Shah, Mater, Coptic, Avenue, KCB Group, Safaricom, named NGO, named pharma) with month-precision dates, role, salary in KES, supervisor name + WhatsApp/email. Include professional body registrations: NCK (Nursing Council of Kenya), KMPDC (Kenya Medical Practitioners), ICPAK (accountants), EBK (engineers). UK cross-checks these registers.",
+      },
+      {
+        heading: "Maintenance funds + family plan",
+        prompt: "Skilled Worker requires £1,270 maintenance held 28 consecutive days OR employer A-rated cover certificate. For Health & Care Worker the £1,270 is usually waived if employer certifies cover. Document KES source-of-funds: Equity Bank, KCB, Standard Chartered Kenya, NCBA bank statements with NSSF deductions visible. Dependent visa for spouse + each child <18 adds £285/£315 maintenance per dependent.",
+      },
+      {
+        heading: "Future plan — ILR settlement or temporary",
+        prompt: "Skilled Worker is a 5-year route to ILR. State your settlement plan including Life in the UK test prep and B1 English (already at B2/C1 for most Kenyan professionals — Kenya's medium of instruction is English). If you want to return to Kenya after a fixed period, state that openly — Skilled Worker doesn't require settlement intent. Mention any UK family (Kenyan diaspora is large in London, Birmingham, Reading) but note: they are not 'maintenance providers' unless legally sponsoring.",
+      },
+    ],
+    moneySavingTips: [
+      "Health & Care Worker is IHS-exempt (saves £5,175 over 5 years per applicant) — choose this route over standard Skilled Worker whenever role qualifies",
+      "Kenyan-trained nurses can negotiate £2,000-£5,000 relocation packages from NHS Trusts — ask at offer stage, especially in critical-care, theatre, and ICU specialties",
+      "Use British Council Nairobi for IELTS UKVI (KES 28,500) — book multi-sitting packages if uncertain on first attempt",
+      "ECCTIS Statement of Comparability £140 standard / £210 urgent (5-day) — order early to avoid the rush price",
+      "Apply for Certificate of Good Conduct online at eCitizen.go.ke — KES 1,050; in-person fingerprinting at Huduma Centre (Embakasi, Kiambu, Nakuru, Mombasa, Eldoret); don't pay touts at DCI HQ KES 5,000+",
+      "IOM Nairobi TB test: book early — slot availability is the bottleneck, not the visa fee. Some UK NHS Trusts pre-pay IOM fees as part of relocation",
+      "Avoid 'visa agents' charging KES 200,000+ — UK Home Office is the only fee-charging party; UK employer's HR handles CoS at no cost to you",
+      "Family-in-UK can act as your sponsor for £1,270 maintenance via a signed Undertaking from a named UK citizen / settled person",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Skilled Worker / Health & Care Worker visa with NHS Trust CoS, clean record, NCK/KMPDC registered",
+        "Dependent applications (spouse + children) submitted with main applicant",
+        "ILR after 5 years continuous qualifying residence",
+        "Switching between sponsored employers within UK (within 60 days of leaving previous role)",
+      ],
+      getALawyer: [
+        "Prior UK visa refusal (study, visit, work) — refusal grounds carry forward",
+        "Care sector role with sponsor under CQC investigation / recent licence revocation (2024 saw mass revocations affecting Kenyans)",
+        "Past UK overstay or removal",
+        "Kenyan criminal record (even if dismissed under Probation of Offenders Act) — disclosure to Home Office is mandatory",
+        "Bringing 18+ dependent (adult dependent relative is one of UK's hardest visa categories)",
+        "FGM / protection-claim history — disclose carefully; can affect both spouse application and asylum coordination",
+        "Past Gulf state work history (KSA, UAE, Qatar, Kuwait) with kafala-system disputes / overstay flags",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // SOUTH AFRICAN → UK — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "ZA:GB:work": {
+    whatCarriesWeight: [
+      {
+        label: "Certificate of Sponsorship + Skilled Worker vs Health & Care Worker routing",
+        why: "South Africans split between standard Skilled Worker (general roles £38,700, IHS £1,035/yr) and Health & Care Worker (£29,000, IHS-exempt). Beyond these, two SA-specific options: Youth Mobility Scheme (18-30, 2-year, ballot system replaced by direct grant for SA from 2024 — 2,000 visas/year), and UK Ancestry Visa (UK-born grandparent — common for white South Africans; 5-year visa, full work rights, no sponsor needed, route to ILR).",
+      },
+      {
+        label: "SAQA evaluation + HPCSA/SANC/SACAA professional verification",
+        why: "South African qualifications need ECCTIS Statement of Comparability (~£140). For regulated professions: SANC (nurses) maps to NMC, HPCSA (doctors, allied health) maps to GMC + role council, SACAA (pilots) to UK CAA, ECSA (engineers) to ICE/IET, SAICA (chartered accountants) to ICAEW. Cross-recognition is much smoother than for non-Commonwealth applicants — Commonwealth heritage and English-medium education work in your favour.",
+      },
+      {
+        label: "SAPS Police Clearance + UK TB test (IOM Pretoria/Cape Town/Durban)",
+        why: "SAPS Police Clearance from local SAPS station or eHome Affairs (R150-R200, 6-12 weeks turnaround — start EARLY, this is the most common bottleneck for SA applicants). UK TB clearance from IOM Pretoria, IOM Cape Town, or IOM Durban (R2,500-R3,500, valid 6 months). For every country you've spent 6+ months in (including UK if previous Tier 4 / Youth Mobility) you also need that country's police certificate.",
+      },
+      {
+        label: "Maintenance funds in ZAR converted to GBP — beware of exchange rate timing",
+        why: "Skilled Worker requires £1,270 (~R29,000) held in personal name for 28 consecutive days. Health & Care Worker the £1,270 is waived if employer certifies cover. Document via FNB, Standard Bank, Absa, Nedbank, Capitec statements. The ZAR/GBP rate has swung 20%+ in recent years — convert your buffer to GBP early or hold the equivalent of £1,500-£2,000 to avoid edge-case refusals. Each dependent adds £285/£315 maintenance.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route choice — and why",
+        prompt: "South Africans have unusually many routes. State explicitly which you're applying for: Skilled Worker, Health & Care Worker, Youth Mobility Scheme (if under 31), UK Ancestry (if grandparent UK-born), or HPI (High Potential Individual visa if you have a degree from one of the world's top 50 universities — UCT, Wits, Stellenbosch made the list previously but check current ranking). Show research — picking the right route is half the application.",
+      },
+      {
+        heading: "Your South African work history — verifiable, professional body numbers included",
+        prompt: "List every SA employer (Discovery Health, MediClinic, Netcare, Life Healthcare, Standard Bank, FirstRand, Sasol, Anglo American, MTN, Vodacom, Naspers, named NGO) with exact dates, role, salary in ZAR, supervisor + email. Include professional body numbers: SANC PIN (nurses), HPCSA MP/SP/PSY number, ECSA PrEng/CandEng, SAICA membership. UK Home Office cross-checks these registers directly with SA bodies.",
+      },
+      {
+        heading: "Family + 'plan' — including the Commonwealth/Ancestry angle",
+        prompt: "If you have UK-born ancestry, mention it even if you're not applying via the Ancestry route — it strengthens settlement intent for Skilled Worker. Document family already in UK (SA expat community in London, Bristol, Reading, Manchester is large). Show genuine integration plan: housing, schools (state school catchment areas, fees if independent), community ties. Avoid 'I want to leave SA' framing — focus on positive UK pull factors.",
+      },
+      {
+        heading: "Future plan — ILR, dual citizenship, or temporary",
+        prompt: "Skilled Worker, Health & Care Worker, and UK Ancestry are all 5-year routes to ILR. SA citizenship can be retained alongside British (SA permits dual citizenship with prior application via Section 26B — file before naturalising UK to avoid loss of SA passport). Mention this if asked — it shows settlement seriousness. Life in the UK test + B1 English (most South Africans are at C1/native English from school) is straightforward.",
+      },
+    ],
+    moneySavingTips: [
+      "UK Ancestry Visa has NO sponsor requirement (saves the SOC-code wage scrutiny entirely) — if you have a UK-born grandparent, this is almost always the best route",
+      "Youth Mobility Scheme is a ballot system replaced by direct grant for South Africans from 2024 — 2,000 visas/year; £298 fee + IHS, NO sponsor needed, 2-year stay, route to switch into Skilled Worker after building UK experience",
+      "Health & Care Worker is IHS-exempt — saves £5,175 over 5 years per applicant",
+      "SAPS PCC: apply EARLY (12 weeks turnaround) at your local SAPS station or via eHome Affairs — R150-R200, don't use 'expediting services' charging R5,000+",
+      "Use ECCTIS Statement of Comparability (£140 standard) ONLY if your profession is regulated — for unregulated tech/finance roles UK employers accept SA degree certificates directly",
+      "SA Reserve Bank approval (Exchange Control SARB) for any GBP transfer above R1m — apply via your SA bank's FX desk free of charge; allow 7-14 days",
+      "Negotiate UK-paid relocation package from NHS Trust / UK tech employer — typically £3,000-£8,000 for SA hires given the higher logistics cost",
+      "Skip 'visa consultants' charging R30,000+ — Home Office fees + ECCTIS + SAPS + IOM total ~£3,000 for primary applicant; everything else is your time",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Skilled Worker / Health & Care Worker with NHS Trust CoS or named UK employer",
+        "UK Ancestry Visa with UK-born grandparent (clear documentary chain)",
+        "Youth Mobility Scheme (now direct-grant for SA citizens 18-30)",
+        "Dependent visa applications (spouse + children) concurrent with main applicant",
+        "ILR after 5 years continuous qualifying residence",
+        "Switching from Tier 4 Student to Skilled Worker within UK",
+      ],
+      getALawyer: [
+        "Past UK visa refusal (including a 2020+ Tier 4 student refusal)",
+        "Past UK overstay or removal (SAPS Police Clearance shows port-of-departure history if relevant)",
+        "SA criminal record (even minor, even diversion programme outcomes — disclosure to Home Office is mandatory)",
+        "UK Ancestry application where the grandparent's birth was in pre-independence Commonwealth countries (Northern Ireland 1921+ counts; Republic of Ireland post-1922 does NOT)",
+        "Bringing 18+ dependent or adult dependent relative (one of UK's hardest visa categories)",
+        "Dual SA / other non-Commonwealth passport (visa application from the wrong passport)",
+        "HPI (High Potential Individual) visa where your university's ranking dropped off the eligible list since you graduated — eligibility uses the ranking from the year of your graduation, so document this carefully",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // THAI → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "TH:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from a SEVP-certified US school + SEVIS I-901 paid",
+        why: "Your US institution issues Form I-20 (F-1) or DS-2019 (J-1 exchange) once admitted and proof-of-funds verified. Pay SEVIS I-901 fee ($350 F-1 / $220 J-1) before booking DS-160 interview — without the SEVIS receipt the consulate will reject the appointment. Thai applicants book at US Embassy Bangkok (Wireless Road) or US Consulate General Chiang Mai. Bangkok slots typically open Mondays 7am ICT and fill within minutes during peak season.",
+      },
+      {
+        label: "Proof of funds in THB with USD equivalent + 214(b) ties to Thailand",
+        why: "Show 1st-year tuition + living costs (typically $40-80k). Thai bank statements (SCB, Kasikorn, Bangkok Bank, Krungthai, Krungsri) are accepted but the DS-160 interviewer wants USD equivalent at the BOT rate. Strong 214(b) ties for Thai applicants: family in Thailand (parents' tha-bian-baan / house registration), property in Thailand (land deed chanote), Thai military service (DAFM exemption certificate or completed conscription documentation), expected return job (Thai employer letter), Thai fiancé(e).",
+      },
+      {
+        label: "Strong English score + Thai academic transcripts apostilled",
+        why: "TOEFL iBT 80+ or IELTS Academic 6.5+ is typical for US undergrad/grad admission. For visa purposes, the DS-160 interview will be in English — practice with native speakers or AUA Thailand-language teachers (reverse). Thai high-school M.6 transcript and any university transcripts need Ministry of Foreign Affairs Thailand legalisation (Department of Consular Affairs, Chaeng Wattana) — about THB 200/document, 2 working days regular or same-day rush.",
+      },
+      {
+        label: "Visa interview narrative — clear, short, no overselling",
+        why: "Thai applicants face a relatively friendly US consulate (refusal rate historically below 20% for first-time F-1), but interviews are short (1-3 minutes). The officer wants: which school + programme, who pays, why this programme, what you'll do after graduation. Long answers and over-rehearsed scripts hurt; clear short answers and confidence help. Bring all documents in an organised folder but expect the officer to ask for only 2-3.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this specific US programme over Thai or AEC alternatives",
+        prompt: "Thailand has strong universities (Chulalongkorn, Mahidol, Thammasat, Chiang Mai). Explain why your US programme offers something unique — research lab, specific professor, industry network (Silicon Valley for CS, NYC for finance, Hollywood for film, Boston for biotech). Reference concrete elements: a specific course not offered at Chula, an internship pipeline, faculty publication you've read. Vague 'American education is the best' is a 214(b) refusal trigger.",
+      },
+      {
+        heading: "Funding — Thai family / scholarship structure",
+        prompt: "Quantify: tuition $X, living $Y, total Year 1 $Z. Then show coverage: family contribution THB X (with bank statement and notarised Affidavit of Support), scholarship $Y, savings $Z. Common Thai funding sources: family-owned business profits, parent salary (especially government officers — explain rank and ministry), real estate rental income, family land sale proceeds. Document each clearly with chanote (land deed) or business registration.",
+      },
+      {
+        heading: "Post-graduation plan — your return to Thailand",
+        prompt: "F-1 visas explicitly require intent to return. State which Thai sector you'll return to (Thai banking — Bangkok Bank, SCB, KBank; Thai telecoms — AIS, True, dtac; Thai retail — Central, CP, BJC; Thai hospitality — Minor, Centara, Dusit; Thai pharma; or family business). If your family owns a business, mention it explicitly — succession plan is strong 214(b) evidence. If you want OPT (Optional Practical Training) after graduation, briefly mention but emphasise return.",
+      },
+      {
+        heading: "Family ties remaining in Thailand",
+        prompt: "List parents (occupation, location), siblings, grandparents, partner. Mention property — family home (with tha-bian-baan registration showing your name), land owned by parents that you're heir to, Thai bank accounts you'll maintain (with Thai mobile number for SMS-OTP). Thai military status (sor-dor for completed service, or DAFM exemption) is important to mention — males 21+ must show resolved military obligation.",
+      },
+    ],
+    moneySavingTips: [
+      "Apply through US Embassy Bangkok — Wireless Road; Chiang Mai consulate has shorter wait times if you're from the North",
+      "F-1 visa fee is $185 (was $160 pre-2023); pay via Krungthai Bank deposit slip — fastest and the bank prints the official MRV receipt",
+      "Don't pay for visa-prep agencies — DS-160 is online, free, and questions are straightforward. The interview is the bottleneck, not the form",
+      "Thai applicants are eligible for Fulbright Thailand (~$30,000 stipend + tuition), Anandamahidol Foundation (Royal scholarship for top students), Asian Cultural Council fellowships, AIT-Thailand graduate scholarships",
+      "Some US universities offer 'Thai Heritage Scholarships' — Cornell, Stanford, MIT, USC, Texas A&M have named Thai-origin endowments; ask the international student office",
+      "OneStudent visa application centre (third-party) is not required for Thailand — apply direct to US Embassy Bangkok",
+      "Use Krungthai or SCB student remittance accounts for tuition transfers — lower FX fees than retail remittance, regulated under BOT educational outflow allowance (no annual limit for tuition)",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with clean record, clear funding, strong programme fit",
+        "Standard exchange-programme J-1 through AFS, EF, AYUSA, Fulbright, or accredited Thai university partnership",
+        "Renewal of existing F-1 (re-issuance in Thailand during winter / summer breaks)",
+        "OPT or STEM OPT application during or after the programme",
+      ],
+      getALawyer: [
+        "Prior US visa refusal (any category — B1/B2 tourist refusal is a red flag for F-1)",
+        "Thai criminal record (even minor — drug possession, DUI, bar-related charges)",
+        "Lèse-majesté (Section 112) related case history — disclose carefully; framing matters for US disclosure",
+        "Funding from a sponsor outside Thailand (Chinese, Indian, Cambodian, Laotian sponsors face additional scrutiny)",
+        "Past US overstay (even 30 days) or B1/B2 visa flag in your travel history",
+        "Transfer from another country's F-1 status (SEVIS transfer within US is fine, country-to-country needs care)",
+        "Same-sex partner accompanying — Thailand recognised same-sex civil partnerships from January 2025 (Marriage Equality Act); F-2 dependent for same-sex spouse needs careful documentation",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // EGYPTIAN → UAE — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "EG:AE:work": {
+    whatCarriesWeight: [
+      {
+        label: "Employer Work Permit + Entry Permit (تأشيرة دخول العمل) issued by MOHRE",
+        why: "Egyptians are the second-largest expat population in UAE (~900,000+). Your UAE employer applies to the Ministry of Human Resources & Emiratisation (MOHRE) for a Work Permit, and to GDRFA (Dubai) / ICA (Abu Dhabi / other emirates) for the Entry Permit. The 60-day Entry Permit lets you fly in; on arrival you do medical fitness test, Emirates ID biometric, and visa stamping in your passport (now mostly digital). Total employer cost AED 3,000-7,000 — should be paid by employer per UAE Labour Law.",
+      },
+      {
+        label: "Egyptian educational certificates attested through MOFA + UAE Embassy Cairo",
+        why: "All Egyptian degree certificates need attestation: 1) issuing Egyptian university stamp, 2) Ministry of Higher Education Egypt, 3) Egyptian MOFA (Tahrir or Cairo airport), 4) UAE Embassy in Cairo (currently in Garden City), 5) UAE MOFA on arrival. Total cost EGP 1,500-3,500 + AED 150-300. Attestation typically takes 3-6 weeks — start before applying for the job offer if possible. For salary above AED 12,000/month, the role/degree match matters less; for under that level, MOHRE checks degree-occupation fit more rigorously.",
+      },
+      {
+        label: "Salary tier determines visa category + Golden Visa potential",
+        why: "UAE work visa is now tiered: Standard (most workers, 2-year visa renewable), Professional (AED 25,000+/month, simpler renewal), Golden Visa (5 or 10 years, no sponsor, family included). Egyptian professionals earning AED 30,000+/month (engineers, doctors, senior managers) qualify for Golden Visa directly. Investors with AED 2M property or AED 2M public investment also qualify regardless of nationality.",
+      },
+      {
+        label: "Medical fitness test + tuberculosis / HIV screening on arrival",
+        why: "Within 60 days of Entry Permit issuance you must complete medical fitness at DHA-approved centres (Dubai), SEHA (Abu Dhabi), or MOHAP (other emirates). TB, HIV, and Hepatitis B/C screening — positive results lead to immediate non-issuance of residence visa and deportation. Costs AED 320-750. Egyptian applicants with prior Gulf experience should pre-test in Egypt at an authorised lab (Al Borg, AlfaLab) — saves the AED airfare-loss if results would disqualify.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role, your UAE employer, and salary tier",
+        prompt: "UAE doesn't ask for personal statements at the consular interview stage (most processing is employer-led + MOHRE-portal), but during medical fitness and emirates ID interview officers may ask. Be ready: which UAE company, which emirate, salary band, role responsibilities, and specifically why the UAE labour market needs an Egyptian rather than Emirati or other GCC national. Egyptian Arabic and educational background in Egypt (Cairo University, Ain Shams, Alexandria, AUC) are recognised positives.",
+      },
+      {
+        heading: "Your Egyptian work history — TIN, social insurance number, exact dates",
+        prompt: "List every Egyptian employer with month-precision dates, role, salary in EGP, supervisor name + contact. Include TIN (Tax ID Number) from Egyptian Tax Authority and Social Insurance Number from National Organisation for Social Insurance — UAE attestation occasionally requires these. Past Gulf experience (KSA, Qatar, Kuwait, Oman, Bahrain) strengthens applications — document each Gulf contract by employer name, dates, and reason for leaving.",
+      },
+      {
+        heading: "Family + sponsorship plan",
+        prompt: "If bringing dependants (spouse, children, parents) — they need separate Dependent Residence visas tied to your sponsorship. Salary threshold AED 4,000/month + accommodation for sponsoring spouse/children; AED 6,000-12,000/month for sponsoring parents (varies by emirate). Egyptian spouse / children carry Egyptian passports — separate attestation chain (Egyptian marriage cert + birth certs) and UAE Embassy Cairo legalisation needed.",
+      },
+      {
+        heading: "Long-term plan — Golden Visa or rotation back to Egypt",
+        prompt: "UAE work visas are not a path to citizenship (UAE doesn't naturalise foreign workers in practice). State either: Golden Visa target (if income/investment qualifying) for 5-10 year stability, or temporary contract (2-3 years) with planned return to Egypt. Some Egyptian professionals split residence — UAE Golden Visa + Egyptian property maintenance + family rotation. Tax: Egypt taxes worldwide income for tax-resident Egyptians (>183 days/year in Egypt); UAE has no personal income tax.",
+      },
+    ],
+    moneySavingTips: [
+      "Employer must pay all work visa costs per UAE Labour Law (MOHRE Resolution 30 of 2013) — refuse any 'visa fee deduction' from your first salary; report to MOHRE if pressured",
+      "Egyptian degree attestation: do all 5 steps yourself (~EGP 1,500 + AED 250) instead of via agency charging EGP 8,000-15,000",
+      "Medical fitness centres: DHA-approved centres in Dubai (Al Maktoum, Karama) are cheaper (AED 320 standard) than SEHA premium services (AED 750)",
+      "Open ENBD, FAB, or ADCB salary account — corporate sponsor often gets fee waivers; ask about salary-transfer-based account opening before paying account opening fees",
+      "Don't use 'free zone PRO services' charging AED 5,000+ for what your employer's PRO does free — clarify at offer stage who handles your Emirates ID processing",
+      "Apply for Egyptian Tax Residency Certificate if you'll be UAE-resident >183 days/year — exempts you from Egyptian worldwide-income tax for that period",
+      "Egyptian Mogamma in Cairo can certify documents faster than waiting for embassy queues in Dubai/Abu Dhabi — do all attestation before leaving Egypt",
+      "Use the UAE Visa Insurance product for the 60-day Entry Permit window (covers if work-visa stamping is delayed) — AED 250-400 vs cancellation rebooking cost",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard employer-led work permit + entry permit + residence visa with attested certificates",
+        "Medical fitness, Emirates ID biometric, and visa stamping (all employer-facilitated)",
+        "Dependent visa for spouse + children once you have residence visa and qualifying salary",
+        "Golden Visa application via salary or property route (online via ICA / GDRFA portal)",
+      ],
+      getALawyer: [
+        "Past UAE labour ban (1-year, 6-month, or lifetime — issued for absconding, breach of contract, or criminal case)",
+        "Egyptian criminal record (military case, drugs, debt — UAE rigorously checks)",
+        "Previous Gulf labour dispute (kafala-system unpaid wages, employer-side passport-holding case)",
+        "Switching from one UAE sponsor to another mid-contract without sponsor NOC (now easier under 2022 Labour Law, but edge cases benefit from a PRO/lawyer)",
+        "Free zone visa vs mainland visa selection (DMCC, JAFZA, ADGM, DIFC have different rules; investment thresholds vary)",
+        "Real estate Golden Visa application (AED 2M property qualifier — title deed must be in your sole name, not shared)",
+        "Family member with prior UAE conviction or labour ban (affects your sponsorship eligibility)",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { PlausibleScript } from "@/components/PlausibleScript";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { SocialProofBannerServer } from "@/components/SocialProofBannerServer";
 
 // Site chrome — wraps the public pages but NOT /embed/*, /api/*, /admin/*,
@@ -11,6 +12,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className="min-h-screen flex flex-col">
       <PlausibleScript />
+      <GoogleAnalytics />
       {/* Skip-to-content link — visible only on keyboard focus. */}
       <a
         href="#main-content"

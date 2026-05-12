@@ -5100,6 +5100,388 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // IRANIAN → CANADA — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "IR:CA:study": {
+    whatCarriesWeight: [
+      {
+        label: "Study Permit + Canadian Designated Learning Institution (DLI)",
+        why: "Iran sends ~17,000 students to Canada annually — the largest Middle Eastern student cohort. Your Canadian institution must be on the IRCC Designated Learning Institutions (DLI) list. Apply for Study Permit online or via VFS Global Tehran / Ankara / Istanbul / Dubai — Canada closed its Tehran embassy in 2012, so Iranian applicants apply through Ankara, Istanbul, Dubai, or Abu Dhabi visa application centres. Processing 12-24 weeks (longer than other origins due to security screening).",
+      },
+      {
+        label: "Heightened security screening (Section 11(1) / Section 34 IRPA)",
+        why: "Iranian applicants face mandatory enhanced security screening under IRPA Section 11(1) and Section 34 (admissibility on security grounds — covers concerns about Iranian government, IRGC, terrorism financing, dual-use technology). STEM students (especially in nuclear, aerospace, advanced AI, advanced materials, biotech) face automatic background check with 6-18 month processing delays. CSIS (Canadian Security Intelligence Service) and partner agencies conduct the review. Disclose every Iranian government / military / IRGC affiliation, however peripheral.",
+      },
+      {
+        label: "Proof of funds + GIC alternative + Iranian sanctions banking workarounds",
+        why: "Show CAD$20,635 (single, 2024 figure) for living expenses + tuition + return airfare. Iranian banks (Bank Melli, Bank Saderat, Bank Mellat, Bank Pasargad, Bank Sepah) are heavily sanctioned — direct SWIFT transfers to Canada blocked. Iranian students typically use: GIC (Guaranteed Investment Certificate) from Scotiabank Iran-friendly program (CAD$20,635 transfer via third-country bank), bank-statement-via-Türkiye / UAE / Armenia / Georgia third-country relative, family wealth in Iran with Persian-language bank statements + IRR-to-CAD conversion at Tehran Stock Exchange rate.",
+      },
+      {
+        label: "Iranian academic transcripts + translation + apostille-equivalent",
+        why: "Iran isn't a Hague Apostille signatory. Iranian high school diploma (Diplom-e Mottavasete) and university transcripts (Madreke Karshenasi Bachelor, Karshenasi Arshad Master, Doctora) need: 1) issuing institution stamp + Iranian MOSRT (Ministry of Science, Research and Technology) verification for accredited universities — Sharif, Tehran, Isfahan University of Technology, Amirkabir, Iran University of Science and Technology, Shahid Beheshti, 2) Iranian MOFA legalisation, 3) Canadian embassy (currently Ankara / Istanbul / Dubai) authentication, 4) Persian-to-English notarised translation by sworn translator (Motarjem Rasmi). Cost IRR 5-15 million + CAD 50-150 + USD 100-300.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why Canada over US, UK, or European alternatives",
+        prompt: "Iran has elite universities (Sharif University of Technology, University of Tehran, Amirkabir, Iran University of Science and Technology). Explain why Canada specifically — Canadian welcoming policy toward Iranian students, specific Canadian-Iranian academic links (Toronto, Vancouver, Montreal have large Iranian-Canadian diaspora), specific Canadian institution / professor / research lab, Canadian post-study work permit (PGWP) pathway. Reference Canadian-Iranian academic networks: Iranian Studies departments at UofT, UBC, McGill, Concordia.",
+      },
+      {
+        heading: "Your Iranian academic record + post-graduation plan",
+        prompt: "List every Iranian school / university with month-precision dates, GPA, supervisor / advisor name. Include Iranian National Code (Kart-e Melli — national ID), passport number. For PhD applicants, document research publications (Iranian + international), advisor relationship, intended Canadian research area. State post-graduation intent honestly: return to Iran (if Iranian government / university bonded), apply for Canadian Post-Graduation Work Permit (PGWP), eventual Permanent Residence via Express Entry / PNP, or onward migration. Canadian Study Permit doesn't require return intent (dual intent permitted).",
+      },
+      {
+        heading: "Funding — Iranian family / GIC / Canadian-Iranian sponsor",
+        prompt: "Quantify: tuition CAD$X, living CAD$20,635, total Year 1 CAD$Z. Then show coverage: family contribution IRR X (with Iranian bank statement, parents' employment in named Iranian sector — government, university, private business), GIC certificate CAD$20,635 from Scotiabank / RBC / TD Iran programs, scholarship (Iran's own Ministry of Science scholarship rare for Western study; Canadian university scholarships more common — see below). Iranian-Canadian relatives can act as financial co-sponsors via I-134-equivalent affidavit.",
+      },
+      {
+        heading: "Family ties + Iranian cultural / political context",
+        prompt: "List parents (occupation, location — Tehran / Mashhad / Isfahan / Karaj / Shiraz / Tabriz / Qom district level), siblings, partner. Disclose any Iranian government, IRGC, Basij, military, or political organization affiliation (yours or family's) — even peripheral. Mention Iranian property (with sanad-e malekiyat / title deed in parents' name), Iranian bank accounts. For male applicants, military service status: completed conscription (kart-e payan-e khedmat), exemption (kart-e moafiat), or deferral with study-abroad approval. Without resolution, future Iranian re-entry triggers conscription.",
+      },
+    ],
+    moneySavingTips: [
+      "Study Permit application fee CAD$150 + Biometrics CAD$85 — pay online via IRCC portal in CAD (no Canadian-side reciprocity adjustment for Iranians)",
+      "GIC alternative: family-member-in-Canada-as-sponsor + bank statement from Iran via third-country (Türkiye / UAE / Armenia) — Scotiabank's IRC GIC program is most Iranian-friendly",
+      "Iranian translation services: Tehran-based Motarjem Rasmi (sworn translator) IRR 300,000-800,000/page — significantly cheaper than Canada-based translation (CAD$30-60/page); list of certified translators at Iranian Judiciary website",
+      "Many Canadian universities have Iranian-origin scholarship endowments — UofT, McGill, UBC, Waterloo, McMaster, Western, Alberta all have named Iranian-heritage funds or research-area-specific awards",
+      "Specific Iranian scholarships: Iran Heritage Foundation Canada (UofT, McGill), Iranian Canadian Congress scholarships, Vahab Foundation, Fereshteh-Yegane Memorial Scholarship — apply via Canadian university international admissions",
+      "Pre-departure orientation through Iranian student associations at Canadian universities — UofT Iranian Students Association, UBC Iranian Society, McGill Persian Society offer free pre-arrival info sessions via Zoom",
+      "Use third-country remittance (Türkiye İşbank, Habib Bank Pakistan, Dubai-based exchange, Yerevan banks) — direct Iran-Canada banking is sanctioned; not legal advice but reflects actual Iranian student practice",
+      "Iranian Embassy Ottawa (when open) free notarisation services — currently closed since 2012; use Iranian Interests Section at Pakistani Embassy in Ottawa or apply via Iranian-Canadian community organisations",
+      "Avoid 'Iran-Canada migration consultancies' charging USD 5,000-30,000 — IRCC has its own free advisers; RCIC (Regulated Canadian Immigration Consultants) cost CAD$2,000-5,000 for full Study Permit + extension service",
+      "Use Iranian bank statement + sworn translator + Toronto/Vancouver consular interview at VFS Global Dubai or Istanbul — the consular interview is the bottleneck",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time Study Permit with clean record, clear funding via GIC + family, top-DLI institution acceptance",
+        "Standard PGWP (Post-Graduation Work Permit) application after completing 2+ years study",
+        "Study Permit extension during programme",
+        "Transfer between Canadian DLIs (notify both institutions; usually no new permit needed)",
+      ],
+      getALawyer: [
+        "Prior Canadian visa refusal (study, work, visit) — refusal grounds carry forward",
+        "Past Canadian Study Permit cancellation",
+        "Iranian government / military / IRGC / Basij affiliation (yours or family) — even peripheral",
+        "STEM field with potential CSIS sensitivity (nuclear, aerospace, advanced AI, advanced materials, biotech dual-use)",
+        "Iranian academic / research advisor with potential security concerns",
+        "Past Iranian asylum claim flag (yours or family) in another country",
+        "Funding from Iranian sponsor outside immediate family or via third-country sanctioned bank",
+        "Unresolved Iranian military obligation",
+        "Past UK / US / Australia / EU visa refusal with Iran-related security flag (Five Eyes data sharing affects Canadian application)",
+        "Bringing dependants — separate Study Permit / Work Permit + Visitor Visa coordination, especially for parents (over 60s face stricter funding requirements)",
+        "Same-sex partner accompanying — Iran criminalises same-sex relations; Canada recognises same-sex marriage; documentation chain doesn't exist; refugee claim alternative possible but separate process",
+        "Iranian female applicant without male guardian permission (Mahram-equivalent in Iranian context) — Iranian-side practical issue, not Canadian visa issue, but affects family situation",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // TURKISH → US — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "TR:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "E-1 / E-2 Treaty Trader / Investor via the Türkiye-US 1985 Treaty",
+        why: "Türkiye's E-1 (substantial trade between Türkiye and US) and E-2 (substantial Turkish investment in US business) treaty visas under the 1985 Treaty of Friendship and Commerce. Major Turkish E-1 traders include Yıldız Holding (Pladis-McVitie's, Ülker), Anadolu Group, Eczacıbaşı, Koç Holding, Sabancı Holding. E-2 investors active across US tech (NYC, Bay Area, Boston) and hospitality (NYC, LA, Miami, Houston Turkish-American clusters). No statutory minimum for E-2 but $100k+ practical floor.",
+      },
+      {
+        label: "H-1B Specialty Occupation OR L-1 intracompany via Turkish parent",
+        why: "Standard H-1B (March lottery, 85k slots — Turkish win rate ~30-35%). L-1A/B (intracompany transfer) bypasses lottery if you've worked 1+ year at Turkish parent (Türk Hava Yolları THY, Koç Group, Sabancı Group, Doğuş Group, Eczacıbaşı, Yıldız Holding, Anadolu Group, Vestel, Beko, Ülker, Migros). Turkish-American business community in NYC (large Turkish neighborhood in Brooklyn / NJ Paterson), LA (Hollywood), Boston (academia + tech), Houston (energy).",
+      },
+      {
+        label: "DS-160 + Apostilled Turkish degrees + WES/ECE/AICE credential evaluation",
+        why: "DS-160 online application, then book interview at US Embassy Ankara (Atatürk Bulvarı), US Consulate General Istanbul (İstinye Sancak Tepesi), or US Consulate Adana. Turkish degree certificates (Lisans, Yüksek Lisans, Doktora) need Apostille via Turkish MFA (Türkiye Cumhuriyeti Dışişleri Bakanlığı) — Türkiye is Hague signatory since 1985. Cost TRY 100-300/document, 3-7 working days. WES, ECE, or AICE foreign credential evaluation for US employer petition or licensure. Turkish Lisans (4-year) maps to US Bachelor's; Yüksek Lisans to US Master's.",
+      },
+      {
+        label: "Turkish Police Record + DS-160 disclosure of Turkish security context",
+        why: "Turkish Adli Sicil Kaydı (criminal record certificate) from Türkiye Ministry of Justice — free at Tubitak portal or Türkiye Adalet Bakanlığı online, 1-3 days. For US visa, disclose any: previous arrests / detention (including 2016 post-coup-attempt mass arrest if applicable — many Turkish academics, lawyers, journalists were detained), past military service (mandatory for males), any Gülen / FETÖ allegation history (Turkish government continues investigating), political affiliations (CHP / AKP / MHP / İYİ / DEM / HDP membership), Kurdish or Alevi minority advocacy.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why the US — sector, employer, Turkish-American community",
+        prompt: "Turkish applicants benefit from specificity. Tech (Silicon Valley, NYC, Boston, Austin), finance (NYC, Chicago), entertainment (LA — Turkish-American film, Netflix Turkish content distribution), energy (Houston), pharma (NJ, Boston, Bay Area). Mention Turkish-American business networks (American Turkish Society, Turkish American Chamber of Commerce, ATAA Assembly of Turkish American Associations). Name your target US employer.",
+      },
+      {
+        heading: "Your Turkish employer / academic credentials",
+        prompt: "List Turkish employer chronologically, role, salary in TRY with USD equivalent at TCMB rate, supervisor name + contact. Turkish universities are well-known to US Embassy Ankara: Boğaziçi, METU, ITU, Bilkent, Sabancı, Koç, Hacettepe, Ankara, Marmara, Yıldız Technical, Gazi. For L-1, document the 12+ month qualifying employment at Turkish parent.",
+      },
+      {
+        heading: "Long-term plan — H-1B + green card, E-2 indefinite, or temporary",
+        prompt: "H-1B and L-1 allow dual intent — green-card plans openly stated (EB-2/EB-3 via PERM). E-2 is non-immigrant but renewable indefinitely. Türkiye permits dual citizenship; US permits dual citizenship. State honest plan. Turkish-American community is concentrated in NYC, NJ, Houston, LA — mention specific city if relevant.",
+      },
+      {
+        heading: "Family + dependants + Turkish school year",
+        prompt: "Spouse on L-2: automatic work authorization since 2023; H-4 spouse needs EAD (limited). E-2 spouse gets E-2D with full work rights. Turkish spouse + children under 21 are derivative. Turkish school year (September-June) — children can transition to US August/September start with minimal disruption. International schools in Istanbul (Robert College, MEF International, Istanbul International Community School) ease US transition.",
+      },
+    ],
+    moneySavingTips: [
+      "DS-160 fee $185 (H-1B/L-1) or $315 (E-1/E-2); pay in TRY at İş Bank, Garanti BBVA, Akbank, or Yapı Kredi — no reciprocity fee for Turkish citizens",
+      "Use WES iGPA Calculator (free online) before paying for full evaluation",
+      "Apostille via Turkish MFA: TRY 100-300/document, 3-7 days; or at provincial Valilik (governor's office) — same fee, faster turnaround in provinces",
+      "Open a US-domiciled bank account with Wise USD, Mercury Business, or Türkiye İş Bankası USA (NYC, Chicago — Turkish diaspora-friendly) before relocation",
+      "Turkish Embassy DC + Consulates (Boston, Chicago, Houston, LA, NYC, Miami, San Francisco) offer free notarisation for Turkish citizens",
+      "Avoid Turkish 'göç danışmanlığı' charging TRY 50,000-200,000 for H-1B/L-1 — US-based immigration attorneys with Turkish desks at Fragomen, Berry Appleman, BAL have flat-fee Turkish services at $2,500-3,500",
+      "Use Yapı Kredi, İş Bankası, Garanti BBVA, or Akbank for tuition / large remittance — competitive vs Wise for high-volume transfers",
+      "Plan Turkish tax exit carefully — Türkiye taxes worldwide income for tax-residents (>183 days/year); file final return for year of departure; Türkiye-US Tax Treaty (1996, protocol 2008) prevents double-taxation",
+      "Adli Sicil Kaydı (criminal record): FREE via Tubitak portal or Adalet Bakanlığı online — don't pay agents TRY 1,000+",
+      "Use Wise, Revolut, or Western Union for low-volume TRY/USD remittance — competitive vs traditional bank transfer",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard H-1B / L-1 with named US employer, clean record, clear Turkish degree mapping",
+        "DS-160 interview prep at US Embassy Ankara / Consulate Istanbul / Adana",
+        "Spouse / dependent derivative applications (H-4, L-2, E-2D)",
+        "Renewal of existing H-1B / L-1 at US Embassy Ankara / Consulate Istanbul during home leave",
+        "PERM-based EB-2 / EB-3 green card (Turks are current — no per-country backlog)",
+      ],
+      getALawyer: [
+        "E-1 Treaty Trader — substantial trade volume between Türkiye and US needs evidentiary support",
+        "E-2 Treaty Investor — substantiality, source-of-funds, 'real and operating' enterprise tests",
+        "EB-1A / EB-1B / O-1 — extraordinary ability for Turkish researchers / executives / artists",
+        "Concurrent Turkish exit-tax considerations on substantial holdings",
+        "Prior US visa refusal or US overstay",
+        "Turkish criminal record (military / police case from 2016 post-coup-attempt period, drugs, organised-crime)",
+        "Past FETÖ / Gülen movement allegation (Turkish government continues investigating; affects US visa disclosure)",
+        "Kurdish or Alevi minority political advocacy history",
+        "Past Turkish military service evader or conscientious objector status",
+        "Same-sex spouse — Türkiye doesn't recognise same-sex marriage; US recognises; derivative visas via US documentation chain",
+        "Dual Turkish-other passport (Turkish-German, Turkish-American adoptee, Turkish-Bulgarian common combinations)",
+        "Pre-2016 Turkish military / police background with potential US security concern",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // SOUTH AFRICAN → AUSTRALIA — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "ZA:AU:work": {
+    whatCarriesWeight: [
+      {
+        label: "Subclass 482 Temporary Skill Shortage + Subclass 189 Skilled Independent + Subclass 491",
+        why: "South Africa is one of Australia's top sources of skilled migration (~25,000 ZA migrants annually). Subclass 482 (sponsored — needs Australian employer, salary above TSMIT AUD$73,150 from 1 July 2024). Subclass 189 (Skilled Independent — points-based, no sponsor needed, on Skilled Occupation List). Subclass 491 (Skilled Work Regional — provincial sponsorship, 5-year pathway to PR). South Africans are well-represented in Australian healthcare (doctors, nurses, dentists, allied health), engineering, IT, finance, and mining.",
+      },
+      {
+        label: "Skills assessment + SAQA / engineering body recognition",
+        why: "Australian Skilled Migration requires skills assessment from the relevant assessing authority. Engineers Australia recognises South African engineering degrees from ECSA (Engineering Council of South Africa) accredited institutions. Doctors require AMC (Australian Medical Council) assessment + AHPRA registration. Nurses go through ANMAC + AHPRA-NMBA. Lawyers via state Legal Profession Admission Boards. CAANZ for chartered accountants (Australian-NZ recognition of SAICA). South Africans benefit from English-medium education and Commonwealth heritage.",
+      },
+      {
+        label: "ECCTIS / SAQA degree evaluation + IELTS 7+ for skilled migration",
+        why: "South African qualifications need recognition through assessing authority — SAQA verification is South African-side, not Australian; for Australian visa apply through specific Australian body (Engineers Australia, AMC, ANMAC, CAANZ, ACS for IT). English proficiency: IELTS Academic 7.0+ in each band (or equivalent PTE Academic 65+ in each band) for skilled migration full points; 6.0+ minimum for some visa subclasses. South Africans benefit from English-medium education — typically score 7.5-8.5.",
+      },
+      {
+        label: "SAPS Police Clearance + Australian health requirement",
+        why: "SAPS Police Clearance from local SAPS station or eHome Affairs (R150-R200, 6-12 weeks turnaround — start EARLY). For every country you've spent 12+ months in (including UK if previous Tier 4 / Youth Mobility) you need that country's police certificate. Australian health requirement: medical at panel physician (most major SA cities have IOM-equivalent panel — Pretoria, Cape Town, Durban) plus chest X-ray for TB. Cost R2,500-R3,500.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your visa route — Subclass 482, 189, 190, 491, or 494",
+        prompt: "South Africans have many Australian skilled migration options. State explicitly: 482 (employer sponsored, 2-5 year, route to PR), 189 (Independent — points-based, no sponsor, direct PR), 190 (State Nominated — state list dependent), 491 (Regional Work Provisional — 5-year regional pathway to PR), 494 (Employer Sponsored Regional — 5-year regional route to PR). Each has different EOI (Expression of Interest) and Skill Select scoring.",
+      },
+      {
+        heading: "Your South African work history + professional body numbers",
+        prompt: "List every SA employer (Discovery Health, MediClinic, Netcare, Life Healthcare, Standard Bank, FirstRand, Sasol, Anglo American, MTN, Vodacom, Naspers, named NGO) with exact dates, role, salary in ZAR, supervisor + email. Include SANC PIN (nurses), HPCSA MP/SP/PSY number, ECSA PrEng/CandEng, SAICA membership, SACAA pilot licence number. Australian assessing authorities cross-check these registers directly with SA bodies.",
+      },
+      {
+        heading: "Skills assessment + IELTS / PTE score",
+        prompt: "Document your skills assessment outcome (positive vs negative, date, assessing authority — Engineers Australia, AMC, ANMAC, etc.). State your English score: IELTS Academic 7.5+ each band typical for SA professionals. SA's English-medium education means most SA applicants reach 'Superior English' tier in Subclass 189 points calculator — significant CRS-equivalent boost.",
+      },
+      {
+        heading: "Family + future plan — ILR / Australian citizenship or temporary",
+        prompt: "Most South Africans pursue PR via 189/190/491 (direct PR routes) or 482 (sponsored route to PR after 2-3 years). State whether you intend Australian citizenship (after 4 years total residence with 1 year as PR), retain SA citizenship (dual permitted by both countries), or temporary contract. Mention SA family (often relocating with you) and SA property liquidation plans. Australian school year (February-November) aligns with SA school year (January-December).",
+      },
+    ],
+    moneySavingTips: [
+      "Subclass 189 / 190 visa fees: AUD$4,640 main applicant + AUD$2,320 spouse + AUD$1,160/child — significant; budget AUD$8,000-15,000 for family of 4",
+      "Subclass 482 visa fees: AUD$3,210 main applicant + dependents; usually employer-paid",
+      "Skills assessment fees: Engineers Australia (~AUD$700), AMC for doctors (~AUD$1,500), ANMAC for nurses (~AUD$700), ACS for IT (~AUD$500), CAANZ for accountants (~AUD$1,300)",
+      "SAPS PCC: apply EARLY (12 weeks turnaround) at SAPS station or eHome Affairs — R150-R200; don't use 'expediting services' charging R5,000+",
+      "Use SAQA Verification (FREE for South African-side recognition) before Australian assessing authority (cheaper to discover credential issues early)",
+      "PTE Academic test is faster than IELTS for SA applicants — book at Pearson VUE centres in Johannesburg / Cape Town / Durban / Pretoria",
+      "South African Reserve Bank (SARB) exchange control approval for funds transfer over R1m — apply via FX desk at FNB, Standard Bank, Absa, or Nedbank; free service",
+      "Australian Department of Home Affairs has a 'Migration Skills Assessment' provider list — use these directly, not 'migration agents' charging R30,000-100,000",
+      "Don't pay 'MARA agents' R50,000+ if your case is straightforward — MARA is regulated but expensive; DIY for points-tested visa types is realistic for SA professionals",
+      "Open Wise AUD, ANZ Migrant Banking, NAB Skilled Migration, CommBank Newcomer accounts before flying — most accept SA ID + Australian visa grant",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Subclass 189 / 190 / 491 with positive skills assessment, IELTS 7+, clean record",
+        "Subclass 482 with employer sponsorship and clean documentation",
+        "Dependent visa applications concurrent with main applicant",
+        "Permanent Residence transition from 482 → 186 (Employer Nomination Scheme) after qualifying period",
+        "Australian citizenship application after 4 years residence (1 year as PR)",
+      ],
+      getALawyer: [
+        "Negative skills assessment outcome from assessing authority",
+        "Past Australian visa refusal (visitor, study, work)",
+        "South African criminal record (even minor, even diversion programme outcome)",
+        "Funding from a sponsor outside South Africa or immediate family",
+        "Past Five Eyes visa refusal (US, UK, Canada, NZ) flagged on Australian database",
+        "Bringing 18+ dependent or adult dependent relative",
+        "HPI (High Potential Individual) visa where university ranking dropped off eligible list",
+        "Family member with prior Australian asylum claim",
+        "Dual SA / other non-Commonwealth passport (visa application from wrong passport)",
+        "Past UK Tier 4 student visa with TOEIC fraud allegation (2010-2015 mass scandal affecting some South Africans)",
+        "Apartheid-era political affiliation history (rare but historically sensitive for older applicants)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // GERMAN → UK — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "DE:GB:work": {
+    whatCarriesWeight: [
+      {
+        label: "Skilled Worker visa OR Health & Care Worker — Germans need visa post-Brexit",
+        why: "Post-Brexit (January 2021), German citizens no longer have EU freedom of movement to UK. Standard Skilled Worker visa: sponsor licence + £38,700 general threshold (April 2024) or £29,000 Health & Care Worker (IHS-exempt). German engineers, doctors, IT professionals, finance, and consulting roles are well-recruited. UK ETA (Electronic Travel Authorization) for short visits — but for work / study / family / settlement you need full visa.",
+      },
+      {
+        label: "Certificate of Sponsorship + ECCTIS verification of German qualification",
+        why: "Your UK employer must hold sponsor licence. ECCTIS Statement of Comparability (~£140, 15 working days) for German degrees — Bachelor (3-year) and Bachelor (4-year FH/HS Fachhochschule/Hochschule applied sciences) typically map to UK Level 6; Master (1- or 2-year) to Level 7. For regulated professions: NMC (nurses, OSCE/CBT route), GMC (doctors, PLAB — Germans benefit from Bologna alignment), Law Society (German Volljurist needs SQE), ICAEW / ACCA for accountants.",
+      },
+      {
+        label: "German Police Certificate + UK TB test exemption",
+        why: "Germany is on the UK 'no TB test' country list — no TB clearance needed. German Polizeiliches Führungszeugnis (police certificate) from local Bürgeramt or online via BfJ (Bundesamt für Justiz) — EUR 13, ~14 days. International Certificate of Conduct for UK use is FREE and digitally signed. State-level certificate (Landeszentrale) is also valid for UK Home Office.",
+      },
+      {
+        label: "Income proof + £1,270 maintenance",
+        why: "Skilled Worker requires £1,270 maintenance held 28 consecutive days. For Health & Care Worker, £1,270 typically waived. Document via German banks: Deutsche Bank, Commerzbank, ING-DiBa, Sparkasse, Volksbank, comdirect, DKB. Dependent visa for spouse + each child <18 adds £285/£315 maintenance. EUR/GBP relatively stable but UK-specific maintenance amount must be visible in EUR equivalent.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role + post-Brexit context",
+        prompt: "Since January 2021 German citizens no longer have EU freedom of movement to UK. Be specific: how you found the role (recruitment partnership, NHS Trust direct, EU-UK professional network, online job board), what makes you the right fit, salary level vs going rate. Name the UK employer, team, line manager. German engineers in UK tech (ARM Cambridge, Wise, Revolut), German doctors in NHS, German finance professionals in City of London are common.",
+      },
+      {
+        heading: "German work history + professional credentials",
+        prompt: "List every German employer (Daimler, BMW, VW, Siemens, Bosch, Bayer, BASF, Allianz, Munich Re, Deutsche Bank, Commerzbank, SAP, named NGO) with exact dates, role, salary in EUR, supervisor + email. Include professional body registrations: Approbation (for doctors / pharmacists), Eingetragener Wirtschaftsprüfer (Wirtschaftsprüferkammer for auditors), Berufung as Steuerberater (Steuerberaterkammer), Kammer-Mitgliedschaft as Architekt / Ingenieur.",
+      },
+      {
+        heading: "Maintenance funds + family plan",
+        prompt: "Skilled Worker £1,270 maintenance OR employer A-rated cover. Document German bank statements (Deutsche Bank, Commerzbank, ING-DiBa, Sparkasse). Dependent visa for spouse + children adds £285/£315 per dependent. German UK diaspora is large in London, Cambridge, Edinburgh, Manchester — family support possible but cannot substitute required maintenance.",
+      },
+      {
+        heading: "Future plan — ILR or return",
+        prompt: "Skilled Worker is 5-year route to ILR. State settlement plan with Life in the UK test + B1 English (most Germans are at C1+ from school). Germany permits dual citizenship since 2024 reform; UK permits dual citizenship. Most German-British dual nationals retain both passports. If you intend to return to Germany after a fixed period, state openly — Skilled Worker doesn't require settlement intent.",
+      },
+    ],
+    moneySavingTips: [
+      "UK Skilled Worker / Health & Care Worker visa fees: £719-£1,500 + IHS £1,035/year (general) or IHS-exempt (Health & Care Worker)",
+      "German police certificate via BfJ online portal: EUR 13 — don't use 'document services' charging EUR 50+",
+      "ECCTIS Statement of Comparability £140 standard / £210 urgent",
+      "British Council Germany centres (Berlin, München, Hamburg, Köln) accept IELTS UKVI but most Germans are exempt under 'majority English-speaking country' rule — confirm with UKVI portal",
+      "Don't use German 'Visa-Berater' charging EUR 2,000-5,000 for what is straightforward UKVI process",
+      "Open Wise GBP, Monzo, Revolut UK before flying — most accept German passport + German address",
+      "Use Wise EUR/GBP for tuition / large remittance — competitive vs Deutsche Bank international transfer",
+      "Negotiate UK relocation package — typically £3,000-£8,000 for German hires given logistics + cross-EU+UK costs",
+      "German tax: file Wegzugsmeldung when leaving Germany; UK-Germany tax treaty (1964, protocol 2010) prevents double-taxation; German Auslandsrentenversicherung continues if you're posted (≤24 months) under EU-equivalent A1-style certificate",
+      "ICAEW Pathway for German Wirtschaftsprüfer to UK Chartered Accountant: simplified mutual recognition agreement",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Skilled Worker / Health & Care Worker visa with named UK employer CoS",
+        "Dependent visa applications concurrent with main applicant",
+        "ILR after 5 years continuous qualifying residence",
+        "Switching between sponsored employers within UK",
+        "Naturalisation after 1 year ILR + 5 years total UK residence",
+      ],
+      getALawyer: [
+        "Past UK visa refusal",
+        "Past UK overstay or removal",
+        "German criminal record (even spent / suspended under Bundeszentralregister)",
+        "Care sector role with sponsor under CQC investigation / recent licence revocation",
+        "Pre-Brexit UK residency / EUSS application (EU Settlement Scheme — different track)",
+        "Bringing 18+ dependent or adult dependent relative",
+        "Dual German-other non-Commonwealth passport (visa application from wrong passport)",
+        "HPI (High Potential Individual) visa where your German university dropped off top-50 list",
+        "Same-sex spouse — Germany recognises same-sex marriage 2017; UK recognises 2014; derivative visas straightforward",
+        "Past EU expulsion / public-order ban affecting UK entry",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // PERUVIAN → US — family
+  // ════════════════════════════════════════════════════════════════════
+
+  "PE:US:family": {
+    whatCarriesWeight: [
+      {
+        label: "Family-based green card via IR-1 / CR-1 / F-2A / F-2B / F-1 / F-3 / F-4",
+        why: "Peruvians use standard US family-based immigration system. IR-1/CR-1 (spouse of US citizen — IR-1 unconditional 10-year, CR-1 conditional 2-year if marriage <2 years), IR-2 (unmarried child of US citizen under 21), IR-5 (parent of US citizen 21+), F-1 (unmarried adult child of US citizen — current backlog ~7 years), F-2A (spouse/minor children of LPR), F-2B (unmarried adult children of LPR — backlog ~7 years), F-3 (married children of US citizen — backlog ~15 years), F-4 (siblings of US citizen 21+ — backlog ~20+ years for Peru). Current visa bulletin shows F-4 Peru as one of the longest waits globally.",
+      },
+      {
+        label: "Peruvian civil documents + Apostille via Cancillería Lima",
+        why: "Peruvian birth certificates, marriage certificates, divorce decrees, death certificates need Apostille via Peruvian Cancillería (Ministerio de Relaciones Exteriores — Peru is Hague signatory since 2010). Apply at Cancillería Lima (Jr. Lampa 545) or regional offices (Arequipa, Cusco, Trujillo, Piura, Iquitos, Pucallpa, Tacna, Tarapoto). Cost PEN 100-200 (~USD 28-56)/document, 3-7 working days. Pre-2007 Peruvian birth records often handwritten and may need rectification via Peruvian notary (Notario Público) before Apostille.",
+      },
+      {
+        label: "Affidavit of Support (I-864) + Peruvian-American sponsor compliance",
+        why: "US sponsor (citizen or LPR) files Form I-864 — must show income at 125% of Federal Poverty Guidelines for household size + sponsored beneficiary (~$25k single, $33k for 2-person, $42k for 3-person). Joint sponsors accepted if primary insufficient. Peruvian-American sponsors should attach: 3 years of US tax returns (Form 1040), W-2s, employer letter, bank statements, asset valuations. Peruvian-American community concentrated in Paterson NJ, Miami FL, Houston TX, Washington DC area.",
+      },
+      {
+        label: "Peruvian Police Clearance + medical exam at Lima panel physician",
+        why: "Peruvian Certificado de Antecedentes Penales from RENIEC (Registro Nacional de Identificación y Estado Civil) Lima or via online portal — PEN 28 (~USD 8), 1-3 days. INTERPOL clearance also available for some categories. Medical exam at US-designated panel physician in Lima — most common: International Health & Medical (IHM) Lima, MedicalServ. Cost USD 200-400. Yellow fever vaccination required (most Peruvians have it from childhood — bring carnet de vacunación).",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your visa category and relationship",
+        prompt: "State explicit visa category and family relationship. IR-1/CR-1 (spouse of US citizen), IR-2 (child under 21), IR-5 (parent), F-1 (unmarried adult child), F-2A (spouse/minor children of LPR), F-2B (unmarried adult children of LPR), F-3 (married children), F-4 (siblings — long backlog for Peru). Document priority date if file is in National Visa Center queue.",
+      },
+      {
+        heading: "Your relationship narrative",
+        prompt: "For spousal cases (IR-1/CR-1), document bona fide marriage: when/where/how met (Peru, US, third country), wedding details, photos, joint financial records, joint travel, communication history (WhatsApp, video calls — preserve evidence), family integration. CR-1 is 2-year conditional pending I-751 removal of conditions; IR-1 is 10-year unconditional. Document timeline carefully.",
+      },
+      {
+        heading: "Family ties + Peruvian context",
+        prompt: "Document your Peruvian history: residence (Lima / Arequipa / Cusco / Trujillo / Chiclayo / Piura district level), parents' occupation, siblings, education at Peruvian universities (PUCP Pontificia Universidad Católica del Perú, UNMSM, UPC, U de Lima, ESAN, UPC), Peruvian property with Registro de Predios title, Peruvian bank accounts. Peruvians are typically not flagged for special security screening — straightforward documentation.",
+      },
+      {
+        heading: "US sponsor compliance + future plan",
+        prompt: "US sponsor relationship + I-864 sponsorship capacity. State settlement plan: where you'll live (typically with US sponsor or near Peruvian-American community in Paterson NJ / Miami FL / DC metro / Houston TX), work plan (Peruvian credentials evaluated via WES/ECE), child education plan (US public school enrolment via local district), eventual naturalisation timeline (3 years for IR spouse with marriage, 5 years otherwise).",
+      },
+    ],
+    moneySavingTips: [
+      "Family-based visa total fee per applicant: I-130 petition $675 + NVC processing $445 + medical $200-400 + I-864 affidavit $120 = typically $1,400-1,800",
+      "Apostille via Peruvian Cancillería Lima: PEN 100-200/document — don't use 'tramitadores' charging PEN 500+",
+      "Don't pay 'asesores migratorios' USD 5,000-15,000 — USCIS forms are free at uscis.gov; immigration attorney costs $1,500-5,000 depending on complexity",
+      "Peruvian-American legal aid: Asociación de Peruanos en Maryland, Peruvian Society of New Jersey, Peruvian American Coalition — low-cost consultation",
+      "Translation: certified Spanish-English translation USD 25-50/page",
+      "Medical exam at IHM Lima / MedicalServ Lima: USD 200-400 — direct booking; don't use agency middlemen",
+      "Use Wise USD/PEN, Western Union, Banco Continental, or BCP for remittance — competitive vs traditional bank transfer",
+      "Peruvian Certificado de Antecedentes Penales: PEN 28 via online RENIEC portal — don't pay agents PEN 200+",
+      "Peruvian Embassy DC + Consulates (Atlanta, Boston, Chicago, Dallas, Denver, Hartford CT, Houston, LA, Miami, NY, Newark NJ, Paterson NJ, Philadelphia, Phoenix, San Diego, SF) offer free notarisation for Peruvian citizens",
+      "F-4 sibling petition has 20+ year backlog for Peru — start applications NOW even if relative is years away from coming",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard I-130 petition for spouse / immediate family member with clean record",
+        "I-485 Adjustment of Status (if already in US under valid status)",
+        "Naturalisation (N-400) after 3 years marriage to US citizen or 5 years LPR",
+        "F-1 / F-2A / F-2B / F-3 / F-4 priority date tracking and waiting",
+      ],
+      getALawyer: [
+        "Prior US visa refusal or US overstay (B1/B2 overstay common)",
+        "Peruvian criminal record (drug-related cases under Ley 23330)",
+        "Family member with prior US asylum claim from Peru (Sendero Luminoso era, MRTA, Fujimori-era cases)",
+        "Adoption-related petition where Peruvian adoption documentation incomplete",
+        "Same-sex spouse — Peru doesn't recognise same-sex marriage federally (some same-sex marriages recognised from abroad under 2024 Inter-American Court ruling); US recognises; documentation chain via third-country marriage cert (Argentina, Spain, US)",
+        "Past unauthorised US entry / border crossing",
+        "Peruvian-American sponsor with prior tax delinquency affecting I-864 sponsorship",
+        "Multi-country Peruvian migration history (Peru → Argentina → Chile → US complicates beneficiary documentation)",
+        "Dual Peruvian-other passport (Peruvian-Spanish, Peruvian-Italian common — apply via Peruvian passport)",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

@@ -19,7 +19,7 @@ import type { ResolvedVisaOption, Purpose, VisaStatus } from "@/lib/types";
 import { PURPOSE_LABEL } from "@/lib/types";
 import { nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
-import { assessDifficulty } from "@/lib/difficulty";
+import { assessDifficulty, BUCKET_PALETTE, BUCKET_LABEL } from "@/lib/difficulty";
 import { assessRealism } from "@/lib/realism";
 import { obstaclesFor, type Obstacle } from "@/content/obstacles";
 
@@ -139,7 +139,9 @@ export function DirectAnswerCard({
       : difficulty.bucket === "medium"
       ? "There's a moderate amount of paperwork"
       : "The paperwork is heavy";
-  sentences.push(`${difficultyPhrase} — ${realismPhrase}.`);
+  sentences.push(
+    `${difficultyPhrase} — ${difficulty.score}/10 difficulty (${BUCKET_LABEL[difficulty.bucket].toLowerCase()}), and ${realism.score}/10 realism (${realism.bucket}). ${capitaliseFirst(realismPhrase)}.`,
+  );
 
   if (options.length > 1) {
     sentences.push(
@@ -163,11 +165,7 @@ export function DirectAnswerCard({
     );
   }
 
-  const tone = difficulty.bucket === "easy"
-    ? "border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/20"
-    : difficulty.bucket === "medium"
-    ? "border-amber-200 dark:border-amber-900 bg-amber-50/40 dark:bg-amber-950/20"
-    : "border-red-200 dark:border-red-900 bg-red-50/40 dark:bg-red-950/20";
+  const tone = BUCKET_PALETTE[difficulty.bucket].border;
 
   return (
     <section className={`mb-6 rounded-xl border ${tone} p-5 sm:p-6`}>

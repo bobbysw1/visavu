@@ -39,21 +39,21 @@ function baseOption(overrides: Partial<ResolvedVisaOption> = {}): ResolvedVisaOp
 }
 
 describe("bucketFor", () => {
-  it("buckets 8-10 as easy, 4-7 as medium, 1-3 as hard", () => {
-    expect(bucketFor(10)).toBe("easy");
-    expect(bucketFor(8)).toBe("easy");
-    expect(bucketFor(7)).toBe("medium");
-    expect(bucketFor(4)).toBe("medium");
-    expect(bucketFor(3)).toBe("hard");
-    expect(bucketFor(1)).toBe("hard");
+  it("buckets 1-4 as easy, 5-6 as medium, 7-10 as hard", () => {
+    expect(bucketFor(1)).toBe("easy");
+    expect(bucketFor(4)).toBe("easy");
+    expect(bucketFor(5)).toBe("medium");
+    expect(bucketFor(6)).toBe("medium");
+    expect(bucketFor(7)).toBe("hard");
+    expect(bucketFor(10)).toBe("hard");
   });
 });
 
 describe("assessDifficulty", () => {
-  it("scores plain visa-free entry as easy/10", () => {
+  it("scores plain visa-free entry as 1 (easy)", () => {
     const a = assessDifficulty(baseOption());
     expect(a.bucket).toBe("easy");
-    expect(a.score).toBe(10);
+    expect(a.score).toBe(1);
   });
 
   it("scores VWP-style visa-free-with-eta + onward ticket as easy", () => {
@@ -66,7 +66,7 @@ describe("assessDifficulty", () => {
       }),
     );
     expect(a.bucket).toBe("easy");
-    expect(a.score).toBeGreaterThanOrEqual(8);
+    expect(a.score).toBeLessThanOrEqual(4);
   });
 
   it("scores Skilled-Worker-style sponsor-required, high-salary work visa as hard or borderline-medium", () => {
@@ -97,7 +97,7 @@ describe("assessDifficulty", () => {
       }),
     );
     expect(["hard", "medium"]).toContain(a.bucket);
-    expect(a.score).toBeLessThanOrEqual(5);
+    expect(a.score).toBeGreaterThanOrEqual(6);
   });
 
   it("scores e_visa with light requirements + fast processing as medium-or-easy", () => {
@@ -110,10 +110,10 @@ describe("assessDifficulty", () => {
       }),
     );
     expect(["easy", "medium"]).toContain(a.bucket);
-    expect(a.score).toBeGreaterThanOrEqual(7);
+    expect(a.score).toBeLessThanOrEqual(4);
   });
 
-  it("scores embassy_visa with multi-week processing as medium", () => {
+  it("scores embassy_visa with multi-week processing as medium-or-hard", () => {
     const a = assessDifficulty(
       baseOption({
         status: "embassy_visa",
@@ -122,12 +122,16 @@ describe("assessDifficulty", () => {
         requirements: ["Application form", "Photos", "Bank statement", "Itinerary"],
       }),
     );
-    expect(a.bucket).toBe("medium");
+    // Medium bucket is narrower (5–6) under the new spec, so a multi-week
+    // embassy visa with light requirements sits right on the hard boundary.
+    expect(["medium", "hard"]).toContain(a.bucket);
+    expect(a.score).toBeGreaterThanOrEqual(6);
+    expect(a.score).toBeLessThanOrEqual(8);
   });
 
-  it("scores entry refused as 1 (hard)", () => {
+  it("scores entry refused as 10 (hard)", () => {
     const a = assessDifficulty(baseOption({ status: "refused" }));
-    expect(a.score).toBe(1);
+    expect(a.score).toBe(10);
     expect(a.bucket).toBe("hard");
   });
 

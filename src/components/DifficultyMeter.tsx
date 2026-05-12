@@ -2,43 +2,45 @@
  * Visual difficulty indicator. Renders the 1–10 score as a 10-segment bar
  * (so the score is visible even on a quick scan), the bucket label, and
  * a "Why this score?" disclosure that lists the modifiers.
+ *
+ * Scale: 1 = easiest, 10 = hardest. Colours come from BUCKET_PALETTE so
+ * every difficulty surface in the app uses the exact same swatches.
  */
-import { type DifficultyAssessment, BUCKET_LABEL, BUCKET_BLURB } from "@/lib/difficulty";
-
-const BUCKET_TONE: Record<DifficultyAssessment["bucket"], { dot: string; bar: string; chip: string }> = {
-  easy: {
-    dot: "bg-emerald-500",
-    bar: "bg-emerald-500",
-    chip: "bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-200",
-  },
-  medium: {
-    dot: "bg-amber-500",
-    bar: "bg-amber-500",
-    chip: "bg-amber-100 text-amber-900 dark:bg-amber-900/40 dark:text-amber-200",
-  },
-  hard: {
-    dot: "bg-red-500",
-    bar: "bg-red-500",
-    chip: "bg-red-100 text-red-900 dark:bg-red-900/40 dark:text-red-200",
-  },
-};
+import {
+  type DifficultyAssessment,
+  BUCKET_LABEL,
+  BUCKET_BLURB,
+  BUCKET_PALETTE,
+  BUCKET_RANGE,
+} from "@/lib/difficulty";
 
 export function DifficultyMeter({ assessment }: { assessment: DifficultyAssessment }) {
-  const tone = BUCKET_TONE[assessment.bucket];
+  const tone = BUCKET_PALETTE[assessment.bucket];
+  const blurbId = `difficulty-blurb-${assessment.bucket}`;
 
   return (
     <section className="mb-5 p-4 rounded-lg border border-neutral-200 dark:border-neutral-800">
-      <header className="flex flex-wrap items-center justify-between gap-2 mb-3">
+      <header className="flex flex-wrap items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-3">
           <span className={`inline-block w-2.5 h-2.5 rounded-full ${tone.dot}`} aria-hidden />
           <h4 className="text-sm font-semibold">Difficulty</h4>
-          <span className={`text-xs font-semibold px-2 py-0.5 rounded ${tone.chip}`}>
+          <span
+            className={`text-sm font-bold px-3 py-1 rounded uppercase tracking-wide ${tone.chip}`}
+            title={BUCKET_BLURB[assessment.bucket]}
+            aria-describedby={blurbId}
+          >
             {BUCKET_LABEL[assessment.bucket]}
           </span>
+          <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono">
+            {BUCKET_RANGE[assessment.bucket]}
+          </span>
         </div>
-        <div className="text-right">
-          <span className="text-2xl font-bold">{assessment.score}</span>
-          <span className="text-sm text-neutral-500 dark:text-neutral-400">/10</span>
+        <div
+          className={`inline-flex items-baseline px-3 py-1 rounded ${tone.chip}`}
+          title={`Score ${assessment.score} of 10`}
+        >
+          <span className="text-2xl font-bold leading-none">{assessment.score}</span>
+          <span className="text-sm font-medium ml-0.5">/10</span>
         </div>
       </header>
 
@@ -63,7 +65,7 @@ export function DifficultyMeter({ assessment }: { assessment: DifficultyAssessme
         ))}
       </div>
 
-      <p className="text-xs text-neutral-600 dark:text-neutral-400 mb-3">
+      <p id={blurbId} className="text-xs text-neutral-600 dark:text-neutral-400 mb-3">
         {BUCKET_BLURB[assessment.bucket]}
       </p>
 
@@ -77,11 +79,18 @@ export function DifficultyMeter({ assessment }: { assessment: DifficultyAssessme
               <span
                 className={`shrink-0 font-mono w-10 text-right ${
                   r.delta > 0
-                    ? "text-emerald-600 dark:text-emerald-400"
-                    : r.delta < 0
                     ? "text-red-600 dark:text-red-400"
+                    : r.delta < 0
+                    ? "text-emerald-600 dark:text-emerald-400"
                     : "text-neutral-500"
                 }`}
+                title={
+                  r.delta > 0
+                    ? `Adds ${r.delta} to difficulty`
+                    : r.delta < 0
+                    ? `Subtracts ${Math.abs(r.delta)} from difficulty`
+                    : "Base difficulty for this visa status"
+                }
               >
                 {r.delta > 0 ? `+${r.delta}` : r.delta === 0 ? "—" : r.delta}
               </span>

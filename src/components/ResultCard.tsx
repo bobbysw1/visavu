@@ -437,7 +437,7 @@ function CompactScoreRow({
     difficulty.bucket === "easy"
       ? "text-emerald-700 dark:text-emerald-300"
       : difficulty.bucket === "medium"
-      ? "text-amber-700 dark:text-amber-300"
+      ? "text-orange-700 dark:text-orange-300"
       : "text-red-700 dark:text-red-300";
   const realTone =
     realism.bucket === "likely"

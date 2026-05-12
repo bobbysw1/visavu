@@ -6968,3 +6968,18 @@ export function routeAdviceFor(
   const key = `${passportIso2.toUpperCase()}:${destinationIso2.toUpperCase()}:${purpose}` as RouteKey;
   return ROUTE_ADVICE[key] ?? null;
 }
+
+/**
+ * All hand-written route keys parsed into structured form. Used by the
+ * sitemap chunk handler to surface high-quality transit/family/diplomatic
+ * URLs (which we otherwise exclude from the sitemap to avoid thin-content
+ * penalties). Hand-written cells get sitemap inclusion regardless of purpose.
+ */
+export const HAND_WRITTEN_ROUTES: ReadonlyArray<{
+  passport: string;
+  destination: string;
+  purpose: Purpose;
+}> = Object.keys(ROUTE_ADVICE).map((key) => {
+  const [passport, destination, purpose] = key.split(":") as [string, string, Purpose];
+  return { passport: passport.toLowerCase(), destination: destination.toLowerCase(), purpose };
+});

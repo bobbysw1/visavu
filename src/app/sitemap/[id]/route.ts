@@ -1,5 +1,6 @@
 import { COUNTRY_LIST } from "@/lib/countries";
 import { SITE } from "@/lib/site";
+import { HAND_WRITTEN_ROUTES } from "@/content/routeAdvice";
 
 // Per-origin sitemap chunk: /sitemap/[id].xml — one chunk per origin passport.
 // Each chunk emits ~1,400 URLs (273 pairs × 4 indexed purposes + 1 bare pair +
@@ -9,7 +10,26 @@ import { SITE } from "@/lib/site";
 // to fully control the response and avoid collision with the sitemap index at
 // /sitemap.xml.
 
+// High-search purpose URLs that every (passport, destination) pair gets in
+// the sitemap. Templated content on these is unique enough to avoid
+// thin-content flags.
 const INDEXED_PURPOSES = ["tourism", "work", "study", "business"] as const;
+
+// Hand-written purpose URLs additionally get sitemap inclusion for ALL 7
+// purposes (transit / family / diplomatic) because their content is
+// genuinely route-specific. Indexed by passport-lowercase for fast lookup
+// per chunk.
+const HAND_WRITTEN_BY_ORIGIN: Map<string, Array<{ destination: string; purpose: string }>> = (() => {
+  const map = new Map<string, Array<{ destination: string; purpose: string }>>();
+  for (const r of HAND_WRITTEN_ROUTES) {
+    // Skip if already covered by INDEXED_PURPOSES — those are emitted anyway.
+    if ((INDEXED_PURPOSES as readonly string[]).includes(r.purpose)) continue;
+    const list = map.get(r.passport) ?? [];
+    list.push({ destination: r.destination, purpose: r.purpose });
+    map.set(r.passport, list);
+  }
+  return map;
+})();
 
 export const dynamic = "force-static";
 export const revalidate = 86400;
@@ -18,8 +38,9 @@ export async function generateStaticParams() {
   return COUNTRY_LIST.map((_, i) => ({ id: `${i}.xml` }));
 }
 
-export function GET(_req: Request, { params }: { params: { id: string } }) {
-  const idStr = params.id.replace(/\.xml$/, "");
+export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id: idParam } = await params;
+  const idStr = idParam.replace(/\.xml$/, "");
   const id = Number.parseInt(idStr, 10);
   const origin = COUNTRY_LIST[id];
   if (!origin) {
@@ -58,6 +79,21 @@ export function GET(_req: Request, { params }: { params: { id: string } }) {
         urlEntry(`${SITE.url}/${lowerOrigin}/${lowerDest}/${purpose}`, lastmod, "weekly", "0.5"),
       );
     }
+  }
+
+  // Hand-written non-indexed-purpose URLs from this origin (transit / family /
+  // diplomatic only — work/study/tourism/business already emitted above).
+  // Higher priority because the content is genuinely route-specific.
+  const handWritten = HAND_WRITTEN_BY_ORIGIN.get(lowerOrigin) ?? [];
+  for (const { destination, purpose } of handWritten) {
+    urls.push(
+      urlEntry(
+        `${SITE.url}/${lowerOrigin}/${destination}/${purpose}`,
+        lastmod,
+        "monthly",
+        "0.6",
+      ),
+    );
   }
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>

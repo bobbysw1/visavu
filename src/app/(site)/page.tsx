@@ -4,6 +4,7 @@ import { Landmark, UserX, Ban } from "lucide-react";
 import { LookupForm } from "@/components/LookupForm";
 import { RouteCard } from "@/components/RouteCard";
 import { AllCountriesGrid } from "@/components/AllCountriesGrid";
+import { ClaudeTipCallout } from "@/components/ClaudeTipCallout";
 import { COUNTRY_LIST } from "@/lib/countries";
 import { NATIONALITY } from "@/lib/nationalities";
 import { SITE, absoluteUrl } from "@/lib/site";
@@ -259,6 +260,11 @@ export default async function HomePage() {
             with the government. Our incentive is being right, not collecting commissions.
           </p>
         </div>
+      </section>
+
+      {/* The $10k Claude tip — the founder story that motivated this whole site. */}
+      <section className="mx-auto max-w-4xl px-4 py-8">
+        <ClaudeTipCallout />
       </section>
 
       {/* Browse by passport — every nationality, scrollable + searchable */}

@@ -13,6 +13,7 @@ import { routeAdviceFor } from "@/content/routeAdvice";
 import { PURPOSE_LABEL, type Purpose, type VisaStatus } from "@/lib/types";
 import { nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
+import { ClaudeTipCallout } from "@/components/ClaudeTipCallout";
 
 export function VisaApplicationAdvice({
   purpose,
@@ -135,10 +136,9 @@ export function VisaApplicationAdvice({
             </li>
           ))}
         </ol>
-        <p className="text-[11px] text-neutral-500 dark:text-neutral-400 mt-3 italic">
-          Tip: paste this skeleton into Claude or ChatGPT with your specific facts — the AI
-          will turn rough notes into a tightly-structured statement caseworkers expect.
-        </p>
+        <div className="mt-5">
+          <ClaudeTipCallout />
+        </div>
       </div>
 
       {/* Money-saving tips */}

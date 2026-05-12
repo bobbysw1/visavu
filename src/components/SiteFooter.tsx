@@ -20,6 +20,7 @@ export function SiteFooter() {
             <li><Link href="/guides" className="hover:underline">Guides</Link></li>
             <li><Link href="/passport/us" className="hover:underline">By passport</Link></li>
             <li><Link href="/destination/jp" className="hover:underline">By destination</Link></li>
+            <li><Link href="/services" className="hover:underline">Relocation services</Link></li>
           </ul>
         </div>
         <div>

@@ -1,13 +1,14 @@
 /**
- * Travel-adjacent affiliate rail. Renders BELOW the SourcesPanel on every
- * result page. Three cards: insurance / eSIM / flights. Clearly labelled
- * "Sponsored — separate from visa info above."
+ * Travel-adjacent affiliate rail. Renders BELOW the RelocationServicesPanel
+ * on every result page. Two cards: eSIM / flights — insurance lives in the
+ * relocation panel above. Clearly labelled "Sponsored — separate from visa
+ * info above."
  *
  * Strategy:
  *   - We never link affiliate visa-application services. That would
  *     compromise trust in the core product.
- *   - We do link adjacent travel services (insurance, eSIM, flights) where
- *     the user clearly benefits from a curated handful of options.
+ *   - We do link adjacent travel services (eSIM, flights) where the user
+ *     clearly benefits from a curated handful of options.
  *   - Every click fires a Plausible AffiliateClicked event so we can see
  *     what works and remove what doesn't.
  *   - See /disclosure for the full commercial relationship statement.
@@ -16,7 +17,7 @@ import Link from "next/link";
 import { nameFor } from "@/lib/countries";
 
 type AffiliateCard = {
-  partner: "safetywing" | "airalo" | "kiwi";
+  partner: "airalo" | "kiwi";
   title: string;
   body: string;
   cta: string;
@@ -24,14 +25,6 @@ type AffiliateCard = {
 };
 
 const CARDS: AffiliateCard[] = [
-  {
-    partner: "safetywing",
-    title: "Travel insurance",
-    body: "Pay-as-you-go cover that works for digital nomads + multi-month trips. Covers medical, evacuation, and trip interruption.",
-    cta: "Compare plans",
-    // Placeholder URL — replace with real affiliate link before launch.
-    url: (iso) => `https://safetywing.com/?ref=visavu&utm_country=${iso}`,
-  },
   {
     partner: "airalo",
     title: "eSIM data",
@@ -65,7 +58,7 @@ export function TravelAdjacentRail({ destinationIso2 }: { destinationIso2: strin
         </p>
       </header>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {CARDS.map((card) => (
           <a
             key={card.partner}

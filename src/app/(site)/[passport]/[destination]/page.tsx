@@ -32,6 +32,7 @@ import {
 import { resolveUserCurrency } from "@/lib/userCurrency";
 import { SourcesPanel } from "@/components/SourcesPanel";
 import { TravelAdjacentRail } from "@/components/TravelAdjacentRail";
+import { RelocationServicesPanel } from "@/components/RelocationServicesPanel";
 import { RelatedRoutesRail } from "@/components/RelatedRoutesRail";
 import { obstaclesFor } from "@/content/obstacles";
 import { COUNTRY_LIST, flagEmoji, nameFor } from "@/lib/countries";
@@ -648,7 +649,13 @@ export default async function Page({
             don't have scraped data, because primary-source links ARE the value. */}
         <SourcesPanel passportIso2={p} destinationIso2={d} options={options} />
 
-        {/* Travel-adjacent affiliates — clearly labelled, separate from visa info. */}
+        {/* Comprehensive seven-category relocation services panel: travel /
+            health insurance, vaccinations, biometrics, medical checks,
+            passport photos, legal. Route-aware filtering. */}
+        <RelocationServicesPanel passportIso2={p} destinationIso2={d} purpose={purpose} />
+
+        {/* Travel-adjacent affiliates (eSIM + flights) — separate from the
+            relocation panel above which handles insurance + legal etc. */}
         <TravelAdjacentRail destinationIso2={d} />
 
         <section className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">

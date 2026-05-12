@@ -61,6 +61,14 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       ["/about", "monthly", "0.4"],
       ["/sources", "monthly", "0.4"],
       ["/disclaimer", "monthly", "0.3"],
+      ["/services", "weekly", "0.6"],
+      ["/services/travel-insurance", "weekly", "0.5"],
+      ["/services/health-insurance", "weekly", "0.5"],
+      ["/services/vaccinations", "weekly", "0.5"],
+      ["/services/biometrics", "weekly", "0.5"],
+      ["/services/medical-checks", "weekly", "0.5"],
+      ["/services/passport-photos", "weekly", "0.5"],
+      ["/services/legal-services", "weekly", "0.5"],
     ] as const) {
       urls.push(urlEntry(`${SITE.url}${path}`, lastmod, freq, prio));
     }

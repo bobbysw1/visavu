@@ -17,6 +17,7 @@
  * privacy-friendly side regardless.
  */
 import Script from "next/script";
+import { consentInitScript } from "@/lib/analyticsConsent";
 
 const DEFAULT_GA_ID = "G-JVHR3D6YJQ";
 
@@ -25,6 +26,13 @@ export function GoogleAnalytics() {
   if (!id) return null;
   return (
     <>
+      {/* Consent init: regular inline <script> (NOT next/script) so it
+          executes synchronously during HTML parse, guaranteed before the
+          async gtag.js library finishes loading. Reads the localStorage
+          opt-out flag and sets window["ga-disable-<id>"] which GA
+          respects — no hits leak if the user has opted out. Same script
+          also neutralises Plausible. */}
+      <script dangerouslySetInnerHTML={{ __html: consentInitScript(id) }} />
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${id}`}
         strategy="afterInteractive"

@@ -26,15 +26,34 @@ export function PlausibleScript() {
 
   return (
     <>
-      <script
-        defer
-        data-domain={domain}
-        src="https://plausible.io/js/script.tagged-events.js"
-      />
-      {/* Initialise the queue so events fire even before the script loads. */}
+      {/* Initialise the event queue + check the opt-out flag in one
+          synchronous pre-script. If the user has opted out, window.plausible
+          is reassigned to a no-op so queued calls drop silently AND we skip
+          inserting the tracker <script>. The flag is checked again by GA. */}
       <script
         dangerouslySetInnerHTML={{
-          __html: `window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`,
+          __html: `
+            window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) };
+            try {
+              if (window.localStorage.getItem("visavu:analytics-optout") === "true") {
+                window.plausible = function () {};
+                window.__visavu_optout = true;
+              } else {
+                var s = document.createElement("script");
+                s.defer = true;
+                s.src = "https://plausible.io/js/script.tagged-events.js";
+                s.setAttribute("data-domain", ${JSON.stringify(domain)});
+                document.head.appendChild(s);
+              }
+            } catch (e) {
+              // localStorage blocked — load Plausible as normal.
+              var s = document.createElement("script");
+              s.defer = true;
+              s.src = "https://plausible.io/js/script.tagged-events.js";
+              s.setAttribute("data-domain", ${JSON.stringify(domain)});
+              document.head.appendChild(s);
+            }
+          `,
         }}
       />
     </>

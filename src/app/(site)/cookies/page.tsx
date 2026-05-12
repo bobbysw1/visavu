@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { AnalyticsOptOut } from "@/components/AnalyticsOptOut";
 import { SITE, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: false },
 };
 
-const LAST_UPDATED = "2026-05-12";
+const LAST_UPDATED = "2026-05-13";
 
 export default function CookiesPage() {
   return (
@@ -25,11 +26,12 @@ export default function CookiesPage() {
       <p className="text-sm text-neutral-500">Last updated: {LAST_UPDATED}</p>
 
       <p>
-        This page explains how {SITE.name} uses cookies and similar technologies. Our approach
-        is to use as few cookies as possible and rely on cookie-free analytics. As a result, we
-        do not display a cookie banner — there is no advertising or tracking technology to
-        consent to.
+        This page explains how {SITE.name} uses cookies and similar technologies. We use as few
+        cookies as possible. The only analytics that sets cookies is Google Analytics 4 — and
+        you can switch it off with the button below at any time.
       </p>
+
+      <AnalyticsOptOut />
 
       <h2>What is a cookie?</h2>
       <p>
@@ -85,20 +87,78 @@ export default function CookiesPage() {
         </table>
       </div>
 
+      <h3>Analytics (opt-out controllable)</h3>
+      <p>
+        These cookies are set by Google Analytics 4 and can be disabled with the toggle near
+        the top of this page.
+      </p>
+      <div className="not-prose overflow-x-auto">
+        <table className="text-sm border-collapse w-full">
+          <thead>
+            <tr className="border-b border-neutral-300 dark:border-neutral-700">
+              <th className="text-left py-2 pr-4 font-semibold">Name</th>
+              <th className="text-left py-2 pr-4 font-semibold">Purpose</th>
+              <th className="text-left py-2 pr-4 font-semibold">Type</th>
+              <th className="text-left py-2 font-semibold">Lifetime</th>
+            </tr>
+          </thead>
+          <tbody className="text-neutral-700 dark:text-neutral-300">
+            <tr className="border-b border-neutral-200 dark:border-neutral-800">
+              <td className="py-2 pr-4 font-mono text-xs">_ga</td>
+              <td className="py-2 pr-4">
+                Distinguishes unique visitors. Set by Google Analytics 4.
+              </td>
+              <td className="py-2 pr-4">Third-party (Google)</td>
+              <td className="py-2">2 years</td>
+            </tr>
+            <tr className="border-b border-neutral-200 dark:border-neutral-800">
+              <td className="py-2 pr-4 font-mono text-xs">_ga_JVHR3D6YJQ</td>
+              <td className="py-2 pr-4">
+                Persists session state for our GA4 property.
+              </td>
+              <td className="py-2 pr-4">Third-party (Google)</td>
+              <td className="py-2">2 years</td>
+            </tr>
+            <tr>
+              <td className="py-2 pr-4 font-mono text-xs">visavu:analytics-optout</td>
+              <td className="py-2 pr-4">
+                Stored in <em>localStorage</em>, not a cookie. Set when you click "Opt out of
+                analytics" — disables both Google Analytics and Plausible on this device.
+              </td>
+              <td className="py-2 pr-4">First-party localStorage</td>
+              <td className="py-2">Until cleared</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <h3>Analytics</h3>
       <p>
-        We use <a href="https://plausible.io" target="_blank" rel="noopener noreferrer">Plausible
-        Analytics</a>, which is <strong>cookie-free</strong>. Plausible does not set any cookies
-        and does not use cross-site identifiers, fingerprinting, or local storage to track
-        users. It counts page views via short-lived hashed IPs that are discarded after the
-        request.
+        We use two analytics services, and you can opt out of both at any time using the
+        toggle near the top of this page.
       </p>
+      <ul>
+        <li>
+          <strong><a href="https://plausible.io" target="_blank" rel="noopener noreferrer">Plausible
+          Analytics</a></strong> — cookie-free. Does not set any cookies and does not use
+          cross-site identifiers, fingerprinting, or local storage. Counts page views via
+          short-lived hashed IPs discarded after the request.
+        </li>
+        <li>
+          <strong>Google Analytics 4</strong> — Google&apos;s analytics platform. Uses cookies
+          (<code className="text-xs">_ga</code>, <code className="text-xs">_ga_*</code>) to count
+          unique visitors, sessions, and traffic-source attribution. Cookies live up to 2 years.
+          We do not run ad-targeting, remarketing, or Google Signals on top of GA — it&apos;s used
+          only to understand which pages help users and which don&apos;t. Opting out via the
+          toggle above sets <code className="text-xs">window[&quot;ga-disable-G-…&quot;] = true</code>
+          which prevents Google&apos;s tag from sending hits.
+        </li>
+      </ul>
 
       <h3>Advertising / third-party tracking</h3>
       <p>
-        We do not set advertising cookies, retargeting pixels, or third-party analytics
-        trackers. There is no Google Analytics, Facebook Pixel, LinkedIn Insight Tag, or
-        equivalent.
+        We do not set advertising cookies, retargeting pixels, or third-party social-network
+        trackers. No Facebook Pixel, no LinkedIn Insight Tag, no remarketing audiences.
       </p>
 
       <h2>Third-party cookies set by external content</h2>

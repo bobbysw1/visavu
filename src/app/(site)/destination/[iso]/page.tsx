@@ -5,6 +5,7 @@ import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { VisaCategoryNav } from "@/components/VisaCategoryNav";
 import { CoverageStats } from "@/components/CoverageStats";
 import { DestinationDifficultyBucketGrid } from "@/components/DifficultyBucketGrid";
+import { CountryMetricsDashboard } from "@/components/CountryMetricsDashboard";
 import { NationalityHero } from "@/components/NationalityHero";
 import { CountryFactsBox } from "@/components/CountryFactsBox";
 import { COUNTRY_LIST, TOP_ORIGINS, nameFor } from "@/lib/countries";
@@ -124,6 +125,12 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
         />
 
         <CountryFactsBox iso2={upper} mode="destination" />
+
+        {/* Investment-dashboard-style 9-tile country summary — relocation
+            stats answered in <5 seconds before scrolling into the visa lists. */}
+        <div className="mt-6">
+          <CountryMetricsDashboard destinationIso2={upper} />
+        </div>
 
         {coverage && <CoverageStats snapshot={coverage} context="destination" />}
 

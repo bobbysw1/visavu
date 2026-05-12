@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
+import { MetricComparisonTable } from "@/components/MetricComparisonTable";
 import { COUNTRY_LIST, flagEmoji, nameFor } from "@/lib/countries";
 import { coverageForPassport } from "@/lib/coverage";
 import { SITE, absoluteUrl } from "@/lib/site";
@@ -124,6 +125,14 @@ export default async function ComparePage({ params }: { params: Promise<Params> 
             <section className="grid grid-cols-2 gap-4 mb-8">
               <SummaryCard iso={aIso} coverage={coverageA} />
               <SummaryCard iso={bIso} coverage={coverageB} />
+            </section>
+
+            {/* Side-by-side living conditions — salary, COL, tax, safety,
+                healthcare, English, PR pathway. Each row marks the edge
+                so the comparison is scannable in seconds. */}
+            <section className="mb-8">
+              <h2 className="text-lg font-semibold mb-3">Living conditions, head to head</h2>
+              <MetricComparisonTable aIso={aIso} bIso={bIso} />
             </section>
 
             <section className="mb-8">

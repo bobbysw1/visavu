@@ -3,7 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { VisaCategoryNav } from "@/components/VisaCategoryNav";
-import { DifficultyHeatMap } from "@/components/DifficultyHeatMap";
+import { WorldMap, type EligibilityEntry } from "@/components/WorldMap";
+import { getWorldMapData } from "@/lib/worldMap";
+import { assessDifficulty } from "@/lib/difficulty";
 import { NationalityHero } from "@/components/NationalityHero";
 import { PassportSidebar } from "@/components/PassportSidebar";
 import { CountrySilhouette } from "@/components/CountrySilhouette";
@@ -211,19 +213,73 @@ export default async function PassportIndex({ params }: { params: Promise<Params
               )}
             </section>
 
-            {/* DIFFICULTY HEAT MAP — visual signal of where it's easy / hard */}
-            {summaries.length > 0 && (
-              <section>
-                <h2 className="text-xl font-bold tracking-tight mb-2">
-                  Where it&apos;s easy and where it&apos;s hard
-                </h2>
-                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
-                  Continent-grouped view. Click any country to see the full visa rules from{" "}
-                  {name}.
-                </p>
-                <DifficultyHeatMap passportIso2={upper} summaries={summaries} />
-              </section>
-            )}
+            {/* WORLD MAP — premium interactive geography. Eligible
+                destinations shaded by visa status; hover reveals difficulty,
+                processing time, salary, tax, safety, PR pathway in a
+                popover; click jumps to the full route. */}
+            {summaries.length > 0 && (() => {
+              const worldData = getWorldMapData();
+              const eligibility: Record<string, EligibilityEntry> = {};
+              for (const s of summaries) {
+                const a = assessDifficulty({
+                  id: -1,
+                  passportIso2: upper,
+                  destinationIso2: s.destinationIso2,
+                  purpose: s.purpose,
+                  status: s.status,
+                  label: s.label,
+                  maxStayDays: s.maxStayDays,
+                  validityDays: null,
+                  entriesAllowed: null,
+                  passportValidityMonthsRequired: s.passportValidityMonthsRequired,
+                  blankPagesRequired: null,
+                  onwardTicketRequired: s.onwardTicketRequired,
+                  proofOfFundsRequired: s.proofOfFundsRequired,
+                  proofOfAccommodationRequired: s.proofOfAccommodationRequired,
+                  biometricsRequired: s.biometricsRequired,
+                  biometricsLocation: null,
+                  requirements: new Array(s.requirementsCount).fill(""),
+                  vaccinationRequirements: [],
+                  processingTimeDaysMin: null,
+                  processingTimeDaysMax: s.processingTimeDaysMax,
+                  applicationUrl: null,
+                  primarySourceUrl: null,
+                  fees: s.fees.map((f) => ({
+                    kind: f.kind as "base" | "service" | "biometrics" | "courier" | "vac" | "rush" | "other",
+                    amountMinor: f.amountMinor,
+                    currency: f.currency,
+                    asOf: "",
+                    optional: f.optional,
+                  })),
+                  blocDerivedFrom: null,
+                  eta: null,
+                  purposeMetadata: null,
+                  correctnessBucket: "high",
+                  lastFetchedAt: null,
+                  lastVerifiedAt: null,
+                  notes: null,
+                });
+                eligibility[s.destinationIso2] = {
+                  status: s.status,
+                  label: s.label,
+                  difficultyScore: a.score,
+                  difficultyBucket: a.bucket,
+                  processingDaysMax: s.processingTimeDaysMax,
+                  purpose: s.purpose,
+                };
+              }
+              return (
+                <section>
+                  <WorldMap
+                    data={worldData}
+                    passportIso2={upper}
+                    eligibility={eligibility}
+                    title={`Where ${name} passport holders can go`}
+                    subtitle="Hover any country for visa rules + living-conditions snapshot. Click to open the full route."
+                  />
+                </section>
+              );
+            })()}
 
             {/* VISA TYPE BROWSE */}
             <section>

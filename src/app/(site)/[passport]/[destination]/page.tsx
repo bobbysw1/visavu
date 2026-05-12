@@ -33,6 +33,8 @@ import { resolveUserCurrency } from "@/lib/userCurrency";
 import { SourcesPanel } from "@/components/SourcesPanel";
 import { TravelAdjacentRail } from "@/components/TravelAdjacentRail";
 import { RelocationServicesPanel } from "@/components/RelocationServicesPanel";
+import { CountryMetricsDashboard } from "@/components/CountryMetricsDashboard";
+import { assessDifficulty } from "@/lib/difficulty";
 import { RelatedRoutesRail } from "@/components/RelatedRoutesRail";
 import { obstaclesFor } from "@/content/obstacles";
 import { COUNTRY_LIST, flagEmoji, nameFor } from "@/lib/countries";
@@ -547,6 +549,19 @@ export default async function Page({
           baselineTourismStatus={baselineTourismStatus}
         />
 
+        {/* Investment-dashboard-style 9-tile country summary. Scannable
+            in <5 seconds: difficulty, processing, PR pathway, salary, COL,
+            tax, healthcare, safety, English proficiency — all the deal-
+            breakers a relocation user filters on. */}
+        <div className="mb-6">
+          <CountryMetricsDashboard
+            destinationIso2={d}
+            difficulty={primary ? assessDifficulty(primary, baselineTourismStatus) : null}
+            processingDaysMin={primary?.processingTimeDaysMin ?? null}
+            processingDaysMax={primary?.processingTimeDaysMax ?? null}
+          />
+        </div>
+
         {/* High-stakes visa types — extra warning banner above the answer */}
         {category === "long_stay" && (
           <div className="mb-6 p-4 rounded-lg border border-amber-300 bg-amber-50 dark:bg-amber-950/30 text-sm">
@@ -600,54 +615,71 @@ export default async function Page({
           </div>
         )}
 
-        {/* What you'll need — sorted-by-lead-time document checklist.
-            Renders for every purpose where advance prep is meaningful.
-            When we have no option data we fall back to embassy_visa as the
-            status estimate (long-stay categories always need prep). */}
-        {purpose !== "diplomatic" && primary?.status !== "refused" && (
-          <VisaPrepTimeline
-            destinationIso2={d}
-            passportIso2={p}
-            purpose={purpose}
-            status={primary?.status ?? (category === "long_stay" ? "embassy_visa" : "e_visa")}
-          />
-        )}
-
-        {/* Free application advice for high-stakes purposes (family, work,
-            study). Includes a personal-statement skeleton, money-saving
-            tips, and when to spend on a real immigration lawyer. The
-            component skips itself when the route is same-country or
-            visa-free, and substitutes the destination/passport into
-            illustrative copy. */}
-        <VisaApplicationAdvice
-          purpose={purpose}
-          passportIso2={p}
-          destinationIso2={d}
-          primaryStatus={primary?.status ?? null}
-        />
-
-        {showDualHint && easierPassports.length > 0 && (
-          <DualPassportHint destinationIso2={d} options={easierPassports} />
-        )}
-
         {options.length > 0 && (
           <AlertOptIn passportIso2={p} destinationIso2={d} purpose={purpose} />
         )}
 
-        <AlternativesPanel
-          passportIso2={p}
-          destinationIso2={d}
-          alternatives={alternatives}
-        />
+        {/* Deep detail folded behind a single disclosure so the result page
+            no longer feels like an infinite scroll. The summary + dashboard
+            + ResultCard above answer the question; everything in here is
+            for users who want to dig deeper. */}
+        <details className="group mt-8 rounded-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden bg-white dark:bg-neutral-950">
+          <summary className="cursor-pointer list-none flex items-center justify-between gap-3 px-5 py-4 hover:bg-neutral-50 dark:hover:bg-neutral-900/40 transition">
+            <div>
+              <p className="font-semibold text-sm sm:text-base">Application prep, advice &amp; sources</p>
+              <p className="text-xs text-neutral-600 dark:text-neutral-400">
+                Step-by-step checklist, when to hire a lawyer, alternative routes, related country
+                pairs, and the official primary sources behind every claim above.
+              </p>
+            </div>
+            <span className="text-xs text-neutral-500 dark:text-neutral-400 shrink-0 group-open:rotate-180 transition">
+              ▾
+            </span>
+          </summary>
+          <div className="px-5 pb-5 space-y-6 border-t border-neutral-200 dark:border-neutral-800">
+            <div className="pt-5">
+              {/* What you'll need — sorted-by-lead-time document checklist.
+                  Renders for every purpose where advance prep is meaningful.
+                  When we have no option data we fall back to embassy_visa as the
+                  status estimate (long-stay categories always need prep). */}
+              {purpose !== "diplomatic" && primary?.status !== "refused" && (
+                <VisaPrepTimeline
+                  destinationIso2={d}
+                  passportIso2={p}
+                  purpose={purpose}
+                  status={primary?.status ?? (category === "long_stay" ? "embassy_visa" : "e_visa")}
+                />
+              )}
+            </div>
 
-        {/* Cross-pair internal linking — surfaces ~20 related country pairs
-            so PageRank flows through the deep route graph (Google would
-            otherwise only discover these via the sitemap). */}
-        <RelatedRoutesRail passportIso2={p} destinationIso2={d} purpose={purpose} />
+            {/* Free application advice for high-stakes purposes (family, work,
+                study). Includes a personal-statement skeleton, money-saving
+                tips, and when to spend on a real immigration lawyer. */}
+            <VisaApplicationAdvice
+              purpose={purpose}
+              passportIso2={p}
+              destinationIso2={d}
+              primaryStatus={primary?.status ?? null}
+            />
 
-        {/* Sources & references — appears on EVERY result page, even when we
-            don't have scraped data, because primary-source links ARE the value. */}
-        <SourcesPanel passportIso2={p} destinationIso2={d} options={options} />
+            {showDualHint && easierPassports.length > 0 && (
+              <DualPassportHint destinationIso2={d} options={easierPassports} />
+            )}
+
+            <AlternativesPanel
+              passportIso2={p}
+              destinationIso2={d}
+              alternatives={alternatives}
+            />
+
+            {/* Cross-pair internal linking — surfaces ~20 related country
+                pairs so PageRank flows through the deep route graph. */}
+            <RelatedRoutesRail passportIso2={p} destinationIso2={d} purpose={purpose} />
+
+            {/* Sources & references — primary-source links ARE the value. */}
+            <SourcesPanel passportIso2={p} destinationIso2={d} options={options} />
+          </div>
+        </details>
 
         {/* Comprehensive seven-category relocation services panel: travel /
             health insurance, vaccinations, biometrics, medical checks,

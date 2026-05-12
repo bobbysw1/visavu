@@ -6596,6 +6596,368 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // CHINESE → JAPAN — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "CN:JP:work": {
+    whatCarriesWeight: [
+      {
+        label: "Engineer/Specialist + Highly Skilled Professional + Specified Skilled Worker routes",
+        why: "China is Japan's largest expat group (~800,000 Chinese, ~25% of all foreign residents in Japan). Engineer/Specialist in Humanities/International Services (技術・人文知識・国際業務) for university-degree-holding Chinese. Highly Skilled Professional (高度専門職) for senior professionals scoring 70+ points (salary, age, education, JLPT level) — 70+ points = HSP-i (1-year fast-track to PR), 80+ = HSP-ii (immediate PR pathway). Tokutei Ginō (Specified Skilled Worker) less common for Chinese than Engineer/Specialist.",
+      },
+      {
+        label: "Chinese educational credentials + Apostille (China joined Hague Convention Nov 2023)",
+        why: "China joined Hague Apostille Convention November 2023 — replaced older multi-step legalisation. Chinese 学位证书 + 毕业证书 + 成绩单 need Apostille via Chinese MFA — RMB 50-200/document. Japanese employers accept apostilled Chinese degrees from 985/211 Project universities directly (auto-verified). Tsinghua, Peking, Fudan, Zhejiang, SJTU degrees especially well-recognised.",
+      },
+      {
+        label: "Japanese language requirement varies by visa category",
+        why: "Engineer/Specialist visa: officially no language requirement; practically JLPT N3+ needed for most roles. Highly Skilled Professional: language adds points (N1 = 15 pts, N2 = 10 pts). Tokutei Ginō i: JLPT N4 + industry skills test. Chinese applicants benefit from kanji familiarity — JLPT progression often faster than for non-CJK applicants.",
+      },
+      {
+        label: "Chinese-Japanese cultural integration + Tokyo / Osaka / Yokohama concentrations",
+        why: "Chinese community in Japan concentrated in Tokyo (Ikebukuro 'New Chinatown', Shinjuku), Yokohama (historic Chinatown), Osaka, Kobe (historic Chinatown), Nagoya. Japan permits dual nationality only until age 22 (Article 14 Nationality Act); enforcement is lax but state your awareness if planning long-term. Chinese-Japanese historical sensitivities exist but rarely affect work visa issuance.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route — Engineer/Specialist, HSP, or Tokutei Ginō",
+        prompt: "State explicit visa category. Engineer/Specialist (degree-required, family allowed from start, path to PR after 5 years), Highly Skilled Professional (70+ points fast-track to PR in 3 years, 80+ points 1 year), Tokutei Ginō i (JLPT N4 + skills test, 5-year initial, family not generally allowed during i), or Special Highly Skilled Professional (J-SKIP visa for elite researchers post-2023).",
+      },
+      {
+        heading: "Your Chinese work history + JLPT progression",
+        prompt: "List every Chinese employer with month-precision dates, role, salary in RMB, supervisor + WeChat/email. Include 身份证号, 社保, 公积金 numbers. Document JLPT progression: enrolment, level achieved, exam date.",
+      },
+      {
+        heading: "Long-term plan — HSP fast-track PR, return to China, or settlement",
+        prompt: "HSP-i: 3-year fast-track to PR; HSP-ii: 1-year fast-track. Standard Engineer/Specialist: 5-year PR pathway. Many Chinese in Japan pursue PR + retain Chinese citizenship (Japan allows dual until 22 but Chinese law forbids dual after 18; practical resolution is informal).",
+      },
+      {
+        heading: "Family + Chinese school options in Japan",
+        prompt: "Engineer/Specialist allows family from start. HSP allows family + parental sponsorship + housekeeper. Chinese schools in Japan: Tokyo Chinese School, Yokohama Chinese School, Osaka Chinese Academy — follow Chinese curriculum + Japanese supplement.",
+      },
+    ],
+    moneySavingTips: [
+      "Engineer/Specialist visa fee JPY 4,000 (single-entry) / JPY 6,000 (multiple) at Japanese consulate in China — paid in RMB at consulate bank counter",
+      "Apostille via Chinese MFA (post-November 2023 Hague joining): RMB 50-200/document, 5-7 days",
+      "JLPT registration in China: RMB 350-450 at certified centres",
+      "Don't pay 'Japan migration consultancies' RMB 30,000-200,000",
+      "Open MUFG, SMBC, Mizuho, or Japan Post Bank on arrival with Residence Card",
+      "Use AliPay International, WeChat Pay, Wise CNY/JPY, or BoC International for remittance",
+      "Apply for Chinese Tax Residency Certificate if Japan-resident >183 days/year",
+      "Highly Skilled Professional points calculator (Japan Immigration Bureau website) — optimise before applying",
+      "Chinese Embassy Tokyo + Consulates (Osaka, Nagoya, Fukuoka, Niigata, Sapporo) offer free notarisation",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Engineer/Specialist visa with cooperating Japanese employer",
+        "Highly Skilled Professional application with documented points",
+        "Tokutei Ginō i application via licensed sending organisation + Japanese receiving organisation",
+        "Status of Residence renewal at regional Immigration Bureau",
+        "Path to Permanent Residence via HSP fast-track",
+      ],
+      getALawyer: [
+        "Past Japan deportation or overstay",
+        "Chinese criminal record (drugs, corruption — 反贪 anti-corruption case)",
+        "Past Tokutei Ginō / TITP escape or labour dispute",
+        "Bringing same-sex partner — China doesn't recognise same-sex marriage; Japan doesn't recognise federally; no derivative visa path",
+        "Past Taiwan / Hong Kong / Macau passport switching",
+        "Complex degree-role mismatch for Engineer/Specialist",
+        "Past Japanese asylum-related family member case",
+        "Family member with Tibetan / Uyghur / Falun Gong / Hong Kong pro-democracy connection",
+        "Past Saudi / UAE / European work history with disputes",
+        "Pregnancy during Tokutei Ginō contract",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // BRITISH → SPAIN — family (retirement)
+  // ════════════════════════════════════════════════════════════════════
+
+  "GB:ES:family": {
+    whatCarriesWeight: [
+      {
+        label: "Non-Lucrative Visa (Visado de No Lucrativo) — popular retirement route for Brits post-Brexit",
+        why: "Post-Brexit (January 2021), British citizens no longer have EU freedom of movement to Spain. Non-Lucrative Visa is the primary retirement route — for those with passive income (pension, investments, savings) >€28,800/year per applicant + €7,200/year per dependent (~€36,000 total for couple in 2024). Renewable every 2 years. Cannot work in Spain. After 5 years, can apply for permanent residence (Permiso de Residencia de Larga Duración).",
+      },
+      {
+        label: "Digital Nomad Visa (Visado Nómada Digital) — for remote-working Brits",
+        why: "Launched January 2023, Spanish Digital Nomad Visa allows remote workers earning >€33,600/year (2024 minimum, 200% of Spanish minimum wage) to live in Spain while working remotely for non-Spanish employers / clients. 12-month initial visa renewable for 5 years total, with 3-year resident card option. Special tax regime (Beckham Law-equivalent) — 24% flat tax on first €600,000 income for 5 years.",
+      },
+      {
+        label: "Golden Visa alternative — restricted from April 2025",
+        why: "Spanish Golden Visa (Visado de Residencia para Inversores) was restricted from April 2025 — real estate investment (€500,000) route abolished; only €1M Spanish company investment, €2M government bonds, or €1M Spanish business creating jobs remains. For wealthy British retirees, Non-Lucrative or Digital Nomad routes now preferred.",
+      },
+      {
+        label: "Padron + NIE + Empadronamiento — practical settlement requirements",
+        why: "Upon arrival, register at local Padrón (municipal census) — required for everything from NIE (Número de Identidad de Extranjero — foreigner ID) to opening Spanish bank account to driving licence exchange. Empadronamiento certificate from your Spanish Ayuntamiento (town hall) is essential. NIE is your tax + administrative number; obtain from Oficina de Extranjería or Spanish Embassy/Consulate before arrival.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your visa route — Non-Lucrative, Digital Nomad, or other",
+        prompt: "State explicit visa category: Non-Lucrative (passive income >€28,800/year, no work in Spain), Digital Nomad (remote work for non-Spanish employer >€33,600/year), Family Reunification (spouse / child / parent of Spanish-resident British), Golden Visa (post-April 2025 restricted to €1M+ investment routes).",
+      },
+      {
+        heading: "Financial requirements + income source documentation",
+        prompt: "Document income: UK State Pension + private pension + investment income + savings. UK pension recipients benefit from UK-Spain Social Security Agreement (1974) — UK pension paid in Spain with UK uprating (post-Brexit retained). Spanish residency tax considerations: tax-resident if >183 days/year in Spain; UK-Spain Double Taxation Convention (2013) prevents double-tax.",
+      },
+      {
+        heading: "Housing + integration plan",
+        prompt: "Document Spanish rental contract or property purchase deed (escritura de compraventa). British retirees concentrate in Costa del Sol (Marbella, Estepona, Fuengirola), Costa Blanca (Alicante, Benidorm), Mallorca, Tenerife. Spanish language plan via Cervantes Institute or local academies. Healthcare: private (Sanitas, ASISA, DKV, Asisa, Adeslas) or convenio especial with INSS Spanish public system.",
+      },
+      {
+        heading: "Family + long-term plan — Spanish residency, retain UK citizenship",
+        prompt: "Spain permits dual citizenship with Latin American + Sephardic + Filipino + Portuguese; UK citizens must renounce UK citizenship if naturalising Spanish. Most British retirees retain UK citizenship and accept permanent Spanish residency. Family reunification: spouse + dependent children + dependent parents all eligible.",
+      },
+    ],
+    moneySavingTips: [
+      "Non-Lucrative Visa fee EUR 60 + Spanish-side card fee EUR 16-22 — apply at Spanish Consulate London / Edinburgh / Manchester",
+      "Digital Nomad Visa fee EUR 73-80 + card fee — apply via Spanish Embassy London",
+      "Don't pay 'Spanish retirement consultancies' GBP 3,000-10,000 for what is straightforward consular application",
+      "UK State Pension upgrading in Spain post-Brexit: confirmed via 2020 UK-Spain bilateral agreement — pension increases annually like in UK",
+      "Spanish Empadronamiento at Ayuntamiento: FREE — required for everything",
+      "NIE at Spanish Police Office or Oficina de Extranjería: EUR 9.84 — don't pay agents EUR 200+",
+      "Spanish-side private healthcare insurance (Sanitas, ASISA, DKV, Adeslas) for visa application: EUR 600-1,500/year per person — significantly cheaper than UK private medical",
+      "Convenio Especial with INSS for Spanish public healthcare after 1 year residence: EUR 60-160/month per person — alternative to private",
+      "Use Wise GBP/EUR, Revolut, HSBC Expat for currency transfers and ongoing income",
+      "Spanish Embassy London / Edinburgh / Manchester consulates process Non-Lucrative + Digital Nomad applications — typically 1-3 months",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Non-Lucrative Visa with documented passive income",
+        "Standard Digital Nomad Visa with remote work contract evidence",
+        "Family reunification application via Spanish-resident sponsor",
+        "Permanent residence application after 5 years legal residence",
+        "Annual visa renewal in Spain",
+      ],
+      getALawyer: [
+        "Post-April 2025 Golden Visa with €1M+ investment route",
+        "Tax residency split (UK vs Spain >183-day test)",
+        "Spanish citizenship application (rare for British given dual-citizenship requirement)",
+        "UK criminal record affecting Spanish residency",
+        "Complex pension portability scenarios",
+        "Spanish property purchase / inheritance affecting visa status",
+        "Past Schengen entry ban or Spanish overstay",
+        "Family reunification of non-British spouse / step-children",
+        "Spanish Golden Visa under previous (pre-April 2025) real estate route — vested rights questions",
+        "Pre-Brexit Spanish residency (TIE / Tarjeta de Identidad de Extranjero) — different track under Withdrawal Agreement",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // KENYAN → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "KE:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from SEVP-certified US school + SEVIS I-901 paid",
+        why: "Kenya sends ~4,000 students to the US annually. Apply at US Embassy Nairobi (United Nations Avenue, Gigiri) — single consulate handles all of Kenya.",
+      },
+      {
+        label: "Source-of-funds + Kenyan banking",
+        why: "Document Kenyan bank statements (Equity Bank, KCB, Standard Chartered Kenya, NCBA, Cooperative Bank). Family business sponsorship needs Certificate of Incorporation, KRA Pin, audited accounts.",
+      },
+      {
+        label: "Kenyan transcripts + KNEC verification + ECCTIS",
+        why: "KCSE certificate verification via KNEC portal. Bachelor's degrees apostilled via Kenyan MOFA. Kenya joined Hague Apostille Convention January 2024 — simplified legalisation.",
+      },
+      {
+        label: "Kenyan Police Clearance + DS-160 disclosure",
+        why: "DCI (Directorate of Criminal Investigations) Certificate of Good Conduct via eCitizen.go.ke (KES 1,050, 7-14 days).",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this US programme over Kenyan or African alternatives",
+        prompt: "Kenya has strong universities (UoN, Strathmore, USIU, KCA, JKUAT, Kenyatta, Maseno). Explain why US programme.",
+      },
+      {
+        heading: "Funding — Kenyan family / scholarship",
+        prompt: "Family contribution KES X with bank statements + KRA Pin. Scholarships: Fulbright Kenya, USAID-funded scholarships, MasterCard Foundation Scholars (Berkeley, Stanford, Michigan etc.).",
+      },
+      {
+        heading: "Post-graduation plan — return to Kenya",
+        prompt: "Kenyan banking sector (KCB, Equity, NCBA, Co-op), telecoms (Safaricom, Airtel), tech (Sendy, Kopo Kopo, Twiga, M-Kopa), MNCs (Coca-Cola Africa, Standard Chartered Africa).",
+      },
+      {
+        heading: "Family ties + Kenyan context",
+        prompt: "Document Kenyan property with title deed, parents' employment, family in Kenya, expected return job.",
+      },
+    ],
+    moneySavingTips: [
+      "F-1 visa fee $185 at US Embassy Nairobi",
+      "MasterCard Foundation Scholars Program — full ride for African students at named partner US universities",
+      "Fulbright Kenya (USEFK) — annual cycle, fully funded for grad students",
+      "EducationUSA Kenya offers free advising at US Embassy Nairobi",
+      "DCI Certificate of Good Conduct: KES 1,050 via eCitizen — don't pay agents",
+      "Apostille via Kenyan MFA (post-2024 Hague joining): KES 1,000-3,000/document",
+      "Use Equity Bank, KCB, or NCBA student remittance — competitive vs retail FX",
+      "Don't pay 'visa agents' KES 30,000-500,000",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with clean record, clear funding",
+        "Standard Fulbright Kenya / MasterCard Foundation scholarship application",
+        "Renewal of existing F-1 at US Embassy Nairobi",
+        "OPT / STEM OPT during/after programme",
+      ],
+      getALawyer: [
+        "Prior US visa refusal",
+        "Kenyan criminal record (anti-terror Act, drug, fraud)",
+        "Family member with prior US asylum claim",
+        "Past US overstay",
+        "Funding from sponsor outside Kenya / immediate family",
+        "STEM field with potential SAO sensitivity",
+        "Past Gulf state work history with disputes",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // AUSTRALIAN → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "AU:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from SEVP-certified US school + SEVIS I-901 paid",
+        why: "Australia sends ~13,000 students to the US annually. Apply at US Embassy Canberra (Moonah Place, Yarralumla) or US Consulate Sydney (MLC Centre, 19-29 Martin Place), Melbourne (553 St Kilda Road), Perth (16 St Georges Terrace).",
+      },
+      {
+        label: "Strong source-of-funds + Australian banking efficiency",
+        why: "Document Australian bank statements (CommBank, ANZ, NAB, Westpac, Macquarie). Australia historically has one of the lowest F-1 refusal rates globally (~3-5%).",
+      },
+      {
+        label: "Australian academic transcripts + Apostille (Australia is Hague signatory since 1995)",
+        why: "Apostille via Australian DFAT (Department of Foreign Affairs and Trade) — cost AUD$98/document, 1-7 days at DFAT Sydney/Melbourne/Brisbane/Adelaide/Perth/Canberra. WES, ECE, or AICE credential evaluation for some US universities.",
+      },
+      {
+        label: "Australian no compulsory military service — simpler than many origins",
+        why: "Australia has no compulsory military service. ADF (Australian Defence Force) is voluntary. Simpler than Korean, Taiwanese, Iranian, Egyptian, Singaporean origins which require military service status documentation.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this US programme over Group of Eight Australian universities",
+        prompt: "Australia has elite universities (Group of Eight = Melbourne, ANU, Sydney, UNSW, Monash, UQ, UWA, Adelaide). Explain why US programme offers something unique.",
+      },
+      {
+        heading: "Funding — Australian family / scholarship",
+        prompt: "Document family contribution AUD X (with bank statement). Australian scholarships: Fulbright Australia, Endeavour Leadership Program, Tuckwell Scholarship (ANU), Westpac Asian Exchange Scholarship.",
+      },
+      {
+        heading: "Post-graduation plan — return to Australia",
+        prompt: "Australian banking (CommBank, ANZ, NAB, Westpac, Macquarie), mining (BHP, Rio Tinto, Fortescue), tech (Atlassian, Canva, Afterpay/Block, Wisetech), finance (Macquarie Group), family business succession.",
+      },
+      {
+        heading: "Family ties + future plan",
+        prompt: "Document Australian property, parents' employment, expected return job, Australian bank accounts.",
+      },
+    ],
+    moneySavingTips: [
+      "F-1 visa fee $185; pay via Citibank Australia or major Australian bank with MRV barcode — no reciprocity fee",
+      "Apostille via Australian DFAT: AUD$98/document, 1-7 days",
+      "Australian applicants eligible for Fulbright Australia (~$30k + tuition), Endeavour Leadership Program, Westpac Asian Exchange",
+      "EducationUSA Australia (administered through Fulbright Commission Australia) offers free advising",
+      "Use Wise USD/AUD, Western Union, or CommBank International for tuition transfers",
+      "Don't pay 'visa consultancy' agencies AUD 1,000-5,000 — straightforward consular process",
+      "Australian Embassy DC + Consulates (LA, NYC, SF, Chicago, Honolulu, Houston) offer free notarisation for Australian citizens",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with clean record",
+        "Standard Fulbright Australia / Endeavour scholarship application",
+        "Renewal of F-1 at US Embassy/Consulate during home leave",
+        "OPT / STEM OPT during/after programme",
+        "Future transition F-1 → H-1B / O-1 / E-3 (Australia's unique E-3 visa is a major advantage)",
+      ],
+      getALawyer: [
+        "Prior US visa refusal",
+        "Australian criminal record (even spent convictions)",
+        "Past US overstay or visa flag",
+        "STEM field with SAO sensitivity",
+        "Same-sex partner accompanying — Australia recognised same-sex marriage 2017; US recognises; derivative visas straightforward",
+        "Funding from sponsor outside Australia / immediate family",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // INDONESIAN → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "ID:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from SEVP-certified US school + SEVIS I-901 paid",
+        why: "Indonesia sends ~9,000 students to the US annually. Apply at US Embassy Jakarta (Jl. Medan Merdeka Selatan) or US Consulate General Surabaya (Jl. Citra Raya Niaga).",
+      },
+      {
+        label: "Source-of-funds + Indonesian banking + 214(b) ties",
+        why: "Document Indonesian bank statements (BCA, Mandiri, BNI, BRI, CIMB Niaga, Permata). Strong 214(b) ties: family home with sertifikat hak milik, parents' employment, Indonesian property.",
+      },
+      {
+        label: "Indonesian transcripts + Apostille (Indonesia joined Hague Convention 2022)",
+        why: "Indonesian SMA/SMK diploma + university degrees apostilled via Kemenkumham — Indonesia is Hague signatory since June 2022. Cost IDR 50,000-150,000/document, 3-5 days.",
+      },
+      {
+        label: "Indonesian Police Clearance + DS-160 disclosure",
+        why: "SKCK (Surat Keterangan Catatan Kepolisian) from local Polsek/Polres/Polda — IDR 30,000, 7-14 days.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this US programme over Indonesian alternatives",
+        prompt: "Indonesia has strong universities (UI Universitas Indonesia, UGM Gadjah Mada, ITB Bandung Institute of Technology, ITS Surabaya, UNAIR Airlangga, BINUS, UPH). Explain why US programme.",
+      },
+      {
+        heading: "Funding — Indonesian family / LPDP / business",
+        prompt: "Family contribution IDR X (with bank statement, family business 营业执照 SIUP/TDP/NIB if business-owner). LPDP (Lembaga Pengelola Dana Pendidikan) — premier Indonesian government scholarship for grad students.",
+      },
+      {
+        heading: "Post-graduation plan — return to Indonesia",
+        prompt: "Indonesian banking (BCA, Mandiri, BNI, BRI), telecoms (Telkomsel, Indosat, XL), tech (Gojek, Tokopedia, Bukalapak, Traveloka), pharma (Kalbe Farma), or family business.",
+      },
+      {
+        heading: "Family ties + Indonesian context",
+        prompt: "Document Indonesian property, parents' employment, Indonesian bank accounts. Mention Indonesian school year (July-June).",
+      },
+    ],
+    moneySavingTips: [
+      "F-1 visa fee $185; pay via BCA or Bank Mandiri with MRV barcode",
+      "Apostille via Kemenkumham (post-2022 Hague joining): IDR 50,000-150,000/document",
+      "LPDP scholarship: fully funded by Indonesian government for grad students — applications typically open February-September; cover tuition + living + return flights + visa fees",
+      "Fulbright Indonesia (AMINEF — American Indonesian Exchange Foundation) — annual cycle, fully funded for grad students",
+      "EducationUSA Indonesia offers free advising at US Embassy Jakarta",
+      "SKCK: IDR 30,000 at local Polsek — don't pay calo (touts) IDR 200,000+",
+      "Use BCA, Mandiri, or BNI student remittance for tuition — competitive vs retail",
+      "Don't pay 'visa consultancy' agencies IDR 5,000,000-50,000,000",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with clean record, clear funding via LPDP / family",
+        "Standard Fulbright Indonesia / LPDP scholarship application",
+        "Renewal of F-1 at US Embassy Jakarta / Consulate Surabaya",
+        "OPT / STEM OPT during/after programme",
+      ],
+      getALawyer: [
+        "Prior US visa refusal",
+        "Indonesian criminal record (UU Narkotika narcotics, terrorism-related — Indonesia rigorously checks)",
+        "Family member with prior US asylum claim",
+        "Past US overstay",
+        "Funding from sponsor outside Indonesia / immediate family",
+        "STEM field with SAO sensitivity",
+        "Indonesian-Chinese (Tionghoa) ethnic affiliation history (rare but historically sensitive)",
+        "Past Indonesian military / TNI / Densus 88 background",
+        "Indonesian Christian / Buddhist / Hindu / Confucian religious affiliation with persecution claims",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

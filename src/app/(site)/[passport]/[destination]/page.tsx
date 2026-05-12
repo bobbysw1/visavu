@@ -222,6 +222,63 @@ function travelActionJsonLd(
   return node;
 }
 
+// Article JSON-LD — signals to LLMs (Claude, ChatGPT, Gemini, Perplexity)
+// and to Google that each country-pair page is an authored, dated article,
+// not a thin templated landing page. The dateModified pulls from the most
+// recent verification on the underlying visa options when available, falling
+// back to today. The headline matches the page <h1>, which LLMs use as the
+// citation anchor.
+function articleJsonLdFor(
+  p: string,
+  d: string,
+  purpose: Purpose,
+  options: ResolvedVisaOption[],
+  canonicalUrl: string,
+) {
+  const headline = questionH1(p, d, purpose);
+  const description = descriptionFor(p, d, purpose);
+
+  // Pick latest verification date across options. Falls back to today.
+  let lastVerified: string | undefined;
+  for (const opt of options) {
+    const v = opt.lastVerifiedAt;
+    if (!v) continue;
+    if (!lastVerified || v > lastVerified) lastVerified = v;
+  }
+  const dateModified = lastVerified ?? new Date().toISOString();
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline,
+    description,
+    inLanguage: "en",
+    mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
+    author: {
+      "@type": "Organization",
+      name: SITE.name,
+      url: SITE.url,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE.name,
+      url: SITE.url,
+    },
+    datePublished: "2025-01-01T00:00:00.000Z",
+    dateModified,
+    about: [
+      { "@type": "Country", name: nameFor(p) },
+      { "@type": "Country", name: nameFor(d) },
+    ],
+    keywords: [
+      `${nationalityFor(p)} ${PURPOSE_LABEL[purpose].toLowerCase()} visa`,
+      `${nameFor(d)} visa`,
+      `${nameFor(p)} ${nameFor(d)} visa`,
+      `${PURPOSE_LABEL[purpose]} visa requirements`,
+    ].join(", "),
+  };
+}
+
 // FAQ varies by purpose. People searching for a tourist visa ask different
 // questions than people searching for a partner visa.
 function faqJsonLdFor(p: string, d: string, purpose: Purpose, options: ResolvedVisaOption[]) {
@@ -388,11 +445,28 @@ export default async function Page({
     },
   ];
 
+  // Self-canonical URL — matches what generateMetadata computes. Tourism is
+  // the default purpose so its canonical is the bare pair URL.
+  const articleCanonical = absoluteUrl(
+    purpose === "tourism"
+      ? `/${p.toLowerCase()}/${d.toLowerCase()}`
+      : `/${p.toLowerCase()}/${d.toLowerCase()}/${purpose}`,
+  );
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd(crumbs, SITE.url)) }}
+      />
+      {/* Article schema — declares each page as authored content with a
+          dateModified. Critical for LLM citation (Claude / ChatGPT / Perplexity
+          / Gemini all parse Article JSON-LD from training-data scrapes). */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleJsonLdFor(p, d, purpose, options, articleCanonical)),
+        }}
       />
       {options.length > 0 && (
         <>

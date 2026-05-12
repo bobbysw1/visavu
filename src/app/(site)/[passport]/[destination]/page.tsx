@@ -35,6 +35,13 @@ import { TravelAdjacentRail } from "@/components/TravelAdjacentRail";
 import { RelocationServicesPanel } from "@/components/RelocationServicesPanel";
 import { CountryMetricsDashboard } from "@/components/CountryMetricsDashboard";
 import { assessDifficulty } from "@/lib/difficulty";
+import { ProfileFilter } from "@/components/ProfileFilter";
+import { isProfile, PATHWAY_META, type Profile } from "@/lib/profiles";
+import {
+  classifyAll,
+  sortForProfile,
+  groupByPathway,
+} from "@/lib/profileMatching";
 import { RelatedRoutesRail } from "@/components/RelatedRoutesRail";
 import { obstaclesFor } from "@/content/obstacles";
 import { COUNTRY_LIST, flagEmoji, nameFor } from "@/lib/countries";
@@ -51,7 +58,7 @@ import {
 import { SITE, absoluteUrl } from "@/lib/site";
 
 type Params = { passport: string; destination: string };
-type Search = { purpose?: string; lang?: string; currency?: string };
+type Search = { purpose?: string; lang?: string; currency?: string; profile?: string };
 
 function normalize(iso2: string): string | null {
   const upper = iso2.toUpperCase();
@@ -387,6 +394,7 @@ export default async function Page({
 
   const purpose = purposeFrom(sp.purpose);
   const category = PURPOSE_CATEGORY[purpose];
+  const profile: Profile | null = sp.profile && isProfile(sp.profile) ? sp.profile : null;
 
   // Resolve locale: ?lang= wins over Accept-Language, both fall back to "en".
   const hdrs = await headers();
@@ -596,24 +604,94 @@ export default async function Page({
           <EmptyStateCard passportIso2={p} destinationIso2={d} purpose={purpose} />
         )}
 
-        {options.length > 0 && (
-          <div className="space-y-4">
-            {options.length > 1 && (
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                {options.length} options available — review and choose the one that matches your trip.
-              </p>
-            )}
-            {options.map((opt) => (
-              <ResultCard
-                key={opt.id}
-                option={opt}
-                baselineTourismStatus={baselineTourismStatus}
-                locale={locale}
-                userCurrency={userCurrency}
-              />
-            ))}
-          </div>
-        )}
+        {options.length > 0 && (() => {
+          // Classify every option into a pathway + profile-fit map, then
+          // sort/filter for the selected profile (if any). Group the result
+          // by pathway so Investment / Skilled / Sponsored / etc. each get
+          // their own labelled section — Dubai Golden Visa never sits
+          // beside a UK Skilled Worker visa in a flat list anymore.
+          const classified = classifyAll(options);
+          const { primary, secondary } = sortForProfile(classified, profile);
+          const primaryGroups = groupByPathway(primary);
+          const secondaryGroups = groupByPathway(secondary);
+
+          return (
+            <div className="space-y-6">
+              <ProfileFilter initial={profile} />
+
+              {options.length > 1 && (
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  {options.length} options available
+                  {profile ? " — sorted for your profile" : ""}.
+                </p>
+              )}
+
+              {primaryGroups.map((group) => {
+                const meta = PATHWAY_META[group.pathway];
+                return (
+                  <section key={group.pathway} aria-labelledby={`pathway-${group.pathway}`}>
+                    <header className="mb-2">
+                      <h3
+                        id={`pathway-${group.pathway}`}
+                        className="text-base font-semibold tracking-tight flex items-center gap-2"
+                      >
+                        {meta.label}
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
+                          {group.items.length}
+                        </span>
+                      </h3>
+                      <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-snug max-w-3xl">
+                        {meta.description}
+                      </p>
+                    </header>
+                    <div className="space-y-4">
+                      {group.items.map(({ option: opt }) => (
+                        <ResultCard
+                          key={opt.id}
+                          option={opt}
+                          baselineTourismStatus={baselineTourismStatus}
+                          locale={locale}
+                          userCurrency={userCurrency}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                );
+              })}
+
+              {secondaryGroups.length > 0 && (
+                <details className="group mt-4 rounded-lg border border-dashed border-neutral-200 dark:border-neutral-800 overflow-hidden">
+                  <summary className="cursor-pointer list-none flex items-center justify-between gap-3 px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-900/40 transition text-sm">
+                    <span className="font-medium text-neutral-700 dark:text-neutral-300">
+                      Other routes available (less relevant to your profile)
+                    </span>
+                    <span className="text-xs text-neutral-500 group-open:rotate-180 transition">▾</span>
+                  </summary>
+                  <div className="px-4 py-4 space-y-4 border-t border-neutral-200 dark:border-neutral-800">
+                    {secondaryGroups.map((group) => (
+                      <section key={`sec-${group.pathway}`}>
+                        <h4 className="text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 mb-2">
+                          {PATHWAY_META[group.pathway].label}
+                        </h4>
+                        <div className="space-y-3">
+                          {group.items.map(({ option: opt }) => (
+                            <ResultCard
+                              key={opt.id}
+                              option={opt}
+                              baselineTourismStatus={baselineTourismStatus}
+                              locale={locale}
+                              userCurrency={userCurrency}
+                            />
+                          ))}
+                        </div>
+                      </section>
+                    ))}
+                  </div>
+                </details>
+              )}
+            </div>
+          );
+        })()}
 
         {options.length > 0 && (
           <AlertOptIn passportIso2={p} destinationIso2={d} purpose={purpose} />

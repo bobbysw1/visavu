@@ -5482,6 +5482,383 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // CHINESE → SINGAPORE — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "CN:SG:work": {
+    whatCarriesWeight: [
+      {
+        label: "Employment Pass (EP) + COMPASS — Chinese applicants compete in highest-volume EP cohort",
+        why: "Chinese applicants are Singapore's largest foreign professional cohort (~480,000 Chinese-origin on EP / S-Pass / PR). EP requires minimum monthly salary S$5,000 (S$5,500 financial services) rising with age (~S$10,500 mid-40s). From September 2023, COMPASS replaces simple salary cutoff: salary above median (40 pts max), diversity (Chinese contributes NEGATIVE diversity points in Chinese-heavy firms), qualifications (Tier-1 universities), strategic-economic-priorities skills shortage. Chinese applicants in Chinese-heavy companies (Huawei Singapore, Alibaba Singapore, Tencent Singapore, ByteDance Singapore) face higher COMPASS scrutiny than in diversity-positive firms.",
+      },
+      {
+        label: "MOM Pass application + China university auto-verification",
+        why: "Your Singapore employer applies via Ministry of Manpower EP Online portal. Application fee S$105; once approved, IPA letter to enter Singapore; on arrival biometrics at ICA + EP card. Processing typically 3 weeks. Singapore MOM auto-verifies degrees from major Chinese universities (985/211 Project schools: Tsinghua 清华大学, Peking 北京大学, Fudan 复旦大学, Zhejiang 浙江大学, SJTU 上海交通大学, USTC, Renmin, Beihang, Beijing Normal — 39 Project 985 universities all auto-verified). Lesser-known institutions need Dataflow verification (~S$200-400) and CHSI (学信网) cross-check.",
+      },
+      {
+        label: "Chinese educational credentials via MEA / CSCSE + MOM auto-verification",
+        why: "Chinese degree certificates: 1) 学位证书 + 毕业证书 + 成绩单 issuance, 2) 学信网 (CHSI — China Higher Education Student Information) verification (free online), 3) 中国留学服务中心 (CSCSE) certification if specifically requested, 4) Apostille via Chinese MFA (China is Hague signatory since November 2023 — recent change, many Singapore employers still accept old multi-step legalisation chain in transition period). Cost RMB 200-1,000/document.",
+      },
+      {
+        label: "Permanent Residence (PR) — Chinese applicants face one of longest PR queues in Singapore",
+        why: "Singapore PR after EP/S-Pass typically requires 2-3 years work + ICA processing 12-18 months for non-Chinese, often 18-36 months for Chinese applicants. PR grants permanent residence, job mobility, CPF contributions, eventual citizenship eligibility after 5+ years PR. Singapore actively manages CMIO (Chinese-Malay-Indian-Others) demographic balance — Chinese over-representation in PR queue means longer waits despite high qualifications. National Service obligation: male PR holders (both first-gen and second-gen) must serve 2 years NS at 18+ — major decision factor for Chinese families with sons.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role + COMPASS strategic factor",
+        prompt: "Singapore doesn't ask personal-statement narrative at consular stage (employer-led via MOM). For Chinese applicants, important: Singapore employer UEN (Unique Entity Number), MOM tier classification, role + salary band, sector (financial services have S$5,500 min, tech/manufacturing S$5,000 min). Chinese applicants in diversity-positive (non-Chinese-heavy) employers score higher in COMPASS. Highlight Tier-1 Chinese university (985/211 Project), strategic skills (cybersecurity, AI/ML, green economy, biotech).",
+      },
+      {
+        heading: "Chinese work history — 身份证, 社保, 公积金 numbers",
+        prompt: "List every Chinese employer with month-precision dates, role, salary in RMB, supervisor name + WeChat. Include 身份证号 (national ID), 社保编号 (social insurance number), 公积金 (housing fund) number. Past Singapore experience strongly preferred. For technical roles, attach LinkedIn / GitHub / publication record. Document any English certifications (CET-6, BEC Higher, TOEFL, IELTS) — most Chinese professionals are B1+ English.",
+      },
+      {
+        heading: "Family + dependants + son's National Service consideration",
+        prompt: "Dependent Pass for spouse + children of EP holders earning S$6,000+/month. Long-Term Visit Pass for partners and parents (S$12,000+/month). Chinese spouse + children carry Chinese passports — separate Dependent Pass attestation (Hague Apostille via Chinese MFA + Singapore MOM acceptance). CRITICAL for sons: if you become PR, male PR sons (born or naturalised) must serve 2 years Singapore National Service at 18 — this is a major family decision Chinese families consider carefully.",
+      },
+      {
+        heading: "Long-term plan — PR, citizenship, or rotation",
+        prompt: "State plan: PR target after 2-3 years EP (Chinese PR processing 18-36 months due to CMIO balance), eventual Singapore citizenship after 5+ years PR (Singapore requires renouncing Chinese passport — no dual citizenship; can apply for Returnee Chinese SAR status but limited), or temporary contract with planned China return (most common for Chinese expats), or onward migration (Singapore-based Chinese sometimes progress to Canada / Australia / UK / US).",
+      },
+    ],
+    moneySavingTips: [
+      "EP application fee S$105 — employer pays; refuse 'fee deduction' from first salary unless contractual",
+      "Most major Chinese universities auto-verified by MOM — saves S$200-400 Dataflow fee",
+      "Open DBS, OCBC, UOB, Standard Chartered Singapore, HSBC Singapore, ICBC Singapore (Chinese-friendly) salary account — most accept IPA letter + Chinese passport pre-arrival",
+      "ONE Pass eligibility S$30,000+/month — apply via MOM portal",
+      "Apply for Chinese Tax Residency Certificate at China Tax Authority if you'll be Singapore-resident >183 days/year — exempts Singapore income from Chinese global-income tax under China-Singapore DTAA",
+      "Singapore CPF: as EP holder don't contribute; as PR/citizen contribute 20% (employee) + 17% (employer) — major retirement savings, BUT understand obligation",
+      "Use Wise SGD/RMB, Western Union, AliPay International, WeChat Pay, or Bank of China Singapore — competitive rates; SAFE (China State Administration of Foreign Exchange) educational/professional outflow has no annual cap with employment proof",
+      "Apostille via Chinese MFA since November 2023: RMB 50-200/document, 5-7 working days — replaces older multi-step legalisation; Singapore-side accepts Hague Apostille",
+      "Don't pay Chinese 'singapur移民咨询' RMB 30,000-150,000 — MOM EP Online is straightforward; employer's HR handles application",
+      "Plan Chinese tax exit carefully — China taxes worldwide income for tax-residents (>183 days/year); file final return with Tax Authority for year of departure",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard EP / S-Pass / ONE Pass with employer support, clean record, clear qualifications",
+        "Dependent Pass / LTVP for spouse + children",
+        "PR application after 2-3 years EP",
+        "Renewal of EP at end of 2-year initial / 3-year renewal periods",
+        "Singapore tax filing",
+      ],
+      getALawyer: [
+        "Past Singapore visa refusal or PR rejection (common for Chinese due to CMIO balance)",
+        "Chinese criminal record (drugs, corruption — Chinese 反贪 anti-corruption case)",
+        "Past Singapore overstay or work-permit-related dispute",
+        "COMPASS scoring borderline — strategic optimisation of role description / salary / company tier",
+        "Family member with prior asylum claim from China (Tibetan, Uyghur, Falun Gong, Hong Kong pro-democracy)",
+        "Male PR son's National Service obligation (Chinese family with son approaching 18 — major decision)",
+        "Singapore PR application after multiple EP renewals without success",
+        "Past Singapore detention or deportation flag",
+        "Hong Kong BNO passport holder (different from mainland Chinese passport for visa purposes)",
+        "Same-sex spouse — China doesn't recognise same-sex marriage; Singapore decriminalised same-sex relations 2022 but doesn't recognise marriage; F-2 derivative complicated",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // INDIAN → CANADA — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "IN:CA:work": {
+    whatCarriesWeight: [
+      {
+        label: "Express Entry + Provincial Nominee Program — Indians dominate Canadian skilled migration",
+        why: "Indians are Canada's #1 source of skilled migrants (~135,000 PR admissions in 2023, ~30% of total). Express Entry pool (Federal Skilled Worker FSW / Federal Skilled Trades FST / Canadian Experience Class CEC) uses CRS (Comprehensive Ranking System) scoring out of 1,200 points. Provincial Nominee Programs (PNP) — particularly Ontario (OINP), British Columbia (BCPNP), Alberta (AAIP), Saskatchewan (SINP), Manitoba (MPNP), Atlantic (AIPP), Nova Scotia, New Brunswick — actively recruit Indian professionals via tech / healthcare / general skilled streams.",
+      },
+      {
+        label: "LMIA-based work permit OR LMIA-exempt categories (intra-company / treaty / IEC)",
+        why: "For temporary work permit: most Indians use LMIA-backed Temporary Foreign Worker Program. LMIA-exempt options: Intra-Company Transfer (Indian parent → Canadian subsidiary), GATS (General Agreement on Trade in Services) for some specific categories, NAFTA-equivalent under CUSMA (not available to Indians like Mexicans/Americans), International Mobility Program (IMP). Indian tech workers often enter via LMIA-exempt Global Talent Stream (GTS) — 2-week processing for tech roles like software engineer, machine learning engineer.",
+      },
+      {
+        label: "WES Educational Credential Assessment + IELTS General CLB 5+",
+        why: "Express Entry and PNP require WES (World Education Services), ICAS, or IQAS evaluation of your Indian degree — Indian B.Tech / BE / MCA / M.Tech / BBA / MBA all map to Canadian equivalents. IELTS General CLB 5+ minimum (Reading 5.0, Writing 5.0, Listening 5.0, Speaking 5.0) for FSW; CLB 7+ unlocks Express Entry CRS points and category-based draws (healthcare, STEM, transport, trades, French-speakers). PTE Core also now accepted (introduced December 2023). TEF Canada / TCF Canada accepted for French-language draws.",
+      },
+      {
+        label: "Indian Police Clearance + provincial police checks for past residences",
+        why: "Indian PCC from passport seva portal (INR 500, 7-21 days) — required for IRCC. If you worked in Gulf states (UAE, Saudi, Qatar, Kuwait), Malaysia, Singapore, US for 6+ months, you also need that country's police certificate. IRCC frequently refuses applications where Indian applicants forget to disclose a Gulf-state work stint. Disclose every country with 6+ months residence.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your visa route — Express Entry, PNP, Work Permit, or sponsored",
+        prompt: "Indians have unusually many Canadian routes. State explicitly: Express Entry (federal pool — FSW / FST / CEC), Provincial Nominee Program (named province — OINP / BCPNP / AAIP / SINP / MPNP etc.), LMIA-backed Work Permit (employer sponsored), LMIA-exempt Work Permit (intra-company / GTS), Permanent Residence via Family Sponsorship, Atlantic Immigration Program. Show research — picking the right route significantly affects timeline.",
+      },
+      {
+        heading: "Your Indian work history — verifiable",
+        prompt: "List every Indian employer chronologically with month-precision dates, role, salary in INR, supervisor name + email. Include PAN, EPFO UAN, Aadhaar. Any Indian professional designations: PEC PE / CEng (engineers), MCI registration (doctors), PCI (pharmacists), ICAI / ICAEW (accountants), MBBS / MD postgraduate, BCI Bar Council registration (lawyers). Indian universities (IIT, NIT, IIM, IISc, BITS, etc.) are well-known to Canadian assessors.",
+      },
+      {
+        heading: "Settlement plan + funds — proof of CAD$13,757 (1 adult) or scaled up for family",
+        prompt: "Even with a Canadian job offer, IRCC wants to see proof you can survive landing — CAD$13,757 (1 person), CAD$17,127 (2), CAD$21,055 (3), CAD$25,564 (4), scaling up. Document Indian bank statements (HDFC, ICICI, SBI, Axis, Kotak Mahindra, IndusInd, IDFC, Yes Bank), Indian property, and remittance plans. Mention Canadian family if applicable — they can co-sponsor maintenance via Section 39 IRPR letters.",
+      },
+      {
+        heading: "Express Entry strategy + long-term plan",
+        prompt: "State CRS score (Indian applicants typically need 470-510 for Express Entry under current draws, lower for category-based STEM / healthcare / French / trades draws). Plan: Express Entry → PR → Canadian citizenship after 3 years (4 years if not present 3 cumulative). Document IELTS / PTE / TEF score, WES outcome, work experience NOC (National Occupational Classification) code, Canadian provincial connections. Canada permits dual citizenship; India doesn't (must apply for OCI — Overseas Citizen of India — after Canadian naturalisation).",
+      },
+    ],
+    moneySavingTips: [
+      "Express Entry profile creation is FREE — only pay processing fees at ITA (Invitation to Apply) stage: CAD$1,365 main applicant + CAD$1,365 spouse + CAD$230/child",
+      "Use the IRCC's free CRS calculator and Express Entry profile tool — don't pay RCIC CAD$2,000-5,000 unless you have unique complications",
+      "WES costs CAD$237 (basic) or CAD$329 (course-by-course); ICAS and IQAS are alternatives — choose based on your province (Alberta prefers IQAS; rest accept WES)",
+      "IELTS General: book through British Council India or IDP — INR 17,800; PTE Core in India is INR 17,000; book multi-attempt packages if uncertain on first sitting",
+      "WES Verification of Educational Credentials (VEC): free for Indian applicants via direct IIT/NIT/state university partnership — avoids document mailing costs",
+      "Indian Police Clearance: INR 500 via passport seva portal — don't pay agents INR 5,000+",
+      "Use HDFC Forex, SBI Forex, or ICICI Forex Card for tuition / relocation — Forex cards lock in rate; RBI's LRS allows USD 250,000/year outbound",
+      "Apply for Indian Tax Residency Certificate at Income Tax Department if you'll be Canadian-resident >183 days/year — exempts Canadian income from Indian global-income tax under India-Canada DTAA",
+      "Avoid Indian 'Canada migration agencies' charging INR 200,000-2,000,000 for nothing — IRCC forms are free; RCIC-regulated representatives in Canada cost CAD$2,000-5,000 max for full Express Entry / PNP support",
+      "Use Wise INR/CAD, Western Union, MoneyGram, or Remitly for remittance — competitive vs SBI international transfer",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Express Entry profile creation, EOI submission, and ITA response",
+        "PNP application via cooperating Canadian employer or provincial stream",
+        "LMIA-based work permit with employer support",
+        "Family reunification (spouse, child) once you have Canadian PR",
+        "Canadian citizenship application after 3 years residence",
+      ],
+      getALawyer: [
+        "Previous Canadian visa refusal (visitor, study, or work)",
+        "Past US B1-B2 refusal or overstay (IRCC shares data with USCIS)",
+        "Indian criminal record (NDPS narcotics, dowry, criminal breach of trust)",
+        "Job offer in a regulated profession (medicine, nursing, law, engineering — provincial licensing is separate from IRCC)",
+        "Self-employed or business-owner applicant claiming experience without traditional payslips",
+        "Past Gulf state work history with kafala-system disputes or End of Service Gratuity disputes",
+        "Express Entry CRS borderline (470-510) — strategic optimisation of NOC code, work experience, English/French test, additional points",
+        "Family member with prior Canadian asylum claim from India",
+        "Bringing 18+ dependent (adult dependent child rules complicated)",
+        "Same-sex spouse — India recognised same-sex relations as legal (2018 Section 377 decriminalised) but doesn't recognise same-sex marriage; Canada recognises; derivative visas straightforward",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // ROMANIAN → US — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "RO:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "E-2 Treaty Investor (Romania-US Treaty 1992) + H-1B / L-1 standard routes",
+        why: "Romania is an E-2 Treaty Investor country under the 1992 US-Romania Treaty of Commerce. E-2 grants Romanian entrepreneurs the right to substantial investment in US business (~$100k+ practical floor, no statutory minimum). Romanian E-2 applicants are concentrated in tech (NYC, Bay Area, Austin, Boston for Romanian-founded fintech and SaaS), hospitality (NYC, LA, Miami), and IT services (Romanian diaspora is strong in software). H-1B (cap-subject lottery, ~35-40% win rate for Romanians). L-1A/B intracompany transfer from Romanian parent (Romgaz, Petrom, BCR, Banca Transilvania, Hidroelectrica, Dacia/Renault Romania).",
+      },
+      {
+        label: "DS-160 + Apostilled Romanian degrees + WES/ECE credential evaluation",
+        why: "DS-160 online application, then book interview at US Embassy Bucharest (Liviu Librescu 4-6 Boulevard) — single consulate handles all of Romania. Romanian degree certificates (Licență, Master, Doctorat) need Apostille via Romanian MFA — Romania is Hague signatory since 1995. Cost RON 50-150/document, 3-7 working days. WES, ECE, or AICE foreign credential evaluation for US employer petition. Romanian Licență (Bologna-compliant 3-year) maps to US Bachelor's; Master to US Master's. Romanian medical degrees (4-6 year) need USMLE pathway separately.",
+      },
+      {
+        label: "Romanian Cazier Judiciar + DS-160 disclosure",
+        why: "Romanian Cazier Judiciar (criminal record certificate) from local Police Station or via online portal (free, 1-3 days). Romanian Police Apostille if needed. Disclose any: previous arrests / detention, past military service (compulsory until 2007 — abolished; Romanian males pre-2007 should document service or exemption), political affiliations, past EU sanctioning. Romanian-EU citizens have stronger EU-side rights but US visa is separate from EU framework.",
+      },
+      {
+        label: "US-Romania Totalization Agreement (2010, effective March 2024) + tax treaty",
+        why: "The US-Romania Totalization Agreement entered into force March 2024 — Romanians no longer pay BOTH Romanian CAS and US Social Security/Medicare on short-term assignments. Get a Certificate of Coverage from Romanian Casa Naţională de Pensii Publice (CNPP) — keeps you on Romanian CAS for up to 5 years on temporary US assignment, exempt from US Social Security/Medicare. Beyond 5 years switch to US system; Romanian quarters count toward future Romanian pension via Totalization. Tax treaty (1973, protocol 2009) prevents double-taxation.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route — H-1B, L-1, or E-2",
+        prompt: "Romanians have several routes. State explicitly: H-1B (cap-subject lottery), L-1A/B (intracompany transfer from Romanian parent with 12+ months qualifying employment), E-2 Treaty Investor (substantial Romanian investment, post-1992 treaty). Show research. Romanian tech founders increasingly use E-2 to launch US subsidiaries.",
+      },
+      {
+        heading: "Your Romanian employer / academic credentials",
+        prompt: "List Romanian employer chronologically, role, salary in RON with USD equivalent, supervisor name. Romanian universities (Universitatea București / Babeș-Bolyai Cluj / Politehnica București / Politehnica Cluj / Iași Alexandru Ioan Cuza / Transilvania Brașov / SNSPA / ASE Bucharest) are well-known to US Embassy Bucharest.",
+      },
+      {
+        heading: "Long-term plan — H-1B + green card, E-2 indefinite, or temporary",
+        prompt: "H-1B and L-1 allow dual intent — green-card plans openly stated (EB-1/EB-2/EB-3 via PERM). E-2 is non-immigrant but renewable indefinitely. Romania permits dual citizenship; US permits dual citizenship. State honest plan. Romanian-American community is concentrated in NYC, Chicago, Detroit, Cleveland, LA — mention specific city if relevant.",
+      },
+      {
+        heading: "Family + dependants",
+        prompt: "Spouse on L-2 has automatic work authorization since 2023; H-4 spouse needs EAD (limited). E-2 spouse gets E-2D with full work rights. Romanian spouse + children under 21 are derivative. School year alignment (September-June Romania vs August-June US) typically smooth.",
+      },
+    ],
+    moneySavingTips: [
+      "DS-160 fee $185 (H-1B/L-1) or $315 (E-2); pay in RON at Banca Comercială Română or BCR — no reciprocity fee for Romanians",
+      "Use WES iGPA Calculator (free online) before paying for full evaluation",
+      "Apostille via Romanian MFA: RON 50-150/document, 3-7 days",
+      "Open a US-domiciled bank account with Wise USD, Mercury Business, or BCR US (limited US presence) before relocation",
+      "Romanian Embassy DC + Consulates (Chicago, LA, NYC, Detroit) offer free notarisation for Romanian citizens",
+      "Avoid Romanian 'consultoría imigrare' charging RON 10,000-30,000 for H-1B/L-1 — US-based attorneys with Romanian language services at Fragomen, Berry Appleman, BAL have flat-fee Romanian services at $2,500-3,500",
+      "US-Romania Totalization Agreement (effective March 2024) — get CoC from CNPP if posted ≤5 years",
+      "Romania-US tax treaty preserves IRA-equivalent tax deferral; CSO Romania and IRS coordinate via tax treaty articles",
+      "Don't pay 'EUR-USD remittance' agencies — use Wise, Revolut, Transferwise for low-volume; Banca Transilvania, BCR for high-volume",
+      "Cazier Judiciar: FREE via online portal — don't pay agents RON 200+",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard H-1B / L-1 with named US employer, clean record, clear Romanian degree mapping",
+        "DS-160 interview prep at US Embassy Bucharest",
+        "Spouse / dependent derivative applications",
+        "Renewal of existing H-1B / L-1 at US Embassy Bucharest during home leave",
+        "PERM-based EB-2 / EB-3 green card (Romanians are current — no per-country backlog)",
+      ],
+      getALawyer: [
+        "E-2 Treaty Investor — substantiality, source-of-funds, 'real and operating' enterprise tests",
+        "EB-1A / EB-1B / O-1 — extraordinary ability",
+        "Prior US visa refusal or US overstay",
+        "Romanian criminal record",
+        "Pre-1990 Romanian Securitate file connection",
+        "Past EU-side public-order ban affecting US application",
+        "Same-sex spouse — Romania doesn't recognise same-sex marriage (2024 partial civil-union recognition for some couples); US recognises; documentation chain may need third-country marriage cert",
+        "Dual Romanian-other passport — apply via Romanian passport",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // SINGAPOREAN → US — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "SG:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "H-1B1 — Singapore's unique treaty-based work visa (not subject to annual lottery)",
+        why: "Singapore (and Chile) have a unique H-1B1 visa under the US-Singapore Free Trade Agreement (2004) — 5,400 visas annually for Singaporeans (separate from the 85k H-1B lottery cap). Specialty Occupation requiring Bachelor's degree, US employer petition, prevailing wage. H-1B1 differs from H-1B in: no lottery, no PERM-based dual intent (officially non-immigrant), 1-year initial duration vs 3-year H-1B, no spouse work authorization automatic. Apply at US Embassy Singapore (27 Napier Road) — bypass US-based premium-processing.",
+      },
+      {
+        label: "H-1B (lottery) OR L-1 (intracompany) OR E-2 (Singapore-US 1990 Treaty)",
+        why: "Singaporeans qualify for standard H-1B (cap-subject lottery), L-1A/B (intracompany transfer from Singaporean parent — DBS, OCBC, UOB, Singapore Airlines, ST Engineering, SingTel, Keppel, CapitaLand have well-trodden L-1 paths), and E-2 Treaty Investor under the 1990 US-Singapore Treaty (substantial Singaporean investment, ~$100k+ practical floor). Singaporean tech founders use E-2 to launch US subsidiaries — common in SF, NYC, Boston Singapore-origin tech ecosystem.",
+      },
+      {
+        label: "DS-160 + Apostilled Singapore degrees + WES/ECE credential evaluation",
+        why: "DS-160 online application, then book interview at US Embassy Singapore. Singaporean degree certificates from NUS / NTU / SMU / SUTD / SUSS / SIT — auto-verified by US universities via SUNI (Singapore University Notary Identification) and direct partnerships. Apostille via Singapore MFA — Singapore joined Hague Apostille Convention January 2021. Cost SGD 10-25 per document, same-day at MFA. NUS / NTU / SMU are top-50 globally — high US Embassy recognition.",
+      },
+      {
+        label: "Singapore Police Certificate + DS-160 disclosure",
+        why: "Singapore Certificate of Clearance from Police via online portal (free for citizens, S$50 for non-citizens, 1-3 days). Apostille if needed. Disclose any: previous arrests / detention (Singapore strict on cannabis under MDA, alcohol-related driving, vandalism), National Service status (mandatory for male Singaporean citizens and PRs), Operationally Ready Date (ORD), reservist obligations.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route — H-1B1, H-1B, L-1, or E-2",
+        prompt: "Singaporeans have unusually many routes. State explicitly: H-1B1 (no lottery, 5,400 annual quota — Singapore's unique advantage), H-1B (cap-subject lottery), L-1A/B (intracompany transfer with 12+ months qualifying employment), E-2 Treaty Investor (substantial Singaporean investment, post-1990 treaty). H-1B1 is dramatically easier than H-1B lottery.",
+      },
+      {
+        heading: "Your Singaporean employer / academic credentials",
+        prompt: "List Singapore employer chronologically, role, salary in SGD with USD equivalent at MAS rate, supervisor name. Singapore universities (NUS, NTU, SMU, SUTD, SUSS, SIT) are well-known to US Embassy Singapore. For L-1, document the 12+ month qualifying employment at Singapore parent.",
+      },
+      {
+        heading: "National Service status for male Singapore citizens (mandatory)",
+        prompt: "Male Singaporean citizens and PRs must complete 2 years NS at 18+ followed by reservist obligation until ~40. Document: Operationally Ready Date (ORD) certificate, MINDEF reservist obligation status, any deferral for overseas study (Singapore Ministry of Defence approval required). Without proper NS resolution, you cannot leave Singapore without permission and future Singapore re-entry triggers compliance check.",
+      },
+      {
+        heading: "Long-term plan — temporary or US settlement",
+        prompt: "H-1B1 is non-immigrant; H-1B and L-1 allow dual intent. State honest plan. Singapore doesn't permit dual citizenship — Singaporean-American naturalisation requires renouncing Singapore. Many Singaporean-Americans retain Singapore citizenship and accept US PR (green card) without naturalising.",
+      },
+    ],
+    moneySavingTips: [
+      "DS-160 fee $185 (H-1B1/H-1B/L-1) or $315 (E-2); pay in SGD at Citibank Singapore or HSBC Singapore — no reciprocity fee for Singaporeans",
+      "H-1B1 application at US Embassy Singapore is dramatically faster than US-based premium processing — no lottery, no PERM, direct consular path",
+      "Use WES iGPA Calculator (free online) before paying for full evaluation",
+      "Apostille via Singapore MFA: SGD 10-25/document, same-day in person",
+      "Open a US-domiciled bank account with Wise USD, Mercury Business, or DBS USA (Treasury Manhattan branch — Singapore diaspora-friendly) before relocation",
+      "Singapore Embassy DC + Consulates (LA, NYC, SF, Chicago, Houston, Atlanta) offer free notarisation for Singapore citizens",
+      "Don't pay 'Singapore-US migration consultancies' SGD 5,000-15,000 — US-based attorneys handle H-1B1 / H-1B / L-1 / E-2 at $2,500-3,500 flat fee",
+      "H-1B1 dependent visas (H-4) — children of H-1B1 holders eligible; spouse work auth via H-4 EAD only if on certain US adjustment-of-status track (rare for H-1B1)",
+      "Singapore-US tax treaty in negotiation but not yet ratified — file US tax return claiming foreign-tax-credit on Singapore-source income; CPF contributions are pre-tax in Singapore but US-taxable when withdrawn unless treaty provisions apply",
+      "Use DBS, OCBC, UOB for tuition / large remittance — competitive vs Wise for high-volume transfers",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard H-1B1 / H-1B / L-1 with named US employer, clean record, clear Singaporean degree mapping",
+        "DS-160 interview prep at US Embassy Singapore",
+        "Spouse / dependent derivative applications",
+        "Renewal of existing H-1B1 / H-1B / L-1 at US Embassy Singapore during home leave",
+        "PERM-based EB-2 / EB-3 green card (Singaporeans are current — no per-country backlog) for H-1B transitioning to immigrant intent",
+      ],
+      getALawyer: [
+        "E-2 Treaty Investor (Singapore-US E-2 since 1990) — substantiality, source-of-funds, 'real and operating' enterprise tests",
+        "EB-1A / EB-1B / O-1 — extraordinary ability",
+        "H-1B1 to H-1B transition (cap-subject lottery vs annual quota) — strategic timing",
+        "Concurrent Singaporean tax planning on substantial holdings",
+        "Prior US visa refusal or US overstay",
+        "Singaporean criminal record (cannabis, alcohol, vandalism)",
+        "Pending Singapore NS obligation (male citizens with active reservist call-up)",
+        "Past MINDEF non-compliance flag (failure to register for NS, dodging service)",
+        "Same-sex spouse — Singapore decriminalised same-sex relations 2022 but doesn't recognise same-sex marriage; US recognises; F-2 derivative via US documentation chain",
+        "Dual Singaporean-other passport (rare — Singapore doesn't permit dual citizenship; check if you've actually retained Singaporean citizenship)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // ALBANIAN → ITALY — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "AL:IT:work": {
+    whatCarriesWeight: [
+      {
+        label: "Non-EU work permit (Decreto Flussi) + 2023 Italy-Albania protocol",
+        why: "Albania is not in the EU; Albanians need work visa for Italy. Italy publishes annual Decreto Flussi (Flow Decree) setting quotas for non-EU workers — Albanian quota is typically 50,000-80,000/year (largest single-origin quota due to Italy-Albania bilateral relations). 2023 Italy-Albania Migration Protocol established additional cooperation framework. Apply via Sportello Unico Immigrazione (SUI) at Prefettura — employer-driven application; Albanian applicants benefit from large diaspora (~500,000 Albanians in Italy) and Italian-Albanian linguistic kinship (Italian + Albanian Romance/Albanian-language schools widespread in Italian-Albanian community).",
+      },
+      {
+        label: "EU Blue Card (separate from Decreto Flussi for high-skill professionals)",
+        why: "For high-skilled Albanian professionals, EU Blue Card is alternative — Italian threshold ~€33,500/year for engineers, IT, tech (lower than Germany's €48,300). Italy-side EU Blue Card processing through Sportello Unico Immigrazione + Italian university degree recognition (Riconoscimento). Faster than Decreto Flussi for tech / finance / engineering roles. Albanian Bachelor's degrees from University of Tirana, Polytechnic University of Tirana, Tirana Economic University recognised under Bologna Process.",
+      },
+      {
+        label: "Italian language proficiency + cultural integration",
+        why: "Italy requires A2 Italian for first work permit, B1 for permanent residence (Soggiorno Permanente UE / Lungo Soggiorno). For nursing roles, B1+ Italian. Albanian-Italian linguistic kinship + large Albanian diaspora means most Albanian applicants achieve A2 quickly via Volkshochschule-equivalent (Centri Territoriali Permanenti CTP). Italian Albania-origin community (largest in Milan / Rome / Veneto / Tuscany / Apulia) provides cultural integration support.",
+      },
+      {
+        label: "Albanian Police Clearance + Apostille via Albanian MFA",
+        why: "Albanian Vërtetimi i Kontrollit te Gjendjes Gjyqësore (criminal record) from local Police Station or Ministry of Justice (ALL 500-1,500, 7-14 days). Apostille via Albanian MFA (Ministria e Punëve të Jashtme) — Albania is Hague signatory since 2006. Cost ALL 2,000-5,000/document, 5-7 days. Albanian translation to Italian via sworn translator (Përkthyes i Autorizuar) — typically performed via Italian-licensed translators in Albania or in Italy.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route — Decreto Flussi, EU Blue Card, or family reunification",
+        prompt: "Albanians have several Italian routes. State explicitly: Decreto Flussi (annual quota — most common for blue-collar work), EU Blue Card (high-skilled, faster processing), family reunification (Ricongiungimento Familiare for spouse / minor children / dependent parents of Italian-resident Albanian), Permesso di Soggiorno tied to Italian study programme (alternative pathway).",
+      },
+      {
+        heading: "Your Albanian work history + Italian-language progression",
+        prompt: "List every Albanian employer with month-precision dates, role, salary in ALL, supervisor name + email. Document Italian-language progression: enrolment in Italian course (with study hours), CILS / CELI / PLIDA Italian-language certification, work experience with Italian-speaking colleagues if any.",
+      },
+      {
+        heading: "Family + Italian diaspora connections",
+        prompt: "Italian Albanian-origin community is one of Italy's largest. Mention any Italian-Albanian relatives or community connections — Milan, Rome, Treviso, Padua, Verona, Florence, Bologna, Bari, Brindisi, Foggia all have large Albanian populations. Document Italian-Albanian linkage for family reunification or work integration.",
+      },
+      {
+        heading: "Long-term plan — Italian PR, citizenship, or rotation",
+        prompt: "Albanian-Italian Permesso di Soggiorno UE per Soggiornanti di Lungo Periodo (EU PR) after 5 years legal residence + B1 Italian. Italian citizenship after 10 years residence (down from 4 for EU citizens — not applicable to Albanians as non-EU). Many Albanian-Italians retain Albanian citizenship + apply for Italian citizenship; Albania permits dual citizenship.",
+      },
+    ],
+    moneySavingTips: [
+      "Decreto Flussi has annual quota fixed — apply within window (typically January-March); employer pays Prefettura fee ~€100",
+      "EU Blue Card application fee ~€100 — significantly cheaper than UK Skilled Worker fees",
+      "Albanian Police Clearance: ALL 500-1,500 at local Police Station — don't pay agents ALL 5,000+",
+      "Apostille via Albanian MFA: ALL 2,000-5,000/document",
+      "Italian-language Albanian-origin community resources: Casa della Memoria Italo-Albanese, Albania House Rome, Centro Culturale Albano-Italiano (free or low-cost Italian language classes for Albanians)",
+      "Open Banca Intesa Sanpaolo (largest Albanian Italian-friendly bank), UniCredit, BNL BNP Paribas, Banca Popolare di Milano salary account on arrival",
+      "Use Western Union, Wise, RIA Money Transfer for remittance to Albania — competitive rates",
+      "Italian Codice Fiscale (tax ID) is FREE at Agenzia delle Entrate — required before employment",
+      "Tessera Sanitaria (health card) FREE via SSN registration at ASL",
+      "Don't pay Albanian 'agjenci migracioni' EUR 1,000-5,000 — Italy-side employer handles Sportello Unico Immigrazione; Albania-side documents are straightforward DIY",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Decreto Flussi with Italian employer support",
+        "EU Blue Card with high-skill Italian employer",
+        "Family reunification (Ricongiungimento) for spouse / minor children / dependent parents",
+        "Permesso di Soggiorno UE per Soggiornanti di Lungo Periodo after 5 years residence + B1 Italian",
+        "Italian citizenship application after 10 years residence",
+      ],
+      getALawyer: [
+        "Past Italian / Schengen entry ban or overstay",
+        "Albanian criminal record (Anti-Mafia investigation, smuggling, narcotics — Italy rigorously checks)",
+        "Past EU expulsion from another member state affecting Italian entry",
+        "Albanian-Italian inheritance or property dispute affecting family reunification",
+        "Asylum-related past family member case in Italy or another EU state",
+        "Pre-1990 communist-era political affiliation history (rare but historically sensitive)",
+        "Multiple-country Albanian migration history (Albania → Greece → Italy → onward)",
+        "Bringing 18+ dependent or adult dependent relative",
+        "Italian-Albanian language certification (CILS / CELI / PLIDA) dispute on level claimed",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

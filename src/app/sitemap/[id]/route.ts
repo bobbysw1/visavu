@@ -61,6 +61,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       ["/about", "monthly", "0.4"],
       ["/sources", "monthly", "0.4"],
       ["/disclaimer", "monthly", "0.3"],
+      ["/find-my-visa", "weekly", "0.7"],
       ["/services", "weekly", "0.6"],
       ["/services/travel-insurance", "weekly", "0.5"],
       ["/services/health-insurance", "weekly", "0.5"],

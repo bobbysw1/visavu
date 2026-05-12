@@ -47,6 +47,8 @@ export type FinderResult = {
   maxStayDays: number | null;
   feeAmountMinor: number | null;
   feeCurrency: string | null;
+  /** Processing time upper bound in days, when known. */
+  processingTimeDaysMax: number | null;
   primarySourceUrl: string | null;
   applicationUrl: string | null;
   /** Score 0–100, higher = better fit. Used for ranking. */
@@ -135,6 +137,7 @@ export async function findDestinations(
       status: schema.visaOptions.status,
       purpose: schema.visaOptions.purpose,
       maxStayDays: schema.visaOptions.maxStayDays,
+      processingTimeDaysMax: schema.visaOptions.processingTimeDaysMax,
       primarySourceUrl: schema.visaOptions.primarySourceUrl,
       applicationUrl: schema.visaOptions.applicationUrl,
     })
@@ -200,6 +203,7 @@ export async function findDestinations(
         status: r.status as VisaStatus,
         purpose: r.purpose as Purpose,
         maxStayDays: r.maxStayDays,
+        processingTimeDaysMax: r.processingTimeDaysMax ?? null,
         feeAmountMinor: fee?.amount ?? null,
         feeCurrency: fee?.currency ?? null,
         primarySourceUrl: r.primarySourceUrl,

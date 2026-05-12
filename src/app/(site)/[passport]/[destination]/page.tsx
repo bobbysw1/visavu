@@ -413,6 +413,53 @@ export default async function Page({
     options = route.primary;
     alternatives = route.alternatives;
     baselineTourismStatus = route.baselineTourismStatus;
+
+    // Profile-aware widening: when a user has picked "Doctor" / "Engineer" /
+    // "High-school graduate" / etc. the URL's `purpose` (often tourism by
+    // default) shouldn't restrict what they see. Pull options from EVERY
+    // profile-relevant purpose and merge them in. That way clicking
+    // "Doctor" on /us/au surfaces work + skilled-migration visas in addition
+    // to tourism, instead of just sorting two tourism rows.
+    if (profile) {
+      const PROFILE_PURPOSES: Record<Profile, Purpose[]> = {
+        doctor: ["work", "study"],
+        engineer: ["work"],
+        trade_worker: ["work"],
+        hnwi: ["work", "family"],
+        investor: ["work"],
+        digital_nomad: ["work"],
+        remote_worker: ["work"],
+        student: ["study"],
+        high_school_graduate: ["work", "study", "tourism"],
+        entrepreneur: ["work"],
+        retiree: ["family", "tourism"],
+      };
+      const seen = new Set(options.map((o) => o.id));
+      const extra = await Promise.all(
+        PROFILE_PURPOSES[profile]
+          .filter((extraPurpose) => extraPurpose !== purpose)
+          .map(async (extraPurpose) => {
+            try {
+              const r = await resolveRoute({
+                passportIso2: p,
+                destinationIso2: d,
+                purpose: extraPurpose,
+              });
+              return r.primary;
+            } catch {
+              return [] as ResolvedVisaOption[];
+            }
+          }),
+      );
+      for (const list of extra) {
+        for (const opt of list) {
+          if (!seen.has(opt.id)) {
+            seen.add(opt.id);
+            options.push(opt);
+          }
+        }
+      }
+    }
   } catch (e) {
     resolverError = e instanceof Error ? e.message : "Lookup failed";
   }

@@ -35,6 +35,29 @@ type Rule = {
 };
 
 const RULES: Rule[] = [
+  // ---- Working Holiday programmes (must come BEFORE generic work + tourism) ----
+  // Routes targeted at young people for a year of casual work + travel.
+  // Strong fit for high-school graduates + recent students; also valid for
+  // trade workers and remote workers as a low-friction year abroad.
+  {
+    id: "working-holiday",
+    match: (o) =>
+      /working holiday|subclass 417|subclass 462|youth mobility|whp\b|J-1 work|h-2b|seasonal worker|au pair|cultural exchange/i.test(
+        o.label,
+      ),
+    classification: {
+      pathway: "sponsored_work",
+      profiles: {
+        high_school_graduate: 3,
+        student: 2,
+        trade_worker: 2,
+        digital_nomad: 1,
+        remote_worker: 1,
+        engineer: 1,
+      },
+    },
+  },
+
   // ---- Digital nomad visas (must come BEFORE generic work) ----
   {
     id: "digital-nomad",

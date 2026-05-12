@@ -42,38 +42,115 @@ import {
 import type { DifficultyAssessment } from "@/lib/difficulty";
 import { nameFor } from "@/lib/countries";
 
-const RATING_TONE: Record<MetricRating, { dot: string; chip: string; label: string }> = {
+// Colour palette only — the LABEL is per-metric (see RATING_LABELS below) so
+// "Processing: Strong" is never a thing. Healthcare gets Excellent/Limited,
+// Tax gets Low/High, Difficulty gets Easy/Hard, etc.
+const RATING_TONE: Record<MetricRating, { dot: string; chip: string }> = {
   very_good: {
     dot: "bg-emerald-500",
     chip: "bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-200",
-    label: "Strong",
   },
   good: {
     dot: "bg-emerald-400",
     chip: "bg-emerald-50 text-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-200",
-    label: "Good",
   },
   average: {
     dot: "bg-orange-400",
     chip: "bg-orange-50 text-orange-900 dark:bg-orange-950/60 dark:text-orange-200",
-    label: "Mid",
   },
   poor: {
     dot: "bg-orange-500",
     chip: "bg-orange-100 text-orange-900 dark:bg-orange-900/40 dark:text-orange-200",
-    label: "Weak",
   },
   very_poor: {
     dot: "bg-red-500",
     chip: "bg-red-100 text-red-900 dark:bg-red-900/40 dark:text-red-200",
-    label: "Tough",
+  },
+};
+
+// Per-tile rating words. Picked so each one reads naturally next to its
+// metric: "Difficulty: Easy" or "Tax: Low" rather than the same five
+// generic adjectives everywhere.
+type MetricKey =
+  | "difficulty"
+  | "processing"
+  | "pr"
+  | "salary"
+  | "col"
+  | "tax"
+  | "healthcare"
+  | "safety"
+  | "english";
+
+const RATING_LABELS: Record<MetricKey, Record<MetricRating, string>> = {
+  difficulty: {
+    very_good: "Easy",
+    good: "Mostly easy",
+    average: "Moderate",
+    poor: "Challenging",
+    very_poor: "Hard",
+  },
+  processing: {
+    very_good: "Fast",
+    good: "Quick",
+    average: "Standard",
+    poor: "Slow",
+    very_poor: "Very slow",
+  },
+  pr: {
+    very_good: "Quick path",
+    good: "Standard path",
+    average: "Long path",
+    poor: "Very long",
+    very_poor: "Limited / none",
+  },
+  salary: {
+    very_good: "High",
+    good: "Above average",
+    average: "Average",
+    poor: "Below average",
+    very_poor: "Low",
+  },
+  col: {
+    very_good: "Cheap",
+    good: "Affordable",
+    average: "Standard",
+    poor: "Pricey",
+    very_poor: "Expensive",
+  },
+  tax: {
+    very_good: "Low tax",
+    good: "Moderate",
+    average: "Standard",
+    poor: "High",
+    very_poor: "Very high",
+  },
+  healthcare: {
+    very_good: "Excellent",
+    good: "Strong",
+    average: "Adequate",
+    poor: "Limited",
+    very_poor: "Weak",
+  },
+  safety: {
+    very_good: "Very safe",
+    good: "Safe",
+    average: "Moderate",
+    poor: "Use caution",
+    very_poor: "High caution",
+  },
+  english: {
+    very_good: "Widely spoken",
+    good: "Common",
+    average: "Some",
+    poor: "Limited",
+    very_poor: "Very limited",
   },
 };
 
 const UNKNOWN_TONE = {
   dot: "bg-neutral-300 dark:bg-neutral-700",
   chip: "bg-neutral-100 text-neutral-500 dark:bg-neutral-900 dark:text-neutral-500",
-  label: "No data",
 };
 
 function formatSalary(usd: number | null): string {
@@ -136,10 +213,19 @@ export function CountryMetricsDashboard({
       )}
 
       <div className={gridClass}>
-        {tiles.map((t) => {
-          const { key, ...rest } = t;
-          return <Tile key={key} {...rest} compact={layout === "compact"} />;
-        })}
+        {tiles.map((t) => (
+          <Tile
+            key={t.key}
+            metricKey={t.key}
+            icon={t.icon}
+            label={t.label}
+            value={t.value}
+            sub={t.sub}
+            rating={t.rating}
+            source={t.source}
+            compact={layout === "compact"}
+          />
+        ))}
       </div>
 
       {layout === "full" && !m && (
@@ -153,7 +239,7 @@ export function CountryMetricsDashboard({
 }
 
 type TileSpec = {
-  key: string;
+  key: MetricKey;
   icon: typeof Banknote;
   label: string;
   value: string;
@@ -162,7 +248,7 @@ type TileSpec = {
   source?: { label: string; url: string | null };
 };
 
-type TileProps = Omit<TileSpec, "key">;
+type TileProps = Omit<TileSpec, "key"> & { metricKey: MetricKey };
 
 function Tile({
   icon: Icon,
@@ -172,9 +258,13 @@ function Tile({
   rating,
   source,
   compact,
+  metricKey,
 }: TileProps & { compact: boolean }) {
   const tone = rating ? RATING_TONE[rating] : UNKNOWN_TONE;
-  const title = source ? `${label} — ${value}${sub ? ` (${sub})` : ""} · Source: ${source.label}` : `${label} — ${value}`;
+  const ratingWord = rating ? RATING_LABELS[metricKey][rating] : "No data";
+  const title = source
+    ? `${label} — ${value}${sub ? ` (${sub})` : ""} · Source: ${source.label}`
+    : `${label} — ${value}`;
   return (
     <div
       title={title}
@@ -194,9 +284,11 @@ function Tile({
       {sub && (
         <p className="text-[10px] text-neutral-500 dark:text-neutral-400 mt-0.5 truncate">{sub}</p>
       )}
-      <span className={`mt-2 inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded ${tone.chip}`}>
+      <span
+        className={`mt-2 inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded ${tone.chip}`}
+      >
         <span className={`w-1.5 h-1.5 rounded-full ${tone.dot}`} aria-hidden />
-        {tone.label}
+        {ratingWord}
       </span>
     </div>
   );

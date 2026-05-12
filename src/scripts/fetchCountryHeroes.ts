@@ -30,18 +30,18 @@ const FORCE = process.argv.includes("--force");
 // depend on the runtime module. Plain country-name searches are noisy;
 // these hand-picked phrases surface the most recognisable visual.
 const QUERY_OVERRIDES: Record<string, string> = {
-  US: "new york city skyline",
-  GB: "london skyline",
-  FR: "paris eiffel",
-  IT: "rome colosseum",
-  ES: "barcelona architecture",
-  DE: "cologne cathedral germany",
-  JP: "tokyo cityscape",
-  CN: "great wall of china",
-  IN: "taj mahal",
-  AU: "sydney opera house",
-  CA: "canadian rockies",
-  BR: "rio de janeiro",
+  US: "new york skyline blue sky",
+  GB: "london sunny day tower bridge",
+  FR: "paris eiffel tower sunny",
+  IT: "rome colosseum sunny day",
+  ES: "barcelona park guell sunny",
+  DE: "berlin brandenburg gate sunny",
+  JP: "tokyo cherry blossom skyline",
+  CN: "great wall of china sunny",
+  IN: "taj mahal blue sky",
+  AU: "sydney opera house harbour sunny",
+  CA: "vancouver mountains sunny",
+  BR: "rio de janeiro christ redeemer sunny",
   AE: "dubai skyline",
   TH: "thailand temple",
   SG: "singapore skyline",
@@ -249,14 +249,55 @@ function saveManifest(m: Manifest) {
 
 async function fetchOne(iso2: string, apiKey: string): Promise<PexelsPhoto | null> {
   const query = queryFor(iso2);
-  const url = `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1&orientation=landscape&size=large`;
+  // Pulls the first 15 landscape "large" Pexels matches and picks the one
+  // with the highest "brightness" — Pexels exposes `avg_color` per photo,
+  // a 6-digit hex of the average pixel. We compute its perceived luma and
+  // skip results that are too dark / too monochrome.
+  // Bias: prefers vibrant well-lit travel shots over moody silhouettes,
+  // which was the GB/AU complaint.
+  const url =
+    `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}` +
+    `&per_page=15&orientation=landscape&size=large`;
   const res = await fetch(url, { headers: { Authorization: apiKey } });
   if (!res.ok) {
     console.warn(`  Pexels ${res.status} for ${iso2} (${query})`);
     return null;
   }
-  const data = (await res.json()) as { photos: PexelsPhoto[] };
-  return data.photos[0] ?? null;
+  const data = (await res.json()) as { photos: (PexelsPhoto & { avg_color?: string })[] };
+  if (data.photos.length === 0) return null;
+
+  // Perceived luma (Rec. 709): 0.2126*R + 0.7152*G + 0.0722*B. Scale 0–255.
+  // Anything below 90 reads as "dark / depressing" in this UI; anything
+  // very-low-saturation hex (#xxxxxx with low colour spread) is bleak.
+  function luma(hex: string | undefined): number {
+    if (!hex || !/^#[0-9a-f]{6}$/i.test(hex)) return 128; // unknown → neutral
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  }
+  function saturation(hex: string | undefined): number {
+    if (!hex || !/^#[0-9a-f]{6}$/i.test(hex)) return 0.5;
+    const r = parseInt(hex.slice(1, 3), 16) / 255;
+    const g = parseInt(hex.slice(3, 5), 16) / 255;
+    const b = parseInt(hex.slice(5, 7), 16) / 255;
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    return max === 0 ? 0 : (max - min) / max;
+  }
+
+  // Score = luma + 30·saturation. Reward brightness AND colour spread.
+  const scored = data.photos
+    .map((p) => ({
+      photo: p,
+      score: luma(p.avg_color) + 30 * saturation(p.avg_color),
+    }))
+    .sort((a, b) => b.score - a.score);
+
+  // Drop pitch-black results entirely (luma < 60). If all are dark, fall
+  // back to the highest-scoring one anyway so we don't return null.
+  const bright = scored.filter((s) => luma(s.photo.avg_color) >= 90);
+  return (bright[0] ?? scored[0]).photo;
 }
 
 async function downloadImage(imageUrl: string, dest: string): Promise<void> {

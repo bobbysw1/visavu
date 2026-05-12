@@ -3971,6 +3971,381 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // INDIAN → SINGAPORE — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "IN:SG:work": {
+    whatCarriesWeight: [
+      {
+        label: "Employment Pass (EP) — Tier-based qualifying salary + Complementarity Assessment Framework (COMPASS)",
+        why: "Singapore's EP for foreign professionals: minimum monthly salary S$5,000 from 2023 (S$5,500 for financial services), rising with age (~S$10,500 for mid-40s). From September 2023, COMPASS (Complementarity Assessment Framework) replaces simple salary cutoff — points-based system rewarding: salary above median (40 pts max), diversity (Indian as nationality contributes positive points in non-Indian-heavy firms), qualifications (Tier-1 universities), strategic-economic-priorities skills shortage. 40 points to pass, 80+ for higher-tier. Indians are Singapore's largest professional expat group (~350,000 Indians on EP / S-Pass / PR).",
+      },
+      {
+        label: "MOM Pass application — employer-sponsored via SingPass Business / EP Online",
+        why: "Your Singapore employer applies via Ministry of Manpower (MOM) EP Online portal. Application fee S$105; once approved, you receive In-Principle Approval (IPA) letter to enter Singapore; on arrival you complete biometrics at ICA (Immigration & Checkpoints Authority) and receive your EP card. Processing typically 3 weeks. For senior roles (S$30,000+/month), ONE Pass (Overseas Networks & Expertise) is the elite tier — 5-year duration, multiple concurrent jobs, no employer dependency.",
+      },
+      {
+        label: "Indian educational credentials — MEA Apostille + MOM auto-verification with major Indian universities",
+        why: "Indian degree certificates need attestation: 1) issuing university stamp, 2) State HRD or AICTE if technical, 3) MEA Apostille via e-Sanad portal (free or INR 50-200). Singapore MOM auto-verifies degrees from major Indian universities (IITs, IIMs, NITs, IISc, BITS, Anna University, Delhi University, JNU, AIIMS) via direct MOM API integration. For lesser-known institutions, additional Dataflow verification at MOM cost (~S$200-400). For regulated professions: SMC (Singapore Medical Council), SNB (Singapore Nursing Board), PEB (Professional Engineers Board) separate licensure.",
+      },
+      {
+        label: "Permanent Residence (PR) via Singapore PR scheme — Indian applicants face long timelines",
+        why: "Singapore PR after EP/S-Pass typically requires 2-3 years of work + Indian applicant must wait for ICA processing (12-18 months typical). PR grants permanent residence, ability to switch jobs freely, CPF contributions (with employer match), eventual eligibility for citizenship after 5+ years PR. Indian applicants face particularly long PR processing relative to other nationalities — Singapore actively manages racial diversity per longstanding 'CMIO' (Chinese-Malay-Indian-Others) demographic balance.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your role, your Singapore employer, and COMPASS impact",
+        prompt: "Singapore doesn't ask personal-statement narrative at consular stage (employer-led via MOM EP Online). For Indians: Singapore employer UEN (Unique Entity Number), MOM tier classification (Foreign Worker / S-Pass / Employment Pass / ONE Pass), role + salary band, specific sector (financial services have S$5,500 min, tech/manufacturing S$5,000 min). Highlight Indian qualifications and COMPASS-relevant factors: salary above median, diversity contribution, Tier-1 university, skills shortage area (cybersecurity, AI/ML, advanced engineering, green economy).",
+      },
+      {
+        heading: "Your Indian work history — PAN, EPF UAN, Aadhaar, exact dates",
+        prompt: "List every Indian employer with month-precision dates, role, salary in INR, supervisor name + contact. Include PAN, EPFO UAN, Aadhaar (sometimes requested for KYC), and any professional body memberships (PEC, ICAI, ICAEW, MCI, PCI). Past Singapore experience strengthens applications. For technical roles, attach LinkedIn profile, GitHub, technical certifications.",
+      },
+      {
+        heading: "Family + dependants + Indian school year",
+        prompt: "Dependent Pass (DP) for spouse + children of EP holders earning S$6,000+/month. Long-Term Visit Pass (LTVP) for common-law partners and parents (S$12,000+/month). Indian spouse + children carry Indian passports — separate Dependent Pass attestation chain (Indian state notary + MEA Apostille). Indian school year (April-March) timing: Indian schools in Singapore (Indian Embassy schools, NUS High School, Tanglin Trust School, GIIS Global Indian International School) follow CBSE/ICSE curriculum.",
+      },
+      {
+        heading: "Long-term plan — PR, citizenship, or rotation",
+        prompt: "State plan: PR target after 2-3 years EP (Indian PR processing 12-18 months), eventual Singapore citizenship after 5+ years PR (Singapore doesn't permit dual citizenship — naturalisation requires renouncing Indian passport, but you can apply for OCI — Overseas Citizen of India — afterward to maintain ties), or temporary contract with planned India return, or onward migration (Singapore-based Indians often progress to US / UK / Australia / Canada). Tax: Indian tax-resident if you spend >182 days/year in India OR 60+ days + 365+ days in 4 prior years. Singapore has no capital gains tax; income tax progressive 0-22%.",
+      },
+    ],
+    moneySavingTips: [
+      "EP application fee S$105 — employer pays; refuse 'fee deduction' from first salary unless contractual",
+      "Indian degree attestation via MEA e-Sanad portal: INR 50-200/document direct",
+      "Most major Indian universities auto-verified by MOM — saves S$200-400 Dataflow fee",
+      "Open DBS, OCBC, UOB, Standard Chartered Singapore, HSBC Singapore salary account — most accept IPA letter + Indian passport pre-arrival",
+      "ONE Pass eligibility S$30,000+/month — apply yourself via MOM portal; consultancies charge S$5,000+ for no real value",
+      "Apply for Indian Tax Residency Certificate at Income Tax Department if you'll be Singapore-resident >183 days/year — exempts Singapore income from Indian global-income tax under India-Singapore DTAA",
+      "Singapore CPF: as EP holder you don't contribute to CPF; as PR/citizen you contribute 20% (employee) + 17% (employer) — significant retirement savings",
+      "Use Wise SGD/INR, Western Union, Mahesh Express, or DBS Remit for remittance — competitive vs DBS international transfer; RBI's LRS allows USD 250,000/year outbound from India",
+      "Indian rupee-denominated NRI account in India (NRE / NRO) is tax-efficient — interest exempt for NRI",
+      "Don't pay 'Singapore immigration consultancy' INR 200,000+ — MOM EP Online is straightforward; employer's HR handles application",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard EP / S-Pass / ONE Pass application with employer support, clean record, clear qualifications",
+        "Dependent Pass / LTVP for spouse + children",
+        "PR application after 2-3 years EP (online ICA process is straightforward)",
+        "Renewal of EP at end of 2-year initial / 3-year renewal periods",
+        "Singapore tax filing (mandatory for residents)",
+      ],
+      getALawyer: [
+        "Past Singapore visa refusal or PR rejection",
+        "Indian criminal record (NDPS narcotics, dowry, criminal breach of trust)",
+        "Past Singapore overstay or work-permit-related dispute",
+        "COMPASS scoring borderline — strategic optimisation of points (employer can adjust role description, salary band, work-pass type)",
+        "Family member with prior Singapore asylum claim (rare for Indians)",
+        "Dual Indian-OCI status of spouse complicating Dependent Pass documentation",
+        "Singapore PR application after multiple EP renewals without success",
+        "Past Singapore detention or deportation flag",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // ARGENTINIAN → SPAIN — family
+  // ════════════════════════════════════════════════════════════════════
+
+  "AR:ES:family": {
+    whatCarriesWeight: [
+      {
+        label: "Ley de Memoria Democrática / Ley de Nietos — Argentinian descent of Spanish exiles route",
+        why: "October 2022 Spanish 'Ley de Memoria Democrática' (also called 'Ley de Nietos') allows Argentinians descended from Spanish Republican exiles (and broader Spanish emigration) to claim Spanish citizenship through original Spanish ancestry. Window: October 2022 to October 2025 with possible extension. Eligible: descendants of Spaniards who emigrated due to political, ideological, or labour reasons (broadly interpreted), Spanish-born grandparents/great-grandparents who lost Spanish nationality, women who lost Spanish nationality by marrying foreigners pre-1978. No residency required in Spain — apply via Spanish consulate Buenos Aires / Mendoza / Rosario / Bahía Blanca / Córdoba / Mar del Plata. ~700,000+ Argentinians have applied since 2022.",
+      },
+      {
+        label: "Spanish consulate application + Argentine civil registration documentation",
+        why: "Apply at Spanish Consulate Buenos Aires (Calle Maipú or Florida) or regional consulates. Documents required: Argentine birth certificate (apostilled per Hague Convention — Argentina is signatory) showing parent/grandparent name, Argentine marriage certificates linking generations, Spanish-born ancestor's birth certificate from Spanish civil registry (Registro Civil — apply to municipality of birth via family historian or Spanish consulate-accredited researcher), Spanish ancestor's emigration records (passenger lists from CEMLA Centro de Estudios Migratorios Latinoamericanos in Buenos Aires can help). NO Spanish language test required for Ley de Nietos applicants.",
+      },
+      {
+        label: "Sephardic route alternative — closed October 2019 but reopened cases continue",
+        why: "Argentinian Jews of Sephardic origin had a separate Spanish citizenship route under 2015 Sephardic Law — application window closed October 2019 but cases filed before that date continue to be processed. Required: certification of Sephardic ancestry by Spanish-recognised rabbi or DERSO Federación de Comunidades Judías de España attestation, DELE A2 Spanish exam, basic Spanish history/civics test (CCSE), proof of historical ties to Spain (surname, family records, language). If your Sephardic application was filed pre-October 2019 it remains processing — check with Spanish consulate Buenos Aires.",
+      },
+      {
+        label: "Naturalisation by residence — 2-year fast-track for Argentinians",
+        why: "Spain offers Argentinians (and other Latin American + Filipino + Sephardic + Andorran + Equatorial Guinean / Portuguese) a 2-year naturalisation route (vs 10 years for other nationalities) — requires legal residence in Spain for 2 continuous years. The 2-year fast-track is the second-fastest option after Ley de Nietos (which requires no residency). Apply for Spanish 'Tarjeta de Residencia' first, then after 2 years apply for citizenship via Ministerio de Justicia. DELE A2 Spanish exam + CCSE test required (Argentinians are first-language Spanish speakers, exempt from DELE A2 with proof).",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route — Ley de Nietos, Sephardic, 2-year residence, or family reunification",
+        prompt: "Argentinians have many routes to Spanish nationality. State explicitly: Ley de Nietos (descent from Spanish ancestor with no residency required — window closes October 2025), Sephardic (pre-2019 filed cases only), 2-year residence + naturalisation (requires Spanish job offer or family ties), or family reunification (if you have Spanish parent / spouse / minor child). Each route has different documentation requirements.",
+      },
+      {
+        heading: "Your Spanish ancestry — exact lineage chain",
+        prompt: "For Ley de Nietos: document the chain. Spanish-born ancestor's full name, birth date, birth municipality (e.g., 'María García López, born 15 March 1928, Vigo, Galicia'). Emigration date and reason if available (CEMLA records). Each generation linking ancestor to you via Argentine civil registry birth/marriage certificates. Include ancestor's profession, religion (if relevant for Sephardic), and any documents from Spanish or Argentine archives.",
+      },
+      {
+        heading: "Argentine documents + Spanish ancestor's birth certificate",
+        prompt: "Argentine documents (birth, marriage, death certificates) need Apostille per Hague Convention. Spanish ancestor's birth certificate requires application to Spanish municipality of birth — many Spanish municipalities digitised civil registry pre-1900 and accessible via family-history researchers or consulate assistance. If birth certificate destroyed (Spanish Civil War 1936-1939, fires, natural disasters), 'Declaración con valor de simple presunción' notarial declaration accepted as substitute.",
+      },
+      {
+        heading: "Future plan — Spanish citizenship benefits + dual nationality",
+        prompt: "Spanish citizenship grants EU passport with free movement / residence / work across EU + Schengen. Argentina permits dual citizenship; Spain permits dual citizenship for Latin American nationals + Sephardic Jews + Filipino + Andorran + Equatorial Guinean + Portuguese (under specific treaty). For Argentinian-Spanish dual nationals: maintain Argentine ID + passport while gaining Spanish ID + passport. State plan: settle in Spain (Madrid, Barcelona, Valencia have large Argentinian diaspora), settle elsewhere in EU (Spanish passport = EU citizenship), maintain Argentine residence with Spanish passport for travel.",
+      },
+    ],
+    moneySavingTips: [
+      "Ley de Nietos application has NO Spanish residency requirement — saves Spanish housing + tax-residency costs entirely",
+      "Application fee at Spanish consulate: ARS 5,000-15,000 (~USD 5-15) — extremely cheap; don't pay 'Spanish citizenship consultancies' charging USD 1,000-5,000",
+      "Spanish ancestor's birth certificate via 'familysearch.org' (free) often substitutes for Spanish civil registry trip — many Spanish municipalities cooperate with FamilySearch digitisation",
+      "CEMLA (Centro de Estudios Migratorios Latinoamericanos) Buenos Aires has free immigration record search — Av. Independencia 20",
+      "Spanish municipality civil registry: free; allow 3-6 months turnaround by mail",
+      "Argentine document apostille: free via Ministerio de Relaciones Exteriores (Cancillería) Buenos Aires — same-day in-person; don't pay agencies ARS 30,000+",
+      "Argentine notarised translation (traducción pública) into Spanish — wait, your documents are already in Spanish; this saves translation costs entirely",
+      "Don't pay 'genealogy services' for Spanish ancestry research — Spanish civil registries are free; FamilySearch is free; many Argentinian historical societies offer free assistance",
+      "If applying via Argentine consulate in Spain (i.e., you're already in Spain), the process is reverse — apply at the Madrid Argentine consulate first for Argentine documents, then Spanish municipality for citizenship",
+      "Spanish DNI / NIE / passport application fees are nominal (€10-30) — pay direct at Spanish police / Foreign Office; don't use 'Spanish immigration consultancies'",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Ley de Nietos application with clear ancestor documentation chain",
+        "2-year residence + naturalisation application via Ministerio de Justicia (after qualifying Spanish residence)",
+        "Family reunification (Reagrupamiento Familiar) for Spanish spouse / minor child / parent",
+        "Spanish DNI / NIE / passport issuance once citizenship granted",
+      ],
+      getALawyer: [
+        "Spanish ancestor's birth certificate destroyed (Civil War 1936-1939) — Declaración con valor de simple presunción notarial declaration needs specialist drafting",
+        "Sephardic route case filed pre-October 2019 with pending decisions — specialist Spanish lawyer with Sephardic-Latino expertise",
+        "Multi-generation chain with non-marital births (hijos naturales) or adoption — legal documentation chain needs careful framing",
+        "Argentine criminal record",
+        "Spanish ancestor was Spanish citizen but lost Spanish nationality before emigration (rare, complicated)",
+        "Past Spanish visa refusal (rare for Argentinians, but if any flag)",
+        "Multiple-country ancestry chain (e.g., Spanish + Italian + Lebanese great-grandparents) — choose strongest route",
+        "Pre-existing Argentine military / political controversial role affecting Spanish good-character assessment",
+        "Spanish ancestor's surname is unclear due to historical Hispanic naming conventions (paterno-materno reversal, religious name vs civil name)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // VENEZUELAN → US — family
+  // ════════════════════════════════════════════════════════════════════
+
+  "VE:US:family": {
+    whatCarriesWeight: [
+      {
+        label: "TPS (Temporary Protected Status) for Venezuelans + parole programmes",
+        why: "Venezuelans in the US have unique status options. TPS (Temporary Protected Status) currently valid until October 2026 (extended February 2025) — grants work authorization + protection from deportation but NOT a path to permanent residence. Cuban-Haitian-Nicaraguan-Venezuelan Parole Program (CHNV) provided 30,000/month admissions under Biden — paused January 2025 by Trump admin pending review. Venezuelan parents in US can file family-based green card petitions (I-130) for Venezuelan children/spouses — IR-1 (immediate relative spouse), CR-1 (conditional 2-year), F-2A/F-2B (siblings/adult children of US citizens / LPRs), F-1 (unmarried adult children).",
+      },
+      {
+        label: "Venezuelan civil documents — Caracas consular processing constraints + apostille via SAREN",
+        why: "US has not had a functioning embassy in Caracas since 2019 — Venezuelan family-based visa applicants currently process through US Embassy Bogotá (Colombia), US Embassy Lima (Peru), or US Embassy Quito (Ecuador) depending on US assignment. Venezuelan birth certificates, marriage certificates, and police clearances need apostille via Venezuelan SAREN (Servicio Autónomo de Registros y Notarías). Older records (pre-1990s) often handwritten and may need rectification via Venezuelan notary before apostille. Cost ~USD 100-300 + travel to functional notary; documentation chain is the bottleneck.",
+      },
+      {
+        label: "Affidavit of Support (I-864) + Venezuelan-American sponsor compliance",
+        why: "Family-based green card requires US sponsor (citizen or LPR) to file Form I-864 Affidavit of Support — sponsor must show income at 125% of Federal Poverty Guidelines for household size + sponsored beneficiary (~$25k single, $33k for 2-person household, $42k for 3-person). Joint sponsors (additional household member) accepted if primary sponsor income insufficient. Venezuelan-American sponsors should attach: 3 years of US tax returns (Form 1040), W-2s, employer letter, bank statements, asset valuations.",
+      },
+      {
+        label: "Venezuelan Police Clearance + medical exam at Bogotá / Lima / Quito",
+        why: "CICPC (Cuerpo de Investigaciones Científicas, Penales y Criminalísticas) Venezuelan police record check — currently obtainable in Venezuela via SAREN or via Venezuelan consulates abroad in Bogotá / Madrid / Buenos Aires / Mexico City. Document the chain. Medical exam at US-designated panel physician — for Bogotá-processed cases, at IOM Bogotá clinics; Lima cases at IOM Lima; Quito cases at IOM Quito. Cost ~USD 200-400. Yellow fever vaccination required for adults born after 1980; COVID-19 vaccination requirements rescinded.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route choice — TPS, CHNV, IR-1/CR-1, F-2A, F-2B, F-1",
+        prompt: "State explicit visa category and family relationship. IR-1/CR-1 (spouse of US citizen), IR-2 (unmarried child of US citizen under 21), IR-5 (parent of US citizen 21+), F-1 (unmarried adult child of US citizen), F-2A (spouse/minor children of LPR), F-2B (unmarried adult children of LPR), F-3 (married children of US citizen), F-4 (siblings of US citizen 21+). Each has different priority date wait times (current visa bulletin shows F-4 Venezuela at 7+ years backlog).",
+      },
+      {
+        heading: "Your relationship narrative — bona fide marriage / relationship",
+        prompt: "For spousal cases, IR-1/CR-1 requires evidence of bona fide marriage: when/where/how met (Venezuela, US, third country — be specific), wedding details (date, location, witnesses, religious vs civil), photos, joint financial records (if any), joint travel, communication history (WhatsApp, video calls — preserve evidence), family integration. CR-1 is 2-year conditional pending I-751 removal of conditions; IR-1 is 10-year unconditional. Document timeline carefully — Venezuela's economic crisis means many couples have geographically separated periods that need explanation.",
+      },
+      {
+        heading: "Family ties + Venezuelan economic crisis context",
+        prompt: "Acknowledge Venezuelan context openly. Document your Venezuelan history: residence (Caracas / Maracaibo / Valencia / Maracay / Barquisimeto / Ciudad Bolivar district level), parents' occupation, siblings, education at Venezuelan universities (UCV, USB, ULA, UCAB, UDO, LUZ). Document your route to current location if outside Venezuela (Colombia, Peru, Ecuador, Brazil, Spain, US under CHNV, asylum claim). US officers understand humanitarian context but require complete documentation.",
+      },
+      {
+        heading: "US sponsor's compliance + future plan",
+        prompt: "US sponsor's relationship to you (spouse, parent, child, sibling) + I-864 sponsorship capacity. State your settlement plan: where you'll live (typically with US sponsor or near Venezuelan-American community in Miami / Houston / NYC / Orlando / Atlanta), work plan (Venezuelan professional credentials evaluated via WES/ECE), child education plan (US public school enrolment via local district), eventual naturalisation timeline (3 years for IR spouse with marriage, 5 years otherwise).",
+      },
+    ],
+    moneySavingTips: [
+      "TPS application (I-821) fee $50 + biometric $85 (under 14 exempt) — refile every 18 months when DHS designates",
+      "Family-based visa (I-130 petition) fee $675 for relative of US citizen, $675 for relative of LPR; consular processing fee $445 per applicant; affidavit of support fee $120; medical $200-400; total per applicant typically $1,400-1,800",
+      "Don't pay 'visa consultancy' agencies USD 5,000-15,000 — USCIS forms are free at uscis.gov; immigration attorney costs $1,500-5,000 for full I-130 + consular processing depending on complexity",
+      "Venezuelan-American legal aid: Catholic Charities, Hispanic Federation, ASCV (Asociación Suizo-Venezolana), Venezuelan-American Chamber of Commerce — free or low-cost legal consultation",
+      "Apostille in Venezuela via SAREN: USD 50-200/document — don't pay 'Caracas document service' charging USD 500+",
+      "Translation: certified Spanish-English translation (USCIS requires certified, not necessarily 'sworn') — USD 25-50/page typical; don't pay 'apostilled translation' charging USD 200+",
+      "Medical exam at IOM Bogotá / Lima / Quito: USD 200-400 — direct booking via IOM portal saves agency fees",
+      "Consular processing centre choice (NVC documentation transfer): work with US sponsor's attorney to choose Bogotá / Lima / Quito based on processing times — currently Bogotá ~12-18 months, Lima ~10-14 months, Quito ~8-12 months",
+      "Use Wise USD/VEF or LATAM-friendly remittance (Reserve.com, Servicio Remesas, Western Union Venezuela) — competitive vs traditional bank transfer",
+      "Consider expedited processing (USCIS Form I-907 Premium Processing) — $2,500 for some categories; not available for I-130 family-based but available for some adjustment-of-status cases",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard TPS application / renewal for already-eligible Venezuelans",
+        "I-130 petition for spouse / immediate family member with clean record",
+        "I-485 Adjustment of Status (if already in US under valid status — TPS does not authorise adjustment in all cases)",
+        "Naturalisation (N-400) after 3 years marriage to US citizen or 5 years LPR",
+      ],
+      getALawyer: [
+        "TPS to LPR pathway (complex — TPS does not directly grant green card; need separate I-130 / employer sponsorship)",
+        "CHNV parole status holders facing 2025 administrative changes",
+        "Pre-2017 Venezuelan crime / political violence connections (Chavismo-era enforcement officers, anti-Chavismo activists)",
+        "Venezuelan military / SEBIN / DGCIM affiliations — even peripheral",
+        "Past US visa refusal or US overstay (B1/B2 visa overstay common during 2014-2019 crisis years)",
+        "Family member with prior US asylum claim from Venezuela",
+        "Adoption-related petition where Venezuelan adoption documentation is incomplete",
+        "Past entry through Mexican border (CBP One app appointment vs unauthorised entry — significant legal distinction)",
+        "Venezuelan-American sponsor with prior tax delinquency affecting I-864 sponsorship eligibility",
+        "Multiple-country Venezuelan migration history (Venezuela → Colombia → Peru → US complicates beneficiary documentation)",
+        "Same-sex spouse petition — Venezuela doesn't fully recognise same-sex marriage (2024 partial recognition for prior marriages abroad); US recognises same-sex marriage; documentation chain may need Colombian / Spanish / US marriage certificate substitute",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // CHILEAN → US — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "CL:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "H-1B1 — Chile's unique treaty-based work visa (not subject to annual lottery)",
+        why: "Chile (and Singapore) have a unique H-1B1 visa under the US-Chile Free Trade Agreement (2004) — 1,400 visas annually for Chileans (separate from the 85k H-1B lottery cap). Specialty Occupation requiring Bachelor's degree, US employer petition, prevailing wage. H-1B1 differs from H-1B in: no lottery, no PERM-based dual intent (officially non-immigrant), 1-year initial duration vs 3-year H-1B, no spouse work authorization automatic. Apply at US Embassy Santiago (Av Andrés Bello 2800) directly with US employer petition documents — bypass US-based premium-processing entirely.",
+      },
+      {
+        label: "H-1B (lottery) OR L-1 (intracompany) OR E-2 (Chile became eligible 2014)",
+        why: "Chileans also qualify for standard H-1B (cap-subject lottery), L-1A/B (intracompany transfer from Chilean parent — Empresas Copec, Falabella, LATAM Airlines, Codelco, SQM, CCU, Concha y Toro, ENAP have well-trodden L-1 paths), and E-2 Treaty Investor since 2014 (under US-Chile FTA Investment Chapter — substantial Chilean investment in US business, ~USD 100,000+ typical). E-2 is renewable indefinitely while investment substantially operates.",
+      },
+      {
+        label: "DS-160 + Apostilled Chilean degrees + WES/ECE/AICE credential evaluation",
+        why: "DS-160 online application, then book interview at US Embassy Santiago. Chilean degree certificates (Licenciatura, Magister, Doctorado) need Apostille via Chilean MFA — Chile is Hague signatory since 2016. Cost CLP 800-2,500 per document. WES, ECE, or AICE foreign credential evaluation for US employer petition or licensure. Chilean 4-year Licenciatura maps to US Bachelor's; 5-year Ingeniería Civil maps to US Master's of Engineering for some technical roles.",
+      },
+      {
+        label: "Chilean Pasado Judicial + DICREP background check",
+        why: "Chilean PSP (Servicio de Registro Civil e Identificación) Certificate of Antecedents — free at Civil Registry offices or online via Registro Civil website. DICREP (Dirección General del Crédito Prendario) and Personería Judicial certificates for some categories. These are not always demanded at DS-160 interview but having them ready accelerates the process. Particularly useful for E-2 source-of-funds documentation.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route — H-1B1, H-1B, L-1, or E-2",
+        prompt: "Chileans have unusually many routes. State explicitly: H-1B1 (no lottery, 1,400 annual quota, US employer petition), standard H-1B (lottery — Chilean win rate ~35-40%), L-1A/B (intracompany transfer from Chilean parent with 12+ months qualifying employment), E-2 Treaty Investor (substantial Chilean investment in US business). Show research — H-1B1 is the unique advantage for Chileans.",
+      },
+      {
+        heading: "Your Chilean employer / academic credentials",
+        prompt: "List Chilean employer chronologically, role, salary in CLP with USD equivalent, supervisor name + contact. Chilean universities (PUC Pontificia Universidad Católica, U de Chile, USACH Universidad de Santiago, U de Concepción, UAI Universidad Adolfo Ibáñez, UTFSM Universidad Técnica Federico Santa María) are well-known to US Embassy Santiago. For L-1, document the 12+ month qualifying employment at Chilean parent.",
+      },
+      {
+        heading: "Long-term plan — H-1B1 vs H-1B + green card",
+        prompt: "H-1B1 is officially non-immigrant (no dual intent) — can't openly state green-card plans. H-1B and L-1 allow dual intent. State plan honestly: temporary US contract (1-2 years on H-1B1), longer-term US career (transition from H-1B1 to H-1B → EB-2/EB-3 PERM-based green card), or E-2 indefinite renewal. Chile permits dual citizenship; US permits dual citizenship.",
+      },
+      {
+        heading: "Family + dependants + Chilean school year",
+        prompt: "Spouse on H-1B1: H-4 (no work authorization automatic; EAD restrictive). Spouse on H-1B: H-4 with EAD if H-1B principal is in I-140 approved stage. Spouse on L-1: L-2 with automatic work auth since 2023. Spouse on E-2: E-2D with full work rights. Chilean school year (March-December) timing: arrival before US August/September school start. International schools in Santiago (Grange School, Saint George's, Nido de Águilas) ease US school transition.",
+      },
+    ],
+    moneySavingTips: [
+      "DS-160 fee $185 (H-1B1/H-1B/L-1) or $315 (E-2); pay in CLP at Banco de Chile, Banco Santander Chile, or BBVA Chile — no reciprocity fee for Chileans",
+      "H-1B1 application at US Embassy Santiago is much faster than US-based premium processing — no lottery, no PERM, direct consular path",
+      "Use WES iGPA Calculator (free online) before paying for full evaluation",
+      "Apostille via Chilean MFA online portal: CLP 800-2,500/document",
+      "Open a US-domiciled bank account with Wise USD, Mercury Business, or BCI Miami / Banco Estado Miami (Chilean diaspora-friendly) before relocation",
+      "Chilean Embassy DC + Consulates (LA, NYC, SF, Chicago, Houston, Miami, San Juan PR, Boston) offer free notarisation for Chilean citizens",
+      "Avoid Chilean 'asesores migratorios' charging CLP 3-8M for H-1B1/H-1B — US-based immigration attorneys with Latin American desks at Fragomen, Berry Appleman, BAL have flat-fee Spanish-language Chilean services at $2,500-3,500",
+      "H-1B1 dependent visas (H-4) — children of H-1B1 holders eligible; spouse work auth via H-4 EAD only if on certain US adjustment-of-status track (rare for H-1B1)",
+      "Use Banco de Chile, Santander, or BancoEstado for tuition transfers — competitive vs retail FX; Chilean Central Bank educational outflow has no annual cap with admission proof",
+      "Plan Chilean tax exit carefully — Chile has 'departure tax' on substantial holdings (unrealised gains on shares/business); file final Chilean tax return as resident in year of departure",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard H-1B1 / H-1B / L-1 with named US employer, clean record, clear Chilean degree mapping",
+        "DS-160 interview prep and document gathering at US Embassy Santiago",
+        "Spouse / dependent derivative applications (H-4, L-2, E-2D)",
+        "Renewal of existing H-1B1 / H-1B / L-1 at US Embassy Santiago during home leave",
+        "PERM-based EB-2 / EB-3 green card (Chileans are current — no per-country backlog) for H-1B transitioning to immigrant intent",
+      ],
+      getALawyer: [
+        "E-2 Treaty Investor (Chile-US E-2 since 2014) — substantiality, source-of-funds, 'real and operating' enterprise tests benefit from specialist drafting",
+        "EB-1A / EB-1B / O-1 — extraordinary ability for Chilean researchers / executives / artists",
+        "H-1B1 to H-1B transition (cap-subject lottery in March vs annual H-1B1 quota) — strategic timing",
+        "Concurrent Chilean Wegzugsbesteuerung-equivalent considerations on substantial holdings",
+        "Prior US visa refusal or US overstay",
+        "Chilean criminal record (drug-related cases — disclosure to USCIS / DOS mandatory)",
+        "Past Allende-era political family or military junta era controversial role",
+        "Same-sex spouse — Chile recognised same-sex civil unions 2015 and same-sex marriage March 2022; US recognises; derivative visas straightforward",
+        "Dual Chilean-other passport (Chilean-Spanish, Chilean-Italian, Chilean-German common — apply via Chilean passport)",
+        "Pinochet-era military / police background check complications",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // SAUDI → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "SA:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from a SEVP-certified US school + SEVIS I-901 paid + Saudi government / Aramco sponsorship",
+        why: "Saudi Arabia is one of the largest sources of fully-funded students to the US (~25,000 enrolments). Most are funded under KASP (King Abdullah Scholarship Programme — launched 2005, paused/restarted 2023), Saudi Aramco / SABIC / Saudi Royal Court / Ministry of Higher Education scholarships, or self-funded by wealthy Saudi families. Your US institution issues Form I-20 (F-1) or DS-2019 (J-1) once admitted and proof-of-funds verified. Pay SEVIS I-901 fee ($350 F-1 / $220 J-1) before booking DS-160. Apply at US Embassy Riyadh (Diplomatic Quarter) or US Consulate General Jeddah / Dhahran.",
+      },
+      {
+        label: "Saudi educational credentials + Tahseen authentication + Ministry of Higher Education attestation",
+        why: "Saudi Thanawiya Amma diploma (12-grade) and Saudi university degrees (Bachelor's, Master's, PhD from KFUPM, KAUST, KSU King Saud, KAU King Abdulaziz, Umm Al-Qura, KFU King Faisal, Imam, Saudi Electronic) — need: 1) issuing institution stamp, 2) Saudi Tahseen (Ministry of Higher Education Equivalency) for non-Saudi-issued portions, 3) Saudi MOFA legalisation, 4) US Embassy Riyadh / Consulate Jeddah / Dhahran legalisation OR Hague Apostille if Saudi joined recently (still being phased in). Saudi 4-year Bachelor's typically maps to US Bachelor's.",
+      },
+      {
+        label: "Mahram (male guardian) requirements for unaccompanied female Saudi students",
+        why: "Historically Saudi Arabia required female students under 25 (or unmarried over 25) to have a Mahram (male guardian — father, husband, brother, son) accompanying them or providing written permission for overseas study. Reform: since 2019 women 21+ can travel without Mahram permission for general purposes; for sponsored scholarships (KASP), Mahram requirement was relaxed/abolished; for self-funded study, no Mahram document required at US Embassy. Female Saudi applicants should clarify with their funding source (KASP / private / family) and Saudi cultural attaché in DC about any Mahram-related obligations for travel allowance / housing in US.",
+      },
+      {
+        label: "Cultural Attaché letter + Saudi Police Clearance + DS-160 narrative",
+        why: "All Saudi sponsored students require Cultural Attaché letter (from Saudi Cultural Mission in Washington DC, SAMCM) before US visa — confirms scholarship and intended programme. Self-funded students don't need this. Saudi Police Clearance from local Saudi police via Absher app or Ministry of Interior — free, 7-30 days. For every country you've spent 6+ months in (Gulf states, Lebanon, Egypt for many Saudis), additional police certificate required.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your funding source — KASP, Aramco, self-funded, or family",
+        prompt: "State explicitly: KASP / SABIC / Saudi Aramco / Royal Court / Ministry of Higher Education scholarship (with letter), or self-funded by family (with bank statements + IBAN). Each funding source has different documentation chain. KASP students have a 'scholarship offer letter' that automatically satisfies funding proof at the DS-160 interview. Self-funded students need to document Saudi family wealth via Saudi bank statements (Al Rajhi, SNB, Riyad Bank, Alinma, Banque Saudi Fransi, Arab National Bank).",
+      },
+      {
+        heading: "Why this specific US programme over Saudi or alternative destinations",
+        prompt: "Saudi universities are growing in international rankings (KAUST is well-funded; KFUPM is petroleum-engineering elite). Explain why your US programme offers something unique — research lab, specific professor, industry network (Silicon Valley for CS, Wall Street for finance, Houston for energy, Boston for biotech), specialised programme. Saudi government scholarships often direct students toward specific US universities (Stanford for AI, MIT for engineering, Harvard for medicine, USC for business — KASP has list of pre-approved institutions).",
+      },
+      {
+        heading: "Post-graduation plan — your return to Saudi Arabia",
+        prompt: "F-1 visas explicitly require intent to return. KASP / Aramco / government-sponsored students have explicit return obligation (bonded — typically work in Saudi sector for 4-7 years post-graduation, in named role at Aramco / SABIC / Saudi Ministry / Saudi university faculty). State this directly — it's actually the strongest 214(b) argument possible. Self-funded students should state intended Saudi sector: Aramco, SABIC, STC, Royal Family enterprises, family business succession, Saudi medical sector, Saudi academia.",
+      },
+      {
+        heading: "Family ties + Saudi cultural context",
+        prompt: "List father (occupation, location — Riyadh / Jeddah / Dammam / Madinah / Makkah / Khobar / Tabuk / Abha / Hail district level), mother, siblings, partner (if married — many Saudi students are married before graduate study). Mention Saudi property — family home in compound or villa, family business if applicable. For male applicants, Saudi national military service status: voluntary in Saudi, but reservist obligation may apply for some former military families.",
+      },
+    ],
+    moneySavingTips: [
+      "KASP students: ALL costs paid (tuition, living, medical insurance, return flights, dependent allowances) — KASP also typically covers spouse / children",
+      "Apply at US Embassy Riyadh OR US Consulate General Jeddah (depending on city of residence)",
+      "F-1 visa fee is $185; pay via Saudi bank (Al Rajhi, SNB, Alinma, Riyad Bank) with MRV barcode — both KSA bank deposit and USD cash accepted",
+      "Don't pay 'visa consultancy' agencies SAR 5,000-50,000 — DS-160 is free, US Embassy is straightforward, agencies don't influence consular decisions",
+      "Cultural Attaché letter is FREE for KASP students at SAMCM (Saudi Arabian Cultural Mission) Washington DC",
+      "Saudi Police Clearance via Absher app: FREE — don't pay touts at police stations",
+      "Apostille via Saudi MOFA: SAR 200-500/document — direct booking via online portal",
+      "Saudi Arabia joined Hague Apostille Convention 2023 — phased implementation; many US institutions still require traditional MOFA + Embassy chain",
+      "Use Al Rajhi, SNB, or Riyad Bank for tuition transfers — competitive vs retail; Saudi Central Bank has no annual cap on educational outflow",
+      "Saudi-American Chamber of Commerce + Saudi Arabian Cultural Mission (SAMCM) provide free advisory services",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with KASP or self-funded support, clean record, strong programme fit",
+        "Standard Cultural Attaché letter + visa interview prep",
+        "Renewal of existing F-1 at US Embassy Riyadh / Jeddah during winter / summer breaks",
+        "OPT or STEM OPT application during or after the programme (where allowed by KASP terms)",
+      ],
+      getALawyer: [
+        "Prior US visa refusal (any category — rare for sponsored Saudis but if any flag)",
+        "Saudi criminal record (alcohol, drug, Hadd offenses — Saudi rigorously checks)",
+        "STEM field with potential SAO sensitivity (nuclear, aerospace, advanced AI, advanced materials, dual-use biotech)",
+        "Family member in Saudi military / intelligence (Mukhabarat) / royal family (additional security review)",
+        "KASP bond / sponsorship cancellation requests (complex Saudi-side legal process)",
+        "Past US overstay or visa flag in your travel history (rare for Saudis)",
+        "Female applicant with Mahram-related guardian dispute (more relevant for KASP terms than US visa)",
+        "Same-sex partner accompanying — Saudi criminalises same-sex relations; US recognises; documentation chain unavailable in Saudi",
+        "Past military service in Saudi-led coalition (Yemen war) — sensitive for some US visa categories",
+        "Transition from KASP to non-KASP funding mid-programme (KASP terms typically forbid this without permission)",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

@@ -11,9 +11,12 @@ import { HAND_WRITTEN_ROUTES } from "@/content/routeAdvice";
 // /sitemap.xml.
 
 // High-search purpose URLs that every (passport, destination) pair gets in
-// the sitemap. Templated content on these is unique enough to avoid
-// thin-content flags.
-const INDEXED_PURPOSES = ["tourism", "work", "study", "business"] as const;
+// the sitemap. Tourism is INTENTIONALLY OMITTED here — it canonicalises to
+// the bare pair URL (/ca/au, not /ca/au/tourism) so the sitemap would
+// otherwise contain ~75k non-canonical URLs that Google would consolidate
+// and flag as "Alternate page with proper canonical tag." The bare pair URL
+// already covers the tourism case.
+const INDEXED_PURPOSES = ["work", "study", "business"] as const;
 
 // Hand-written purpose URLs additionally get sitemap inclusion for ALL 7
 // purposes (transit / family / diplomatic) because their content is

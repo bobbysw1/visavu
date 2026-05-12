@@ -2494,6 +2494,369 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // CHINESE → UK — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "CN:GB:study": {
+    whatCarriesWeight: [
+      {
+        label: "Confirmation of Acceptance for Studies (CAS) from a licensed Student sponsor",
+        why: "China sends the UK ~150,000 students annually — the largest single-origin cohort. Your UK institution issues CAS once you accept the offer and pay the deposit (typically £2,000-£5,000). Apply for the UK Student visa online (£490 outside UK + IHS £776/year student rate). The CAS is single-use, tied to a specific course start date; if you defer, the CAS must be re-issued. Russell Group universities (Oxford, Cambridge, Imperial, UCL, LSE, KCL, Edinburgh, Manchester, Bristol) and other top-100 institutions get smoother CAS processing.",
+      },
+      {
+        label: "Financial capacity — £1,334/month London or £1,023/month outside London, held 28 consecutive days",
+        why: "From January 2024 living costs raised to £1,334/month for London courses (£12,006 for 9 months) and £1,023/month outside London (£9,207 for 9 months). Must be held 28 consecutive days in YOUR name or your parents' (not company account, not friends, not extended family). Document via Chinese banks (ICBC 工商银行, CCB 建设银行, BOC 中国银行, ABC 农业银行, China Merchants 招商银行, Ping An 平安银行) with English statements stamped and signed. Account opening date must be at least 28 days before application date — visible at top of statement.",
+      },
+      {
+        label: "ATAS clearance for STEM postgrad + 留服 (CSCSE) verification",
+        why: "Academic Technology Approval Scheme (ATAS) is mandatory for postgraduate STEM subjects (engineering, physical sciences, advanced computing, materials science, biological sciences with dual-use potential). Apply at gov.uk/atas — free, 4-6 weeks turnaround. Without ATAS your visa is refused regardless of CAS. Chinese高中 / 本科 / 硕士 transcripts need notarisation through a Chinese notary public office (公证处), then if going through CSCSE (中国留学服务中心 中国教育部) for UK admission, plus translation by a sworn translator. WES-style evaluations aren't typically needed for direct UK admission but help with later professional recognition.",
+      },
+      {
+        label: "IELTS UKVI Academic or accepted secure English test",
+        why: "UK Student visa for degree-level courses requires Independent IELTS UKVI Academic (NOT regular IELTS — must be 'For UK Visas and Immigration'), or accepted alternatives like Pearson PTE Academic UKVI, Cambridge English Advanced/Proficiency. Below-degree courses (foundation, pre-sessional) require IELTS UKVI for UKVI SELT secure test. Test at British Council Beijing, Shanghai, Guangzhou, Chengdu, or IDP centres; book early — slots fill 6-8 weeks ahead. Minimum varies by course: UG typically 6.0 overall with no skill below 5.5, PG typically 6.5 with no skill below 6.0.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why UK over US, Australia, or Chinese top universities",
+        prompt: "China has elite universities (Tsinghua 清华大学, Peking 北京大学, Fudan 复旦大学, Zhejiang 浙江大学, SJTU 上海交通大学, USTC 中国科学技术大学) and many Chinese students consider US (Ivy League, MIT, Stanford) or Hong Kong (HKU, HKUST, CUHK). Explain why your UK programme offers something unique — Russell Group prestige, 1-year UK Master's vs 2-year US Master's (faster, cheaper), specific specialism (LSE economics, UCL computer science, Edinburgh AI, Imperial finance, KCL biomed), Oxford/Cambridge tutorial system.",
+      },
+      {
+        heading: "Course-career link — return to China sector",
+        prompt: "Map your Chinese background to the UK course to your post-graduation career. Be specific: '中国本科 Software Engineering at Beihang → UCL MSc AI → return to Beijing/Shanghai tech sector at Baidu / Tencent / Alibaba / ByteDance / Meituan / JD / Xiaomi / Huawei / DiDi.' For finance: '复旦本科 Finance → LSE MSc Finance → return to Shanghai banking sector at CICC / ICBC / Citic Securities / China Securities.' If you intend to use the UK Graduate Route (2-year post-study work right), state it honestly — UK Student visa doesn't require non-immigrant intent like F-1 does.",
+      },
+      {
+        heading: "Funding — Chinese family / scholarship structure",
+        prompt: "Quantify: tuition £X (typically £24,000-£38,000 for international PG), living £12,006/£9,207, total Year 1 £Z. Then show coverage: family contribution RMB X (with bank statement, parents' Chinese income certificate, family business 营业执照 if business-owner, 税务登记 tax registration). CSC (China Scholarship Council 国家留学基金管理委员会) scholarship recipients should attach CSC offer letter — gold-standard funding evidence. Chevening UK Government Scholarship (~£25,000 + tuition + flights) is the prestige equivalent.",
+      },
+      {
+        heading: "Post-graduation plan",
+        prompt: "UK Graduate Route allows 2 years post-study work without sponsor. State your plan honestly: '12 months Graduate Route to gain UK work experience, then return to China sector X' or 'pursue Skilled Worker visa via UK employer for longer-term UK career, then evaluate ILR/citizenship pathway after 5 years.' UK Student visa officers don't require non-immigrant intent, so honesty about pathway is welcomed.",
+      },
+    ],
+    moneySavingTips: [
+      "UK Student visa fee is £490 + IHS £776/year (student rate) — paid in RMB equivalent via UKVI portal; total for 1-year Master's ≈ £1,266 + visa fee",
+      "Don't pay '中介' (Chinese education agents) RMB 30,000-100,000 for visa applications you can do yourself — UKVI online form is free and straightforward; agents are only useful for university application stage, not visa stage",
+      "CSC (China Scholarship Council) covers tuition + living + return flights + medical insurance + visa fee for selected programmes — apply via your home Chinese university's international office",
+      "Chevening Scholarship: ~30 Chinese students/year, fully funded — apply via Chevening.org November-January cycle for following autumn intake",
+      "Russell Group / Oxbridge fee waivers and bursaries — Oxford has named China scholarships (Oxford-Wuhan, Oxford-Tsinghua), Cambridge has Cambridge Trust + Gates Cambridge, LSE has 国奖 (国家奖学金) + LSE Master's Awards",
+      "Use ICBC Easy Loan or BOC student remittance for tuition — lower FX fees than retail money changers; SAFE (State Administration of Foreign Exchange) educational outflow has no annual cap with admission proof + I-20-equivalent CAS",
+      "Tuition deposit: pay via Flywire / TransferMate / Convera (formerly Western Union) — lower margins than direct SWIFT; UK universities partner with one of these",
+      "Pre-sessional English course can reduce IELTS requirement — many UK universities accept lower IELTS (e.g. 5.5 instead of 6.5) if you complete their 4/8/12-week pre-sessional, saving the cost of multiple IELTS retakes",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard UK Student visa with CAS from Russell Group / top-tier institution, clear funding, clean record",
+        "ATAS-cleared STEM postgrad application with research plan in approved area",
+        "Dependent visa applications (spouse + children if 9+ month PG course)",
+        "Graduate Route post-study work visa application after course completion",
+        "Switching from Tier 4 Student (pre-2020 stamping) to current Student route during course transition",
+      ],
+      getALawyer: [
+        "Prior UK visa refusal (study, visit, work) — refusal grounds carry forward",
+        "ATAS refusal for STEM postgrad (research area flagged as dual-use / sensitive)",
+        "Chinese criminal record (even minor — drugs is absolute disqualifier under Chinese and UK frameworks)",
+        "Funding from a sponsor outside immediate family (Chinese friends, distant relatives, business sponsor)",
+        "Past UK overstay (rare for Chinese students, but if any 14+ day overstay flagged on UKVI database, addresses)",
+        "Family member with prior UK asylum claim from China (Falun Gong, Uyghur, Tibetan, Hong Kong pro-democracy)",
+        "Switching from low-tier institution to top-tier mid-course (CAS validity questions)",
+        "Hong Kong BNO passport holder applying for UK Student visa (use BNO Hong Kong route instead — different and far better visa pathway)",
+        "Research area on UK Academic Technology Approval Scheme sensitive list (nuclear, advanced military tech, dual-use AI) — even ATAS-cleared applicants face slower processing",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // CHINESE → AUSTRALIA — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "CN:AU:study": {
+    whatCarriesWeight: [
+      {
+        label: "Subclass 500 Student Visa + Confirmation of Enrolment (CoE)",
+        why: "China is Australia's largest international student source (~165,000 enrolments, ~28% of total). Your Australian institution issues CoE via PRISMS (Provider Registration and International Student Management System) once you accept the offer and pay initial fees. Subclass 500 fee raised to AUD$1,600 from 1 July 2024 — one of the world's most expensive student visa fees. Chinese applicants are 'Assessment Level 3' (the higher-scrutiny tier) — more documentation required than for Indonesian or Malaysian applicants at AL1.",
+      },
+      {
+        label: "Genuine Student (GS) requirement — replaced GTE in March 2024",
+        why: "From 23 March 2024, the Genuine Temporary Entrant (GTE) test was replaced by the Genuine Student (GS) test with explicit immigration-pathway questions. Your statement must address: previous study + work + travel history, course-career link, Australian study benefits vs Chinese options, post-graduation plan. Chinese applicants under GS face higher refusal rates if statement is generic or formulaic — Department of Home Affairs has flagged 'cookie-cutter' Chinese applications from agents.",
+      },
+      {
+        label: "OSHC + financial capacity declaration AUD$29,710/year",
+        why: "Overseas Student Health Cover is mandatory for full visa duration — Bupa, Medibank, Allianz, NIB, AHM. Single AUD$650-850/year; family AUD$3,500-5,000/year. Financial capacity from 10 May 2024: AUD$29,710/year living costs (raised from $24,505) + tuition + travel. Chinese RMB bank statements (ICBC, CCB, BOC, ABC, China Merchants, Ping An, CITIC) acceptable; family-business sponsors should attach 营业执照, 税务登记, 法人证明 (legal representative cert), and 2 years of tax filings.",
+      },
+      {
+        label: "中国 academic certificates + 公证处 notarisation + sworn translation",
+        why: "Chinese 高中 diploma (高中毕业证书) and university transcripts (本科毕业证书 + 学位证书 + 成绩单) need 公证处 (notary public office) notarisation — typically 公证 + 翻译公证 (notarised translation). For postgraduate applicants, CSCSE (中国留学服务中心) verification adds credibility. Avoid 'pop-up' agent translations — Australian Department of Home Affairs cross-checks Chinese degree numbers against 学信网 (CHSI — China Higher Education Student Information).",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why Australia, why this institution",
+        prompt: "Many Chinese students choose Australia for Group of Eight (Go8) prestige (Melbourne, ANU, Sydney, UNSW, Monash, UQ, UWA, Adelaide) and the lifestyle. Explain specifically why your chosen Australian programme over a Chinese top university or alternative destination. Reference specific elements: faculty research area, course coursework, industry placement, regional advantage (Sydney finance, Melbourne biotech, Brisbane mining, Perth WA resources).",
+      },
+      {
+        heading: "Course-career link — return to China sector OR pathway honesty",
+        prompt: "Map your Chinese background to the Australian course to your career. Be specific: '复旦本科 Accounting → UNSW Master of Professional Accounting → return to Shanghai Big Four (Deloitte / PwC / EY / KPMG) or CICC / CITIC Securities.' If you intend to pursue Subclass 485 Temporary Graduate Visa post-study, state this honestly — GS test allows expression of pathway intent. Chinese applicants who pretend they have no Australian work intent get caught and refused.",
+      },
+      {
+        heading: "Funding — Chinese family / business / CSC scholarship",
+        prompt: "Quantify: tuition AUD$X, living AUD$29,710, total Year 1 AUD$Z. Then show coverage: family contribution RMB X (with bank statement, family business 营业执照, 税务登记, 法人证明). CSC (China Scholarship Council) recipients attach CSC offer letter. Australian Awards scholarships are not available to Chinese citizens (program is for developing countries — China graduated out).",
+      },
+      {
+        heading: "Your immigration pathway — be honest",
+        prompt: "Many Chinese students target Subclass 485 (2-5 years post-study work right) and some target PR via Subclass 189/190/491 or employer-sponsored Subclass 482. State this honestly — GS allows pathway expression. Document Chinese ties (family home with 房产证, family business succession, returning job offer) so the visa officer can weigh genuine intent. Avoid stating 'I will definitely return to China after graduation' if your behaviour suggests otherwise.",
+      },
+    ],
+    moneySavingTips: [
+      "Subclass 500 visa fee is AUD$1,600 (from 1 July 2024) — no discount; each dependent adds $440 (under 18) or $1,190 (over 18)",
+      "Don't pay '澳洲中介' RMB 30,000-100,000 for visa applications — Department of Home Affairs ImmiAccount portal is free; agents are only useful for university application stage",
+      "CSC (China Scholarship Council) covers tuition + living + return flights + insurance for selected programmes via Chinese university's international office",
+      "Group of Eight scholarships and bursaries — Melbourne has Melbourne International Scholarship + Indo-Pacific Excellence Scholarship; ANU has ANU-China scholarship; Sydney has Sydney Scholars Awards; UNSW has International Scholarship; UQ has UQ Excellence; all open to high-performing Chinese students",
+      "OSHC: don't bundle through agent — compare directly at privatehealth.gov.au; Bupa and Medibank are typically cheapest for single student cover at AUD$650-850/year",
+      "PTE Academic test is AUD$355 in mainland China (Beijing, Shanghai, Guangzhou, Shenzhen, Chengdu) vs IELTS at AUD$385; Australian universities accept PTE equally",
+      "Use ICBC Easy Loan, BOC, or CCB student remittance for tuition — lower FX fees than retail; SAFE educational outflow has no annual cap with CoE",
+      "Tuition deposit: pay via Flywire / TransferMate / Convera — lower margins than direct SWIFT; Australian universities partner with one of these",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Subclass 500 with Go8 / top-50 university CoE, clean record, clear CSC / family funding",
+        "Dependent visa applications (spouse + children) concurrent with main applicant",
+        "Subclass 485 Temporary Graduate Visa after 2+ years study completion",
+        "Course change or institution change within same visa (notify provider; usually no new visa needed)",
+        "OSHC switch / renewal during visa term",
+      ],
+      getALawyer: [
+        "Prior Australian visa refusal (visitor, study, or work) — refusal grounds carry forward to GS assessment",
+        "Past Australian student visa cancellation (attendance below 80%, course non-progression)",
+        "Chinese criminal record (even minor — narcotics is absolute disqualifier)",
+        "学信网 (CHSI) verification dispute (degree certificate not registered or registered under different name)",
+        "Funding from a sponsor outside immediate family (distant relatives, business sponsor, third-country sponsor)",
+        "Past Five Eyes visa refusal (US, UK, Canada, NZ) flagged on Australian database",
+        "Family member with prior Australian asylum claim from China (Falun Gong, Uyghur, Tibetan, Hong Kong pro-democracy)",
+        "Switching from non-CRICOS course to CRICOS course mid-stream",
+        "Bringing dependants when funding is borderline (AUD$29,710 + dependent additions tightens scrutiny)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // TURKISH → GERMANY — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "TR:DE:work": {
+    whatCarriesWeight: [
+      {
+        label: "EU Blue Card OR Skilled Worker Aufenthaltserlaubnis — Turkey-Germany has the deepest historical pathway",
+        why: "Germany hosts ~3 million Turkish-origin people — Europe's largest single-origin diaspora. EU Blue Card threshold €48,300 (2024 general) or €43,759 in shortage occupations (IT, STEM, medicine, math, engineering). Skilled Worker Residence Permit (§18a/b AufenthG) accepts any salary meeting position market rate. Turkish applicants benefit from the 1963 Ankara Agreement (still partially effective for some categories — see below) and Germany's specific labour-market openness toward Turkish nurses and skilled trades.",
+      },
+      {
+        label: "Ankara Agreement / Association Council Decision 1/80 — narrow but real legacy benefits",
+        why: "Despite Turkey not being in the EU, the 1963 EEC-Turkey Ankara Agreement and Decision 1/80 (1980) of the Association Council provide narrow visa-fee, family-reunification, and self-employment benefits for Turkish citizens who established residence in Germany before 2009 (Bundesverwaltungsgericht jurisprudence). For new applicants post-2009 these benefits are limited but family-reunification rules are still more favourable for Turkish-origin already-resident sponsors. A German immigration lawyer (Anwalt für Migrationsrecht) familiar with Ankara cases can identify niche advantages.",
+      },
+      {
+        label: "Anerkennung — recognition of Turkish qualification through Anabin / ZAB",
+        why: "Germany requires formal recognition of your Turkish degree through the Anabin database. Most Turkish bachelor's degrees from accredited universities (Boğaziçi, METU, ITU, Hacettepe, Ankara, Bilkent, Sabancı, Koç, Yıldız) map as H+ (recognised). Less-known institutions need ZAB (Zentralstelle für ausländisches Bildungswesen) individual assessment at €200. For regulated professions (medicine, nursing, engineering, teaching, law) the Anerkennung is granted by the relevant Länder Anerkennungsstelle — Turkish nurses are in active recruitment programmes (Triple-Win project run jointly by Goethe-Institut, BA, and Turkish İŞKUR).",
+      },
+      {
+        label: "German A1/A2 language requirement + visa application at German Consulates Istanbul / Ankara / Izmir",
+        why: "Skilled Worker visa typically requires A2 German for non-shortage occupations; Blue Card requires no German at application (B1 needed for Niederlassungserlaubnis later). For nursing specifically, B1-B2 German is mandatory (DSH or TestDaF or Goethe certification) — the Anerkennung body and the federal labour office (BA) both check. Apply at German Consulate General Istanbul, Embassy Ankara, or Consulate General Izmir; expect 4-12 weeks processing for Blue Card, longer for general Skilled Worker.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why Germany — specific city, employer, industry cluster",
+        prompt: "Germany has specific differentiators: Mittelstand engineering (Stuttgart automotive, Munich BMW + Siemens + Helsing, Hamburg logistics + Airbus, Frankfurt finance + pharma), Berlin startups, Wolfsburg VW, Rhein-Main pharma cluster (BioNTech, Boehringer, Merck KGaA), Stuttgart-Sindelfingen Mercedes-Benz, Munich Allianz. Tie your career trajectory to a specific region. Turkish applicants who can name target employer (Bosch — major Turkish-origin workforce, Daimler, BMW, Siemens) and explain why score higher.",
+      },
+      {
+        heading: "Turkish work history + your qualifications mapping",
+        prompt: "List Turkish employer chronologically, role, salary in TRY + EUR equivalent at official TCMB rate, supervisor name + contact. Turkish engineering schools (ITU, METU, Boğaziçi, Bilkent) and Turkish business schools (Koç, Sabancı) are well-known to German consulates. For nursing, document specific clinical experience: ICU, theatre, paediatric, oncology — German hospitals (Charité Berlin, Universitätsklinikum Heidelberg, MHH Hannover) actively recruit Turkish nurses through Triple-Win at €2,500-3,500 net starting salary.",
+      },
+      {
+        heading: "Family + integration plan",
+        prompt: "Many Turkish applicants have existing family in Germany (Berlin Kreuzberg, Köln, Hamburg, München, Stuttgart Turkish-origin neighbourhoods). State this honestly — it strengthens integration narrative and provides initial accommodation. German family reunification rules: spouse needs A1 German before visa OR within 3 months of arrival (some exceptions for skilled workers). Children up to 16 automatic; 16-18 with A1 German.",
+      },
+      {
+        heading: "Long-term plan — Niederlassungserlaubnis + citizenship",
+        prompt: "Germany's 2024 citizenship reform reduces naturalisation period from 8 to 5 years (3 with C1 + special integration), and allows dual citizenship (huge change — previously Turkish-origin had to renounce). State your plan: Niederlassungserlaubnis (settlement permit) after 21 months Blue Card with A1 German or 33 months without German; citizenship after 5 years. Turkey allows dual citizenship — many Turkish-Germans hold both passports legally now.",
+      },
+    ],
+    moneySavingTips: [
+      "Blue Card visa fee at German consulates is €75 — pay in TRY equivalent at official rate; under Ankara Agreement, some Turkish categories have fee reductions",
+      "Use the Triple-Win programme for nurses (Goethe-Institut + BA + İŞKUR) — covers German language training (B1-B2) + recognition costs + relocation; net cost to you can be €0",
+      "Goethe-Institut Istanbul / Ankara / Izmir offers A1-B2 German courses at €2,500-4,000 total — cheaper and better quality than private TÖMER alternatives",
+      "Open N26, Commerzbank, or DKB account before flying (online with Turkish passport accepted) — needed for IBAN on employment contract",
+      "Schufa-Auskunft (€29.95 online) before any rental application — landlords demand it",
+      "Don't break Turkish SGK (sosyal güvenlik kurumu) early — Turkey-Germany Totalization Agreement (1964, updated 1984) means contribution years count toward future Turkish pension regardless of where you end up",
+      "Health insurance: public TK costs the same regardless of provider for the same income — don't pay for 'health insurance brokers'; sign up direct at tk.de or via your employer's Personalabteilung",
+      "Avoid private 'visa consultancy' charging TRY 25,000+ — Auslandsvertretungen process Blue Card and Skilled Worker applications directly; only complex cases need licensed Rechtsanwalt",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Blue Card with German employment contract above salary threshold",
+        "Skilled Worker Residence Permit with H+ rated Turkish bachelor's and clean record",
+        "Triple-Win programme nursing applications (organisation handles paperwork)",
+        "Family reunification (Familiennachzug) when primary applicant already approved",
+        "Niederlassungserlaubnis after qualifying period with A1/B1 German",
+        "Citizenship application after 5 years under 2024 reform with C1 German for fast-track",
+      ],
+      getALawyer: [
+        "Ankara Agreement / Decision 1/80 legacy benefit claims (specialist area; only specific Anwälte für Migrationsrecht handle these)",
+        "Regulated profession recognition (medicine, dentistry, pharmacy, teaching, lawyer) — Anerkennung process is Länder-specific",
+        "Turkish military service status (males pre-30 with unresolved obligation) affecting visa issuance",
+        "Past German visa refusal, Schengen visa overstay, or deportation",
+        "Turkish criminal record (DUI, drug, theft, anything beyond minor traffic) — disclosure to German authorities mandatory",
+        "Switching from Blue Card to self-employment / Freiberufler (Ankara Agreement legacy can help here for some)",
+        "Dual Turkish-other passport (Turkish-German child applying via Turkish passport for visa to Germany — wrong process)",
+        "Asylum-related family member (Kurdish, Alevi, Gülen movement connection) — discretionary handling required",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // PAKISTANI → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "PK:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from a SEVP-certified US school + SEVIS I-901 paid",
+        why: "Pakistan sends ~10,000 students to the US annually. Your US institution issues Form I-20 (F-1) or DS-2019 (J-1) once admitted and proof-of-funds verified. Pay SEVIS I-901 fee ($350 F-1 / $220 J-1) before booking DS-160. Pakistani applicants book at US Consulate General Karachi (Mai Kolachi Road), Lahore (Shimla Pahari), Peshawar (Saddar), or US Embassy Islamabad (Diplomatic Enclave) — district-of-residence based. Islamabad and Karachi handle highest F-1 volume.",
+      },
+      {
+        label: "Heightened security clearance / Administrative Processing (221(g))",
+        why: "Pakistani applicants in STEM, engineering, and certain dual-use fields face mandatory administrative processing under 221(g) — a 'soft refusal' pending SAO (Security Advisory Opinion) clearance. SAO can take 60 days to 12+ months. Allow buffer time — don't book inflexible flights or housing. Common SAO triggers: nuclear-related research, advanced engineering (aerospace, materials), AI/ML at certain US schools, biotech with dual-use, certain Pakistani universities flagged in DOS sensitive list. The visa is usually approved post-clearance.",
+      },
+      {
+        label: "Source-of-funds + bank statement seasoning + Pakistani Police Character Certificate",
+        why: "Pakistan has elevated F-1 refusal rates due to funding concerns. Show 1st-year tuition + living costs ($40-80k). Document Pakistani bank statements (Habib Bank, MCB, UBL, Allied, Bank Alfalah, Standard Chartered Pakistan, Meezan, Faysal) with USD-equivalent at SBP interbank rate. Avoid lump-sum deposits within 90 days of interview — these are the #1 refusal trigger. Pakistani Police Character Certificate from your Tehsil-level Police Station (Rs. 200-500, 14-30 days) — required for SEVP-school admission and for some visa interviews.",
+      },
+      {
+        label: "Strong 214(b) ties to Pakistan — family, property, return plan",
+        why: "F-1 is non-immigrant. Strong Pakistani ties: family home with Fard / Intiqal (land record) in parents' name, parents' employment (especially military, civil service, banking, professional services, family business), Pakistani property (Karachi DHA, Lahore Bahria/DHA, Islamabad sectors), expected return job, family business succession. Officers ask 'what will you do after graduation' — answer Pakistan-specific: 'return to Pakistani banking sector / family textile business / NUST or LUMS teaching position' beats 'I'll see what opportunities arise.'",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this specific US programme over Pakistani or UK alternatives",
+        prompt: "Pakistan has strong universities (LUMS, NUST, IBA Karachi, AKU, FAST, NED, GIKI, COMSATS, UET, QAU) and many Pakistanis study in UK (LSE, UCL, Manchester, Edinburgh) or Australia (Monash, Melbourne) or Canada (UofT, McGill, UBC). Explain why your US programme offers something unique — research lab, specific professor, industry network (Silicon Valley for CS, Wall Street for finance, Texas for energy, Boston for biotech), specialised programme. Reference concrete elements: faculty publication, course offering, lab.",
+      },
+      {
+        heading: "Funding — Pakistani family / business / sponsor structure",
+        prompt: "Quantify: tuition $X, living $Y, total Year 1 $Z. Then show coverage: family contribution PKR X (with bank statement, NTN tax registration, business income tax returns for last 3 years if business-owner, parent's salary slips if employed). Document AT LEAST 12 months of consistent income/balance — F-1 officers know which Pakistani sectors throw off real cashflow vs paper-only. Avoid lump-sum deposits in the 90 days before interview.",
+      },
+      {
+        heading: "Post-graduation plan — your return to Pakistan",
+        prompt: "F-1 visas explicitly require intent to return. State which Pakistani sector you'll return to: Pakistani banks (HBL, MCB, UBL, Bank Alfalah, Meezan, Bank of Khyber), oil & gas (OGDCL, PSO, Mari Petroleum), Pakistani tech (Systems Limited, NetSol, 10Pearls, Khaadi, Daraz), telecoms (Jazz, Telenor, Zong, PTCL, Ufone), professional services (KPMG Taseer Hadi, AF Ferguson, EY Ford Rhodes), academia (LUMS, NUST, AKU faculty), or family business succession. If you want OPT (Optional Practical Training), briefly mention but emphasise return.",
+      },
+      {
+        heading: "Family ties remaining in Pakistan",
+        prompt: "List parents (occupation, location — Karachi / Lahore / Islamabad area level), siblings, partner. Mention Pakistani property — family home with Fard / Intiqal in parents' name with you as inheritor, agricultural land in your village/district, Pakistani bank accounts you'll maintain (with Pakistani mobile number for SMS-OTP). Avoid mentioning extensive US-based family — Pakistani-American extended family is a 214(b) concern.",
+      },
+    ],
+    moneySavingTips: [
+      "Apply at the US Consulate covering your area — Karachi for Sindh + parts of Balochistan, Lahore for Punjab, Peshawar for KP + AJK, Islamabad for Islamabad + parts of Punjab; you cannot freely choose",
+      "F-1 visa fee is $185; pay via Standard Chartered Pakistan or HBL counter with MRV barcode — both accept USD cash or PKR at SBP rate",
+      "Don't pay 'visa consultancy' agencies PKR 100,000-500,000 — DS-160 is free online, interview is the bottleneck, agents don't influence consular decisions",
+      "Pakistani applicants are eligible for Fulbright Pakistan (~$30,000 + tuition for grad students — USEFP runs application cycle February-May), HEC (Higher Education Commission) overseas scholarships, Aga Khan Foundation International Scholarship Programme, Stamford International Scholarship, Citi Foundation scholarships",
+      "Many US universities have Pakistani-origin scholarship endowments — Stanford has Pakistani Heritage Award, MIT has need-based for Pakistanis, Cornell, Columbia, UPenn all have named Pakistani-heritage funds",
+      "HBL, MCB, Bank Alfalah student remittance accounts for tuition transfers — lower FX fees than retail; SBP educational outflow has no annual cap with admission proof",
+      "Police Character Certificate: Rs. 200-500 at your local Tehsil HQ — don't pay Rs. 5,000+ to dalals (touts) outside police stations",
+      "If your STEM application triggers 221(g) administrative processing, don't pay 'expediters' — they have no influence; just wait, the SAO clearance comes when it comes",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with clean record, clear funding, strong programme fit at non-sensitive school / field",
+        "Standard Fulbright, USEFP, or HEC overseas scholarship J-1 / F-1 application",
+        "Renewal of existing F-1 (re-issuance in Pakistan during winter / summer breaks)",
+        "OPT or STEM OPT application during or after the programme",
+      ],
+      getALawyer: [
+        "Prior US visa refusal (any category — B1/B2 tourist refusal is a major red flag for F-1)",
+        "Pakistani criminal record (even minor — anti-terrorism Act / Hudood / drug cases)",
+        "STEM field with potential SAO sensitivity (nuclear, aerospace, advanced AI, advanced materials, biotech dual-use)",
+        "Family member in Pakistani military / ISI / nuclear establishment (additional security review)",
+        "Family member with prior US asylum claim from Pakistan (Ahmadi, Shia, Christian, Hindu minority protection claims)",
+        "Past visa overstay in any country (Gulf states common for Pakistanis — addresses)",
+        "Sectarian or political affiliation history (PTI / PML-N / PPP / TLP / JI active membership)",
+        "Transfer from UK/Canadian/Australian student visa to US F-1 — country-to-country SEVIS transfer needs careful handling",
+        "Funding from a sponsor outside Pakistan / immediate family (Gulf relatives, business sponsor)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // JAPANESE → US — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "JP:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "E-1 / E-2 Treaty Trader / Investor via the Japan-US 1953 Treaty",
+        why: "Japan is the world's largest single source of E-1 Treaty Trader visas — the 1953 Treaty of Friendship, Commerce and Navigation makes E-1 (substantial trade between US and Japan) and E-2 (substantial investment in a US enterprise) flagship visa categories. Japanese trading houses (Mitsubishi 三菱商事, Mitsui 三井物産, Sumitomo 住友商事, Itochu 伊藤忠商事, Marubeni 丸紅, Toyota Tsusho 豊田通商) operate at massive scale under E-1; manufacturing FDI (Toyota, Honda, Subaru, Nissan, Hitachi, Komatsu) under E-2. No PERM, renewable indefinitely while substantial trade/investment continues.",
+      },
+      {
+        label: "H-1B Specialty Occupation OR L-1 intracompany via Japanese parent",
+        why: "H-1B is cap-subject (March lottery, 85k slots — Japanese win rate ~30-35%). L-1A (executive/manager) and L-1B (specialised knowledge) bypass the lottery if you've worked 1+ year at a Japanese parent company with a US subsidiary. Common L-1 paths: Sony Japan → Sony Pictures LA / Sony Electronics NYC, Toyota Japan → Toyota North America Texas, Nintendo Japan → Nintendo of America Seattle, Honda Japan → Honda North America Ohio. DS-160 interview at US Embassy Tokyo (Akasaka 1-10-5, Minato-ku) or US Consulate Osaka-Kobe.",
+      },
+      {
+        label: "Apostilled Japanese 卒業証明書 + ECE/WES credential evaluation",
+        why: "Japanese university 卒業証明書 (graduation certificate) and 成績証明書 (transcript) need Apostille via Japanese Ministry of Foreign Affairs (外務省) at Kasumigaseki Tokyo or Honmachi Osaka. Cost JPY 400 per Apostille, same-day for in-person submission, 5-7 days by mail. For US licensure (medicine, dentistry, accounting, engineering PE) WES, ECE, or AICE foreign credential evaluation. Japanese 学士 (Bachelor's) maps to US Bachelor's; 修士 (Master's) maps to US Master's; 博士 (Doctorate) maps to US PhD.",
+      },
+      {
+        label: "US-Japan Totalization Agreement (2005) + tax treaty considerations",
+        why: "Get a Certificate of Coverage (CoC) from Japan Pension Service (日本年金機構) — keeps you on Japanese Kokumin-Nenkin / Kosei-Nenkin for up to 5 years on temporary US assignment, exempt from US Social Security/Medicare. Beyond 5 years switch to US system; Japanese quarters count toward future Japanese pension via Totalization. Tax treaty (2003, protocol 2013) prevents double-taxation on salary; file Form 8833 to claim treaty benefits. Japanese 年金 partial withdrawal on permanent departure: 一時金 lump-sum (up to 5 years' contributions) available before US arrival.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why the US — specific industry / employer",
+        prompt: "Japanese applicants benefit from specificity. Tech (Silicon Valley, NYC, Seattle, Austin), automotive (Detroit, Tennessee, Texas, Ohio for Honda/Toyota/Subaru R&D), entertainment (LA — Sony Pictures, anime distribution), gaming (Seattle Nintendo, San Mateo Sony PlayStation, Tokyo-based publishers' US offices), trading (Houston for energy, Chicago for commodities, NYC for finance), pharma (NJ, Boston, Bay Area for Takeda, Astellas, Daiichi-Sankyo US ops). Name your target US employer.",
+      },
+      {
+        heading: "Your Japanese employer / academic credentials",
+        prompt: "List your Japanese employer (full Japanese name 株式会社X + English translation), role 役職, salary in JPY with USD equivalent, supervisor name. For L-1, document the 12+ month qualifying employment at the Japanese parent with role progression — Sony → Sony Pictures, Toyota Motor Corp → TMNA, Honda Motor Co → Honda America, Nintendo Co. Ltd. → Nintendo of America are well-trodden L-1 paths. Japanese university (東京大学, 京都大学, 慶應義塾, 早稲田, 一橋, 東京工業, 大阪大学, 名古屋大学) brand recognition is high at US Embassy Tokyo.",
+      },
+      {
+        heading: "Long-term plan — dual residency considerations",
+        prompt: "Japan permits dual nationality only until age 22 (must choose by Article 14 Nationality Act, though enforcement is lax in practice). State your plan: temporary US assignment (return to Japan after 3-5 years, retain Japanese citizenship and Japanese pension), long-term US PR (will need to navigate choice between Japanese and US citizenship at naturalisation), or dual-track (Japanese spouse providing US citizenship for children via jus soli while maintaining Japanese parent's citizenship).",
+      },
+      {
+        heading: "Family + dependants + Japanese school timing",
+        prompt: "Spouse on L-2 has automatic work authorisation since 2023; H-4 spouse needs EAD (limited categories). E-1/E-2 spouse gets E-1D/E-2D with full work rights. Japanese spouse + Japanese children under 21 are derivative. Mention Japanese school year (April-March) when timing relocation — children in 小学校 / 中学校 / 高校 in Japan benefit from arrival before US August/September school start.",
+      },
+    ],
+    moneySavingTips: [
+      "DS-160 fee $185 (H-1B/L-1) or $315 (E-1/E-2); pay in JPY at Shinsei Bank or SMBC Trust Bank counters — no reciprocity fee for Japanese citizens",
+      "Use WES iGPA Calculator (free online) before paying for full evaluation; many US employers accept Japanese-certified transcripts at offer stage",
+      "Apostille at Japan MOFA Tokyo (Kasumigaseki) or Osaka (Honmachi) is JPY 400/document — same-day in-person; don't use 'expediter' services charging JPY 10,000+",
+      "Open a US-domiciled bank account with Wise USD, Mercury Business, or MUFG Union Bank (rebranded to U.S. Bank in 2022 — Japanese diaspora-friendly branch network) before relocation",
+      "Japanese Embassy DC + Consulates (LA, NYC, SF, Chicago, Houston, Atlanta, Seattle, Boston, Honolulu, Detroit, Anchorage, Hagåtña, Portland) offer free notarisation for Japanese citizens",
+      "Don't break out of Japanese Kosei-Nenkin (Employees' Pension) when leaving — under Totalization Agreement you can claim 一時金 (lump-sum withdrawal) for up to 5 years' contributions, and beyond that years count toward future Kosei-Nenkin via Totalization",
+      "Avoid Japanese 'visa consultancy' charging JPY 500,000-1M for H-1B/L-1 — US-based immigration attorneys at major firms (Fragomen, Berry Appleman, Erickson Immigration) have flat-fee Japanese desks at $2,500-3,500",
+      "Japanese 退職金 (severance / retirement allowance) timing: receiving before US tax residency = JPY-only taxation; after = US worldwide income inclusion. Time carefully with your accountant",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard H-1B / L-1 with named US employer, clean record, clear Japanese degree mapping",
+        "DS-160 interview prep and document gathering at US Embassy Tokyo",
+        "Spouse / dependent derivative applications (H-4, L-2, E-1D, E-2D)",
+        "Renewal of existing H-1B / L-1 at US Embassy Tokyo or Consulate Osaka-Kobe during home leave",
+        "PERM-based EB-2 / EB-3 green card with cooperating US employer (Japanese applicants are current — no per-country backlog)",
+      ],
+      getALawyer: [
+        "E-1 Treaty Trader — substantiality of trade volume (typically 50%+ of total trade must be between US-Japan) needs evidentiary support",
+        "E-2 Treaty Investor — substantiality, source-of-funds, 'real and operating' enterprise tests for Japanese FDI; trading house structures need careful drafting",
+        "EB-1A / EB-1B / O-1 — extraordinary ability petitions for Japanese researchers / executives / artists / athletes",
+        "Concurrent Japanese exit tax (出国税 / 国外転出時課税制度) considerations for substantial holdings >JPY 100M",
+        "Prior US visa refusal or US overstay (rare for Japanese, but flagged if any)",
+        "Japanese criminal record (DUI, drugs, theft, anything beyond minor traffic) — disclosure to USCIS / DOS mandatory",
+        "Same-sex spouse — Japan doesn't recognise same-sex marriage federally (some prefectures do); US recognises it (H-4 / L-2 / E-2D derivative is fine, but Japanese documentation chain may not exist)",
+        "Dual Japanese-other passport (Japanese-American with US citizenship applying via Japanese passport — wrong process)",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

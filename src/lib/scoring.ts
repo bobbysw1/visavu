@@ -19,12 +19,17 @@ export function scoreDestinationsForPassport(
   return summaries.map((s) => {
     const opt = passportSummaryToResolved(s, passportIso2);
     const a = assessDifficulty(opt);
+    const totalFee = totalMandatoryFee(s.fees);
     return {
       otherIso2: s.destinationIso2,
       label: s.label,
       purpose: s.purpose,
       score: a.score,
       bucket: a.bucket,
+      status: s.status,
+      processingTimeDaysMax: s.processingTimeDaysMax,
+      feeAmountMinor: totalFee?.amount ?? null,
+      feeCurrency: totalFee?.currency ?? null,
     };
   });
 }
@@ -36,14 +41,31 @@ export function scoreOriginsForDestination(
   return summaries.map((s) => {
     const opt = originSummaryToResolved(s, destinationIso2);
     const a = assessDifficulty(opt);
+    const totalFee = totalMandatoryFee(s.fees);
     return {
       otherIso2: s.passportIso2,
       label: s.label,
       purpose: s.purpose,
       score: a.score,
       bucket: a.bucket,
+      status: s.status,
+      processingTimeDaysMax: s.processingTimeDaysMax,
+      feeAmountMinor: totalFee?.amount ?? null,
+      feeCurrency: totalFee?.currency ?? null,
     };
   });
+}
+
+function totalMandatoryFee(
+  fees: { amountMinor: number; currency: string; optional: boolean; kind: string }[],
+): { amount: number; currency: string } | null {
+  let acc: { amount: number; currency: string } | null = null;
+  for (const f of fees) {
+    if (f.optional) continue;
+    if (!acc) acc = { amount: f.amountMinor, currency: f.currency };
+    else if (acc.currency === f.currency) acc.amount += f.amountMinor;
+  }
+  return acc;
 }
 
 function passportSummaryToResolved(

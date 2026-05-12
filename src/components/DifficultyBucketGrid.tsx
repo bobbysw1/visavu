@@ -33,6 +33,11 @@ export type ScoredItem = {
   purpose: Purpose;
   score: number;
   bucket: DifficultyBucket;
+  /** Optional fields populated for richer views (continent grid sort axes). */
+  status?: string;
+  processingTimeDaysMax?: number | null;
+  feeAmountMinor?: number | null;
+  feeCurrency?: string | null;
 };
 
 const ORDER: DifficultyBucket[] = ["easy", "medium", "hard"];

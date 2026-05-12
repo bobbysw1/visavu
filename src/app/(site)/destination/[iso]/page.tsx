@@ -6,6 +6,7 @@ import { VisaCategoryNav } from "@/components/VisaCategoryNav";
 import { CoverageStats } from "@/components/CoverageStats";
 import { DestinationDifficultyBucketGrid } from "@/components/DifficultyBucketGrid";
 import { CountryMetricsDashboard } from "@/components/CountryMetricsDashboard";
+import { ContinentResultsGrid } from "@/components/ContinentResultsGrid";
 import { NationalityHero } from "@/components/NationalityHero";
 import { CountryFactsBox } from "@/components/CountryFactsBox";
 import { COUNTRY_LIST, TOP_ORIGINS, nameFor } from "@/lib/countries";
@@ -138,6 +139,19 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
           <DestinationDifficultyBucketGrid
             destinationIso2={upper}
             scored={scoreOriginsForDestination(upper, summaries)}
+          />
+        )}
+
+        {/* CONTINENT TABS — seven-tab geographic browse of origin
+            passports, with sort by difficulty / cost / processing / visa
+            type / name. */}
+        {summaries.length > 0 && (
+          <ContinentResultsGrid
+            mode="destination"
+            anchorIso2={upper}
+            scored={scoreOriginsForDestination(upper, summaries)}
+            heading="Origins by continent"
+            subheading={`Tabbed by region. Switch the sort to find the easiest, cheapest, or fastest passports for entry to ${nameFor(upper)}.`}
           />
         )}
 

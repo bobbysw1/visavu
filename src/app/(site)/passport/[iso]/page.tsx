@@ -6,6 +6,8 @@ import { VisaCategoryNav } from "@/components/VisaCategoryNav";
 import { WorldMap, type EligibilityEntry } from "@/components/WorldMap";
 import { getWorldMapData } from "@/lib/worldMap";
 import { assessDifficulty } from "@/lib/difficulty";
+import { ContinentResultsGrid } from "@/components/ContinentResultsGrid";
+import { scoreDestinationsForPassport } from "@/lib/scoring";
 import { NationalityHero } from "@/components/NationalityHero";
 import { PassportSidebar } from "@/components/PassportSidebar";
 import { CountrySilhouette } from "@/components/CountrySilhouette";
@@ -280,6 +282,19 @@ export default async function PassportIndex({ params }: { params: Promise<Params
                 </section>
               );
             })()}
+
+            {/* CONTINENT TABS — seven-tab geographic browse with sort
+                axes (difficulty / cost / processing / visa type / name).
+                Cards stay visual + tile-based. */}
+            {summaries.length > 0 && (
+              <ContinentResultsGrid
+                mode="passport"
+                anchorIso2={upper}
+                scored={scoreDestinationsForPassport(upper, summaries)}
+                heading="Where you can go, by continent"
+                subheading={`Tabbed by region. Switch the sort to find the easiest, cheapest, or fastest options from ${name}.`}
+              />
+            )}
 
             {/* VISA TYPE BROWSE */}
             <section>

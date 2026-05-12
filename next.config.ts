@@ -33,6 +33,85 @@ const config: NextConfig = {
     ];
   },
 
+  // visavu.com was a Vietnamese visa-service WordPress site (2024–early 2025)
+  // before this project. Permanent 301 redirects preserve any inbound link
+  // equity by routing old paths to the closest-matching new page. Paths we
+  // can't sensibly redirect (WordPress system URLs) are handled by middleware
+  // returning HTTP 410 Gone, which de-indexes them from Google faster than a
+  // soft 404.
+  async redirects() {
+    return [
+      // Chinese visa content → China destination page
+      {
+        source: "/dich-vu-lam-visa-trung-quoc",
+        destination: "/destination/cn",
+        permanent: true,
+      },
+      {
+        source: "/dich-vu-lam-visa-trung-quoc/:path*",
+        destination: "/destination/cn",
+        permanent: true,
+      },
+      {
+        source: "/tong-hop-tu-a-z-kinh-nghiem-thu-tuc-xin-visa-trung-quoc",
+        destination: "/destination/cn",
+        permanent: true,
+      },
+      {
+        source: "/tong-hop-tu-a-z-kinh-nghiem-thu-tuc-xin-visa-trung-quoc/:path*",
+        destination: "/destination/cn",
+        permanent: true,
+      },
+
+      // Country categories on the old site → destination pages
+      { source: "/hoa-ky", destination: "/destination/us", permanent: true },
+      { source: "/hoa-ky/:path*", destination: "/destination/us", permanent: true },
+      { source: "/canada", destination: "/destination/ca", permanent: true },
+      { source: "/canada/:path*", destination: "/destination/ca", permanent: true },
+      { source: "/brazil", destination: "/destination/br", permanent: true },
+      { source: "/brazil/:path*", destination: "/destination/br", permanent: true },
+      { source: "/cuba", destination: "/destination/cu", permanent: true },
+      { source: "/cuba/:path*", destination: "/destination/cu", permanent: true },
+
+      // Regional categories → home (no sensible single-country mapping)
+      { source: "/chau-a", destination: "/", permanent: true },
+      { source: "/chau-a/:path*", destination: "/", permanent: true },
+      { source: "/chau-my", destination: "/", permanent: true },
+      { source: "/chau-my/:path*", destination: "/", permanent: true },
+
+      // Generic visa service / consulting → home (best landing for general intent)
+      { source: "/dich-vu-visa", destination: "/", permanent: true },
+      { source: "/dich-vu-visa/:path*", destination: "/", permanent: true },
+      { source: "/goc-tu-van", destination: "/", permanent: true },
+      { source: "/goc-tu-van/:path*", destination: "/", permanent: true },
+
+      // About / team / contact / FAQ → our About page
+      { source: "/about-us", destination: "/about", permanent: true },
+      { source: "/about-us/:path*", destination: "/about", permanent: true },
+      { source: "/team", destination: "/about", permanent: true },
+      { source: "/team/:path*", destination: "/about", permanent: true },
+      { source: "/faqs", destination: "/about", permanent: true },
+      { source: "/faqs/:path*", destination: "/about", permanent: true },
+      { source: "/contact", destination: "/about", permanent: true },
+      { source: "/contact/:path*", destination: "/about", permanent: true },
+
+      // WordPress defaults → home
+      { source: "/hello-world", destination: "/", permanent: true },
+      { source: "/hello-world/:path*", destination: "/", permanent: true },
+      { source: "/uncategorized", destination: "/", permanent: true },
+      { source: "/uncategorized/:path*", destination: "/", permanent: true },
+      { source: "/author/:path*", destination: "/", permanent: true },
+      { source: "/service", destination: "/", permanent: true },
+      { source: "/service/:path*", destination: "/", permanent: true },
+
+      // RSS feeds → home
+      { source: "/feed", destination: "/", permanent: true },
+      { source: "/feed/:path*", destination: "/", permanent: true },
+      { source: "/comments/feed", destination: "/", permanent: true },
+      { source: "/comments/feed/:path*", destination: "/", permanent: true },
+    ];
+  },
+
   async headers() {
     return [
       {

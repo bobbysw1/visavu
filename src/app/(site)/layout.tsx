@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { PlausibleScript } from "@/components/PlausibleScript";
@@ -28,11 +27,10 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <div id="main-content" role="main" className="flex-1">{children}</div>
       <SiteFooter />
       {/* Small, dismissible insights pill — bottom-left, rotates through
-          verified DB stats + curated visa-route facts. Honest social
-          proof, not fabricated user counts. */}
-      <Suspense fallback={null}>
-        <SocialProofBannerServer />
-      </Suspense>
+          build-time-baked dataset stats + curated visa-route facts.
+          Honest social proof, not fabricated user counts. No per-request
+          DB work — see SocialProofBannerServer comment. */}
+      <SocialProofBannerServer />
     </div>
   );
 }

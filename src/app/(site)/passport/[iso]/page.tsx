@@ -21,6 +21,17 @@ import { getCountryPhoto } from "@/lib/pexels";
 
 export const maxDuration = 60;
 export const runtime = "nodejs";
+// Cost optimisation: SSG every passport profile at build time, ISR-revalidate
+// once a day. 250 countries × ~1s build cost = ~4 min added to build; in
+// return every visitor + every Googlebot crawl is served from the edge
+// cache with zero Fluid Active CPU.
+export const revalidate = 86_400;
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return COUNTRY_LIST.map((c) => ({ iso: c.iso2.toLowerCase() }));
+}
 
 type Params = { iso: string };
 

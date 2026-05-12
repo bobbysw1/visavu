@@ -4,7 +4,11 @@
  * Tiny header dropdown that lets users override the auto-detected currency.
  * Posts to /api/set-currency (server action) which sets a long-lived cookie,
  * then redirects back to the current page.
+ *
+ * Reads the current value from `document.cookie` on the client so the
+ * SiteHeader can stay static-cacheable. Defaults to "USD" until hydrated.
  */
+import { useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
 // Curated top-30 currencies — enough to cover the audience without showing
@@ -44,11 +48,26 @@ const CURRENCIES: Array<{ code: string; label: string; symbol: string }> = [
   { code: "ZAR", label: "South African Rand", symbol: "R" },
 ];
 
-export function CurrencySwitcher({ current }: { current: string }) {
+function readCurrencyCookie(): string | null {
+  if (typeof document === "undefined") return null;
+  const m = document.cookie.match(/(?:^|;\s*)vl_currency=([A-Z]{3})/);
+  return m ? m[1] : null;
+}
+
+export function CurrencySwitcher() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const qs = searchParams.toString();
   const next = qs ? `${pathname}?${qs}` : pathname;
+
+  // Hydrate the displayed currency from the cookie on mount. Default to
+  // "USD" pre-hydration so SSR + first-paint match — we never read
+  // navigator.language here for the same reason.
+  const [current, setCurrent] = useState("USD");
+  useEffect(() => {
+    const fromCookie = readCurrencyCookie();
+    if (fromCookie) setCurrent(fromCookie);
+  }, []);
 
   return (
     <details className="relative text-sm">

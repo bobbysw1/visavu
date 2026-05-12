@@ -16,6 +16,18 @@ import { scoreOriginsForDestination } from "@/lib/scoring";
 import { getCountryPhoto } from "@/lib/pexels";
 import { factsFor } from "@/content/countryFacts";
 
+// Cost optimisation: SSG every destination profile at build time, ISR-revalidate
+// once a day. Same rationale as /passport/[iso] — Googlebot crawls these
+// heavily, and visitors land on them from the homepage popular-destinations
+// chips, so caching them at the edge eliminates the bulk of per-request CPU.
+export const revalidate = 86_400;
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return COUNTRY_LIST.map((c) => ({ iso: c.iso2.toLowerCase() }));
+}
+
 type Params = { iso: string };
 
 function isValid(iso: string) {

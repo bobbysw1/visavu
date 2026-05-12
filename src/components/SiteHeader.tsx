@@ -1,24 +1,15 @@
 import Link from "next/link";
-import { headers, cookies } from "next/headers";
+import { Suspense } from "react";
 import { VisavuLogo } from "./VisavuLogo";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { CurrencySwitcher } from "./CurrencySwitcher";
-import { resolveLocaleFromAcceptLanguage, type Locale } from "@/i18n/t";
-import { resolveUserCurrency } from "@/lib/userCurrency";
 
-export async function SiteHeader() {
-  const hdrs = await headers();
-  const cookieJar = await cookies();
-  const referer = hdrs.get("referer") ?? "";
-  const langFromUrl = referer.match(/[?&]lang=([a-z]{2})/)?.[1];
-  const locale: Locale =
-    (langFromUrl as Locale) || resolveLocaleFromAcceptLanguage(hdrs.get("accept-language"));
-
-  const userCurrency = resolveUserCurrency({
-    cookie: cookieJar.get("vl_currency")?.value ?? null,
-    acceptLanguage: hdrs.get("accept-language"),
-  });
-
+// SiteHeader is intentionally a pure static server component — no
+// headers()/cookies() reads, no per-request work. That keeps the entire
+// (site) layout cacheable at the CDN edge. Locale + currency state is
+// resolved client-side by the two switchers themselves (URL ?lang= for
+// locale, vl_currency cookie for currency).
+export function SiteHeader() {
   return (
     <header className="border-b border-neutral-200/70 dark:border-neutral-800 sticky top-0 z-30 bg-white/80 dark:bg-neutral-950/80 backdrop-blur">
       <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
@@ -68,8 +59,15 @@ export async function SiteHeader() {
           >
             How it works
           </Link>
-          <CurrencySwitcher current={userCurrency} />
-          <LocaleSwitcher current={locale} />
+          {/* Suspense wraps the switchers because they call useSearchParams()
+              client-side; without a boundary, Next bails out of SSG for
+              every page that mounts this header. */}
+          <Suspense fallback={null}>
+            <CurrencySwitcher />
+          </Suspense>
+          <Suspense fallback={null}>
+            <LocaleSwitcher />
+          </Suspense>
         </nav>
       </div>
     </header>

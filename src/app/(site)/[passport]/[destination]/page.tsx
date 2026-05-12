@@ -22,14 +22,11 @@ import { getCountryPhoto } from "@/lib/pexels";
 import { policyChangesFor } from "@/content/recentPolicyChanges";
 import { assessRealism } from "@/lib/realism";
 import { easierPassportsFor } from "@/lib/coverage";
-import { headers, cookies } from "next/headers";
 import {
   isSupportedLocale,
-  resolveLocaleFromAcceptLanguage,
   type Locale,
   isRtl,
 } from "@/i18n/t";
-import { resolveUserCurrency, secondaryCurrencyFor } from "@/lib/userCurrency";
 import { SourcesPanel } from "@/components/SourcesPanel";
 import { TravelAdjacentRail } from "@/components/TravelAdjacentRail";
 import { RelocationServicesPanel } from "@/components/RelocationServicesPanel";
@@ -397,28 +394,15 @@ export default async function Page({
   const category = PURPOSE_CATEGORY[purpose];
   const profile: Profile | null = sp.profile && isProfile(sp.profile) ? sp.profile : null;
 
-  // Resolve locale: ?lang= wins over Accept-Language, both fall back to "en".
-  const hdrs = await headers();
-  const cookieJar = await cookies();
-  let locale: Locale;
-  if (sp.lang && isSupportedLocale(sp.lang)) {
-    locale = sp.lang;
-  } else {
-    locale = resolveLocaleFromAcceptLanguage(hdrs.get("accept-language"));
-  }
-
-  // Resolve user currency: ?currency= > cookie > Accept-Language → region/language → currency.
-  const userCurrency = resolveUserCurrency({
-    queryParam: sp.currency ?? null,
-    cookie: cookieJar.get("vl_currency")?.value ?? null,
-    acceptLanguage: hdrs.get("accept-language"),
-  });
-  // De-facto secondary currency for the visitor's home market (e.g. an
-  // Albanian visitor sees fees in ALL primary + EUR secondary). Computed
-  // from the Accept-Language → country resolution. Null when none applies.
-  const userSecondaryCurrency = secondaryCurrencyFor(
-    hdrs.get("accept-language")?.split(",")[0]?.split("-")[1] ?? null,
-  );
+  // Cost optimisation: no per-request headers()/cookies() reads here. The
+  // page is ISR-cached by Vercel based on its URL (passport + destination +
+  // purpose searchParam), so per-visitor variation (locale, currency) is
+  // resolved on the CLIENT by LocaleSwitcher + CurrencySwitcher + ResultCard
+  // reading the same cookie/URL state. SSR renders the universal default;
+  // hydration upgrades it.
+  const locale: Locale = sp.lang && isSupportedLocale(sp.lang) ? sp.lang : "en";
+  const userCurrency = "USD";
+  const userSecondaryCurrency: string | null = null;
 
   let options: ResolvedVisaOption[] = [];
   let alternatives: Awaited<ReturnType<typeof resolveRoute>>["alternatives"] = [];

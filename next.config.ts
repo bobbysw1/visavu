@@ -114,6 +114,19 @@ const config: NextConfig = {
   },
 
   async headers() {
+    // Cache-Control on the dynamic public routes. The result page
+    // /[passport]/[destination] (and its /:purpose path variant) reads
+    // searchParams so Next marks it dynamic, BUT Vercel's CDN happily
+    // caches dynamic responses when we set s-maxage. Each unique URL
+    // (passport + destination + purpose + any other ?param) gets its own
+    // edge cache entry. Googlebot crawling 60k URLs hits CPU on the
+    // first miss per URL and then serves from cache for 24h.
+    //
+    // stale-while-revalidate lets Vercel serve a slightly-stale cached
+    // response for up to a week while it revalidates in the background —
+    // so traffic never waits on a cold render.
+    const longCache = "public, s-maxage=86400, stale-while-revalidate=604800";
+
     return [
       {
         // Embeddable result cards must be iframe-able from any site.
@@ -124,6 +137,21 @@ const config: NextConfig = {
           { key: "X-Frame-Options", value: "ALLOWALL" },
           { key: "Content-Security-Policy", value: "frame-ancestors *;" },
         ],
+      },
+      {
+        // /[passport]/[destination] — bare form. Two alpha-2 segments.
+        source: "/:passport([A-Za-z]{2})/:destination([A-Za-z]{2})",
+        headers: [{ key: "Cache-Control", value: longCache }],
+      },
+      {
+        // /[passport]/[destination]/[purpose] — path form (rewritten internally to ?purpose=).
+        source: "/:passport([A-Za-z]{2})/:destination([A-Za-z]{2})/:purpose(tourism|business|transit|work|study|family|diplomatic)",
+        headers: [{ key: "Cache-Control", value: longCache }],
+      },
+      {
+        // /compare/[a]/[b] — comparison pages.
+        source: "/compare/:a([A-Za-z]{2})/:b([A-Za-z]{2})",
+        headers: [{ key: "Cache-Control", value: longCache }],
       },
     ];
   },

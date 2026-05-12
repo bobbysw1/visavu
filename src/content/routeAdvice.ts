@@ -4724,6 +4724,382 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // JAPANESE → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "JP:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from a SEVP-certified US school + SEVIS I-901 paid",
+        why: "Japan sends ~14,000 students to the US annually — declining from 1990s peak but stable. Your US institution issues Form I-20 (F-1) or DS-2019 (J-1) once admitted and proof-of-funds verified. Pay SEVIS I-901 fee ($350 F-1 / $220 J-1) before booking DS-160. Japanese applicants book at US Embassy Tokyo (Akasaka 1-10-5, Minato-ku — near Roppongi) or US Consulate General Osaka-Kobe / Naha. Tokyo and Osaka are most common. Japanese applicants have one of the lowest F-1 refusal rates globally (~3-5%) — documentation efficiency matters more than narrative.",
+      },
+      {
+        label: "Source-of-funds + Japanese family financial culture",
+        why: "Show 1st-year tuition + living costs ($40-80k). Document Japanese bank statements (Mizuho 銀行, MUFG 三菱UFJ, SMBC 三井住友, Japan Post Bank ゆうちょ銀行, Resona, Aozora) with USD-equivalent at BOJ rate. Japanese families demonstrate funds via savings accounts (普通預金), time deposits (定期預金), and stock holdings (NISA, 持ち株). Lump-sum deposits are uncommon and don't trigger 214(b) concerns for Japanese applicants as they would for some other origins.",
+      },
+      {
+        label: "Japanese academic transcripts + Apostille via MOFA",
+        why: "Japanese 高校卒業証明書 (high school graduation certificate), 大学卒業証明書 (university graduation), 成績証明書 (transcripts) need Apostille via Japan MOFA (外務省) at Kasumigaseki Tokyo or Honmachi Osaka. Cost JPY 400 per Apostille, same-day in-person submission, 5-7 days by mail. WES, ECE, or AICE foreign credential evaluation for some US universities — particularly relevant for transfer students or graduate applicants from non-elite Japanese institutions.",
+      },
+      {
+        label: "Japanese male military service status (NONE — Japan has no conscription)",
+        why: "Japan has NO compulsory military service since the post-WWII constitution. Japanese males have no military obligation to document — significant simplification compared to Korean / Taiwanese / Chinese applicants. Self-Defense Forces (Jieitai 自衛隊) are voluntary; if you served in JSDF, document service period and discharge documents (退職証明書), useful for some role-related security clearances at US universities.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this specific US programme over Japanese elite universities",
+        prompt: "Japan has elite universities (Imperial 7 = Tokyo 東京大学, Kyoto 京都大学, Tohoku 東北, Nagoya 名古屋, Osaka 大阪, Hokkaido 北海道, Kyushu 九州; plus Keio 慶応義塾, Waseda 早稲田, Hitotsubashi 一橋, Tokyo Tech 東京工業大学). Explain why your US programme offers something unique — research lab, specific professor, industry network (Silicon Valley for CS, Wall Street for finance, Boston for biotech, LA for entertainment), specialised programme. Vague 'I want to experience American education' is a weak case — Japanese students are well-served by domestic universities.",
+      },
+      {
+        heading: "Funding — Japanese family / scholarship / Fulbright Japan",
+        prompt: "Quantify: tuition $X, living $Y, total Year 1 $Z. Then show coverage: family contribution JPY X (with bank statement, parents' source-of-income certificate 源泉徴収票, salary slip 給与明細書), scholarship (Fulbright Japan, Watanabe Trust UK, Japan Student Services Organization JASSO scholarship, Yoneyama Memorial Foundation, Nakajima Foundation, Tobitate! Young Ambassadors Program). Japanese banks issue 'Certificate of Deposit Balance' (預金残高証明書) — standard at consular interview.",
+      },
+      {
+        heading: "Post-graduation plan — your return to Japan",
+        prompt: "F-1 requires intent to return. State which Japanese sector: Sony / Nintendo / Sega / Square Enix / Bandai (gaming + entertainment), Toyota / Honda / Subaru / Nissan / Mazda / Suzuki (automotive), Mitsubishi / Mitsui / Sumitomo / Itochu / Marubeni (trading houses), Takeda / Astellas / Daiichi-Sankyo (pharma), Mizuho / MUFG / SMBC (banking), Hitachi / NEC / Fujitsu / Panasonic / Sharp (industrial), or academic return (Japanese university faculty positions value US-PhDs heavily). If you want OPT briefly mention but emphasise return.",
+      },
+      {
+        heading: "Family ties + Japanese culture context",
+        prompt: "List parents (occupation, location — Tokyo / Yokohama / Osaka / Nagoya / Sapporo / Fukuoka / Sendai prefecture level), siblings, partner. Mention Japanese property — family home with 不動産登記 (real estate registration), Japanese bank accounts, Japanese mobile number for SMS-OTP. Japan permits dual nationality only until age 22 (Article 14 Nationality Act — enforcement is lax but state your awareness). For sponsorship at religious or family-business roles, additional context may help.",
+      },
+    ],
+    moneySavingTips: [
+      "F-1 visa fee is $185; pay via Shinsei Bank or SMBC Trust Bank counters in JPY — no reciprocity fee for Japanese citizens",
+      "Apostille via Japan MOFA Tokyo (Kasumigaseki) or Osaka (Honmachi): JPY 400/document, same-day in-person",
+      "Don't pay 'visa consultancy' agencies JPY 200,000-1,000,000 — DS-160 is free, US Embassy is efficient",
+      "Japanese applicants are eligible for Fulbright Japan (~$30,000 + tuition for grad students — apply through Japan-US Educational Commission), JASSO (Japan Student Services Organization) Long-term Study Abroad scholarship, Watanabe Trust Scholarship (full-funded master's at top UK/US schools)",
+      "Tobitate! Young Ambassadors Program — Japanese government scholarship for undergraduate / high-school students; covers everything for short-term US study abroad",
+      "Many US universities have Japanese-origin scholarship endowments — Harvard, MIT, Stanford, Yale, Columbia, USC, Texas all have named Japanese-heritage funds",
+      "MUFG, Mizuho, SMBC educational remittance for tuition transfers — competitive vs retail; BOJ has no annual cap on educational outflow with admission proof",
+      "Japanese Embassy DC + Consulates (LA, NYC, SF, Chicago, Houston, Atlanta, Boston, Seattle, Honolulu, Detroit, Anchorage, Hagåtña, Portland, Nashville) offer free notarisation for Japanese citizens",
+      "ESTA reciprocity: US citizens visa-exempt for Japanese entry under visa waiver; Japanese students don't need ESTA (have F-1)",
+      "Use Wise USD/JPY, Western Union, or MoneyGram for low-volume remittance; SMBC / Mizuho / MUFG for large educational transfers",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with clean record, clear funding, strong programme fit",
+        "Standard Fulbright Japan / Tobitate / JASSO scholarship F-1 / J-1 application",
+        "Renewal of existing F-1 at US Embassy Tokyo / Consulate Osaka-Kobe / Naha during winter / summer breaks",
+        "OPT or STEM OPT application during or after the programme",
+      ],
+      getALawyer: [
+        "Prior US visa refusal (any category — rare for Japanese)",
+        "Japanese criminal record (DUI, drug under 麻薬及び向精神薬取締法, organised-crime affiliation — Japan rigorously checks)",
+        "STEM field with potential SAO sensitivity (nuclear, aerospace, advanced AI, advanced materials, dual-use biotech)",
+        "Family member in Japanese military / JSDF / nuclear establishment",
+        "Past US overstay or visa flag",
+        "Funding from a sponsor outside Japan / immediate family",
+        "Transfer from UK/Canadian/Australian/Korean student visa to US F-1",
+        "Same-sex partner accompanying — Japan doesn't recognise same-sex marriage federally (some prefectures do); US recognises; F-2 derivative for same-sex spouse needs careful documentation",
+        "Dual Japanese-other passport (Japanese-American with US citizenship — apply via US passport)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // POLISH → DE — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "PL:DE:work": {
+    whatCarriesWeight: [
+      {
+        label: "EU freedom of movement — no work permit needed for Polish citizens since 2011",
+        why: "Poland joined EU 2004; restrictions on Polish workers in Germany lifted 2011 under transitional provisions. Polish citizens have full freedom of movement under TFEU Article 45 — no work permit, no visa, no residence permit required. Simply move to Germany and register with the local Bürgeramt (Anmeldung) within 14 days of arrival. Polish-German worker migration is one of Europe's largest corridors — ~2 million Poles in Germany (largest non-German EU group).",
+      },
+      {
+        label: "Anmeldung + Steuer-ID + Krankenkasse registration — the practical bottlenecks",
+        why: "Within 14 days of arrival, register your address (Anmeldung) at the local Bürgeramt — required for everything else. Anmeldung issues Anmeldebescheinigung (registration certificate). With it, you get Steueridentifikationsnummer (tax ID) automatically by mail in 2-3 weeks. Register with German health insurance (gesetzliche Krankenversicherung — TK, AOK, Barmer, DAK at ~14.6% of salary split with employer; OR private Krankenversicherung above €69,300 salary threshold). Without Krankenkasse, employer can't run payroll.",
+      },
+      {
+        label: "Polish-German social-security coordination + ZUS / Deutsche Rentenversicherung",
+        why: "Under EU Regulation 883/2004, Polish and German pension contributions count toward each other (totalization). Polish ZUS contributions made before German move count toward eventual German Rente; German Rentenversicherung contributions count toward eventual Polish ZUS pension. For short-term postings (up to 24 months), Polish workers can stay on ZUS via 'A1 form' (formerly E101) issued by ZUS Polish office — exempting from German Rentenversicherung. Beyond 24 months, switch to German Rentenversicherung; Polish years count toward eventual benefit calculation.",
+      },
+      {
+        label: "Polish qualification recognition — automatic for regulated EU professions",
+        why: "EU Mutual Recognition of Professional Qualifications Directive (2005/36/EC, amended 2013/55/EU) gives automatic recognition for certain professions: doctors, dentists, nurses, midwives, pharmacists, veterinary surgeons, architects. Polish lekarz (doctor), pielęgniarka (nurse), pielęgniarz (male nurse) qualifications are automatically valid in Germany after Anerkennung formality. Other regulated professions (lawyer, accountant, teacher, engineer) require Anerkennung process — typically faster for Polish applicants given EU/EEA framework.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "No personal statement needed at the border — Polish citizens travel freely",
+        prompt: "Unlike non-EU visa applications, Polish-German movement requires no narrative or documentation at the border. You travel with Polish passport or Polish dowód osobisty (national ID card). However, Anmeldung at Bürgeramt does require: passport/ID, completed Anmeldeformular (registration form), Wohnungsgeberbestätigung (landlord's confirmation of your residence — replaces older Mietvertrag requirement). Bring these to your appointment.",
+      },
+      {
+        heading: "Settlement plan — German employer, city, integration",
+        prompt: "While not required by visa officers, you'll need to plan: which German city (Berlin / Hamburg / München / Köln / Frankfurt / Stuttgart / Düsseldorf — large Polish diasporas in NRW Nordrhein-Westfalen and Berlin), which sector (automotive Stuttgart-Wolfsburg, finance Frankfurt, tech Berlin-München, healthcare across Germany), language plan (Polish bilingual schools available in NRW; Berlin Polish School). State your specific German employer name + branch.",
+      },
+      {
+        heading: "Long-term plan — German citizenship, retain Polish, or rotation",
+        prompt: "Germany's 2024 citizenship reform allows dual citizenship — Polish-German dual nationality fully permitted now (previously Polish-Germans had to renounce). Naturalisation after 5 years legal residence (3 years with C1 German + special integration including civic engagement); A1/B1 German required + Einbürgerungstest. Many Poles maintain Polish citizenship while gaining German — useful for Polish family ties, Polish property, eventual EU mobility flexibility.",
+      },
+      {
+        heading: "Family + dependants + Polish school year",
+        prompt: "EU family members travel freely with you — spouse, registered partner (Lebenspartnerschaft equivalent), minor children, dependent adult children, dependent parents under EU framework. Polish school year (September-June, aligns with German August/September-July) means children can enrol mid-year if arriving outside the standard intake window. Polish schools in Germany (Szkoła Polska im. Adama Mickiewicza, Polish School at Polish Embassy Berlin) supplement German schools for cultural / linguistic continuity.",
+      },
+    ],
+    moneySavingTips: [
+      "EU citizens pay NO immigration fees in Germany — Anmeldung is FREE at Bürgeramt",
+      "Don't pay 'Polish-German migration consultancies' EUR 1,500-5,000 for what is paperwork-free EU travel + Anmeldung",
+      "Free Anmeldung appointment booking at Bürgeramt Berlin / Hamburg / München / Köln etc. websites — book 2-4 weeks ahead",
+      "A1 form from ZUS Poland is FREE — exempts German Rentenversicherung for up to 24 months for posted workers; ZUS-side application via PUE ZUS portal",
+      "Open N26, Commerzbank, DKB, or Sparkasse account before flying — all accept Polish ID + Polish address",
+      "Free German language courses for EU citizens at Volkshochschule (municipal community college) — A1-B2 German courses €100-500 (subsidised)",
+      "Integration course (Integrationskurs) for B1 German + civic knowledge is FREE for EU citizens who need it for naturalisation",
+      "Polish doctors / nurses in Germany earn €30k-80k+/year — significantly above Polish average; Anerkennung process for medics is fast",
+      "Tax treaty Germany-Poland (1972, protocol 2003) prevents double-taxation; CSO Poland and Bundeszentralamt für Steuern coordinate",
+      "Free Polish school enrolment in NRW + Berlin — Polish-language education supplements German state schools",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "EU freedom of movement entry to Germany (no visa needed)",
+        "Standard Anmeldung at Bürgeramt with Polish passport + Wohnungsgeberbestätigung",
+        "Polish doctor / nurse / midwife / pharmacist Anerkennung via Bezirksregierung",
+        "Naturalisation application after 5 years residence (3 years with C1 + integration)",
+        "EU family-member visa for non-EU spouse / children of Polish citizen",
+      ],
+      getALawyer: [
+        "Polish criminal record affecting Anerkennung for regulated profession (German Ärztekammer / Pflegekammer scrutinise)",
+        "Past German entry ban / Schengen overstay flagged on Polish-side records",
+        "Non-EU spouse needing EU family-member visa (technical, requires care)",
+        "Polish pension claim coordination with German Rentenversicherung when retiring",
+        "Loss of Polish citizenship (renunciation) for some legal reason — unusual",
+        "Complex tax-residency split (working in Germany, Polish family business, dual home country)",
+        "Polish-German child custody or family dispute with both countries' courts involved",
+        "Polish-German cross-border worker (Grenzgänger) status — different tax / social-security implications",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // ROMANIAN → ITALY — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "RO:IT:work": {
+    whatCarriesWeight: [
+      {
+        label: "EU freedom of movement — no work permit needed for Romanian citizens since 2014",
+        why: "Romania joined EU 2007; restrictions on Romanian (and Bulgarian) workers in Italy lifted 2014. Romanian citizens have full freedom of movement under TFEU Article 45 — no work permit, no visa. Simply move to Italy and register with the local Comune (anagrafe) within 90 days for residenza. Romanian-Italian worker migration is one of Europe's largest corridors — ~1.1 million Romanians in Italy (largest non-Italian EU group); concentrated in caregiving (badanti), construction, agriculture, hospitality, and increasingly white-collar.",
+      },
+      {
+        label: "Anagrafe registration + Codice Fiscale + Tessera Sanitaria",
+        why: "Within 90 days of arrival, register at local Comune anagrafe for Italian residenza. Required documents: Romanian passport/CI, lease (contratto di locazione) or letter from landlord, proof of work / sufficient funds (~€7,500/year per adult + €5,500 per dependent). Once registered, you receive Codice Fiscale (Italian tax ID) — required for everything from employment contract to bank account to SIM card. Register with SSN (Servizio Sanitario Nazionale) for Tessera Sanitaria (health card) — Romania-Italy EU coordination ensures automatic transfer of Romanian CAS contributions.",
+      },
+      {
+        label: "Romanian-Italian social-security coordination + CAS / INPS",
+        why: "Under EU Regulation 883/2004, Romanian CAS (Casa Asigurari de Sanatate) contributions and INPS contributions count toward each other. Romanian pensions: Casa Naţională de Pensii Publice (CNPP) Romanian pension contributions coordinated with Italian INPS via A1 form for posted workers (≤24 months) or full INPS transfer for permanent move. Romanian tax: Romania left worldwide-income taxation as of 2018 reform; Italy taxes worldwide income for tax-residents (>183 days/year).",
+      },
+      {
+        label: "Romanian qualification recognition — automatic EU professional recognition",
+        why: "EU Mutual Recognition of Professional Qualifications Directive applies to Romanian doctors, dentists, nurses, midwives, pharmacists, veterinary surgeons, architects — automatic recognition in Italy. Other regulated professions (lawyer Avvocato, accountant Dottore Commercialista, engineer Ingegnere) require recognition (riconoscimento) process. For Romanian psihologi (psychologists), psicologi (Italian equivalent) — recognition via Ordine degli Psicologi varies by region. Romanian-Italian linguistic kinship (both Romance languages) makes integration smooth.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "No personal statement needed at the border — Romanian citizens travel freely",
+        prompt: "Unlike non-EU visa applications, Romanian-Italian movement requires no narrative at the border. Travel with Romanian passport or Romanian carte de identitate (national ID card). For Comune anagrafe registration you'll need: passport/CI, lease contract or landlord's letter (Italian: dichiarazione di ospitalità), proof of employment or sufficient funds, photo for tessera.",
+      },
+      {
+        heading: "Settlement plan — Italian region, employer, integration",
+        prompt: "While not required by visa officers, plan: which Italian region (Veneto and Lombardia have large Romanian populations; Roma and Milano white-collar; Sicily for elderly care). State Italian employer name + branch. Italian regulated professions need riconoscimento with Italian-language proficiency (B2 typical) — for caregivers/badanti the language requirement is lower but still important for cultural integration.",
+      },
+      {
+        heading: "Long-term plan — Italian citizenship, retain Romanian, or rotation",
+        prompt: "Italy permits dual citizenship with EU members; Romania permits dual citizenship. Naturalisation in Italy after 10 years legal residence (down from 4 only available under EU treaty interpretation that doesn't apply post-Romania-EU-membership scrutiny). For Romanian-Italian dual nationality: rare to renounce Romanian citizenship; most Italian-naturalised Romanians retain both passports.",
+      },
+      {
+        heading: "Family + dependants + Romanian school year",
+        prompt: "EU family members travel freely with you. Romanian spouse, minor children, dependent adult children, dependent parents under EU framework. Romanian-language schools in Italy (Şcoala Românească in Roma, Milano, Torino) supplement Italian state schools. Romanian Orthodox Church communities concentrated in major cities provide cultural / spiritual support.",
+      },
+    ],
+    moneySavingTips: [
+      "EU citizens pay NO immigration fees in Italy — Comune anagrafe registration is FREE",
+      "Codice Fiscale issuance is FREE at Agenzia delle Entrate (Italian Revenue Agency) — bring Romanian passport/CI",
+      "Tessera Sanitaria (health card) is FREE via SSN registration at ASL (Azienda Sanitaria Locale)",
+      "Don't pay 'Romanian-Italian migration consultancies' EUR 800-3,000 for paperwork-free EU travel + registration",
+      "Comune anagrafe appointment: book online via Comune website (Roma, Milano, Torino, Napoli, Verona, Bologna all have e-services)",
+      "A1 form from CNPP / CAS Romania: FREE — exempts INPS Italian social security for up to 24 months for posted workers",
+      "Open Intesa Sanpaolo, UniCredit, BNL BNP Paribas, Banca Popolare di Milano, or Mediolanum account — all accept Romanian ID + Italian address",
+      "Free Italian language courses at CTP (Centri Territoriali Permanenti) for adult education — A1-B2 Italian courses €100-300 (subsidised)",
+      "EU regulated profession recognition is FREE via Ministero della Salute / Ministero della Giustizia — don't pay 'professional recognition agencies' EUR 1,000+",
+      "Tax treaty Italy-Romania (1977, protocol 2007) prevents double-taxation; ANAF Romania and Agenzia delle Entrate Italy coordinate automatically",
+      "Romanian-Italian remittance: Western Union, Wise, MoneyGram, Sigue, or direct Banca Italo-Romena — competitive rates",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "EU freedom of movement entry to Italy (no visa needed)",
+        "Standard Comune anagrafe registration with Romanian passport + lease",
+        "Romanian doctor / nurse / midwife / pharmacist riconoscimento via Ministero della Salute",
+        "Italian naturalisation application after 10 years residence",
+        "EU family-member visa for non-EU spouse / children of Romanian citizen",
+      ],
+      getALawyer: [
+        "Romanian criminal record affecting professional recognition (Italian Ordine dei Medici / Ordine degli Avvocati scrutinise)",
+        "Past Italian entry ban / Schengen overstay (pre-Romania EU accession)",
+        "Non-EU spouse needing EU family-member visa",
+        "Romanian pension claim coordination with INPS when retiring in Italy",
+        "Complex Romanian-Italian tax residency split (working in Italy, Romanian family business)",
+        "Romanian-Italian child custody disputes",
+        "Past EU expulsion / public-order ban from another EU state affecting Italian entry",
+        "Pre-1990 Romanian Securitate file connection (very rare but historically sensitive)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // VIETNAMESE → JAPAN — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "VN:JP:work": {
+    whatCarriesWeight: [
+      {
+        label: "Specified Skilled Worker (Tokutei Ginō) + Technical Intern Training Program (TITP) routes",
+        why: "Japan has been Vietnam's largest white-collar / blue-collar work migration destination since 2018. Two main routes: Specified Skilled Worker (Tokutei Ginō i / ii — 特定技能 — covers 12 industries including construction, agriculture, fisheries, food service, hospitality; ~5-year initial duration, family possible after ii promotion), and Technical Intern Training Program (TITP / Ginō Jisshū — gradually being phased into Tokutei Ginō; previous 3-5 year intern program with mixed labour-rights record). 2024-2025: Japan launched 'Ikuseishu Romu' replacement program for TITP, simplifying transition to Tokutei Ginō and granting greater worker mobility.",
+      },
+      {
+        label: "Specialist (Engineer/Specialist in Humanities/International Services) — for university-degree-holding Vietnamese",
+        why: "University-educated Vietnamese (often from Bach Khoa Hanoi / HCMUS / FTU / NEU) use the Engineer/Specialist in Humanities/International Services (技術・人文知識・国際業務) visa — degree-required, but no industry restriction beyond degree-role match. Major employers: Honda Vietnam → Honda Japan, Toyota → Toyota R&D, Samsung Vietnam (Korean) → Samsung Japan branches, Vietnamese-tech expats at Rakuten, LINE Yahoo, Mercari, Toshiba. Salary minimum ~JPY 3.5-5M/year for entry-level professional.",
+      },
+      {
+        label: "Japanese language requirement + JLPT N4 minimum (Tokutei Ginō) or N2/N1 (Specialist)",
+        why: "Tokutei Ginō i requires JLPT N4 (basic — ~250-300 hours study) + industry skills test. Tokutei Ginō ii requires JLPT N3 + advanced skills test. Engineer/Specialist visa officially has no language requirement but practically N3 or higher needed. For nursing / caregiving (Tokutei Ginō kaigo): JLPT N4 + Kaigo Nihongo (caregiver-specific Japanese test). Vietnamese applicants train at JLPT centres in Hanoi (VJCC, Sakura), HCMC (East-West, Sakura), Da Nang.",
+      },
+      {
+        label: "Vietnamese sending organisation + Japanese receiving organisation registration",
+        why: "Vietnamese DOLAB (Department of Overseas Labour, formerly DOLAB-MOLISA) regulates worker dispatch — only licensed sending organisations (송출기관 in Korean equivalent — Việt Nam tổ chức gửi lao động) can recruit. Japanese receiving organisation must be MOJ (Ministry of Justice)-registered as accepting Tokutei Ginō workers. Vietnamese applicants pay sending-organisation fees (capped at VND 33M / ~JPY 200,000 for Tokutei Ginō under 2024 Vietnamese government regulation, lower than previous TITP-era VND 100M+ that frequently caused worker debt bondage). Avoid unlicensed brokers — DOLAB website lists licensed sending organisations.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route — Tokutei Ginō i/ii, Engineer/Specialist, or other",
+        prompt: "State explicit visa category. Tokutei Ginō i (12 industries, JLPT N4 + skills test, 5-year initial, family not generally allowed during i), Tokutei Ginō ii (after passing N3 + advanced skills test, family possible, longer duration), Engineer/Specialist (degree + degree-role match), TITP transitioning to Ikuseishu Romu (2024+ reform), Special Highly Skilled Professional (high-skill points calculator). Choose based on your education, Japanese language level, and career trajectory.",
+      },
+      {
+        heading: "Your Vietnamese work history + Japanese language journey",
+        prompt: "List every Vietnamese employer with month-precision dates, role, salary in VND, supervisor name + Zalo/email. Include Vietnamese tax ID (Mã số thuế cá nhân — MST), social insurance number (Sổ bảo hiểm xã hội), and any Vietnamese professional body memberships. Document Japanese language progression: enrolment date in Japanese course (with study hours), JLPT level achieved + certificate, industry-specific skills test results, internship if any.",
+      },
+      {
+        heading: "Sending organisation + Japanese receiving organisation",
+        prompt: "Vietnamese sending organisation (tổ chức đưa người đi lao động ngoài nước) name + DOLAB licence number — verify on DOLAB website. Japanese receiving organisation name + MOJ registration. Many Tokutei Ginō Vietnamese workers come through reputable sending organisations like Bestcom, Esuhai, IZ Group, AHO Group, Hihako, Goh Việt Nam, JCS Việt Nam, Olympia, ISTV. Don't sign with unlicensed brokers.",
+      },
+      {
+        heading: "Long-term plan — Tokutei Ginō ii promotion, return to Vietnam, or settlement",
+        prompt: "Tokutei Ginō i is officially temporary (5 years, no family except in rare exceptions); Tokutei Ginō ii after passing N3 + advanced skills test allows family, longer duration, and theoretically path to Permanent Residence (PR) after 10 years total residence. Engineer/Specialist allows family + path to PR (5 years standard, 1-3 years via Highly Skilled Professional). State plan: temporary 5-year Tokutei Ginō i + return to Vietnam with skills and savings (most common), promotion to Tokutei Ginō ii + family settlement, or Engineer/Specialist route to PR.",
+      },
+    ],
+    moneySavingTips: [
+      "Tokutei Ginō visa: receiving employer pays initial visa-related fees (Japan-side); Vietnamese sending organisation fees capped at VND 33M (2024 regulation) — refuse any payment beyond this; report to DOLAB if asked for more",
+      "Don't use unlicensed Vietnamese brokers (cò lao động) charging VND 100-300M for Tokutei Ginō — illegal under 2020 Vietnamese Worker Going Overseas Law; DOLAB licensed organisations have transparent fee structures",
+      "Free Japanese language courses for Tokutei Ginō workers at sending organisation training centres — typically 3-6 months pre-departure",
+      "JLPT registration: VND 1,500,000 (N5) to VND 2,500,000 (N1) at official Japanese-Vietnamese centres",
+      "Free pre-departure orientation (PDO) at DOLAB and sending organisation — covers Japanese culture, labour law, emergency contacts",
+      "Open MUFG, SMBC, Mizuho, or Japan Post Bank account on arrival (with Residence Card + work permit) — Japan Post is most foreigner-friendly with minimal documentation",
+      "Use Western Union, Wise VND/JPY, BIDV Remit, or Japan Post Bank international transfer for remittance to Vietnam — competitive rates",
+      "End of employment: Tokutei Ginō workers eligible for nenkin (national pension) lump-sum refund — claim within 2 years of leaving Japan via Japan Pension Service",
+      "Use Vietnamese Embassy Tokyo / Consulate Osaka services free for document attestation — don't pay 'Vietnamese-Japan migration consultancies'",
+      "Tokutei Ginō ii promotion exam: free industry-specific skills test + N3 JLPT — Japanese employer often pays preparation course",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Tokutei Ginō i application via licensed sending organisation + receiving organisation",
+        "Engineer/Specialist visa for university-degree-holding Vietnamese with Japanese employer",
+        "JLPT N4 + industry skills test preparation and exam",
+        "Status of Residence renewal at regional Immigration Bureau",
+        "Tokutei Ginō i → ii promotion via N3 + advanced skills test",
+        "Nenkin lump-sum refund claim on departure",
+      ],
+      getALawyer: [
+        "Past Vietnamese sending-organisation fraud / overcharging (>VND 33M for Tokutei Ginō)",
+        "Past Japan TITP escape / dispute / labour-rights violation case",
+        "Vietnamese criminal record (anti-narcotics, smuggling, labour-export-fraud-involvement)",
+        "Switching Japanese sponsor within Tokutei Ginō (now easier under 2024 Ikuseishu Romu reform but case-by-case)",
+        "Bringing same-sex partner — Vietnam permitted same-sex relations 2000 (without legal recognition); Japan doesn't recognise same-sex marriage; no derivative visa path",
+        "Past Japan deportation or overstay",
+        "Complex degree-role mismatch for Engineer/Specialist visa",
+        "Special-status holder (Mongolian-Vietnamese ethnic minority, Hmong ethnic minority) needing additional documentation",
+        "Pregnancy during Tokutei Ginō contract — Japanese labour law protects but practical complications",
+        "Past Vietnamese asylum-related family member case in any Asia-Pacific country",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // PORTUGUESE → US — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "PT:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "E-1 / E-2 Treaty Trader / Investor via the Portugal-US 1840 Treaty",
+        why: "Portugal has the oldest US Treaty of Friendship, Commerce and Navigation (1840) — predates almost every other US-EU treaty relationship. E-1 (substantial trade between Portugal and US) and E-2 (substantial Portuguese investment in US business) are major routes for Portuguese entrepreneurs. E-2 has no statutory minimum but $100k+ in a real US enterprise is the practical floor. Portuguese-American business community is concentrated in Massachusetts (Fall River, New Bedford, Cambridge) and New Jersey (Newark, Elizabeth) — strong existing diaspora networks for E-2 startups.",
+      },
+      {
+        label: "H-1B Specialty Occupation OR L-1 intracompany via Portuguese parent",
+        why: "Portuguese applicants compete in standard H-1B (March lottery, 85k slots — win rate ~30-35%). L-1A/B (intracompany transfer) bypasses lottery if you've worked 1+ year at Portuguese parent (Galp Energia, EDP, Jerónimo Martins, Sonae, Mota-Engil, Navigator Company, Pestana Hotels, NOS, Altri, Cofina, GS Yuasa Lithium Energy Portugal). Major US destinations: Boston (tech + biotech, large Portuguese diaspora), NY (finance), Miami (Latin business + Brazilian-Portuguese-American crossover), LA (entertainment, Madeira / Azores diaspora).",
+      },
+      {
+        label: "Apostilled Portuguese degrees + ECE/WES credential evaluation",
+        why: "Portuguese degrees (Licenciatura, Mestrado, Doutoramento) need Apostille via Portuguese Procuradoria-Geral da República (PGR — Portugal is Hague signatory since 1968). Cost EUR 10-25/document. For US licensure (medicine, law, accounting, engineering PE) WES, ECE, or AICE foreign credential evaluation. Portuguese 3-year Licenciatura (post-Bologna) typically maps to US Bachelor's; Mestrado to US Master's. Portuguese medical degrees (Licenciatura em Medicina from Universidade de Lisboa / Porto / Coimbra) need separate USMLE pathway for US practice.",
+      },
+      {
+        label: "US-Portugal Totalization Agreement (1989) + tax treaty",
+        why: "Get a Certificate of Coverage (CoC) from Portuguese Caixa Geral de Aposentações or Segurança Social — keeps you on Portuguese Segurança Social for up to 5 years on temporary US assignment, exempt from US Social Security/Medicare. Beyond 5 years switch to US system; Portuguese quarters count toward future Portuguese pension via Totalization. Tax treaty Portugal-US (1994) prevents double-taxation on salary; Portuguese exit-tax considerations on substantial holdings (Lei Geral Tributária Articles 167 and 167-A).",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why the US — sector, employer, and Portuguese-American community ties",
+        prompt: "Portuguese applicants benefit from specificity. Tech (Silicon Valley, NYC, Boston), finance (NYC, Chicago), biotech (Boston), entertainment (LA — Portuguese-American film, music), hospitality (Florida, NV — Pestana / Vila Galé / Sana Hotels expanding US presence). Mention Portuguese-American business networks (Portuguese-American Chamber of Commerce, Luso-American Foundation, BES USA legacy connections).",
+      },
+      {
+        heading: "Your Portuguese employer / academic credentials",
+        prompt: "List Portuguese employer chronologically, role, salary in EUR with USD equivalent, supervisor name. Portuguese universities (Universidade de Lisboa, Universidade do Porto, Universidade Católica Portuguesa, Universidade Nova, ISCTE-IUL, Universidade do Minho, Universidade de Aveiro) are well-known to US Embassy Lisbon. For L-1, document the 12+ month qualifying employment at Portuguese parent.",
+      },
+      {
+        heading: "Long-term plan — H-1B + green card, E-2 indefinite, or temporary",
+        prompt: "H-1B and L-1 allow dual intent — green-card plans openly stated (EB-2/EB-3 via PERM). E-2 is non-immigrant but renewable indefinitely. Portugal permits dual citizenship; US permits dual citizenship. State honest plan. Portuguese-American community is concentrated — mention specific city you'll settle if relevant (Fall River MA, Cambridge MA, Newark NJ, Mineola NY, Pawtucket RI all have large Portuguese populations).",
+      },
+      {
+        heading: "Family + dependants + Portuguese school year",
+        prompt: "Spouse on L-2: automatic work authorization since 2023; H-4 spouse needs EAD (limited). E-2 spouse gets E-2D with full work rights. Portuguese spouse + children under 21 are derivative. Portuguese school year (mid-September to mid-June) — children can transition to US August/September start with minimal disruption. International schools in Lisbon / Porto (Lisbon American School, Carlucci American International School, Oporto British School) ease US transition.",
+      },
+    ],
+    moneySavingTips: [
+      "DS-160 fee $185 (H-1B/L-1) or $315 (E-1/E-2); pay in EUR at Citibank Portugal or Millennium BCP — no reciprocity fee for Portuguese citizens",
+      "Use WES iGPA Calculator (free online) before paying for full evaluation",
+      "Apostille via Portuguese PGR / Conservatória do Registo Civil: EUR 10-25/document, 5 working days; don't use 'apostille agencies' charging EUR 200+",
+      "Open a US-domiciled bank account with Wise USD, Mercury Business, or Millennium BCP US (Newark NJ branch — Portuguese diaspora-friendly) before relocation",
+      "Portuguese Embassy DC + Consulates (Boston, Newark, NYC, SF, Providence RI, New Bedford MA, Hartford CT, Pawtucket RI) offer free notarisation for Portuguese citizens",
+      "Avoid Portuguese 'consultoria de imigração' charging EUR 3,000-10,000 for H-1B/L-1 — US-based attorneys at Fragomen, Berry Appleman, BAL have flat-fee Portuguese services at $2,500-3,500",
+      "Use Caixa Geral de Depósitos, BPI, Santander Totta, or Millennium BCP for tuition / large remittance — competitive vs Wise for high-volume transfers",
+      "Plan Portuguese tax exit carefully — Portuguese tax-resident if you spend >183 days/year in Portugal or maintain habitual residence; file final IRS return for year of departure",
+      "Portuguese Golden Visa programme was significantly restricted in 2023 — affects E-2 vs Golden Visa choice if you have substantial investment",
+      "Use Wise, Western Union, or Revolut for low-volume EUR/USD remittance — competitive vs traditional bank transfer",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard H-1B / L-1 with named US employer, clean record, clear Portuguese degree mapping",
+        "DS-160 interview prep at US Embassy Lisbon",
+        "Spouse / dependent derivative applications (H-4, L-2, E-2D)",
+        "Renewal of existing H-1B / L-1 at US Embassy Lisbon during home leave",
+        "PERM-based EB-2 / EB-3 green card (Portuguese are current — no per-country backlog)",
+      ],
+      getALawyer: [
+        "E-1 Treaty Trader — substantial trade between Portugal and US needs evidentiary support",
+        "E-2 Treaty Investor — substantiality, source-of-funds, 'real and operating' enterprise tests; Portuguese Golden Visa-related capital can complicate E-2 source-of-funds",
+        "EB-1A / EB-1B / O-1 — extraordinary ability petitions",
+        "Concurrent Portuguese exit-tax considerations on substantial holdings",
+        "Prior US visa refusal or US overstay",
+        "Portuguese criminal record — disclosure to USCIS / DOS mandatory",
+        "Past Portuguese Golden Visa investor status with complex source-of-funds documentation",
+        "Same-sex spouse — Portugal recognised same-sex marriage 2010; US recognises; derivative visas straightforward",
+        "Dual Portuguese-Brazilian / Portuguese-CPLP-country / Portuguese-other passport — apply via Portuguese passport",
+        "Portuguese-Macanese SAR passport holder applying via Portuguese (not Chinese) passport",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

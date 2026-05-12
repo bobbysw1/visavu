@@ -680,7 +680,577 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
   },
 
   // ════════════════════════════════════════════════════════════════════
-  // FILIPINO → USA — work (H-1B / H-2B / EB-3)
+  // BRITISH → AUSTRALIA — work (Subclass 482 / 189 / 482→186)
+  // ════════════════════════════════════════════════════════════════════
+  "GB:AU:work": {
+    whatCarriesWeight: [
+      {
+        label: "Subclass 482 with sponsor nomination + TSMIT AUD$73,150",
+        why: "UK applicants are the second-largest 482 cohort after Indians. From 1 July 2024 the Temporary Skilled Migration Income Threshold rose to AUD$73,150; below it, refusal. Most British professionals in tech / finance / engineering / health clear it easily but mid-market consultancy salaries can fall short.",
+      },
+      {
+        label: "Subclass 189 General Skilled Migration (points test)",
+        why: "189 gives permanent residence on grant — no employer sponsorship needed. Minimum 65 points; competitive scores 85-100+. UK applicants get age (max points 25-32), Skills Assessment via Engineers Australia / VETASSESS / CPA / ACS, English-language test (Proficient at IELTS 7+ adds 10 points, Superior at 8+ adds 20). Subclass 190 (state-nominated) and 491 (regional) add 5/15 points respectively.",
+      },
+      {
+        label: "Working Holiday Subclass 417 — UK-only +35-year extension",
+        why: "Under-31 (under-36 from 2024 for UK passport holders specifically — bilateral arrangement extended) British nationals get a 12-month Working Holiday Visa, extendable to 2nd and 3rd year by completing specified regional work. Different from US, Indian, Chinese applicants who have no equivalent. Saves the Subclass 482 path entirely for adventurous mid-career professionals.",
+      },
+      {
+        label: "Skills Assessment via Engineers Australia / ACS / CPA / VETASSESS",
+        why: "Assessment is pre-application and 4-12 weeks. UK engineering credentials (CEng MIET, CEng MIMechE) map cleanly. ACS for IT: UK Bachelor's + relevant work history is standard pathway. CPA Australia: ICAEW / ACCA / ACA UK chartership recognised but requires conversion exam in some cases. Start it 6 months before the visa application.",
+      },
+      {
+        label: "Reciprocal Health Care Agreement — UK has one with AU",
+        why: "Unique British advantage: the UK-Australia RHCA gives British visitors (including 482 holders) access to Medicare-equivalent emergency care during their first 6 months. After that, Medicare or OVHC kicks in based on visa class. Subclass 482 typically requires OVHC (private health insurance) — but the RHCA buffer eases the first months.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Visa class chosen + why this not Subclass 189", prompt: "If 482: 'My sponsoring employer [X] in Sydney has nominated me for [role] under ANZSCO [code], with offered salary AUD$[Y] above TSMIT.' If 189: 'I'm applying via Skilled Independent permanent visa with CRS [points], occupation [Z] on the Medium-Long Term Strategic Skills List, and a positive Skills Assessment from [authority].'" },
+      { heading: "2. Why Australia over Canada / NZ / Singapore", prompt: "Common British reasons: better weather + outdoor lifestyle vs UK, stronger labour market for engineers / health / finance, family ties (Commonwealth migration history), partner already migrated. Be specific — the 482 caseworker reviews thousands of these monthly." },
+      { heading: "3. UK exit logistics", prompt: "HMRC tax-residency clean break via P85 form. NHS dental records, council-tax exit, ISA / pension treatment. UK pensions can be transferred via QROPS to an Australian-resident scheme — but post-2024 LTA changes complicate this; specialist advice essential." },
+      { heading: "4. Australian city + employer fit", prompt: "Sydney finance / Melbourne pharma / Perth mining / Brisbane biotech / Adelaide defence. Each city has distinct industry concentrations. UK applicants often default to Sydney / Melbourne by name recognition — research the regional alternatives." },
+      { heading: "5. Long-term plan + permanent residence pathway", prompt: "482 → 186 (Employer Nomination Scheme) after 2-3 years for permanent residence. Or 189 leading directly to PR. State your honest timeline — UK applicants are reliably approved for PR transitions thanks to clean immigration history and Commonwealth context." },
+    ],
+    moneySavingTips: [
+      "Check Subclass 417 Working Holiday eligibility BEFORE applying for 482 — the bilateral UK-AU agreement gives Brits age 18-35 (extended from 30 in 2024) a 1-year visa, extendable to 3 with regional work. AUD$650 vs AUD$3,210 for 482, and no employer sponsorship required.",
+      "UK is on the AUSFTA-equivalent list for SOME visa classes — RHCA covers emergency healthcare for the first 6 months without OVHC, saving ~AUD$300 for short-stay paperwork.",
+      "Skills Assessment via VETASSESS: Standard track is AUD$1,200, Priority track is AUD$2,100 (3 weeks vs 6 weeks). For July starts, pay priority.",
+      "Don't pay for 482 priority processing (~AUD$1,200) unless your start date is < 6 weeks out. Standard is 1-3 months reliably for UK applicants.",
+      "Australian super (11.5% from July 2024) is YOUR money — choose a low-fee fund (Hostplus, Australian Retirement Trust, AustralianSuper) on arrival. UK pension can be transferred to a QROPS-listed super fund tax-free below LSA threshold; above it, complex.",
+      "Open an Australian bank account remotely via Commonwealth Bank / NAB / Westpac international onboarding 4-6 weeks before arrival. Wise multi-currency account works for the first paychecks.",
+      "British driving licence converts to Australian state licence without practical test in most states (NSW, VIC, QLD, WA). Save 2-3 weeks of L-plate / P-plate process.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Subclass 417 / 462 Working Holiday application as under-35 British national",
+        "Subclass 482 via a major Australian employer (Big 4, ASX-50, FAANG Sydney offices) with clean credentials",
+        "Subclass 189 with skilled-occupation Engineering / IT / Accounting + strong CRS score",
+      ],
+      getALawyer: [
+        "Subclass 188 Business Innovation & Investment route (substantial investment + complex evaluation)",
+        "QROPS pension transfer — specialist cross-border pension lawyer + tax accountant essential",
+        "Prior visa refusal in any country (Commonwealth member-state refusals are weighted heavier in Australia)",
+        "Self-employed / consulting Subclass 482 nomination by your own AU company — genuineness scrutiny intense",
+        "Same-sex relationship dependent application — Australian recognition is solid but documentation needs care",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // NEW ZEALAND → AUSTRALIA — work (Special Category 444)
+  // ════════════════════════════════════════════════════════════════════
+  "NZ:AU:work": {
+    whatCarriesWeight: [
+      {
+        label: "Special Category Visa 444 — automatic on arrival",
+        why: "NZ citizens with valid NZ passports get the Special Category Visa 444 automatically on arrival in Australia. No application, no fee, no time limit, no employer sponsorship needed. Granted at the Australian border, in your e-passport. This is the closest thing to free-movement between two countries anywhere in the world.",
+      },
+      {
+        label: "What 444 allows + what it doesn't",
+        why: "Live and work indefinitely in Australia. BUT: NOT a path to Australian citizenship automatically — until 2023's policy change, 444 holders couldn't naturalise without first getting permanent residence. Since 1 July 2023, NZ citizens resident 4+ years can apply for Australian citizenship directly. Game-changing.",
+      },
+      {
+        label: "Direct citizenship pathway since July 2023",
+        why: "NZ citizens with 4+ years' lawful residence in Australia (continuous, with absences ≤90 days/year) can now apply for Australian citizenship without first becoming permanent residents. ~AUD$540 application fee + character test. Far cheaper and faster than the standard PR-then-citizenship route. Australia / NZ dual citizenship is permitted.",
+      },
+      {
+        label: "Tax + Medicare access",
+        why: "444 holders are Australian tax residents from day one — file tax with the ATO from your first paycheck. Medicare eligibility under the AU-NZ Reciprocal Health Care Agreement provides basic public-health access for short stays; resident 444 holders get full Medicare from day one of residence.",
+      },
+      {
+        label: "Superannuation rules — NZ-AU portability",
+        why: "Australian super contributions from your Australian employer go to a regulated Australian super fund. NZ KiwiSaver balances can be transferred to AU super under the Trans-Tasman Portability Scheme (since 2013). Bidirectional — Australians moving to NZ can transfer in the other direction.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Visa pathway — 444 vs anything else", prompt: "For NZ citizens to AU, the 444 SCV is automatic on arrival. No personal statement needed for entry. Personal statements only apply when you're: (a) applying for Australian citizenship after 4 years, (b) seeking a different visa class for some reason, or (c) a non-citizen NZ resident not eligible for SCV." },
+      { heading: "2. Why Australia (for the citizenship application after 4 years)", prompt: "When applying for citizenship: 'I've lived in Australia for [X years] continuously, working as [role] at [company]. My family is here, my career has been built here, and I want to formalise my permanent commitment to Australia.'" },
+      { heading: "3. Continuous-residence calculation", prompt: "The 4-year requirement allows ≤90 days absence per year + ≤365 days total absence across the 4 years. Document every overseas trip with passport stamps + boarding-pass records. Caseworkers verify this rigorously." },
+      { heading: "4. Australian ties + integration", prompt: "Employment continuity, property purchase, children's schooling, community involvement, Australian partner. Show actual roots — not just years on the calendar." },
+      { heading: "5. Character + clean record", prompt: "Australian Federal Police clearance + NZ Police clearance. Any criminal record (even minor traffic offences) needs explanation. The character test is non-trivial for citizenship applications." },
+    ],
+    moneySavingTips: [
+      "Don't apply for ANY Australian visa as an NZ passport holder — the SCV 444 is automatic and FREE on arrival. Some agents charge for 'application services' that don't exist.",
+      "KiwiSaver to AU super transfer: do it via your AU super fund (most major funds — Australian Retirement Trust, Hostplus, AustralianSuper — handle this). Free transfer, no tax penalty.",
+      "Australian Medicare card application on arrival: take your NZ passport + AU address proof to a Medicare office or apply via myGov. Free.",
+      "Australian Tax File Number (TFN) on arrival day: apply online at ato.gov.au. Free. Without it, your first paycheck is taxed at 47%.",
+      "Australian citizenship application: AUD$540 + AUD$25 (citizenship test, which you'll likely pass first try with prior AU residence). Compare to standard PR + citizenship cost of AUD$10k+ — significant saving.",
+      "Don't transfer your NZ driver's licence — your NZ licence is valid in Australia indefinitely under the Trans-Tasman arrangement. Apply for an AU licence only if you want voting / ID purposes.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard arrival on NZ passport — no application needed, 444 granted automatically",
+        "Citizenship application after 4+ years residence with clean records",
+      ],
+      getALawyer: [
+        "Criminal record (even minor) — character test for citizenship is non-trivial",
+        "Children born in Australia to NZ-citizen parents (specific birth-status complexity)",
+        "Dual citizenship to a country that doesn't permit it (Indonesia, China, etc.) — must surrender one",
+        "Application after extensive overseas absences (>365 days total across the 4 years)",
+        "Health conditions triggering character / public-interest review",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // NEW ZEALAND → USA — work (E-3 NZ since 2023!)
+  // ════════════════════════════════════════════════════════════════════
+  "NZ:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "E-3 'NZ' visa — exclusive Kiwi route since 2023",
+        why: "Until 2023 only Australians had access to the US E-3 visa under AUSFTA. In December 2022 the US-NZ Tradition of Friendship Act extended E-3 status to New Zealanders specifically — 1,200/year reserved for NZ citizens. NZ$385 USCIS petition fee + US$315 visa fee = far cheaper than H-1B + L-1 routes. 2-year stay, renewable indefinitely, spouse can work without restriction. Most NZ professionals don't know it exists.",
+      },
+      {
+        label: "Specialty Occupation classification",
+        why: "E-3 requires the role to be a 'specialty occupation' — typically requiring a Bachelor's degree in a specific field. NZ engineers, accountants, lawyers, computer professionals, scientists clear this. Trades and unskilled workers don't qualify for E-3 — use H-2B or family-sponsorship routes.",
+      },
+      {
+        label: "L-1A / L-1B intracompany transfer (still available)",
+        why: "If your NZ employer has a US office (most NZ-listed companies do), L-1A (manager/exec, 7-year max) or L-1B (specialised knowledge, 5-year max) bypasses the lottery. L-1A → EB-1C green card with manageable backlog.",
+      },
+      {
+        label: "Visa interview at the US Consulate in Auckland or Sydney",
+        why: "US Consulate Auckland processes most NZ visa applications — manageable wait times (1-3 weeks) compared to Asia / Latin America consulates. Sydney is the alternate for some categories.",
+      },
+      {
+        label: "FBI clearance — pre-arrival document",
+        why: "USCIS may request police clearances from countries you've lived in for 12+ months. NZ Police certificate via the NZ Ministry of Justice (~NZ$30, 20 working days). Add Australian Federal Police if you've spent time there via SCV 444.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. E-3 NZ vs other US visa options", prompt: "If E-3: 'My role qualifies as a specialty occupation under the US-NZ Tradition of Friendship Act. The sponsoring US employer [X] has filed Labor Condition Application certifying the role and salary.' Be explicit you're using the NZ-specific E-3 quota, not generic H-1B." },
+      { heading: "2. Why the US (specific city + industry)", prompt: "Common Kiwi reasons: tech industry concentration (SF / NYC / Boston), startup ecosystem, larger market size, family already in US. Pair lifestyle with industry specifics. Avoid 'the American dream' framing — it rings hollow." },
+      { heading: "3. NZ ties + return option", prompt: "Family in NZ, property, ongoing business interests, employment relationships. The US-NZ relationship is informal — most Kiwi E-3 holders move between the two over their careers. State honest intent: 'I plan to use E-3 for 2-4 years US industry experience, with option to return to NZ or transition to green card.'" },
+      { heading: "4. Family arrangements", prompt: "E-3 spouse can apply for EAD (work authorisation) — uniquely flexible vs Australian E-3 dependents. School-age kids: standard US public-school enrolment. Mention family if accompanying." },
+      { heading: "5. Long-term plan", prompt: "E-3 isn't a direct green-card route, but you can transition to EB-2 / EB-3 with your US employer's I-140 petition. NZ-born applicants have CURRENT priority dates for EB-2 (no backlog) — green card achievable in 2-4 years from filing." },
+    ],
+    moneySavingTips: [
+      "E-3 NZ saves ~US$2,000 vs H-1B (no premium processing needed, no DOL LCA prevailing-wage scrutiny equivalent). Use it.",
+      "1,200 annual E-3 NZ quota is rarely hit — apply any time of year. Compare to H-1B's 85,000 cap reached within days each April.",
+      "Skip the H-1B lottery entirely if you qualify for E-3. Saves both money and the 1-in-5 lottery roulette.",
+      "Open a US bank account remotely via Chase / Citi / HSBC US international onboarding 4-6 weeks before arrival. NZ-issued international cards (Westpac, ANZ, ASB) work for US transactions but with international fees.",
+      "NZ Police certificate via NZ Ministry of Justice — NZ$30 vs commercial 'fast-track' services charging NZ$200+.",
+      "Don't repatriate KiwiSaver on departure — leave it invested. Withdrawal pre-65 is tax-disadvantaged and the savings keep compounding. Coordinate with your NZ provider for cross-border options.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard E-3 NZ via a major US employer (FAANG, Big 4, finance) with established immigration support",
+        "L-1A / L-1B transfer from a major NZ employer with US office",
+      ],
+      getALawyer: [
+        "Specialty-occupation classification challenges (some roles get questioned)",
+        "EB-1A / EB-1B self-petition with NZ academic / executive record",
+        "Pension transfer planning — KiwiSaver + US retirement-account interaction is specialist",
+        "Spouse / dependent applications with non-US-NZ-passport family members",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // BRAZILIAN → PORTUGAL — family (citizenship via CPLP)
+  // ════════════════════════════════════════════════════════════════════
+  "BR:PT:family": {
+    whatCarriesWeight: [
+      {
+        label: "Brazilian citizenship by descent for Portuguese-heritage applicants",
+        why: "Brazilians with a Portuguese-born parent (or for some routes grandparent) qualify for Portuguese citizenship via direct attribution. Easier than naturalisation — apply at a Portuguese consulate in Brazil OR at an AIMA office in Portugal. Free of charge for direct-line descent under jus sanguinis.",
+      },
+      {
+        label: "CPLP free-movement agreement (Lusophone fast-track)",
+        why: "The Community of Portuguese Language Countries (CPLP) gives Brazilian nationals significant procedural shortcuts at AIMA: simplified residence permit applications, reduced documentation requirements, lower fees, and faster processing than non-CPLP nationals. Portuguese language proof not required (it's your native language).",
+      },
+      {
+        label: "Reagrupamento Familiar (Family Reunification) for spouses",
+        why: "Brazilian spouses of Portuguese citizens / EU citizens / Portuguese residents apply via Reagrupamento Familiar. Requires marriage certificate apostilled (Hague Convention — Brazil signed), proof of cohabitation, sponsor's income evidence. AIMA processing typically 4-9 months in 2024-2025 (massive backlogs reduced from 2022-2023 peak).",
+      },
+      {
+        label: "Brazilian Civil Registry + Portuguese citizenship attribution",
+        why: "If your Portuguese parent registered your birth at the Portuguese consulate in Brazil within the validity window, you may already BE Portuguese (just need passport issuance). Many Brazilians of Portuguese descent don't know this. Check your birth registration before pursuing naturalisation routes.",
+      },
+      {
+        label: "Sephardic Jewish heritage closed 2022",
+        why: "Decree-Law 30-A/2022 closed the Sephardic Jewish descent pathway in March 2022. Applications submitted before that date are still being processed but no new submissions accepted. If you're descended from Portuguese Sephardic Jews (heritage from pre-1497 expulsion), check whether your application was filed in time.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Pathway chosen", prompt: "Direct attribution via Portuguese parent (atribuição), grandparent route (with effective-ties demonstration), spouse via Reagrupamento Familiar, or naturalisation after 5 years residence. Each has different evidence requirements." },
+      { heading: "2. Your Portuguese descent chain", prompt: "For attribution: 'My [parent / grandparent] [Maria Silva] born [date] in [Coimbra / Porto / Lisboa / Açores / Madeira / etc.] emigrated to Brazil in [year]. Their Portuguese birth certificate, marriage certificate to my Brazilian-born [other parent], and Brazilian-side documentation of my birth establish the descent.'" },
+      { heading: "3. Effective ties (for grandparent route)", prompt: "Demonstrate Portuguese cultural / linguistic / community ties — visits to Portugal, family contacts maintained, Portuguese-language usage, participation in Portuguese cultural events in Brazil. Required only for grandparent route." },
+      { heading: "4. Spouse-route family evidence", prompt: "For Reagrupamento Familiar: marriage certificate apostilled, joint financial accounts, cohabitation evidence, Portuguese spouse's tax records + income evidence. Submit at the Portuguese consulate in your Brazilian city of residence." },
+      { heading: "5. Long-term plan", prompt: "Portuguese citizenship = EU citizenship = freedom of movement across 27 EU states + Schengen + EEA. Brazilians dual-nationally permitted. After Portuguese citizenship issuance, you can move to any EU member state under Article 21 TFEU." },
+    ],
+    moneySavingTips: [
+      "Brazilians have the cheapest EU-citizenship-by-descent route — no application fee for direct attribution, only document apostille + sworn translation costs (~R$500-1,500 total).",
+      "Hire a Portuguese lawyer (advogado) in Lisbon or Porto only if you're going the grandparent or naturalisation route. Direct-attribution applications can be filed by the applicant themselves at the consulate (~R$1,000 saving).",
+      "Brazilian Apostille via competent Brazilian Cartório (notary) — typically R$50-200 per document, 1-3 days. Don't pay 'fast-track' services 5x more.",
+      "Portuguese sworn translation (tradução juramentada) — required for Brazilian documents in Portugal. Hire a Portuguese-certified translator (Tradutor Ajuramentado registered with the Ordem dos Advogados de Portugal) — R$50-150/page in Brazil vs €30-50/page in Portugal.",
+      "Once Portuguese citizenship is granted, transfer your Brazilian INSS contributions to Portuguese Segurança Social via the Brazil-Portugal Bilateral Agreement. Reduces double-contribution loss.",
+      "Open an EU bank account remotely via N26 / Revolut / Wise — much faster than waiting for Portuguese citizenship to open a high-street account.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Direct attribution with a Portuguese-born parent — well-documented chain",
+        "Reagrupamento Familiar with clean spousal evidence and Portuguese spouse with stable employment",
+      ],
+      getALawyer: [
+        "Grandparent route requiring 'effective ties' demonstration",
+        "Sephardic Jewish heritage (closed route) — appeals or pending applications",
+        "Naturalisation after 5 years residence with documentation gaps",
+        "Brazilian Civil Registry / Portuguese Civil Registry conflict on your birth registration",
+        "Prior Portuguese visa refusal or AIMA / SEF history",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // MEXICAN → USA — family (IR-1 / CR-1)
+  // ════════════════════════════════════════════════════════════════════
+  "MX:US:family": {
+    whatCarriesWeight: [
+      {
+        label: "IR-1 vs CR-1 — when the 2-year marriage matters",
+        why: "If you've been married 2+ years at the time of I-130 approval: IR-1 (10-year unrestricted green card on arrival). If less than 2 years: CR-1 (2-year conditional green card, requires I-751 Removal of Conditions filed 90 days before expiry). Mexican applicants have the third-largest IR-1/CR-1 cohort after the Philippines and India.",
+      },
+      {
+        label: "I-130 + Mexican consular processing wait times",
+        why: "Form I-130 is the petition US citizen / LPR spouse files. After I-130 approval (currently 7-15 months), the case transfers to NVC then to US Consulate Ciudad Juárez (USCJ) — which handles 100% of Mexican IR-1/CR-1 immigrant visa interviews. Total timeline: 12-24 months from I-130 filing to visa issuance. Mexican applicants face the longest consular wait in the world (Juárez handles ~25% of all US family-immigration interviews globally).",
+      },
+      {
+        label: "Form I-864 Affidavit of Support — the income test",
+        why: "US citizen spouse must show income at 125% of the Federal Poverty Guidelines (or 100% for active military). For 2026: ~US$25,000/year for a 2-person household, ~US$32,000 for 3-person, etc. If income falls short, joint sponsor permitted (any US-citizen or LPR adult earning enough). Most-failed step for Mexican applications when sponsor is mid-income earner.",
+      },
+      {
+        label: "Mexican Constancia de Antecedentes Penales",
+        why: "Mexican PCC issued by the State Procuraduría where you've lived 6+ months. Some states (Jalisco, Nuevo León) have rapid online systems (~7 days); others (rural states) take 2-4 weeks. Apostille via SEGOB for US use — adds 1-2 weeks. Start this 6 months before USCJ interview.",
+      },
+      {
+        label: "Medical exam at USCJ-designated panel physician in Ciudad Juárez",
+        why: "Mexican applicants typically travel to Juárez for medical + interview combined. Designated panel physicians publish their list at travel.state.gov. Vaccination records required + chest X-ray + serology. Costs ~US$300-400. Book 4-6 weeks before interview to allow result processing.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Marriage history + sponsor relationship", prompt: "How and when you met your US-citizen spouse. Marriage location, date, witnesses, family attendance. Mexican-US marriages are routinely scrutinised for genuineness — concrete dates + detailed narrative beat generic 'we fell in love' framing." },
+      { heading: "2. Relationship evidence across categories", prompt: "Financial (joint accounts, shared bills), household (lease / mortgage in both names), social (photos across the relationship, family attendance at events), communication (WhatsApp / iMessage logs during separations). Spread matters more than volume in any one category." },
+      { heading: "3. US spouse's income + Affidavit of Support", prompt: "Sponsor's last 3 years of tax returns, employer letter, current pay stubs (last 3 months). If income at 125% FPG: standalone affidavit. If below: joint sponsor required + their full I-864 + income documentation. Mexican applicants frequently use multi-sponsor structures when household income is borderline." },
+      { heading: "4. Why the US (post-arrival plans)", prompt: "Where you'll live, what your work plans are, kids' schooling. Caseworkers want to see settled-life intent — vague 'we'll figure it out' rings false. State the city, the Mexican spouse's intended work path (eligible for EAD on arrival), kids' school district." },
+      { heading: "5. Travel history + intent honesty", prompt: "Mexican applicants with B1/B2 visa overstays face complex unlawful-presence consequences. Caseworkers verify entry / exit dates via CBP records. Be honest about any overstay — fixable via I-601A provisional waiver in some cases, but lying is automatic refusal." },
+    ],
+    moneySavingTips: [
+      "Don't pay 'notario' / 'consultor de inmigración' for I-130 filing. The USCIS form is well-documented; the typical fee of MXN 30,000-80,000 adds zero value for clean cases. Use a licensed US-side immigration attorney (US$1,500-3,500) only if you have complications.",
+      "Mexican Constancia de Antecedentes Penales: apply at the state Procuraduría online portal (Jalisco, CDMX) — MXN 100-300 vs commercial 'gestor' fees of MXN 1,500+.",
+      "Apostille via SEGOB (Mexico City) takes 1-3 days at the SEGOB Apostille office. Don't pay for express services unless your timeline is < 2 weeks to USCJ interview.",
+      "Medical exam at USCJ-designated panel physician: shop the published list. Costs vary US$280-500 — some panel physicians markup significantly.",
+      "Plan USCJ travel: stay at El Paso (US side, safer + cheaper hotels) vs Juárez side. Cross at Stanton St / Bridge of the Americas for the consulate interview.",
+      "USCIS Immigrant Fee (US$220) — payable after visa issuance, before entering US. Don't forget this — without payment, your green card won't be mailed.",
+      "I-864 joint sponsor: ANY US-citizen / LPR adult can be joint sponsor (parent, sibling, friend), not just family. Don't pay a 'sponsorship service' — friends qualify if their tax returns are clean.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Clean marriage 2+ years, US-citizen spouse with W-2 income at 200%+ FPG, no prior US visa history",
+        "Recent marriage (CR-1) with strong relationship evidence + clean records",
+      ],
+      getALawyer: [
+        "Prior US visa overstay, refusal, or removal in your or your spouse's history",
+        "Conviction (any) — Mexican applicants with even minor convictions need careful waiver work",
+        "Self-employed US spouse with complex tax returns / business income",
+        "Same-sex marriage in a US state that recognises it (federal recognition is automatic but border-state interview comfort varies)",
+        "I-601A provisional waiver for prior unlawful presence — specialist work that's worth the US$3-5k legal fee",
+        "Children from prior relationships requiring K-2 / step-relationship petitions",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // NIGERIAN → UK — work (Skilled Worker / Health & Care)
+  // ════════════════════════════════════════════════════════════════════
+  "NG:GB:work": {
+    whatCarriesWeight: [
+      {
+        label: "Health & Care Worker visa — the Nigerian NHS pipeline",
+        why: "Nigerian doctors, nurses, midwives, paramedics, social-care workers fast-track to the UK via Health & Care Worker visa. Salary threshold £29,000 (vs £38,700 general Skilled Worker), IHS-EXEMPT (£5,175 saving over 5 years), reduced visa fees. NHS Trusts and major care providers actively recruit Nigerian healthcare professionals.",
+      },
+      {
+        label: "General Skilled Worker £38,700 threshold",
+        why: "Nigerian applicants in finance, tech, engineering, consultancy go via standard Skilled Worker. £38,700 minimum (or going rate, whichever higher). Below threshold = refusal. Nigerian Tier 2 banks' London offices (FBN UK, Zenith UK) and Big 4 advisory firms have established sponsorship pipelines.",
+      },
+      {
+        label: "Nigerian PCC + UK background scrutiny",
+        why: "Nigerian Police Character Certificate via Nigerian Police Force (~4-8 weeks). Apply at NPF state command or via online services. UKVI cross-references against international warrant databases. Nigerian applicants with clean records get standard processing; any flag triggers extensive background review.",
+      },
+      {
+        label: "TB test mandatory for stays > 6 months",
+        why: "Nigeria is on the UK TB-test country list. Indo-Trust Lagos and IOM Migration Health Centres in Lagos / Abuja are approved. Costs ~NGN 90,000 (~US$60). Book BEFORE the visa appointment — results need 5-10 days processing.",
+      },
+      {
+        label: "Funds threshold £1,270 maintenance",
+        why: "Skilled Worker requires £1,270 in your own account for 28 consecutive days (or sponsor certification waiving this). Each dependent adds £285 (£855 family of 4). Nigerian banks' GBP-denominated accounts work — UK consulate accepts NGN-equivalent statements with sworn exchange-rate translations.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Visa route + employer", prompt: "Health & Care Worker for healthcare professionals (much faster, IHS-free) or Skilled Worker for everything else. State sponsoring employer + role + start date + salary + occupation SOC code." },
+      { heading: "2. Why the UK", prompt: "Nigerian applicants' reasons: English-language work environment, established Nigerian diaspora (~500k in UK), NHS recruitment for healthcare professionals, post-Brexit relaxation of skilled-worker rules, family ties to UK-based Nigerian community." },
+      { heading: "3. Your qualifications + UK recognition", prompt: "Nigerian MBBS recognised by GMC (after PLAB exam or accepted equivalent). UK Pharmacist requires GPhC registration. Engineers benefit from MICE / ICE chartership. Be explicit about which UK professional-body registration you've completed or are pursuing." },
+      { heading: "4. Financial source + sponsor", prompt: "If self-funded: Nigerian bank statements + employment evidence. If family-sponsored: full family financial documentation. Nigerian Naira → GBP conversion clearly documented with bank stamps." },
+      { heading: "5. Long-term intent", prompt: "Skilled Worker → ILR (Indefinite Leave to Remain) at year 5 → British citizenship at year 6. Nigerian dual citizenship is permitted by both countries. State your honest pathway intent." },
+    ],
+    moneySavingTips: [
+      "Health & Care Worker visa: IHS-EXEMPT saves £5,175 over 5 years vs Skilled Worker. ALWAYS check this route first if you're in nursing / care / paramedical.",
+      "Nigerian Police Character Certificate via NPF Lagos online portal: ~NGN 10,000 vs commercial 'gestors' charging NGN 50,000+.",
+      "TB test at Indo-Trust Lagos: NGN 85,000-95,000 standard. Don't pay 'express' premiums unless your appointment is in < 2 weeks.",
+      "MOI (Medium of Instruction) letter from your Nigerian university bypasses IELTS for English proof. Save NGN 80,000+ on the IELTS fee. Most Nigerian institutions issue MOI letters within 1-2 weeks.",
+      "Priority processing UK Skilled Worker (£500) — worth it if your start date is < 4 weeks out. Standard processing for Nigeria is 3-5 weeks reliably.",
+      "Open a UK bank account before arrival via Monzo / Starling / Revolut — they accept BRP within 24 hours. High-street banks demand 3 months of UK address proof first.",
+      "Nigerian Pension Fund: leave it invested in Nigeria for compound returns. Cross-border pension transfers are complex and often tax-disadvantageous; specialist advice from a Nigerian PFA is essential.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Health & Care Worker visa via NHS Trust with recruiter pipeline (e.g. NHS Professionals)",
+        "Standard Skilled Worker via major employer (Big 4, FAANG, FBN UK, GTB UK) with clean credentials",
+      ],
+      getALawyer: [
+        "Prior UK visa refusal in your or family member's history",
+        "Self-employed / business-owner applicant where sponsor compliance is uncertain",
+        "Innovator Founder route (£50k+ investment requirement)",
+        "Adult Dependent Relative visa for elderly parents — extremely high refusal rate",
+        "Funding from non-immediate-family sources — provenance scrutiny intense for Nigerian applications",
+        "Conviction (any) or immigration violation in your history — Nigerian applications get rigorous review",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // PAKISTANI → UK — family (Spouse / Family Reunion)
+  // ════════════════════════════════════════════════════════════════════
+  "PK:GB:family": {
+    whatCarriesWeight: [
+      {
+        label: "Spouse visa minimum-income requirement: £29,000",
+        why: "From 11 April 2024 the UK Spouse visa minimum income for the UK-based sponsor is £29,000 (rising to £38,700 in 2027). Below threshold = automatic refusal. Most-failed test for Pakistani spouse applications. Sponsor's last 6 months of payslips + employer letter + bank statements must demonstrate this — savings substitution permitted at £88,500+ in cash held 6+ months.",
+      },
+      {
+        label: "Genuineness test — Pakistani applications get the deepest scrutiny",
+        why: "Pakistani spouse visa applications face the most intensive caseworker scrutiny worldwide due to historical arranged-marriage / forced-marriage concerns. Caseworkers cross-check: shared accommodation history, family member statements, telephone records, photographs at culturally-significant events (Eid, Nikkah, family gatherings), and prior visits. Generic photo bundles get refused; spread + specificity wins.",
+      },
+      {
+        label: "Pakistani PCC (Police Character Certificate)",
+        why: "PCC from Pakistani Special Branch (each provincial Police HQ). Lahore, Karachi, Islamabad police HQs process applications. ~2-4 weeks typical; sometimes 6-8. MOFA attestation often required for international use. Some applicants additionally need a Federal Investigation Agency (FIA) clearance — verify before submission.",
+      },
+      {
+        label: "TB test mandatory at IOM-approved clinic",
+        why: "Pakistan on UK TB-test country list. IOM Islamabad / Karachi / Lahore are approved. ~PKR 12,000 (~US$45). Book BEFORE the visa appointment — results need 5-10 days.",
+      },
+      {
+        label: "English language at A1 minimum + relationship evidence",
+        why: "Spouse visa applicant needs CEFR A1 English (basic conversation). IELTS for UKVI or approved equivalent. Some applicants exempt (UK degree, English-medium country citizen, age 65+). Pakistani applicants from English-medium school backgrounds may have MOI letters but should verify acceptance.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Marriage circumstances", prompt: "Date, place, religious + civil ceremony, witnesses, family present. Pakistani marriages often have multiple ceremonies (Nikkah, Walima, etc.) — document each with dates + photos. For arranged marriages: explicitly state how the introduction happened (family, matchmaker, prior acquaintance), and the development from introduction to marriage." },
+      { heading: "2. Relationship history + visits", prompt: "Pre-marriage acquaintance period — phone calls, video chats, family visits. Post-marriage visits by the UK-based spouse to Pakistan, and (where possible) Pakistani spouse's visits to UK via Visitor visa. Document EACH visit with passport stamps + boarding passes + dated photos." },
+      { heading: "3. Sponsor income + Affidavit-of-Support equivalent", prompt: "UK sponsor's last 6 months payslips + P60 + employer letter + bank statements. If self-employed: full SA302 / Tax Calculations + business accounts. Cross-reference each figure against tax records." },
+      { heading: "4. Plans for the UK", prompt: "Where you'll live (joint tenancy / sponsor-owned property / family home), employment plans for the applicant (spouse can work full-time on Spouse visa from day one), children if any, integration plans." },
+      { heading: "5. Long-term intent", prompt: "Spouse visa 2.5-year initial + 2.5-year extension → ILR at year 5 → British citizenship at year 6. Pakistan permits dual citizenship via NICOP / POC. State your honest long-term plan." },
+    ],
+    moneySavingTips: [
+      "Pakistani Special Branch PCC: apply directly at provincial police HQ (~PKR 500). Don't pay 'agents' charging PKR 15,000+.",
+      "MOFA attestation: only needed if requested by UK Home Office or for certain documents. Verify before paying for it — some Pakistani agents over-attest unnecessarily.",
+      "TB test at IOM Karachi / Islamabad: PKR 11,000-13,000 standard. Don't pay 'express' premiums unless under 2 weeks to appointment.",
+      "MOI (Medium of Instruction) letter from your Pakistani institution waives IELTS if your education was English-medium. Save PKR 30,000+ on test fees.",
+      "Don't use 'visa consultant' agencies charging PKR 200,000+ for what an English-speaking applicant can do directly. UKVCAS application portal is well-documented at gov.uk.",
+      "Priority processing UK Spouse visa (£500) — generally NOT worth it for spouse applications (multi-year process anyway). Standard 12-week processing is the norm.",
+      "ILR (Indefinite Leave to Remain) at year 5: £2,885 + Life-in-the-UK Test (£50). Start saving from year 1.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Clean spouse application with UK sponsor at salary £35k+ above threshold and strong relationship evidence",
+        "Second visit visa application after clean prior visit history",
+      ],
+      getALawyer: [
+        "Spouse income at or below threshold with savings-substitution strategy",
+        "Prior UK visa refusal in your or sponsor's history",
+        "Sponsor self-employed or business-owner with complex tax filings",
+        "Adult Dependent Relative application for elderly Pakistani parents — UK's hardest family route",
+        "Conviction (any) in your or family member's history",
+        "Allegations of arranged-marriage / forced-marriage concerns or prior fraud findings",
+        "British dependent children from prior relationships — Best Interests of the Child considerations",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // INDIAN → USA — family (IR-1 / CR-1)
+  // ════════════════════════════════════════════════════════════════════
+  "IN:US:family": {
+    whatCarriesWeight: [
+      {
+        label: "I-130 + Mumbai consular processing",
+        why: "Indian applicants' I-130 (petition by US-citizen / LPR spouse) processing: 7-15 months at USCIS. After approval, consular processing transfers to US Consulate Mumbai (handles most Indian IR-1/CR-1) or US Embassy New Delhi. Mumbai is the world's third-busiest immigrant visa consulate. Total timeline: 12-24 months from I-130 filing.",
+      },
+      {
+        label: "F-2A (LPR spouse) vs IR-1 (US-citizen spouse) wait times",
+        why: "If your US-based spouse is a US citizen: IR-1/CR-1, no visa backlog, current priority dates. If your spouse is an LPR (green card holder): F-2A category with longer waits (currently 2-3 years for India). Many Indian families wait to file F-2A until the US-based spouse naturalises.",
+      },
+      {
+        label: "I-864 Affidavit of Support — Indian-sponsor income",
+        why: "US sponsor income at 125% Federal Poverty Guidelines (~US$25k for 2-person, $32k for 3, $39k for 4). For Indian-American sponsors in California / NY / NJ, this is easily cleared. Mid-income sponsors in lower-cost states may need joint sponsors. Indian applications routinely use joint sponsors from extended family.",
+      },
+      {
+        label: "Indian PCC via passportindia.gov.in",
+        why: "PCC issued by your regional passport office (RPO). Apply online at passportindia.gov.in — appointment-based. ~INR 500 + INR 50 SMS fee. Standard processing 7-21 days; longer if you've moved addresses in the past 5 years (each prior address may require police verification).",
+      },
+      {
+        label: "Medical exam at Mumbai panel physician + COVID-19 + vaccinations",
+        why: "Mumbai consulate has its panel-physician list. Most Indian applicants travel to Mumbai for combined medical + interview. ~INR 5,000-12,000. Schedule 4-6 weeks before interview. Updated vaccinations required (annual flu, COVID-19, MMR, etc.).",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Marriage history + family circumstances", prompt: "Where + when + religious + civil ceremonies. Indian families often have multiple ceremonies (engagement, mehndi, wedding, reception) — document each with dates + photos + attendees. For arranged marriages: explicitly state the matchmaking history — relatives, marriage bureau, online matrimonial site, mutual contacts. Caseworkers expect this for Indian applications and a clear narrative beats vague references." },
+      { heading: "2. Relationship evidence across categories", prompt: "Joint bank accounts (NRO/NRE in India), shared lease/property in India, joint mobile-phone contracts, joint utility bills, family photos at major events (festivals, weddings, birthdays), WhatsApp / iMessage logs during separations. Spread matters — Indian caseworkers want to see normal-married-life evidence, not just one type." },
+      { heading: "3. US sponsor's financial setup", prompt: "Sponsor's W-2 + tax returns last 3 years, current pay stubs, employer letter, bank statements. If sponsor is Indian-American business owner: full Schedule C + business income documentation. Joint sponsors (extended family, friends) common in Indian applications — full I-864 for each." },
+      { heading: "4. Why the US (post-arrival plans)", prompt: "Where you'll live, applicant's employment plans (eligible for EAD on arrival), kids' schooling. Most Indian IR-1 applicants land in California / Texas / NJ / Chicago / Atlanta — concentrated Indian-American communities. State the specific city + neighbourhood." },
+      { heading: "5. Long-term intent", prompt: "Green card on arrival → 5-year citizenship pathway (with continuous physical presence). India does NOT permit dual citizenship — Indian citizens who naturalise as Americans must surrender Indian passport, but can apply for OCI (Overseas Citizen of India) which gives lifelong return rights. State your plan." },
+    ],
+    moneySavingTips: [
+      "Don't pay 'visa consultancy' agencies. The I-130 + DS-260 process is well-documented at travel.state.gov + USCIS. Indian English-speaking applicants can handle 95% of the paperwork directly.",
+      "Indian PCC via passportindia.gov.in: INR 500 vs commercial 'gestor' fees INR 5,000+.",
+      "Mumbai panel physician: shop the published list. Costs vary INR 5,000-12,000 — some panel physicians markup significantly for foreign-currency-earning applicants.",
+      "Apostille via MEA (Ministry of External Affairs) New Delhi: INR 50-100 per document, 3-5 days. Don't pay 'fast-track' services 10x more unless under critical timeline.",
+      "USCIS Immigrant Fee (US$220): payable after visa issuance, before entering US. Easy to forget — green card won't be mailed without it.",
+      "I-864 joint sponsor: ANY US citizen / LPR adult with sufficient income qualifies. Indian applicants often use US-citizen friends or extended family — perfectly legitimate.",
+      "OCI (Overseas Citizen of India) application: file AFTER getting US citizenship via the OCI online portal at ociservices.gov.in. ~US$275 fee + Indian consulate processing.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Clean marriage 2+ years with W-2-earning US-citizen sponsor, clean documentation",
+        "Recent marriage (CR-1) with strong relationship evidence + steady employment",
+      ],
+      getALawyer: [
+        "Prior US visa refusal, overstay, or removal in your or sponsor's history",
+        "Self-employed Indian-American sponsor with complex business income",
+        "F-2A (LPR spouse) with priority-date timing strategy",
+        "Conviction (any) on your or sponsor's record",
+        "Same-sex marriage where you / sponsor face complications in home jurisdiction recognition",
+        "Multi-step strategy: K-1 fiancé + adjustment of status, or B1-B2 → adjustment (specialist domain)",
+        "Children from prior relationships requiring step-relationship petitions",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // CHINESE → CANADA — study (Study Permit + SDS)
+  // ════════════════════════════════════════════════════════════════════
+  "CN:CA:study": {
+    whatCarriesWeight: [
+      {
+        label: "Student Direct Stream (SDS) for Chinese applicants",
+        why: "China is on the SDS country list (since 2024). 20-day processing target vs 8-16 weeks regular. Requires: IELTS 6.0+ overall, GIC (Guaranteed Investment Certificate) CAD$20,635 from Scotiabank / RBC / CIBC / TD / BMO, full first-year tuition paid, upfront medical exam.",
+      },
+      {
+        label: "Provincial Attestation Letter (PAL) + provincial caps",
+        why: "Since 22 January 2024 most applicants need a PAL from the province where they'll study. Ontario, BC, Quebec issue PALs — caps fill by mid-year. Chinese applicants to Ontario universities should secure PAL immediately upon admission. Without PAL, no study permit possible.",
+      },
+      {
+        label: "Letter of Acceptance from DLI",
+        why: "Canada only issues study permits for DLI-listed institutions. Most public universities (U of T, McGill, UBC, McMaster, Waterloo, Western, Queen's) are DLIs. Some private colleges aren't — verify before paying deposit. SDS applications additionally require the institution to be on the Designated Learning Institution list with current good standing.",
+      },
+      {
+        label: "Financial documentation matching the LoA figure",
+        why: "Chinese applicants face additional scrutiny on funding provenance. Bank statements 6+ months, parents' / sponsor's employment evidence + tax records, real-estate holdings + property documentation. Each rupee or yuan should match an underlying source — caseworkers cross-check rigorously.",
+      },
+      {
+        label: "Upfront medical exam (SDS requirement)",
+        why: "Medical at IRCC-approved panel physician BEFORE applying. Beijing, Shanghai, Guangzhou panel physicians published at canada.ca. ~RMB 1,500-2,500. Required for SDS — speeds the overall process by 2-3 weeks.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. SDS / regular Study Permit + why this institution", prompt: "If SDS: 'I'm applying via the Student Direct Stream as a Chinese national, with GIC certificate from Scotiabank for CAD$20,635, IELTS overall 6.5, full first-year tuition paid.' Name the institution + programme + start date." },
+      { heading: "2. Why Canada vs US / UK / Australia / Singapore", prompt: "Common Chinese reasons: more stable immigration policy than recent US, lower tuition than UK / Australia, English-language environment, Post-Graduation Work Permit (PGWP) up to 3 years, Express Entry Canadian Experience Class pathway for permanent residence." },
+      { heading: "3. Why this specific programme + course fit", prompt: "Faculty research, industry placement record, location's industry ecosystem (Waterloo for tech, Vancouver for film, Toronto for finance, Montreal for AI/ML). Specifics: 'Waterloo's Master of Engineering with specific industry placement program in [field] aligns with my undergraduate research at Tsinghua on [topic]'." },
+      { heading: "4. Funding source — provenance documented", prompt: "Each yuan source explained. Parents' employment + ITR-equivalent, real-estate sale proceeds (with property documentation + sale contracts), inheritance, family business revenue. Chinese applications face higher provenance scrutiny — overdocument." },
+      { heading: "5. Post-study intent + Express Entry pathway", prompt: "PGWP (1-3 years post-graduation, unrestricted work) → Canadian Experience Class for permanent residence. Honest answer: 'I plan to use PGWP for 1-2 years industry experience, then apply for permanent residence via Express Entry CEC stream.' Saying 'I'll definitely return to China' rings false when the route is built for the opposite — state honest dual-track intent." },
+    ],
+    moneySavingTips: [
+      "SDS GIC at Scotiabank: CAD$200 setup + CAD$20,635 deposit. Compare against RBC ($150 setup + same deposit) and BMO. The deposit IS refunded upon arrival in Canada — only the setup fee is a real cost.",
+      "Skip 'study consultants' charging RMB 100,000-500,000. The IRCC online application is straightforward for English-speaking Chinese applicants; total DIY cost is CAD$150 fee + GIC + medical + biometrics.",
+      "Provincial Attestation Letter is FREE — request from the province as soon as the LoA arrives. Some Chinese agents charge for this; don't pay.",
+      "Canadian universities offer tiered tuition deposits — pay only the minimum required to trigger your LoA (~CAD$3,000-8,000) rather than full first-year tuition. Save cash flow.",
+      "IELTS One Skill Retake: if you score 6.0/6.0/6.0/5.5, retake JUST the speaking module (CAD$200) rather than the full test. Most Canadian universities + IRCC accept the One Skill Retake.",
+      "Spousal Open Work Permit (SOWP) was tightened in 2024 — only spouses of graduate-level / select professional programmes qualify. Verify before quitting your spouse's Chinese job.",
+      "Open a Canadian bank account remotely via Scotiabank StartRight Programme or RBC NewClient — saves the 'no SIN, no account' loop on arrival.",
+      "International Wire Transfer: standard Chinese bank wire (Bank of China / ICBC / China Citic) — Chinese applicants face USD/CNY transfer caps (US$50k/year individual). Plan multi-step transfers via family members if needed.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "SDS application with clean documentation + DLI institution + IELTS 6.5+ + GIC + clean immigration history",
+        "Direct undergrad → graduate progression at major Canadian university",
+      ],
+      getALawyer: [
+        "Prior visa refusal (Canadian / US / UK / Australian) — refusal history shared across Five Eyes databases",
+        "Funding via family-business income or non-immediate-family sources",
+        "Undergrad from PLA-affiliated Chinese institution — Canada doesn't have an equivalent to US PP10043 but security screening exists",
+        "Pathway college applications (different scrutiny than universities)",
+        "Quebec study permit (separate CAQ + federal permit process)",
+        "Hong Kong / Macau passport-holders (different visa procedures)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // INDIAN → UK — family (Spouse / Family Reunion)
+  // ════════════════════════════════════════════════════════════════════
+  "IN:GB:family": {
+    whatCarriesWeight: [
+      {
+        label: "Spouse visa minimum-income requirement: £29,000",
+        why: "From 11 April 2024 the UK Spouse visa minimum income for the UK-based sponsor is £29,000 (rising to £38,700 in 2027). Below threshold = automatic refusal. Indian applications: sponsor's last 6 months payslips + employer letter + bank statements. Savings substitution permitted at £88,500+ cash held 6+ months.",
+      },
+      {
+        label: "Genuineness test for arranged-marriage context",
+        why: "UK caseworkers don't penalise arranged marriages but DO scrutinise relationship evidence. Document: introduction context (family, matchmaker, mutual contacts), pre-marriage communication, wedding events (multiple ceremonies common), post-marriage cohabitation periods (UK visits by sponsor + Indian-side family visits)." },
+      {
+        label: "Indian PCC via passportindia.gov.in",
+        why: "PCC issued by your regional passport office (RPO). Apply online — appointment-based. ~INR 500. Standard 7-21 days; longer if you've moved addresses in past 5 years.",
+      },
+      {
+        label: "TB test mandatory at IOM-approved clinic",
+        why: "India is on UK TB-test country list. IOM clinics in Delhi (Lodhi Estate), Mumbai (Mumbai Migration Health Centre), Chennai approved. ~INR 5,000. Book BEFORE appointment.",
+      },
+      {
+        label: "English at A1 minimum + MOI alternative",
+        why: "Spouse applicant needs CEFR A1 English. MOI letter from your Indian institution (most engineering / commerce / professional grads) substitutes for IELTS. Save INR 17,000+ on test fees.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Marriage circumstances + family context", prompt: "Date, place, religious + civil ceremonies (Indian marriages often have multiple — engagement, mehndi, wedding, reception). For arranged marriages: explicitly state introduction history. Caseworkers expect this context — be specific rather than vague." },
+      { heading: "2. Relationship evidence", prompt: "Joint bank accounts (NRO/NRE), shared property / lease in India, joint utility bills, family photos at major events, WhatsApp / iMessage logs during separations. Spread matters more than volume in any single category." },
+      { heading: "3. Sponsor income + Affidavit-of-Support equivalent", prompt: "UK sponsor's last 6 months payslips + P60 + employer letter + bank statements. If self-employed: full SA302 + business accounts. Cross-reference each figure against tax records." },
+      { heading: "4. UK arrangements", prompt: "Where you'll live (joint tenancy, sponsor-owned property, parents' home), employment plans (spouse can work full-time from day one), children if any, integration plans." },
+      { heading: "5. Long-term intent", prompt: "Spouse visa 2.5-year initial + 2.5-year extension → ILR year 5 → British citizenship year 6. India doesn't permit dual citizenship — Indian citizens taking British citizenship must surrender Indian passport but can apply for OCI for lifelong return rights." },
+    ],
+    moneySavingTips: [
+      "MOI letter from Indian institution waives IELTS for English proof. Save INR 17,000+. Most institutions issue within 1-2 weeks.",
+      "Indian PCC via passportindia.gov.in: INR 500 vs commercial 'gestors' charging INR 5,000+.",
+      "TB test at IOM Delhi / Mumbai: INR 5,000 standard. Don't pay 'express' premiums.",
+      "Priority processing UK Spouse visa (£500) — generally NOT worth it for spouse applications (multi-year process anyway). Standard 12-week processing is the norm.",
+      "ILR at year 5: £2,885 + Life-in-the-UK Test (£50). Start saving from year 1.",
+      "Indian National Pension Scheme: leave it invested for compound returns. Cross-border pension transfers are complex and often tax-disadvantageous.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Clean spouse application with UK sponsor at salary £40k+ above threshold and strong relationship evidence",
+      ],
+      getALawyer: [
+        "Sponsor income at or below threshold with savings-substitution strategy",
+        "Prior UK visa refusal in your or sponsor's history",
+        "Sponsor self-employed with complex tax filings",
+        "Adult Dependent Relative application for elderly Indian parents — UK's hardest family route",
+        "Conviction or immigration violation in either party's history",
+        "British dependent children from prior relationships — Best Interests of the Child considerations",
+      ],
+    },
+  },
   // ════════════════════════════════════════════════════════════════════
   "PH:US:work": {
     whatCarriesWeight: [

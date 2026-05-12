@@ -5859,6 +5859,379 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // SPANISH → US — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "ES:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "E-1 / E-2 Treaty Trader / Investor via the Spain-US 1903 Treaty",
+        why: "Spain has a long-standing US Treaty of Friendship and General Relations (1903) — E-1 (substantial trade between Spain and US) and E-2 (substantial Spanish investment in US business) are major routes. Spanish companies with strong US presence: Inditex (Zara, Massimo Dutti, Bershka), Telefónica, Iberdrola, Banco Santander, BBVA, Repsol, Acerinox, Indra, Ferrovial, ACS. E-2 has no statutory minimum but $100k+ practical floor for tech / hospitality / restaurant ventures.",
+      },
+      {
+        label: "H-1B Specialty Occupation OR L-1 intracompany via Spanish parent",
+        why: "Standard H-1B (cap-subject lottery, ~30-35% Spanish win rate). L-1A/B (intracompany transfer) bypasses lottery if you've worked 1+ year at Spanish parent. Major Spanish multinationals (Telefónica USA, Banco Santander US, BBVA Compass, Iberdrola Avangrid, Repsol Houston, Inditex US, Ferrovial Cintra, Ebro Foods, Mango USA, Roca Sanitario) have well-trodden L-1 paths.",
+      },
+      {
+        label: "DS-160 + Apostilled Spanish degrees + WES/ECE/AICE credential evaluation",
+        why: "DS-160 online application, then book interview at US Embassy Madrid (Calle Serrano) or US Consulate General Barcelona (Paseo Reina Elisenda). Spanish degree certificates (Grado, Máster, Doctorado) need Apostille via Spanish Ministry of Education or via Spanish MFA — Spain is Hague signatory since 1978. Cost EUR 12-50/document, 5-10 working days. WES, ECE, or AICE foreign credential evaluation for US employer petition or licensure. Spanish Grado (Bologna 4-year) maps to US Bachelor's; Máster to US Master's.",
+      },
+      {
+        label: "US-Spain Totalization Agreement (1988) + tax treaty + Beckham Law return considerations",
+        why: "Get a Certificate of Coverage (CoC) from Spanish Seguridad Social — keeps you on Spanish Seguridad Social for up to 5 years on temporary US assignment, exempt from US Social Security/Medicare. Beyond 5 years switch to US system; Spanish quarters count toward future Spanish pension via Totalization. Tax treaty (1990, protocol 2013) prevents double-taxation. Spanish 'Beckham Law' (Ley de Impatriados) provides preferential tax treatment for 6 years to returning Spaniards working in Spain after living abroad — affects timing of US assignment return.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why the US — sector, employer, Spanish-American community",
+        prompt: "Spanish applicants benefit from specificity. Tech (Silicon Valley, NYC, Boston, Austin, Miami — large Latin tech community), finance (NYC, Miami for Latin American banking), hospitality (NYC, Miami, LA — Spanish chefs and hoteliers especially), entertainment (LA / Miami — Spanish-language production, Sony Music Latin), energy (Houston, Texas). Name your target US employer and Spanish-American community connections.",
+      },
+      {
+        heading: "Your Spanish employer / academic credentials",
+        prompt: "List Spanish employer chronologically, role, salary in EUR with USD equivalent, supervisor name. Spanish universities (Universidad Complutense Madrid, Universidad de Barcelona, Autónoma de Madrid, Pompeu Fabra, Carlos III, ESADE, IESE, IE Business School, Universidad de Navarra, Politécnica de Madrid / Catalunya, ICADE) are well-known to US Embassy Madrid.",
+      },
+      {
+        heading: "Long-term plan — H-1B + green card, E-2 indefinite, or temporary",
+        prompt: "H-1B and L-1 allow dual intent — green-card plans openly stated. E-2 is non-immigrant but renewable indefinitely. Spain permits dual citizenship for Latin American + Sephardic + Filipino + Andorran + Equatorial Guinean + Portuguese citizens; for other nationalities (including American), Spain requires renunciation. State honest plan.",
+      },
+      {
+        heading: "Family + dependants + Spanish school year",
+        prompt: "Spouse on L-2: automatic work authorization since 2023; H-4 spouse needs EAD (limited). E-2 spouse gets E-2D with full work rights. Spanish spouse + children under 21 are derivative. Spanish school year (mid-September to mid-June) — children can transition to US August/September start with minimal disruption. International schools in Madrid (American School, Runnymede College, ICS Madrid) ease US transition.",
+      },
+    ],
+    moneySavingTips: [
+      "DS-160 fee $185 (H-1B/L-1) or $315 (E-1/E-2); pay in EUR at Citibank Spain or Banco Santander — no reciprocity fee for Spanish citizens",
+      "Use WES iGPA Calculator (free online) before paying for full evaluation",
+      "Apostille via Spanish MFA or Ministry of Education: EUR 12-50/document, 5-10 working days; or at Notaría (notary public) for some documents",
+      "Open a US-domiciled bank account with Wise USD, Mercury Business, or Santander US (large Spanish diaspora-friendly branch network in NYC/Miami) before relocation",
+      "Spanish Embassy DC + Consulates (Boston, Chicago, Houston, LA, NYC, Miami, San Juan PR, San Francisco) offer free notarisation for Spanish citizens",
+      "Avoid Spanish 'asesoría de inmigración' charging EUR 3,000-10,000 for H-1B/L-1 — US-based attorneys at Fragomen, Berry Appleman, BAL have flat-fee Spanish services at $2,500-3,500",
+      "Use Wise EUR/USD, Western Union, BBVA, or Santander for remittance — competitive vs traditional bank transfer",
+      "Plan Spanish tax exit carefully — Spain taxes worldwide income for tax-residents (>183 days/year); file final IRPF return for year of departure; Beckham Law return option for eventual reverse migration",
+      "ICEX (Instituto Español de Comercio Exterior) and Spanish-American Chamber of Commerce offer free networking for Spanish entrepreneurs and professionals in US",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard H-1B / L-1 with named US employer, clean record, clear Spanish degree mapping",
+        "DS-160 interview prep at US Embassy Madrid / Consulate Barcelona",
+        "Spouse / dependent derivative applications (H-4, L-2, E-2D)",
+        "Renewal of existing H-1B / L-1 at US Embassy Madrid / Consulate Barcelona during home leave",
+        "PERM-based EB-2 / EB-3 green card (Spanish are current — no per-country backlog)",
+      ],
+      getALawyer: [
+        "E-1 Treaty Trader — substantial trade between Spain and US needs evidentiary support",
+        "E-2 Treaty Investor — substantiality, source-of-funds, 'real and operating' enterprise tests",
+        "EB-1A / EB-1B / O-1 — extraordinary ability",
+        "Concurrent Spanish exit-tax considerations on substantial holdings >€4M",
+        "Prior US visa refusal or US overstay",
+        "Spanish criminal record (drug-related cases — disclosure to USCIS / DOS mandatory)",
+        "Past ETA / Basque political affiliation history (1968-2011 era — sensitive)",
+        "Past Catalan independence (Procés 2017) political affiliation history",
+        "Same-sex spouse — Spain recognised same-sex marriage 2005 (one of earliest); US recognises; derivative visas straightforward",
+        "Dual Spanish-Latin American passport (apply via Spanish passport — usually faster processing)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // FRENCH → CANADA — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "FR:CA:work": {
+    whatCarriesWeight: [
+      {
+        label: "Mobilité francophone — French-speakers' fast-track to Canadian work permit (LMIA-exempt)",
+        why: "Canada strongly recruits French-speaking professionals to support French-language minority communities outside Quebec. 'Mobilité francophone' (formerly French Mobility Worker) is an LMIA-exempt work permit category — Canadian employer simply offers role at NOC TEER 0/1/2/3 with French as the working language. Significantly faster than LMIA-based work permit. French citizens benefit hugely from this — Express Entry French-language draws give 50-extra CRS points + category-based draws since 2023.",
+      },
+      {
+        label: "Express Entry French-language draws + Quebec Skilled Worker Program (PSTQ)",
+        why: "Express Entry CRS points: French-language proficiency (Niveau de compétence linguistique canadien NCLC 7+ via TEF Canada / TCF Canada) adds 25-50 points + access to French-speaking-priority category draws (introduced 2023). Quebec has separate immigration program (PSTQ — Programme de sélection des travailleurs qualifiés) — French-speakers fast-track to Quebec; after 6 months of Quebec residence + B2 French + integration courses, Permanent Resident status possible.",
+      },
+      {
+        label: "WES Educational Credential Assessment + French degree recognition",
+        why: "WES, ICAS, or IQAS evaluation of your French degree — Licence (3-year Bologna) typically maps to Canadian Bachelor's; Master to Master's; Grandes Écoles degrees (Polytechnique, Centrale, HEC, Sciences Po, ENS) typically map to Master's of Engineering / Business / Public Affairs depending on programme. For regulated professions in Quebec specifically: separate Quebec body (Ordre des ingénieurs du Québec, Collège des médecins du Québec, Ordre des comptables professionnels agréés CPA Québec).",
+      },
+      {
+        label: "French Police Certificate + Casier Judiciaire National",
+        why: "French Casier Judiciaire National Bulletin n°3 — free via online service at justice.fr, available within minutes for French residents. For French citizens abroad, slower (1-3 weeks). For every country you've spent 6+ months in (Belgium, Switzerland, Luxembourg, UK, Germany, Spain commonly for French), additional police certificate required.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route — Mobilité francophone, Express Entry, PNP, or Quebec",
+        prompt: "French citizens have unusually many Canadian routes. State explicitly: Mobilité francophone (LMIA-exempt work permit for French-speakers outside Quebec — fastest), Express Entry with French-language draws priority (50 CRS bonus + French-priority draws), Provincial Nominee Program (provinces like Ontario, Manitoba, New Brunswick, Nova Scotia have French-speaking streams), Quebec PSTQ (separate Quebec-only immigration program), or Quebec Mobility (different from rest of Canada).",
+      },
+      {
+        heading: "Your French work history + Grandes Écoles credentials",
+        prompt: "List every French employer with month-precision dates, role, salary in EUR, supervisor name + email. French Grandes Écoles (Polytechnique, Centrale, HEC, ENS, Sciences Po, ENA, Mines, INSA, Télécom Paris, Sorbonne, Paris-Saclay, ENSAE) are well-known to Canadian assessors. Document professional designations: PE / Ingénieur (CTI-accredited engineer), CPA (French Cabinet d'Expertise Comptable), Avocat (Bar admission), Médecin (Conseil de l'Ordre des Médecins).",
+      },
+      {
+        heading: "Settlement plan + Quebec vs rest-of-Canada choice",
+        prompt: "Quebec has separate immigration program with stricter French requirements (B2+ French) but faster permanent residence. Rest of Canada has Express Entry French-language priority. State your target province: Quebec (Montréal / Québec City — strongest French-Canadian community), Ontario (Toronto / Ottawa — large bilingual community), New Brunswick (officially bilingual province — strong French-Canadian welcome), British Columbia (Vancouver Acadian / French community), Alberta (Edmonton French community).",
+      },
+      {
+        heading: "Long-term plan — Canadian citizenship + dual nationality",
+        prompt: "Express Entry / PSTQ leads to PR after qualifying period; Canadian citizenship after 3 years (1,095 days) presence. France permits dual citizenship; Canada permits dual citizenship. State plan: settle in Quebec / Ontario / NB / BC, maintain French citizenship, eventual Canadian citizenship. Mention specific community connections if applicable (French-Canadian universities, Alliance Française, Lycée Français in target city).",
+      },
+    ],
+    moneySavingTips: [
+      "Mobilité francophone work permit fee CAD$155 — employer-side fees minimal compared to LMIA route",
+      "Express Entry profile creation FREE — only pay processing fees at ITA stage (CAD$1,365 main + CAD$1,365 spouse + CAD$230/child)",
+      "WES costs CAD$237 (basic) — common French universities have streamlined verification chains",
+      "TEF Canada or TCF Canada French test: EUR 280-350 in France (Alliance Française centres in Paris, Lyon, Marseille, Bordeaux, Toulouse, Lille, Strasbourg, Nice, Nantes, Rennes, Montpellier, Grenoble)",
+      "French Casier Judiciaire National Bulletin n°3: FREE online at justice.fr — don't pay agents EUR 50+",
+      "Use HSBC France, BNP Paribas, Société Générale, Crédit Agricole for tuition / large remittance — competitive vs Wise for high-volume",
+      "Open Wise CAD, RBC Canada, BMO, Scotiabank, TD Canada Trust account before flying — most accept French passport + Canadian work permit pre-arrival",
+      "France-Canada tax treaty (1995, protocol 2013) prevents double-taxation; CSG/CRDS contributions are NOT US-foreign-tax-creditable (different from France-US) but France-Canada treaty has favourable provisions",
+      "French Embassy DC + Consulates (Boston, Chicago, Houston, LA, NYC, Miami, San Francisco, New Orleans, Atlanta) offer free notarisation for French citizens",
+      "French diaspora in Quebec / Toronto / Vancouver has well-organised support networks: Union des Français du Canada, Conseil Économique et Social Français au Canada, Alliance Française",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Mobilité francophone work permit with cooperating Canadian employer",
+        "Express Entry profile creation, EOI submission, and ITA response (French-language priority draw)",
+        "PNP application via French-speaking provincial stream",
+        "Quebec PSTQ application via MIFI portal",
+        "Canadian citizenship application after 3 years residence",
+      ],
+      getALawyer: [
+        "Previous Canadian visa refusal",
+        "Past US B1-B2 refusal or overstay (IRCC shares with USCIS)",
+        "French criminal record",
+        "Past EU expulsion / public-order ban affecting Canadian entry",
+        "Concurrent French Wegzugsbesteuerung-equivalent (Exit Tax under Article 167 bis CGI) when leaving France with substantial holdings >€800k",
+        "DALF C1/C2 not held by spouse + spouse from non-EU third country",
+        "PACS partner accompanying — Canada recognises PACS as common-law partnership, but Quebec has its own civil-union framework",
+        "Quebec PSTQ vs federal Express Entry strategic choice — significantly different timelines and requirements",
+        "Dual French-other passport (French-Lebanese, French-Algerian, French-Vietnamese common — usually apply via French passport)",
+        "Past French military service evader or conscientious objector status",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // GREEK → DE — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "GR:DE:work": {
+    whatCarriesWeight: [
+      {
+        label: "EU freedom of movement — no work permit needed for Greek citizens",
+        why: "Greece is EU member; Greek citizens have full freedom of movement under TFEU Article 45 — no work permit, no visa, no residence permit required. Simply move to Germany and register with the local Bürgeramt (Anmeldung) within 14 days of arrival. Greek-German worker migration spiked during 2008-2018 Greek crisis (~80,000 Greeks moved to Germany 2010-2015) — significant Greek diaspora in Berlin, München, Hamburg, Stuttgart, Düsseldorf, Frankfurt.",
+      },
+      {
+        label: "Anmeldung + Steuer-ID + Krankenkasse — practical bottlenecks",
+        why: "Within 14 days of arrival, register address at local Bürgeramt — required for everything else. Anmeldung issues Anmeldebescheinigung. With it, Steueridentifikationsnummer arrives by mail in 2-3 weeks. Register with German health insurance (gesetzliche Krankenversicherung — TK, AOK, Barmer, DAK at ~14.6% of salary split with employer; OR private Krankenversicherung above €69,300 salary threshold). Without Krankenkasse, employer cannot run payroll.",
+      },
+      {
+        label: "Greek-German social-security coordination + EFKA / Deutsche Rentenversicherung",
+        why: "Under EU Regulation 883/2004, Greek EFKA (Ενιαίος Φορέας Κοινωνικής Ασφάλισης) contributions and German Rentenversicherung count toward each other. Greek pension claims coordinated with German Rente via A1 form for posted workers (≤24 months) — exempting from German Rentenversicherung. Beyond 24 months, switch to German system; Greek years count toward eventual pension. Greek-German tax treaty (1966) prevents double-taxation; Greek IFTS digital tax system processes Greek tax obligations.",
+      },
+      {
+        label: "Greek qualification recognition — automatic for regulated EU professions",
+        why: "EU Mutual Recognition Directive automatic for: ιατρός (doctor), νοσοκόμα/νοσοκόμος (nurse/midwife), φαρμακοποιός (pharmacist), αρχιτέκτονας (architect), κτηνίατρος (veterinary surgeon). Greek doctor degrees (Πτυχίο Ιατρικής) automatically valid in Germany after Anerkennung formality at Bezirksregierung. Other regulated professions (δικηγόρος lawyer, λογιστής accountant, μηχανικός engineer) require Anerkennung — typically faster for EU/EEA framework.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "No personal statement needed at the border — Greek citizens travel freely",
+        prompt: "Greek-German movement requires no narrative at the border. Travel with Greek passport or Greek δελτίο ταυτότητας (national ID card). For Anmeldung at Bürgeramt: passport/ID, completed Anmeldeformular, Wohnungsgeberbestätigung (landlord's confirmation). Bring these to your appointment.",
+      },
+      {
+        heading: "Settlement plan — German employer, city, integration",
+        prompt: "Plan: which German city (Berlin / München / Hamburg / Stuttgart / Frankfurt / Düsseldorf — large Greek diasporas in NRW Nordrhein-Westfalen, Bayern, Hessen), which sector (automotive Stuttgart-Wolfsburg, finance Frankfurt, tech Berlin-München, healthcare across Germany, hospitality everywhere given large Greek-restaurant presence). Greek-Bavarian community in München is one of Europe's largest.",
+      },
+      {
+        heading: "Long-term plan — German citizenship + retain Greek",
+        prompt: "Germany's 2024 citizenship reform allows dual citizenship — Greek-German dual nationality fully permitted now. Naturalisation after 5 years legal residence (3 years with C1 German + special integration); A1/B1 German required + Einbürgerungstest. Greece permits dual citizenship.",
+      },
+      {
+        heading: "Family + dependants + Greek school options in Germany",
+        prompt: "EU family members travel freely. Greek-Bavarian and Greek-NRW schools (Hellenic Saturday Schools, Griechische Gemeinde) supplement German state schools — strong Greek diaspora community education networks in Stuttgart, München, Düsseldorf, Hamburg.",
+      },
+    ],
+    moneySavingTips: [
+      "EU citizens pay NO immigration fees in Germany — Anmeldung is FREE",
+      "Don't pay 'Greek-German migration consultancies' EUR 1,000-3,000 for paperwork-free EU travel",
+      "Free Anmeldung appointment at Bürgeramt websites — book 2-4 weeks ahead",
+      "A1 form from EFKA Greece: FREE — exempts German Rentenversicherung for up to 24 months",
+      "Open N26, Commerzbank, DKB, Sparkasse account before flying — all accept Greek ID + Greek address",
+      "Free German language courses for EU citizens at Volkshochschule (community college) — A1-B2 German €100-500 (subsidised)",
+      "Integration course (Integrationskurs) for B1 + civic knowledge is FREE for EU citizens needing it for naturalisation",
+      "Greek doctors / nurses in Germany earn EUR 35k-80k+/year — significantly above Greek average; Anerkennung process fast",
+      "Tax treaty Germany-Greece (1966) prevents double-taxation; AADE Greek tax authority and BZSt Germany coordinate",
+      "Greek Embassy Berlin + Consulates (München, Stuttgart, Hamburg, Frankfurt, Köln, Düsseldorf) offer free Greek notarisation for citizens",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "EU freedom of movement entry to Germany",
+        "Standard Anmeldung at Bürgeramt with Greek passport",
+        "Greek doctor / nurse / midwife / pharmacist Anerkennung",
+        "Naturalisation application after 5 years residence",
+        "EU family-member visa for non-EU spouse / children of Greek citizen",
+      ],
+      getALawyer: [
+        "Greek criminal record affecting Anerkennung for regulated profession",
+        "Past German entry ban / Schengen overstay flagged on Greek-side records (pre-EU)",
+        "Non-EU spouse needing EU family-member visa",
+        "Greek pension claim coordination with German Rentenversicherung",
+        "Cyprus-related family member status (Greek-Cypriot vs Cypriot citizen)",
+        "Past EU public-order ban from another member state",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // ETHIOPIAN → US — family
+  // ════════════════════════════════════════════════════════════════════
+
+  "ET:US:family": {
+    whatCarriesWeight: [
+      {
+        label: "Family-based green card via IR-1 / CR-1 / F-2A / F-2B / F-1 / F-3 / F-4",
+        why: "Ethiopians use standard US family-based immigration system. IR-1/CR-1 (spouse of US citizen), IR-2 (child under 21), IR-5 (parent), F-1 / F-2A / F-2B / F-3 / F-4 categories. Ethiopian-American community is concentrated in Washington DC area (largest Ethiopian-origin US community ~250,000), Minneapolis, Atlanta, Los Angeles, Seattle. F-4 sibling petition has ~15+ year backlog for Ethiopia; F-3 ~12+ year; F-2A 'current' status as of 2025 visa bulletin.",
+      },
+      {
+        label: "Ethiopian civil documents + apostille via Ethiopian MFA / Document Authentication and Registration Agency (DARA)",
+        why: "Ethiopia is NOT Hague Apostille signatory. Documents need full legalisation chain: 1) issuing authority (Kebele birth certificate, Wereda marriage certificate, Federal Court divorce decree), 2) Ethiopian Document Authentication and Registration Agency (DARA — formerly Document Authentication), 3) Ethiopian MFA (Foreign Affairs Ministry — Bole), 4) US Embassy Addis Ababa (Entoto Road) verification. Cost ETB 200-1,000/document + USD 25-50. Pre-1991 records often handwritten and may need rectification.",
+      },
+      {
+        label: "Affidavit of Support (I-864) + Ethiopian-American sponsor compliance",
+        why: "US sponsor (citizen or LPR) files Form I-864 — must show income at 125% of Federal Poverty Guidelines. Joint sponsors accepted. Ethiopian-American sponsors should attach: 3 years US tax returns (Form 1040), W-2s, employer letter, bank statements, asset valuations. Ethiopian-American community has well-organized mutual aid through Ethiopian Community Development Council (ECDC), Ethiopian Sports Federation in North America, Tsehai Loves Ethiopia organization.",
+      },
+      {
+        label: "Ethiopian Police Clearance + medical exam at Addis Ababa panel physician",
+        why: "Ethiopian Police Clearance Certificate from Ethiopian Federal Police via online portal (ETB 100-300, 7-21 days). Medical exam at US-designated panel physician in Addis Ababa — most common: Hayat Medical College, St. Paul's Hospital Millennium Medical College, Yekatit 12 Hospital. Cost USD 200-400. Yellow fever vaccination required (Ethiopian children routinely vaccinated — bring carnet de vacunación). Polio booster sometimes required for adults.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your visa category and relationship",
+        prompt: "State explicit visa category and family relationship. IR-1/CR-1 (spouse of US citizen), IR-2 (child under 21), IR-5 (parent), F-1 (unmarried adult child), F-2A (spouse/minor children of LPR), F-2B (unmarried adult children of LPR), F-3 (married children), F-4 (siblings — 15+ year backlog for Ethiopia).",
+      },
+      {
+        heading: "Your relationship narrative",
+        prompt: "For spousal cases, IR-1/CR-1 documents bona fide marriage: when/where/how met (Ethiopia, US, third country), wedding details, photos, joint financial records, joint travel, communication history. CR-1 is 2-year conditional pending I-751; IR-1 is 10-year unconditional. Document Ethiopian wedding traditions (Mahabbet, Melse) carefully — US officers understand Ethiopian wedding customs through Ethiopian-American interpretive frameworks.",
+      },
+      {
+        heading: "Family ties + Ethiopian context",
+        prompt: "Document Ethiopian residence (Addis Ababa / Mekele / Gondar / Bahir Dar / Hawassa / Dire Dawa region level), parents' occupation, siblings, education at Ethiopian universities (Addis Ababa University, Mekele University, Adama Science and Technology University, Bahir Dar University), Ethiopian property with title (Sira Yegna), Ethiopian bank accounts. Ethiopia has had multiple humanitarian crises (Tigray conflict 2020-2022, drought, Eritrean border tensions) — context may be relevant for related family-protection cases.",
+      },
+      {
+        heading: "US sponsor compliance + future plan",
+        prompt: "US sponsor relationship + I-864 capacity. State settlement plan: where you'll live (typically near Ethiopian-American community — DC metro, Minneapolis, Atlanta, Seattle, Los Angeles), work plan (Ethiopian credentials evaluated via WES/ECE), child education plan (US public school enrolment), eventual naturalisation timeline.",
+      },
+    ],
+    moneySavingTips: [
+      "Family-based visa total fee per applicant: I-130 petition $675 + NVC processing $445 + medical $200-400 + I-864 affidavit $120 = typically $1,400-1,800",
+      "Ethiopian-American legal aid: Ethiopian Community Development Council DC, Tsehai Loves Ethiopia, Ethiopian Sports Federation in North America — free or low-cost consultation",
+      "Document legalisation via Ethiopian DARA: ETB 200-1,000/document — don't use 'Addis document service' charging ETB 5,000+",
+      "Don't pay 'asesores migratorios' / 'Ethio migration agencies' USD 5,000-15,000 — USCIS forms are free at uscis.gov; immigration attorney costs $1,500-5,000 max for full I-130 + consular processing",
+      "Translation: certified Amharic/Tigrinya/Oromo to English translation USD 25-50/page",
+      "Medical exam at Hayat Medical, St. Paul's, or Yekatit 12: USD 200-400 — direct booking",
+      "Use Wise USD/ETB, Western Union, World Remit, RIA, or Telebirr for remittance — competitive vs traditional bank transfer; Commercial Bank of Ethiopia and Awash Bank have international branches",
+      "Ethiopian Embassy DC + Consulates (Atlanta, Houston, LA, NYC, Minneapolis, Seattle) offer free notarisation for Ethiopian citizens",
+      "F-4 sibling petition has 15+ year backlog for Ethiopia — start applications NOW if relative may apply later",
+      "Use direct flight Ethiopian Airlines Addis Ababa → Washington Dulles (IAD) — non-stop flagship route for Ethiopian-American immigration journey",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard I-130 petition for spouse / immediate family member with clean record",
+        "I-485 Adjustment of Status (if already in US under valid status)",
+        "Naturalisation (N-400) after 3 years marriage to US citizen or 5 years LPR",
+        "F-1 / F-2A / F-2B / F-3 / F-4 priority date tracking and waiting",
+      ],
+      getALawyer: [
+        "Prior US visa refusal or US overstay",
+        "Ethiopian criminal record (anti-terror Act, drug, fraud)",
+        "Family member with prior US asylum claim (Eritrean separation, Tigray conflict, OLA Oromo Liberation Army, political opposition)",
+        "Adoption-related petition where Ethiopian adoption documentation incomplete (Ethiopia paused intercountry adoptions 2017-2018)",
+        "Same-sex spouse — Ethiopia criminalises same-sex relations under Penal Code; US recognises; documentation chain doesn't exist; refugee claim alternative possible",
+        "Past unauthorised US entry / border crossing (rare for Ethiopians)",
+        "Ethiopian-American sponsor with prior tax delinquency affecting I-864 sponsorship",
+        "Multi-country Ethiopian migration history (Ethiopia → Kenya → Sudan → US complicates beneficiary documentation)",
+        "Eritrean-origin family member (Eritrea and Ethiopia have separate immigration histories — Eritrean asylum claims affect Ethiopian relatives)",
+        "Bringing 18+ dependent or adult dependent relative",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // INDIAN → GERMANY — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "IN:DE:work": {
+    whatCarriesWeight: [
+      {
+        label: "EU Blue Card — preferred route for Indian IT/engineering professionals",
+        why: "Indians are Germany's fastest-growing professional immigrant group (~280,000 Indians in Germany, doubled 2018-2023). EU Blue Card threshold €48,300/year (2024 general) or €43,759 in shortage occupations (IT, STEM, medicine, math, engineering). For IT roles specifically, the threshold is €43,759 even without specific shortage classification — favours Indian software engineers. Processing 4-6 weeks at German Consulate Mumbai (BKC), Chennai (Anna Salai), Bangalore (Lavelle Road), New Delhi (Chanakyapuri), Kolkata (Hastings).",
+      },
+      {
+        label: "Anerkennung — recognition of Indian qualification through Anabin / ZAB",
+        why: "Germany requires formal recognition of Indian degrees through Anabin database. Most major Indian university Bachelor's (IIT, NIT, IIIT, BITS, IISc, Delhi, Mumbai, Madras, Calcutta, Bangalore, Hyderabad, Jadavpur, Anna University, Manipal, VIT) map as H+ (recognised). Lesser-known institutions need ZAB (Zentralstelle für ausländisches Bildungswesen) individual assessment at €200. For regulated professions (medicine, nursing, engineering PE) the Anerkennung is granted by the relevant Länder Anerkennungsstelle.",
+      },
+      {
+        label: "Indian Police Clearance + Apostille via MEA",
+        why: "Indian PCC from passport seva portal (INR 500, 7-21 days). MEA Apostille via e-Sanad portal (Hague signatory since 2005, free or INR 50-200/document). German Consulate India accepts apostilled Indian documents directly. For employment contracts and birth/marriage certificates, separate apostille chain required.",
+      },
+      {
+        label: "German language A1 vs Blue Card no-language requirement",
+        why: "Blue Card doesn't require German at application (B1 needed for Niederlassungserlaubnis after 21 months with A1 or 33 months without). For Skilled Worker route (non-Blue-Card), A2 German typically required. Indian applicants in tech often delay German learning, planning to leave Germany after 3-5 years; those committed to long-term stay should start A1 via Goethe-Institut Mumbai / Bangalore / Chennai / Delhi / Kolkata / Pune / Hyderabad immediately.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why Germany over US, UK, or Canada alternatives",
+        prompt: "Indians have many global options. Germany differentiators: EU passport access after naturalisation, lower cost of living than UK/US/Canadian major cities, world-class engineering / automotive / industrial sector, strong R&D culture, 2024 citizenship reform (5 years for naturalisation, dual citizenship permitted). Name specific German employer (Siemens, SAP, Bosch, BMW, Mercedes-Benz, Volkswagen, Continental, Allianz, Munich Re, Deutsche Bank, Bayer, BASF, Helsing, BioNTech, N26, GetYourGuide) and city.",
+      },
+      {
+        heading: "Your Indian work history + IIT/NIT/professional credentials",
+        prompt: "List every Indian employer chronologically with month-precision dates, role, salary in INR, supervisor + email. IIT / NIT / IIIT / BITS / IISc degrees auto-recognised by Anabin database. Document any Indian professional designations: PEC PE (engineers), MCI registration (doctors), ICAI (accountants), MBBS / MD postgraduate. For German Blue Card, attach degree certificate + Apostille + Anabin H+ status proof.",
+      },
+      {
+        heading: "Family + Indian school options in Germany",
+        prompt: "Spouse on Blue Card derivative has full work rights (one of Germany's best perks for trailing spouses). Children up to 16 automatic; 16-18 with A1 German. Indian schools in Germany: Indian International School Stuttgart, Indian School München (private), Indian Cultural Centres in Berlin / Frankfurt / Hamburg. Many Indian families choose German Realschule / Gymnasium directly for full German curriculum.",
+      },
+      {
+        heading: "Long-term plan — Niederlassungserlaubnis + 2024 citizenship reform",
+        prompt: "Germany's 2024 citizenship reform reduces naturalisation period from 8 to 5 years (3 with C1 German + special integration including civic engagement) and allows dual citizenship (major change — Indians previously had to renounce). State plan: Niederlassungserlaubnis after 21 months Blue Card with A1 German or 33 months without; citizenship after 5 years. India doesn't permit dual citizenship — Indian-Germans must renounce Indian passport at German naturalisation, but can apply for OCI (Overseas Citizen of India) afterward for visa-free India access.",
+      },
+    ],
+    moneySavingTips: [
+      "Blue Card visa fee at German consulates is €75 — pay in INR equivalent at consular bank counter; significantly cheaper than UK Skilled Worker fees",
+      "Goethe-Institut India centres offer A1-B2 German courses at INR 30,000-60,000 total — start before relocation for Niederlassungserlaubnis timeline planning",
+      "Open N26 (online digital bank — accepts Indian passport pre-arrival), Commerzbank, DKB, or Deutsche Bank account; Schufa-Auskunft (€29.95 online) before rental application",
+      "Use ICICI Forex, HDFC Forex, or SBI Foreign Exchange for tuition / relocation transfers; RBI's LRS allows USD 250,000/year outbound",
+      "Don't break Indian EPF (Employees Provident Fund) early — keep contributions; India-Germany Social Security Agreement (effective October 2009) coordinates contributions",
+      "Health insurance: public TK costs same as any other insurer at your income level — don't pay 'health insurance brokers'",
+      "Indian Embassy Berlin + Consulates (München, Hamburg, Frankfurt) offer free notarisation for Indian citizens; Indian-origin Mietverein lawyers in major German cities offer pro-bono advice for first-time Indians",
+      "Avoid Indian 'Germany migration consultancies' charging INR 200,000-1,500,000 for Blue Card — German consulate processes Blue Card directly; only complex cases benefit from German Rechtsanwalt für Migrationsrecht",
+      "Apply for Indian Tax Residency Certificate at Income Tax Department if you'll be German-resident >182 days/year — exempts German income from Indian global-income tax under India-Germany DTAA",
+      "Use Wise INR/EUR, Western Union, MoneyGram, or Remitly for remittance — competitive vs SBI international transfer",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Blue Card with German employment contract above salary threshold",
+        "Skilled Worker Residence Permit with H+ rated Indian Bachelor's and clean record",
+        "Spouse / dependent applications via family reunification (Familiennachzug)",
+        "Permanent residence (Niederlassungserlaubnis) after qualifying period with documented A1/B1 German",
+        "Citizenship application after 5 years under 2024 reform (with C1 German + integration for 3-year fast-track)",
+      ],
+      getALawyer: [
+        "Indian criminal record (NDPS narcotics, dowry, criminal breach of trust)",
+        "Regulated profession recognition (medicine, dentistry, pharmacy, teaching) — Anerkennung process is Länder-specific",
+        "Indian PAN/Aadhaar-based ITR delinquency affecting future German residency renewal",
+        "Switch from Blue Card to self-employment / Freiberufler — different residence-permit category",
+        "Niederlassungserlaubnis with extended absences from Germany (Indian business travel can break the residence chain)",
+        "Family member with prior US / UK / Canadian asylum claim from India affecting good-character assessment",
+        "Dual Indian-OCI status of spouse complicating Familiennachzug documentation",
+        "Indian military / IRS Indian Revenue Service background needing additional security review",
+        "Past Gulf state work history with kafala-system disputes affecting German employer due-diligence",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

@@ -92,8 +92,9 @@ const config: NextConfig = {
       { source: "/team/:path*", destination: "/about", permanent: true },
       { source: "/faqs", destination: "/about", permanent: true },
       { source: "/faqs/:path*", destination: "/about", permanent: true },
-      { source: "/contact", destination: "/about", permanent: true },
-      { source: "/contact/:path*", destination: "/about", permanent: true },
+      // /contact intentionally NOT redirected — we now have our own real
+      // contact page at /contact. The previous WordPress site's contact form
+      // is gone but anyone landing on /contact today should see our page.
 
       // WordPress defaults → home
       { source: "/hello-world", destination: "/", permanent: true },

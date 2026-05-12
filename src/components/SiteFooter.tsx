@@ -4,8 +4,8 @@ import { SITE } from "@/lib/site";
 export function SiteFooter() {
   return (
     <footer className="border-t border-neutral-200 dark:border-neutral-800 mt-16">
-      <div className="mx-auto max-w-6xl px-4 py-10 grid grid-cols-2 sm:grid-cols-4 gap-8 text-sm">
-        <div className="col-span-2">
+      <div className="mx-auto max-w-6xl px-4 py-10 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-8 text-sm">
+        <div className="col-span-2 lg:col-span-2">
           <p className="font-semibold mb-2">{SITE.name}</p>
           <p className="text-neutral-600 dark:text-neutral-400 max-w-md">
             We aggregate official visa information so you can compare options and act on real
@@ -29,7 +29,17 @@ export function SiteFooter() {
             <li><Link href="/methodology" className="hover:underline">Methodology</Link></li>
             <li><Link href="/changelog" className="hover:underline">Changelog</Link></li>
             <li><Link href="/sources" className="hover:underline">Source health</Link></li>
+            <li><Link href="/contact" className="hover:underline">Contact</Link></li>
+          </ul>
+        </div>
+        <div>
+          <p className="font-semibold mb-2">Legal</p>
+          <ul className="space-y-1.5 text-neutral-600 dark:text-neutral-400">
+            <li><Link href="/terms" className="hover:underline">Terms of Service</Link></li>
+            <li><Link href="/privacy" className="hover:underline">Privacy</Link></li>
+            <li><Link href="/cookies" className="hover:underline">Cookies</Link></li>
             <li><Link href="/disclaimer" className="hover:underline">Disclaimer</Link></li>
+            <li><Link href="/disclosure" className="hover:underline">Affiliate disclosure</Link></li>
           </ul>
         </div>
       </div>

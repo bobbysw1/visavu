@@ -6232,6 +6232,370 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // SOUTH AFRICAN → CA — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "ZA:CA:work": {
+    whatCarriesWeight: [
+      {
+        label: "Express Entry + Provincial Nominee Program — South Africans benefit from English-medium education",
+        why: "South Africa sends ~10,000 PR admissions to Canada annually. Express Entry pool (FSW / FST / CEC) uses CRS scoring. South African Bachelor's (3-year vs 4-year — SAQA verification helps clarify) typically maps to Canadian Bachelor's. South Africans benefit from English-medium education (CLB 9+ achievable on IELTS — full points for Canadian Language Benchmark). Provincial Nominee Programs (Ontario OINP, BC, Alberta AAIP, Saskatchewan SINP, Manitoba MPNP, Atlantic AIPP) actively recruit South Africans via tech / healthcare / general skilled streams.",
+      },
+      {
+        label: "LMIA-based work permit OR LMIA-exempt categories",
+        why: "For temporary work permit: most South Africans use LMIA-backed Temporary Foreign Worker Program (employer pays CAD$1,000 LMIA fee). LMIA-exempt options: Intra-Company Transfer (SA parent → Canadian subsidiary — Discovery, MTN, Naspers, Sasol have well-trodden L-1-equivalent paths). South African tech workers often use Global Talent Stream (GTS) for 2-week processing.",
+      },
+      {
+        label: "WES Educational Credential Assessment + IELTS General CLB 9+",
+        why: "WES, ICAS, or IQAS evaluation of your SA degree. South African Bachelor's degrees from English-medium universities (UCT, Wits, Stellenbosch, UJ, UP Pretoria, UKZN, Rhodes, NMU) are recognised as Canadian equivalents. IELTS General typically CLB 9+ for South Africans given native English proficiency — significant CRS boost. PTE Core also accepted (introduced December 2023).",
+      },
+      {
+        label: "SAPS Police Clearance + Canadian health requirement",
+        why: "SAPS Police Clearance from local SAPS station or eHome Affairs (R150-R200, 6-12 weeks turnaround — START EARLY). For every country you've spent 6+ months in (UK, US, AU common for South Africans), additional police certificate required. Canadian medical exam at panel physician in SA (Pretoria, Cape Town, Durban) plus chest X-ray for TB. Cost R2,500-R3,500.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route — Express Entry, PNP, LMIA Work Permit, or Quebec",
+        prompt: "South Africans have many Canadian routes. State explicitly: Express Entry (federal pool — FSW / FST / CEC), Provincial Nominee Program (named province), LMIA-backed Work Permit (employer sponsored), LMIA-exempt Work Permit (intra-company / GTS / French Mobility if applicable), Quebec PSTQ (separate Quebec immigration), Atlantic Immigration Program. Choose route based on your CRS, target province, and employer support.",
+      },
+      {
+        heading: "Your South African work history + professional body numbers",
+        prompt: "List every SA employer (Discovery, MediClinic, Netcare, Life Healthcare, Standard Bank, FirstRand, Sasol, Anglo American, MTN, Vodacom, Naspers) with exact dates, role, salary in ZAR, supervisor + email. Include professional body registrations: SANC PIN (nurses), HPCSA MP/SP/PSY number, ECSA PrEng/CandEng, SAICA membership, SACAA pilot licence.",
+      },
+      {
+        heading: "Settlement plan + funds — proof of CAD$13,757 (1 adult) or scaled up",
+        prompt: "Document SA bank statements (FNB, Standard Bank, Absa, Nedbank, Capitec), SA property liquidation plan, currency conversion considerations (ZAR/CAD volatility means hold equivalent of CAD$15,000+ buffer). Mention Canadian family if applicable.",
+      },
+      {
+        heading: "Long-term plan — Canadian citizenship + retain SA",
+        prompt: "Express Entry → PR → Canadian citizenship after 3 years (4 years if not present 3 cumulative). Canada permits dual citizenship; South Africa permits dual citizenship with prior application via Section 26B Citizenship Act (apply before naturalising to avoid loss of SA passport). Most SA-Canadian dual nationals retain both passports legally.",
+      },
+    ],
+    moneySavingTips: [
+      "Express Entry profile creation FREE — only pay processing fees at ITA stage (CAD$1,365 main + CAD$1,365 spouse + CAD$230/child)",
+      "Use the IRCC's free CRS calculator and Express Entry profile tool — don't pay RCIC CAD$2,000-5,000 unless complex case",
+      "WES costs CAD$237 (basic) or CAD$329 (course-by-course); ICAS / IQAS alternatives",
+      "IELTS General: book via British Council South Africa or IDP — R2,650-R3,000; PTE Core also accepted",
+      "SAPS Police Clearance: apply EARLY (6-12 weeks) — R150-R200; don't pay 'expediting services' R5,000+",
+      "Use SAQA verification (free for SA-side recognition) before Canadian assessing authority",
+      "South African Reserve Bank approval for transfers >R1m — apply via FX desk at FNB, Standard Bank, Absa, or Nedbank; free",
+      "Don't pay 'MARA + Canadian partner' agencies R30,000-100,000 — MARA agents have NO authority on Canadian matters; use Canadian RCIC directly (~CAD$2,000-5,000) or DIY",
+      "Open Wise CAD, RBC, TD Canada Trust, BMO, Scotiabank, CIBC newcomer account before flying — most accept SA passport + Canadian visa pre-arrival",
+      "Negotiate Canadian relocation package — typically CAD$5,000-10,000 for SA hires given higher logistics + airfare cost",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Express Entry / PNP with WES + IELTS 9+ + clean record",
+        "LMIA-backed Work Permit with Canadian employer support",
+        "Dependent applications concurrent with main applicant",
+        "Permanent Residence transition from work permit → PR",
+        "Canadian citizenship application after 3 years residence",
+      ],
+      getALawyer: [
+        "Previous Canadian visa refusal",
+        "Past US B1-B2 refusal or overstay",
+        "South African criminal record (even diversion programme outcome)",
+        "Past UK Tier 4 student visa with TOEIC fraud allegation (2010-2015 mass scandal)",
+        "Apartheid-era political affiliation history (rare but historically sensitive for older applicants)",
+        "Express Entry CRS borderline — strategic optimisation",
+        "Bringing 18+ dependent or adult dependent relative",
+        "Dual SA / other non-Commonwealth passport (visa application from wrong passport)",
+        "Past Australian visa with section 116 cancellation flag",
+        "Past Gulf state work history with kafala-system disputes",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // FILIPINO → JAPAN — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "PH:JP:work": {
+    whatCarriesWeight: [
+      {
+        label: "Specified Skilled Worker (Tokutei Ginō) + Engineer/Specialist routes",
+        why: "Japan has accelerated Filipino recruitment 2019-2024 under both Tokutei Ginō (Specified Skilled Worker, 12 industries, JLPT N4 + skills test required, 5-year initial) and Engineer/Specialist in Humanities/International Services (技術・人文知識・国際業務 — for university-degree-holding Filipinos). About 250,000 Filipinos in Japan as of 2024 (3rd-largest expat group after Chinese and Korean), with strong growth in caregiving (kaigo), construction, food service, hospitality, and manufacturing.",
+      },
+      {
+        label: "Japanese language requirement + JLPT N4 minimum + caregiver-specific testing",
+        why: "Tokutei Ginō i requires JLPT N4 (basic — ~250-300 hours study) + industry skills test. For caregiving (kaigo) role specifically, additional Kaigo Nihongo (caregiver-specific Japanese language test) — addresses Filipino caregivers being a major Japanese policy priority due to aging population. Japan-Philippines Economic Partnership Agreement (JPEPA, 2008) created the caregiver/nurse pathway with subsidised Japanese language training in PH (DMW + JICWELS partnership).",
+      },
+      {
+        label: "POEA / DMW deployment clearance + Japan receiving organization",
+        why: "Filipinos must go through Department of Migrant Workers (DMW, formerly POEA) for overseas deployment — includes pre-departure orientation seminar (PDOS), OEC (Overseas Employment Certificate, valid 60 days), and OWWA (Overseas Workers Welfare Administration) membership. Japan-side: receiving organization must be MOJ (Ministry of Justice) registered as accepting Tokutei Ginō workers. Vietnamese sending model applies — Filipino sending organisations (BLAS-licensed) typically pay caregiver candidate's Japanese language training upfront, deducted from first months' salary.",
+      },
+      {
+        label: "Filipino-Japanese cultural integration + family reunification",
+        why: "Tokutei Ginō i is 5-year initial without family typically; Tokutei Ginō ii (after JLPT N3 + advanced skills test) allows family + longer duration. Engineer/Specialist allows family + path to Permanent Residence (PR) after 5 years standard, 1-3 years via Highly Skilled Professional. Filipino community in Japan concentrated in Tokyo (Ueno area), Yokohama, Osaka, Nagoya, Fukuoka — Filipino Catholic communities provide cultural / spiritual support.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route — Tokutei Ginō, Engineer/Specialist, or other",
+        prompt: "State explicit visa category. Tokutei Ginō i (12 industries, JLPT N4 + skills test, 5-year initial, family not generally allowed during i), Tokutei Ginō ii (after JLPT N3 + advanced skills test, family possible, longer duration, path to PR), Engineer/Specialist (degree-required, family allowed from start, path to PR), JPEPA caregiver/nurse pathway (Japan-Philippines specific).",
+      },
+      {
+        heading: "Your Filipino work history + Japanese language journey",
+        prompt: "List every Philippine employer with month-precision dates, role, salary in PHP, supervisor + contact. Include TIN, SSS, Pag-IBIG, PhilHealth, PRC licence number. Document Japanese language progression: enrolment date in Japanese course (with study hours), JLPT level achieved + certificate, Kaigo Nihongo if caregiver, industry-specific skills test results.",
+      },
+      {
+        heading: "Sending organisation + Japanese receiving organisation",
+        prompt: "Filipino sending organisation (BLAS-licensed agency) name + DMW licence — verify on DMW website. Japanese receiving organisation name + MOJ registration. Reputable Filipino sending agencies: Cuevas International, Bautista International, EDI Staffbuilders International, A1 Healthcare Industry. Don't sign with unlicensed brokers (operating outside DMW oversight).",
+      },
+      {
+        heading: "Long-term plan — Tokutei Ginō ii, return to Philippines, or settlement",
+        prompt: "Tokutei Ginō i is officially temporary (5 years); Tokutei Ginō ii allows family + longer duration + path to PR (after 10 years total residence). State plan: temporary 5-year Tokutei Ginō i + return to Philippines with skills + savings (most common for caregivers), promotion to Tokutei Ginō ii + family settlement, or Engineer/Specialist route to PR.",
+      },
+    ],
+    moneySavingTips: [
+      "Tokutei Ginō visa: receiving employer pays initial visa-related fees (Japan-side); Filipino sending organisation fees regulated under DMW guidelines",
+      "Don't use unlicensed Filipino brokers — illegal under RA 11641 Migrant Workers and Overseas Filipinos Act 1995",
+      "Free Japanese language courses for Tokutei Ginō workers at sending organisation training centres",
+      "JLPT registration in Philippines: PHP 1,000-2,500 (N5) to PHP 5,000-8,000 (N1) at TESDA / Far Eastern University / De La Salle University JLPT centres",
+      "Free pre-departure orientation (PDOS) at OWWA / sending organisation",
+      "Open MUFG, SMBC, Mizuho, or Japan Post Bank account on arrival (with Residence Card)",
+      "Use Western Union, Wise PHP/JPY, PNB Japan, Cebuana Lhuillier, or M Lhuillier for remittance to Philippines",
+      "End of employment: nenkin (national pension) lump-sum refund — claim within 2 years via Japan Pension Service",
+      "Use Philippine Embassy Tokyo / Consulate Osaka for free document attestation",
+      "Tokutei Ginō ii promotion exam: free industry-specific skills test + JLPT N3",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Tokutei Ginō i application via licensed sending organisation + Japanese receiving organisation",
+        "Engineer/Specialist visa for university-degree-holding Filipino",
+        "JLPT N4 + industry skills test preparation",
+        "Status of Residence renewal at regional Immigration Bureau",
+        "Tokutei Ginō i → ii promotion",
+        "Nenkin lump-sum refund on departure",
+      ],
+      getALawyer: [
+        "Past Filipino sending-organisation fraud / overcharging",
+        "Past Japan-side labour dispute (overtime, harassment, contract breach)",
+        "Filipino criminal record (anti-drug, illegal recruitment-victim status)",
+        "Switching Japanese sponsor within Tokutei Ginō",
+        "Bringing same-sex partner — Philippines doesn't legally recognise same-sex marriage federally; Japan doesn't recognise same-sex marriage; no derivative visa path",
+        "Past Japan deportation or overstay",
+        "Complex degree-role mismatch for Engineer/Specialist",
+        "Pregnancy during Tokutei Ginō contract",
+        "Past Saudi / UAE / Qatar work history with kafala disputes affecting Japan receiving organisation due-diligence",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // PORTUGUESE → DE — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "PT:DE:work": {
+    whatCarriesWeight: [
+      {
+        label: "EU freedom of movement — no work permit needed for Portuguese citizens",
+        why: "Portugal is EU member; Portuguese citizens have full freedom of movement under TFEU Article 45 — no work permit, no visa, no residence permit required. Move to Germany and register with Bürgeramt within 14 days. Portuguese-German migration spiked post-2008 Portuguese crisis (~30,000 Portuguese moved 2010-2015) — significant Portuguese diaspora in Berlin, München, Hamburg, Frankfurt, Stuttgart.",
+      },
+      {
+        label: "Anmeldung + Steuer-ID + Krankenkasse",
+        why: "Within 14 days of arrival, register at Bürgeramt. Anmeldebescheinigung + Steueridentifikationsnummer + Krankenkasse registration are practical bottlenecks. Public TK / AOK / Barmer / DAK ~14.6% of salary; private above €69,300 salary threshold.",
+      },
+      {
+        label: "Portuguese-German social-security coordination via EU framework",
+        why: "Under EU Regulation 883/2004, Portuguese Segurança Social and German Rentenversicherung count toward each other (totalization). Portuguese A1 form (FREE via Segurança Social) — exempts German Rentenversicherung for up to 24 months for posted workers. Tax treaty Germany-Portugal (1980, protocol 2003) prevents double-taxation.",
+      },
+      {
+        label: "Portuguese qualification recognition — automatic for regulated EU professions",
+        why: "EU Mutual Recognition Directive automatic for: médico (doctor), enfermeiro/enfermeira (nurse), farmacêutico (pharmacist), arquitecto (architect), veterinário. Other regulated professions (advogado lawyer, contabilista accountant, engenheiro engineer) require Anerkennung — typically faster for EU/EEA framework.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "No personal statement needed at border — Portuguese citizens travel freely",
+        prompt: "Portuguese-German movement requires no narrative. Travel with Portuguese passport or cartão de cidadão (national ID).",
+      },
+      {
+        heading: "Settlement plan — German employer, city, integration",
+        prompt: "Plan: which German city (Berlin / München / Hamburg / Frankfurt / Stuttgart). Portuguese-German diaspora in Hamburg / Berlin / Düsseldorf is strong.",
+      },
+      {
+        heading: "Long-term plan — German citizenship + retain Portuguese",
+        prompt: "Germany's 2024 citizenship reform allows dual citizenship — Portuguese-German dual nationality fully permitted. Portugal permits dual citizenship.",
+      },
+      {
+        heading: "Family + dependants",
+        prompt: "EU family members travel freely. Portuguese schools in Germany supplement German state schools — Hamburg / Berlin Portuguese-Saturday schools exist.",
+      },
+    ],
+    moneySavingTips: [
+      "EU citizens pay NO immigration fees — Anmeldung FREE",
+      "Don't pay 'Portuguese-German migration consultancies' EUR 1,000-3,000",
+      "Free Anmeldung at Bürgeramt websites",
+      "A1 form from Segurança Social Portugal: FREE",
+      "Open N26, Commerzbank, DKB, Sparkasse — all accept Portuguese ID",
+      "Free German language courses at Volkshochschule",
+      "Portuguese doctors / nurses earn EUR 35k-80k+ in Germany",
+      "Tax treaty Germany-Portugal prevents double-taxation",
+      "Portuguese Embassy Berlin + Consulates (Düsseldorf, Hamburg, München, Frankfurt) offer free notarisation",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "EU freedom of movement entry to Germany",
+        "Standard Anmeldung at Bürgeramt",
+        "Portuguese doctor / nurse / midwife / pharmacist Anerkennung",
+        "Naturalisation after 5 years residence",
+      ],
+      getALawyer: [
+        "Portuguese criminal record affecting Anerkennung",
+        "Past German entry ban / Schengen overstay",
+        "Non-EU spouse needing EU family-member visa",
+        "Portuguese pension claim coordination with German Rentenversicherung",
+        "Brazilian-Portuguese dual nationality complications",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // NIGERIAN → CANADA — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "NG:CA:work": {
+    whatCarriesWeight: [
+      {
+        label: "Express Entry + Provincial Nominee Program — Nigerians are Canada's #2 African source",
+        why: "Nigeria is Canada's #2 African source of skilled migrants (~17,000 PR admissions in 2023). Express Entry pool (FSW / FST / CEC) uses CRS scoring. Nigerian Bachelor's degrees from accredited universities (Covenant, OAU Obafemi Awolowo, UI Ibadan, Unilag, UNN, ABU Zaria, FUTA) typically map to Canadian Bachelor's via WES. Provincial Nominee Programs (Ontario, Manitoba, Saskatchewan, Atlantic provinces) actively recruit Nigerian healthcare, IT, and engineering professionals.",
+      },
+      {
+        label: "LMIA-based work permit OR LMIA-exempt categories",
+        why: "Most Nigerians use LMIA-backed TFW Program. LMIA-exempt: Intra-Company Transfer (Nigerian parent → Canadian subsidiary), Global Talent Stream (GTS) for tech roles — 2-week processing.",
+      },
+      {
+        label: "WES Educational Credential Assessment + IELTS General CLB 7+",
+        why: "WES, ICAS, or IQAS evaluation. Nigerian English-medium education means CLB 7-9 achievable. IELTS General typically CLB 7+ for CRS optimisation. PTE Core also accepted.",
+      },
+      {
+        label: "Nigerian Police Clearance + Canadian health requirement",
+        why: "Nigerian PCC from local CID HQ or via online passport portal (NGN 5,000-15,000, 14-30 days). For every country you've spent 6+ months in (UK, Ghana, UAE common for Nigerians), additional police certificate. Canadian medical at panel physician in Lagos / Abuja.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Your route — Express Entry, PNP, LMIA Work Permit",
+        prompt: "State explicitly: Express Entry, PNP (named province), LMIA Work Permit, or LMIA-exempt route.",
+      },
+      {
+        heading: "Your Nigerian work history + professional credentials",
+        prompt: "List every Nigerian employer with exact dates. Include professional body registrations: MCAN (medical), NMC (nursing), COREN (engineers), ICAN (accountants).",
+      },
+      {
+        heading: "Settlement plan + funds CAD$13,757+",
+        prompt: "Document Nigerian bank statements (GTBank, Zenith, Access, UBA, First Bank), CBN-approved currency conversion plan.",
+      },
+      {
+        heading: "Long-term plan — Canadian citizenship",
+        prompt: "Express Entry → PR → Canadian citizenship after 3 years. Nigeria permits dual citizenship; Canada permits dual citizenship.",
+      },
+    ],
+    moneySavingTips: [
+      "Express Entry profile FREE — pay processing fees at ITA stage (CAD$1,365 main + dependents)",
+      "WES CAD$237 — Nigerian universities have varied verification chains",
+      "IELTS General R12,000-R18,000 NGN at British Council Lagos/Abuja",
+      "Nigerian PCC: NGN 5,000-15,000 via online portal — don't pay agents NGN 100,000+",
+      "Use Wise NGN/CAD, World Remit, LemFi, or Sendwave for remittance — competitive vs Nigerian bank international transfer",
+      "Don't pay 'Canada migration agencies' NGN 500,000-5,000,000 — IRCC forms are free; RCIC costs CAD$2,000-5,000",
+      "Open Wise CAD, RBC, BMO, Scotiabank newcomer account before flying",
+      "Negotiate Canadian relocation package — typically CAD$5,000-10,000 for Nigerian hires",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Express Entry / PNP with WES + IELTS + clean record",
+        "LMIA-backed Work Permit",
+        "Dependent applications",
+        "Canadian citizenship application after 3 years",
+      ],
+      getALawyer: [
+        "Previous Canadian visa refusal",
+        "Past US B1-B2 refusal or overstay (Nigerians face higher scrutiny)",
+        "Nigerian criminal record OR pending EFCC / ICPC case",
+        "WAEC/NECO certificate authenticity dispute",
+        "Funding from sponsor outside Nigeria / immediate family",
+        "Family member with prior Canadian / US asylum claim from Nigeria",
+        "Past Ghana / South Africa / UAE / UK travel with overstay flag",
+        "Bringing 18+ dependent",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // EGYPTIAN → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "EG:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from SEVP-certified US school + SEVIS I-901 paid",
+        why: "Egypt sends ~7,000 students to the US annually. Your US institution issues Form I-20 (F-1) or DS-2019 (J-1) once admitted. Pay SEVIS I-901 fee ($350 F-1 / $220 J-1) before booking DS-160. Apply at US Embassy Cairo (5 Tawfik Diab Street) — single consulate handles all of Egypt.",
+      },
+      {
+        label: "Source-of-funds + Egyptian banking + 214(b) ties",
+        why: "Show 1st-year tuition + living costs ($40-80k). Document Egyptian bank statements (CIB Commercial International Bank, NBE National Bank of Egypt, Banque Misr, QNB Al Ahli, AAIB) with USD-equivalent at CBE rate. Strong 214(b) ties: family home with rasid (title deed) in parents' name, Egyptian property, expected return job, family business succession.",
+      },
+      {
+        label: "Egyptian transcripts apostilled (Egypt joined Hague Convention 2024)",
+        why: "Egypt joined Hague Apostille Convention in 2024 — simplified document legalisation. Egyptian Thanawiya Amma + university transcripts need: 1) issuing institution + Egyptian MOE for graduate level, 2) Apostille via Egyptian MFA (Tahrir Square). Replaces older multi-step legalisation chain.",
+      },
+      {
+        label: "Egyptian Police Clearance + DS-160 disclosure",
+        why: "Egyptian Police Clearance from Ministry of Interior or local police (EGP 100-500, 7-14 days). Disclose past detentions including 2013-2014 era political mass arrests if applicable.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this specific US programme over Egyptian alternatives",
+        prompt: "Egypt has strong universities (Cairo, AUC American University in Cairo, Ain Shams, Alexandria, Helwan, Mansoura, MUST, AAST). Explain why US programme offers something unique.",
+      },
+      {
+        heading: "Funding — Egyptian family / business / scholarship",
+        prompt: "Document family contribution EGP X (with bank statement, NTN tax ID, business income tax returns). Egyptian scholarships: Fulbright Egypt, USEFP, Aga Khan Foundation, AmidEast.",
+      },
+      {
+        heading: "Post-graduation plan — return to Egypt",
+        prompt: "State which Egyptian sector: CIB, NBE, banking; Orange Egypt, Vodafone Egypt, Etisalat telecoms; Sawiris-owned Orascom; family business succession.",
+      },
+      {
+        heading: "Family ties + Egyptian military service status (males 18-30)",
+        prompt: "Egyptian compulsory military service for males 18-30. Document service status with kashf el-tagneed (military service certificate).",
+      },
+    ],
+    moneySavingTips: [
+      "F-1 visa fee $185; pay via CIB Egypt or Citibank Egypt with MRV barcode",
+      "Apostille via Egyptian MFA (post-2024 Hague joining): EGP 200-500/document",
+      "Don't pay 'visa consultancy' agencies EGP 5,000-50,000",
+      "Fulbright Egypt (USEFP) — annual cycle, fully funded for grad students",
+      "AmidEast EducationUSA Egypt offers free advising",
+      "Use CIB, NBE, or QNB student remittance — competitive vs retail FX",
+      "WAEC equivalent for Egypt: Thanawiya Amma certificate verification at MOE — free",
+      "Avoid 'visa expediters' for any 221(g) administrative processing — they have no influence",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with clean record, clear funding",
+        "Standard Fulbright Egypt / AmidEast scholarship application",
+        "Renewal of existing F-1 at US Embassy Cairo",
+        "OPT / STEM OPT during/after programme",
+      ],
+      getALawyer: [
+        "Prior US visa refusal",
+        "Egyptian criminal record (anti-terror Act, drugs, Muslim Brotherhood affiliation)",
+        "STEM field with potential SAO sensitivity",
+        "Family member in Egyptian military / Mukhabarat (intelligence) — additional security review",
+        "Past US overstay",
+        "Funding from sponsor outside Egypt / immediate family",
+        "Past 2013-2014 era political arrest / detention",
+        "Unresolved Egyptian military obligation (males 18-30)",
+        "Coptic Christian Egyptian with religious persecution history (sensitive disclosure)",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

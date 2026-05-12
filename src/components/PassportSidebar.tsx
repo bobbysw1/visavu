@@ -8,7 +8,7 @@
  */
 import Link from "next/link";
 import { Globe2, MapPin, Users, Banknote, Languages, Phone, ScrollText, TrendingUp, AlertCircle, Plane } from "lucide-react";
-import { PassportCover } from "./PassportCover";
+import { PassportPresenceCard } from "./PassportPresenceCard";
 import { CountrySilhouette } from "./CountrySilhouette";
 import { Flag } from "./Flag";
 import { nameFor } from "@/lib/countries";
@@ -68,10 +68,9 @@ export function PassportSidebar({
 
   return (
     <aside className="space-y-6">
-      {/* PASSPORT COVER */}
-      <div className="flex justify-center bg-neutral-50 dark:bg-neutral-900/40 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6">
-        <PassportCover iso2={upper} width={200} height={280} />
-      </div>
+      {/* PASSPORT PRESENCE — premium photo-overlaid identity card replacing
+          the previous fake passport-book illustration. */}
+      <PassportPresenceCard iso2={upper} />
 
       {/* COUNTRY OUTLINE — the silhouette cutout you asked for. */}
       <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5">

@@ -2139,6 +2139,361 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // VIETNAMESE → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "VN:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from a SEVP-certified US school + SEVIS I-901 paid",
+        why: "Vietnamese students are the 5th-largest international cohort in the US (~30,000 annually). Your US institution issues Form I-20 (F-1) or DS-2019 (J-1 exchange) once admitted and proof-of-funds verified. Pay SEVIS I-901 fee ($350 F-1 / $220 J-1) BEFORE booking DS-160 — without the SEVIS receipt the consulate rejects the appointment. Vietnamese applicants book at US Consulate General Ho Chi Minh City (Le Duan, District 1) or US Embassy Hanoi (Lang Ha) depending on residence.",
+      },
+      {
+        label: "Strong source-of-funds documentation in VND — the biggest refusal driver",
+        why: "Vietnam has high F-1 refusal rates (~30-40%) primarily due to funding concerns. Show 1st-year tuition + living costs ($40-80k typical). Document Vietnamese bank balance (Vietcombank, BIDV, VietinBank, ACB, Techcombank, MB Bank) with USD-equivalent at SBV rate. Family business funding requires Business Registration Certificate (Giấy phép kinh doanh), tax declarations for last 3 years, and bank statements showing genuine cashflow — not just lump sums dropped in 1 week before interview. Sudden deposits trigger 214(b) refusal.",
+      },
+      {
+        label: "Vietnamese academic transcripts apostilled + notarised translation",
+        why: "Vietnam high-school certificate (Bằng Tốt nghiệp THPT) and university transcripts need Vietnamese Ministry of Foreign Affairs legalisation (Department of Consular Affairs, Hanoi or HCMC sub-office). Apostille is NOT available — Vietnam isn't a Hague Convention signatory for apostille. Instead: notarise the Vietnamese original at Phòng Công chứng, then certified translation at a sworn translator, then consular legalisation by US Embassy/Consulate or by Vietnamese MOFA for incoming use. Cost VND 200,000-500,000 per document.",
+      },
+      {
+        label: "214(b) ties to Vietnam — family, property, return job, post-graduation plan",
+        why: "F-1 is non-immigrant — officer assumes you intend to overstay unless you prove otherwise. Strong Vietnamese ties: family home with Sổ Đỏ (red book / land title) in parents' name, parents' Vietnamese employment (especially government / military / SOE), Vietnamese property (apartment, land), Vietnamese business succession (family company shares allocated to you), expected return job (Vietnamese employer Memorandum of Understanding for post-graduation hire). Officers ask 'what will you do after graduation' — answer should be Vietnam-specific, not 'maybe stay in the US'.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this specific US programme over Vietnamese universities",
+        prompt: "Vietnam has good universities (VNU Hanoi, HCMUS, FTU, NEU, RMIT Vietnam, BUV British University Vietnam). Explain why your US programme offers something unique — research lab, specific professor, industry network (Silicon Valley for CS, NYC for finance, Boston for biotech), specialised programme not available in Vietnam. Reference concrete elements: a faculty publication, a specific course, a lab. Vague 'American education is the best' is a 214(b) refusal trigger.",
+      },
+      {
+        heading: "Funding — Vietnamese family / business structure",
+        prompt: "Quantify: tuition $X, living $Y, total Year 1 $Z. Then show coverage: family contribution VND X (with bank statement and Giấy ủy quyền — power of attorney / sponsorship affidavit), scholarship $Y, savings $Z. If parents own a business, name it, attach Business Registration, tax declarations (Tờ khai thuế), and bank statements showing 12+ months of revenue. Vietnamese consular officers know which industries throw off real cashflow vs which are paper-only — be transparent.",
+      },
+      {
+        heading: "Post-graduation plan — your return to Vietnam",
+        prompt: "F-1 visas explicitly require intent to return. State which Vietnamese sector you'll return to: Vietnamese banks (Vietcombank, BIDV, Techcombank, VPBank), Vietnamese tech (VinAI, Viettel, FPT, VNG), foreign multinational Vietnam offices (Samsung Vietnam, Intel Vietnam, Unilever, Nestlé), or family business succession. If you want OPT (Optional Practical Training) after graduation, briefly mention it but emphasise return.",
+      },
+      {
+        heading: "Family ties remaining in Vietnam",
+        prompt: "List parents (occupation, location — Hanoi / HCMC / Da Nang district level), siblings, grandparents, partner. Mention Vietnamese property — family home Sổ Đỏ in parents' name with you as heir, land in original province (quê), Vietnamese bank accounts you'll maintain. For Vietnamese males 18-25, military service status (Nghĩa vụ Quân sự) is important — show exemption certificate, deferral document, or completed service paper. Undisclosed military deferral can affect future Vietnamese re-entry.",
+      },
+    ],
+    moneySavingTips: [
+      "Apply through US Consulate Ho Chi Minh City — generally faster slot turnover than Hanoi; both consulates can serve any Vietnamese resident",
+      "F-1 visa fee is $185; pay via Citibank Vietnam deposit slip with the MRV barcode — fastest receipting",
+      "Don't pay 'visa consultancy' agencies VND 50-150M for what is a free DS-160 form + interview — they don't influence consular decisions; the interview is the bottleneck",
+      "Vietnamese applicants are eligible for Fulbright Vietnam (~$30,000 + tuition for grad students), USAID-funded scholarships, VEF (Vietnam Education Foundation) for STEM PhDs, Atlantic Philanthropies (legacy), Ford Foundation IFP alumni network",
+      "Many US universities have 'Vietnamese Heritage Scholarships' — Cornell, Stanford, MIT, USC, Texas A&M, Boston College have named Vietnamese-origin endowments; ask the international student office at admission time",
+      "Use VietinBank or BIDV student remittance accounts for tuition transfers — lower FX fees than retail; regulated under SBV educational outflow allowance (no annual cap for tuition with proof of admission)",
+      "Get all transcripts MOFA-legalised in Vietnam before applying — legalisation from outside is 5-10x more expensive and slower",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with clean record, clear funding, strong programme fit",
+        "Standard exchange-programme J-1 through Fulbright Vietnam, AFS, EF, AYUSA, or accredited Vietnamese university partnership",
+        "Renewal of existing F-1 (re-issuance in Vietnam during winter / summer breaks)",
+        "OPT or STEM OPT application during or after the programme",
+      ],
+      getALawyer: [
+        "Prior US visa refusal (any category — B1/B2 tourist refusal is a major red flag for F-1)",
+        "Vietnamese criminal record (even minor — drug, theft, fraud)",
+        "Funding from a sponsor outside Vietnam / family (third-country sponsors face heavy scrutiny)",
+        "Past US overstay or visa flag in your travel history (even old)",
+        "Transfer from another country's F-1 status (SEVIS transfer within US is fine, country-to-country needs care)",
+        "Unresolved Vietnamese military obligation status (males 18-25)",
+        "Family member with prior US asylum claim — even successful claim can affect your non-immigrant intent showing",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // NIGERIAN → US — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "NG:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "I-20 from a SEVP-certified US school + SEVIS I-901 paid",
+        why: "Nigeria sends ~17,000 students to the US annually — the highest in Sub-Saharan Africa. Your US institution issues Form I-20 (F-1) or DS-2019 (J-1) once admitted and proof-of-funds verified. Pay SEVIS I-901 fee ($350 F-1 / $220 J-1) before booking DS-160. Nigerian applicants book at US Embassy Abuja (Diplomatic Drive) or US Consulate General Lagos (Walter Carrington Crescent, Victoria Island). Lagos handles higher F-1 volume; Abuja often has shorter wait times.",
+      },
+      {
+        label: "Source-of-funds + WAEC/NECO certificate authenticity",
+        why: "Nigerian F-1 refusals (~50%+ historically — among the world's highest) cluster around (1) funding gaps and (2) document authenticity concerns. Show 1st-year tuition + living costs ($40-80k). Document Nigerian bank statements (Zenith, GTBank, First Bank, Access, UBA, Stanbic IBTC) with USD-equivalent at CBN I&E window rate. WAEC and NECO certificates need verification — US schools now require scratch-card online verification at waecdirect.org and neco-ng.org. Forged WAEC results are a known refusal trigger; never use a 'verifier service' that promises pass results.",
+      },
+      {
+        label: "Strong 214(b) ties to Nigeria — family, property, return plan",
+        why: "F-1 is non-immigrant. Strong Nigerian ties: family home with Certificate of Occupancy / Governor's Consent, parents' Nigerian employment (especially government, military, oil & gas, banking, big professional services), Nigerian property (Lagos, Abuja, Port Harcourt — with C of O), expected return job (Nigerian employer letter), family business succession. Officers ask 'what will you do after graduation' — answer Nigeria-specific: 'return to family business / Nigerian banking sector / Nigerian university teaching role' beats 'I'll see what opportunities arise'.",
+      },
+      {
+        label: "DS-160 form accuracy + interview confidence",
+        why: "Nigerian applicants face particularly close DS-160 scrutiny on travel history, family ties, and prior visa applications. Be completely truthful — disclose every prior US visa application (even refusals 10 years ago), every prior travel (Ghana, UK, UAE, South Africa visits), and every family member who has emigrated. Hide nothing. Practice interview answers in clear English (Nigerian applicants are at a strong advantage with native English) but avoid memorised scripts.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why this specific US programme over Nigerian or UK alternatives",
+        prompt: "Nigeria has strong universities (Covenant University, University of Ibadan, OAU, UI, UNN, UNILAG, ABU Zaria) and many Nigerians study in UK (LSE, UCL, Manchester) or Ghana (UG, KNUST). Explain why your US programme offers something unique — research lab, specific professor, industry network (Silicon Valley for CS, NYC for finance, Houston for energy, Boston for biotech), specialised programme. Reference concrete elements: faculty publication, specific course, lab.",
+      },
+      {
+        heading: "Funding — Nigerian family / business / sponsor structure",
+        prompt: "Quantify: tuition $X, living $Y, total Year 1 $Z. Then show coverage: family contribution NGN X (with bank statement, sponsor's CAC business registration if business-owner, tax clearance, oil & gas / banking / professional services employment letter). Document at least 12 months of consistent income — F-1 officers know which industries throw off real cashflow vs paper-only. Avoid lump-sum deposits in the 30 days before interview; that's the #1 refusal trigger.",
+      },
+      {
+        heading: "Post-graduation plan — your return to Nigeria",
+        prompt: "F-1 visas explicitly require intent to return. State which Nigerian sector: Nigerian banks (GTBank, Zenith, Access, UBA, FBN), oil & gas (NNPC, Shell, Chevron, Mobil, Total, Seplat), Nigerian tech (Andela, Flutterwave, Paystack, Interswitch, Konga), telecoms (MTN, Glo, Airtel, 9mobile), professional services (PWC, KPMG, Deloitte, EY Nigeria), or family business succession. If you want OPT (Optional Practical Training) briefly mention it but emphasise return to Nigeria.",
+      },
+      {
+        heading: "Family ties remaining in Nigeria",
+        prompt: "List parents (occupation, location — Lagos / Abuja / state level), siblings, partner. Mention Nigerian property — family home with C of O / Governor's Consent in parents' name with you as heir, land in your village/state of origin, Nigerian bank accounts you'll maintain (with Nigerian mobile number for OTP/USSD banking). Mention any obligation in Nigeria — family business board membership, NYSC service deferral (post-graduation 1-year mandatory service is a clear return trigger).",
+      },
+    ],
+    moneySavingTips: [
+      "Apply at US Consulate Lagos OR Embassy Abuja — Abuja often has faster appointment slots than Lagos during peak student-visa season (May-August)",
+      "F-1 visa fee is $185; pay via GTBank or Zenith Bank counter with MRV barcode — both accept USD cash or Naira at CBN rate",
+      "Don't pay 'visa consultancy' agencies ₦500,000-2,000,000 — DS-160 is free online, interview is the bottleneck, and these agencies don't influence consular decisions",
+      "Nigerian applicants are eligible for Fulbright Nigeria (~$30,000 + tuition for grad students), MasterCard Foundation Scholars Program (UC Berkeley, Michigan, McGill, Stanford, etc.), Aliko Dangote Foundation scholarships, MTN Foundation Scholarships, Shell LiveWIRE entrepreneurial scholarships, Tony Elumelu Foundation",
+      "Many US universities have Nigerian-origin scholarship endowments — Harvard, Yale, Stanford, MIT, Cornell, Columbia all have named Nigerian-heritage funds; ask the international student office",
+      "Use online I&E window banks (Stanbic IBTC, Zenith) for tuition transfers — lower FX fees than retail BDC; CBN PTA student allowance is $20,000/quarter with proof of admission",
+      "WAEC/NECO scratch card verification ($30-100) is paid by US school — don't pay any 'verification expediter' a separate fee",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "First-time F-1 / J-1 with clean record, clear funding, verifiable WAEC/NECO, and strong programme fit",
+        "Standard Fulbright, MasterCard Foundation, or named-scholarship J-1 / F-1 application",
+        "Renewal of existing F-1 (re-issuance in Nigeria during winter / summer breaks)",
+        "OPT or STEM OPT application during or after the programme",
+      ],
+      getALawyer: [
+        "Prior US visa refusal (any category — B1/B2 tourist refusal is a major red flag for F-1)",
+        "Nigerian criminal record OR pending EFCC / ICPC case (even minor — disclose to consulate)",
+        "Funding from a sponsor outside Nigeria / immediate family (third-country sponsors trigger fraud scrutiny)",
+        "Past US overstay or visa flag in your travel history",
+        "WAEC/NECO certificate authenticity dispute (re-take or appeal pending)",
+        "Family member with prior US asylum claim from Nigeria — affects 214(b) showing",
+        "Transfer from UK/Canadian student visa to US F-1 — country-to-country SEVIS transfer needs careful handling",
+        "Past Ghana / South Africa / UAE / UK travel with visa overstay flag",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // INDONESIAN → AUSTRALIA — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "ID:AU:study": {
+    whatCarriesWeight: [
+      {
+        label: "Subclass 500 Student Visa + Confirmation of Enrolment (CoE) from a CRICOS provider",
+        why: "Indonesia is Australia's 3rd-largest source of international students (~22,000 enrolments). Your Australian institution issues CoE once you accept the offer and pay initial fees. Apply for Subclass 500 online (AUD$1,600 fee from 1 July 2024, raised from $710 — one of the world's most expensive student visa fees). Indonesian applicants are 'Assessment Level 1' under SSVF since 2023 — the lowest scrutiny tier, no financial bond required if institution is also Streamlined-eligible.",
+      },
+      {
+        label: "Genuine Student (GS) requirement — replaced GTE in March 2024",
+        why: "From 23 March 2024, the Genuine Temporary Entrant (GTE) test is replaced by the Genuine Student (GS) test plus separate immigration-pathway questions. Your statement must address: previous study + work + travel history, course-career link, Australian study benefits vs Indonesian options, and post-graduation plan. Indonesian applicants previously cited GTE high-success route — GS is similar but with explicit acknowledgement of pathway intent: you CAN say you intend to apply for post-study work visa (Subclass 485) and even PR, as long as you genuinely intend the study.",
+      },
+      {
+        label: "OSHC + financial capacity declaration",
+        why: "Overseas Student Health Cover is mandatory for the full visa duration — providers Bupa, Medibank, Allianz, NIB, AHM. Single AUD$650-850/year; family AUD$3,500-5,000/year. Financial capacity from 10 May 2024: AUD$29,710/year living costs (raised from $24,505) + tuition + travel. Indonesian rupiah bank statements (BCA, Mandiri, BNI, BRI, CIMB Niaga, Permata) acceptable; large family-business sponsors should attach NPWP, SIUP, TDP, and 2 years of tax filings.",
+      },
+      {
+        label: "Indonesian academic certificates + notarised translation",
+        why: "Indonesian SMA/SMK diploma (Ijazah) and university transcripts (Daftar Nilai) need notarised translation by a sworn translator (Penerjemah Tersumpah) at the Ministry of Law (Kemenkumham) registry. Apostille via Kemenkumham (Indonesia joined Hague Apostille Convention on 4 June 2022) — replaced the older multi-stage legalisation. Cost IDR 75,000 per document, 3-5 working days at Kemenkumham Jakarta / Surabaya / Medan / Makassar / Denpasar.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why Australia, why this course, why this institution",
+        prompt: "Indonesia has good universities (UI, UGM, ITB, ITS, UNAIR, BINUS, UPH). Explain why your Australian programme offers something unique — Group of Eight research depth, ANU policy network, Melbourne biotech, UQ tropical medicine, USyd business case studies, UTS engineering practice. Reference specific elements: faculty publication, course coursework, industry partnership. Vague 'Australian education is high quality' is a GS refusal trigger.",
+      },
+      {
+        heading: "Course-career link",
+        prompt: "Map your Indonesian background to the Australian course to your post-graduation career. Be specific: 'Bachelor of Accounting from UPH → Master of Professional Accounting at UNSW → return to Indonesia as Big Four senior associate / CFO track at family business / Indonesian government Ministry of Finance.' If you intend to use the Temporary Graduate Visa (485) for post-study Australian work first, state that openly — GS doesn't penalise stated pathway intent.",
+      },
+      {
+        heading: "Funding — Indonesian family / business / scholarship",
+        prompt: "Quantify: tuition AUD$X, living AUD$29,710, total Year 1 AUD$Z. Then show coverage: family contribution IDR X (with bank statement, NPWP tax record, SIUP/TDP business registration if business-owner). LPDP (Lembaga Pengelola Dana Pendidikan) scholarship recipients should attach LPDP letter — it's gold-standard funding evidence. Australia Awards Indonesia scholarship recipients have separate application path.",
+      },
+      {
+        heading: "Your immigration pathway — be honest",
+        prompt: "Indonesian students often pursue Subclass 485 Temporary Graduate Visa (2-5 years post-study work right) and some target PR via Subclass 189/190/491. State this honestly — GS allows expression of pathway intent. Document strong Indonesian ties anyway (family home with sertifikat hak milik, family business succession, returning-job offer) since visa officers still weigh likelihood of return after the temporary work visa expires.",
+      },
+    ],
+    moneySavingTips: [
+      "Subclass 500 visa fee is AUD$1,600 (from 1 July 2024) — no discount available; this fee covers main applicant only, each dependent adds $440 (under 18) or $1,190 (over 18)",
+      "Don't pay Indonesian education agents commission you can avoid — many CRICOS providers (Monash, UNSW, Melbourne, Sydney, ANU, UQ, UTS, Macquarie, RMIT) accept direct applications saving agent fees of AUD$2,000-5,000",
+      "LPDP (government scholarship) covers tuition + living + return flights + visa fee + insurance — apply early in the year (intake closes around July/September); selection is highly competitive",
+      "Australia Awards Indonesia: ~250 scholarships/year for Indonesians, fully funded; priority sectors are health, education, governance, economic recovery",
+      "Bidik Misi continuation programmes can extend to Australian master's via memorandum institutions",
+      "OSHC: don't bundle through agent — compare directly at private health.gov.au site; Bupa and Medibank are typically cheapest single student cover",
+      "PTE Academic test is AUD$355 in Jakarta vs IELTS at AUD$385; Australian universities accept PTE equally — book at British Council / IDP centres",
+      "Use BCA, Mandiri, or BNI student remittance for tuition — lower FX fees than retail money changers; Bank Indonesia educational outflow has no annual cap with admission proof",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard Subclass 500 with clean record, clear LPDP / Australia Awards / family funding, strong GS statement",
+        "Dependent visa applications (spouse + children) concurrent with main applicant",
+        "Subclass 485 Temporary Graduate Visa application after completing 2+ years study",
+        "Course change or institution change within the same visa (notify provider; usually no new visa needed)",
+        "OSHC switch / renewal during visa term",
+      ],
+      getALawyer: [
+        "Prior Australian visa refusal (visitor, study, or work) — refusal grounds carry forward to GS assessment",
+        "Past Australian student visa cancellation (attendance below 80%, course non-progression)",
+        "Indonesian criminal record (even minor — narkotika cases are deal-breakers regardless of disposition)",
+        "Funding from a sponsor outside Indonesia / immediate family",
+        "Past US / UK / Canada visa refusal flagged on DS-160 / IRCC / Home Office records (Australia checks Five Eyes data)",
+        "Family member with prior Australian asylum claim",
+        "Switching from non-CRICOS course to a CRICOS course mid-stream",
+        "Bringing dependants when funding is borderline ($29,710 + dependent additions tightens scrutiny)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // MALAYSIAN → UK — study
+  // ════════════════════════════════════════════════════════════════════
+
+  "MY:GB:study": {
+    whatCarriesWeight: [
+      {
+        label: "Confirmation of Acceptance for Studies (CAS) + UK Student Visa application",
+        why: "Malaysia is the UK's 7th-largest source of international students (~17,000 enrolments). Your UK institution issues CAS once admitted and deposit paid. Apply for the UK Student visa (formerly Tier 4) online — £490 outside UK / £490 IHS at £776/year for students (reduced from £1,035 standard IHS in 2024). Malaysian applicants are 'low-risk nationals' — minimal Genuine Student narrative needed; document collection is lighter than for some other origins.",
+      },
+      {
+        label: "Financial capacity — £1,334/month London or £1,023/month outside London, held 28 consecutive days",
+        why: "From January 2024 living costs raised to £1,334/month for courses in London (£12,006 for 9 months) and £1,023/month outside London (£9,207 for 9 months). Must be held 28 consecutive days in your or parents' personal name (not company account). Document via Malaysian banks: Maybank, CIMB, Public Bank, RHB, Hong Leong, AmBank. PTPTN, MARA, JPA, Khazanah, Yayasan Khazanah, Yayasan Sime Darby scholarship awards count as financial sponsor letters — attach the offer letter and signed agreement.",
+      },
+      {
+        label: "Academic transcripts (SPM/STPM/A-Level/Matrikulasi) + ECCTIS verification",
+        why: "Malaysian SPM, STPM, A-Level (Cambridge), Matrikulasi, and undergraduate degrees are well-known to UK admissions. For visa purposes, your UK school determines whether ECCTIS Statement of Comparability is needed — for SPM/STPM going to UK undergrad, usually not; for international postgrad it's sometimes requested. Cost £140 standard / £210 urgent (5-day). Twinning programmes (e.g., Sunway-Lancaster, KDU-Northumbria) make UK degree completion easier.",
+      },
+      {
+        label: "TB clearance from IOM Malaysia Kuala Lumpur",
+        why: "All Malaysian students applying for UK Student visa for 6+ months need TB clearance from IOM-approved provider in Malaysia: IOM Kuala Lumpur, KPJ Hospital, Subang Jaya Medical Centre, or Sunway Medical Centre. Cost MYR 400-700, valid 6 months. Standard chest X-ray + sputum if indicated; rarely a barrier for Malaysian applicants but always check IOM panel list at gov.uk before booking elsewhere.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why UK over Malaysian, Australian, or US alternatives",
+        prompt: "Malaysia has good universities (UM, USM, UPM, UKM, UTM, Sunway, Taylor's, Monash Malaysia) and many Malaysians study in Australia (Monash, Melbourne) or Singapore (NUS, NTU). Explain why your UK programme offers something unique — Russell Group prestige, specific specialism (LSE economics, UCL biomed, Oxbridge tutorial), professional accreditation (LPC for law, ACA/CIMA for accounting), industry placement.",
+      },
+      {
+        heading: "Course-career link",
+        prompt: "Map your Malaysian background to the UK course to your post-graduation career. Be specific: 'STPM Science → Imperial Mechanical Engineering → Petronas / Shell Malaysia / family engineering business.' For Bumiputera applicants on JPA / Khazanah / Yayasan funding, the bond structure (typically return to Malaysia, work in named sector for 5-10 years) is itself the strongest 'genuine student' evidence — attach the funding agreement.",
+      },
+      {
+        heading: "Funding — Malaysian family / scholarship / PTPTN structure",
+        prompt: "Quantify: tuition £X, living £12,006/£9,207, total Year 1 £Z. Then show coverage: family contribution MYR X (with bank statement, business registration if Bumi business), MARA/JPA/PTPTN/Khazanah/Sime Darby/Petronas/Maybank scholarship documentation. Most Malaysian students combine partial scholarship + parental top-up — show both clearly with 28-consecutive-day bank balance in the appropriate party's name.",
+      },
+      {
+        heading: "Post-graduation plan",
+        prompt: "Most Malaysian scholarship holders are bonded to return to Malaysia — state the bond structure explicitly. If self-funded, you can mention the UK Graduate Route (2-year post-study work right, no sponsor needed) but also document Malaysian ties: family home with grant title (Geran Mukim), parents' Malaysian employment, Malaysian property (KL, Penang, JB), Malaysian business succession.",
+      },
+    ],
+    moneySavingTips: [
+      "UK Student visa fee is £490 + IHS £776/year (student rate, reduced from £1,035 standard) — paid in MYR equivalent at the UKVI portal",
+      "Don't pay 'visa agents' MYR 5,000-15,000 for what's a free UKVI online form + biometric appointment — VFS Global handles biometrics at MYR 300 (KL or Penang centres)",
+      "PTPTN, MARA, JPA, Khazanah, Yayasan Khazanah, Yayasan Sime Darby, Petronas, Bank Negara, Maybank Scholar all fund Malaysian students for UK study — apply through respective portals well before UK application deadline",
+      "Russell Group fee waivers for top SPM/STPM/A-Level scorers — Oxbridge, LSE, UCL, KCL offer Malaysian-eligible scholarships at admission stage (£3,000-10,000/year)",
+      "Use Wise, Maybank2u, or CIMB Clicks for tuition transfers — lower FX fees than retail money changers; Bank Negara has no annual cap on educational outflow with admission proof",
+      "Twinning programmes (Sunway-Lancaster, INTI-Hertfordshire, KDU-Northumbria, HELP-Liverpool) cut UK costs in half — complete first 2 years in Malaysia, last year in UK, save MYR 50,000-150,000",
+      "Apply for the GREAT Scholarship Malaysia (UK Government + UK university partnership, ~£10,000) — separate from institutional scholarships; gov.uk lists eligible universities",
+      "TB clearance: IOM KL is the gold standard but Sunway Medical and Subang Jaya Medical Centre are cheaper (MYR 400-500 vs MYR 700+) and equally accepted",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard UK Student visa with CAS from Russell Group / top-tier institution, clear funding, clean record",
+        "Dependent visa applications (spouse + children if postgrad on 9+ month course)",
+        "Graduate Route post-study work visa application after course completion",
+        "Switching course or institution within UK during study (notify provider; new CAS may be needed)",
+        "Renewal of Student visa for further study in UK (e.g., undergrad → postgrad transition)",
+      ],
+      getALawyer: [
+        "Prior UK visa refusal (study, visit, work) — refusal grounds carry forward",
+        "Past UK overstay or removal (rare for Malaysians, but discovery sinks applications)",
+        "Malaysian criminal record (even minor — drugs is absolute disqualifier under Malaysian and UK frameworks)",
+        "Funding from a sponsor outside Malaysia / immediate family",
+        "Bumiputera JPA scholarship recipient considering breaking the bond (financial + legal implications in Malaysia, separate from UK visa)",
+        "Past Five Eyes visa refusal (US, Canada, Australia, NZ flagged on UKVI database)",
+        "Family member with prior UK asylum claim",
+        "Switching from non-CAS-eligible course mid-stream (e.g., language school to degree)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // KOREAN → US — work
+  // ════════════════════════════════════════════════════════════════════
+
+  "KR:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "E-3 isn't available — H-1B lottery, L-1, O-1, or KORUS-FTA E-2 as primary routes",
+        why: "Korea doesn't have the E-3 treaty visa (Australia exclusive) or the H-1B1 (Chile / Singapore). Korean applicants compete in the standard H-1B cap (March lottery, 85k slots — Korean win rate ~35-40%) or use L-1 intracompany transfer from Korean parent (Samsung, LG, Hyundai, SK, Kia, Naver, Kakao, Coupang) to US sub. KORUS Free Trade Agreement (2012) makes E-2 Treaty Investor accessible — substantial Korean investment in US business, no statutory minimum but $100k+ typical.",
+      },
+      {
+        label: "DS-160 + Apostilled Korean degree + Korean Notary-Office translation",
+        why: "DS-160 online application, then book interview at US Embassy Seoul (Sejong-daero, Jongno-gu — Gwanghwamun area). Korean degrees (학사, 석사, 박사) need Apostille from Korean MOFA (Ministry of Foreign Affairs) at Anguk-dong centre or local provincial Education Office. Cost KRW 1,000-2,000 per document, 2-3 working days. For US licensure (medicine, dentistry, accounting) WES, ECE, or AICE credential evaluation; Korean Saneobjo (industrial-engineering school) often needs course-by-course evaluation.",
+      },
+      {
+        label: "Korean military service status (males 18-35) — Byeong-mu-cheong documentation",
+        why: "All Korean males 18-35 must show resolved military obligation. Hyeong-yeok (completed active duty), Bo-chung-yeok (supplementary service), Yegun (reserves), Myeon-yeok (exempt with documented reason), or Yeon-gi (deferral with valid ground — study abroad, graduate school, athletic / arts achievement). Korean Military Manpower Administration (Byeong-mu-cheong) certificate must be attached to DS-160. Undisclosed military deferral risk: future Korean re-entry restrictions, not US visa, but officers ask.",
+      },
+      {
+        label: "US-Korea Totalization Agreement (2001) + tax treaty",
+        why: "Get a Certificate of Coverage (CoC) from Korean National Pension Service (NPS) — keeps you on Korean Gukmin-Yeongeum for up to 5 years on temporary US assignment, exempt from US Social Security/Medicare. Beyond 5 years switch to US system; Korean quarters count toward future Korean pension via Totalization. Tax treaty (1979, protocol 2006) prevents double-taxation; CSAT / professional certifications and Bachelor's degrees from KAIST, POSTECH, SNU, Yonsei, Korea University, Sungkyunkwan, Hanyang are well-recognised by US employers and consular officers.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "Why the US — sector and employer",
+        prompt: "Korean applicants do well with specificity: tech (Silicon Valley FAANG, AI roles, semiconductor — Intel, TSMC Phoenix, Samsung Austin), finance (NYC banks, fintech), automotive (Detroit, Hyundai Alabama, Kia Georgia), entertainment (LA Korean wave / K-pop crossover), biotech (Boston, NJ, Bay Area). Name your US employer and explain why your Korean background (chaebol experience, KAIST/Seoul Nat'l/POSTECH degree, specific industry exposure) is uniquely valuable.",
+      },
+      {
+        heading: "Your Korean employer / academic credentials",
+        prompt: "List your Korean employer chronologically, role, salary in KRW with USD equivalent, supervisor name + contact. For L-1, document the 12+ month qualifying employment at the Korean parent with role progression — Samsung Electronics → Samsung Semiconductor US, LG Display → LG Innotek Detroit, Hyundai Motor → Hyundai America are common L-1 paths. KAIST / Seoul National / POSTECH / Yonsei / Korea University degrees are well-known to US Embassy Seoul; secondary universities benefit from explicit explanation of programme strength.",
+      },
+      {
+        heading: "Long-term plan — dual citizenship considerations",
+        prompt: "Korea doesn't permit dual nationality for adult naturalisation (with some exceptions for Korean-overseas adoptees and senior professionals over 65 under amended Nationality Act). State your plan: temporary US assignment (return after 3-5 years, retain Korean citizenship), long-term US PR (will need to choose between Korean and US citizenship at naturalisation stage, expect tough decision), or dual-track (Korean-American spouse providing US citizenship for children via jus soli while maintaining Korean parent's citizenship).",
+      },
+      {
+        heading: "Family + dependants",
+        prompt: "Spouse on L-2 has automatic work authorisation since 2023; H-4 spouse needs EAD (limited categories). E-2 spouse gets E-2D with full work rights. Korean spouse + Korean children under 21 are derivative. Mention Korean school year (March-February) when timing relocation — children in elementary / middle / high school in Korea benefit from arrival before September US school start. Korean military deferral for sons in Korea pre-conscription age (under 18) needs careful planning.",
+      },
+    ],
+    moneySavingTips: [
+      "DS-160 fee $185 (H-1B/L-1) or $315 (E-2); pay in KRW at Citibank Korea or Standard Chartered Korea — no reciprocity fee for Korean citizens",
+      "Use WES iGPA Calculator (free online) before paying for full evaluation; many US employers accept Korean-certified transcripts at offer stage",
+      "Open a US-domiciled bank account with Wise USD, Mercury Business, or KEB Hana NY Branch (Korean diaspora-friendly) before relocation",
+      "Korean Embassy DC + Consulates (LA, NYC, SF, Chicago, Houston, Atlanta, Seattle, Boston, Honolulu) offer free notarisation and apostille for Korean citizens — saves $200+ vs US public notaries",
+      "Don't break out of Korean National Pension Service when leaving — under Totalization Agreement you can reactivate later, and contribution years count toward future Gukmin-Yeongeum",
+      "K-ETA reciprocity: now suspended through 2024 for US citizens; if you're a returning Korean with US PR, you may need to use I-551 for Korea re-entry",
+      "Avoid Korean 'visa consultancy' charging KRW 3-5M for H-1B/L-1 — US-based immigration attorneys with Korean desks at Fragomen, Berry Appleman, Tahirih often offer flat-fee Korean services at $2,500-3,500",
+      "Defer Korean Yeon-gum (retirement allowance) partial withdrawal until you confirm US tax residency — early withdrawal triggers Korean ordinary income tax",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard H-1B / L-1 with named US employer, clean record, clear Korean degree mapping",
+        "DS-160 interview prep and document gathering at US Embassy Seoul",
+        "Spouse / dependent derivative applications (H-4, L-2, E-2D)",
+        "Renewal of existing H-1B / L-1 at US Embassy Seoul during home leave",
+        "PERM-based EB-2 / EB-3 green card with cooperating US employer (Koreans are current — no per-country backlog)",
+      ],
+      getALawyer: [
+        "E-2 Treaty Investor — substantiality, source-of-funds, and 'real and operating' enterprise tests are highly evidentiary; Korean chaebol-linked investments need careful structuring",
+        "EB-1A / EB-1B / O-1 — extraordinary ability for Korean researchers / executives / K-pop / entertainment figures",
+        "Concurrent Korean exit tax considerations when leaving with substantial holdings",
+        "Prior US visa refusal or US overstay (even minor)",
+        "Korean criminal record (DUI, drug, theft, anything beyond minor traffic) — disclosure to USCIS / DOS mandatory",
+        "Unresolved Korean military obligation (males 18-35 with active deferral approaching expiry)",
+        "Dual Korean-other passport (e.g., Korean-American adoptee with US citizenship, applying via the wrong passport)",
+        "Same-sex spouse — Korea doesn't recognise same-sex marriage; US recognises it (H-4 / L-2 derivative is fine, but Korean documentation chain may not exist)",
+      ],
+    },
+  },
 };
 
 export function routeAdviceFor(

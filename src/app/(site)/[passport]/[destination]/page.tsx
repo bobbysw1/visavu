@@ -31,15 +31,10 @@ import { SourcesPanel } from "@/components/SourcesPanel";
 import { TravelAdjacentRail } from "@/components/TravelAdjacentRail";
 import { RelocationServicesPanel } from "@/components/RelocationServicesPanel";
 import { EmbassyLocator } from "@/components/EmbassyLocator";
-import { CountryMetricsDashboard } from "@/components/CountryMetricsDashboard";
+import { DestinationSidebar } from "@/components/DestinationSidebar";
+import { VisaOptionsByPurpose } from "@/components/VisaOptionsByPurpose";
 import { assessDifficulty } from "@/lib/difficulty";
-import { ProfileFilter } from "@/components/ProfileFilter";
-import { isProfile, PATHWAY_META, type Profile } from "@/lib/profiles";
-import {
-  classifyAll,
-  sortForProfile,
-  groupByPathway,
-} from "@/lib/profileMatching";
+import { isProfile, type Profile } from "@/lib/profiles";
 import { RelatedRoutesRail } from "@/components/RelatedRoutesRail";
 import { obstaclesFor } from "@/content/obstacles";
 import { COUNTRY_LIST, flagEmoji, nameFor } from "@/lib/countries";
@@ -530,7 +525,7 @@ export default async function Page({
         </>
       )}
 
-      <main className="mx-auto max-w-4xl px-4 py-8" dir={isRtl(locale) ? "rtl" : "ltr"} lang={locale}>
+      <main className="mx-auto max-w-6xl px-4 py-8" dir={isRtl(locale) ? "rtl" : "ltr"} lang={locale}>
         <Breadcrumbs crumbs={crumbs} />
 
         <RouteHero
@@ -572,45 +567,17 @@ export default async function Page({
           </header>
         )}
 
-        <div className="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-5 mb-8">
-          <Suspense fallback={null}>
-            <LookupForm initialPassport={p} initialDestination={d} initialPurpose={purpose} />
-          </Suspense>
-        </div>
-
-        {/* Single-zone banner: highest-severity warning only. The rest move
-            inline into ResultCard's "Show full details" disclosure. */}
+        {/* Highest-severity warning band — sits full-width above the 2-col
+            grid so it can't be missed even if the user scrolls down the
+            options column. */}
         <ResultBannerStack
           obstacles={obstacles}
           policyChanges={policyChangesFor(p, d, purpose)}
           realism={primary ? assessRealism(primary, obstacles, baselineTourismStatus) : null}
         />
 
-        {/* AI-style direct-answer summary — first content the user reads. */}
-        <DirectAnswerCard
-          passportIso2={p}
-          destinationIso2={d}
-          purpose={purpose}
-          options={options}
-          baselineTourismStatus={baselineTourismStatus}
-        />
-
-        {/* Investment-dashboard-style 9-tile country summary. Scannable
-            in <5 seconds: difficulty, processing, PR pathway, salary, COL,
-            tax, healthcare, safety, English proficiency — all the deal-
-            breakers a relocation user filters on. */}
-        <div className="mb-6">
-          <CountryMetricsDashboard
-            destinationIso2={d}
-            difficulty={primary ? assessDifficulty(primary, baselineTourismStatus) : null}
-            processingDaysMin={primary?.processingTimeDaysMin ?? null}
-            processingDaysMax={primary?.processingTimeDaysMax ?? null}
-          />
-        </div>
-
-        {/* High-stakes visa types — extra warning banner above the answer */}
         {category === "long_stay" && (
-          <div className="mb-6 p-4 rounded-lg border border-amber-300 bg-amber-50 dark:bg-amber-950/30 text-sm">
+          <div className="mb-6 p-4 rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-950/30 text-sm">
             <p className="font-semibold mb-1">{PURPOSE_LABEL[purpose]} visas have major life consequences.</p>
             <p className="text-neutral-700 dark:text-neutral-300">
               Long-stay visa decisions affect your right to live, work, study, or remain with
@@ -621,7 +588,7 @@ export default async function Page({
         )}
 
         {category === "official" && (
-          <div className="mb-6 p-4 rounded-lg border border-slate-300 bg-slate-50 dark:bg-slate-900/40 text-sm">
+          <div className="mb-6 p-4 rounded-xl border border-slate-300 bg-slate-50 dark:bg-slate-900/40 text-sm">
             <p className="font-semibold mb-1">Diplomatic visa.</p>
             <p className="text-neutral-700 dark:text-neutral-300">
               Diplomatic visa applications go through the issuing country&apos;s ministry of foreign
@@ -632,209 +599,134 @@ export default async function Page({
         )}
 
         {resolverError && (
-          <div className="rounded-lg border border-amber-300 bg-amber-50 dark:bg-amber-950/30 p-4 text-sm">
+          <div className="rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-950/30 p-4 text-sm mb-6">
             <p className="font-medium mb-1">Lookup is temporarily unavailable.</p>
             <p className="text-neutral-700 dark:text-neutral-300 text-xs">{resolverError}</p>
           </div>
         )}
 
-        {!resolverError && options.length === 0 && (
-          <EmptyStateCard passportIso2={p} destinationIso2={d} purpose={purpose} />
-        )}
-
-        {options.length > 0 && (() => {
-          // Classify every option into a pathway + profile-fit map, then
-          // sort/filter for the selected profile (if any). Group the result
-          // by pathway so Investment / Skilled / Sponsored / etc. each get
-          // their own labelled section — Dubai Golden Visa never sits
-          // beside a UK Skilled Worker visa in a flat list anymore.
-          const classified = classifyAll(options);
-          const { primary, secondary } = sortForProfile(classified, profile);
-          const primaryGroups = groupByPathway(primary);
-          const secondaryGroups = groupByPathway(secondary);
-
-          return (
-            <div className="space-y-6">
-              <ProfileFilter initial={profile} />
-
-              {options.length > 1 && (
-                <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                  {options.length} options available
-                  {profile ? " — sorted for your profile" : ""}.
-                </p>
-              )}
-
-              {primaryGroups.map((group) => {
-                const meta = PATHWAY_META[group.pathway];
-                return (
-                  <section key={group.pathway} aria-labelledby={`pathway-${group.pathway}`}>
-                    <header className="mb-2">
-                      <h3
-                        id={`pathway-${group.pathway}`}
-                        className="text-base font-semibold tracking-tight flex items-center gap-2"
-                      >
-                        {meta.label}
-                        <span className="text-[10px] font-mono font-bold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-                          {group.items.length}
-                        </span>
-                      </h3>
-                      <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-snug max-w-3xl">
-                        {meta.description}
-                      </p>
-                    </header>
-                    <div className="space-y-4">
-                      {group.items.map(({ option: opt }) => (
-                        <ResultCard
-                          key={opt.id}
-                          option={opt}
-                          baselineTourismStatus={baselineTourismStatus}
-                          locale={locale}
-                          userCurrency={userCurrency}
-                          secondaryCurrency={userSecondaryCurrency}
-                        />
-                      ))}
-                    </div>
-                  </section>
-                );
-              })}
-
-              {secondaryGroups.length > 0 && (
-                <details className="group mt-4 rounded-lg border border-dashed border-neutral-200 dark:border-neutral-800 overflow-hidden">
-                  <summary className="cursor-pointer list-none flex items-center justify-between gap-3 px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-900/40 transition text-sm">
-                    <span className="font-medium text-neutral-700 dark:text-neutral-300">
-                      Other routes available (less relevant to your profile)
-                    </span>
-                    <span className="text-xs text-neutral-500 group-open:rotate-180 transition">▾</span>
-                  </summary>
-                  <div className="px-4 py-4 space-y-4 border-t border-neutral-200 dark:border-neutral-800">
-                    {secondaryGroups.map((group) => (
-                      <section key={`sec-${group.pathway}`}>
-                        <h4 className="text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 mb-2">
-                          {PATHWAY_META[group.pathway].label}
-                        </h4>
-                        <div className="space-y-3">
-                          {group.items.map(({ option: opt }) => (
-                            <ResultCard
-                              key={opt.id}
-                              option={opt}
-                              baselineTourismStatus={baselineTourismStatus}
-                              locale={locale}
-                              userCurrency={userCurrency}
-                          secondaryCurrency={userSecondaryCurrency}
-                            />
-                          ))}
-                        </div>
-                      </section>
-                    ))}
-                  </div>
-                </details>
-              )}
-            </div>
-          );
-        })()}
-
-        {options.length > 0 && (
-          <AlertOptIn passportIso2={p} destinationIso2={d} purpose={purpose} />
-        )}
-
-        {/* Deep detail folded behind a single disclosure so the result page
-            no longer feels like an infinite scroll. The summary + dashboard
-            + ResultCard above answer the question; everything in here is
-            for users who want to dig deeper. */}
-        <details className="group mt-8 rounded-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden bg-white dark:bg-neutral-950">
-          <summary className="cursor-pointer list-none flex items-center justify-between gap-3 px-5 py-4 hover:bg-neutral-50 dark:hover:bg-neutral-900/40 transition">
-            <div>
-              <p className="font-semibold text-sm sm:text-base">Application prep, advice &amp; sources</p>
-              <p className="text-xs text-neutral-600 dark:text-neutral-400">
-                Step-by-step checklist, when to hire a lawyer, alternative routes, related country
-                pairs, and the official primary sources behind every claim above.
-              </p>
-            </div>
-            <span className="text-xs text-neutral-500 dark:text-neutral-400 shrink-0 group-open:rotate-180 transition">
-              ▾
-            </span>
-          </summary>
-          <div className="px-5 pb-5 space-y-6 border-t border-neutral-200 dark:border-neutral-800">
-            <div className="pt-5">
-              {/* What you'll need — sorted-by-lead-time document checklist.
-                  Renders for every purpose where advance prep is meaningful.
-                  When we have no option data we fall back to embassy_visa as the
-                  status estimate (long-stay categories always need prep). */}
-              {purpose !== "diplomatic" && primary?.status !== "refused" && (
-                <VisaPrepTimeline
-                  destinationIso2={d}
-                  passportIso2={p}
-                  purpose={purpose}
-                  status={primary?.status ?? (category === "long_stay" ? "embassy_visa" : "e_visa")}
-                />
-              )}
-            </div>
-
-            {/* Free application advice for high-stakes purposes (family, work,
-                study). Includes a personal-statement skeleton, money-saving
-                tips, and when to spend on a real immigration lawyer. */}
-            <VisaApplicationAdvice
-              purpose={purpose}
+        {/* 2-column magazine layout: visa options on the LEFT (the main
+            decision the user is here to make), destination context on
+            the RIGHT (photo, key metrics, official entry portal). The
+            sidebar is sticky on desktop so it stays visible while
+            users scroll a long option list. */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
+          {/* MAIN COLUMN */}
+          <div className="min-w-0 space-y-6">
+            <DirectAnswerCard
               passportIso2={p}
               destinationIso2={d}
-              primaryStatus={primary?.status ?? null}
+              purpose={purpose}
+              options={options}
+              baselineTourismStatus={baselineTourismStatus}
             />
 
-            {showDualHint && easierPassports.length > 0 && (
-              <DualPassportHint destinationIso2={d} options={easierPassports} />
+            {!resolverError && options.length === 0 && (
+              <EmptyStateCard passportIso2={p} destinationIso2={d} purpose={purpose} />
             )}
 
-            <AlternativesPanel
-              passportIso2={p}
-              destinationIso2={d}
-              alternatives={alternatives}
-            />
+            {options.length > 0 && (
+              <VisaOptionsByPurpose
+                options={options}
+                baselineTourismStatus={baselineTourismStatus}
+                passportIso2={p}
+                destinationIso2={d}
+                locale={locale}
+                userCurrency={userCurrency}
+                secondaryCurrency={userSecondaryCurrency}
+              />
+            )}
 
-            {/* Cross-pair internal linking — surfaces ~20 related country
-                pairs so PageRank flows through the deep route graph. */}
-            <RelatedRoutesRail passportIso2={p} destinationIso2={d} purpose={purpose} />
+            {options.length > 0 && (
+              <AlertOptIn passportIso2={p} destinationIso2={d} purpose={purpose} />
+            )}
 
-            {/* Sources & references — primary-source links ARE the value. */}
-            <SourcesPanel passportIso2={p} destinationIso2={d} options={options} />
+            {/* Embassy + VAC locator — only when the visa actually requires
+                an in-person step. Visa-free / eTA / online e-Visa routes
+                don't need it. */}
+            {(primary?.status === "embassy_visa" || primary?.status === "restricted") && (
+              <EmbassyLocator passportIso2={p} destinationIso2={d} />
+            )}
+
+            {/* Deep detail folded behind a single disclosure so the page
+                doesn't feel like an infinite scroll. */}
+            <details className="group rounded-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden bg-white dark:bg-neutral-950">
+              <summary className="cursor-pointer list-none flex items-center justify-between gap-3 px-5 py-4 hover:bg-neutral-50 dark:hover:bg-neutral-900/40 transition">
+                <div>
+                  <p className="font-semibold text-sm sm:text-base">Application prep, advice &amp; sources</p>
+                  <p className="text-xs text-neutral-600 dark:text-neutral-400">
+                    Step-by-step checklist, when to hire a lawyer, alternative routes, related country
+                    pairs, and the official primary sources behind every claim above.
+                  </p>
+                </div>
+                <span className="text-xs text-neutral-500 dark:text-neutral-400 shrink-0 group-open:rotate-180 transition">
+                  ▾
+                </span>
+              </summary>
+              <div className="px-5 pb-5 space-y-6 border-t border-neutral-200 dark:border-neutral-800">
+                <div className="pt-5">
+                  {purpose !== "diplomatic" && primary?.status !== "refused" && (
+                    <VisaPrepTimeline
+                      destinationIso2={d}
+                      passportIso2={p}
+                      purpose={purpose}
+                      status={primary?.status ?? (category === "long_stay" ? "embassy_visa" : "e_visa")}
+                    />
+                  )}
+                </div>
+
+                <VisaApplicationAdvice
+                  purpose={purpose}
+                  passportIso2={p}
+                  destinationIso2={d}
+                  primaryStatus={primary?.status ?? null}
+                />
+
+                {showDualHint && easierPassports.length > 0 && (
+                  <DualPassportHint destinationIso2={d} options={easierPassports} />
+                )}
+
+                <AlternativesPanel
+                  passportIso2={p}
+                  destinationIso2={d}
+                  alternatives={alternatives}
+                />
+
+                <RelatedRoutesRail passportIso2={p} destinationIso2={d} purpose={purpose} />
+
+                <SourcesPanel passportIso2={p} destinationIso2={d} options={options} />
+              </div>
+            </details>
+
+            <RelocationServicesPanel passportIso2={p} destinationIso2={d} purpose={purpose} />
+
+            <TravelAdjacentRail destinationIso2={d} />
           </div>
-        </details>
 
-        {/* Embassy + VAC locator — only when the visa actually requires
-            an in-person step. Visa-free / eTA / online e-Visa routes
-            don't need it. */}
-        {(primary?.status === "embassy_visa" || primary?.status === "restricted") && (
-          <EmbassyLocator passportIso2={p} destinationIso2={d} />
-        )}
+          {/* SIDEBAR — sticky on desktop, top-of-page-after-options on
+              mobile (renders below the main column via order in narrow
+              flex). Carries the destination's photo + facts + key metrics. */}
+          <div className="lg:sticky lg:top-20 lg:self-start">
+            <DestinationSidebar
+              destinationIso2={d}
+              passportIso2={p}
+              difficulty={primary ? assessDifficulty(primary, baselineTourismStatus) : null}
+              processingDaysMin={primary?.processingTimeDaysMin ?? null}
+              processingDaysMax={primary?.processingTimeDaysMax ?? null}
+            />
+          </div>
+        </div>
 
-        {/* Comprehensive seven-category relocation services panel: travel /
-            health insurance, vaccinations, biometrics, medical checks,
-            passport photos, legal. Route-aware filtering. */}
-        <RelocationServicesPanel passportIso2={p} destinationIso2={d} purpose={purpose} />
-
-        {/* Travel-adjacent affiliates (eSIM + flights) — separate from the
-            relocation panel above which handles insurance + legal etc. */}
-        <TravelAdjacentRail destinationIso2={d} />
-
-        <section className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Link
-            href={`/passport/${p.toLowerCase()}`}
-            className="p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-600 transition"
-          >
-            <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-1">
-              Browse other destinations
-            </p>
-            <p className="font-semibold">Where can {nationalityFor(p)} passport holders go?</p>
-          </Link>
-          <Link
-            href={`/destination/${d.toLowerCase()}`}
-            className="p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-600 transition"
-          >
-            <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-1">
-              Other passports visiting {nameFor(d)}
-            </p>
-            <p className="font-semibold">Who needs a visa for {nameFor(d)}?</p>
-          </Link>
-        </section>
+        {/* Mini refine form below the fold — for users who want to switch
+            passport / destination / purpose without scrolling back up. */}
+        <div className="mt-10 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5">
+          <p className="text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 font-semibold mb-3">
+            Try a different route
+          </p>
+          <Suspense fallback={null}>
+            <LookupForm initialPassport={p} initialDestination={d} initialPurpose={purpose} />
+          </Suspense>
+        </div>
 
         <p className="mt-10 text-xs text-neutral-500 italic">
           Informational only. A valid visa permits entry subject to officer discretion at the

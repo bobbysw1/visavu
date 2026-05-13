@@ -231,8 +231,21 @@ type Manifest = Record<
 >;
 
 function queryFor(iso2: string): string {
-  return QUERY_OVERRIDES[iso2] ?? `${nameFor(iso2)} landscape`;
+  // Simple, predictable query format. "Landmark <Country>" returns the
+  // most recognisable visual icon for each country (Eiffel Tower for FR,
+  // Sydney Opera House for AU, Big Ben for GB) without our editorial
+  // overrides nudging Pexels toward niche shots.
+  //
+  // Compound country names ("United Kingdom", "United States") work fine
+  // — Pexels does keyword-rather-than-phrase matching on these queries.
+  const name = nameFor(iso2);
+  return `landmark ${name}`;
 }
+
+// Kept for reference / fallback only — not currently consulted. If
+// "landmark X" returns no usable photos for a small country, you can
+// re-enable the lookup below by chaining `QUERY_OVERRIDES[iso2] ?? `.
+void QUERY_OVERRIDES;
 
 function loadManifest(): Manifest {
   if (!existsSync(MANIFEST_PATH)) return {};

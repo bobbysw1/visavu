@@ -60,9 +60,11 @@ export function PassportPresenceCard({
         <div className="absolute inset-0 bg-gradient-to-br from-slate-700 via-slate-800 to-slate-950" />
       )}
 
-      {/* Three-stop overlay: subtle dim across the whole image, dense
-          dark band at the bottom for the text block. */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/20 to-black/85" />
+      {/* Targeted overlays only where text sits — top edge for the
+          "Mobility identity" eyebrow + ISO code badge, bottom edge for
+          the country name. Middle of the photo stays untouched. */}
+      <div className="absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-black/55 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
 
       {/* Top row: ISO code badge (top-right), Visavu wordmark (top-left).
           Treats this like the corner of a boarding pass / travel card. */}

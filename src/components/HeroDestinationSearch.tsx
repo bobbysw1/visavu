@@ -41,9 +41,16 @@ export function HeroDestinationSearch() {
         className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl p-5 sm:p-7"
       >
         <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-blue-700 dark:text-blue-300 mb-4">
-          Where do you want to go?
+          What visa do you need?
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_auto] gap-3 items-end">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_auto] gap-3 items-end">
+          <CountryCombobox
+            label="Your passport"
+            mode="nationality"
+            value={passport}
+            onChange={setPassport}
+            placeholder="e.g. British"
+          />
           <CountryCombobox
             label="Destination"
             mode="country"
@@ -51,13 +58,6 @@ export function HeroDestinationSearch() {
             onChange={setDestination}
             placeholder="Type a country — Portugal, Japan, Canada…"
             required
-          />
-          <CountryCombobox
-            label="Your passport (optional)"
-            mode="nationality"
-            value={passport}
-            onChange={setPassport}
-            placeholder="e.g. British"
           />
           <button
             type="submit"

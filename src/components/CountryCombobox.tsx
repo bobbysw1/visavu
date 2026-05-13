@@ -6,6 +6,12 @@ import { nationalityFor } from "@/lib/nationalities";
 
 type Mode = "country" | "nationality";
 
+// Surfaced at the top of the dropdown when the input is empty. The
+// "Popular" section gives users a one-tap path to the most-searched
+// countries without scrolling the full alphabetical list.
+const POPULAR_DESTINATIONS = ["US", "GB", "CA", "AU", "NZ", "DE", "FR", "ES", "PT", "JP", "AE", "SG"];
+const POPULAR_NATIONALITIES = ["US", "GB", "CA", "AU", "IN", "DE", "FR", "ES", "BR", "PH", "IT", "MX"];
+
 type Props = {
   label: string;
   value: string;
@@ -67,6 +73,24 @@ export function CountryCombobox({
   }, []);
 
   const matches = useMemo(() => filter(list, query, mode), [list, query, mode]);
+
+  // Empty-input state: build a "Popular" section followed by the full
+  // alphabetical list. With a query typed in, the popular section is
+  // hidden — users typing have specific intent already.
+  const popular = useMemo<DisplayRef[]>(() => {
+    if (query.trim()) return [];
+    const codes = mode === "nationality" ? POPULAR_NATIONALITIES : POPULAR_DESTINATIONS;
+    return codes
+      .map((iso) => list.find((c) => c.iso2 === iso))
+      .filter((c): c is DisplayRef => Boolean(c));
+  }, [list, mode, query]);
+
+  // Skip popular entries inside the alphabetical list to avoid duplicates.
+  const matchesMinusPopular = useMemo<DisplayRef[]>(() => {
+    if (!popular.length) return matches;
+    const skip = new Set(popular.map((p) => p.iso2));
+    return matches.filter((m) => !skip.has(m.iso2));
+  }, [matches, popular]);
 
   function commit(c: DisplayRef) {
     onChange(c.iso2);
@@ -133,31 +157,75 @@ export function CountryCombobox({
         {open && matches.length > 0 && (
           <ul
             role="listbox"
-            className="absolute z-20 mt-1 max-h-72 w-full overflow-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-lg"
+            className="absolute z-20 mt-1 max-h-80 w-full overflow-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-lg"
           >
-            {matches.slice(0, 20).map((c, i) => (
-              <li
-                role="option"
-                aria-selected={i === highlight}
-                key={c.iso2}
-                onMouseDown={(e) => {
-                  e.preventDefault();
-                  commit(c);
-                }}
-                onMouseEnter={() => setHighlight(i)}
-                className={`flex items-center gap-3 px-3 py-2 text-sm cursor-pointer ${
-                  i === highlight ? "bg-blue-50 dark:bg-blue-950/40" : ""
-                }`}
-              >
-                <span className="text-lg" aria-hidden>{c.flag}</span>
-                <span className="flex-1">{c.displayName}</span>
-                {/* In nationality mode, show the country name as a hint so users
-                    can still find by either form. */}
-                <span className="text-xs text-slate-400 font-mono">
-                  {mode === "nationality" ? c.name : c.iso2}
-                </span>
-              </li>
-            ))}
+            {/* Popular section (empty-input only). Renders above the
+                alphabetical list with a small label header so users see
+                the high-traffic options first. */}
+            {popular.length > 0 && (
+              <>
+                <li
+                  aria-hidden
+                  className="px-3 pt-2 pb-1 text-[10px] font-semibold tracking-[0.18em] uppercase text-slate-500 dark:text-slate-400 bg-slate-50/60 dark:bg-slate-900/60"
+                >
+                  Popular
+                </li>
+                {popular.map((c, i) => (
+                  <li
+                    role="option"
+                    aria-selected={i === highlight}
+                    key={`pop-${c.iso2}`}
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      commit(c);
+                    }}
+                    onMouseEnter={() => setHighlight(i)}
+                    className={`flex items-center gap-3 px-3 py-2 text-sm cursor-pointer ${
+                      i === highlight ? "bg-blue-50 dark:bg-blue-950/40" : ""
+                    }`}
+                  >
+                    <span className="text-lg" aria-hidden>{c.flag}</span>
+                    <span className="flex-1">{c.displayName}</span>
+                    <span className="text-[10px] text-blue-700 dark:text-blue-300 font-semibold uppercase tracking-wide">
+                      Popular
+                    </span>
+                  </li>
+                ))}
+                <li
+                  aria-hidden
+                  className="px-3 pt-2 pb-1 text-[10px] font-semibold tracking-[0.18em] uppercase text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60"
+                >
+                  All countries (A–Z)
+                </li>
+              </>
+            )}
+            {/* Full alphabetical list — was capped at 20 entries which
+                cut off everywhere past "Barbados" / "Bangladesh". Now
+                renders every match, scrollable inside max-h-80. */}
+            {matchesMinusPopular.map((c, idx) => {
+              const i = idx + popular.length;
+              return (
+                <li
+                  role="option"
+                  aria-selected={i === highlight}
+                  key={c.iso2}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    commit(c);
+                  }}
+                  onMouseEnter={() => setHighlight(i)}
+                  className={`flex items-center gap-3 px-3 py-2 text-sm cursor-pointer ${
+                    i === highlight ? "bg-blue-50 dark:bg-blue-950/40" : ""
+                  }`}
+                >
+                  <span className="text-lg" aria-hidden>{c.flag}</span>
+                  <span className="flex-1">{c.displayName}</span>
+                  <span className="text-xs text-slate-400 font-mono">
+                    {mode === "nationality" ? c.name : c.iso2}
+                  </span>
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>

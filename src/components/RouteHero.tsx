@@ -73,9 +73,11 @@ export function RouteHero({
           <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-l from-transparent to-black/40" />
         </div>
 
-        {/* Overall darken so the white text is legible on bright Pexels
-            photos like Tokyo neon, Patagonia sunset, Santorini noon. */}
-        <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/55 via-black/25 to-black/30" />
+        {/* Subtle bottom-only gradient. The flag pills + plane chip have
+            their own white backgrounds, so we don't need a heavy global
+            darken — just enough at the bottom edge for the photographer
+            attribution to remain readable. */}
+        <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none bg-gradient-to-t from-black/45 to-transparent" />
 
         {/* Plane glyph in the middle. Sits on a small white pill so it
             pops against any photo combination. */}

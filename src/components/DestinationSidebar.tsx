@@ -69,7 +69,10 @@ export function DestinationSidebar({
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-slate-700 to-slate-950" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
+        {/* Bottom-only gradient — just enough darkness behind the
+            destination name so it reads cleanly. Top of the photo stays
+            fully bright. */}
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
         <div className="absolute bottom-0 inset-x-0 p-4">
           <div className="flex items-center gap-2 mb-1.5">
             <span className="rounded-sm overflow-hidden ring-1 ring-white/30">

@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import Link from "next/link";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
-import { LookupForm } from "@/components/LookupForm";
-import { ResultCard } from "@/components/ResultCard";
 import { AlternativesPanel } from "@/components/AlternativesPanel";
 // ObstaclesPanel was removed — its content now feeds ResultBannerStack
 // (single-banner zone) and the inline disclosure on each ResultCard.
@@ -33,6 +30,7 @@ import { RelocationServicesPanel } from "@/components/RelocationServicesPanel";
 import { EmbassyLocator } from "@/components/EmbassyLocator";
 import { DestinationSidebar } from "@/components/DestinationSidebar";
 import { VisaOptionsByPurpose } from "@/components/VisaOptionsByPurpose";
+import { RefineSearchPanel } from "@/components/RefineSearchPanel";
 import { assessDifficulty } from "@/lib/difficulty";
 import { isProfile, type Profile } from "@/lib/profiles";
 import { RelatedRoutesRail } from "@/components/RelatedRoutesRail";
@@ -613,12 +611,25 @@ export default async function Page({
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
           {/* MAIN COLUMN */}
           <div className="min-w-0 space-y-6">
+            {/* Compact red/amber/green answer band — replaces the long
+                three-paragraph block that used to live here. */}
             <DirectAnswerCard
               passportIso2={p}
               destinationIso2={d}
               purpose={purpose}
               options={options}
               baselineTourismStatus={baselineTourismStatus}
+            />
+
+            {/* "Narrow your search" — collapsed by default. Profile pills,
+                prefilled passport/destination/purpose form, and a
+                prominent CTA to the 12-question questionnaire. Sits
+                above the visa list so users can refine before browsing. */}
+            <RefineSearchPanel
+              passportIso2={p}
+              destinationIso2={d}
+              purpose={purpose}
+              profile={profile}
             />
 
             {!resolverError && options.length === 0 && (
@@ -642,14 +653,12 @@ export default async function Page({
             )}
 
             {/* Embassy + VAC locator — only when the visa actually requires
-                an in-person step. Visa-free / eTA / online e-Visa routes
-                don't need it. */}
+                an in-person step. */}
             {(primary?.status === "embassy_visa" || primary?.status === "restricted") && (
               <EmbassyLocator passportIso2={p} destinationIso2={d} />
             )}
 
-            {/* Deep detail folded behind a single disclosure so the page
-                doesn't feel like an infinite scroll. */}
+            {/* Deep detail folded behind a single disclosure. */}
             <details className="group rounded-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden bg-white dark:bg-neutral-950">
               <summary className="cursor-pointer list-none flex items-center justify-between gap-3 px-5 py-4 hover:bg-neutral-50 dark:hover:bg-neutral-900/40 transition">
                 <div>
@@ -698,8 +707,12 @@ export default async function Page({
               </div>
             </details>
 
+            {/* RELOCATION SERVICES first — these are content-useful (legal
+                advice, insurance, medical) and earn revenue. */}
             <RelocationServicesPanel passportIso2={p} destinationIso2={d} purpose={purpose} />
 
+            {/* SPONSORED TRAVEL RAIL last — eSIM + flights affiliate.
+                Sits below relocation services per the latest UX brief. */}
             <TravelAdjacentRail destinationIso2={d} />
           </div>
 
@@ -717,16 +730,8 @@ export default async function Page({
           </div>
         </div>
 
-        {/* Mini refine form below the fold — for users who want to switch
-            passport / destination / purpose without scrolling back up. */}
-        <div className="mt-10 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5">
-          <p className="text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 font-semibold mb-3">
-            Try a different route
-          </p>
-          <Suspense fallback={null}>
-            <LookupForm initialPassport={p} initialDestination={d} initialPurpose={purpose} />
-          </Suspense>
-        </div>
+        {/* The "try a different route" form used to live here. It's now
+            inside RefineSearchPanel at the TOP of the page. */}
 
         <p className="mt-10 text-xs text-neutral-500 italic">
           Informational only. A valid visa permits entry subject to officer discretion at the

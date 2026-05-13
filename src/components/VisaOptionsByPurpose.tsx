@@ -3,14 +3,23 @@
 /**
  * Visa-options panel for the result page.
  *
- * Groups visa options by PURPOSE first (Tourism / Work / Study / Family /
- * Business / Transit) then by PATHWAY within each purpose. Each purpose
- * group is a collapsible card — Tourism is expanded by default (most
- * common intent), the rest open on click.
+ * Two-tier grouping:
+ *   1. Standard PURPOSE groups (Work / Tourism / Study / Family / Business
+ *      / Transit) — every option whose pathway isn't "unique" lives here.
+ *   2. UNIQUE PATHWAY groups at the bottom (Investor / Golden, Digital
+ *      Nomad, Entrepreneur / Startup, Retirement) — separated out so
+ *      they don't clutter the standard purpose groups. A Golden Visa
+ *      may be tagged `purpose=work` in our data, but mentally it's a
+ *      different category — surfaced as its own bottom group.
  *
- * When the user picks a profile filter ("Doctor", "High-school graduate"),
- * the most-relevant purpose group is auto-opened in addition to Tourism
- * so the user sees their actual options without an extra click.
+ * ALL groups are collapsed by default. The user expands the categories
+ * they're actually interested in. No auto-open even for Tourism — the
+ * compact answer band at the top of the page already tells them the
+ * primary status; this list is for browsing alternatives.
+ *
+ * Profile filter widening still applies: picking "Doctor" pulls in work
+ * + skilled-migration options from across all purposes and lists them.
+ * Those still appear in their PURPOSE group below — no auto-expansion.
  */
 import { useMemo, useState } from "react";
 import { ChevronDown, Sparkles } from "lucide-react";
@@ -18,17 +27,28 @@ import type { ResolvedVisaOption, Purpose, VisaStatus } from "@/lib/types";
 import type { Locale } from "@/i18n/t";
 import { PURPOSE_LABEL } from "@/lib/types";
 import { ResultCard } from "./ResultCard";
-import { ProfileFilter } from "./ProfileFilter";
 import {
   classifyAll,
   sortForProfile,
   groupByPathway,
   type ClassifiedOption,
 } from "@/lib/profileMatching";
-import { PATHWAY_META, isProfile, type Profile } from "@/lib/profiles";
+import { PATHWAY_META, isProfile, type Profile, type PathwayCategory } from "@/lib/profiles";
 import { useSearchParams } from "next/navigation";
 
-const PURPOSE_ORDER: Purpose[] = ["tourism", "business", "transit", "work", "study", "family", "diplomatic"];
+// Standard purposes (top of list, in this order).
+const PURPOSE_ORDER: Purpose[] = ["work", "tourism", "study", "family", "business", "transit", "diplomatic"];
+
+// "Unique" pathway categories that get their own group at the bottom,
+// regardless of the option's declared purpose. A Golden Visa flagged
+// purpose=work belongs in `investor_golden` here, not in the Work group
+// above.
+const UNIQUE_PATHWAYS: PathwayCategory[] = [
+  "investor_golden",
+  "digital_nomad",
+  "entrepreneur_startup",
+  "retirement",
+];
 
 const PURPOSE_DESCRIPTION: Record<Purpose, string> = {
   tourism: "Holidays, sightseeing, visiting friends. Short stays only.",
@@ -50,21 +70,17 @@ const PURPOSE_EMOJI: Record<Purpose, string> = {
   diplomatic: "🪪",
 };
 
-// Which purpose group should auto-open for each profile (in addition to
-// Tourism). Reflects the most-likely visa pathway someone with that
-// profile is actually researching.
-const PROFILE_AUTO_OPEN: Record<Profile, Purpose | null> = {
-  doctor: "work",
-  engineer: "work",
-  trade_worker: "work",
-  hnwi: "work",
-  investor: "work",
-  digital_nomad: "work",
-  remote_worker: "work",
-  student: "study",
-  high_school_graduate: "work",
-  entrepreneur: "work",
-  retiree: "family",
+const PATHWAY_EMOJI: Record<PathwayCategory, string> = {
+  investor_golden: "💎",
+  digital_nomad: "💻",
+  entrepreneur_startup: "🚀",
+  retirement: "🌅",
+  skilled_migration: "🛠️",
+  sponsored_work: "🛠️",
+  tourism: "🧳",
+  family: "💞",
+  study: "🎓",
+  transit_other: "🪪",
 };
 
 export function VisaOptionsByPurpose({
@@ -88,59 +104,60 @@ export function VisaOptionsByPurpose({
   const profileParam = params.get("profile");
   const profile: Profile | null = profileParam && isProfile(profileParam) ? profileParam : null;
 
-  // Sort + classify once. Sorting widens to include profile-relevant
-  // options in `primary`; everything else stays in `secondary`.
-  const { primaryByPurpose, secondary } = useMemo(() => {
+  // Sort + classify once. Profile-relevant options end up in `primary`;
+  // everything else in `secondary`. Then split into:
+  //   (a) standard PURPOSE buckets — for options whose pathway is one of
+  //       the "standard" categories (tourism / sponsored_work / skilled_
+  //       migration / study / family / transit_other).
+  //   (b) UNIQUE PATHWAY buckets — Golden / DigitalNomad / Startup /
+  //       Retirement. These get their own groups at the bottom.
+  const { primaryByPurpose, uniqueByPathway, secondary } = useMemo(() => {
     const classified = classifyAll(options);
     const { primary, secondary: sec } = sortForProfile(classified, profile);
-    const map = new Map<Purpose, ClassifiedOption[]>();
+
+    const byPurpose = new Map<Purpose, ClassifiedOption[]>();
+    const byPathway = new Map<PathwayCategory, ClassifiedOption[]>();
+
     for (const item of primary) {
-      const list = map.get(item.option.purpose) ?? [];
-      list.push(item);
-      map.set(item.option.purpose, list);
+      if (UNIQUE_PATHWAYS.includes(item.classification.pathway)) {
+        const list = byPathway.get(item.classification.pathway) ?? [];
+        list.push(item);
+        byPathway.set(item.classification.pathway, list);
+      } else {
+        const list = byPurpose.get(item.option.purpose) ?? [];
+        list.push(item);
+        byPurpose.set(item.option.purpose, list);
+      }
     }
-    return { primaryByPurpose: map, secondary: sec };
+    return { primaryByPurpose: byPurpose, uniqueByPathway: byPathway, secondary: sec };
   }, [options, profile]);
 
-  // Auto-open Tourism + the profile's most-relevant purpose.
-  const autoOpen = useMemo(() => {
-    const open = new Set<Purpose>(["tourism"]);
-    if (profile) {
-      const want = PROFILE_AUTO_OPEN[profile];
-      if (want) open.add(want);
-    }
-    // If profile is set and Tourism has no fit, prefer the profile's purpose
-    // as the first-paint default instead.
-    return open;
-  }, [profile]);
-
-  // Build the visible purpose groups in priority order.
   const visiblePurposes = PURPOSE_ORDER.filter((p) => (primaryByPurpose.get(p)?.length ?? 0) > 0);
+  const visibleUnique = UNIQUE_PATHWAYS.filter((p) => (uniqueByPathway.get(p)?.length ?? 0) > 0);
 
   if (options.length === 0) return null;
 
   return (
-    <section className="space-y-4">
-      <ProfileFilter initial={profile} />
-
+    <section className="space-y-3">
       {profile && (
-        <p className="rounded-xl px-4 py-3 text-sm bg-blue-50 dark:bg-blue-950/40 text-blue-900 dark:text-blue-200 flex items-start gap-2">
-          <Sparkles size={14} className="shrink-0 mt-0.5" aria-hidden />
+        <p className="rounded-lg px-3 py-2 text-xs bg-blue-50 dark:bg-blue-950/40 text-blue-900 dark:text-blue-200 flex items-start gap-2">
+          <Sparkles size={12} className="shrink-0 mt-0.5" aria-hidden />
           <span>
-            Showing visas relevant to your profile across <strong>all visa types</strong>, not
-            just the one your URL points at. Clear the filter above to see only tourism.
+            Showing visas relevant to your profile across <strong>all categories</strong>. Clear the
+            filter in &quot;Narrow your search&quot; above to revert.
           </span>
         </p>
       )}
 
+      {/* Standard purpose groups — all collapsed by default. */}
       {visiblePurposes.map((purpose) => {
         const items = primaryByPurpose.get(purpose)!;
         return (
           <PurposeGroup
             key={purpose}
+            kind="purpose"
             purpose={purpose}
             items={items}
-            openByDefault={autoOpen.has(purpose)}
             baselineTourismStatus={baselineTourismStatus}
             locale={locale}
             userCurrency={userCurrency}
@@ -150,6 +167,33 @@ export function VisaOptionsByPurpose({
           />
         );
       })}
+
+      {/* "Unique" pathway groups at the BOTTOM. Visually distinct so users
+          recognise these are different beasts from the standard purposes. */}
+      {visibleUnique.length > 0 && (
+        <div className="mt-5 pt-5 border-t border-neutral-200 dark:border-neutral-800 space-y-3">
+          <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-neutral-500 dark:text-neutral-400">
+            Unique visa pathways
+          </p>
+          {visibleUnique.map((pathway) => {
+            const items = uniqueByPathway.get(pathway)!;
+            return (
+              <PurposeGroup
+                key={pathway}
+                kind="pathway"
+                pathway={pathway}
+                items={items}
+                baselineTourismStatus={baselineTourismStatus}
+                locale={locale}
+                userCurrency={userCurrency}
+                secondaryCurrency={secondaryCurrency}
+                passportIso2={passportIso2}
+                destinationIso2={destinationIso2}
+              />
+            );
+          })}
+        </div>
+      )}
 
       {secondary.length > 0 && (
         <details className="group rounded-xl border border-dashed border-neutral-200 dark:border-neutral-800">
@@ -181,30 +225,35 @@ export function VisaOptionsByPurpose({
   );
 }
 
-function PurposeGroup({
-  purpose,
-  items,
-  openByDefault,
-  baselineTourismStatus,
-  locale,
-  userCurrency,
-  secondaryCurrency,
-}: {
-  purpose: Purpose;
+type PurposeGroupProps = {
   items: ClassifiedOption[];
-  openByDefault: boolean;
   baselineTourismStatus: VisaStatus | null;
   locale: Locale;
   userCurrency: string | null;
   secondaryCurrency: string | null;
   passportIso2: string;
   destinationIso2: string;
-}) {
-  const [open, setOpen] = useState(openByDefault);
-  const grouped = useMemo(() => groupByPathway(items), [items]);
+} & (
+  | { kind: "purpose"; purpose: Purpose }
+  | { kind: "pathway"; pathway: PathwayCategory }
+);
 
-  // Headline preview = best option in the group (highest-status / lowest difficulty).
-  const headline = items[0]?.option;
+function PurposeGroup(props: PurposeGroupProps) {
+  // All groups start closed — user opens whichever categories they
+  // want to browse. Same for unique pathways (Golden / Nomad / etc.).
+  const [open, setOpen] = useState(false);
+  const grouped = useMemo(() => groupByPathway(props.items), [props.items]);
+
+  const emoji = props.kind === "purpose" ? PURPOSE_EMOJI[props.purpose] : PATHWAY_EMOJI[props.pathway];
+  const title =
+    props.kind === "purpose"
+      ? PURPOSE_LABEL[props.purpose]
+      : PATHWAY_META[props.pathway].label;
+  const description =
+    props.kind === "purpose"
+      ? PURPOSE_DESCRIPTION[props.purpose]
+      : PATHWAY_META[props.pathway].description;
+  const headline = props.items[0]?.option;
 
   return (
     <section className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 overflow-hidden">
@@ -212,25 +261,26 @@ function PurposeGroup({
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="w-full text-left px-4 sm:px-5 py-4 flex items-start justify-between gap-3 hover:bg-neutral-50 dark:hover:bg-neutral-900/40 transition"
+        className="w-full text-left px-4 sm:px-5 py-3.5 flex items-start justify-between gap-3 hover:bg-neutral-50 dark:hover:bg-neutral-900/40 transition"
       >
         <div className="flex items-start gap-3 min-w-0 flex-1">
-          <span className="text-2xl leading-none shrink-0 mt-0.5" aria-hidden>
-            {PURPOSE_EMOJI[purpose]}
+          <span className="text-xl leading-none shrink-0 mt-0.5" aria-hidden>
+            {emoji}
           </span>
           <div className="min-w-0 flex-1">
             <div className="flex items-baseline gap-2 flex-wrap">
-              <h3 className="font-bold text-base sm:text-lg">{PURPOSE_LABEL[purpose]}</h3>
+              <h3 className="font-bold text-base">{title}</h3>
               <span className="text-[10px] font-mono uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-                {items.length} option{items.length === 1 ? "" : "s"}
+                {props.items.length} option{props.items.length === 1 ? "" : "s"}
               </span>
             </div>
-            <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-0.5 leading-snug">
-              {PURPOSE_DESCRIPTION[purpose]}
-            </p>
-            {!open && headline && (
-              <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1.5 truncate">
-                Best fit: <span className="font-medium text-neutral-700 dark:text-neutral-200">{headline.label}</span>
+            {!open && headline ? (
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1 truncate">
+                e.g. <span className="font-medium text-neutral-700 dark:text-neutral-200">{headline.label}</span>
+              </p>
+            ) : (
+              <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-0.5 leading-snug">
+                {description}
               </p>
             )}
           </div>
@@ -248,7 +298,7 @@ function PurposeGroup({
             const meta = PATHWAY_META[group.pathway];
             return (
               <div key={group.pathway}>
-                {/* Pathway sub-header only renders when a purpose contains multiple pathways. */}
+                {/* Sub-header only renders when a group contains multiple pathways. */}
                 {grouped.length > 1 && (
                   <p className="text-[11px] font-semibold tracking-wide uppercase text-neutral-500 dark:text-neutral-400 mb-2">
                     {meta.label}
@@ -259,10 +309,10 @@ function PurposeGroup({
                     <ResultCard
                       key={option.id}
                       option={option}
-                      baselineTourismStatus={baselineTourismStatus}
-                      locale={locale}
-                      userCurrency={userCurrency}
-                      secondaryCurrency={secondaryCurrency}
+                      baselineTourismStatus={props.baselineTourismStatus}
+                      locale={props.locale}
+                      userCurrency={props.userCurrency}
+                      secondaryCurrency={props.secondaryCurrency}
                     />
                   ))}
                 </div>

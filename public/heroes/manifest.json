@@ -11,19 +11,19 @@
   "AX": {
     "file": "/heroes/ax.jpg",
     "pexelsId": 35072186,
-    "photographer": "Rasa Vilci\u0146a",
+    "photographer": "Rasa Vilciņa",
     "photographerUrl": "https://www.pexels.com/@rasa-vilcina-656234815",
     "pexelsUrl": "https://www.pexels.com/photo/scenic-view-of-pine-trees-in-aland-archipelago-35072186/",
-    "alt": "Beautiful view of pine trees against the clear sky in the \u00c5land archipelago.",
+    "alt": "Beautiful view of pine trees against the clear sky in the Åland archipelago.",
     "fetchedAt": "2026-05-15T22:53:47.208Z"
   },
   "AL": {
     "file": "/heroes/al.jpg",
     "pexelsId": 29201404,
-    "photographer": "Necati \u00d6mer Karpuzo\u011flu",
+    "photographer": "Necati Ömer Karpuzoğlu",
     "photographerUrl": "https://www.pexels.com/@necatiomerk",
     "pexelsUrl": "https://www.pexels.com/photo/historic-rozafa-castle-in-shkoder-albania-29201404/",
-    "alt": "Scenic view of Rozafa Castle in Shkod\u00ebr, showcasing historic ruins and landscape.",
+    "alt": "Scenic view of Rozafa Castle in Shkodër, showcasing historic ruins and landscape.",
     "fetchedAt": "2026-05-15T22:53:48.788Z"
   },
   "DZ": {
@@ -41,7 +41,7 @@
     "photographer": "Virginia Chien",
     "photographerUrl": "https://www.pexels.com/@virginiachien",
     "pexelsUrl": "https://www.pexels.com/photo/scenic-pavilion-at-ludao-taiwan-with-ocean-view-29941688/",
-    "alt": "A serene pavilion at L\u00fcdao in Taitung, Taiwan, with lush greenery and ocean backdrop under a moody sky.",
+    "alt": "A serene pavilion at Lüdao in Taitung, Taiwan, with lush greenery and ocean backdrop under a moody sky.",
     "fetchedAt": "2026-05-15T22:53:50.539Z"
   },
   "AD": {
@@ -104,7 +104,7 @@
     "photographer": "Leyla Helvaci",
     "photographerUrl": "https://www.pexels.com/@leyla-helvaci-50263565",
     "pexelsUrl": "https://www.pexels.com/photo/birds-flying-over-the-ocean-13024141/",
-    "alt": "Stunning view of Lake Van, T\u00fcrkiye, with a flock of birds and a distant mountain backdrop.",
+    "alt": "Stunning view of Lake Van, Türkiye, with a flock of birds and a distant mountain backdrop.",
     "fetchedAt": "2026-05-15T22:53:59.527Z"
   },
   "AW": {
@@ -137,7 +137,7 @@
   "AZ": {
     "file": "/heroes/az.jpg",
     "pexelsId": 33249853,
-    "photographer": "Tahir X\u0259lf\u0259",
+    "photographer": "Tahir Xəlfə",
     "photographerUrl": "https://www.pexels.com/@tahir",
     "pexelsUrl": "https://www.pexels.com/photo/baku-cityscape-with-iconic-flame-towers-33249853/",
     "alt": "Aerial view of Baku city skyline featuring the modern Flame Towers on a sunny day.",
@@ -200,7 +200,7 @@
   "BZ": {
     "file": "/heroes/bz.jpg",
     "pexelsId": 35342836,
-    "photographer": "Matthew Jes\u00fas",
+    "photographer": "Matthew Jesús",
     "photographerUrl": "https://www.pexels.com/@matthew-jesus-468170389",
     "pexelsUrl": "https://www.pexels.com/photo/close-up-of-ship-s-porthole-and-vent-35342836/",
     "alt": "A detailed view of a ship's porthole and vent, showcasing maritime design elements.",
@@ -212,7 +212,7 @@
     "photographer": "Kenza Loussouarn",
     "photographerUrl": "https://www.pexels.com/@kenza-loussouarn-24828091",
     "pexelsUrl": "https://www.pexels.com/photo/a-woman-riding-a-boat-6729842/",
-    "alt": "African woman paddles a canoe through a serene lake in Ganvi\u00e9, Benin, surrounded by tall grass and wildlife.",
+    "alt": "African woman paddles a canoe through a serene lake in Ganvié, Benin, surrounded by tall grass and wildlife.",
     "fetchedAt": "2026-05-15T22:54:21.949Z"
   },
   "BM": {
@@ -248,13 +248,13 @@
     "photographer": "Wijs (Wise)",
     "photographerUrl": "https://www.pexels.com/@wijs-wise-136435282",
     "pexelsUrl": "https://www.pexels.com/photo/abandoned-lighthouse-on-sandy-path-in-curacao-32330654/",
-    "alt": "Lonely lighthouse at the end of a sandy path in Cura\u00e7ao under a vast blue sky.",
+    "alt": "Lonely lighthouse at the end of a sandy path in Curaçao under a vast blue sky.",
     "fetchedAt": "2026-05-15T22:54:26.249Z"
   },
   "BA": {
     "file": "/heroes/ba.jpg",
     "pexelsId": 33660894,
-    "photographer": "B\u00fcsra",
+    "photographer": "Büsra",
     "photographerUrl": "https://www.pexels.com/@bxsra",
     "pexelsUrl": "https://www.pexels.com/photo/aerial-view-of-the-historic-mostar-bridge-33660894/",
     "alt": "Scenic aerial view of Mostar's Old Bridge and surrounding architecture in summer.",
@@ -527,7 +527,7 @@
     "photographer": "Wijs (Wise)",
     "photographerUrl": "https://www.pexels.com/@wijs-wise-136435282",
     "pexelsUrl": "https://www.pexels.com/photo/historic-lighthouse-on-klein-curacao-island-32330655/",
-    "alt": "An abandoned red lighthouse on Klein Cura\u00e7ao under a cloudy sky.",
+    "alt": "An abandoned red lighthouse on Klein Curaçao under a cloudy sky.",
     "fetchedAt": "2026-05-15T22:55:10.652Z"
   },
   "CY": {
@@ -551,7 +551,7 @@
   "DK": {
     "file": "/heroes/dk.jpg",
     "pexelsId": 29405304,
-    "photographer": "Micha\u0142 Robak",
+    "photographer": "Michał Robak",
     "photographerUrl": "https://www.pexels.com/@michalrobak",
     "pexelsUrl": "https://www.pexels.com/photo/mermaid-statue-on-rock-by-the-seashore-29405304/",
     "alt": "Serene view of a mermaid statue perched on a rock in a vast ocean landscape.",
@@ -731,10 +731,10 @@
   "GM": {
     "file": "/heroes/gm.jpg",
     "pexelsId": 33880365,
-    "photographer": "DMN At\u00f6lye",
+    "photographer": "DMN Atölye",
     "photographerUrl": "https://www.pexels.com/@dmn-atolye-2154263074",
     "pexelsUrl": "https://www.pexels.com/photo/gobekli-tepe-archaeological-site-overview-33880365/",
-    "alt": "Aerial view of ancient stone structures at G\u00f6bekli Tepe, T\u00fcrkiye.",
+    "alt": "Aerial view of ancient stone structures at Göbekli Tepe, Türkiye.",
     "fetchedAt": "2026-05-15T22:55:51.030Z"
   },
   "GE": {
@@ -803,7 +803,7 @@
   "GU": {
     "file": "/heroes/gu.jpg",
     "pexelsId": 31107311,
-    "photographer": "Asrorbek O\u2018ktamjonov",
+    "photographer": "Asrorbek O‘ktamjonov",
     "photographerUrl": "https://www.pexels.com/@asrorbek-o-ktamjonov-196508814",
     "pexelsUrl": "https://www.pexels.com/photo/stunning-dome-of-tashkent-memorial-31107311/",
     "alt": "Explore the unique architecture of Tashkent's iconic dome against a bright sky.",
@@ -947,7 +947,7 @@
   "IE": {
     "file": "/heroes/ie.jpg",
     "pexelsId": 28824260,
-    "photographer": "Florian S\u00fc\u00df",
+    "photographer": "Florian Süß",
     "photographerUrl": "https://www.pexels.com/@florian-suss-269098632",
     "pexelsUrl": "https://www.pexels.com/photo/stunning-cliffs-of-moher-coastal-scene-28824260/",
     "alt": "Breathtaking view of the Cliffs of Moher with vibrant wildflowers and the Atlantic Ocean.",
@@ -959,13 +959,13 @@
     "photographer": "urtimud.89",
     "photographerUrl": "https://www.pexels.com/@urtimud-89-76108288",
     "pexelsUrl": "https://www.pexels.com/photo/cross-with-the-twr-mawr-lighthouse-in-the-background-20580541/",
-    "alt": "Idyllic landscape of T\u0175r Mawr Lighthouse and cross in peaceful Welsh coast, enhancing spiritual tranquility.",
+    "alt": "Idyllic landscape of Tŵr Mawr Lighthouse and cross in peaceful Welsh coast, enhancing spiritual tranquility.",
     "fetchedAt": "2026-05-15T22:56:33.934Z"
   },
   "IL": {
     "file": "/heroes/il.jpg",
     "pexelsId": 11659894,
-    "photographer": "Yasir G\u00fcrb\u00fcz",
+    "photographer": "Yasir Gürbüz",
     "photographerUrl": "https://www.pexels.com/@yasirgurbuz",
     "pexelsUrl": "https://www.pexels.com/photo/al-aqsa-mosque-facade-in-jerusalem-11659894/",
     "alt": "Beautiful view of Al-Aqsa Mosque's facade and dome in Jerusalem during dusk.",
@@ -974,7 +974,7 @@
   "IT": {
     "file": "/heroes/it.jpg",
     "pexelsId": 20392469,
-    "photographer": "Ozan Tabako\u011flu",
+    "photographer": "Ozan Tabakoğlu",
     "photographerUrl": "https://www.pexels.com/@stonesdonotdisappear",
     "pexelsUrl": "https://www.pexels.com/photo/ruins-of-colosseum-20392469/",
     "alt": "Stunning view of the Colosseum in Rome, showcasing its ancient architecture and historical significance.",
@@ -1109,7 +1109,7 @@
   "LR": {
     "file": "/heroes/lr.jpg",
     "pexelsId": 33473113,
-    "photographer": "B. Aristotl\u00e8 Guweh Jr",
+    "photographer": "B. Aristotlè Guweh Jr",
     "photographerUrl": "https://www.pexels.com/@b-aristotle-guweh-jr-1643208950",
     "pexelsUrl": "https://www.pexels.com/photo/young-girl-playing-with-puppy-in-green-yard-33473113/",
     "alt": "A joyful moment of a young African girl interacting with a playful puppy in a grassy outdoor setting in Liberia.",
@@ -1118,7 +1118,7 @@
   "LY": {
     "file": "/heroes/ly.jpg",
     "pexelsId": 32408774,
-    "photographer": "\u0130dil  \u00c7elikler",
+    "photographer": "İdil  Çelikler",
     "photographerUrl": "https://www.pexels.com/@idilcelikler",
     "pexelsUrl": "https://www.pexels.com/photo/ancient-roman-columns-in-monochrome-visual-32408774/",
     "alt": "Monochrome image of ancient Roman columns showcasing classical architecture and intricate details.",
@@ -1130,7 +1130,7 @@
     "photographer": "Louis",
     "photographerUrl": "https://www.pexels.com/@suissounet",
     "pexelsUrl": "https://www.pexels.com/photo/scenic-view-of-gruyeres-castle-in-misty-landscape-34017515/",
-    "alt": "Misty landscape with Gruy\u00e8res Castle amidst green hills and forested mountains, Switzerland.",
+    "alt": "Misty landscape with Gruyères Castle amidst green hills and forested mountains, Switzerland.",
     "fetchedAt": "2026-05-15T22:57:06.737Z"
   },
   "LT": {
@@ -1226,7 +1226,7 @@
   "MQ": {
     "file": "/heroes/mq.jpg",
     "pexelsId": 31107311,
-    "photographer": "Asrorbek O\u2018ktamjonov",
+    "photographer": "Asrorbek O‘ktamjonov",
     "photographerUrl": "https://www.pexels.com/@asrorbek-o-ktamjonov-196508814",
     "pexelsUrl": "https://www.pexels.com/photo/stunning-dome-of-tashkent-memorial-31107311/",
     "alt": "Explore the unique architecture of Tashkent's iconic dome against a bright sky.",
@@ -1262,10 +1262,10 @@
   "MX": {
     "file": "/heroes/mx.jpg",
     "pexelsId": 31657159,
-    "photographer": "Diego Alberto Mart\u00ednez Mendoza",
+    "photographer": "Diego Alberto Martínez Mendoza",
     "photographerUrl": "https://www.pexels.com/@diego-alberto-martinez-mendoza-2151149994",
     "pexelsUrl": "https://www.pexels.com/photo/majestic-pyramid-of-chichen-itza-against-blue-sky-31657159/",
-    "alt": "Explore the iconic Pyramid of Chich\u00e9n Itz\u00e1, Yucat\u00e1n, an architectural marvel under a vibrant blue sky.",
+    "alt": "Explore the iconic Pyramid of Chichén Itzá, Yucatán, an architectural marvel under a vibrant blue sky.",
     "fetchedAt": "2026-05-15T22:57:28.617Z"
   },
   "FM": {
@@ -1460,7 +1460,7 @@
   "MK": {
     "file": "/heroes/mk.jpg",
     "pexelsId": 34908027,
-    "photographer": "Nuref\u015fan \u00c7al\u0131\u015fkan",
+    "photographer": "Nurefşan Çalışkan",
     "photographerUrl": "https://www.pexels.com/@nurefsancaliskan",
     "pexelsUrl": "https://www.pexels.com/photo/panoramic-view-of-ohrid-north-macedonia-34908027/",
     "alt": "Scenic aerial view of Ohrid city with Macedonian flag and Lake Ohrid in autumn.",
@@ -1514,7 +1514,7 @@
   "PS": {
     "file": "/heroes/ps.jpg",
     "pexelsId": 11696809,
-    "photographer": "Yasir G\u00fcrb\u00fcz",
+    "photographer": "Yasir Gürbüz",
     "photographerUrl": "https://www.pexels.com/@yasirgurbuz",
     "pexelsUrl": "https://www.pexels.com/photo/dome-of-al-aqsa-mosque-11696809/",
     "alt": "Stunning view of the Dome of the Rock, a famous landmark in Jerusalem, Israel.",
@@ -1724,7 +1724,7 @@
     "photographer": "Giuseppe  Di Maria",
     "photographerUrl": "https://www.pexels.com/@giuseppe-di-maria-163888120",
     "pexelsUrl": "https://www.pexels.com/photo/rolling-italian-landscape-21316144/",
-    "alt": "Panoramic view of rooftops and lush green hills in Citt\u00e0 di San Marino.",
+    "alt": "Panoramic view of rooftops and lush green hills in Città di San Marino.",
     "fetchedAt": "2026-05-15T22:58:42.847Z"
   },
   "ST": {
@@ -1787,7 +1787,7 @@
     "photographer": "Diego F. Parra",
     "photographerUrl": "https://www.pexels.com/@diego-f-parra-33199",
     "pexelsUrl": "https://www.pexels.com/photo/seals-on-sandy-beach-18426852/",
-    "alt": "Two Gal\u00e1pagos sea lions resting on a sandy beach at San Crist\u00f3bal, Islas Gal\u00e1pagos, Ecuador.",
+    "alt": "Two Galápagos sea lions resting on a sandy beach at San Cristóbal, Islas Galápagos, Ecuador.",
     "fetchedAt": "2026-05-15T22:55:21.849Z"
   },
   "DE": {
@@ -2054,7 +2054,7 @@
   "TR": {
     "file": "/heroes/tr.jpg",
     "pexelsId": 19357083,
-    "photographer": "Zafer Erdo\u011fan",
+    "photographer": "Zafer Erdoğan",
     "photographerUrl": "https://www.pexels.com/@zafer-erdogan-49915050",
     "pexelsUrl": "https://www.pexels.com/photo/hagia-sophia-with-park-and-ruins-on-side-19357083/",
     "alt": "Stunning view of Hagia Sophia with birds in Istanbul's historic skyline.",
@@ -2072,7 +2072,7 @@
   "TC": {
     "file": "/heroes/tc.jpg",
     "pexelsId": 17411378,
-    "photographer": "Tu\u011f\u00e7e A\u00e7\u0131ky\u00fcrek",
+    "photographer": "Tuğçe Açıkyürek",
     "photographerUrl": "https://www.pexels.com/@tugce-acikyurek-3099881",
     "pexelsUrl": "https://www.pexels.com/photo/cloudy-sky-over-the-sile-castle-and-ocakli-island-17411378/",
     "alt": "A serene view of Sile Castle on a rocky island surrounded by the sea, under a cloudy sky.",
@@ -2108,7 +2108,7 @@
   "UA": {
     "file": "/heroes/ua.jpg",
     "pexelsId": 12002181,
-    "photographer": "\u041d\u0430\u0442\u0430\u043b\u044c\u044f \u0421\u0432\u0435\u0442\u043b\u043e\u0432\u0430",
+    "photographer": "Наталья Светлова",
     "photographerUrl": "https://www.pexels.com/@20712960",
     "pexelsUrl": "https://www.pexels.com/photo/green-and-gold-concrete-church-under-white-clouds-12002181/",
     "alt": "A vibrant Orthodox church dome with a cross against a vivid sunset sky, highlighting cultural architecture.",
@@ -2135,7 +2135,7 @@
   "US": {
     "file": "/heroes/us.jpg",
     "pexelsId": 18012331,
-    "photographer": "Jorge Alcal\u00e1",
+    "photographer": "Jorge Alcalá",
     "photographerUrl": "https://www.pexels.com/@jorgealcala",
     "pexelsUrl": "https://www.pexels.com/photo/statue-of-liberty-in-nyc-18012331/",
     "alt": "The Statue of Liberty stands tall against a cloudy sky in New York City, symbolizing freedom.",
@@ -2150,103 +2150,103 @@
     "alt": "Misty view of Mount Bromo's expansive landscape beneath a cloudy sky in Indonesia.",
     "fetchedAt": "2026-05-15T23:02:46.807Z"
   },
-  "EH": {
-    "file": "/heroes/eh.jpg",
-    "pexelsId": 30099211,
-    "photographer": "Fives TM",
-    "photographerUrl": "https://www.pexels.com/@fives-tm-990299524",
-    "pexelsUrl": "https://www.pexels.com/photo/mesmerizing-dunes-at-sunrise-in-merzouga-30099211/",
-    "alt": "Beautiful sunrise over the sand dunes of Merzouga, Morocco, with footprints in the foreground.",
-    "fetchedAt": "2026-05-11T20:02:20.539Z"
-  },
   "UM": {
     "file": "/heroes/um.jpg",
-    "pexelsId": 31260373,
-    "photographer": "Robert So",
-    "photographerUrl": "https://www.pexels.com/@robertkso",
-    "pexelsUrl": "https://www.pexels.com/photo/scenic-view-of-green-hills-and-urban-landscape-31260373/",
-    "alt": "Beautiful panoramic view of green rolling hills and a vibrant town beneath a clear blue sky.",
-    "fetchedAt": "2026-05-11T20:02:08.074Z"
+    "pexelsId": 32461196,
+    "photographer": "Abhishek  Navlakha",
+    "photographerUrl": "https://www.pexels.com/@navlakha",
+    "pexelsUrl": "https://www.pexels.com/photo/alcatraz-island-view-from-san-francisco-bay-32461196/",
+    "alt": "Scenic view of Alcatraz Island and prison from San Francisco Bay, California, in daylight.",
+    "fetchedAt": "2026-05-16T00:10:17.690Z"
   },
   "UY": {
     "file": "/heroes/uy.jpg",
-    "pexelsId": 30681696,
-    "photographer": "Camila  Galdo",
-    "photographerUrl": "https://www.pexels.com/@camila-galdo-2149565357",
-    "pexelsUrl": "https://www.pexels.com/photo/cabo-polonio-lighthouse-on-rocky-coastline-30681696/",
-    "alt": "Scenic view of Cabo Polonio lighthouse with rocky coastline under a clear blue sky in Uruguay.",
-    "fetchedAt": "2026-05-11T20:02:09.128Z"
+    "pexelsId": 36398639,
+    "photographer": "Brent Singleton",
+    "photographerUrl": "https://www.pexels.com/@brentsingletonphoto",
+    "pexelsUrl": "https://www.pexels.com/photo/charming-cobblestone-street-in-colonia-uruguay-36398639/",
+    "alt": "Explore the historic charm of a cobblestone street in Colonia, Uruguay, showcasing unique architecture.",
+    "fetchedAt": "2026-05-16T00:10:18.914Z"
   },
   "UZ": {
     "file": "/heroes/uz.jpg",
-    "pexelsId": 19227959,
+    "pexelsId": 16796303,
     "photographer": "AXP Photography",
     "photographerUrl": "https://www.pexels.com/@axp-photography-500641970",
-    "pexelsUrl": "https://www.pexels.com/photo/courtyard-of-tilya-kori-madrasa-19227959/",
-    "alt": "Beautiful courtyard view of Tilya-Kori Madrasa in Samarkand, showcasing stunning Islamic architecture.",
-    "fetchedAt": "2026-05-11T20:02:10.989Z"
+    "pexelsUrl": "https://www.pexels.com/photo/antique-square-in-uzbekistan-16796303/",
+    "alt": "Explore the stunning architecture of Registan Square in Samarkand, Uzbekistan with vibrant mosaics and historical monuments.",
+    "fetchedAt": "2026-05-16T00:10:20.303Z"
   },
   "VA": {
     "file": "/heroes/va.jpg",
-    "pexelsId": 19248421,
-    "photographer": "\u00d6zg\u00fcr KAYA",
-    "photographerUrl": "https://www.pexels.com/@ozgur-kaya-575422504",
-    "pexelsUrl": "https://www.pexels.com/photo/vatican-city-19248421/",
-    "alt": "Crowds gather at St. Peter's Basilica, a landmark of Vatican City, under the daytime sky.",
-    "fetchedAt": "2026-05-11T20:02:12.860Z"
+    "pexelsId": 13829337,
+    "photographer": "Aleksandra Żmuda",
+    "photographerUrl": "https://www.pexels.com/@aleksandra-zmuda-9516327",
+    "pexelsUrl": "https://www.pexels.com/photo/dome-of-st-peter-s-basilica-13829337/",
+    "alt": "Stunning view of St. Peter's Basilica dome rising above lush greenery in Vatican City.",
+    "fetchedAt": "2026-05-16T00:10:22.061Z"
   },
   "VE": {
     "file": "/heroes/ve.jpg",
-    "pexelsId": 32699742,
-    "photographer": "RITRATTO VISUAL",
-    "photographerUrl": "https://www.pexels.com/@ritratto-visual-704627165",
-    "pexelsUrl": "https://www.pexels.com/photo/scenic-coastal-view-of-nueva-esparta-venezuela-32699742/",
-    "alt": "Panoramic view of the coast and mountains in Nueva Esparta, Venezuela.",
-    "fetchedAt": "2026-05-13T00:04:26.982Z"
+    "pexelsId": 9711755,
+    "photographer": "Elizabeth Lizzie",
+    "photographerUrl": "https://www.pexels.com/@owayn",
+    "pexelsUrl": "https://www.pexels.com/photo/grayscale-photo-of-niagara-falls-9711755/",
+    "alt": "Stunning grayscale capture of Niagara Falls in New York, showcasing the powerful cascading water.",
+    "fetchedAt": "2026-05-16T00:10:23.968Z"
   },
   "VN": {
     "file": "/heroes/vn.jpg",
-    "pexelsId": 29904816,
-    "photographer": "Thanh Long B\u00f9i",
-    "photographerUrl": "https://www.pexels.com/@thanh-long-bui-483143920",
-    "pexelsUrl": "https://www.pexels.com/photo/stunning-view-of-ha-long-bay-in-vietnam-29904816/",
-    "alt": "Blue skies over Ha Long Bay with cruise boats and limestone islands in Vietnam.",
-    "fetchedAt": "2026-05-13T00:06:20.112Z"
+    "pexelsId": 20878975,
+    "photographer": "Alan Wang",
+    "photographerUrl": "https://www.pexels.com/@alankrantas",
+    "pexelsUrl": "https://www.pexels.com/photo/woman-and-man-standing-on-seashore-in-vietnam-20878975/",
+    "alt": "Couple stands on a pier at Ha Long Bay, Vietnam, with a ship in the distance.",
+    "fetchedAt": "2026-05-16T00:10:26.089Z"
   },
   "WF": {
     "file": "/heroes/wf.jpg",
-    "pexelsId": 15946790,
-    "photographer": "Cheap  Gear  Photography",
-    "photographerUrl": "https://www.pexels.com/@katherine",
-    "pexelsUrl": "https://www.pexels.com/photo/woods-on-hills-15946790/",
-    "alt": "Breathtaking aerial view of green forests, rolling hills, and a distant ocean horizon under a clear blue sky.",
-    "fetchedAt": "2026-05-11T20:02:18.995Z"
+    "pexelsId": 36452625,
+    "photographer": "Nothing Ahead",
+    "photographerUrl": "https://www.pexels.com/@ian-panelo",
+    "pexelsUrl": "https://www.pexels.com/photo/serene-ocean-view-with-clear-blue-sky-36452625/",
+    "alt": "Peaceful ocean scene with a stone structure and expansive blue sky and sea.",
+    "fetchedAt": "2026-05-16T00:10:27.117Z"
+  },
+  "EH": {
+    "file": "/heroes/eh.jpg",
+    "pexelsId": 35112813,
+    "photographer": "Magda Ehlers",
+    "photographerUrl": "https://www.pexels.com/@magda-ehlers-pexels",
+    "pexelsUrl": "https://www.pexels.com/photo/sunset-over-desert-dunes-with-4x4-vehicles-35112813/",
+    "alt": "A scenic view of a desert landscape at sunset with 4x4 vehicles and sand dunes.",
+    "fetchedAt": "2026-05-16T00:10:28.242Z"
   },
   "YE": {
     "file": "/heroes/ye.jpg",
-    "pexelsId": 28506304,
-    "photographer": "abdullah alallah",
-    "photographerUrl": "https://www.pexels.com/@abdullah-alallah-314142096",
-    "pexelsUrl": "https://www.pexels.com/photo/architectural-beauty-in-historic-al-balad-jeddah-28506304/",
-    "alt": "Explore the traditional wooden architecture of Al-Balad in Jeddah, showcasing its historical charm.",
-    "fetchedAt": "2026-05-11T20:02:21.609Z"
+    "pexelsId": 36773498,
+    "photographer": "mori dad",
+    "photographerUrl": "https://www.pexels.com/@mori-dad-2159761098",
+    "pexelsUrl": "https://www.pexels.com/photo/historic-architecture-in-old-damascus-syria-36773498/",
+    "alt": "Charming old buildings and narrow alleyways in historic Damascus, Syria.",
+    "fetchedAt": "2026-05-16T00:10:29.363Z"
   },
   "ZM": {
     "file": "/heroes/zm.jpg",
-    "pexelsId": 27878405,
-    "photographer": "BabijaPhoto JB",
-    "photographerUrl": "https://www.pexels.com/@babijaphoto",
-    "pexelsUrl": "https://www.pexels.com/photo/an-aerial-view-of-the-victoria-falls-in-zimbabwe-27878405/",
-    "alt": "Breathtaking aerial view of Victoria Falls surrounded by lush greenery during summer day.",
-    "fetchedAt": "2026-05-11T20:02:22.656Z"
+    "pexelsId": 16241883,
+    "photographer": "K",
+    "photographerUrl": "https://www.pexels.com/@kelly",
+    "pexelsUrl": "https://www.pexels.com/photo/rainbow-in-breeze-16241883/",
+    "alt": "Vibrant rainbow arcs over misty waterfall, creating a breathtaking natural scene.",
+    "fetchedAt": "2026-05-16T00:10:31.002Z"
   },
   "ZW": {
     "file": "/heroes/zw.jpg",
-    "pexelsId": 12661321,
-    "photographer": "Jhune Bleu",
-    "photographerUrl": "https://www.pexels.com/@jhuneblue",
-    "pexelsUrl": "https://www.pexels.com/photo/motorcyclist-riding-on-a-dirt-road-in-the-wilderness-12661321/",
-    "alt": "A motorcyclist rides through a picturesque dirt road in a rural savannah landscape.",
-    "fetchedAt": "2026-05-13T00:29:55.116Z"
+    "pexelsId": 16339342,
+    "photographer": "SHIVANSHU BHARDWAJ",
+    "photographerUrl": "https://www.pexels.com/@shivanshu-bhardwaj-334691890",
+    "pexelsUrl": "https://www.pexels.com/photo/ruins-of-a-stone-fort-16339342/",
+    "alt": "Explore the ancient fort ruins in New Delhi, showcasing historical architecture.",
+    "fetchedAt": "2026-05-16T00:10:32.092Z"
   }
 }

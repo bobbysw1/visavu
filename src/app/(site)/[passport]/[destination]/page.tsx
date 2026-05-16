@@ -29,6 +29,7 @@ import { SourcesPanel } from "@/components/SourcesPanel";
 import { TravelAdjacentRail } from "@/components/TravelAdjacentRail";
 import { RelocationServicesPanel } from "@/components/RelocationServicesPanel";
 import { EmbassyLocator } from "@/components/EmbassyLocator";
+import { DIYStatementCallout } from "@/components/DIYStatementCallout";
 import { DestinationSidebar } from "@/components/DestinationSidebar";
 import { VisaOptionsByPurpose } from "@/components/VisaOptionsByPurpose";
 import { RefineSearchPanel } from "@/components/RefineSearchPanel";
@@ -696,6 +697,14 @@ export default async function Page({
 
             {options.length > 0 && (
               <AlertOptIn passportIso2={p} destinationIso2={d} purpose={purpose} />
+            )}
+
+            {/* DIY personal-statement guide CTA — surfaces the single
+                biggest money-saving lever for high-stakes applications.
+                Only renders for family / work / study (the purposes
+                where a personal statement matters). */}
+            {options.length > 0 && (
+              <DIYStatementCallout purpose={purpose} />
             )}
 
             {/* Embassy + VAC locator — only when the visa actually requires

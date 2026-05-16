@@ -6958,6 +6958,440 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
       ],
     },
   },
+
+  // ════════════════════════════════════════════════════════════════════
+  // BRITISH → AUSTRALIA — family / partner
+  // ════════════════════════════════════════════════════════════════════
+
+  "GB:AU:family": {
+    whatCarriesWeight: [
+      {
+        label: "Subclass 309 (offshore) or 820 (onshore) — choose the right one",
+        why: "If you're applying from outside Australia, lodge Subclass 309 (Partner provisional) which leads to Subclass 100 (permanent) after ~2 years. If you're already onshore on another valid visa (visitor / WHV / student), lodge Subclass 820 which leads to 820 (permanent). Both cost the same AUD$9,365 (Jul 2024–25) for the primary applicant and both have the same evidence requirements. Default is offshore — get this wrong and you re-pay the fee.",
+      },
+      {
+        label: "12-month relationship test — cohabitation, registered relationship, OR marriage",
+        why: "Australia requires either (a) marriage, (b) registered relationship (state register: NSW BDM, VIC BDM etc.) at the time of application, OR (c) 12 months of cohabitation immediately before lodging. Long-distance dating doesn't count toward the 12 months even with constant visits. Easiest workaround for shorter-relationship couples: register the relationship at a state Births Deaths Marriages office FIRST (instant), then lodge the partner visa. NSW registration costs AUD$57.",
+      },
+      {
+        label: "Genuine and mutual commitment evidence across four dimensions",
+        why: "DHA explicitly assesses: (1) Financial — joint accounts / joint bills / financial pooling; (2) Household — joint tenancy / mortgage / utilities; (3) Social — photos with both families, evidence other people regard you as a couple, joint travel; (4) Nature of commitment — statements from both partners describing the relationship, plans for the future, knowledge of each other's families / history. Form 47SP (applicant) + Form 40SP (sponsor) are the binding declarations.",
+      },
+      {
+        label: "Two Statutory Declarations of Support from Australian citizens / PRs (Form 888)",
+        why: "Two Form 888 statutory declarations from friends or family who are Australian citizens or permanent residents, attesting to the genuineness of the relationship. They MUST be Australian — a UK friend can't sign Form 888. Need to be witnessed by a JP / pharmacist / postal manager / police officer in Australia.",
+      },
+      {
+        label: "Police checks from every country lived in 12+ months since age 16",
+        why: "UK ACRO Police Certificate (£55 standard, £95 premium 2-day). AFP National Police Check (AUD$43) for any cumulative 12 months living in Australia. Plus equivalent certificates from EVERY country you lived in 12+ months — this is the single most-delayed step. ACRO Premium turnaround is 2 working days; mail-in is 10 working days; start on day one.",
+      },
+      {
+        label: "Health exam — Bupa Medical Visa Services or designated panel physician",
+        why: "Compulsory immigration medical with Bupa Medical Visa Services UK (~£300–500 depending on London / Manchester / Glasgow centre) OR a designated overseas panel physician. Includes chest X-ray + medical exam + HIV test (if 15+). HAP ID generated after lodgement triggers the booking. Allow 4–6 weeks from request to receipt.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "1. How we met — date, place, context",
+        prompt: "Specific date and place. 'In March 2022, we met through a mutual friend at her birthday in London' beats 'we met through friends a few years ago.' If you met on an app (Hinge / Bumble), say so — DHA doesn't penalise online introductions.",
+      },
+      {
+        heading: "2. Development of the relationship — dated timeline",
+        prompt: "First few dates: when, where, what you did. First time meeting each other's families: date, who attended. First long trip together. Moving from 'dating' to 'in a relationship' moment. Annotate every milestone with a specific month + year.",
+      },
+      {
+        heading: "3. Cohabitation — start date, address, joint arrangements",
+        prompt: "When did you move in together? What's the address? Whose name is on the tenancy? What bills are joint? Cover any periods apart (visa runs, work trips) and explain how you maintained the relationship. Australia's 12-month rule is interrupted by separations of more than 8 weeks — be honest and explain.",
+      },
+      {
+        heading: "4. Registered relationship OR marriage milestone (if applicable)",
+        prompt: "If registered: state register, date, certificate number. If married: date, place, who attended, why you picked that venue. If neither: explain why you're using the 12-month cohabitation route + provide cohabitation start date with corroborating tenancy / utility evidence.",
+      },
+      {
+        heading: "5. Why Australia — concrete future plans",
+        prompt: "Job offer? Family in Australia? Existing residency right (citizenship by descent, PR sponsor)? Where will you live? What will you do? Vague 'we want to build our life there' is weaker than 'sponsor's parents are in Brisbane, sponsor returning to her existing accounting role at PwC Brisbane, we've signed a 12-month lease at [address].'",
+      },
+      {
+        heading: "6. Long-term commitment — using DHA's own language",
+        prompt: "Close with a line on intent to live together in Australia permanently, share finances, raise a family (if applicable), contribute to Australian life. Use DHA's exact phrase: 'mutual commitment to a shared life together to the exclusion of all others, on a genuine and continuing basis.' Lifting this verbatim shows you've read the rules.",
+      },
+    ],
+    moneySavingTips: [
+      "Total partner-visa fee AUD$9,365 (Jul 2024–25) primary + AUD$4,690 each adult dependent. NO discount for combined applications — but you only pay it ONCE because Subclass 100 / 801 (permanent stage) is included.",
+      "Use ACRO Premium (£95, 2 days) instead of standard (£55, 10 days) — every week of police-check delay risks losing your medical / form 888 freshness.",
+      "Bupa Medical Visa Services UK London (Holborn) tends to have the shortest wait — book the moment your HAP ID is issued.",
+      "Don't pay a migration agent AUD$5,000–10,000 for a partner visa application that fits the standard template. DHA's MyImmiAccount + checklist is well-designed for self-filers.",
+      "Sponsor's evidence (Form 40SP, payslips, Australian birth certificate or citizenship cert, photo ID) must be CERTIFIED COPIES — Justice of the Peace certifications are free in Australia at most council offices.",
+      "Bridging Visa A is automatic onshore: lodge Subclass 820 while on valid visa → BVA kicks in when current visa expires. You can work and stay until decision (~12-30 months).",
+      "If sponsor is Australian citizen by descent born in UK, request UK certificate of registration via UK Embassy Canberra to support evidence of identity.",
+      "Joint travel evidence: keep boarding passes, hotel bookings in BOTH names, photos with dates / locations EXIF data intact.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Clean cohabitation history with documented joint tenancy + utilities for 12+ months",
+        "Married couples with marriage certificate + a few rich evidence categories",
+        "Sponsor has clean financial record and is willing to commit time to Form 40SP",
+        "No prior visa refusals or overstays on either side",
+      ],
+      getALawyer: [
+        "Sponsor previously refused to sponsor another partner — DHA scrutiny escalates",
+        "Either side has past visa refusal, deportation, or overstay anywhere in the world",
+        "Criminal record on the applicant side — Australia's character test (Section 501 Migration Act) is strict",
+        "Sponsor's income from complex sources (self-employment, overseas income, recent bankruptcy)",
+        "Same-sex relationship where one partner has lived in countries where it was illegal — handle the police-certificate disclosure carefully",
+        "Children from previous relationships — international custody / consent orders complicate",
+        "Relationship under 12 months AND not registered AND not married — needs specialist framing as 'compelling circumstances'",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // BRITISH → USA — family / spouse (CR-1, IR-1, K-1)
+  // ════════════════════════════════════════════════════════════════════
+
+  "GB:US:family": {
+    whatCarriesWeight: [
+      {
+        label: "CR-1 / IR-1 (spouse) vs K-1 (fiancé) — pick deliberately",
+        why: "K-1 (fiancé) gets you to the US in ~12 months but requires marriage within 90 days of entry and a SEPARATE adjustment-of-status filing (~$1,225 extra) for a green card. CR-1 / IR-1 takes ~16-22 months but you arrive WITH a green card and full work + travel rights from day one. For most Brit-American couples already living together, CR-1/IR-1 is the right choice. K-1 makes sense only when sponsor and applicant truly haven't met long enough to marry.",
+      },
+      {
+        label: "I-130 + I-864 — petition and Affidavit of Support",
+        why: "US-citizen sponsor files Form I-130 (Petition for Alien Relative) — that establishes the qualifying relationship. Once approved by USCIS (~8-14 months in 2024), case transfers to National Visa Center. Then Form I-864 (Affidavit of Support) — sponsor commits to maintaining applicant at 125% of US Federal Poverty Guidelines ($25,550 for a household of 2 in 2024). If sponsor's income falls short, a joint sponsor (US citizen or LPR) can co-sign, OR a sponsor can use assets at 3x the income shortfall.",
+      },
+      {
+        label: "Bona-fide marriage evidence — the unwritten 90% of the application",
+        why: "USCIS is strict on marriage-of-convenience fraud. Document: joint financial accounts (Wise / Revolut / US joint checking), joint tenancy / mortgage, both names on utility bills, photos with both families over time, joint travel (UK <-> US visits documented), communication logs (WhatsApp / iMessage / FaceTime), affidavits from people who know you. CR-1/IR-1 distinction: if married 2+ years at petition approval → IR-1 (10-year unrestricted green card on arrival). Under 2 years → CR-1 (2-year conditional green card, requires Form I-751 Removal of Conditions filed 90 days before expiry).",
+      },
+      {
+        label: "Medical exam at US Embassy London — designated panel physician",
+        why: "US Embassy London (UK) lists designated panel physicians — Knightsbridge Doctors, Wimpole Street, Visa Medicals Manchester. Cost £200-£400 plus vaccinations as needed. Includes chest X-ray, blood draw (syphilis, gonorrhea), TB skin test (if applicable), MMR / TdaP / varicella / flu vaccinations to current US standards. Sealed envelope hand-carried to the visa interview (do not open).",
+      },
+      {
+        label: "Police certificates — UK ACRO + every country lived 6+ months since age 16",
+        why: "UK ACRO Police Certificate (£55 standard, £95 premium 2-day). PLUS certificates from every country you lived 6+ months as an adult (US lower threshold than AU). Start ACRO + foreign certificates immediately — they're the longest lead time. Issuance dates matter: certificates must be less than 6 months old at interview.",
+      },
+      {
+        label: "DS-260 + interview at US Embassy London (Nine Elms)",
+        why: "Once NVC has fees + civil documents + I-864, applicant completes DS-260 online and books visa interview. US Embassy London is at 33 Nine Elms Lane (moved from Grosvenor Square 2018). Interview scheduling backlog has been 6-12 weeks in 2024. Bring originals of every document + 2 passport photos (US specs, 2x2 inches white background) + sealed medical envelope + interview confirmation.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "1. How we met — when, where, context",
+        prompt: "Specific date and place: 'In April 2021, we met at a friend's wedding in San Francisco.' Online intros (Hinge, Match, mutual followers on Instagram) are fine — USCIS doesn't penalise them but does want specifics.",
+      },
+      {
+        heading: "2. Pre-marriage relationship — the dated timeline",
+        prompt: "First date, first 'official' dating, first visit across the Atlantic, first time meeting each other's families. Annotate dates. If you had long-distance periods, document them with flight bookings + accommodation in both names + messaging logs (WhatsApp / iMessage shows volume + recency).",
+      },
+      {
+        heading: "3. Engagement + wedding — date, place, attendees",
+        prompt: "Date and location of proposal. Wedding date and venue — who attended, where they came from, photos. Reception details. If you had two ceremonies (UK + US), explain why. Marriage certificate is the legal anchor but the social context evidences bona fides.",
+      },
+      {
+        heading: "4. Joint life since marriage — financial + household + legal",
+        prompt: "When did you start sharing finances? Joint bank accounts (date opened, both names on statement). Joint tenancy / mortgage. Health insurance with both names. Phone plan with both names. Tax-filing strategy (UK side: probably file separately if non-resident in US; US sponsor will need to amend filing status to Married Filing Jointly if applicable). Demonstrate intermingling of lives.",
+      },
+      {
+        heading: "5. Why move to the US — sponsor's situation + applicant's plans",
+        prompt: "Sponsor's anchor in the US (family, job, property, citizenship). Where will you both live? Will applicant work — USCIS allows IR-1 / IR-1 spouses to work day one on the green card; CR-1 spouses also (no EAD needed). Concrete next-12-months plan: 'we'll move to [city] where sponsor has a job at [employer]; I'll continue my role at [UK employer] remotely until June then transition to a US-based role.'",
+      },
+      {
+        heading: "6. Closing — using USCIS's own language",
+        prompt: "USCIS uses 'bona fide marriage entered into in good faith and not solely for immigration purposes.' Echo that wording verbatim — it's not just a flourish, it's the legal standard you're meeting. Close with both of you committed to building a life together in the US.",
+      },
+    ],
+    moneySavingTips: [
+      "Total US-side fees: I-130 $675, USCIS-NVC fees $445 (immigrant visa + AOS), medical £200-400, interview no extra fee. Total ~$1,200 USD + medical. K-1 is similar but you ALSO pay ~$1,225 adjustment of status once married in US — so CR-1/IR-1 is cheaper overall.",
+      "US Embassy London is the consulate for ALL UK-resident applicants — there's no Manchester / Edinburgh / Belfast visa consulate. Plan travel to London for the medical + interview.",
+      "Don't pay an immigration lawyer the typical $1,500–3,000 retainer for a straightforward CR-1 — USCIS forms are detailed but follow the public instructions cleanly. Boundless.com (we list them in /services/legal-services) offers attorney-reviewed packages from $995 if you want that safety net for less.",
+      "Use ACRO Premium (£95, 2 days) for the UK police certificate — standard (£55, 10 days) routinely delays interview scheduling.",
+      "Get original (long-form) UK birth certificate, NOT short version. ~£11 from gov.uk's general register office.",
+      "Use Wise / Revolut for joint USD-GBP transactions evidencing financial intermingling — both work as 'joint financial' evidence even if the underlying account is in one name.",
+      "Submit Form I-130A (Supplemental Information for Spouse Beneficiary) — it's free but easy to forget. Missing I-130A delays processing by months.",
+      "TB skin test ineligibility: if you've had BCG vaccination (most UK adults born pre-2005), request IGRA blood test from the panel physician instead. Sponsor physicians know this.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard marriage-based CR-1 / IR-1 for UK applicants with clean criminal history",
+        "Sponsor income comfortably above 125% FPG threshold",
+        "Document trail from a multi-year relationship including pre-marriage cohabitation in UK or US",
+        "K-1 for couples genuinely engaged but not yet married, with prior in-person meetings in last 2 years documented",
+      ],
+      getALawyer: [
+        "Applicant has prior US visa overstay (any duration over 180 days triggers 3/10-year bars)",
+        "Applicant has prior US visa refusal under INA 214(b), 221(g), or 212(a) inadmissibility",
+        "Criminal record on the applicant side — drink-driving, drug possession, even minor public order, all need review",
+        "Sponsor income below threshold AND no eligible joint sponsor available — assets-based path is workable but complex",
+        "Prior marriage to a US citizen on either side — fraud-marriage assumptions kick in",
+        "Sponsor is a recently naturalised US citizen (5 years or less) — establishing domicile in US for I-864 can be contested",
+        "Marriage less than 12 months old at I-130 filing — Section 245(d) restrictions on K-1 entrants",
+        "Either party has minor children from previous relationships — derivative beneficiaries + consent orders",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // BRITISH → CANADA — family / spousal sponsorship
+  // ════════════════════════════════════════════════════════════════════
+
+  "GB:CA:family": {
+    whatCarriesWeight: [
+      {
+        label: "Inland (Family Class) vs Outland Spousal Sponsorship — different timelines",
+        why: "Outland: spouse stays in UK during processing (~12-18 months), can travel freely, application via Mississauga Case Processing Centre. Inland: spouse already in Canada (visitor / IEC / study / work), gets implied status + can apply for an Open Work Permit while waiting. Outland is faster on average; Inland keeps the couple together during processing. NO income requirement for spousal sponsorship — unlike Parent / Grandparent Programme where MNI applies.",
+      },
+      {
+        label: "Marriage OR common-law (12 months cohab) OR conjugal partnership",
+        why: "Three qualifying relationships under IRPA: (a) marriage, legal under the law of the place where it occurred; (b) common-law — 12 continuous months of cohabitation in a marriage-like relationship; (c) conjugal partner — relationship existed for 12+ months and couple were UNABLE to live together due to legal / immigration / persecution barriers. Most UK-Canada couples qualify as married or common-law. Document cohabitation with joint tenancy, joint utilities, joint bank statements.",
+      },
+      {
+        label: "Genuine relationship test — IRCC's specific evidence checklist",
+        why: "IRCC explicitly wants: (1) photos showing the relationship over time — events, families, places; (2) communication logs evidencing volume + recency (WhatsApp, Messenger, FaceTime, Zoom); (3) joint travel — boarding passes in both names; (4) financial commingling — joint accounts, joint household bills, money transfers; (5) statements from family + friends attesting to the relationship. The IMM 5532 (Relationship Information and Sponsorship Evaluation) is the binding form.",
+      },
+      {
+        label: "Police certificates — UK ACRO + every country lived 6+ months since age 18",
+        why: "Canadian threshold is 6 months (lower than Australia's 12). UK ACRO Police Certificate (£55 standard, £95 premium). Plus equivalent for every country you've lived 6+ months as an adult. Issuance date must be less than 12 months before submission. Start ACRO Premium on day one.",
+      },
+      {
+        label: "Medical exam — IRCC-designated panel physician (eMedical system)",
+        why: "Compulsory immigration medical exam. UK panel physicians: Knightsbridge Doctors (London), Visa Medicals Manchester, IRCC-designated panel doctors across major cities (~£200-300). Includes chest X-ray, blood + urine, eye test, GP exam. Results uploaded to IRCC's eMedical system within ~5 business days of exam. Valid 12 months from exam date.",
+      },
+      {
+        label: "Sponsor undertaking — 3-year financial commitment",
+        why: "Canadian sponsor signs an IMM 1344 Undertaking committing to financially support the spouse for 3 years from PR landing. Sponsor must be Canadian citizen or PR aged 18+, not currently receiving social assistance (other than disability), not in default on a previous sponsorship undertaking, no recent criminal convictions for offences against family members. The 3-year commitment survives divorce.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "1. How we met — when, where, context",
+        prompt: "Specific date and place. If you met online (Hinge, Bumble), state it; IRCC doesn't penalise app-based introductions but does want specifics. 'We met on Hinge in February 2022 and had our first in-person date in London on March 5, 2022' beats 'we met online a couple of years ago.'",
+      },
+      {
+        heading: "2. Relationship development — the dated timeline",
+        prompt: "First few dates → moving from 'dating' to 'in a relationship' → first family introductions → first long trip together. Date every major milestone. If you had long-distance periods (UK ↔ Canada), document them: flights both ways, accommodation, video-call logs.",
+      },
+      {
+        heading: "3. Cohabitation OR marriage start point",
+        prompt: "If common-law: cohabitation start date + address + joint tenancy / utilities (3+ proofs ideal). If married: marriage date, place, who attended. Cover gaps in cohabitation explicitly — IRCC accepts work trips / family emergencies but expects you to explain.",
+      },
+      {
+        heading: "4. Sponsor's situation — anchor in Canada",
+        prompt: "Sponsor's Canadian status (citizen or PR), province of residence, employment / income, family in Canada. Where will you both live? Sponsor's plans for next 12 months. If sponsor is currently outside Canada (allowed for citizens), how / when will they re-establish residence.",
+      },
+      {
+        heading: "5. Why Canada — applicant's plans",
+        prompt: "Why move to Canada specifically. Sponsor's family / job there? Applicant's career plan in Canada? Open Work Permit if applying inland — what work will you do? Concrete plans beat vague intent. 'Sponsor's family is in Vancouver; I'll continue freelance editorial work via Canadian Open Work Permit while we settle' is stronger than 'we want to live there.'",
+      },
+      {
+        heading: "6. Long-term commitment — using IRCC's own language",
+        prompt: "Close using IRCC's exact phrasing: 'genuine relationship... entered into in good faith and not primarily for the purpose of acquiring permanent resident status.' This is the legal test for genuineness in IRPA Section 4 — quote it verbatim.",
+      },
+    ],
+    moneySavingTips: [
+      "Total IRCC fees: $570 sponsorship + $570 PR fee + $635 Right of PR Fee = $1,775 CAD per principal applicant ($1,205 if no kids). Substantially cheaper than US or Australian equivalents.",
+      "Use ACRO Premium (£95, 2 days) for UK police certificate.",
+      "Don't pay an immigration consultant $3,000-5,000 CAD for a straightforward spousal sponsorship. IRCC's checklist is well-documented for self-filers.",
+      "Common-law couples: a Statutory Declaration of Common-Law Union (IMM 5409) signed before a Commissioner of Oaths replaces the marriage certificate; £20 at a UK solicitor.",
+      "Use Wise / Revolut for GBP↔CAD joint transactions, evidencing financial commingling.",
+      "PR landing fee ($635 ROPRF) can be paid AFTER decision but BEFORE landing — easier cashflow timing.",
+      "Bring originals of every civil document (birth certificates, marriage certificate, divorce decrees if applicable) plus 2 sets of certified copies — IRCC may keep originals or return them.",
+      "After PR landing: spouse becomes eligible for Open Work Permit immediately + Provincial Health Insurance (BC, Ontario etc. have 3-month wait); ALL FREE — don't pay a relocation consultant for 'PR setup services.'",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard common-law or marriage-based spousal sponsorship with clean records on both sides",
+        "Couples with documented cohabitation + joint finances + family knowledge",
+        "Sponsor is a long-established Canadian citizen or PR (~5+ years) currently resident in Canada",
+        "No prior IRCC refusals or visa overstays",
+      ],
+      getALawyer: [
+        "Sponsor previously refused to sponsor another partner — IRCC scrutiny escalates",
+        "Sponsor has unpaid social-assistance debt or in default on a previous undertaking",
+        "Either side has a Canadian or other-country visa refusal in their immigration history",
+        "Criminal record on the applicant side — Canadian inadmissibility for criminality requires Rehabilitation application (separate, 5-year wait for individual rehab)",
+        "Sponsor is a recent grant of Canadian citizenship (sponsor must intend to reside in Canada at the time of landing — easy for citizens, complex for naturalised newcomers)",
+        "Conjugal partner application — IRCC's bar for 'unable to cohabit' is high and case-by-case",
+        "Same-sex couple where one party lived where same-sex unions weren't recognised — complex documentation of prior cohabitation",
+        "Dependent children from previous relationships — derivative inadmissibility, custody orders",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // AMERICAN → UK — family / spouse
+  // ════════════════════════════════════════════════════════════════════
+
+  "US:GB:family": {
+    whatCarriesWeight: [
+      {
+        label: "Spouse / Civil Partner / Unmarried Partner route — choose the right one",
+        why: "UK Spouse visa requires marriage or civil partnership. Unmarried Partner visa requires 2 YEARS of continuous cohabitation prior to application — the bar is high and well-documented. Fiancé(e) visa is a 6-month visit-only visa with no work rights that requires marriage in UK within the 6 months, then SWITCH to Spouse visa from inside UK. Most American-British couples either marry first (US or UK ceremony fine) then apply for Spouse, OR cohabit 2+ years then apply for Unmarried Partner.",
+      },
+      {
+        label: "Minimum Income Requirement — £29,000 (raised April 2024)",
+        why: "The UK sponsor must earn £29,000+/year in gross income from employment for the 6 months immediately before application. Self-employment income works (P60 + SA302 + business accounts for the last full UK tax year). Savings can substitute at £88,500 held for 6 months. From January 2025 the threshold rises to £38,700 (matching Skilled Worker minimum) under Conservative plans, though Labour may revise. Cash savings + income can be combined for any shortfall.",
+      },
+      {
+        label: "Genuine and subsisting relationship + intent to live together permanently",
+        why: "The phrase 'genuine and subsisting' is from Appendix FM Rule E-LTRP.1.7 — quote it in your statement. Document: marriage certificate / civil partnership certificate / 2+ years cohabitation evidence (joint tenancy, utilities, both names on bank statements, council tax). Cohabitation evidence must SPAN the 2-year period with 6+ different proof points across that span.",
+      },
+      {
+        label: "Adequate accommodation in the UK without recourse to public funds",
+        why: "Sponsor must show suitable UK accommodation: own property (Land Registry title), or tenancy agreement signed (or being signed shortly) for a property where you'll live together. Spouse cannot access most public funds (Universal Credit, Housing Benefit, child tax credit) for the duration of the 5-year route to ILR. UK Council Tax + utilities must demonstrate the sponsor's existing UK address.",
+      },
+      {
+        label: "English language requirement — A1 CEFR initially, A2 at extension",
+        why: "Initial Spouse visa requires English at CEFR A1 level — IELTS Life Skills A1, Trinity GESE Grade 2, or Pearson PTE Home A1. US citizens are EXEMPT from the language test as English is one of the recognised national languages of the US. But you should not assume the exemption — list 'United States' as country of birth on the form to trigger the automatic English-language exemption.",
+      },
+      {
+        label: "TB test — US citizens are EXEMPT (US not on UK TB-test country list)",
+        why: "Unlike applicants from TB-prevalent countries, US citizens applying from the US for a UK Spouse visa are exempt from the TB test requirement. This saves $80–250 and 1-2 weeks. Confirm on the gov.uk TB-test country list before booking anyway.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "1. How we met — when, where, context",
+        prompt: "Specific date and place. App, mutual friends, work, study abroad — all fine. 'We met at a conference in Boston in October 2021' is better than 'we met through work.'",
+      },
+      {
+        heading: "2. Pre-marriage relationship — dated milestones",
+        prompt: "First date, first 'official' couple status, first time meeting each other's families, first trip across the Atlantic. UK Home Office wants a TIMELINE. Document long-distance periods with flight records + accommodation in both names + messaging logs.",
+      },
+      {
+        heading: "3. Marriage / civil partnership OR cohabitation start",
+        prompt: "If married: date, place, attendees, why you chose that venue. UK civil partnerships are recognised. If using Unmarried Partner route: cohabitation start date (precise), address, both-names tenancy or mortgage, joint utility bills going back 2+ years. Gaps need explanations.",
+      },
+      {
+        heading: "4. Sponsor's UK anchor — income, accommodation, life",
+        prompt: "Sponsor's employment (employer, role, gross annual salary, P60 + 6 months of payslips). Sponsor's UK accommodation (own property or tenancy). How sponsor returned to UK if previously abroad. Family ties in UK.",
+      },
+      {
+        heading: "5. Plans for the UK — concrete next 12 months",
+        prompt: "Where you'll live (specific address if known). Applicant's work plan — Spouse visa carries unrestricted work rights, so 'I plan to continue my role at [US employer] remotely for the first 6 months while job-searching in [city]' is realistic and shows you've thought it through. NHS access from day one is one of the benefits — don't pretend you've considered private healthcare.",
+      },
+      {
+        heading: "6. Long-term commitment — using Home Office terminology",
+        prompt: "Close with: 'Our relationship is genuine and subsisting, and we intend to live together permanently in the UK' — direct quote from Appendix FM. This is the legal test. Echo it.",
+      },
+    ],
+    moneySavingTips: [
+      "Total UKVI fees: £1,938 application + £1,035/year IHS (Immigration Health Surcharge) = £4,047 for a 30-month visa. Premium decision (5 working days) adds £500 but rarely worth it for first application.",
+      "ACRO certificate NOT needed for US-citizen applicants applying from the US — UK doesn't ask for police certificates on the partner route (different from Australia / Canada).",
+      "Don't pay an immigration solicitor £1,500-3,000 for a standard Spouse visa application — Home Office's Appendix FM checklist is well-documented for self-filers. Sterling Law and similar OISC-regulated firms offer one-hour paid consultations from ~£100 if you want a sanity-check.",
+      "Use US 1040 forms + 6-month US bank statement showing salary deposits as primary income evidence; UK Home Office accepts foreign income for the sponsor if returning to UK + a confirmed UK job offer is provided.",
+      "If sponsor is UK-resident and you're applying from the US: apply at US side via UKVI commercial partner (TLScontact, formerly VFS) — VAC fees ~$130-200 on top of the £1,938 visa fee.",
+      "Apply 3 months before intended travel — UKVI Standard processing is currently 8-12 weeks from the US.",
+      "Save on translations: any English-language US document (marriage certificate, birth certificate) needs NO translation. Don't pay a 'document translator' for an English document.",
+      "5-year route to ILR (Indefinite Leave to Remain) requires two extensions before settlement — total UK visa cost over 5 years ~£8,000-10,000 inclusive of IHS. Married 2+ years before applying lets you renew at 2.5-year intervals.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard married couple with sponsor earning comfortably above £29,000 and 6 months of payslips",
+        "Civil partnership where both names appear on UK tenancy / mortgage",
+        "Unmarried Partner route with 2+ years of well-documented UK cohabitation",
+        "Clean immigration history on both sides",
+      ],
+      getALawyer: [
+        "Sponsor income just below £29,000 OR mixed self-employment + employment income",
+        "Sponsor is not currently UK-resident and needs to evidence intent to relocate (returning resident category complications)",
+        "Applicant has prior UK visa refusal, overstay, or Section 320 / 322 general grounds refusal",
+        "Criminal record on the applicant side — UK general grounds for refusal (4-year ban for some criminality, lifetime for serious offences)",
+        "Dependent children from previous relationships — derivative leave requirements",
+        "Applicant is currently in UK on visit visa wanting to switch — switching from visit visa to spouse is NOT permitted; must return to US and apply from there",
+        "Sponsor previously had recent ILR / settlement granted to a previous partner",
+        "Same-sex couple from US states where civil unions had unclear legal status — document the legal recognition path carefully",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // AUSTRALIAN → UK — family / spouse
+  // ════════════════════════════════════════════════════════════════════
+
+  "AU:GB:family": {
+    whatCarriesWeight: [
+      {
+        label: "Spouse / Civil Partner / Unmarried Partner — same Appendix FM rules apply",
+        why: "Australians apply through the SAME UK Spouse / Civil Partner / Unmarried Partner / Fiancé(e) routes as US applicants. UK doesn't have a Commonwealth-shortcut on the partner route. Choose carefully — Unmarried Partner needs 2 YEARS of continuous documented cohabitation; Spouse needs valid marriage; Fiancé(e) is a 6-month visit visa pending UK marriage.",
+      },
+      {
+        label: "Minimum Income Requirement — £29,000 sponsor income",
+        why: "UK sponsor must earn £29,000+/year gross from employment with 6 months of payslips (£18,600 was the previous threshold, raised April 2024). Savings substitute at £88,500 (held 6+ months). Self-employed sponsors use last full UK tax year. From January 2025 the threshold may rise further to match Skilled Worker — verify the current figure at gov.uk before applying.",
+      },
+      {
+        label: "Genuine and subsisting relationship — UK's specific evidence categories",
+        why: "Home Office Appendix FM cites: marriage certificate or 2+ years cohabitation evidence; joint financial commitments (joint accounts, mortgage); communication evidence during separations; photos with both families; honeymoon / joint travel; statements from family and friends attesting to the relationship. Spread across categories beats volume in any single one.",
+      },
+      {
+        label: "Tuberculosis testing — Australia is OFF the TB-test list",
+        why: "Australians are EXEMPT from UK TB testing (Australia is not on the UK's high-risk TB country list). One less £80-250 expense + week of delay.",
+      },
+      {
+        label: "ACRO / AFP police certificates",
+        why: "UK Home Office may request a UK ACRO Police Certificate (Australian sponsor's UK criminal record check, £55 standard) and an AFP National Police Check (Australian applicant's Australian record, AUD$43) — though the UK doesn't always require police certificates on partner applications. Have them ready as supporting evidence.",
+      },
+      {
+        label: "English language — Australians automatically exempt",
+        why: "Australia is on the UK Home Office's English-language exemption list. List 'Australia' as country of birth on the form to trigger automatic exemption — no IELTS Life Skills or other test required.",
+      },
+    ],
+    personalStatementTemplate: [
+      {
+        heading: "1. How we met — when, where, context",
+        prompt: "Specific date + place. Australians often meet British partners through working-holiday programmes (Subclass 417 in AU, Youth Mobility Scheme in UK) — that's fine; document it. 'In June 2021, I met my partner at a backpacker hostel in Edinburgh during my UK Youth Mobility year' is concrete.",
+      },
+      {
+        heading: "2. Pre-marriage relationship — dated timeline",
+        prompt: "First date, official couple, first family introductions, first joint travel between Australia and UK. Document any long-distance periods with flights both ways + accommodation in both names + messaging logs.",
+      },
+      {
+        heading: "3. Marriage / civil partnership OR cohabitation start point",
+        prompt: "If married in Australia: marriage certificate from BDM (state register). UK recognises Australian marriages without further legalisation. If Unmarried Partner route: cohabitation start, address, both-names tenancy / utility bills covering 2+ years.",
+      },
+      {
+        heading: "4. Sponsor's UK anchor",
+        prompt: "Sponsor's employment, income evidence (P60, 6 months payslips), UK accommodation (mortgage / tenancy), family ties. If sponsor returned recently from Australia after working there: document the return-to-UK arrangements.",
+      },
+      {
+        heading: "5. Plans for UK — work, accommodation, settlement",
+        prompt: "Spouse visa carries full work rights — Australian applicants often continue careers in UK seamlessly. State concrete next steps: 'I'll continue freelance work for my Sydney-based employer remotely while job-searching in London' is realistic and demonstrates planning.",
+      },
+      {
+        heading: "6. Closing — Home Office language",
+        prompt: "Use the exact Home Office phrase: 'Our relationship is genuine and subsisting and we intend to live together permanently in the United Kingdom.' This is from Appendix FM E-LTRP.1.7 — the legal test for genuineness.",
+      },
+    ],
+    moneySavingTips: [
+      "UKVI fees: £1,938 application + £1,035/year IHS = £4,047 total for 30-month visa. Premium decision (£500 extra) rarely worth it for partner applications.",
+      "Australians are exempt from the English language test and TB test — list 'Australia' as country of birth + Australian passport on the application to trigger both exemptions automatically.",
+      "Apply via TLScontact / VFS Australia — locations in Sydney, Melbourne, Perth, Brisbane, Auckland. VAC fee ~AUD$200 on top of the visa fee.",
+      "Don't pay a UK immigration lawyer AUD$3,000-5,000 for a standard Spouse visa. Home Office's checklist is well-documented for self-filers. Sterling Law / OTS Solicitors etc. offer one-hour paid consultations from ~£100 if you want a check.",
+      "Use Wise / Revolut to evidence joint financial commitments in GBP — both work fine as evidence even if account is in one name.",
+      "Sponsor's UK employer letter should explicitly state gross salary, employment continuation post-application, and contact details for HR verification.",
+      "If sponsor is currently in Australia (Subclass 417 / 482 etc.) but plans to return to UK: document the return travel + UK accommodation arranged for return.",
+      "5-year route to ILR involves two extensions — budget ~£8,000-10,000 total UK visa cost over 5 years.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Standard married couple with comfortable sponsor income + UK accommodation arranged",
+        "Civil partnership / marriage from Australia, both names on Australian property or financial accounts",
+        "Unmarried Partner route with 2+ years of documented Australian or UK cohabitation",
+        "Sponsor returning to UK from Australia with re-established UK employment",
+      ],
+      getALawyer: [
+        "Sponsor income just below £29,000 OR mixed UK + Australian income sources",
+        "Sponsor not yet returned to UK and needs to evidence intent to settle (Returning Resident grounds)",
+        "Applicant has prior UK visa refusal, overstay, or general grounds refusal",
+        "Criminal record on the applicant — UK rehabilitation periods (Rehabilitation of Offenders Act 1974) interact with mandatory refusal grounds",
+        "Same-sex couple where Australian marriage / civil partnership was recognised but pre-2017 (legal recognition unclear during transition)",
+        "Dependent children — Australian custody orders need explicit recognition in UK family courts",
+        "Pending Australian immigration application (e.g. Subclass 309 Partner being processed) — withdrawal vs continuation strategic call",
+      ],
+    },
+  },
+
 };
 
 export function routeAdviceFor(

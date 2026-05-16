@@ -9,6 +9,7 @@ import * as schengenEes from "./schengen-ees-explained";
 import * as brazil from "./brazil-reintroduces-visas-2025";
 import * as workingHoliday from "./working-holiday-visas-complete-guide";
 import * as digitalNomad from "./digital-nomad-visas-how-to-choose";
+import * as diyPersonalStatement from "./diy-personal-statement";
 import type { GuideModule } from "./types";
 
 export const GUIDES: GuideModule[] = [
@@ -18,6 +19,7 @@ export const GUIDES: GuideModule[] = [
   brazil as unknown as GuideModule,
   workingHoliday as unknown as GuideModule,
   digitalNomad as unknown as GuideModule,
+  diyPersonalStatement as unknown as GuideModule,
 ];
 
 export function guideBySlug(slug: string): GuideModule | undefined {

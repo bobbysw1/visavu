@@ -42,29 +42,34 @@ export const ADVICE_BY_PURPOSE: Record<Purpose, AdviceBlock | null> = {
   family: {
     whatCarriesWeight: [
       {
-        label: "Genuine, subsisting relationship evidence",
+        label: "Relationship-duration test — usually 12 months living together OR married/civil partnership",
         why:
-          "The single biggest fraud signal caseworkers watch for is a relationship of convenience. Spread of evidence across financial, household, social and communication dimensions matters more than volume in any one category — 30 photos and nothing else is weaker than 5 photos + joint tenancy + joint bank statements + WhatsApp logs across the entire relationship.",
+          "Nearly every partner / spouse / family visa demands proof the relationship is GENUINE AND HAS LASTED. Typical thresholds: Australia (Subclass 309 / 820) requires 12 months of cohabitation OR a registered relationship OR marriage; New Zealand Partnership-based wants 12 months living together; UK Spouse / Partner visa wants marriage / civil partnership OR 2 years cohabitation; Canada Spousal Sponsorship accepts marriage / common-law (12 months cohabitation) / conjugal partners; US CR-1 / IR-1 requires a legally valid marriage with no minimum duration but heavy bona-fide-marriage scrutiny. Read your specific destination's threshold above — refusal is common when applicants assume their own country's rule applies.",
+      },
+      {
+        label: "Genuine, subsisting relationship evidence — spread is what matters",
+        why:
+          "Caseworkers watch for relationships of convenience. Spread of evidence across financial, household, social and communication dimensions beats volume in any single category — 30 photos and nothing else is weaker than 5 photos + joint tenancy + joint bank statements + WhatsApp logs going back through the relationship. Anglophone destinations specifically use the phrase 'genuine and subsisting' (UK) / 'genuine and mutual commitment' (AU) / 'genuine relationship' (CA) — copying their exact terminology in your statement signals you've read the rules.",
       },
       {
         label: "Financial-requirement compliance",
         why:
-          "The sponsor's income / savings test is binary — you meet it or you don't. Most refused partner-visa applications fail here before the caseworker even reads the relationship evidence. Calculate the threshold for {destination}'s partner / spouse visa precisely (it's in the visa fee + processing details above). Most countries have hard-coded ways of evidencing salary, self-employment, savings, and pension income — they don't substitute freely.",
+          "The sponsor's income / savings test is binary — you meet it or you don't. Most refused partner-visa applications fail here before the caseworker even reads the relationship evidence. UK Spouse: sponsor £29,000/year (raised April 2024). Australia Partner: no formal income test but AOS (Assurance of Support) if requested. US CR-1: 125% of Federal Poverty Guidelines via Form I-864. Canada Spousal: no income requirement for spouse but MNI applies for parental sponsorship. Calculate the threshold for {destination}'s partner / spouse visa precisely (it's in the visa fee + processing details above); most countries have hard-coded ways of evidencing salary, self-employment, savings, and pension income — they don't substitute freely.",
       },
       {
         label: "Personal statement / letter of intent",
         why:
-          "A clear, dated narrative of how you met, when the relationship became serious, the major milestones (moving in together, engagement, marriage), and your plans for the destination is the caseworker's roadmap through the evidence bundle. A confused or contradictory statement does damage that strong evidence can't fully undo.",
+          "A clear, DATED narrative of how you met, when the relationship became serious, the major milestones (moving in together, engagement, marriage), and your plans for the destination is the caseworker's roadmap through the evidence bundle. A confused or contradictory statement does damage that strong evidence can't fully undo. See our DIY personal-statement guide for the section-by-section skeleton + an AI prompt template that saved one of us £1,500+ in lawyer fees.",
       },
       {
         label: "Police certificates from every long-term residence",
         why:
-          "Missing one police certificate from a country you lived in 6+ months sets the application back 8–12 weeks. They're the slowest-to-obtain document — start them on day one.",
+          "Most destinations want a police certificate from every country you've lived in 6 or 12 months as an adult. Missing one sets the application back 8–12 weeks. They're the slowest-to-obtain document — start them on day one. UK: ACRO Police Certificate (£55 standard, £95 premium). US: FBI Identity History Summary via Channeler (~$50, 1–3 days) — DON'T use FBI Mail (2–3 months). Australia: AFP National Police Check ($43). Canada: RCMP Police Certificate.",
       },
       {
         label: "Medical exam (when required)",
         why:
-          "Many destinations only require a medical for relationships forming in TB-prevalent regions. Check the destination's TB-test country list; if you're on it, book the panel physician early — 4–6-week waits in major cities.",
+          "Long-stay partner / spouse visas to Australia, Canada, New Zealand require panel-physician medicals. UK requires TB test if you've lived 6+ months in a high-TB country (~100-country list). US CR-1 / IR-1 requires medical by Embassy-designated panel physician. Book early — 4–6-week waits in major cities are common.",
       },
     ],
     personalStatementTemplate: [

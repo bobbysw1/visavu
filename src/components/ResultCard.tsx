@@ -11,6 +11,7 @@ import { RealismMeter } from "./RealismMeter";
 import { ApplicationChecklist } from "./ApplicationChecklist";
 import { t, type Locale, DEFAULT_LOCALE } from "@/i18n/t";
 import { formatFeeLocalised } from "@/lib/exchange";
+import { GlossaryText } from "./GlossaryText";
 
 const STATUS_LABEL: Record<ResolvedVisaOption["status"], string> = {
   visa_free: "Visa-free",
@@ -339,7 +340,9 @@ export function ResultCard({
                 <h4 className="text-sm font-semibold mb-1.5">{t("ui.what_you_need", locale)}</h4>
                 <ul className="space-y-1 text-neutral-700 dark:text-neutral-300 list-disc list-inside marker:text-neutral-400">
                   {option.requirements.map((r, i) => (
-                    <li key={i}>{r}</li>
+                    <li key={i}>
+                      <GlossaryText text={r} />
+                    </li>
                   ))}
                 </ul>
               </div>

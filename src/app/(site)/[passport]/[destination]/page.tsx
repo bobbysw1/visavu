@@ -433,7 +433,23 @@ export default async function Page({
     // pay the DB cost twice on a single render.
     const route = await cachedResolveRoute(p, d, purpose);
     if (!route) throw new Error("resolver unavailable");
-    options = route.primary;
+    // Always surface EVERY purpose on the result page. Most users land
+    // on /gb/au (no purpose param → defaults to tourism) but want to
+    // see "is there a work visa for me?" too. The visa list groups by
+    // purpose with all groups collapsed; the DirectAnswerCard at the
+    // top still reflects the URL's primary purpose, so context
+    // doesn't get lost.
+    const merged = [...route.primary];
+    const seen = new Set(route.primary.map((o) => o.id));
+    for (const alt of route.alternatives) {
+      for (const opt of alt.options) {
+        if (!seen.has(opt.id)) {
+          seen.add(opt.id);
+          merged.push(opt);
+        }
+      }
+    }
+    options = merged;
     alternatives = route.alternatives;
     baselineTourismStatus = route.baselineTourismStatus;
 

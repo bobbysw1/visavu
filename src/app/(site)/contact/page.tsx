@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 // Single inbox for now — segmented by subject line. Avoids the trust signal
 // problem of "Contact Us" pages with no real way to reach a human.
-const CONTACT_EMAIL = "hello@visavu.com";
+const CONTACT_EMAIL = "info@visavu.com";
 
 export default function ContactPage() {
   return (

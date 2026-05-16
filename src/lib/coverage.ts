@@ -292,6 +292,24 @@ export type PassportRanking = {
   // passport-strength index metric).
   visaFreeAccess: number;
   totalOptions: number;
+  // Per-status DESTINATION counts for tourism (deduped — each destination
+  // counted once at its highest-tier status). Drives the stacked status
+  // bars on /passport-rankings without a second query.
+  byStatus: Record<VisaStatus, number>;
+};
+
+// Status precedence — when a single (passport, destination) pair has more
+// than one tourism record (e.g. visa-free for short stays + e-visa for
+// longer), the row counts under the most-favourable status only. Mirrors
+// what users care about most: "what's the easiest way in?".
+const STATUS_RANK: Record<VisaStatus, number> = {
+  visa_free: 0,
+  visa_free_with_eta: 1,
+  visa_on_arrival: 2,
+  e_visa: 3,
+  embassy_visa: 4,
+  restricted: 5,
+  refused: 6,
 };
 
 export async function passportRankings(): Promise<PassportRanking[]> {
@@ -321,6 +339,22 @@ export async function passportRankings(): Promise<PassportRanking[]> {
     .innerJoin(schema.passports, eq(schema.passports.id, schema.visaOptions.passportId))
     .where(eq(schema.passports.type, "ordinary"));
 
+  // Best-status-per-destination for tourism. We dedupe on (iso2, destIso)
+  // and keep the lowest-numbered STATUS_RANK so the stacked bar segments
+  // sum to <= totalDestinations and don't double-count.
+  const bestStatus = new Map<string, Map<string, VisaStatus>>();
+  for (const r of tourismRows) {
+    let perPassport = bestStatus.get(r.iso2);
+    if (!perPassport) {
+      perPassport = new Map();
+      bestStatus.set(r.iso2, perPassport);
+    }
+    const existing = perPassport.get(r.destIso);
+    if (!existing || STATUS_RANK[r.status as VisaStatus] < STATUS_RANK[existing]) {
+      perPassport.set(r.destIso, r.status as VisaStatus);
+    }
+  }
+
   const visaFreeByIso = new Map<string, Set<string>>();
   for (const r of tourismRows) {
     if (r.status !== "visa_free" && r.status !== "visa_free_with_eta") continue;
@@ -341,11 +375,27 @@ export async function passportRankings(): Promise<PassportRanking[]> {
 
   const rankings: PassportRanking[] = [];
   for (const [iso2, entry] of totalsByIso) {
+    const byStatus: Record<VisaStatus, number> = {
+      visa_free: 0,
+      visa_free_with_eta: 0,
+      visa_on_arrival: 0,
+      e_visa: 0,
+      embassy_visa: 0,
+      restricted: 0,
+      refused: 0,
+    };
+    const perPassport = bestStatus.get(iso2);
+    if (perPassport) {
+      for (const status of perPassport.values()) {
+        byStatus[status] += 1;
+      }
+    }
     rankings.push({
       iso2,
       totalDestinations: entry.dests.size,
       visaFreeAccess: visaFreeByIso.get(iso2)?.size ?? 0,
       totalOptions: entry.options,
+      byStatus,
     });
   }
 

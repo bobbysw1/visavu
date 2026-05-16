@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
+import { RankingsTable } from "@/components/RankingsTable";
+import { PassportCollage } from "@/components/PassportCollage";
 import { passportRankings } from "@/lib/coverage";
-import { flagEmoji, nameFor } from "@/lib/countries";
+import { nameFor } from "@/lib/countries";
+import { getPassportCover, type PassportCover } from "@/lib/passportCovers";
 import { SITE, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -35,8 +37,23 @@ export default async function PassportRankingsPage() {
   try {
     rankings = await passportRankings();
   } catch {
-    // DB unavailable — empty state.
+    // DB unavailable — fall through to an empty-state notice below.
   }
+
+  // Aggregate stats for the scoreboard strip (mirrors what passportindex.org
+  // shows at the bottom of their leaderboard — gives the data product some
+  // global context). Computed once from the same ranking set.
+  const stats =
+    rankings.length === 0
+      ? null
+      : (() => {
+          const visaFrees = rankings.map((r) => r.visaFreeAccess).sort((a, b) => a - b);
+          const sum = visaFrees.reduce((a, b) => a + b, 0);
+          const avg = Math.round(sum / visaFrees.length);
+          const median = visaFrees[Math.floor(visaFrees.length / 2)];
+          const totalRoutes = rankings.reduce((s, r) => s + r.totalOptions, 0);
+          return { avg, median, totalRoutes, passports: rankings.length };
+        })();
 
   // ItemList JSON-LD aids rich-result rendering for ranked content.
   const itemListJsonLd = {
@@ -63,81 +80,82 @@ export default async function PassportRankingsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
       />
 
-      <main className="mx-auto max-w-4xl px-4 py-8">
+      <main className="mx-auto max-w-5xl px-4 sm:px-6 py-8 sm:py-12">
         <Breadcrumbs crumbs={crumbs} />
 
-        <header className="mb-6">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">
-            Passport rankings
+        <header className="mb-8 sm:mb-10">
+          <p className="kicker mb-3">Leaderboard</p>
+          <h1 className="billboard mb-5 max-w-3xl">
+            Passport power rankings<span className="text-[var(--color-accent)]">.</span>
           </h1>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            Sortable directory of {rankings.length || "every"} passport with verified data on
-            file, ranked by tourism visa-free access. Coverage reflects only routes we&apos;ve
-            verified — this isn&apos;t a complete passport-strength index.
+          <p className="text-base sm:text-lg text-[var(--color-ink)]/85 leading-relaxed max-w-2xl">
+            Every passport on file, ranked by the number of destinations its
+            holders can enter visa-free or via eTA. Built from official
+            government sources — every count traces back to a verified record.
           </p>
         </header>
 
+        {/* Passport-cover collage — the signature visual borrowed from
+            passportindex.org. Sits above the leaderboard as a teaser; the
+            full collage view is duplicated at the bottom for browse-by-photo
+            users. */}
+        <section className="mb-12">
+          <p className="kicker mb-3">Every passport in one view</p>
+          <PassportCollage caption />
+        </section>
+
+        {/* Scoreboard strip — bottom-of-page-style aggregate stats moved
+            to a prominent position to anchor the page in real numbers. */}
+        {stats && (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-[var(--color-rule)] border border-[var(--color-rule)] rounded-2xl overflow-hidden mb-10">
+            <Stat n={stats.avg} label="avg visa-free" />
+            <Stat n={stats.median} label="median visa-free" />
+            <Stat n={stats.passports} label="passports ranked" />
+            <Stat n={stats.totalRoutes} label="verified routes" />
+          </div>
+        )}
+
         {rankings.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-neutral-300 dark:border-neutral-700 p-6 text-sm text-neutral-600 dark:text-neutral-400">
+          <div className="rounded-lg border border-dashed border-[var(--color-rule)] p-6 text-sm text-[var(--color-ink-muted)]">
             <p className="font-medium mb-1">No ranking data yet.</p>
             <p>
-              Run <code className="px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 font-mono text-xs">npm run bootstrap</code>{" "}
+              Run{" "}
+              <code className="px-1.5 py-0.5 rounded bg-[var(--color-muted)] font-mono text-xs">
+                npm run bootstrap
+              </code>{" "}
               to seed visa data, then revisit this page.
             </p>
           </div>
         ) : (
-          <section>
-            <div className="overflow-x-auto rounded-lg border border-neutral-200 dark:border-neutral-800">
-              <table className="w-full text-sm">
-                <thead className="bg-neutral-50 dark:bg-neutral-900 text-left text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 border-b border-neutral-200 dark:border-neutral-800">
-                  <tr>
-                    <th className="py-3 px-4 w-14">#</th>
-                    <th className="py-3 px-4">Passport</th>
-                    <th className="py-3 px-4 text-right">Visa-free destinations (tourism)</th>
-                    <th className="py-3 px-4 text-right">Total destinations</th>
-                    <th className="py-3 px-4 text-right">Total verified routes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rankings.map((r, i) => (
-                    <tr
-                      key={r.iso2}
-                      className="border-b border-neutral-100 dark:border-neutral-900 last:border-0 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition"
-                    >
-                      <td className="py-2.5 px-4 font-mono text-neutral-500 dark:text-neutral-400">
-                        {i + 1}
-                      </td>
-                      <td className="py-2.5 px-4">
-                        <Link
-                          href={`/passport/${r.iso2.toLowerCase()}`}
-                          className="flex items-center gap-3 hover:underline"
-                        >
-                          <span className="text-lg" aria-hidden>{flagEmoji(r.iso2)}</span>
-                          <span className="font-medium">{nameFor(r.iso2)}</span>
-                        </Link>
-                      </td>
-                      <td className="py-2.5 px-4 text-right font-semibold text-emerald-700 dark:text-emerald-400">
-                        {r.visaFreeAccess}
-                      </td>
-                      <td className="py-2.5 px-4 text-right">{r.totalDestinations}</td>
-                      <td className="py-2.5 px-4 text-right text-neutral-500">
-                        {r.totalOptions}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <p className="mt-4 text-xs text-neutral-500 italic">
-              Visa-free count includes both visa-free and visa-free-with-eTA tourism routes.
-              Numbers are derived from the visa records in our database — countries with low
-              counts may simply not yet be covered by our scraping pipeline. Source coverage is
-              continuously expanding.
-            </p>
-          </section>
+          <RankingsTable
+            rankings={rankings}
+            covers={Object.fromEntries(
+              // Pre-resolve every ranking's cover server-side so the
+              // client bundle stays free of node:fs.
+              rankings.map((r) => [r.iso2, getPassportCover(r.iso2) as PassportCover | null]),
+            )}
+          />
         )}
+
+        <p className="mt-8 text-xs text-[var(--color-ink-muted)] italic max-w-2xl">
+          Visa-free count includes both visa-free and visa-free-with-eTA tourism
+          routes, deduplicated per destination. Numbers are derived from the
+          visa records in our database — countries with low counts may simply
+          not yet be fully covered by our scraping pipeline. Coverage is
+          continuously expanding.
+        </p>
       </main>
     </>
+  );
+}
+
+function Stat({ n, label }: { n: number; label: string }) {
+  return (
+    <div className="bg-[var(--color-paper-elev)] p-4 sm:p-5 text-center sm:text-left">
+      <p className="serif-display text-3xl sm:text-4xl font-medium tabular text-[var(--color-ink)]">
+        {new Intl.NumberFormat("en").format(n)}
+      </p>
+      <p className="kicker mt-1">{label}</p>
+    </div>
   );
 }

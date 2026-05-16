@@ -6,6 +6,7 @@ import { RouteCard } from "@/components/RouteCard";
 import { AllCountriesGrid } from "@/components/AllCountriesGrid";
 import { ClaudeTipCallout } from "@/components/ClaudeTipCallout";
 import { DestinationTileStrip } from "@/components/DestinationTileStrip";
+import { PassportCollage } from "@/components/PassportCollage";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { siteStats } from "@/lib/coverage";
 
@@ -225,6 +226,27 @@ export default async function HomePage() {
             />
           ))}
         </div>
+      </section>
+
+      {/* ─── PASSPORT COLLAGE ───
+          Dense grid of real passport-cover photos — the signature visual
+          we owe the brand. Every passport in our index, on one screen,
+          each clickable into its dedicated page. Caption explains the
+          Wikimedia Commons source so the CC attribution is visible. */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
+        <div className="flex items-end justify-between mb-6 gap-4 flex-wrap">
+          <div>
+            <p className="kicker mb-3">By passport</p>
+            <h2 className="section-h2">Every passport in the world.</h2>
+          </div>
+          <Link
+            href="/passport-rankings"
+            className="text-sm underline underline-offset-4 hover:no-underline"
+          >
+            See the full rankings →
+          </Link>
+        </div>
+        <PassportCollage caption />
       </section>
 
       {/* ─── VALUE PROPS ───

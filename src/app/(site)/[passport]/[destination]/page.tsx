@@ -35,7 +35,7 @@ import { assessDifficulty } from "@/lib/difficulty";
 import { isProfile, type Profile } from "@/lib/profiles";
 import { RelatedRoutesRail } from "@/components/RelatedRoutesRail";
 import { obstaclesFor } from "@/content/obstacles";
-import { COUNTRY_LIST, flagEmoji, nameFor } from "@/lib/countries";
+import { COUNTRY_LIST, flagEmoji, issuesPassport, nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
 import { resolveRoute } from "@/lib/resolver";
 import {
@@ -53,6 +53,14 @@ type Search = { purpose?: string; lang?: string; currency?: string; profile?: st
 function normalize(iso2: string): string | null {
   const upper = iso2.toUpperCase();
   return COUNTRY_LIST.some((c) => c.iso2 === upper) ? upper : null;
+}
+
+/** Origin side of /[passport]/[destination] must be a passport-issuing
+ *  country — otherwise we'd serve "AQ passport visa requirements for visiting
+ *  JP" type nonsense. Destination side stays broad. */
+function normalizeOrigin(iso2: string): string | null {
+  const upper = normalize(iso2);
+  return upper && issuesPassport(upper) ? upper : null;
 }
 
 // Question-form H1 matches how people actually search ("can a German travel
@@ -157,7 +165,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { passport, destination } = await params;
   const sp = await searchParams;
-  const p = normalize(passport);
+  const p = normalizeOrigin(passport);
   const d = normalize(destination);
   if (!p || !d) return { title: "Not found" };
 
@@ -404,7 +412,7 @@ export default async function Page({
 }) {
   const { passport, destination } = await params;
   const sp = await searchParams;
-  const p = normalize(passport);
+  const p = normalizeOrigin(passport);
   const d = normalize(destination);
   if (!p || !d) notFound();
 

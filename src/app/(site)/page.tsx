@@ -61,12 +61,12 @@ export default async function HomePage() {
             Every passport · Every destination · No middleman
           </p>
           <h1 className="billboard max-w-4xl mx-auto">
-            What visa do you need
-            <span className="text-[var(--color-accent)]">?</span>
+            Find the right visa for your move abroad
+            <span className="text-[var(--color-accent)]">.</span>
           </h1>
           <p className="mt-6 text-lg sm:text-xl text-[var(--color-ink-muted)] max-w-2xl mx-auto leading-relaxed">
-            Instant answers, sourced directly from each destination&apos;s government portal —
-            not a middleman or a content farm.
+            Visa requirements and relocation roadmaps for every passport — answered
+            in minutes, sourced from official government portals, never a content farm.
           </p>
 
           <div className="mt-10">

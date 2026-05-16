@@ -27,6 +27,40 @@ export function flagEmoji(iso2: string): string {
   return flagFor(iso2);
 }
 
+// ISO 3166-1 codes that do NOT issue passports — uninhabited territories,
+// research stations, and dependencies whose residents travel on the
+// administering country's passport. Generating /passport/[cc] for these
+// produces fabricated thin content (Google "Crawled — currently not indexed"
+// territory). Routes 410-Gone them; sitemap/internal-link callers must
+// filter via `passportCountries()`.
+export const NO_PASSPORT_CODES: ReadonlySet<string> = new Set([
+  "AQ", // Antarctica — no civilian population, no passports
+  "BV", // Bouvet Island — uninhabited (Norway)
+  "HM", // Heard Island & McDonald Islands — uninhabited (Australia)
+  "TF", // French Southern Territories — research stations only
+  "UM", // US Minor Outlying Islands — no permanent residents
+  "IO", // British Indian Ocean Territory — military only
+  "GS", // South Georgia & South Sandwich — uninhabited
+  "PN", // Pitcairn — UK BOTC, no own passport
+  "BQ", // Bonaire, Sint Eustatius, Saba — Dutch passports
+  "CC", // Cocos (Keeling) Islands — Australian
+  "CX", // Christmas Island — Australian
+  "NF", // Norfolk Island — Australian
+  "SJ", // Svalbard & Jan Mayen — Norwegian
+  "EH", // Western Sahara — disputed, no internationally recognized passport
+]);
+
+export function issuesPassport(iso2: string): boolean {
+  return !NO_PASSPORT_CODES.has(iso2.toUpperCase());
+}
+
+/** Countries that issue passports — the canonical set for /passport/[iso]
+ *  generation, /passport-rankings, the homepage popular grids, and the
+ *  destination-page "all passports" list. */
+export const PASSPORT_COUNTRIES: CountryRef[] = COUNTRY_LIST.filter((c) =>
+  issuesPassport(c.iso2),
+);
+
 // High-traffic origins and destinations. Used for the home page "popular routes"
 // grid and as the first ~500 hand-curated SEO pages (top 25 origins × top 20 dests).
 // Ordered roughly by global outbound travel volume (UNWTO + airline reports).

@@ -11,7 +11,7 @@ import { scoreDestinationsForPassport } from "@/lib/scoring";
 import { NationalityHero } from "@/components/NationalityHero";
 import { PassportSidebar } from "@/components/PassportSidebar";
 import { CountrySilhouette } from "@/components/CountrySilhouette";
-import { COUNTRY_LIST, TOP_DESTINATIONS, nameFor } from "@/lib/countries";
+import { COUNTRY_LIST, PASSPORT_COUNTRIES, TOP_DESTINATIONS, issuesPassport, nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { coverageForPassport, destinationSummariesForPassport } from "@/lib/coverage";
@@ -30,13 +30,14 @@ export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return COUNTRY_LIST.map((c) => ({ iso: c.iso2.toLowerCase() }));
+  return PASSPORT_COUNTRIES.map((c) => ({ iso: c.iso2.toLowerCase() }));
 }
 
 type Params = { iso: string };
 
 function isValid(iso: string) {
-  return COUNTRY_LIST.some((c) => c.iso2 === iso.toUpperCase());
+  const upper = iso.toUpperCase();
+  return COUNTRY_LIST.some((c) => c.iso2 === upper) && issuesPassport(upper);
 }
 
 export async function generateMetadata({
@@ -62,6 +63,20 @@ export async function generateMetadata({
       title,
       description: `Visa requirements and travel guide for ${adjective} passport holders.`,
       url: absoluteUrl(`/passport/${upper.toLowerCase()}`),
+      images: [
+        {
+          url: absoluteUrl(`/og?passport=${upper}`),
+          width: 1200,
+          height: 630,
+          alt: `${adjective} passport — visa requirements & travel guide`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: `Visa requirements and travel guide for ${adjective} passport holders.`,
+      images: [absoluteUrl(`/og?passport=${upper}`)],
     },
   };
 }

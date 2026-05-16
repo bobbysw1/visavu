@@ -1,4 +1,4 @@
-import { COUNTRY_LIST } from "@/lib/countries";
+import { COUNTRY_LIST, PASSPORT_COUNTRIES, issuesPassport } from "@/lib/countries";
 import { SITE } from "@/lib/site";
 import { HAND_WRITTEN_ROUTES } from "@/content/routeAdvice";
 
@@ -38,14 +38,16 @@ export const dynamic = "force-static";
 export const revalidate = 86400;
 
 export async function generateStaticParams() {
-  return COUNTRY_LIST.map((_, i) => ({ id: `${i}.xml` }));
+  // One chunk per passport-issuing country. Uninhabited / no-passport codes
+  // are filtered to prevent phantom /passport/[cc] URLs from appearing.
+  return PASSPORT_COUNTRIES.map((_, i) => ({ id: `${i}.xml` }));
 }
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id: idParam } = await params;
   const idStr = idParam.replace(/\.xml$/, "");
   const id = Number.parseInt(idStr, 10);
-  const origin = COUNTRY_LIST[id];
+  const origin = PASSPORT_COUNTRIES[id];
   if (!origin) {
     return new Response("Not found", { status: 404 });
   }
@@ -75,15 +77,22 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     }
   }
 
-  // Passport / destination index pages for this country.
+  // Passport / destination index pages for this country. Passport URL is
+  // only emitted for countries that actually issue passports (filtered at
+  // the chunk level already), but destination is emitted broadly — every
+  // country can be visited even if it doesn't issue its own passport.
   urls.push(
     urlEntry(`${SITE.url}/passport/${lowerOrigin}`, lastmod, "weekly", "0.7"),
     urlEntry(`${SITE.url}/destination/${lowerOrigin}`, lastmod, "weekly", "0.7"),
   );
 
   // Every passport → destination route, with high-search purpose variants.
+  // Skip /[passport]/[destination] when the origin can't be a passport
+  // (already excluded at chunk level) — the destination side may include
+  // any ISO code that can be visited.
   for (const dest of COUNTRY_LIST) {
     if (dest.iso2 === origin.iso2) continue;
+    if (!issuesPassport(origin.iso2)) continue;
     const lowerDest = dest.iso2.toLowerCase();
     urls.push(urlEntry(`${SITE.url}/${lowerOrigin}/${lowerDest}`, lastmod, "weekly", "0.6"));
     for (const purpose of INDEXED_PURPOSES) {

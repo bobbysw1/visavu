@@ -3,10 +3,10 @@ import { db, schema } from "@/db/client";
 import { sql } from "drizzle-orm";
 import { ADAPTERS } from "@/scrapers/sources";
 import { CORRECTNESS_WEIGHTS } from "@/lib/confidence";
-import { absoluteUrl, SITE } from "@/lib/site";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata = {
-  title: `Methodology — how we verify visa data · ${SITE.name}`,
+  title: "Methodology — how we verify visa data",
   description:
     "Every data source we use, how often it's refreshed, how confidence is calculated, and how to challenge a record. Read this before you trust us with a travel decision.",
   alternates: { canonical: absoluteUrl("/methodology") },

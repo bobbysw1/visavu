@@ -17,7 +17,7 @@
  * uses; the type was extended with `status / processingTimeDaysMax /
  * feeAmountMinor` so the sort axes have something to sort on.
  */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { ScoredItem } from "./DifficultyBucketGrid";
 import {
@@ -29,6 +29,13 @@ import {
 import { BUCKET_PALETTE, BUCKET_LABEL } from "@/lib/difficulty";
 import { flagEmoji, nameFor } from "@/lib/countries";
 import { routeHref } from "@/lib/routeHref";
+import { convertMinor } from "@/lib/exchange";
+
+function readCurrencyCookie(): string | null {
+  if (typeof document === "undefined") return null;
+  const m = document.cookie.match(/(?:^|;\s*)vl_currency=([A-Z]{3})/);
+  return m ? m[1] : null;
+}
 
 type Mode = "passport" | "destination";
 
@@ -89,6 +96,13 @@ export function ContinentResultsGrid({
 }: ContinentResultsGridProps) {
   const [tab, setTab] = useState<Continent | "all">("all");
   const [sort, setSort] = useState<SortAxis>("difficulty");
+  // Pre-hydration we don't know the user's currency preference, so the
+  // initial server-render renders fees in native currency. After hydration
+  // we re-render with the cookie-driven choice.
+  const [userCurrency, setUserCurrency] = useState<string | null>(null);
+  useEffect(() => {
+    setUserCurrency(readCurrencyCookie());
+  }, []);
 
   // Bucket items by continent up-front; counts inform tab badges.
   const byContinent: Record<Continent | "other", ScoredItem[]> = useMemo(() => {
@@ -166,7 +180,14 @@ export function ContinentResultsGrid({
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {visible.map((item) => (
-            <Card key={item.otherIso2} item={item} mode={mode} anchorIso2={anchorIso2} sort={sort} />
+            <Card
+              key={item.otherIso2}
+              item={item}
+              mode={mode}
+              anchorIso2={anchorIso2}
+              sort={sort}
+              userCurrency={userCurrency}
+            />
           ))}
         </div>
       )}
@@ -213,11 +234,13 @@ function Card({
   mode,
   anchorIso2,
   sort,
+  userCurrency,
 }: {
   item: ScoredItem;
   mode: Mode;
   anchorIso2: string;
   sort: SortAxis;
+  userCurrency: string | null;
 }) {
   const href =
     mode === "passport"
@@ -264,7 +287,7 @@ function Card({
         />
         <Metric
           label="Fee"
-          value={formatFee(item.feeAmountMinor ?? null, item.feeCurrency ?? null)}
+          value={formatFee(item.feeAmountMinor ?? null, item.feeCurrency ?? null, userCurrency)}
           highlight={sort === "cost"}
         />
       </div>
@@ -307,17 +330,33 @@ function formatProcessing(max: number | null): string {
   return `≤${max}d`;
 }
 
-function formatFee(amountMinor: number | null, currency: string | null): string {
+function formatFee(
+  amountMinor: number | null,
+  currency: string | null,
+  userCurrency: string | null,
+): string {
   if (amountMinor == null || amountMinor === 0) return "Free";
+  // Honour the user's chosen currency when available, otherwise fall back
+  // to the native quoted currency so the compact pill still renders pre-
+  // hydration and for users who haven't picked a currency.
+  let renderAmount = amountMinor;
+  let renderCurrency = currency ?? "USD";
+  if (userCurrency && currency && userCurrency !== currency) {
+    const converted = convertMinor(amountMinor, currency, userCurrency);
+    if (converted != null) {
+      renderAmount = converted;
+      renderCurrency = userCurrency;
+    }
+  }
   try {
     return new Intl.NumberFormat("en", {
       style: "currency",
-      currency: currency ?? "USD",
+      currency: renderCurrency,
       maximumFractionDigits: 0,
-      notation: amountMinor / 100 >= 1_000 ? "compact" : "standard",
-    }).format(amountMinor / 100);
+      notation: renderAmount / 100 >= 1_000 ? "compact" : "standard",
+    }).format(renderAmount / 100);
   } catch {
-    return `~${Math.round(amountMinor / 100)}`;
+    return `~${Math.round(renderAmount / 100)}`;
   }
 }
 

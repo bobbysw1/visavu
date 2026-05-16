@@ -7,10 +7,11 @@
  * pattern in the corner. Per-page colour without per-country curation.
  */
 import { Flag } from "./Flag";
-import { HeroLanguageToggle } from "./HeroLanguageToggle";
+// HeroLanguageToggle is intentionally not rendered while translation
+// coverage is partial. Re-enable when locale-prefixed routes land. See
+// SiteHeader.tsx for the matching note on LocaleSwitcher.
 import { nationalityFor } from "@/lib/nationalities";
 import { nameFor } from "@/lib/countries";
-import { absoluteUrl } from "@/lib/site";
 import type { CountryPhoto } from "@/lib/pexels";
 
 /** Twelve curated gradient pairs. Pick one per passport via hash so the
@@ -42,6 +43,7 @@ export function NationalityHero({
   visaFreeCount,
   totalDestinations,
   photo,
+  mode = "passport",
 }: {
   iso2: string;
   visaFreeCount?: number;
@@ -49,24 +51,33 @@ export function NationalityHero({
   /** Optional Pexels-sourced hero photo. When present, the hero renders a
    *  side-by-side photo panel; when null, falls back to the gradient. */
   photo?: CountryPhoto | null;
+  /** "passport" = "Where can YOU go on a {country} passport?" (default).
+   *  "destination" = "Visa requirements for visiting {country}". The two
+   *  perspectives mirror each other; this prop flips kicker, H1, lead, and
+   *  stat labels. */
+  mode?: "passport" | "destination";
 }) {
   const upper = iso2.toUpperCase();
   const [c1, c2] = paletteFor(upper);
   const name = nameFor(upper);
   const adjective = nationalityFor(upper);
 
-  const pageUrl = absoluteUrl(`/passport/${upper.toLowerCase()}`);
+  const isDestination = mode === "destination";
+  const kicker = isDestination ? `Visiting ${name}` : `${adjective} passport`;
+  const headline = isDestination
+    ? `Visa requirements for visiting ${name}`
+    : `Where can you go on a ${name} passport?`;
+  const lead = isDestination
+    ? `Entry rules, fees, and stay limits for every passport heading to ${name} — sourced from official government data, with a direct link to the destination portal for each.`
+    : `Visa rules, fees, and stay limits for every destination — sourced from official government data, with a direct link to each country's portal.`;
+  const primaryStatLabel = isDestination ? "Passports visa-free or eTA:" : "Visa-free or eTA:";
+  const secondaryStatLabel = isDestination ? "Origin passports covered:" : "Destinations covered:";
 
   if (photo) {
     // Photographic hero — two-column on desktop (content + photo), stacked
     // on mobile (photo above content for visual hook).
     return (
       <section className="relative overflow-hidden rounded-2xl mb-6 sm:mb-8 border border-neutral-200/60 dark:border-neutral-800 bg-white">
-        {/* Language toggle floats above both columns in the top-right of the
-            hero (over the photo). */}
-        <div className="absolute top-3 right-3 z-10">
-          <HeroLanguageToggle iso2={upper} pageUrl={pageUrl} />
-        </div>
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="relative h-48 sm:h-64 md:h-auto md:min-h-[320px] order-1 md:order-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -102,21 +113,20 @@ export function NationalityHero({
                 <Flag iso2={upper} size={36} />
               </div>
               <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-emerald-700 dark:text-emerald-300">
-                {adjective} passport
+                {kicker}
               </p>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] text-slate-900 mb-3">
-              Where can you go on a {name} passport?
+              {headline}
             </h1>
             <p className="text-base sm:text-lg text-slate-700 leading-snug">
-              Visa rules, fees, and stay limits for every destination — sourced from official
-              government data, with a direct link to each country&apos;s portal.
+              {lead}
             </p>
             {(typeof visaFreeCount === "number" || typeof totalDestinations === "number") && (
               <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm">
                 {typeof visaFreeCount === "number" && (
                   <div className="inline-flex items-baseline gap-1.5">
-                    <dt className="text-slate-600">Visa-free or eTA:</dt>
+                    <dt className="text-slate-600">{primaryStatLabel}</dt>
                     <dd className="font-semibold tabular-nums text-emerald-700 dark:text-emerald-300">
                       {visaFreeCount}
                     </dd>
@@ -124,7 +134,7 @@ export function NationalityHero({
                 )}
                 {typeof totalDestinations === "number" && (
                   <div className="inline-flex items-baseline gap-1.5">
-                    <dt className="text-slate-600">Destinations covered:</dt>
+                    <dt className="text-slate-600">{secondaryStatLabel}</dt>
                     <dd className="font-semibold tabular-nums text-slate-900">
                       {totalDestinations}
                     </dd>
@@ -147,8 +157,6 @@ export function NationalityHero({
         backgroundImage: `radial-gradient(70% 70% at 0% 0%, ${c1} 0%, transparent 55%), radial-gradient(60% 80% at 100% 0%, ${c2} 0%, transparent 55%), linear-gradient(180deg, #ffffff 0%, #ffffff 100%)`,
       }}
     >
-      <div className="absolute top-3 right-3 z-10">
-        <HeroLanguageToggle iso2={upper} pageUrl={pageUrl} /></div>
       <svg
         className="absolute -top-6 -right-6 opacity-[0.07] dark:opacity-[0.05] pointer-events-none"
         width="220"
@@ -171,20 +179,19 @@ export function NationalityHero({
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-emerald-700 dark:text-emerald-300 mb-1.5">
-            {adjective} passport
+            {kicker}
           </p>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] text-slate-900 mb-3">
-            Where can you go on a {name} passport?
+            {headline}
           </h1>
           <p className="text-base sm:text-lg text-slate-700 leading-snug max-w-2xl">
-            Visa rules, fees, and stay limits for every destination — sourced from official
-            government data, with a direct link to each country&apos;s portal.
+            {lead}
           </p>
           {(typeof visaFreeCount === "number" || typeof totalDestinations === "number") && (
             <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm">
               {typeof visaFreeCount === "number" && (
                 <div className="inline-flex items-baseline gap-1.5">
-                  <dt className="text-slate-600">Visa-free or eTA:</dt>
+                  <dt className="text-slate-600">{primaryStatLabel}</dt>
                   <dd className="font-semibold tabular-nums text-emerald-700 dark:text-emerald-300">
                     {visaFreeCount}
                   </dd>
@@ -192,7 +199,7 @@ export function NationalityHero({
               )}
               {typeof totalDestinations === "number" && (
                 <div className="inline-flex items-baseline gap-1.5">
-                  <dt className="text-slate-600">Destinations covered:</dt>
+                  <dt className="text-slate-600">{secondaryStatLabel}</dt>
                   <dd className="font-semibold tabular-nums text-slate-900">
                     {totalDestinations}
                   </dd>

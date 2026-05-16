@@ -1,4 +1,4 @@
-import { COUNTRY_LIST } from "@/lib/countries";
+import { PASSPORT_COUNTRIES } from "@/lib/countries";
 import { SITE } from "@/lib/site";
 
 // Sitemap *index* at /sitemap.xml. Next 15's generateSitemaps() emits chunk
@@ -15,7 +15,7 @@ export const revalidate = 86400; // 1 day
 
 export function GET() {
   const lastmod = new Date().toISOString();
-  const sitemaps = COUNTRY_LIST.map(
+  const sitemaps = PASSPORT_COUNTRIES.map(
     (_, i) =>
       `<sitemap><loc>${SITE.url}/sitemap/${i}.xml</loc><lastmod>${lastmod}</lastmod></sitemap>`,
   ).join("");

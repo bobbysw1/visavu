@@ -22,7 +22,7 @@ export async function generateMetadata({
   const { frontmatter } = guide;
   const canonical = absoluteUrl(`/guides/${frontmatter.slug}`);
   return {
-    title: `${frontmatter.title} · ${SITE.name}`,
+    title: frontmatter.title,
     description: frontmatter.summary,
     alternates: { canonical },
     openGraph: {
@@ -33,6 +33,26 @@ export async function generateMetadata({
       publishedTime: frontmatter.publishedAt,
       modifiedTime: frontmatter.modifiedAt,
       authors: [frontmatter.author],
+      images: [
+        {
+          url: absoluteUrl(
+            `/og?title=${encodeURIComponent(frontmatter.title)}&kicker=${encodeURIComponent("Guide")}`,
+          ),
+          width: 1200,
+          height: 630,
+          alt: frontmatter.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: frontmatter.title,
+      description: frontmatter.summary,
+      images: [
+        absoluteUrl(
+          `/og?title=${encodeURIComponent(frontmatter.title)}&kicker=${encodeURIComponent("Guide")}`,
+        ),
+      ],
     },
   };
 }

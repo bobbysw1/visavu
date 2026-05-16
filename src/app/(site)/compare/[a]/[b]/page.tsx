@@ -34,6 +34,14 @@ export async function generateMetadata({
       title,
       description: `Visa access comparison for ${nameFor(aIso)} and ${nameFor(bIso)} passports.`,
       url: absoluteUrl(`/compare/${aIso.toLowerCase()}/${bIso.toLowerCase()}`),
+      images: [
+        {
+          url: absoluteUrl(`/og?title=${encodeURIComponent(title)}&kicker=${encodeURIComponent("Compare passports")}`),
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
     },
   };
 }

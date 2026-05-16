@@ -1,10 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { guidesByDate } from "@/content/guides";
-import { absoluteUrl, SITE } from "@/lib/site";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: `Guides — visa policy explained · ${SITE.name}`,
+  title: "Guides — visa policy explained",
   description:
     "Editorial guides on the visa policies that matter — ETIAS, UK ETA, Schengen EES, Working Holiday visas, Digital Nomad visas, and the recent reciprocity reversals.",
   alternates: {

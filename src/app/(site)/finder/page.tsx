@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { COUNTRY_LIST, flagEmoji, nameFor } from "@/lib/countries";
+import { COUNTRY_LIST, PASSPORT_COUNTRIES, flagEmoji, nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
 import { routeHref } from "@/lib/routeHref";
 import {
@@ -8,10 +8,10 @@ import {
   type FinderGoal,
   FINDER_GOAL_LABEL,
 } from "@/lib/finder";
-import { absoluteUrl, SITE } from "@/lib/site";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata = {
-  title: `Where can I go? — visa finder · ${SITE.name}`,
+  title: "Where can I go? — visa finder",
   description:
     "Pick your passport and what you want to do. We'll show every country open to you for that goal — visa-free, e-Visa, Working Holiday, Digital Nomad, retirement, investment.",
   alternates: { canonical: absoluteUrl("/finder") },
@@ -125,7 +125,7 @@ export default async function FinderPage({
             className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2 text-sm"
           >
             <option value="" disabled>Select a nationality…</option>
-            {COUNTRY_LIST.map((c) => (
+            {PASSPORT_COUNTRIES.map((c) => (
               <option key={c.iso2} value={c.iso2}>
                 {c.flag} {nationalityFor(c.iso2)}
               </option>

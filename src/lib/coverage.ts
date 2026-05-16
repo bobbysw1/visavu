@@ -13,6 +13,7 @@
 import { and, eq, inArray, sql } from "drizzle-orm";
 import { db, schema } from "@/db/client";
 import type { VisaStatus, Purpose } from "./types";
+import { NO_PASSPORT_CODES } from "./countries";
 
 export type StatusCounts = Record<VisaStatus, number>;
 
@@ -352,7 +353,9 @@ export async function passportRankings(): Promise<PassportRanking[]> {
     b.visaFreeAccess - a.visaFreeAccess || b.totalDestinations - a.totalDestinations,
   );
 
-  return rankings;
+  // Filter out uninhabited / no-passport-issuing territories. The DB may
+  // contain stale rows for AQ/BV/HM/etc. that shouldn't surface in any UI.
+  return rankings.filter((r) => !NO_PASSPORT_CODES.has(r.iso2));
 }
 
 // ---------------------------------------------------------------------------

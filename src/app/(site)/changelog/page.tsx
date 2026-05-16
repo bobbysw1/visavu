@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { db } from "@/db/client";
 import { sql } from "drizzle-orm";
-import { absoluteUrl, SITE } from "@/lib/site";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata = {
-  title: `Changelog — visa data updates · ${SITE.name}`,
+  title: "Changelog — visa data updates",
   description:
     "Every detected change to our visa-data sources, in reverse chronological order. Pulled live from source_records hash diffs.",
   alternates: {

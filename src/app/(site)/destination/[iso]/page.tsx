@@ -9,7 +9,7 @@ import { CountryMetricsDashboard } from "@/components/CountryMetricsDashboard";
 import { ContinentResultsGrid } from "@/components/ContinentResultsGrid";
 import { NationalityHero } from "@/components/NationalityHero";
 import { CountryFactsBox } from "@/components/CountryFactsBox";
-import { COUNTRY_LIST, TOP_ORIGINS, nameFor } from "@/lib/countries";
+import { COUNTRY_LIST, PASSPORT_COUNTRIES, TOP_ORIGINS, issuesPassport, nameFor } from "@/lib/countries";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { coverageForDestination, originSummariesForDestination } from "@/lib/coverage";
 import { scoreOriginsForDestination } from "@/lib/scoring";
@@ -55,6 +55,20 @@ export async function generateMetadata({
       title,
       description: `Travel to ${name}: visa types, passport requirements, government portal, travel advisories.`,
       url: absoluteUrl(`/destination/${upper.toLowerCase()}`),
+      images: [
+        {
+          url: absoluteUrl(`/og?destination=${upper}`),
+          width: 1200,
+          height: 630,
+          alt: `Visa requirements for visiting ${name}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: `Travel to ${name}: visa types, passport requirements, government portal, travel advisories.`,
+      images: [absoluteUrl(`/og?destination=${upper}`)],
     },
   };
 }
@@ -132,6 +146,7 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
 
         <NationalityHero
           iso2={upper}
+          mode="destination"
           photo={photo}
           visaFreeCount={coverage ? coverage.byStatus.visa_free + coverage.byStatus.visa_free_with_eta : undefined}
           totalDestinations={coverage?.totalDestinationsCovered}
@@ -180,7 +195,7 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
             Pick your passport to see the exact rules for travel to {name}.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-            {TOP_ORIGINS.filter((p) => p !== upper).map((origin) => {
+            {TOP_ORIGINS.filter((p) => p !== upper && issuesPassport(p)).map((origin) => {
               const country = COUNTRY_LIST.find((c) => c.iso2 === origin);
               return (
                 <Link
@@ -201,7 +216,7 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
           <p className="kicker mb-2">All passports</p>
           <h2 className="section-h2 mb-4">From any passport (A–Z).</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1">
-            {COUNTRY_LIST.filter((c) => c.iso2 !== upper).map((c) => (
+            {PASSPORT_COUNTRIES.filter((c) => c.iso2 !== upper).map((c) => (
               <Link
                 key={c.iso2}
                 href={`/${c.iso2.toLowerCase()}/${upper.toLowerCase()}`}

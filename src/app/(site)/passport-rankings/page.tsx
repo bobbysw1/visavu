@@ -11,9 +11,17 @@ export const metadata: Metadata = {
     "Sortable directory of every passport on file, ranked by tourism visa-free access. Built from official government sources with primary-source links on every record.",
   alternates: { canonical: absoluteUrl("/passport-rankings") },
   openGraph: {
-    title: `Passport rankings — ${SITE.name}`,
+    title: "Passport rankings — visa-free access by country",
     description: "Tourism visa-free access by passport, sourced and dated.",
     url: absoluteUrl("/passport-rankings"),
+    images: [
+      {
+        url: absoluteUrl("/og?title=Passport+rankings&kicker=Visa-free+access"),
+        width: 1200,
+        height: 630,
+        alt: "Visavu — Passport rankings",
+      },
+    ],
   },
 };
 

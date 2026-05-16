@@ -15,10 +15,18 @@ export const metadata: Metadata = {
     "Curated directory of relocation services that pair with your visa: travel and health insurance, required vaccinations, biometrics appointment centres, medical-check panel physicians, passport photo providers, and immigration lawyers.",
   alternates: { canonical: absoluteUrl("/services") },
   openGraph: {
-    title: `Relocation services — ${SITE.name}`,
+    title: "Relocation services",
     description:
       "Everything-but-the-visa: insurance, vaccinations, biometrics, medical checks, passport photos, and legal services.",
     url: absoluteUrl("/services"),
+    images: [
+      {
+        url: absoluteUrl("/og?title=Relocation+services&kicker=Visavu"),
+        width: 1200,
+        height: 630,
+        alt: "Visavu — Relocation services",
+      },
+    ],
   },
 };
 

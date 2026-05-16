@@ -28,13 +28,21 @@ export async function generateMetadata(
   if (!category) return { title: "Not found" };
   const meta = CATEGORY_META[category];
   return {
-    title: `${meta.label} — Visavu relocation services`,
+    title: `${meta.label} — relocation services`,
     description: meta.description,
     alternates: { canonical: absoluteUrl(`/services/${meta.slug}`) },
     openGraph: {
-      title: `${meta.label} — ${SITE.name}`,
+      title: `${meta.label} — relocation services`,
       description: meta.tagline,
       url: absoluteUrl(`/services/${meta.slug}`),
+      images: [
+        {
+          url: absoluteUrl(`/og?title=${encodeURIComponent(meta.label)}&kicker=${encodeURIComponent("Services")}`),
+          width: 1200,
+          height: 630,
+          alt: `${meta.label} — relocation services`,
+        },
+      ],
     },
   };
 }

@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { LocaleSwitcher } from "./LocaleSwitcher";
 import { CurrencySwitcher } from "./CurrencySwitcher";
+
+// NOTE: LocaleSwitcher is intentionally hidden site-wide until translation
+// coverage moves beyond status / purpose labels. A switcher that silently
+// no-ops on ~95% of page copy hurts credibility more than offering no
+// switcher at all. When we add locale-prefixed routes (see project
+// backlog), re-import LocaleSwitcher and add it to <nav> below.
 
 /**
  * SiteHeader — editorial chrome.
@@ -61,9 +66,6 @@ export function SiteHeader() {
               client-side; without a boundary, Next bails out of SSG. */}
           <Suspense fallback={null}>
             <CurrencySwitcher />
-          </Suspense>
-          <Suspense fallback={null}>
-            <LocaleSwitcher />
           </Suspense>
         </nav>
       </div>

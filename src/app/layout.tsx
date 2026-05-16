@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Newsreader } from "next/font/google";
 import "./globals.css";
 import { SITE, absoluteUrl } from "@/lib/site";
@@ -49,17 +49,34 @@ export const metadata: Metadata = {
     description: SITE.description,
     url: SITE.url,
     locale: "en_US",
+    images: [
+      {
+        url: absoluteUrl("/og"),
+        width: 1200,
+        height: 630,
+        alt: `${SITE.name} — ${SITE.tagline}`,
+        type: "image/png",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     site: SITE.twitter,
     title: SITE.name,
     description: SITE.description,
+    images: [absoluteUrl("/og")],
   },
   alternates: {
     canonical: absoluteUrl("/"),
     languages: { en: absoluteUrl("/") },
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

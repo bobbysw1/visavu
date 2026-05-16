@@ -1,5 +1,5 @@
 import { COUNTRY_LIST, PASSPORT_COUNTRIES, issuesPassport } from "@/lib/countries";
-import { SITE } from "@/lib/site";
+import { SITE, SITEMAP_LASTMOD } from "@/lib/site";
 import { HAND_WRITTEN_ROUTES } from "@/content/routeAdvice";
 
 // Per-origin sitemap chunk: /sitemap/[id].xml — one chunk per origin passport.
@@ -52,7 +52,10 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     return new Response("Not found", { status: 404 });
   }
 
-  const lastmod = new Date().toISOString();
+  // Stable build-time lastmod — see SITEMAP_LASTMOD doc in lib/site.ts.
+  // Per-request `new Date()` made Google re-check every URL daily and
+  // burned its crawl budget on revisits instead of new discoveries.
+  const lastmod = SITEMAP_LASTMOD;
   const lowerOrigin = origin.iso2.toLowerCase();
   const urls: string[] = [];
 

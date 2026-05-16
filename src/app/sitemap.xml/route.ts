@@ -1,5 +1,5 @@
 import { PASSPORT_COUNTRIES } from "@/lib/countries";
-import { SITE } from "@/lib/site";
+import { SITE, SITEMAP_LASTMOD } from "@/lib/site";
 
 // Sitemap *index* at /sitemap.xml. Next 15's generateSitemaps() emits chunk
 // files at /sitemap/[id].xml but does NOT auto-emit an index that ties them
@@ -14,10 +14,12 @@ export const dynamic = "force-static";
 export const revalidate = 86400; // 1 day
 
 export function GET() {
-  const lastmod = new Date().toISOString();
+  // Stable build-time lastmod — see SITEMAP_LASTMOD doc. Per-request
+  // `new Date()` made Google re-check every chunk daily and starved
+  // discovery of new URLs.
   const sitemaps = PASSPORT_COUNTRIES.map(
     (_, i) =>
-      `<sitemap><loc>${SITE.url}/sitemap/${i}.xml</loc><lastmod>${lastmod}</lastmod></sitemap>`,
+      `<sitemap><loc>${SITE.url}/sitemap/${i}.xml</loc><lastmod>${SITEMAP_LASTMOD}</lastmod></sitemap>`,
   ).join("");
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>

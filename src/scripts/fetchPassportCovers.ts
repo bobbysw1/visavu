@@ -149,7 +149,46 @@ function plainText(html: string): string {
     .trim();
 }
 
+/** Restrict to Creative Commons / public domain. Anything else we
+ *  explicitly skip so we never ship copyrighted material. */
+function isFreeLicence(licence: string): boolean {
+  return /^(cc[\s-]|public domain|cc0|pdm|attribution)/i.test(licence) || /pd-/i.test(licence);
+}
+
+/** Search Commons category "Passports of {Country}" for any CC-licensed
+ *  file. The lead image of the Wikipedia article is often fair-use only
+ *  (hosted on en.wikipedia, not Commons) — but the category itself
+ *  usually has freely-licensed alternates. This is what rescues the
+ *  countries the page-summary path missed (GB, CA, NZ, GR, KR, CH, FI). */
+type CategoryMember = { title: string };
+async function commonsCategoryFiles(country: string): Promise<string[]> {
+  const variants = [
+    `Category:Passports of ${country}`,
+    `Category:Passports of the ${country}`,
+  ];
+  for (const cat of variants) {
+    const url =
+      "https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*" +
+      "&list=categorymembers&cmtype=file&cmlimit=20" +
+      `&cmtitle=${encodeURIComponent(cat)}`;
+    const res = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
+    if (!res.ok) continue;
+    const data = (await res.json()) as { query?: { categorymembers?: CategoryMember[] } };
+    const members = data.query?.categorymembers ?? [];
+    if (members.length === 0) continue;
+    // Strip "File:" prefix; restrict to actual image extensions so we
+    // skip stray PDFs, audio clips, etc. that sometimes land in passport
+    // categories.
+    const files = members
+      .map((m) => m.title.replace(/^File:/, ""))
+      .filter((f) => /\.(jpe?g|png|webp|svg)$/i.test(f));
+    if (files.length > 0) return files;
+  }
+  return [];
+}
+
 async function fetchOne(iso2: string): Promise<ManifestEntry | null> {
+  // Strategy 1: page-summary lead image (works when it's Commons-hosted).
   const titles = candidateTitles(iso2);
   for (const title of titles) {
     const summary = await fetchSummary(title);
@@ -167,12 +206,9 @@ async function fetchOne(iso2: string): Promise<ManifestEntry | null> {
     const artistHtml = info.extmetadata?.Artist?.value ?? "";
     const artist = plainText(artistHtml) || "Unknown";
 
-    // Restrict to Creative Commons / public domain. Anything else we
-    // explicitly skip so we don't ship copyrighted material accidentally.
-    const ok = /^(cc[\s-]|public domain|cc0|pdm|attribution)/i.test(licence) || /pd-/i.test(licence);
-    if (!ok) {
-      console.log(`  - ${iso2} skipped — non-free licence (${licence})`);
-      return null;
+    if (!isFreeLicence(licence)) {
+      console.log(`  - ${iso2} lead-image non-free (${licence}), trying category fallback`);
+      break; // fall through to category search
     }
 
     const dest = path.resolve(DIR, `${iso2.toLowerCase()}.jpg`);
@@ -192,6 +228,37 @@ async function fetchOne(iso2: string): Promise<ManifestEntry | null> {
       fetchedAt: new Date().toISOString(),
     };
   }
+
+  // Strategy 2: Commons category fallback. The lead image was missing,
+  // non-Commons, or non-free — but the "Passports of {Country}" Commons
+  // category often has CC-licensed alternates we can use instead.
+  const country = nameFor(iso2);
+  const files = await commonsCategoryFiles(country);
+  for (const filename of files) {
+    const info = await fetchImageInfo(filename);
+    if (!info) continue;
+    const licence = info.extmetadata?.LicenseShortName?.value ?? "Unknown";
+    if (!isFreeLicence(licence)) continue;
+    const licenceUrl = info.extmetadata?.LicenseUrl?.value ?? null;
+    const artistHtml = info.extmetadata?.Artist?.value ?? "";
+    const artist = plainText(artistHtml) || "Unknown";
+
+    const dest = path.resolve(DIR, `${iso2.toLowerCase()}.jpg`);
+    await downloadImage(info.url, dest);
+
+    return {
+      file: `/passports/${iso2.toLowerCase()}.jpg`,
+      source: `https://commons.wikimedia.org/wiki/Category:Passports_of_${encodeURIComponent(country)}`,
+      commonsFile: info.descriptionurl,
+      artist,
+      licence,
+      licenceUrl,
+      width: info.width,
+      height: info.height,
+      fetchedAt: new Date().toISOString(),
+    };
+  }
+
   return null;
 }
 

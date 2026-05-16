@@ -96,12 +96,19 @@ export default async function PassportRankingsPage() {
         </header>
 
         {/* Passport-cover collage — the signature visual borrowed from
-            passportindex.org. Sits above the leaderboard as a teaser; the
-            full collage view is duplicated at the bottom for browse-by-photo
-            users. */}
+            passportindex.org. The kicker is honest about what the photo
+            grid represents: we have visa data for every passport, but
+            cover PHOTOS for only the ones surfaced here so far. */}
         <section className="mb-12">
-          <p className="kicker mb-3">{passportCollageCount()} passports we cover</p>
+          <p className="kicker mb-3">
+            {passportCollageCount()} passport covers — and counting
+          </p>
           <PassportCollage />
+          <p className="text-xs text-[var(--color-ink-muted)] mt-3 max-w-2xl">
+            The leaderboard below ranks every passport-issuing country in our
+            index. Cover photos are added as we source them — missing from the
+            grid above doesn&apos;t mean missing from the ranking.
+          </p>
         </section>
 
         {/* Scoreboard strip — bottom-of-page-style aggregate stats moved

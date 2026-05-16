@@ -10,6 +10,7 @@ import { PassportCollage, passportCollageCount } from "@/components/PassportColl
 import { SITE, absoluteUrl } from "@/lib/site";
 import { siteStats } from "@/lib/coverage";
 import { getCountryPhotoSync } from "@/lib/pexels";
+import { PASSPORT_COUNTRIES } from "@/lib/countries";
 
 // Single editorial hero image — Switzerland's Matterhorn. Picked for the
 // clean snow/sky palette (works well with white overlay text), and so it
@@ -275,19 +276,23 @@ export default async function HomePage() {
       </section>
 
       {/* ─── PASSPORT COLLAGE ───
-          Dense grid of real passport-cover photos — the signature visual
-          we owe the brand. Every passport our index currently covers,
-          on one screen, each clickable into its dedicated page. */}
+          Dense grid of real passport-cover photos. The headline talks
+          about VISA coverage (every passport-issuing country) so users
+          don't mistake the photo grid count for our product coverage.
+          The collage shows what we have photographed so far; the
+          underlying visa data covers all 237 passport-issuing nations. */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
         <div className="flex items-end justify-between mb-6 gap-4 flex-wrap">
           <div>
             <p className="kicker mb-3">By passport</p>
             <h2 className="section-h2">
-              {passportCollageCount()} passports we cover<span className="text-[var(--color-accent)]">.</span>
+              Visa data for every passport<span className="text-[var(--color-accent)]">.</span>
             </h2>
             <p className="text-sm text-[var(--color-ink-muted)] mt-2 max-w-xl">
-              Pick yours to see where you can go and what&apos;s required —
-              coverage expands as we add more passports each week.
+              All {PASSPORT_COUNTRIES.length} passport-issuing countries are in our
+              index. {passportCollageCount()} have photographed covers so far — more
+              landing each week. Pick yours to see where you can go and what&apos;s
+              required.
             </p>
           </div>
           <Link

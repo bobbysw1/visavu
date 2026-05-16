@@ -10,8 +10,8 @@
  * No paragraphs — everything is scannable.
  */
 import Link from "next/link";
-import { Compass, Sparkles, Timer, PiggyBank, Home, ArrowRight, AlertTriangle } from "lucide-react";
-import type { Recommendations, RecommendationItem } from "@/lib/findMyVisa";
+import { Compass, Sparkles, Timer, PiggyBank, Home, ArrowRight, CheckCircle2, Scale, Info } from "lucide-react";
+import type { Recommendations, RecommendationItem, AdviceTier } from "@/lib/findMyVisa";
 import { Flag } from "./Flag";
 import { PROFILE_META } from "@/lib/profiles";
 import { GOAL_LABEL } from "@/lib/questionnaire";
@@ -68,19 +68,9 @@ export function RecommendationResults({
         </button>
       </header>
 
-      {results.showLegalAdviceCallout && (
-        <aside className="mb-6 rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 p-4 flex items-start gap-3">
-          <AlertTriangle size={20} className="text-amber-700 dark:text-amber-300 shrink-0 mt-0.5" aria-hidden />
-          <div>
-            <p className="font-semibold text-sm mb-1">Talk to a licensed immigration lawyer.</p>
-            <p className="text-sm text-neutral-700 dark:text-neutral-200 leading-relaxed">
-              Most visa applications ask about serious criminal convictions and require disclosure.
-              A wrong answer is grounds for permanent ban — get advice before applying. See our{" "}
-              <Link href="/services/legal-services" className="underline">directory of immigration lawyers</Link>.
-            </p>
-          </div>
-        </aside>
-      )}
+      {/* Overall DIY-vs-lawyer verdict — replaces the simpler legal-advice
+          callout. Tier-coloured band with a concrete next step. */}
+      {results.advice && <AdviceBand advice={results.advice} />}
 
       <Section
         title="Best overall pathways"
@@ -245,10 +235,129 @@ function CountryCard({
         </span>
         <span className="text-xs font-semibold text-neutral-700 dark:text-neutral-300 tabular-nums">{metric}</span>
       </div>
+
+      {/* Profile fit note — short, positive — explains why this route
+          matches based on the user's answers. */}
+      {item.fitNote && (
+        <p className="mt-2 text-[11px] text-emerald-700 dark:text-emerald-300 leading-snug flex items-start gap-1">
+          <CheckCircle2 size={11} aria-hidden className="shrink-0 mt-0.5" />
+          {item.fitNote}
+        </p>
+      )}
+
+      {/* Caveats — amber, surfaced from the user's answers (criminal
+          record, education gap, capital gap). Honest signals; not blockers. */}
+      {item.caveats && item.caveats.length > 0 && (
+        <ul className="mt-2 space-y-0.5">
+          {item.caveats.map((c, i) => (
+            <li
+              key={i}
+              className="text-[11px] text-amber-700 dark:text-amber-300 leading-snug flex items-start gap-1"
+            >
+              <Info size={11} aria-hidden className="shrink-0 mt-0.5" />
+              {c}
+            </li>
+          ))}
+        </ul>
+      )}
+
       <p className="mt-2.5 text-xs text-blue-700 dark:text-blue-400 font-medium inline-flex items-center gap-1">
         Open route <ArrowRight size={11} />
       </p>
     </Link>
+  );
+}
+
+const ADVICE_TONE: Record<AdviceTier, {
+  wrap: string;
+  bar: string;
+  head: string;
+  body: string;
+  icon: typeof CheckCircle2;
+  iconColor: string;
+  ctaClass: string;
+}> = {
+  ideal: {
+    wrap: "border-emerald-200 dark:border-emerald-900 bg-emerald-50 dark:bg-emerald-950/30",
+    bar: "bg-emerald-500",
+    head: "text-emerald-900 dark:text-emerald-200",
+    body: "text-emerald-900/80 dark:text-emerald-200/80",
+    icon: CheckCircle2,
+    iconColor: "text-emerald-700 dark:text-emerald-300",
+    ctaClass: "bg-emerald-600 hover:bg-emerald-700 text-white",
+  },
+  viable: {
+    wrap: "border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/30",
+    bar: "bg-blue-500",
+    head: "text-blue-900 dark:text-blue-200",
+    body: "text-blue-900/80 dark:text-blue-200/80",
+    icon: Info,
+    iconColor: "text-blue-700 dark:text-blue-300",
+    ctaClass: "bg-blue-600 hover:bg-blue-700 text-white",
+  },
+  complicated: {
+    wrap: "border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40",
+    bar: "bg-amber-500",
+    head: "text-amber-900 dark:text-amber-200",
+    body: "text-amber-900/80 dark:text-amber-200/80",
+    icon: Scale,
+    iconColor: "text-amber-700 dark:text-amber-300",
+    ctaClass: "bg-amber-600 hover:bg-amber-700 text-white",
+  },
+};
+
+function AdviceBand({ advice }: { advice: NonNullable<Recommendations["advice"]> }) {
+  const tone = ADVICE_TONE[advice.tier];
+  const Icon = tone.icon;
+  const external = advice.ctaHref.startsWith("http");
+  return (
+    <aside className={`mb-6 rounded-2xl border ${tone.wrap} overflow-hidden`}>
+      <div className="flex items-stretch">
+        <div className={`w-1.5 ${tone.bar}`} aria-hidden />
+        <div className="flex-1 p-4 sm:p-5 min-w-0">
+          <div className="flex items-start gap-3">
+            <Icon size={20} aria-hidden className={`shrink-0 mt-0.5 ${tone.iconColor}`} />
+            <div className="flex-1 min-w-0">
+              <p className={`font-semibold text-sm sm:text-base mb-1 ${tone.head}`}>{advice.headline}</p>
+              <p className={`text-xs sm:text-sm leading-relaxed ${tone.body}`}>{advice.body}</p>
+
+              {advice.reasons.length > 0 && (
+                <details className="mt-2 group">
+                  <summary className={`cursor-pointer text-[11px] font-medium underline underline-offset-2 ${tone.body}`}>
+                    Why we say this
+                  </summary>
+                  <ul className={`mt-1.5 space-y-0.5 text-[11px] ${tone.body} pl-4`}>
+                    {advice.reasons.map((r, i) => (
+                      <li key={i} className="list-disc">{r}</li>
+                    ))}
+                  </ul>
+                </details>
+              )}
+
+              <div className="mt-3">
+                {external ? (
+                  <a
+                    href={advice.ctaHref}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-md ${tone.ctaClass}`}
+                  >
+                    {advice.ctaLabel}
+                  </a>
+                ) : (
+                  <Link
+                    href={advice.ctaHref}
+                    className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-md ${tone.ctaClass}`}
+                  >
+                    {advice.ctaLabel}
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
   );
 }
 

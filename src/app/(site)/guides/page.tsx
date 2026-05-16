@@ -21,43 +21,44 @@ export default function GuidesIndex() {
   const guides = guidesByDate();
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
-      <header className="mb-8">
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">Guides</h1>
-        <p className="text-slate-600 dark:text-slate-400">
+    <main className="mx-auto max-w-3xl px-4 sm:px-6 py-12 sm:py-16">
+      <header className="mb-12">
+        <p className="kicker mb-3">Editorial</p>
+        <h1 className="billboard mb-5 max-w-2xl">Guides<span className="text-[var(--color-accent)]">.</span></h1>
+        <p className="text-lg text-[var(--color-ink-muted)] leading-relaxed max-w-2xl">
           Long-form pieces on the visa policies travellers ask about most. Live data tables
           pulled from the same database that powers the rest of the site.
         </p>
-        <p className="text-xs text-neutral-500 mt-2">
-          <Link href="/guides.xml" className="underline hover:no-underline">RSS feed</Link>
+        <p className="text-xs text-[var(--color-ink-muted)] mt-4">
+          <Link href="/guides.xml" className="underline underline-offset-4 hover:no-underline">RSS feed</Link>
           {" · "}
-          <Link href="/methodology" className="underline hover:no-underline">methodology</Link>
+          <Link href="/methodology" className="underline underline-offset-4 hover:no-underline">methodology</Link>
         </p>
       </header>
 
-      <ol className="space-y-4">
+      <ol className="space-y-px bg-[var(--color-rule)] border-y border-[var(--color-rule)]">
         {guides.map(({ frontmatter }) => (
-          <li key={frontmatter.slug}>
+          <li key={frontmatter.slug} className="bg-[var(--color-paper)]">
             <Link
               href={`/guides/${frontmatter.slug}`}
-              className="block p-5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-600 hover:shadow-sm transition"
+              className="block px-2 sm:px-4 py-6 hover:bg-[var(--color-paper-elev)] transition group"
             >
-              <div className="flex flex-wrap items-baseline justify-between gap-2 mb-1">
-                <h2 className="text-base sm:text-lg font-semibold leading-snug">
+              <div className="flex flex-wrap items-baseline justify-between gap-3 mb-2">
+                <h2 className="serif-display text-xl sm:text-2xl font-medium leading-tight group-hover:underline underline-offset-4 decoration-1">
                   {frontmatter.title}
                 </h2>
-                <span className="text-xs text-neutral-500 tabular-nums shrink-0">
+                <span className="text-xs text-[var(--color-ink-muted)] tabular shrink-0">
                   {fmtDate(frontmatter.publishedAt)} · {frontmatter.readingMinutes} min
                 </span>
               </div>
-              <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-snug mb-2">
+              <p className="text-sm sm:text-base text-[var(--color-ink)]/85 leading-relaxed mb-3 max-w-2xl">
                 {frontmatter.summary}
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {frontmatter.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-block text-[11px] px-2 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300"
+                    className="inline-block text-[11px] px-2 py-0.5 rounded bg-[var(--color-muted)] text-[var(--color-ink-muted)]"
                   >
                     {tag}
                   </span>

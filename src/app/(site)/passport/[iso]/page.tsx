@@ -202,7 +202,7 @@ export default async function PassportIndex({ params }: { params: Promise<Params
               <div className="absolute top-0 right-0 -translate-y-2 pointer-events-none opacity-[0.10] dark:opacity-[0.18]">
                 <CountrySilhouette iso2={upper} size={180} tone="default" />
               </div>
-              <h2 className="text-2xl font-bold tracking-tight mb-4">
+              <h2 className="section-h2 mb-4">
                 Travel from {name}: the picture in 2026
               </h2>
               {intro ? (
@@ -309,10 +309,9 @@ export default async function PassportIndex({ params }: { params: Promise<Params
 
             {/* VISA TYPE BROWSE */}
             <section>
-              <h2 className="text-xl font-bold tracking-tight mb-2">
-                Browse by what you want to do
-              </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
+              <p className="kicker mb-2">By purpose</p>
+              <h2 className="section-h2 mb-2">Browse by what you want to do.</h2>
+              <p className="text-sm text-[var(--color-ink-muted)] mb-4">
                 Pick a purpose to see the {adjective.toLowerCase()}-specific rules.
               </p>
               <VisaCategoryNav iso={upper} mode="passport" />
@@ -320,12 +319,10 @@ export default async function PassportIndex({ params }: { params: Promise<Params
 
             {/* POPULAR DESTINATIONS */}
             <section>
-              <h2 className="text-xl font-bold tracking-tight mb-2">
-                Most-searched routes from {name}
-              </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
-                Clicking through pulls the {adjective.toLowerCase()}-specific rules, your
-                merged-photo route hero, and a step-by-step prep checklist tailored to{" "}
+              <p className="kicker mb-2">Popular routes</p>
+              <h2 className="section-h2 mb-2">Most-searched routes from {name}.</h2>
+              <p className="text-sm text-[var(--color-ink-muted)] mb-4">
+                Each link opens a step-by-step prep checklist tailored to{" "}
                 {adjective.toLowerCase()} applicants.
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -336,7 +333,7 @@ export default async function PassportIndex({ params }: { params: Promise<Params
                       key={dest}
                       href={`/${upper.toLowerCase()}/${dest.toLowerCase()}`}
                       prefetch={false}
-                      className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-600 hover:bg-blue-50/40 dark:hover:bg-blue-950/30 transition text-sm"
+                      className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-elev)] hover:border-[var(--color-ink)] transition text-sm"
                     >
                       <span className="text-base" aria-hidden>{country?.flag ?? "🏳️"}</span>
                       <span className="truncate">{nameFor(dest)}</span>
@@ -346,25 +343,19 @@ export default async function PassportIndex({ params }: { params: Promise<Params
               </div>
             </section>
 
-            {/* FULL A-Z LIST (collapsed feel — secondary content) */}
-            <details className="group">
-              <summary className="cursor-pointer list-none">
-                <div className="flex items-center justify-between gap-2 px-4 py-3 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition">
-                  <h2 className="text-base font-semibold">
-                    Every destination, A → Z
-                  </h2>
-                  <span className="text-xs text-neutral-500 group-open:rotate-180 transition-transform">
-                    ▼
-                  </span>
-                </div>
+            {/* FULL A-Z LIST (collapsed) */}
+            <details className="group ink-card overflow-hidden">
+              <summary className="cursor-pointer list-none flex items-center justify-between gap-2 px-5 py-4 hover:bg-[var(--color-muted)]/40 transition">
+                <h2 className="serif-display text-lg font-medium">Every destination, A → Z</h2>
+                <span className="chev text-[var(--color-ink-muted)]">▾</span>
               </summary>
-              <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-1">
+              <div className="px-5 pb-5 border-t border-[var(--color-rule)] pt-4 grid grid-cols-2 sm:grid-cols-3 gap-1">
                 {COUNTRY_LIST.filter((c) => c.iso2 !== upper).map((c) => (
                   <Link
                     key={c.iso2}
                     href={`/${upper.toLowerCase()}/${c.iso2.toLowerCase()}`}
                     prefetch={false}
-                    className="flex items-center gap-2 px-2.5 py-1.5 rounded text-sm hover:bg-neutral-50 dark:hover:bg-neutral-900 transition"
+                    className="flex items-center gap-2 px-2.5 py-1.5 rounded text-sm hover:bg-[var(--color-muted)]/60 transition"
                   >
                     <span className="text-sm" aria-hidden>{c.flag}</span>
                     <span className="truncate">{c.name}</span>
@@ -373,10 +364,10 @@ export default async function PassportIndex({ params }: { params: Promise<Params
               </div>
             </details>
 
-            {/* HONEST CAVEAT */}
-            <section className="border-l-4 border-amber-300 dark:border-amber-700 bg-amber-50/40 dark:bg-amber-950/20 pl-5 py-4 pr-4 rounded-r-lg text-sm text-amber-900 dark:text-amber-100">
-              <p className="font-semibold mb-1">Before you book</p>
-              <p>
+            {/* HONEST CAVEAT — editorial pull-quote style */}
+            <section className="border-l-2 border-[var(--color-accent)] pl-5 py-1">
+              <p className="serif-display text-lg font-medium mb-1">Before you book</p>
+              <p className="text-sm text-[var(--color-ink)]/85 leading-relaxed max-w-2xl">
                 A valid visa lets you travel — entry is still at the immigration officer&apos;s
                 discretion. For work, study and family routes especially, double-check the
                 destination&apos;s embassy guidance before signing leases or quitting jobs. Every

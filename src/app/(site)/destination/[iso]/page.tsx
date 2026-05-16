@@ -167,14 +167,16 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
           />
         )}
 
-        <section className="mt-8 mb-2">
-          <h2 className="text-base font-semibold mb-3">Browse by visa type</h2>
+        <section className="mt-12">
+          <p className="kicker mb-2">By purpose</p>
+          <h2 className="section-h2 mb-4">Browse by visa type.</h2>
           <VisaCategoryNav iso={upper} mode="destination" />
         </section>
 
-        <section className="mt-10">
-          <h2 className="text-lg font-semibold mb-4">From popular origin countries</h2>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
+        <section className="mt-12">
+          <p className="kicker mb-2">Popular origins</p>
+          <h2 className="section-h2 mb-2">From popular origin countries.</h2>
+          <p className="text-sm text-[var(--color-ink-muted)] mb-5">
             Pick your passport to see the exact rules for travel to {name}.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
@@ -185,7 +187,7 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
                   key={origin}
                   href={`/${origin.toLowerCase()}/${upper.toLowerCase()}`}
                   prefetch={false}
-                  className="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-600 hover:bg-blue-50/40 dark:hover:bg-blue-950/30 transition text-sm"
+                  className="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-elev)] hover:border-[var(--color-ink)] transition text-sm"
                 >
                   <span className="text-lg" aria-hidden>{country?.flag ?? "🏳️"}</span>
                   <span className="truncate">{nameFor(origin)}</span>
@@ -195,15 +197,16 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
           </div>
         </section>
 
-        <section className="mt-10">
-          <h2 className="text-lg font-semibold mb-4">From any passport (A–Z)</h2>
+        <section className="mt-12">
+          <p className="kicker mb-2">All passports</p>
+          <h2 className="section-h2 mb-4">From any passport (A–Z).</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1">
             {COUNTRY_LIST.filter((c) => c.iso2 !== upper).map((c) => (
               <Link
                 key={c.iso2}
                 href={`/${c.iso2.toLowerCase()}/${upper.toLowerCase()}`}
                 prefetch={false}
-                className="flex items-center gap-2 px-2 py-1.5 rounded text-sm hover:bg-neutral-50 dark:hover:bg-neutral-900 transition"
+                className="flex items-center gap-2 px-2 py-1.5 rounded text-sm hover:bg-[var(--color-muted)]/60 transition"
               >
                 <span className="text-base" aria-hidden>{c.flag}</span>
                 <span className="truncate">{c.name}</span>

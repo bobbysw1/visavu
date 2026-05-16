@@ -79,17 +79,18 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
 
-      <main className="mx-auto max-w-3xl px-4 py-10">
+      <main className="mx-auto max-w-3xl px-4 sm:px-6 py-12 sm:py-16">
         <Breadcrumbs crumbs={crumbs} />
 
-        <header className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight mb-3">
+        <header className="mb-10">
+          <p className="kicker mb-4">{frontmatter.tags[0] ?? "Editorial"}</p>
+          <h1 className="serif-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight mb-5">
             {frontmatter.title}
           </h1>
-          <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-snug mb-3">
+          <p className="text-lg sm:text-xl text-[var(--color-ink-muted)] leading-relaxed mb-5 max-w-2xl">
             {frontmatter.summary}
           </p>
-          <p className="text-xs text-neutral-500 tabular-nums">
+          <p className="text-xs text-[var(--color-ink-muted)] tabular pt-3 border-t border-[var(--color-rule)]">
             Published {fmtDate(frontmatter.publishedAt)}
             {frontmatter.publishedAt !== frontmatter.modifiedAt && (
               <> · Updated {fmtDate(frontmatter.modifiedAt)}</>
@@ -103,18 +104,18 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
           <Body />
         </div>
 
-        <footer className="mt-12 pt-6 border-t border-neutral-200 dark:border-neutral-800 text-sm text-neutral-600 dark:text-neutral-400">
+        <footer className="mt-16 pt-6 border-t border-[var(--color-rule)] text-sm text-[var(--color-ink-muted)]">
           <p>
             Read more in{" "}
-            <Link href="/guides" className="text-blue-700 dark:text-blue-400 underline">
+            <Link href="/guides" className="text-[var(--color-ink)] underline underline-offset-4 hover:no-underline">
               guides
             </Link>{" "}
             · See our{" "}
-            <Link href="/methodology" className="underline hover:no-underline">
+            <Link href="/methodology" className="underline underline-offset-4 hover:no-underline">
               data methodology
             </Link>{" "}
             ·{" "}
-            <Link href="/finder" className="underline hover:no-underline">
+            <Link href="/finder" className="underline underline-offset-4 hover:no-underline">
               Look up your route
             </Link>
           </p>

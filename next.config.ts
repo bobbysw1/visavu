@@ -41,6 +41,24 @@ const config: NextConfig = {
   // soft 404.
   async redirects() {
     return [
+      // CANONICAL: /[passport]/[destination]/tourism → /[passport]/[destination]
+      //
+      // Tourism is the default purpose; the bare pair URL is the canonical
+      // landing page. Before this redirect, `/us/jp/tourism` was rewritten
+      // to the same React tree as `/us/jp` and served identical HTML — a
+      // full duplicate. Googlebot still had to fetch both to discover the
+      // canonical, wasting ~25% of the crawl budget across ~60k pair URLs.
+      // 301-ing path-form tourism URLs to the bare pair stops the duplicate
+      // fetches entirely.
+      //
+      // ISO codes are 2 letters. Anchored to the start of the path so we
+      // don't accidentally swallow longer route segments.
+      {
+        source: "/:passport([A-Za-z]{2})/:destination([A-Za-z]{2})/tourism",
+        destination: "/:passport/:destination",
+        permanent: true,
+      },
+
       // Chinese visa content → China destination page
       {
         source: "/dich-vu-lam-visa-trung-quoc",

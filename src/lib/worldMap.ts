@@ -22,17 +22,12 @@ import worldTopo from "world-atlas/countries-110m.json";
 import type { Topology, GeometryCollection } from "topojson-specification";
 import type { Feature, FeatureCollection, MultiPolygon, Polygon } from "geojson";
 
-export type WorldMapCountry = {
-  iso2: string;
-  name: string;
-  pathD: string;
-};
-
-export type WorldMapData = {
-  width: number;
-  height: number;
-  countries: WorldMapCountry[];
-};
+// Types live in worldMapTypes.ts (no runtime deps) so client components
+// can import them without dragging d3-geo + topojson into the browser
+// bundle. Re-exported here for backwards compatibility with consumers
+// that imported types from this file before the split.
+import type { WorldMapCountry, WorldMapData } from "./worldMapTypes";
+export type { WorldMapCountry, WorldMapData };
 
 const WIDTH = 960;
 const HEIGHT = 480;

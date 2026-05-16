@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { VisaCategoryNav } from "@/components/VisaCategoryNav";
 import { WorldMap, type EligibilityEntry } from "@/components/WorldMap";
-import { getWorldMapData } from "@/lib/worldMap";
 import { assessDifficulty } from "@/lib/difficulty";
 import { ContinentResultsGrid } from "@/components/ContinentResultsGrid";
 import { scoreDestinationsForPassport } from "@/lib/scoring";
@@ -246,7 +245,6 @@ export default async function PassportIndex({ params }: { params: Promise<Params
                 processing time, salary, tax, safety, PR pathway in a
                 popover; click jumps to the full route. */}
             {summaries.length > 0 && (() => {
-              const worldData = getWorldMapData();
               const eligibility: Record<string, EligibilityEntry> = {};
               for (const s of summaries) {
                 const a = assessDifficulty({
@@ -299,7 +297,6 @@ export default async function PassportIndex({ params }: { params: Promise<Params
               return (
                 <section>
                   <WorldMap
-                    data={worldData}
                     passportIso2={upper}
                     eligibility={eligibility}
                     title={`Where ${name} passport holders can go`}

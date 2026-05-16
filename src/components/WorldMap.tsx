@@ -17,9 +17,25 @@
  * passport we render destination-only metrics (treat as a "where do my
  * metrics live?" world view).
  */
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import type { WorldMapData, WorldMapCountry } from "@/lib/worldMap";
+import type { WorldMapData, WorldMapCountry } from "@/lib/worldMapTypes";
+
+// Year-long browser cache after first fetch — geometry never changes
+// between deploys. Concurrent <WorldMap> instances on the same page
+// share the resolved promise so we don't fetch twice in dev.
+let __worldMapPromise: Promise<WorldMapData> | null = null;
+function loadWorldMapData(): Promise<WorldMapData> {
+  if (__worldMapPromise) return __worldMapPromise;
+  __worldMapPromise = fetch("/api/worldmap").then((r) => {
+    if (!r.ok) {
+      __worldMapPromise = null; // allow retry on transient failure
+      throw new Error(`world-map fetch ${r.status}`);
+    }
+    return r.json() as Promise<WorldMapData>;
+  });
+  return __worldMapPromise;
+}
 import type { DifficultyBucket } from "@/lib/difficulty";
 import { BUCKET_PALETTE, BUCKET_LABEL } from "@/lib/difficulty";
 import { metricsFor, ENGLISH_BAND_LABEL } from "@/lib/countryMetrics";
@@ -93,7 +109,10 @@ const NEUTRAL_TONE = {
 };
 
 export type WorldMapProps = {
-  data: WorldMapData;
+  /** Pre-resolved geometry. Omit to fetch from /api/worldmap on mount
+   *  (preferred — keeps the 750KB of SVG path data out of the server-
+   *  rendered HTML payload). */
+  data?: WorldMapData;
   passportIso2?: string;
   eligibility?: Record<string, EligibilityEntry>;
   /** Optional callback (defaults to <Link> to /[passport]/[dest]). */
@@ -105,15 +124,35 @@ export type WorldMapProps = {
 };
 
 export function WorldMap({
-  data,
+  data: initialData,
   passportIso2,
   eligibility = {},
   title,
   subtitle,
 }: WorldMapProps) {
+  const [data, setData] = useState<WorldMapData | null>(initialData ?? null);
   const [hovered, setHovered] = useState<WorldMapCountry | null>(null);
   const [cursor, setCursor] = useState<{ x: number; y: number } | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
+
+  // Lazy-fetch geometry when not passed inline. Triggered once on mount;
+  // subsequent <WorldMap> instances reuse the deduped promise.
+  useEffect(() => {
+    if (data) return;
+    let cancelled = false;
+    loadWorldMapData()
+      .then((d) => {
+        if (!cancelled) setData(d);
+      })
+      .catch(() => {
+        // Soft failure — the page still works without the map. We don't
+        // surface an error UI because the map isn't load-bearing for any
+        // user task (it's an enhancement on top of the data tables).
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [data]);
 
   // Tally legend counts so the user can see "47 visa-free, 12 eTA, …"
   const counts = useMemo(() => {
@@ -163,7 +202,18 @@ export function WorldMap({
         className="relative w-full rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-gradient-to-b from-sky-50/30 via-white to-emerald-50/20 dark:from-sky-950/30 dark:via-neutral-950 dark:to-emerald-950/20"
         onMouseLeave={() => setHovered(null)}
         onMouseMove={handleMove}
+        style={{ aspectRatio: "2 / 1" }}
       >
+        {!data && (
+          // Skeleton placeholder while /api/worldmap fetches. Same aspect
+          // ratio as the rendered map so the surrounding layout doesn't
+          // shift on data arrival (CLS = 0).
+          <div className="absolute inset-0 flex items-center justify-center text-xs text-neutral-400 dark:text-neutral-500 animate-pulse">
+            Loading world map…
+          </div>
+        )}
+        {data && (
+        <>
         <svg
           viewBox={`0 0 ${data.width} ${data.height}`}
           className="w-full h-auto block"
@@ -207,6 +257,8 @@ export function WorldMap({
             x={cursor.x}
             y={cursor.y}
           />
+        )}
+        </>
         )}
       </div>
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { guidesByDate } from "@/content/guides";
 import { absoluteUrl } from "@/lib/site";
@@ -47,12 +48,13 @@ export default function GuidesIndex() {
                 className="grid grid-cols-1 sm:grid-cols-[12rem_1fr] gap-4 sm:gap-6 p-2 sm:p-4 hover:bg-[var(--color-paper-elev)] transition group"
               >
                 {photo ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
+                  // Index-page thumbnails — fixed size, lazy by default.
+                  <Image
                     src={photo.url}
                     alt={photo.alt}
-                    loading="lazy"
-                    decoding="async"
+                    width={192}
+                    height={128}
+                    sizes="(min-width: 640px) 12rem, 100vw"
                     className="w-full sm:w-48 h-32 sm:h-32 object-cover rounded-md ring-1 ring-black/5 dark:ring-white/10"
                   />
                 ) : (

@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { HeroDestinationSearch } from "@/components/HeroDestinationSearch";
 import { LookupForm } from "@/components/LookupForm";
 import { RouteCard } from "@/components/RouteCard";
@@ -75,14 +76,16 @@ export default async function HomePage() {
             {/* Backdrop photo — full-bleed, eager-loaded for LCP. */}
             {heroPhoto ? (
               <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                {/* next/image with `priority` emits its own preload + WebP
+                    srcset for the LCP image. `sizes="100vw"` because the
+                    backdrop fills the whole viewport edge-to-edge. */}
+                <Image
                   src={heroPhoto.url}
                   alt={heroPhoto.alt}
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority="high"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  fill
+                  priority
+                  sizes="100vw"
+                  className="object-cover"
                 />
                 {/* Dark gradient — heavier at the top so the kicker /
                     headline / lead stay legible against any photo, lighter
@@ -344,7 +347,7 @@ export default async function HomePage() {
           Pick your passport to see where you can go and what&apos;s required —
           coverage expands as we add more passports each week.
         </p>
-        <AllCountriesGrid mode="passport" />
+        <AllCountriesGrid mode="passport" compact />
       </section>
 
       {/* ─── BROWSE BY DESTINATION ─── */}
@@ -354,7 +357,7 @@ export default async function HomePage() {
         <p className="text-[var(--color-ink-muted)] mb-6 max-w-xl">
           Every country. Pick a destination to see who can travel and on what terms.
         </p>
-        <AllCountriesGrid mode="destination" />
+        <AllCountriesGrid mode="destination" compact />
       </section>
     </>
   );

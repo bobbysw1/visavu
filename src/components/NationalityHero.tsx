@@ -6,6 +6,7 @@
  * by a deterministic hash of the country code, and a stamped-passport SVG
  * pattern in the corner. Per-page colour without per-country curation.
  */
+import Image from "next/image";
 import { Flag } from "./Flag";
 // HeroLanguageToggle is intentionally not rendered while translation
 // coverage is partial. Re-enable when locale-prefixed routes land. See
@@ -80,13 +81,15 @@ export function NationalityHero({
       <section className="relative overflow-hidden rounded-2xl mb-6 sm:mb-8 border border-neutral-200/60 dark:border-neutral-800 bg-white">
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="relative h-48 sm:h-64 md:h-auto md:min-h-[320px] order-1 md:order-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            {/* LCP candidate on /passport/[iso] + /destination/[iso] —
+                priority emits preload + WebP srcset. */}
+            <Image
               src={photo.url}
               alt={photo.alt}
-              className="absolute inset-0 w-full h-full object-cover"
-              loading="eager"
-              decoding="async"
+              fill
+              priority
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
             />
             {/* Stronger overlay near the bottom-right so the photographer
                 credit chip stays readable on bright photos (snowy peaks,

@@ -10,6 +10,7 @@
  * When either photo is missing we degrade to a single-photo hero (or, if
  * both are missing, the existing flag → flag chip).
  */
+import Image from "next/image";
 import { Plane } from "lucide-react";
 import { Flag } from "./Flag";
 import type { CountryPhoto } from "@/lib/pexels";
@@ -42,13 +43,13 @@ export function RouteHero({
       <div className="relative grid grid-cols-2 h-56 sm:h-64 md:h-72">
         <div className="relative overflow-hidden">
           {passportPhoto ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={passportPhoto.url}
               alt={passportPhoto.alt}
-              className="absolute inset-0 w-full h-full object-cover"
-              loading="eager"
-              decoding="async"
+              fill
+              priority
+              sizes="50vw"
+              className="object-cover"
             />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-slate-700 to-slate-900" />
@@ -59,13 +60,13 @@ export function RouteHero({
         </div>
         <div className="relative overflow-hidden">
           {destinationPhoto ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={destinationPhoto.url}
               alt={destinationPhoto.alt}
-              className="absolute inset-0 w-full h-full object-cover"
-              loading="eager"
-              decoding="async"
+              fill
+              priority
+              sizes="50vw"
+              className="object-cover"
             />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-bl from-slate-700 to-slate-900" />

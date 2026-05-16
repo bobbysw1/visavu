@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { GUIDES, guideBySlug } from "@/content/guides";
@@ -124,14 +125,16 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
 
         {photo && (
           <figure className="mb-10 -mx-4 sm:mx-0">
-            <div className="relative">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            <div className="relative aspect-[16/9]">
+              {/* Guide hero is the LCP element on /guides/[slug] — give
+                  it priority for WebP srcset + preload. */}
+              <Image
                 src={photo.url}
                 alt={photo.alt}
-                loading="eager"
-                decoding="async"
-                className="w-full aspect-[16/9] object-cover sm:rounded-xl ring-1 ring-black/5 dark:ring-white/10"
+                fill
+                priority
+                sizes="(min-width: 768px) 48rem, 100vw"
+                className="object-cover sm:rounded-xl ring-1 ring-black/5 dark:ring-white/10"
               />
               <a
                 href={photo.pexelsUrl}

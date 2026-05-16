@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { flagEmoji, nameFor } from "@/lib/countries";
 import { routeHref } from "@/lib/routeHref";
 import { getCountryPhotoSync } from "@/lib/pexels";
@@ -26,13 +27,13 @@ export function RouteCard({
       className="group relative block aspect-[5/4] rounded-xl overflow-hidden ring-1 ring-black/5 dark:ring-white/10 hover:ring-2 hover:ring-[var(--color-ink)] transition"
     >
       {photo ? (
-        /* eslint-disable-next-line @next/next/no-img-element */
-        <img
+        // 4-up grid on lg, 2-up on sm, 1-up on mobile.
+        <Image
           src={photo.url}
           alt={photo.alt}
-          loading="lazy"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          fill
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
       ) : (
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-200 to-sky-300 dark:from-emerald-900/60 dark:to-sky-900/60" />

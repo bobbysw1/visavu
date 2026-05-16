@@ -15,6 +15,7 @@
  * without attribution; we still credit the photographer in a small chip
  * (matching how NationalityHero handles it).
  */
+import Image from "next/image";
 import { getCountryPhotoSync } from "@/lib/pexels";
 
 export function PageHero({
@@ -42,13 +43,16 @@ export function PageHero({
       <section className="relative overflow-hidden rounded-2xl mb-10 sm:mb-12 ring-1 ring-black/5 dark:ring-white/10 min-h-[280px] sm:min-h-[400px] lg:min-h-[440px] flex items-end">
         {photo ? (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            {/* PageHero is the LCP candidate on /about, /methodology,
+                /sources, /contact, /find-my-visa, /finder — give it
+                `priority` so Next emits a preload + WebP srcset. */}
+            <Image
               src={photo.url}
               alt={photo.alt}
-              loading="eager"
-              decoding="async"
-              className="absolute inset-0 w-full h-full object-cover"
+              fill
+              priority
+              sizes="(min-width: 1024px) 64rem, 100vw"
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
             <a
@@ -101,13 +105,13 @@ export function PageHero({
       <div className="relative min-h-[160px] sm:min-h-0">
         {photo ? (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={photo.url}
               alt={photo.alt}
-              loading="eager"
-              decoding="async"
-              className="absolute inset-0 w-full h-full object-cover"
+              fill
+              priority
+              sizes="(min-width: 640px) 40vw, 100vw"
+              className="object-cover"
             />
             <a
               href={photo.pexelsUrl}

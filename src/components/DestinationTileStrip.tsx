@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getCountryPhotoSync } from "@/lib/pexels";
 import { nameFor } from "@/lib/countries";
 
@@ -31,13 +32,16 @@ export function DestinationTileStrip() {
               className="group relative aspect-[3/4] sm:aspect-[4/5] rounded-lg overflow-hidden ring-1 ring-black/10 dark:ring-white/10 hover:ring-2 hover:ring-[var(--color-ink)] transition"
             >
               {photo ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
+                // Lazy loaded — these sit just below the LCP hero, so
+                // browser-native lazy-load is fine. `sizes` matches the
+                // responsive grid (1/2 viewport width on mobile, 1/4 on
+                // small, 1/8 on large).
+                <Image
                   src={photo.url}
                   alt={photo.alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  fill
+                  sizes="(min-width: 1024px) 12.5vw, (min-width: 640px) 25vw, 50vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-200 to-sky-200 dark:from-emerald-900/60 dark:to-sky-900/60" />

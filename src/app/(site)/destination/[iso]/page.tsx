@@ -96,38 +96,34 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
     { href: `/destination/${upper.toLowerCase()}`, label: `Travel to ${name}` },
   ];
 
-  // FAQ schema — written generically because the same FAQ structure holds
-  // for every destination. The /[passport]/[destination] route handles the
-  // per-pair specifics.
-  const faqJsonLd = {
+  // CollectionPage schema — the destination page IS a collection of
+  // origin-passport visa requirements for visiting this country. This
+  // gives Google a richer structural signal than the generic FAQPage we
+  // used to emit (which Google has been deprioritising — three identical
+  // boilerplate questions per destination wasn't earning rich results).
+  //
+  // Per-pair specifics still surface on /[passport]/[destination] where
+  // we know the user's exact route and can answer real questions about
+  // it.
+  const collectionJsonLd = {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: `Do I need a visa to enter ${name}?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `Visa requirements depend on your passport and purpose. Pick your passport on this page and select tourism, work, study, or family to see the exact rules — every answer cites a primary government source.`,
-        },
-      },
-      {
-        "@type": "Question",
-        name: `Does ${name} have a work visa programme?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `Most countries offer skilled-worker visas tied to a sponsoring employer. Pick your passport and choose "Work" to see ${name}'s eligibility criteria and processing times.`,
-        },
-      },
-      {
-        "@type": "Question",
-        name: `What's ${name}'s student visa policy?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `Student visas typically require an acceptance letter from an accredited institution and proof of funds. Select "Study" on this page for the specific requirements.`,
-        },
-      },
-    ],
+    "@type": "CollectionPage",
+    name: `Visa requirements for visiting ${name}`,
+    description: facts
+      ? `Entry rules for travel to ${name} (capital: ${facts.capital}). Visa policy by passport, government portal links, embassy directory.`
+      : `Entry rules for travel to ${name}. Visa policy by passport, government portal links, embassy directory.`,
+    url: absoluteUrl(`/destination/${upper.toLowerCase()}`),
+    about: {
+      "@type": "Country",
+      name,
+      identifier: upper,
+    },
+    isPartOf: {
+      "@type": "WebSite",
+      name: SITE.name,
+      url: SITE.url,
+    },
+    inLanguage: "en",
   };
 
   return (
@@ -138,7 +134,7 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
       />
 
       <main className="mx-auto max-w-5xl px-4 py-8">

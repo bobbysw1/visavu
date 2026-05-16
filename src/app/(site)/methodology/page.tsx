@@ -3,6 +3,7 @@ import { db, schema } from "@/db/client";
 import { sql } from "drizzle-orm";
 import { ADAPTERS } from "@/scrapers/sources";
 import { CORRECTNESS_WEIGHTS } from "@/lib/confidence";
+import { PageHero } from "@/components/PageHero";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata = {
@@ -101,13 +102,15 @@ export default async function MethodologyPage() {
   }
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-10">
-      <header className="mb-8">
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">Methodology</h1>
-        <p className="text-slate-600 dark:text-slate-400">
-          How we collect visa data, how confidence is scored, and how to challenge a record.
-        </p>
-      </header>
+    <main className="mx-auto max-w-4xl px-4 sm:px-6 py-10">
+      <PageHero
+        kicker="Methodology"
+        title="How we verify every answer"
+        accent="."
+        subtitle="How we collect visa data, how confidence is scored, and how to challenge a record we got wrong."
+        heroIso2="IT"
+        variant="full"
+      />
 
       <section className="editorial-body prose prose-sm dark:prose-invert max-w-none mb-10">
         <h2>Where the data comes from</h2>

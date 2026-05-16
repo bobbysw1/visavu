@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AlertCircle, Mail, FileSearch, Briefcase, Newspaper, Shield } from "lucide-react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { PageHero } from "@/components/PageHero";
 import { SITE, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -17,7 +18,7 @@ const CONTACT_EMAIL = "info@visavu.com";
 
 export default function ContactPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-3xl px-4 sm:px-6 py-10">
       <Breadcrumbs
         crumbs={[
           { href: "/", label: "Home" },
@@ -25,15 +26,14 @@ export default function ContactPage() {
         ]}
       />
 
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-          Get in touch
-        </h1>
-        <p className="text-base text-neutral-600 dark:text-neutral-400 mt-2 leading-relaxed">
-          {SITE.name} is run by a small team. We answer real messages from real people. We do
-          not respond to mass outreach, automated pitches, or link-building requests.
-        </p>
-      </header>
+      <PageHero
+        kicker="Contact"
+        title="Get in touch"
+        accent="."
+        subtitle={`${SITE.name} is run by a small team. We answer real messages from real people — and ignore mass outreach, automated pitches, and link-building requests.`}
+        heroIso2="PT"
+        variant="banner"
+      />
 
       <section className="mb-8 rounded-2xl border-2 border-blue-200 dark:border-blue-900 bg-blue-50/50 dark:bg-blue-950/20 p-6">
         <div className="flex items-start gap-3">

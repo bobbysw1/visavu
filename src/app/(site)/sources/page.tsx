@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SourceHealthTable } from "@/components/SourceHealthTable";
+import { PageHero } from "@/components/PageHero";
 import { sourceHealthSnapshot } from "@/lib/sourceHealth";
 import { SITE, absoluteUrl } from "@/lib/site";
 
@@ -25,14 +26,16 @@ export default async function SourcesPage() {
   const crowdRows = rows.filter((r) => r.kind === "wikipedia" || r.kind === "wikidata");
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-10">
+    <main className="mx-auto max-w-5xl px-4 sm:px-6 py-10">
       <Breadcrumbs crumbs={[{ href: "/", label: "Home" }, { href: "/sources", label: "Our sources" }]} />
-      <h1 className="text-3xl font-bold mb-3">Our sources</h1>
-      <p className="text-neutral-600 dark:text-neutral-400 mb-8 leading-relaxed">
-        Every answer on {SITE.name} links to its primary source. Below is the full set of
-        adapters currently in production, with the date each was last fetched and the number of
-        verified visa records it contributes.
-      </p>
+      <PageHero
+        kicker="Our sources"
+        title="Every answer traces back to a primary source"
+        accent="."
+        subtitle={`The full set of adapters ${SITE.name} pulls from — government immigration sites, embassy pages, regional bloc primary documents, and crowd-sourced fallbacks. Live freshness on every adapter.`}
+        heroIso2="NL"
+        variant="banner"
+      />
 
       {rows.length === 0 ? (
         <div className="rounded-lg border border-dashed border-neutral-300 dark:border-neutral-700 p-6 text-sm text-neutral-600 dark:text-neutral-400">

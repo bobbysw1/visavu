@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { PageHero } from "@/components/PageHero";
 import { SITE, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -10,14 +11,17 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10 prose prose-neutral dark:prose-invert">
+    <main className="mx-auto max-w-3xl px-4 sm:px-6 py-10">
       <Breadcrumbs crumbs={[{ href: "/", label: "Home" }, { href: "/about", label: "How it works" }]} />
-      <h1>How {SITE.name} works</h1>
-      <p className="lead text-lg text-neutral-600 dark:text-neutral-400">
-        We are an information aggregator. We pull visa rules from official government sources,
-        normalize them into a single comparable shape, and surface every answer with a primary
-        source link, a confidence indicator, and the date we last verified the data.
-      </p>
+      <PageHero
+        kicker="How it works"
+        title={`${SITE.name} aggregates the world's visa rules`}
+        accent="."
+        subtitle="Government sources, normalised into one comparable shape — with a primary-source link, a confidence indicator, and the date we last verified the data on every answer."
+        heroIso2="GR"
+        variant="full"
+      />
+      <div className="prose prose-neutral dark:prose-invert max-w-none">
 
       <h2>Where the data comes from</h2>
       <p>
@@ -77,6 +81,7 @@ export default function AboutPage() {
         Every result card has a &ldquo;Report incorrect info&rdquo; link. We triage user reports
         within a documented window and update or correct the underlying record.
       </p>
+      </div>
     </main>
   );
 }

@@ -9,6 +9,18 @@ import {
   FINDER_GOAL_LABEL,
 } from "@/lib/finder";
 import { absoluteUrl } from "@/lib/site";
+import { PageHero } from "@/components/PageHero";
+import { PassportCover } from "@/components/PassportCover";
+import { getPassportCover } from "@/lib/passportCovers";
+
+// Popular nationalities — the same TOP_ORIGINS that drive the homepage
+// route grid. Filtered to those with a real Wikimedia cover so the
+// shortcut strip never shows a row of flag fallbacks.
+const SHORTCUT_PASSPORTS = [
+  "US", "GB", "DE", "FR", "IT", "ES", "NL", "SE", "CH", "IE",
+  "CA", "AU", "NZ", "JP", "KR", "SG", "AE", "BR", "MX", "AR",
+  "IN", "PH", "ZA", "PT", "PL",
+];
 
 export const metadata = {
   title: "Where can I go? — visa finder",
@@ -110,16 +122,15 @@ export default async function FinderPage({
   }
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-8">
-      <header className="mb-6">
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">
-          Where can I go?
-        </h1>
-        <p className="text-slate-600 dark:text-slate-400">
-          Pick your passport and what you want to do. We&apos;ll show every country open to you,
-          ranked easiest first.
-        </p>
-      </header>
+    <main className="mx-auto max-w-4xl px-4 sm:px-6 py-8">
+      <PageHero
+        kicker="Visa finder"
+        title="Where can you go?"
+        accent="?"
+        subtitle="Pick your passport and what you want to do. We'll show every country open to you, ranked easiest first."
+        heroIso2="GR"
+        variant="full"
+      />
 
       <form
         method="GET"
@@ -189,6 +200,38 @@ export default async function FinderPage({
           or check the ISO 3166-1 alpha-2 code (e.g. <code>US</code>, <code>GB</code>,{" "}
           <code>IN</code>).
         </div>
+      )}
+
+      {/* Passport-cover shortcut strip — only shown when the user hasn't
+          already chosen a passport. Each tile is a GET link that pre-fills
+          the form (keeping any existing goal selection) and re-submits,
+          giving high-traffic origins a one-tap route into their results. */}
+      {!validPassport && (
+        <section className="mb-10">
+          <p className="kicker mb-3">Top passports</p>
+          <h2 className="serif-display text-2xl font-medium mb-5">
+            Or tap your passport.
+          </h2>
+          <div className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-9 gap-2">
+            {SHORTCUT_PASSPORTS.map((iso) => {
+              const params = new URLSearchParams();
+              params.set("passport", iso);
+              if (goal) params.set("goal", goal);
+              return (
+                <Link
+                  key={iso}
+                  href={`/finder?${params.toString()}`}
+                  prefetch={false}
+                  className="block"
+                  aria-label={`Find visas for ${nationalityFor(iso)} passport holders`}
+                  title={nationalityFor(iso)}
+                >
+                  <PassportCover iso2={iso} cover={getPassportCover(iso)} size="collage" showCaption />
+                </Link>
+              );
+            })}
+          </div>
+        </section>
       )}
 
       {(!validPassport || !goal) && (

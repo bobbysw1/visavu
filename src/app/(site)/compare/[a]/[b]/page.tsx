@@ -3,8 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { MetricComparisonTable } from "@/components/MetricComparisonTable";
+import { PassportCover } from "@/components/PassportCover";
 import { COUNTRY_LIST, flagEmoji, nameFor } from "@/lib/countries";
 import { coverageForPassport } from "@/lib/coverage";
+import { getPassportCover } from "@/lib/passportCovers";
 import { SITE, absoluteUrl } from "@/lib/site";
 import type { CoverageSnapshot } from "@/lib/coverage";
 import { type VisaStatus, type Purpose, PURPOSE_LABEL } from "@/lib/types";
@@ -104,21 +106,40 @@ export default async function ComparePage({ params }: { params: Promise<Params> 
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd(crumbs, SITE.url)) }}
       />
 
-      <main className="mx-auto max-w-4xl px-4 py-8">
+      <main className="mx-auto max-w-4xl px-4 sm:px-6 py-8">
         <Breadcrumbs crumbs={crumbs} />
 
-        <header className="mb-6">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-1">
-            <span className="mr-2" aria-hidden>{flagEmoji(aIso)}</span>
-            {nameFor(aIso)} vs{" "}
-            <span className="mx-2" aria-hidden>{flagEmoji(bIso)}</span>
-            {nameFor(bIso)}
-          </h1>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            Side-by-side passport strength: visa-free destinations, eTA coverage, and embassy
-            requirements.
+        <section className="relative overflow-hidden rounded-2xl mb-10 ring-1 ring-black/10 dark:ring-white/15 bg-gradient-to-br from-stone-100 via-amber-50 to-stone-100 dark:from-stone-900 dark:via-amber-950/40 dark:to-stone-900 p-6 sm:p-10">
+          <p className="kicker mb-4">Passport vs passport</p>
+          <div className="flex items-center justify-center gap-6 sm:gap-10 mb-6">
+            <div className="flex-1 flex flex-col items-center max-w-[180px]">
+              <div className="w-28 sm:w-36">
+                <PassportCover iso2={aIso} cover={getPassportCover(aIso)} size="collage" />
+              </div>
+              <p className="serif-display text-xl sm:text-2xl font-medium mt-3 text-center">
+                {nameFor(aIso)}
+              </p>
+            </div>
+            <p
+              aria-hidden
+              className="serif-display text-3xl sm:text-4xl text-[var(--color-ink-muted)] italic"
+            >
+              vs
+            </p>
+            <div className="flex-1 flex flex-col items-center max-w-[180px]">
+              <div className="w-28 sm:w-36">
+                <PassportCover iso2={bIso} cover={getPassportCover(bIso)} size="collage" />
+              </div>
+              <p className="serif-display text-xl sm:text-2xl font-medium mt-3 text-center">
+                {nameFor(bIso)}
+              </p>
+            </div>
+          </div>
+          <p className="text-sm sm:text-base text-[var(--color-ink)]/80 text-center max-w-2xl mx-auto leading-relaxed">
+            Side-by-side passport strength — visa-free destinations, eTA coverage, embassy
+            requirements, and the living-conditions tale of the tape.
           </p>
-        </header>
+        </section>
 
         {(!coverageA || !coverageB || coverageA.totalOptions + coverageB.totalOptions === 0) ? (
           <div className="rounded-lg border border-dashed border-neutral-300 dark:border-neutral-700 p-6 text-sm text-neutral-600 dark:text-neutral-400">

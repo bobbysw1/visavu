@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { QuestionnaireWizard } from "@/components/QuestionnaireWizard";
+import { PageHero } from "@/components/PageHero";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -28,5 +29,19 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export default function FindMyVisaPage() {
-  return <QuestionnaireWizard />;
+  return (
+    <>
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 pt-10">
+        <PageHero
+          kicker="Find my visa"
+          title="A personalised relocation roadmap"
+          accent="."
+          subtitle="Answer twelve quick questions — best-fit visa pathways, easiest countries, fastest approvals, cheapest routes, and the shortest paths to permanent residency."
+          heroIso2="PT"
+          variant="full"
+        />
+      </div>
+      <QuestionnaireWizard />
+    </>
+  );
 }

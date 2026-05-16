@@ -11,6 +11,7 @@ export const frontmatter: GuideFrontmatter = {
   modifiedAt: "2026-05-10",
   tags: ["Schengen", "Europe", "ETA", "Upcoming"],
   readingMinutes: 9,
+  heroIso2: "FR",
 };
 
 export default function EtiasGuide() {

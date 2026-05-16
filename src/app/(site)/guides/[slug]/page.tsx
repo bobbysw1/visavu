@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { GUIDES, guideBySlug } from "@/content/guides";
 import { absoluteUrl, SITE } from "@/lib/site";
 import { breadcrumbJsonLd, Breadcrumbs } from "@/components/Breadcrumbs";
+import { getCountryPhoto } from "@/lib/pexels";
 
 type Params = { slug: string };
 
@@ -68,6 +69,7 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
 
   const { frontmatter, default: Body } = guide;
   const canonical = absoluteUrl(`/guides/${frontmatter.slug}`);
+  const photo = frontmatter.heroIso2 ? await getCountryPhoto(frontmatter.heroIso2) : null;
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -119,6 +121,29 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
             {frontmatter.readingMinutes} min read · By {frontmatter.author}
           </p>
         </header>
+
+        {photo && (
+          <figure className="mb-10 -mx-4 sm:mx-0">
+            <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={photo.url}
+                alt={photo.alt}
+                loading="eager"
+                decoding="async"
+                className="w-full aspect-[16/9] object-cover sm:rounded-xl ring-1 ring-black/5 dark:ring-white/10"
+              />
+              <a
+                href={photo.pexelsUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="absolute bottom-2 right-2 text-[10px] uppercase tracking-wider font-semibold text-white bg-black/70 backdrop-blur px-2 py-1 rounded shadow-md hover:bg-black/85 transition"
+              >
+                Photo: {photo.photographer} · Pexels
+              </a>
+            </div>
+          </figure>
+        )}
 
         <div className="editorial-body">
           <Body />

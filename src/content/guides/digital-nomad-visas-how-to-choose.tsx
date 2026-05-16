@@ -14,6 +14,7 @@ export const frontmatter: GuideFrontmatter = {
   modifiedAt: "2026-05-10",
   tags: ["Digital Nomad", "Remote Work", "Live data"],
   readingMinutes: 12,
+  heroIso2: "PT",
 };
 
 export default async function DigitalNomadGuide() {

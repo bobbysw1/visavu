@@ -11,6 +11,7 @@ export const frontmatter: GuideFrontmatter = {
   modifiedAt: "2026-05-10",
   tags: ["United Kingdom", "ETA", "Recent change"],
   readingMinutes: 7,
+  heroIso2: "GB",
 };
 
 export default function UkEtaGuide() {

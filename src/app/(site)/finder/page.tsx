@@ -46,6 +46,18 @@ const GOAL_BLURB: Record<FinderGoal, string> = {
   invest: "Citizenship-by-investment, Golden Visas, Gold Card programs.",
 };
 
+// Single emoji per goal — adds visual hierarchy to the goal grid without
+// needing a full icon set. Picked for instant recognition over cleverness.
+const GOAL_EMOJI: Record<FinderGoal, string> = {
+  visit: "✈️",
+  remote_work: "💻",
+  work_temporary: "🎒",
+  live_work: "💼",
+  study: "🎓",
+  retire: "🌅",
+  invest: "💎",
+};
+
 const STATUS_BADGE: Record<string, string> = {
   visa_free: "bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-200",
   visa_free_with_eta: "bg-sky-100 text-sky-900 dark:bg-sky-900/40 dark:text-sky-200",
@@ -180,16 +192,52 @@ export default async function FinderPage({
       )}
 
       {(!validPassport || !goal) && (
-        <section className="rounded-xl border border-neutral-200 dark:border-neutral-800 p-5 sm:p-6">
-          <h2 className="font-semibold text-base mb-3">Pick a goal to start</h2>
-          <ul className="space-y-2 text-sm">
-            {GOALS.map((g) => (
-              <li key={g} className="flex gap-3">
-                <span className="font-medium min-w-[180px]">{FINDER_GOAL_LABEL[g]}</span>
-                <span className="text-neutral-600 dark:text-neutral-400">{GOAL_BLURB[g]}</span>
-              </li>
-            ))}
-          </ul>
+        <section className="mb-8">
+          <p className="kicker mb-3">
+            {validPassport ? "Pick a goal" : "Or skip the dropdowns —"}
+          </p>
+          <h2 className="serif-display text-2xl font-medium mb-5">
+            {validPassport
+              ? "What do you want to do abroad?"
+              : "Tap a goal and we'll show what's open to your passport."}
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {GOALS.map((g) => {
+              // Goal-card link carries forward whichever passport the user
+              // already picked (or nothing if they haven't). Submitting via
+              // GET to the same page reuses the existing server flow — no
+              // client JS needed and shareable URLs come for free.
+              const params = new URLSearchParams();
+              if (validPassport) params.set("passport", validPassport);
+              params.set("goal", g);
+              const href = `/finder?${params.toString()}`;
+              return (
+                <Link
+                  key={g}
+                  href={href}
+                  prefetch={false}
+                  className="ink-card p-5 hover:border-[var(--color-ink)] transition group flex flex-col"
+                >
+                  <div className="flex items-start gap-3 mb-2">
+                    <span className="text-2xl leading-none" aria-hidden>
+                      {GOAL_EMOJI[g]}
+                    </span>
+                    <span className="serif-display text-lg font-medium leading-tight">
+                      {FINDER_GOAL_LABEL[g]}
+                    </span>
+                  </div>
+                  <p className="text-sm text-[var(--color-ink)]/75 leading-snug">
+                    {GOAL_BLURB[g]}
+                  </p>
+                  <p className="mt-auto pt-3 text-xs font-medium text-[var(--color-ink)]/70 group-hover:text-[var(--color-ink)]">
+                    {validPassport
+                      ? `See options for ${nationalityFor(validPassport)} →`
+                      : "Pick this goal →"}
+                  </p>
+                </Link>
+              );
+            })}
+          </div>
         </section>
       )}
 

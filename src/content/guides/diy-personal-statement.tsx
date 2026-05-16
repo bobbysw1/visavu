@@ -11,6 +11,10 @@ export const frontmatter: GuideFrontmatter = {
   modifiedAt: "2026-05-16",
   tags: ["DIY application", "Personal statement", "Money-saving"],
   readingMinutes: 12,
+  // No single country owns the personal-statement topic; use the UK
+  // hero since UK Spouse / Skilled Worker drove a lot of the source
+  // research behind this guide.
+  heroIso2: "GB",
 };
 
 export default function DIYPersonalStatementGuide() {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
+import { ServiceCategoryIcon } from "@/components/ServiceCategoryIcon";
 import { SITE, absoluteUrl } from "@/lib/site";
 import {
   SERVICE_CATEGORIES,
@@ -89,21 +90,28 @@ export default function ServicesIndexPage() {
               <Link
                 key={cat}
                 href={`/services/${meta.slug}`}
-                className="ink-card p-5 hover:border-[var(--color-ink)] transition block"
+                className="ink-card p-5 hover:border-[var(--color-ink)] transition block group"
               >
-                <div className="flex items-baseline justify-between gap-2 mb-1">
-                  <h2 className="serif-display text-xl font-medium">{meta.label}</h2>
-                  <span className="kicker tabular">
-                    {counts[cat]} provider{counts[cat] === 1 ? "" : "s"}
-                  </span>
+                <div className="flex items-start gap-4 mb-3">
+                  <ServiceCategoryIcon category={cat} />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline justify-between gap-2 mb-1">
+                      <h2 className="serif-display text-xl font-medium leading-tight">
+                        {meta.label}
+                      </h2>
+                      <span className="kicker tabular shrink-0">
+                        {counts[cat]} provider{counts[cat] === 1 ? "" : "s"}
+                      </span>
+                    </div>
+                    <p className="text-sm font-medium text-[var(--color-ink)]/85">
+                      {meta.tagline}
+                    </p>
+                  </div>
                 </div>
-                <p className="text-sm font-medium text-[var(--color-ink)]/85 mb-2">
-                  {meta.tagline}
-                </p>
                 <p className="text-xs text-[var(--color-ink-muted)] leading-snug line-clamp-3">
                   {meta.description}
                 </p>
-                <p className="mt-3 text-xs font-medium text-[var(--color-ink)]">
+                <p className="mt-3 text-xs font-medium text-[var(--color-ink)] group-hover:translate-x-0.5 transition-transform">
                   Browse providers →
                 </p>
               </Link>

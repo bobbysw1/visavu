@@ -5,6 +5,7 @@ import { LookupForm } from "@/components/LookupForm";
 import { RouteCard } from "@/components/RouteCard";
 import { AllCountriesGrid } from "@/components/AllCountriesGrid";
 import { ClaudeTipCallout } from "@/components/ClaudeTipCallout";
+import { DestinationTileStrip } from "@/components/DestinationTileStrip";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { siteStats } from "@/lib/coverage";
 
@@ -53,9 +54,21 @@ export default async function HomePage() {
       />
 
       {/* ─── EDITORIAL HERO ───
-          Paper-backed billboard with the brand mark + question H1 in the
-          editorial serif. Single search input dominates the page. */}
+          Paper-backed billboard with the brand mark + benefit-led H1.
+          Single search input dominates; destination tile strip below it
+          gives the hero its visual weight without committing to a single
+          banner image. Soft gradient blob in the background prevents the
+          paper field from feeling flat. */}
       <section className="relative overflow-hidden border-b border-[var(--color-rule)]">
+        {/* Decorative gradient blobs — purely visual, behind everything. */}
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(60% 50% at 15% 20%, rgba(16, 185, 129, 0.10) 0%, transparent 70%), radial-gradient(50% 50% at 85% 30%, rgba(59, 130, 246, 0.10) 0%, transparent 70%), radial-gradient(70% 60% at 50% 100%, rgba(139, 92, 246, 0.08) 0%, transparent 70%)",
+          }}
+        />
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
           <p className="kicker mb-6">
             Every passport · Every destination · No middleman
@@ -72,6 +85,8 @@ export default async function HomePage() {
           <div className="mt-10">
             <HeroDestinationSearch />
           </div>
+
+          <DestinationTileStrip />
 
           {stats && stats.totalRecords > 0 && (
             <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-px bg-[var(--color-rule)] border border-[var(--color-rule)] rounded-2xl overflow-hidden max-w-3xl mx-auto">

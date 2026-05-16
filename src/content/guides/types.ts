@@ -19,6 +19,11 @@ export type GuideFrontmatter = {
   tags: string[];
   /** Estimated reading time in minutes (rounded up). */
   readingMinutes: number;
+  /** ISO 3166-1 alpha-2 of the country whose hero photo represents this
+   *  guide. We reuse the curated `public/heroes/` set so guides get
+   *  real photography without a second sourcing pipeline. Falls back to
+   *  a neutral gradient if the manifest entry is missing. */
+  heroIso2?: string;
 };
 
 import type { ComponentType } from "react";

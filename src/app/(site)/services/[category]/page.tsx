@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { ServiceCard } from "@/components/RelocationServicesPanel";
+import { ServiceCategoryIcon } from "@/components/ServiceCategoryIcon";
 import { SITE, absoluteUrl } from "@/lib/site";
 import {
   SERVICE_CATEGORIES,
@@ -75,30 +76,33 @@ export default async function ServiceCategoryPage({
       <main className="mx-auto max-w-4xl px-4 sm:px-6 py-8">
         <Breadcrumbs crumbs={crumbs} />
 
-        <header className="mb-8">
-          <p className="text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 font-semibold mb-2">
-            Relocation services
-          </p>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{meta.label}</h1>
-          <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed mb-2">
-            {meta.tagline}
-          </p>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
-            {meta.description}
-          </p>
-          {meta.affiliateSafe && (
-            <p className="mt-3 text-xs text-neutral-500 dark:text-neutral-400">
-              Cards marked <em>Sponsored</em> earn Visavu a referral.{" "}
-              <Link href="/disclosure" className="underline hover:no-underline">
-                Our commercial policy →
-              </Link>
+        <header className="mb-8 flex flex-col sm:flex-row sm:items-start gap-5">
+          <ServiceCategoryIcon category={category} size={40} className="!p-4" />
+          <div className="flex-1 min-w-0">
+            <p className="text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 font-semibold mb-2">
+              Relocation services
             </p>
-          )}
-          {!meta.affiliateSafe && (
-            <p className="mt-3 text-xs text-neutral-500 dark:text-neutral-400">
-              Informational only — links go to government authorities or non-profit registries.
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{meta.label}</h1>
+            <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed mb-2">
+              {meta.tagline}
             </p>
-          )}
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              {meta.description}
+            </p>
+            {meta.affiliateSafe && (
+              <p className="mt-3 text-xs text-neutral-500 dark:text-neutral-400">
+                Cards marked <em>Sponsored</em> earn Visavu a referral.{" "}
+                <Link href="/disclosure" className="underline hover:no-underline">
+                  Our commercial policy →
+                </Link>
+              </p>
+            )}
+            {!meta.affiliateSafe && (
+              <p className="mt-3 text-xs text-neutral-500 dark:text-neutral-400">
+                Informational only — links go to government authorities or non-profit registries.
+              </p>
+            )}
+          </div>
         </header>
 
         {services.length === 0 ? (

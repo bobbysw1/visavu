@@ -11,6 +11,7 @@ export const frontmatter: GuideFrontmatter = {
   modifiedAt: "2026-05-10",
   tags: ["Schengen", "Europe", "EES", "Biometrics"],
   readingMinutes: 6,
+  heroIso2: "IT",
 };
 
 export default function SchengenEesGuide() {

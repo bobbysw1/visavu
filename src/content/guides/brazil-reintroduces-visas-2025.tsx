@@ -11,6 +11,7 @@ export const frontmatter: GuideFrontmatter = {
   modifiedAt: "2026-05-10",
   tags: ["Brazil", "Latin America", "Recent change", "e-Visa"],
   readingMinutes: 5,
+  heroIso2: "BR",
 };
 
 export default function BrazilVisasGuide() {

@@ -14,6 +14,7 @@ export const frontmatter: GuideFrontmatter = {
   modifiedAt: "2026-05-10",
   tags: ["Working Holiday", "Youth Mobility", "Live data"],
   readingMinutes: 11,
+  heroIso2: "AU",
 };
 
 export default async function WorkingHolidayGuide() {

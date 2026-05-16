@@ -1,17 +1,24 @@
 "use client";
 
 /**
- * Header-level locale switcher. Renders a small <details> with each
- * supported language in its native script. Preserves the current
- * pathname + search params when changing language so the user doesn't
- * lose their place — only the ?lang= query value changes.
+ * Header-level locale switcher.
  *
- * Reads its own state from the URL on the client (no server-side
- * Accept-Language read needed) so the SiteHeader stays static-
- * cacheable. Defaults to "en" until hydrated.
+ * Refactored 2026-05 from <details>-based disclosure to an explicit
+ * useState + click-outside dropdown. The <details> version was clicking-
+ * through-to-summary correctly but the dropdown panel was clipped under
+ * the sticky site header on some layouts. This is more reliable.
+ *
+ * Changes the URL's ?lang=xx without losing pathname or other query
+ * params. trackEvent fires on every selection so we can see which
+ * locales actually get use.
+ *
+ * Reads state from the URL on the client (no server-side Accept-Language
+ * read) so SiteHeader stays statically cacheable. Defaults to "en" until
+ * hydrated — preventing SSR mismatch.
  */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { Globe } from "lucide-react";
 import {
   SUPPORTED_LOCALES,
   LOCALE_DISPLAY_NAMES,
@@ -25,14 +32,33 @@ export function LocaleSwitcher() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [current, setCurrent] = useState<Locale>("en");
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
 
-  // Hydrate from URL on mount. `?lang=xx` wins; otherwise stay at "en".
-  // We deliberately DON'T sniff navigator.language because that would
-  // create a hydration mismatch on the first paint of the static layout.
+  // Hydrate from URL on mount.
   useEffect(() => {
     const fromUrl = searchParams.get("lang");
     if (fromUrl && isSupportedLocale(fromUrl)) setCurrent(fromUrl);
   }, [searchParams]);
+
+  // Close on outside click.
+  useEffect(() => {
+    if (!open) return;
+    function onDocClick(e: MouseEvent) {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   function pick(target: Locale) {
     const params = new URLSearchParams(searchParams.toString());
@@ -41,32 +67,48 @@ export function LocaleSwitcher() {
     const qs = params.toString();
     router.push(qs ? `${pathname}?${qs}` : pathname);
     trackEvent("LocaleChanged", { from: current, to: target });
+    setOpen(false);
   }
 
   return (
-    <details className="relative text-sm">
-      <summary
-        className="cursor-pointer list-none px-2.5 py-1.5 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300"
+    <div ref={rootRef} className="relative text-sm">
+      <button
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
         aria-label={`Current language: ${LOCALE_DISPLAY_NAMES[current]}. Click to change.`}
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] hover:bg-[var(--color-muted)] transition"
       >
-        {LOCALE_DISPLAY_NAMES[current]} ▾
-      </summary>
-      <div className="absolute right-0 top-full mt-1 z-30 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md shadow-lg p-1.5 grid grid-cols-1 gap-0.5 min-w-[12rem]">
-        {SUPPORTED_LOCALES.map((l) => (
-          <button
-            key={l}
-            type="button"
-            onClick={() => pick(l)}
-            className={`text-left px-3 py-1.5 rounded text-sm ${
-              l === current
-                ? "bg-blue-100 dark:bg-blue-900/40 text-blue-900 dark:text-blue-200 font-semibold"
-                : "hover:bg-neutral-100 dark:hover:bg-neutral-800"
-            }`}
-          >
-            {LOCALE_DISPLAY_NAMES[l]}
-          </button>
-        ))}
-      </div>
-    </details>
+        <Globe size={14} aria-hidden />
+        <span className="hidden sm:inline">{LOCALE_DISPLAY_NAMES[current]}</span>
+        <span className="sm:hidden uppercase">{current}</span>
+        <span aria-hidden className="text-[10px] opacity-60">▾</span>
+      </button>
+      {open && (
+        <div
+          role="listbox"
+          aria-label="Choose language"
+          className="absolute right-0 top-full mt-2 z-50 ink-card shadow-lg p-1.5 grid grid-cols-1 gap-0.5 min-w-[13rem]"
+        >
+          {SUPPORTED_LOCALES.map((l) => (
+            <button
+              key={l}
+              type="button"
+              role="option"
+              aria-selected={l === current}
+              onClick={() => pick(l)}
+              className={`text-left px-3 py-1.5 rounded text-sm transition ${
+                l === current
+                  ? "bg-[var(--color-ink)] text-[var(--color-paper)] font-semibold"
+                  : "hover:bg-[var(--color-muted)]"
+              }`}
+            >
+              {LOCALE_DISPLAY_NAMES[l]}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

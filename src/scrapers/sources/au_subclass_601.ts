@@ -18,8 +18,11 @@ const SOURCE_URL =
 // ETA-eligible nationalities (Subclass 601) — non-eVisitor visa-exempt
 // passport holders. The eVisitor (Subclass 651) covers EU/EEA + a few others;
 // these countries use the ETA instead.
+// GB was missing from this list — British citizens are explicitly listed on
+// the Department of Home Affairs ETA eligibility page (post-Brexit they
+// migrated from eVisitor to ETA). Added 2026-05.
 const ETA_NATIONALITIES: string[] = [
-  "BN", "CA", "HK", "JP", "MY", "SG", "KR", "TW", "US",
+  "BN", "CA", "GB", "HK", "JP", "MY", "SG", "KR", "TW", "US",
 ];
 
 export const auSubclass601Adapter: Adapter = {

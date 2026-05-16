@@ -62,7 +62,12 @@ const PROGRAMS: WhProgram[] = [
     eligible: {
       BE: {}, CA: { ageMax: 35 }, CY: {}, DK: {}, EE: {}, FI: {}, FR: { ageMax: 35 },
       DE: {}, HK: {}, IE: { ageMax: 35 }, IT: { ageMax: 35 }, JP: {}, KR: {}, MT: {},
-      NL: {}, NO: {}, SE: {}, TW: {}, GB: { ageMax: 35 },
+      NL: {}, NO: {}, SE: {}, TW: {},
+      GB: {
+        ageMax: 35,
+        notes:
+          "British passport holders can extend the 417 by a SECOND year by completing 88 days of specified work (regional / agricultural / construction / tourism) during the first year — and a THIRD year with 6 months of specified work during the second. Total possible stay: 3 years.",
+      },
     },
   },
   // ---------- Australia: Subclass 462 (Work and Holiday Visa) ----------

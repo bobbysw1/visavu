@@ -8,7 +8,7 @@
  * Reads the current value from `document.cookie` on the client so the
  * SiteHeader can stay static-cacheable. Defaults to "USD" until hydrated.
  */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
 // Curated top-30 currencies — enough to cover the audience without showing
@@ -59,6 +59,8 @@ export function CurrencySwitcher() {
   const searchParams = useSearchParams();
   const qs = searchParams.toString();
   const next = qs ? `${pathname}?${qs}` : pathname;
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
 
   // Hydrate the displayed currency from the cookie on mount. Default to
   // "USD" pre-hydration so SSR + first-paint match — we never read
@@ -69,42 +71,68 @@ export function CurrencySwitcher() {
     if (fromCookie) setCurrent(fromCookie);
   }, []);
 
+  // Close on outside click + escape.
+  useEffect(() => {
+    if (!open) return;
+    function onDocClick(e: MouseEvent) {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   return (
-    <details className="relative text-sm">
-      <summary
-        className="cursor-pointer list-none px-2.5 py-1.5 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300"
+    <div ref={rootRef} className="relative text-sm">
+      <button
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
         aria-label={`Display fees in ${current}. Click to change currency.`}
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] hover:bg-[var(--color-muted)] transition font-mono"
       >
-        {current} ▾
-      </summary>
-      <form
-        method="POST"
-        action="/api/set-currency"
-        className="absolute right-0 top-full mt-1 z-30 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md shadow-lg p-2 max-h-96 overflow-y-auto min-w-[14rem]"
-      >
-        <input type="hidden" name="next" value={next} />
-        <ul className="space-y-0.5">
-          {CURRENCIES.map((c) => (
-            <li key={c.code}>
-              <button
-                type="submit"
-                name="currency"
-                value={c.code}
-                className={`w-full text-left px-2 py-1 rounded text-sm flex items-center justify-between gap-2 ${
-                  c.code === current
-                    ? "bg-blue-100 dark:bg-blue-900/40 text-blue-900 dark:text-blue-200 font-semibold"
-                    : "hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                }`}
-              >
-                <span className="truncate">{c.label}</span>
-                <span className="font-mono text-xs text-neutral-500 dark:text-neutral-400 shrink-0">
-                  {c.code}
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </form>
-    </details>
+        {current}
+        <span aria-hidden className="text-[10px] opacity-60">▾</span>
+      </button>
+      {open && (
+        <form
+          method="POST"
+          action="/api/set-currency"
+          className="absolute right-0 top-full mt-2 z-50 ink-card shadow-lg p-2 max-h-96 overflow-y-auto min-w-[14rem]"
+        >
+          <input type="hidden" name="next" value={next} />
+          <ul className="space-y-0.5">
+            {CURRENCIES.map((c) => (
+              <li key={c.code}>
+                <button
+                  type="submit"
+                  name="currency"
+                  value={c.code}
+                  className={`w-full text-left px-2 py-1 rounded text-sm flex items-center justify-between gap-2 transition ${
+                    c.code === current
+                      ? "bg-[var(--color-ink)] text-[var(--color-paper)] font-semibold"
+                      : "hover:bg-[var(--color-muted)]"
+                  }`}
+                >
+                  <span className="truncate">{c.label}</span>
+                  <span className="font-mono text-xs opacity-60 shrink-0">
+                    {c.code}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </form>
+      )}
+    </div>
   );
 }

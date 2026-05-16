@@ -100,11 +100,17 @@ function formatFee(option: ResolvedVisaOption): string {
       if (acc.currency !== f.currency) return acc;
       return { amountMinor: acc.amountMinor + f.amountMinor, currency: acc.currency };
     }, null);
+  // Fee data missing — fall back to a status-derived label rather than the
+  // unhelpful "—" so the billboard never shows naked em-dashes for routes
+  // we know are free-of-charge (visa-free / visa-on-arrival baseline) or
+  // free-but-eTA'd (some eTA programmes don't charge a service fee).
   if (!total) {
-    return option.status === "visa_free" || option.status === "visa_free_with_eta"
-      ? "£0"
-      : "—";
+    if (option.status === "visa_free") return "Free";
+    if (option.status === "visa_free_with_eta") return "Free";
+    if (option.status === "visa_on_arrival") return "Cash on arrival";
+    return "See breakdown";
   }
+  if (total.amountMinor === 0) return "Free";
   try {
     return new Intl.NumberFormat("en", {
       style: "currency",

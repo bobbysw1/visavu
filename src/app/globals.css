@@ -5,6 +5,31 @@
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-newsreader), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  /* ───────── Editorial design tokens (May-2026 redesign) ─────────
+     Warm paper background, near-black ink, bone rule lines. Replaces
+     the cool blue-tinged palette site-wide. Adapts to dark mode below. */
+  --color-paper: #faf8f4;
+  --color-paper-elev: #ffffff;  /* card / panel surface */
+  --color-ink: #18181b;
+  --color-ink-muted: #525252;
+  --color-rule: #e5e1d6;
+  --color-rule-strong: #d6cfbb;
+  --color-muted: #f3efe6;
+  --color-accent: #b45309;  /* amber-700 — editorial flourishes only */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-paper: #16140f;
+    --color-paper-elev: #1c1a14;
+    --color-ink: #f5f5f4;
+    --color-ink-muted: #a3a3a3;
+    --color-rule: #2a2620;
+    --color-rule-strong: #3a342a;
+    --color-muted: #1f1c16;
+    --color-accent: #fbbf24;
+  }
 }
 
 html { height: 100%; }
@@ -14,6 +39,8 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--color-paper);
+  color: var(--color-ink);
 }
 
 /* Tighter, more confident headlines than Tailwind defaults. */
@@ -28,18 +55,89 @@ h1 { letter-spacing: -0.025em; }
   --color-brand-500: #3b82f6;
   --color-brand-600: #2563eb;
   --color-brand-700: #1d4ed8;
+
+  /* Expose editorial tokens as Tailwind colours (bg-paper, text-ink, etc.). */
+  --color-paper: var(--color-paper);
+  --color-paper-elev: var(--color-paper-elev);
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-rule: var(--color-rule);
+  --color-rule-strong: var(--color-rule-strong);
+  --color-muted: var(--color-muted);
+  --color-accent: var(--color-accent);
 }
 
-/* Hero backdrop — layered radial washes that feel sunlit and warm without
-   washing the typography. Blue/emerald/amber map to the brand's tri-tone
-   (action / trust / warmth). */
+/* ───────── Editorial utility classes ─────────
+   Used by the redesigned layout (result, homepage, guides, directories). */
+
+/* Display serif for editorial headings — opts INTO Newsreader. */
+.serif-display {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+/* Billboard-sized answer headline used at the top of result pages. */
+.billboard {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+/* Editorial section H2. */
+.section-h2 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.625rem, 3.2vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+/* All-caps mini-label used on sections / metric tiles. */
+.kicker {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* Editorial card surface — paper-elev with bone rule, no shadow. */
+.ink-card {
+  background: var(--color-paper-elev);
+  border: 1px solid var(--color-rule);
+  border-radius: 1rem;
+}
+
+/* Atmospheric Ken-Burns hero zoom. Used on billboard images. */
+.ken-burns { animation: kenburns 22s ease-in-out infinite alternate; }
+@keyframes kenburns {
+  0% { transform: scale(1.05) translateY(0); }
+  100% { transform: scale(1.15) translateY(-2%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ken-burns { animation: none; }
+}
+
+/* Folded <details> chevron rotation. */
+details > summary { list-style: none; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] .chev { transform: rotate(180deg); }
+.chev { transition: transform 0.2s; display: inline-block; }
+
+/* ───────── Legacy hero gradient — kept for surfaces (homepage, lookup)
+   that still reference it. Phase 3 of the redesign will replace these
+   with editorial atmospheric photos. ───────── */
 .hero-gradient {
   position: relative;
   background-image:
     radial-gradient(70% 55% at 15% 0%, rgba(59, 130, 246, 0.12) 0%, transparent 60%),
     radial-gradient(55% 50% at 85% 5%, rgba(16, 185, 129, 0.10) 0%, transparent 60%),
     radial-gradient(45% 45% at 50% 100%, rgba(251, 191, 36, 0.08) 0%, transparent 70%),
-    linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    linear-gradient(180deg, var(--color-paper) 0%, var(--color-paper-elev) 100%);
 }
 @media (prefers-color-scheme: dark) {
   .hero-gradient {
@@ -47,11 +145,9 @@ h1 { letter-spacing: -0.025em; }
       radial-gradient(70% 55% at 15% 0%, rgba(59, 130, 246, 0.18) 0%, transparent 60%),
       radial-gradient(55% 50% at 85% 5%, rgba(16, 185, 129, 0.14) 0%, transparent 60%),
       radial-gradient(45% 45% at 50% 100%, rgba(251, 191, 36, 0.10) 0%, transparent 70%),
-      linear-gradient(180deg, #0b1220 0%, #0a0f1c 100%);
+      linear-gradient(180deg, var(--color-paper) 0%, var(--color-paper-elev) 100%);
   }
 }
-/* Faint dotted-globe decoration drawn behind the hero typography. Uses an
-   inline SVG data URI so there's no asset round-trip. */
 .hero-globe {
   position: absolute;
   top: 50%;
@@ -91,8 +187,7 @@ h1 { letter-spacing: -0.025em; }
 .tabular { font-variant-numeric: tabular-nums; }
 
 /* Editorial body — long-form prose (guides, methodology) reads in Newsreader
-   serif. Headlines retain the display sans via the h1/h2/h3 rule above, so
-   only paragraphs, list items, and inline text pick up the serif. */
+   serif. Headlines retain display sans via the h1/h2/h3 rule above. */
 .editorial-body p,
 .editorial-body li,
 .editorial-body blockquote {
@@ -101,6 +196,17 @@ h1 { letter-spacing: -0.025em; }
   line-height: 1.7;
 }
 .editorial-body p + p { margin-top: 0.9em; }
+
+/* Drop-cap for the first letter of a lede paragraph. */
+.lede::first-letter {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  float: left;
+  font-size: 3.6em;
+  line-height: 0.85;
+  padding: 0.05em 0.1em 0 0;
+  color: var(--color-ink);
+}
 
 /* Reduce motion for users who request it. */
 @media (prefers-reduced-motion: reduce) {
@@ -111,14 +217,13 @@ h1 { letter-spacing: -0.025em; }
 /* Visible focus ring for keyboard navigation. Hidden on pointer focus. */
 :focus { outline: none; }
 :focus-visible {
-  outline: 2px solid #2563eb;
+  outline: 2px solid var(--color-ink);
   outline-offset: 2px;
   border-radius: 4px;
 }
-/* Explicit dark-mode focus colour for contrast on dark surfaces. */
 @media (prefers-color-scheme: dark) {
   :focus-visible {
-    outline-color: #60a5fa;
+    outline-color: var(--color-ink);
   }
 }
 

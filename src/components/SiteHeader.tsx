@@ -1,67 +1,64 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { VisavuLogo } from "./VisavuLogo";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { CurrencySwitcher } from "./CurrencySwitcher";
 
-// SiteHeader is intentionally a pure static server component — no
-// headers()/cookies() reads, no per-request work. That keeps the entire
-// (site) layout cacheable at the CDN edge. Locale + currency state is
-// resolved client-side by the two switchers themselves (URL ?lang= for
-// locale, vl_currency cookie for currency).
+/**
+ * SiteHeader — editorial chrome.
+ *
+ * Slim, paper-backed top bar with a Newsreader-set wordmark.  Replaces the
+ * blue-CTA-prominent header of the pre-redesign era; the editorial frame
+ * leaves CTAs to in-page elements (RefineSearchPanel, billboard) rather
+ * than the chrome.
+ *
+ * Pure static server component — no headers()/cookies(), full edge cache.
+ * Locale + currency state is resolved client-side by the two switchers.
+ */
 export function SiteHeader() {
   return (
-    <header className="border-b border-neutral-200/70 dark:border-neutral-800 sticky top-0 z-30 bg-white/80 dark:bg-neutral-950/80 backdrop-blur">
-      <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
-        <Link href="/" className="text-base">
-          <VisavuLogo size={22} wordmarkClassName="hidden sm:inline" />
+    <header className="border-b border-[var(--color-rule)] sticky top-0 z-30 bg-[var(--color-paper)]/95 backdrop-blur">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+        <Link
+          href="/"
+          className="serif-display text-2xl tracking-tight flex items-baseline gap-0.5 shrink-0"
+          aria-label="Visavu — home"
+        >
+          <span>Visavu</span>
+          <span className="text-[var(--color-accent)]">.</span>
         </Link>
-        <nav className="flex items-center gap-3 text-sm">
-          <Link
-            href="/find-my-visa"
-            className="px-3 py-1.5 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-semibold whitespace-nowrap"
-          >
-            Find my visa
-          </Link>
+        <nav className="flex items-center gap-1 sm:gap-2 text-sm">
           <Link
             href="/finder"
-            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hidden md:inline"
+            className="hidden md:inline px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
           >
             Where can I go?
           </Link>
           <Link
-            href="/passport/us"
-            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hidden lg:inline"
+            href="/guides"
+            className="hidden sm:inline px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
           >
-            By passport
+            Guides
           </Link>
           <Link
-            href="/destination/jp"
-            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hidden sm:inline"
+            href="/services"
+            className="hidden md:inline px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
           >
-            By destination
-          </Link>
-          <Link
-            href="/compare/us/gb"
-            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hidden sm:inline"
-          >
-            Compare
+            Services
           </Link>
           <Link
             href="/passport-rankings"
-            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hidden md:inline"
+            className="hidden lg:inline px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
           >
             Rankings
           </Link>
           <Link
-            href="/about"
-            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hidden sm:inline"
+            href="/find-my-visa"
+            className="ml-1 inline-flex items-center gap-1.5 rounded-full border border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-paper)] px-3.5 py-1.5 text-xs font-semibold hover:opacity-90 transition whitespace-nowrap"
           >
-            How it works
+            Find my visa
           </Link>
           {/* Suspense wraps the switchers because they call useSearchParams()
-              client-side; without a boundary, Next bails out of SSG for
-              every page that mounts this header. */}
+              client-side; without a boundary, Next bails out of SSG. */}
           <Suspense fallback={null}>
             <CurrencySwitcher />
           </Suspense>

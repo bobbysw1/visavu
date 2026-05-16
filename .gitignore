@@ -19,3 +19,4 @@ src/scrapers/sources/__fixtures__/wikipedia_long_tail.json
 # Country hero photos (Pexels) live in public/heroes/. They're tracked in
 # git so Vercel can serve them — ~22 MB total, fine for the repo size.
 # Re-fetch missing ones with: npm run fetch:heroes
+mockups/

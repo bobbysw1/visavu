@@ -115,7 +115,7 @@ export function ResultCard({
   );
 
   return (
-    <article className="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden">
+    <article className="ink-card overflow-hidden">
       {showRealismHeadline && (
         <div
           className={`px-6 py-4 border-b ${
@@ -190,7 +190,7 @@ export function ResultCard({
             {PURPOSE_LABEL[option.purpose]}
           </span>
         </div>
-        <h3 className="text-xl sm:text-2xl font-semibold leading-snug">{option.label}</h3>
+        <h3 className="serif-display text-2xl sm:text-3xl font-medium leading-tight">{option.label}</h3>
       </div>
 
       <div className="px-6 pb-6">
@@ -238,7 +238,7 @@ export function ResultCard({
         <div className="flex flex-wrap gap-2 mb-4">
           {option.applicationUrl && option.programmeStatus !== "paused" && option.programmeStatus !== "wound_down" && (
             <a
-              className="plausible-event-name=ApplyClicked inline-flex items-center px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition"
+              className="plausible-event-name=ApplyClicked inline-flex items-center px-5 py-2.5 rounded-full bg-[var(--color-ink)] hover:opacity-90 text-[var(--color-paper)] text-sm font-semibold transition"
               href={option.applicationUrl}
               target="_blank"
               rel="noreferrer noopener"
@@ -382,7 +382,7 @@ export function ResultCard({
 
             {option.primarySourceUrl && (
               <a
-                className="inline-flex items-center text-blue-700 dark:text-blue-400 underline hover:no-underline"
+                className="inline-flex items-center text-[var(--color-ink)] underline underline-offset-4 hover:no-underline"
                 href={option.primarySourceUrl}
                 target="_blank"
                 rel="noreferrer noopener"
@@ -394,7 +394,7 @@ export function ResultCard({
         </details>
       </div>
 
-      <footer className="px-6 py-3 border-t border-neutral-100 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-950/40 flex flex-wrap items-center justify-between gap-2 text-xs text-neutral-600 dark:text-neutral-400">
+      <footer className="px-6 py-3 border-t border-[var(--color-rule)] bg-[var(--color-muted)]/40 flex flex-wrap items-center justify-between gap-2 text-xs text-[var(--color-ink-muted)]">
         <div className="flex flex-wrap gap-4">
           <span>
             {t("ui.verified", locale)}:{" "}

@@ -66,7 +66,7 @@ const PROGRAMS: WhProgram[] = [
       GB: {
         ageMax: 35,
         notes:
-          "British passport holders can extend the 417 by a SECOND year by completing 88 days of specified work (regional / agricultural / construction / tourism) during the first year — and a THIRD year with 6 months of specified work during the second. Total possible stay: 3 years.",
+          "British passport holders are EXEMPT from the 88-day specified-work requirement under the UK–Australia Free Trade Agreement (in force 1 July 2023). Brits can apply for the second and third Working Holiday visas without completing regional / agricultural / construction / tourism work — other 417 nationalities still must. Total possible stay: 3 years. Age limit is also raised to 35 (vs 30 for most other nationalities).",
       },
     },
   },

@@ -40,6 +40,12 @@ export type SitemapUrl = {
   loc: string;
   changefreq: string;
   priority: string;
+  /** Marker so the chunk handler can fill in a DB-derived per-URL
+   *  lastmod. The shape is `passport:US`, `destination:JP`, or `static`
+   *  — the chunk handler resolves to a real ISO date via the lastmod
+   *  maps from lib/sitemapLastmod.ts, falling back to SITEMAP_LASTMOD
+   *  when no row exists for that bucket. */
+  lastmodKey: "static" | `passport:${string}` | `destination:${string}`;
 };
 
 // Google's hard cap per sitemap is 50,000 URLs / 50 MB. We aim slightly
@@ -97,25 +103,44 @@ export function getAllSitemapUrls(): SitemapUrl[] {
     ["/services/legal-services", "weekly", "0.5"],
   ];
   for (const [path, freq, prio] of staticPages) {
-    urls.push({ loc: `${SITE.url}${path}`, changefreq: freq, priority: prio });
+    urls.push({
+      loc: `${SITE.url}${path}`,
+      changefreq: freq,
+      priority: prio,
+      lastmodKey: "static",
+    });
   }
 
   // 2) Passport / destination index pages — per passport-issuing country.
+  //    Each URL is bucketed under its own ISO so the chunk handler can
+  //    surface the actual MAX(last_verified_at) for that country.
   for (const origin of PASSPORT_COUNTRIES) {
     const lower = origin.iso2.toLowerCase();
     urls.push(
-      { loc: `${SITE.url}/passport/${lower}`, changefreq: "weekly", priority: "0.7" },
-      { loc: `${SITE.url}/destination/${lower}`, changefreq: "weekly", priority: "0.7" },
+      {
+        loc: `${SITE.url}/passport/${lower}`,
+        changefreq: "weekly",
+        priority: "0.7",
+        lastmodKey: `passport:${origin.iso2}`,
+      },
+      {
+        loc: `${SITE.url}/destination/${lower}`,
+        changefreq: "weekly",
+        priority: "0.7",
+        lastmodKey: `destination:${origin.iso2}`,
+      },
     );
   }
 
   // 3) Every passport → destination pair + indexed purpose variants.
-  //    Destination side may be ANY ISO that can be visited (incl. those
-  //    without passport-issuing status — e.g. Antarctica is reachable
-  //    even if AQ-passport isn't a thing).
+  //    Pair URLs use the passport-bucket lastmod (not destination's) —
+  //    the route's primary content is the passport-perspective rules
+  //    for entering the destination, so the passport's verification
+  //    cadence is the right signal for crawl freshness.
   for (const origin of PASSPORT_COUNTRIES) {
     if (!issuesPassport(origin.iso2)) continue;
     const lowerOrigin = origin.iso2.toLowerCase();
+    const passportKey = `passport:${origin.iso2}` as const;
     for (const dest of COUNTRY_LIST) {
       if (dest.iso2 === origin.iso2) continue;
       const lowerDest = dest.iso2.toLowerCase();
@@ -123,12 +148,14 @@ export function getAllSitemapUrls(): SitemapUrl[] {
         loc: `${SITE.url}/${lowerOrigin}/${lowerDest}`,
         changefreq: "weekly",
         priority: "0.6",
+        lastmodKey: passportKey,
       });
       for (const purpose of INDEXED_PURPOSES) {
         urls.push({
           loc: `${SITE.url}/${lowerOrigin}/${lowerDest}/${purpose}`,
           changefreq: "weekly",
           priority: "0.5",
+          lastmodKey: passportKey,
         });
       }
     }
@@ -136,11 +163,13 @@ export function getAllSitemapUrls(): SitemapUrl[] {
 
   // 4) Hand-written non-INDEXED-purpose URLs (transit / family / etc.).
   for (const [lowerOrigin, entries] of HAND_WRITTEN_BY_ORIGIN) {
+    const iso2 = lowerOrigin.toUpperCase();
     for (const { destination, purpose } of entries) {
       urls.push({
         loc: `${SITE.url}/${lowerOrigin}/${destination}/${purpose}`,
         changefreq: "monthly",
         priority: "0.6",
+        lastmodKey: `passport:${iso2}`,
       });
     }
   }

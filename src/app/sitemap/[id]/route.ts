@@ -3,6 +3,10 @@ import {
   getSitemapChunk,
   getSitemapChunkCount,
 } from "@/lib/sitemapUrls";
+import {
+  getLastmodByPassport,
+  getLastmodByDestination,
+} from "@/lib/sitemapLastmod";
 
 // Per-chunk sitemap at /sitemap/[id].xml. Each chunk is a flat slice of
 // the full URL list (see lib/sitemapUrls.ts). With ~236k total URLs and
@@ -38,12 +42,26 @@ export async function GET(
     return new Response("Not found", { status: 404 });
   }
 
-  const lastmod = SITEMAP_LASTMOD;
+  // DB-derived per-bucket lastmods. Each helper returns an empty map on
+  // DB failure (fresh checkout, PGlite not bootstrapped) and the URL
+  // falls back to SITEMAP_LASTMOD — safe degraded behaviour.
+  const [byPassport, byDestination] = await Promise.all([
+    getLastmodByPassport(),
+    getLastmodByDestination(),
+  ]);
+
   const urls = slice
-    .map(
-      (u) =>
-        `<url><loc>${u.loc}</loc><lastmod>${lastmod}</lastmod><changefreq>${u.changefreq}</changefreq><priority>${u.priority}</priority></url>`,
-    )
+    .map((u) => {
+      let lastmod = SITEMAP_LASTMOD;
+      if (u.lastmodKey.startsWith("passport:")) {
+        const iso = u.lastmodKey.slice("passport:".length);
+        lastmod = byPassport[iso] ?? SITEMAP_LASTMOD;
+      } else if (u.lastmodKey.startsWith("destination:")) {
+        const iso = u.lastmodKey.slice("destination:".length);
+        lastmod = byDestination[iso] ?? SITEMAP_LASTMOD;
+      }
+      return `<url><loc>${u.loc}</loc><lastmod>${lastmod}</lastmod><changefreq>${u.changefreq}</changefreq><priority>${u.priority}</priority></url>`;
+    })
     .join("");
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>

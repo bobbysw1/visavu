@@ -7392,6 +7392,410 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
     },
   },
 
+  // ════════════════════════════════════════════════════════════════════
+  // CANADIAN → USA — work (TN under USMCA + H-1B + L-1 + TN-spousal)
+  // ════════════════════════════════════════════════════════════════════
+  "CA:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "TN visa under USMCA — Canadians' best-kept secret",
+        why: "Canadians (and Mexicans) get the TN professional category under USMCA (NAFTA's successor). NO annual cap — uncapped, year-round, no lottery. Apply at the US port-of-entry or pre-flight inspection with a job offer letter, proof of credentials, US$56 fee. Approved same-day in most cases. Massively easier than H-1B for the ~60 designated TN occupations (engineer, scientist, accountant, lawyer, teacher, IT professional). The TN list is the gatekeeper — if your role isn't on it, you're back to H-1B/L-1.",
+      },
+      {
+        label: "H-1B lottery — only if TN doesn't fit your occupation",
+        why: "H-1B has 65,000 annual cap + 20,000 advanced-degree cap. ~470,000 registrations in 2024 lottery = ~14% selection rate. Filing fees: ~US$2,805–$4,055 for employer + $215 USCIS registration. Don't pursue H-1B if your role qualifies for TN — TN is faster, cheaper, no cap, renewable indefinitely in 3-year blocks. H-1B's one advantage: dual-intent (can pursue green card while on H-1B; TN technically does not allow dual intent though USCIS rarely denies on these grounds).",
+      },
+      {
+        label: "L-1 intracompany transfer — if you've worked 1+ year at a Canadian parent/sub",
+        why: "L-1A (executive/manager) or L-1B (specialised knowledge) requires 12 consecutive months in past 3 years at a qualifying Canadian entity that has a US affiliate. L-1A allows up to 7 years; L-1B caps at 5 years. L-1 spouses (L-2) get automatic work authorisation in US — better than TN where spouse (TD) cannot work at all. Critical distinction many Canadian families miss.",
+      },
+      {
+        label: "TN spouse work limit — the dealbreaker for dual-career couples",
+        why: "TN-dependents (TD status) CANNOT work in the US. Period. No exceptions. Canadian families where both partners need US income must use L-1 (L-2 spouse gets EAD) or H-1B (H-4 spouse with EAD if I-140 approved). This is the single biggest reason Canadian families regret the TN route once they arrive.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Visa class chosen + occupational fit", prompt: "TN: 'My role of [Software Engineer / Civil Engineer / Accountant / etc.] is listed in Appendix 2 to Annex 16-A of USMCA. My degree in [field] from [Canadian university] meets the credential requirement.' L-1: explain the qualifying 12-month Canadian employment + US affiliate relationship. H-1B: justify why TN doesn't apply." },
+      { heading: "2. Why this US employer + city", prompt: "Tech roles in SF Bay Area, Seattle, NYC, Austin. Finance in NYC, Chicago. Energy in Houston. Be specific — port-of-entry CBP officers sometimes ask conversational questions to confirm bona fides." },
+      { heading: "3. Family + dependents", prompt: "If TN: acknowledge TD work limitation and explain plan (spouse on separate H-1B / E-2 / their own TN). If L-1: highlight L-2 EAD eligibility. Kids: F-2 / TD / L-2 dependents can attend US public schools without separate visa." },
+      { heading: "4. Long-term plan", prompt: "TN technically doesn't allow dual-intent — present plan that's consistent with non-immigrant intent at port of entry, but understand that pursuing PERM/EB-2/EB-3 green card from TN is common practice. L-1A to EB-1C is the cleanest path (no PERM required). Canadian citizenship is not lost on US naturalisation — dual is permitted by both countries." },
+    ],
+    moneySavingTips: [
+      "Apply for TN at the US port of entry (Pearson, YVR, land border) — no need to file I-129 in advance for first-time TN. Saves the US$460 I-129 filing fee. Bring originals: degree, transcripts, employer letter, CV, fee receipt.",
+      "Don't pay an immigration lawyer to file TN if your case is straightforward — the application is letter + degree + fee at the border. Lawyers charge US$1,500–$3,000 for what is essentially a CBP officer interaction.",
+      "L-1 blanket petition: if your Canadian employer files 10+ L-1s a year, they may have a blanket — you skip individual I-129 filing and just present L-1 petition to CBP. Ask HR.",
+      "Canada-US tax treaty: tie-breaker rules let you avoid double taxation. File CRA NR73 (Determination of Residency Status) before departure to confirm Canadian non-residency. Avoids paying Canadian tax on US income.",
+      "Canadian RRSP can stay invested while you're in the US — Article XVIII of the treaty defers US tax on RRSP earnings. File Form 8891 (now folded into Form 1040 disclosure) annually. Don't withdraw RRSP while in the US — that triggers Canadian withholding tax.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "TN application at the port of entry with a Canadian degree matching a USMCA Appendix occupation",
+        "L-1A executive transfer from a known multinational with established US presence (RBC US, TD Bank, Shopify US, etc.)",
+      ],
+      getALawyer: [
+        "TN occupation that's borderline (e.g. 'Management Consultant' — CBP scrutinises heavily, often refused)",
+        "Self-employed / consulting structures — TN requires a US employer; B2B contracting can fit but needs careful structuring",
+        "Past CBP refusal at the border (TN refusals are not 'visa denials' but expedited removals — lasting 5-year impact)",
+        "Switching from TN to H-1B (dual-intent issue) or pursuing green card while on TN",
+        "Cannabis industry US employment — federally illegal even where state-legal, can trigger lifetime US ban for Canadians",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // NEW ZEALANDER → UK — work (Skilled Worker + Youth Mobility up to 35)
+  // ════════════════════════════════════════════════════════════════════
+  "NZ:GB:work": {
+    whatCarriesWeight: [
+      {
+        label: "Youth Mobility Scheme — uniquely raised to age 35 for Kiwis",
+        why: "From January 2024, the UK raised the YMS age limit for New Zealand citizens to 35 (up from 30), with a 3-year stay limit (up from 2). NZ is one of only TWO countries (with Australia) to get this. £298 fee + £776 IHS-per-year. No employer sponsorship needed. Unrestricted work. The single best route for any Kiwi under 35 — beats Skilled Worker on cost, flexibility, and stress.",
+      },
+      {
+        label: "Skilled Worker — if you're over 35 or want a settlement path",
+        why: "YMS doesn't lead to settlement. Skilled Worker (sponsored, £38,700 minimum salary from April 2024, or £29,000 for Health & Care occupations) does — ILR after 5 years, citizenship year 6. UK skill-shortage list (Immigration Salary List as of April 2024) discounts the threshold by 20% for designated roles (e.g. some healthcare, engineering, fishing-industry roles). Sponsor must hold a Skilled Worker licence.",
+      },
+      {
+        label: "Ancestry visa — the Kiwi cheat code",
+        why: "If you have a UK-born grandparent (any line), the UK Ancestry visa gives you 5 years' unrestricted work in the UK, leading to ILR. £637 fee + IHS. No salary threshold, no sponsorship, no skill restriction. Many Kiwis with British grandparents miss this route entirely and pay for Skilled Worker instead — Ancestry is dramatically cheaper and more flexible.",
+      },
+      {
+        label: "NZ Police certificate + 'right to work' checks",
+        why: "UK requires NZ Police certificate for all visa categories ≥12 months. ~NZ$55, processed in 10 working days via NZ Police website. UK employers must conduct 'right to work' checks via the eVisa share-code system — Kiwis on YMS / Skilled Worker / Ancestry all get share codes through View and Prove. No more BRPs from 2025.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Visa route + why this not the others", prompt: "YMS for the under-35 unrestricted-work flexibility, Ancestry if eligible (cheapest 5-year route), Skilled Worker if sponsored and over 35. Mention if you've checked grandparent UK-birth eligibility — Ancestry is the obvious choice if you have it." },
+      { heading: "2. Why the UK", prompt: "London's finance/tech/biomed sectors, Edinburgh's engineering, the OE tradition (Overseas Experience — kiwis have a cultural expectation of UK working years), proximity to Europe, sterling-vs-NZD currency arbitrage for high-earners. Kiwi-British dual-heritage is common — mention specific family/cultural ties if applicable." },
+      { heading: "3. Family + dependents", prompt: "YMS doesn't allow dependents (children/spouse) on your visa — spouse needs their own YMS / visa. Skilled Worker and Ancestry both allow dependents. Note Kiwi-British dual-citizen kids: no visa needed for the child if they have a British parent (descent)." },
+      { heading: "4. Long-term plan", prompt: "YMS → switch to Skilled Worker before YMS expires (cannot extend YMS). Ancestry → ILR at year 5. Skilled Worker → ILR at year 5. British citizenship at year 6 (year 5 ILR + 1). NZ permits dual citizenship — no need to renounce." },
+    ],
+    moneySavingTips: [
+      "YMS over Skilled Worker (when under 35): YMS total cost for 3 years = £298 + £2,328 IHS = ~£2,600. Skilled Worker 3 years = £719 × 3 + £3,105 IHS + sponsor fees = ~£8,000+. Save £5,000+ if you qualify by age.",
+      "Apply for Ancestry FIRST if you have a UK-born grandparent — don't waste money on YMS or Skilled Worker if you're Ancestry-eligible. Even adopted grandparents qualify if the adoption was UK-legal.",
+      "Open a UK bank account before arrival via Monzo / Starling / Revolut — non-resident-friendly. HSBC NZ has an 'expat' service for UK account opening pre-departure if you prefer high-street.",
+      "NZ-UK Double Tax Agreement: Article 14 (Employment) makes UK PAYE the primary taxing jurisdiction for UK-earned income. If still in NZ tax-resident status during transition, file IR3 with foreign-income credits. Update IRD records to 'non-resident for tax' once UK residency is established (183-day rule).",
+      "KiwiSaver: you cannot continue contributions while UK-resident, but the fund stays invested. Don't cash out for the visa application — it's not required as proof of funds.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "YMS application from an NZ citizen aged 18-35 with no immigration history concerns",
+        "Skilled Worker via a CoS from a major UK employer (banks, NHS Trusts, big-tech UK offices)",
+        "Ancestry visa with clear UK grandparent birth certificate and unbroken paper trail",
+      ],
+      getALawyer: [
+        "Ancestry visa where the grandparent paper trail has gaps (adopted-in / illegitimacy / records lost in WWII)",
+        "Switching from YMS to Skilled Worker mid-stream (CoS timing + IHS reconciliation)",
+        "Past UK refusal or overstay (even a missed flight in your early 20s can resurface)",
+        "Maori cultural-name documents not matching passport (deed-poll or affidavit may be needed)",
+        "Dual NZ-Aus citizenship and the choice of which passport to apply on (Aus YMS terms differ slightly)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // IRISH → UK — work (Common Travel Area — no visa required)
+  // ════════════════════════════════════════════════════════════════════
+  "IE:GB:work": {
+    whatCarriesWeight: [
+      {
+        label: "Common Travel Area — you do NOT need a UK visa",
+        why: "Irish citizens have unrestricted right to live, work, study, vote, and access public services in the UK under the Common Travel Area (CTA), established 1922, reaffirmed post-Brexit via the May 2019 IE-UK Memorandum. You can fly into the UK on your Irish passport, walk through arrivals, take a job the next day. No visa, no sponsorship, no IHS, no fee. Many Irish people waste hundreds of pounds applying for visas they don't need — STOP. You don't need one.",
+      },
+      {
+        label: "Settlement (ILR) is automatic, citizenship is via naturalisation",
+        why: "Irish citizens are 'settled' in the UK from day one (you're not 'subject to immigration control'). British citizenship by naturalisation requires 5 years UK residence + 1 year free of immigration restrictions (which Irish are from arrival) + Life in the UK test + £1,580 fee. Many Irish in the UK already qualify on residence — they just haven't applied. Dual IE/UK citizenship is permitted by both states.",
+      },
+      {
+        label: "Right to work checks — share code NOT needed",
+        why: "UK employers must conduct 'right to work' checks. For Irish: simply showing your Irish passport (or Irish passport card) satisfies the check. UK employers sometimes wrongly ask for an eVisa share code — they don't need one for Irish citizens. The Home Office Code of Practice explicitly lists IE passport as adequate proof. Push back if HR asks for more.",
+      },
+      {
+        label: "NHS, NI number, voting — all open from day one",
+        why: "Irish citizens register for an NI number via the standard process — apply within first weeks of arrival via gov.uk. NHS registration: walk into any GP, fill in GMS1 form, no immigration check. Vote in UK general + local elections — Ireland is one of only TWO countries (with Commonwealth states) whose citizens get UK voting rights. Council tax, child benefit, universal credit (subject to habitual-residence test) — all available.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. (Personal statement is not required for entry)", prompt: "You do NOT need to write a personal statement to move to the UK as an Irish citizen. Skip this entire process. The only paperwork is the standard NI number application + employer's right-to-work check + GP registration." },
+      { heading: "2. If applying for naturalisation later", prompt: "When you apply for British citizenship (Form AN), the application is mostly residential evidence (utility bills, P60s, council tax) + Life in the UK test + good-character declaration. No personal statement. Two referees countersign." },
+      { heading: "3. Family + dependents", prompt: "Your Irish-citizen spouse and children also have CTA rights — no visa needed. NON-Irish family members (e.g. a US citizen spouse) need a separate UK visa (Family route, Skilled Worker, etc.). This is a common miss — Irish person assumes their American spouse 'gets in too' under CTA. They don't." },
+      { heading: "4. Long-term plan", prompt: "Lifetime CTA right means no settlement-clock anxiety. Naturalisation is optional — most Irish in UK never bother because everything (work, NHS, voting, social security) is already accessible. Only naturalise if you want a British passport for non-EU travel convenience or family-line UK citizenship for descendants." },
+    ],
+    moneySavingTips: [
+      "Do not apply for ANY UK visa. £0 immigration cost. The most-undersold migration savings on this site.",
+      "Skip immigration lawyers entirely — there is nothing to lawyer. You may want an accountant for the Ireland-UK tax-residency transition (~€500), and a solicitor for property purchase, but no immigration spend.",
+      "Ireland-UK Double Tax Agreement + Article 4 tie-breaker: file Form P85 with HMRC to confirm UK tax-resident status after arrival. Revenue (Irish tax authority) accepts UK PAYE evidence to clear your Irish tax obligations.",
+      "Bring your Irish PPS number when applying for NI — they speed-issue NI to Irish citizens who can show prior PPS registration. Saves the 4-6 week wait.",
+      "Naturalisation is £1,580 + £80 ceremony fee. Only worth it if you specifically want a British passport. Otherwise Irish passport already gives you EU + UK access — a strictly better combo.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Any Irish citizen moving to the UK to work — this is genuinely a zero-paperwork move",
+        "British naturalisation after 5 years (or 3 years if married to a British citizen) — Form AN is self-fileable",
+      ],
+      getALawyer: [
+        "Non-Irish spouse / partner needs their own visa (Family route etc.) — that path IS lawyered",
+        "Born in Northern Ireland and uncertain if you're Irish, British, or both (Good Friday Agreement birthright)",
+        "Past UK criminal conviction affecting naturalisation good-character test",
+        "Lost / unrecognised Irish citizenship through historical 1956 Act issues (rare, but reach a specialist)",
+        "Dual-tax cases where you keep Irish employment income while UK-resident (split-year / dual-employment)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // AUSTRALIAN → USA — work (E-3 specialty visa — Aussie-only secret)
+  // ════════════════════════════════════════════════════════════════════
+  "AU:US:work": {
+    whatCarriesWeight: [
+      {
+        label: "E-3 specialty-occupation visa — ONLY Australians qualify",
+        why: "Under AUSFTA (Australia-US Free Trade Agreement, in force 2005), Australians have an exclusive visa class no other nationality can use. E-3 has 10,500 visas per year — has NEVER been fully used. 2-year stay, renewable indefinitely, US$315 fee, spouse (E-3D) gets full US work authorisation via EAD. Approval at US embassy in Sydney/Melbourne/Canberra/Perth ~2-4 weeks. Massively easier than H-1B (which has a 14% lottery selection rate). This is the single best US work visa available to anyone.",
+      },
+      {
+        label: "E-3 specialty-occupation definition — what counts",
+        why: "Requires a 'specialty occupation' — meaning at minimum a bachelor's degree (or equivalent experience: 3 years' experience = 1 year of education, per the 'three-for-one' rule) in a field directly related to the role. Tech, engineering, finance, science, medicine, architecture, accounting, law all qualify cleanly. Marketing, sales, general management often face scrutiny. The US Department of Labor Labor Condition Application (LCA) must be filed by employer before the visa interview — ETA-9035 form, ~7 days to certify.",
+      },
+      {
+        label: "E-3 spouse work + kids — best dependent terms in US system",
+        why: "E-3D spouse files I-765 for EAD on arrival — work-permitted in any field, any employer, no restriction. Children (E-3D) attend US public schools without separate visa. This is dramatically better than H-1B (where H-4 spouse only gets EAD if I-140 approved) or TN (where TD spouse cannot work at all). Many Australian families specifically choose E-3 over Canadian-style TN because of this dependent advantage.",
+      },
+      {
+        label: "AFP National Police Check — bring originals",
+        why: "US embassy interview requires AFP (Australian Federal Police) National Police Check + state police certificates if requested for residence 12+ months. AFP is AU$56 online, 5-10 business days, valid 12 months. Schools, employers, immigration all accept the same AFP — single document covers many purposes.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Why E-3 not H-1B / L-1 / O-1", prompt: "E-3 is your default. State the specialty-occupation classification: 'My role as [Software Engineer / Civil Engineer / Senior Accountant] requires a bachelor's in [field] which I hold from [University of Sydney / Melbourne / UNSW etc.]. The role is classified under [ANZSCO / SOC code] which is a recognised specialty occupation under the AUSFTA E-3 visa.' If you're going down O-1 (extraordinary ability) — explain the publications/awards/critical-role evidence." },
+      { heading: "2. Why this US employer + city", prompt: "Mid-Atlantic finance (NYC, Boston), West Coast tech (SF, Seattle), Texas energy (Houston), DC defence/policy. Australian timezone overlaps with US West Coast morning — note if your role requires this overlap." },
+      { heading: "3. Family + work-authorisation plan", prompt: "Spouse files I-765 immediately on arrival for EAD (typically 3-5 month wait; can be expedited if employer-sponsored). State spouse's intended field. Kids: register at local public school district, take I-94 + lease as proof of residence. No SEVIS for E-3D kids." },
+      { heading: "4. Long-term plan", prompt: "E-3 is renewable indefinitely in 2-year blocks — no upper cap on renewals. Green card pathway: PERM → EB-2 / EB-3, typically employer-sponsored. Australia is a 'no-backlog' country for EB-2/3 (unlike India / China) — PERM-to-green-card cleanly in 2-3 years. Australian citizenship is not lost on US naturalisation." },
+    ],
+    moneySavingTips: [
+      "Apply for E-3 from Australia (US embassy interview at Sydney/Melbourne/Canberra/Perth) — DO NOT pursue H-1B unless your role definitely doesn't fit specialty-occupation. H-1B lottery cost: ~US$5,000-15,000 in employer + lawyer fees with 14% selection rate. E-3: US$315 fee, ~95% approval if specialty-occupation cleanly fits.",
+      "Don't pay premium processing for E-3 — there isn't one. Standard processing is already 2-4 weeks from LCA certification to interview slot.",
+      "AU-US tax treaty: Article 4 tie-breaker rules + Article 22 (Relief from Double Taxation). File Form 1116 (Foreign Tax Credit) on US return for any Australian tax paid during transition year. Update your ATO record to non-resident on departure — Aussie super stays invested.",
+      "Australian super: cannot contribute while in US, but stays invested. If you depart Australia permanently, you can claim DASP (Departing Australia Superannuation Payment) — but it's taxed at 38-65%. Most Australians keep super invested and access at preservation age.",
+      "Use a US-Australia cross-border accountant for the first US tax year — ~US$800. They handle the FBAR (foreign bank account report) + Form 8938 (FATCA) for your AU bank/super accounts. Common DIY mistake: missing FBAR triggers up to US$10,000+ civil penalties.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "E-3 application via a US employer with prior E-3 hires (LCA process already familiar)",
+        "Standard E-3 renewal at the US embassy (visa renewal interview every 2 years)",
+      ],
+      getALawyer: [
+        "First-time E-3 sponsor — LCA filing has compliance pitfalls (wage-level determination, posting requirements)",
+        "Borderline specialty-occupation role (Marketing Manager, Project Manager — Consular Officers scrutinise these heavily)",
+        "Switching from E-3 to green card via PERM — employer's PERM advertising compliance is specialist work",
+        "Past US visa refusal (B-1/B-2 denial, prior overstay)",
+        "Australian conviction record (even spent convictions can be relevant to US admissibility under INA 212)",
+        "Dual citizen UK/Australia choosing which passport to apply on — E-3 requires Australian passport at interview",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // BRIT → NEW ZEALAND — work (Accredited Employer Work Visa + Green List)
+  // ════════════════════════════════════════════════════════════════════
+  "GB:NZ:work": {
+    whatCarriesWeight: [
+      {
+        label: "Accredited Employer Work Visa (AEWV) — the main route",
+        why: "From July 2022 NZ consolidated work visas into the AEWV. Three steps: (1) employer must be accredited (Standard accreditation NZ$740, High-Volume NZ$1,980); (2) Job Check confirms market test passed (NZ$735); (3) you apply for the visa (NZ$750). Minimum salary: NZ$31.61/hour (the NZ median wage) as of February 2025, equivalent to NZ$65,750/year for 40-hour week. Below median = refusal. Skill-shortage list (Green List Tier 1/2) waives some requirements.",
+      },
+      {
+        label: "Green List — Straight to Residence vs Work to Residence",
+        why: "If your occupation is on Green List Tier 1 (e.g. registered nurse, civil engineer, medical specialist, software engineer), you get Straight to Residence — apply for permanent residence directly from offshore, no AEWV intermediate step. Tier 2 occupations (e.g. early childhood teachers, registered electricians) get Work to Residence — 2 years on AEWV, then residence. The Green List is the fastest route to NZ permanent residence for Brits in skilled trades and healthcare.",
+      },
+      {
+        label: "Working Holiday Scheme — under-30s alternative",
+        why: "Brits aged 18-30 can apply for a Working Holiday Visa (12 months, extendable to 23 months with 3 months horticulture/viticulture work). NZ$420 fee. No employer sponsorship, no occupation restriction. Quota: unlimited for UK citizens (uncapped). Great for testing NZ before committing to AEWV, but does NOT lead to residence on its own.",
+      },
+      {
+        label: "ACRO + UK criminal record — NZ's character requirement",
+        why: "Immigration NZ requires ACRO Police Certificate (£55, 10 working days) from UK + any country you've lived 12+ months in past 10 years. NZ has stricter character thresholds than Australia: any conviction in past 10 years carrying ≥12 months potential sentence is an automatic character-bar (requires character waiver from INZ). UK 'spent' convictions ARE disclosable on the NZ application — Rehabilitation of Offenders Act doesn't apply.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Visa class + employer accreditation status", prompt: "AEWV: 'I have a job offer from [Employer], INZ-accredited (Standard / High-Volume) since [date]. Job Check approved [date]. Role is [job title], [ANZSCO code], salary NZ$[amount]/year (above median NZ$65,750).' Green List Tier 1: skip AEWV, apply Straight to Residence. WHV: state age + intent to test NZ before longer-term application." },
+      { heading: "2. Why New Zealand", prompt: "Auckland tech/finance, Wellington government/film (Weta), Christchurch engineering/agriculture, Queenstown tourism/hospitality. Note climate / lifestyle factors specifically — INZ wants to see considered choice, not 'NZ seems nice'. Brits often have Commonwealth or family ties (1950s-70s migration generation) — mention if applicable." },
+      { heading: "3. Family + dependents", prompt: "AEWV principals can include partner (work-open visa) + children (student visas for school-age). Partner needs to demonstrate genuine and stable relationship 12+ months (cohabitation evidence). Green List Tier 1 Straight to Residence: dependents included on the same application." },
+      { heading: "4. Long-term plan", prompt: "AEWV: max 5 years (3+2 renewal), then must switch to Residence Visa or leave. Green List Tier 1: residence on grant. Green List Tier 2: 2 years AEWV → Residence. NZ citizenship by naturalisation: 5 years' residence including substantial physical presence. NZ permits dual citizenship — no need to renounce British." },
+    ],
+    moneySavingTips: [
+      "Check Green List FIRST — if your occupation is Tier 1, apply Straight to Residence offshore (NZ$5,810 fee, single application). Saves the AEWV step (NZ$1,485 in employer + your fees) entirely. Many Brits in healthcare/engineering pay for both before realising.",
+      "AEWV employers MUST be accredited before you can apply — confirm employer's INZ accreditation status (Standard vs High-Volume) before signing offer. Non-accredited offer = no visa. Push back firmly.",
+      "WHV is the cheapest test-the-water route: NZ$420 + airfare, 1-2 years, no commitment. Some Brits do WHV → AEWV onshore (cheaper than offshore AEWV because you skip airfare costs of re-entry).",
+      "UK-NZ Double Tax Agreement: file P85 with HMRC + IR330 with IRD on arrival. NZ tax year is April-March (same as UK). NZ has no capital gains tax on most assets (other than NZ residential property held <10 years) — major lifestyle difference for high-earning Brits with investments.",
+      "ACC (NZ's no-fault accident insurance) replaces private medical for accidents — included in your income tax. Don't pay for separate accident-cover insurance.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Green List Tier 1 Straight to Residence with clean criminal + standard UK degree credentials",
+        "AEWV via established NZ employer (Fonterra, Air New Zealand, banks, major hospitals) with accreditation in place",
+        "Working Holiday Visa for under-30 Brits with no immigration concerns",
+      ],
+      getALawyer: [
+        "Borderline-skilled occupation needing a specific assessment via NZQA (New Zealand Qualifications Authority)",
+        "Health practitioners (doctors, nurses) needing dual INZ + Medical Council NZ / NZNC registration alignment",
+        "Past UK conviction (any kind, any age) — NZ character waivers need specialist drafting",
+        "Partner-inclusion where relationship duration is <12 months or evidence is thin",
+        "Switching from WHV to AEWV onshore (job-offer + accreditation timing is delicate)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // BRIT → USA — study (F-1 + OPT + STEM-OPT)
+  // ════════════════════════════════════════════════════════════════════
+  "GB:US:study": {
+    whatCarriesWeight: [
+      {
+        label: "F-1 visa + I-20 + SEVIS — the three documents that matter",
+        why: "Three independent items: (1) Form I-20 issued by your SEVP-certified US school after you've been admitted + paid the deposit; (2) SEVIS I-901 fee US$350 paid online before applying; (3) DS-160 + visa interview at US Embassy London (Mayfair) or Belfast. Standard fee US$185. The I-20 contains your SEVIS ID — bring the original (printed, signed) to the interview. UK applicants typically get appointments within 2-6 weeks; priority slots available for £100 extra.",
+      },
+      {
+        label: "Proof of funds — show 1 year minimum, not just tuition",
+        why: "I-20 itemises tuition + living expenses for one academic year. UK applicants must show liquid funds covering year 1 — typically US$50k-90k for private universities + US$15k-25k living. Statements: 6 months UK bank statements (Barclays / HSBC / Lloyds international statements work fine), parental sponsorship letter + sponsor's bank statements if parents fund, scholarship letter if applicable. Consular officers refuse F-1s where parental funds aren't well-evidenced.",
+      },
+      {
+        label: "OPT + STEM-OPT — the real reason to study STEM in the US",
+        why: "After completing degree, F-1 students get Optional Practical Training (OPT): 12 months of full work authorisation in the US, no employer-sponsorship. STEM-OPT extension: additional 24 months for designated STEM fields (full list at ICE.gov — covers most engineering, CS, hard sciences, applied maths, some business analytics). Total: 36 months post-graduation work. Vast majority of Brits doing US Master's pick STEM-eligible programmes specifically for this. H-1B lottery eligibility starts during OPT.",
+      },
+      {
+        label: "ACRO + no UK criminal records issue",
+        why: "F-1 does NOT require ACRO Police Certificate. The DS-160 has a 'have you ever been arrested or convicted?' question which you must answer honestly — UK 'spent' convictions under the Rehabilitation of Offenders Act ARE disclosable to US authorities (US doesn't recognise UK spent-convictions rules). Cannabis-related convictions, even minor, can trigger waiver requirements — speak to a lawyer before declaring.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Programme + school + non-immigrant intent", prompt: "'I have been accepted to [University] [Programme] starting [date], a [length] degree. The programme aligns with my prior UK academic record at [UK university].' Then critically: 'I intend to return to the UK upon completion to [specific career plan]'. F-1 is a non-immigrant visa — you MUST evidence ties to the UK and intent to return. Even with OPT-intent, the visa interview answer is 'return home'." },
+      { heading: "2. Why this US programme over UK / other", prompt: "Specific programme strengths, faculty, research focus, industry links. Avoid 'America is more prestigious' — state concrete academic reasons. Compare to UK alternative honestly ('UCL has the closest equivalent but lacks the [specific lab / faculty member / industry partnership]')." },
+      { heading: "3. Funding source", prompt: "Personal savings + parental support + scholarship + part-time work (F-1 allows on-campus work 20 hrs/week + CPT during programme). Show I-20-listed costs are fully covered for year 1. Refer to sponsor's letter + bank statements." },
+      { heading: "4. Post-graduation plan", prompt: "OPT + STEM-OPT if applicable (state intended industry). Long-term return to UK: 'I plan to use the post-graduation OPT period to gain US industry experience before returning to the UK [specific employer / industry / location].' Be specific — vague answers raise red flags." },
+    ],
+    moneySavingTips: [
+      "Book DS-160 visa interview at the London or Belfast US Embassy DIRECTLY via ustraveldocs.com — do NOT use third-party visa-services. They charge £100-300 for a 'service' that's literally filling in the same form you'd fill out on the official site.",
+      "Choose STEM-eligible programmes deliberately if you want a 3-year US-work runway — non-STEM Master's get only 12 months OPT, then immediate departure or H-1B lottery (14% odds).",
+      "UK-US tax treaty Article 20A: F-1 students are exempt from US Social Security/Medicare tax (FICA) on on-campus work. Make sure your university payroll office applies the exemption — many don't unless you ask.",
+      "Keep parental support flowing via Wise / Revolut multi-currency rather than wire transfers — saves £20-50 per transfer.",
+      "F-1 students CANNOT claim US tax refund as 'resident alien' for 5 years — file Form 1040-NR (non-resident return). Common DIY mistake: TurboTax pushes you to 1040, IRS later audits and disqualifies F-1.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "F-1 for an admitted student to a major UK-friendly US university (MIT, Stanford, NYU, Columbia, all Ivies, big state schools)",
+        "Standard OPT application (Form I-765, US$520 fee) — university DSO walks you through it",
+      ],
+      getALawyer: [
+        "DS-160 with 'yes' answer to arrest/conviction question — needs proper drafting + supporting evidence",
+        "F-1 from a UK applicant with previous US visa refusal or overstay",
+        "Cannabis-related UK conviction (US federal-illegal status creates lifetime ban risk)",
+        "F-1 to H-1B to green card pathway — start lawyer in OPT year 1, not year 3",
+        "F-1 + dependents (F-2 spouse cannot work in US — plan around this)",
+        "Programme change mid-stream (e.g. transferring from undergrad to graduate without leaving)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // BRIT → CANADA — study (Study Permit + PGWP + Quebec specifics)
+  // ════════════════════════════════════════════════════════════════════
+  "GB:CA:study": {
+    whatCarriesWeight: [
+      {
+        label: "Study Permit + PAL (Provincial Attestation Letter) since 2024",
+        why: "Since January 2024, IRCC requires a Provincial Attestation Letter (PAL) from your destination province alongside your Designated Learning Institution (DLI) acceptance letter and Study Permit application. Quebec uses the Certificat d'acceptation du Québec (CAQ) instead. PAL is issued via the school once your acceptance is confirmed — 2-6 weeks. Without PAL/CAQ, your study permit will be rejected at the visa office. UK applicants apply via the IRCC portal, CA$150 fee. Standard processing: 4-12 weeks.",
+      },
+      {
+        label: "Proof of funds — CA$20,635 living + tuition (raised 2024)",
+        why: "From January 2024, IRCC raised cost-of-living proof from CA$10,000 to CA$20,635 per year (excluding tuition). UK Brits must show full year-1 tuition (CA$25-55k for international students) + CA$20,635 living + travel cost in a GIC (Guaranteed Investment Certificate) with Scotiabank / RBC / CIBC / TD international stream. The GIC is REQUIRED under the Student Direct Stream (SDS, the fast lane) — pay CA$10,000 upfront, drawn down monthly.",
+      },
+      {
+        label: "PGWP — up to 3 years post-graduation work",
+        why: "Post-Graduation Work Permit (PGWP) gives 1, 2, or 3 years of unrestricted work in Canada based on programme length: 8-23 months programme = matching length PGWP; 24+ months = 3 years. Must apply within 180 days of completing programme. From November 2024, PGWP eligibility requires programmes from public DLIs (some private institutions excluded). Critical: PGWP work counts towards Express Entry Canadian Experience Class — primary pathway to Canadian PR for Brits.",
+      },
+      {
+        label: "ACRO + IELTS (sometimes)",
+        why: "Standard route: NO ACRO required (Canada uses self-declaration on the form). SDS route: ACRO Police Certificate required + IELTS Academic 6.0 overall, no band below 6.0 (or TEF for French / Quebec). UK applicants almost universally meet IELTS — most universities accept the IELTS-waiver for UK-secondary-school applicants automatically.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Programme + DLI + PAL/CAQ status", prompt: "'I have been admitted to [University] [Programme], a [length-month] [diploma / bachelor / Master / PhD] starting [intake]. The institution is a Designated Learning Institution (DLI #[number]). My Provincial Attestation Letter from [province] was issued [date].' For Quebec: state CAQ instead." },
+      { heading: "2. Why Canada + this province", prompt: "Specific reasons: programme strengths, faculty research, industry links. For Brits common reasons: lower-than-US tuition for top universities (UofT, McGill, UBC, Waterloo), shared Commonwealth credentials, English-medium (or French in Quebec), PR pathway via PGWP+Express Entry that's vastly faster than US." },
+      { heading: "3. Funding source + financial evidence", prompt: "GIC of CA$10,000+ (SDS route) or full year-1 cost-of-living proof (non-SDS). Tuition paid status. Parental sponsorship letter + sponsor's bank statements if relevant. UK university student finance does NOT cover Canadian tuition — must be self-funded or scholarship." },
+      { heading: "4. Ties to UK + post-graduation plan", prompt: "'My intent is to use the PGWP to gain Canadian work experience post-graduation. I plan to [return to UK / apply for Canadian PR / further studies].' Unlike F-1, Study Permit allows dual intent — explicitly stating PR aspiration is FINE and common. Just be honest." },
+    ],
+    moneySavingTips: [
+      "Apply via Student Direct Stream (SDS) if you qualify (residence in UK + GIC + IELTS 6.0 + DLI acceptance + first-year tuition paid). SDS processes in 20 calendar days — 3-4x faster than standard.",
+      "GIC: choose Scotiabank Student GIC or RBC International Student GIC — same CA$10,000 deposit, monthly disbursement of CA$833 over 12 months. Avoid private GIC intermediaries that charge 3-5% commission.",
+      "UK-Canada tax treaty: international students on Study Permit are typically Canadian tax-resident from arrival. T2202A (tuition tax certificate) generates significant tax credit — carries forward to first working year.",
+      "Provincial healthcare: BC's MSP and Ontario's OHIP have wait periods (3 months in BC, no immediate OHIP for students — must buy UHIP at ~CA$70/month). Quebec includes students in RAMQ. Factor by province.",
+      "Quebec tuition for international undergrads: significantly higher than other provinces (~CA$30k+/year vs ~CA$15-25k average), but McGill / Concordia worth the premium for global brand. Quebec PR pathway via PEQ is stricter than other provinces.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "SDS Study Permit for an admitted Brit to a major Canadian DLI (UofT, UBC, McGill, Waterloo, McMaster)",
+        "PGWP application (online, CA$255 fee) within 180 days of programme completion",
+      ],
+      getALawyer: [
+        "Past Canadian visa refusal — refusal grounds need correction in next application",
+        "Programme transfer between DLIs after permit issued (requires IRCC notification + sometimes new permit)",
+        "Spouse on Open Work Permit alongside your Study Permit — eligibility narrowed in 2024 to graduate programmes + select undergrad",
+        "Dual intent strategy — Study Permit → PGWP → CEC Express Entry is well-trodden but Quebec PEQ path needs Quebec-specialist counsel",
+        "Past UK criminal conviction (Canadian admissibility regime differs from UK — even some 'spent' convictions create inadmissibility)",
+      ],
+    },
+  },
+
+  // ════════════════════════════════════════════════════════════════════
+  // BRIT → AUSTRALIA — study (Subclass 500 + post-study work)
+  // ════════════════════════════════════════════════════════════════════
+  "GB:AU:study": {
+    whatCarriesWeight: [
+      {
+        label: "Subclass 500 Student visa — the only route",
+        why: "Subclass 500 covers all Australian study (school, VET, undergraduate, postgraduate, ELICOS, AusAID/Defence). Single visa class regardless of programme. AUD$1,600 application fee (raised from AUD$710 in July 2024 — a 125% hike specifically targeting student visa misuse). Allows part-time work 48 hours/fortnight while course is in session, unlimited during breaks. Visa duration matches course length + ~2 months buffer. Valid via the ImmiAccount online portal.",
+      },
+      {
+        label: "GTE / GS (Genuine Student) — replaced GTE in 2024",
+        why: "From March 2024, Australia replaced the long-running 'Genuine Temporary Entrant' (GTE) requirement with the new 'Genuine Student' (GS) requirement. GS still asks: why this course, why this provider, why Australia, ties to home country, intent post-study. Less explicit 'temporary' framing but immigration officers still expect plausible non-PR-fishing intent. UK applicants generally clear GS easily — Brits aren't profiled as 'high-risk' under DHA's 'Evidence Level' framework (UK is Evidence Level 1 = lowest scrutiny).",
+      },
+      {
+        label: "Post-study work — Temporary Graduate visa Subclass 485",
+        why: "Subclass 485 post-study work: 2 years (Vocational stream) or 2-4 years (Post-Higher Education Work stream, varies by qualification and regional study location). Open work permission. Cost AUD$2,235. Critical pathway for Brits aiming to use Australian study as PR springboard via Skilled Migration. Regional-Australia graduates get +1 year extra, and additional points for Skilled Migration. Studying in Melbourne / Sydney capped at 2 years; studying in Brisbane / Adelaide / Perth often counts as regional.",
+      },
+      {
+        label: "OSHC + ACRO (not required for Brits)",
+        why: "Overseas Student Health Cover (OSHC) is MANDATORY for Subclass 500 — buy from a registered provider (Bupa / Medibank / Allianz Care / nib / ahm) for the visa length. Cost AUD$540/year single. UK has a reciprocal Medicare agreement, but it doesn't replace OSHC for student visa purposes. ACRO Police Certificate is NOT required for Brits at Evidence Level 1 (Australia's risk-tier system) — saves £55 and processing time.",
+      },
+    ],
+    personalStatementTemplate: [
+      { heading: "1. Programme + CRICOS code + provider", prompt: "'I have been admitted to [University] [Programme], CRICOS Provider Code [code], CRICOS Course Code [code], commencing [date]. The programme is [length-month] [Bachelor / Master / PhD / VET].' CRICOS codes are mandatory — your CoE (Confirmation of Enrolment) document has them." },
+      { heading: "2. Why Australia + this provider (Genuine Student test)", prompt: "Specific programme strengths, faculty, research, industry links. UK applicants common reasons: Group of Eight (Go8) university brand, shorter degrees than UK PhD timelines, lifestyle, Brexit-EU friction made Aus more attractive vs continental Europe. Be specific not generic." },
+      { heading: "3. Funding source", prompt: "Australian DHA expects evidence of AUD$24,505/year living costs (raised May 2024) PLUS tuition (typically AUD$30-55k for international undergrads + AUD$30-50k Master's). Bank statements 28 days minimum, parental sponsorship letter + statements, or scholarship offer." },
+      { heading: "4. Ties to UK + post-study intent", prompt: "Subclass 500 allows GS-passing answers that include post-study Australian work (485) and even eventual PR aspirations — Australia is much more permissive about expressed PR intent than the US F-1. Honest framing: '2 years post-study via Subclass 485, then assess Skilled Migration eligibility' is FINE." },
+    ],
+    moneySavingTips: [
+      "Australia raised Subclass 500 from AUD$710 to AUD$1,600 in July 2024 (a 125% hike). Budget accordingly. The fee is non-refundable on refusal — get the GS / financial evidence right first time.",
+      "Choose 485-eligible programmes deliberately — not all programmes qualify. Bachelor's, Master's (Coursework/Research), Doctorate, and specific VET qualifications listed under CRICOS qualify. Foundation courses + ELICOS DO NOT.",
+      "Regional study (Brisbane, Adelaide, Perth, Hobart, Darwin, Canberra, regional NSW/VIC/QLD) earns +1 year Subclass 485 + extra Skilled Migration points. Major financial advantage for PR-aspirers.",
+      "UK-Aus reciprocal Medicare: get a Medicare card on arrival (free) — covers emergency hospital + GP visits via UK's reciprocal agreement. OSHC still required for visa compliance but works in parallel.",
+      "Tax File Number (TFN): apply via ATO online within first week of arrival (free). Without TFN, employer withholds 47% of casual income. Saves massive cash flow in part-time work earnings.",
+    ],
+    lawyerTriggers: {
+      diy: [
+        "Subclass 500 for an admitted Brit to a Go8 university with clean immigration history and standard parental funding",
+        "Subclass 485 application post-completion (online via ImmiAccount)",
+      ],
+      getALawyer: [
+        "Past Australian visa refusal (s.97 GS refusals stick — need careful re-framing on retry)",
+        "Health condition triggering Health Examination 'significant cost' threshold under PIC 4007 (HIV+, kidney disease, etc. — character/health refusal risk)",
+        "Past UK conviction — Australian Character Test under s.501 is harsh, even spent convictions disclosable",
+        "Programme change mid-stream (course transfer + provider transfer needs section-19A compliance from current provider)",
+        "Dependents (spouse / children under 18) — partner work-rights post-Subclass 500 changed in 2024; needs current-rules check",
+      ],
+    },
+  },
+
 };
 
 export function routeAdviceFor(

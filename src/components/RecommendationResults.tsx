@@ -10,12 +10,28 @@
  * No paragraphs — everything is scannable.
  */
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Compass, Sparkles, Timer, PiggyBank, Home, ArrowRight, CheckCircle2, Scale, Info } from "lucide-react";
 import type { Recommendations, RecommendationItem, AdviceTier } from "@/lib/findMyVisa";
 import { Flag } from "./Flag";
 import { PROFILE_META } from "@/lib/profiles";
 import { GOAL_LABEL } from "@/lib/questionnaire";
 import { routeHref } from "@/lib/routeHref";
+import { formatFeeLocalised } from "@/lib/exchange";
+
+/** Read the user's preferred currency from the vl_currency cookie set by
+ *  CurrencySwitcher. Returns null on the server (pre-hydration) so SSR +
+ *  first-paint render the native currency only — preventing hydration
+ *  mismatch. The bracketed local conversion populates after mount. */
+function useUserCurrency(): string | null {
+  const [code, setCode] = useState<string | null>(null);
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const m = document.cookie.match(/(?:^|;\s*)vl_currency=([A-Z]{3})/);
+    setCode(m ? m[1] : null);
+  }, []);
+  return code;
+}
 
 export function RecommendationResults({
   results,
@@ -28,6 +44,7 @@ export function RecommendationResults({
 }) {
   const { profile, bestPathways, easiestRoutes, fastestRoutes, cheapestRoutes, prOpportunities } = results;
   const profileMeta = PROFILE_META[profile];
+  const userCurrency = useUserCurrency();
 
   if (results.emptyReason) {
     return (
@@ -80,7 +97,7 @@ export function RecommendationResults({
         accent="emerald"
         items={bestPathways}
         passportLower={lower}
-        metric={(r) => formatMetric("score", r)}
+        metric={(r) => formatMetric("score", r, userCurrency)}
       />
 
       <Section
@@ -90,7 +107,7 @@ export function RecommendationResults({
         accent="sky"
         items={easiestRoutes}
         passportLower={lower}
-        metric={(r) => formatMetric("status", r)}
+        metric={(r) => formatMetric("status", r, userCurrency)}
       />
 
       <Section
@@ -100,7 +117,7 @@ export function RecommendationResults({
         accent="blue"
         items={fastestRoutes}
         passportLower={lower}
-        metric={(r) => formatMetric("processing", r)}
+        metric={(r) => formatMetric("processing", r, userCurrency)}
       />
 
       <Section
@@ -110,7 +127,7 @@ export function RecommendationResults({
         accent="violet"
         items={cheapestRoutes}
         passportLower={lower}
-        metric={(r) => formatMetric("fee", r)}
+        metric={(r) => formatMetric("fee", r, userCurrency)}
       />
 
       <Section
@@ -120,7 +137,7 @@ export function RecommendationResults({
         accent="rose"
         items={prOpportunities}
         passportLower={lower}
-        metric={(r) => formatMetric("pr", r)}
+        metric={(r) => formatMetric("pr", r, userCurrency)}
       />
 
       <p className="mt-10 text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
@@ -360,7 +377,11 @@ function AdviceBand({ advice }: { advice: NonNullable<Recommendations["advice"]>
   );
 }
 
-function formatMetric(kind: "score" | "status" | "processing" | "fee" | "pr", r: RecommendationItem): string {
+function formatMetric(
+  kind: "score" | "status" | "processing" | "fee" | "pr",
+  r: RecommendationItem,
+  userCurrency: string | null,
+): string {
   switch (kind) {
     case "score":
       return `Fit ${Math.round(r.score)}/100`;
@@ -370,17 +391,19 @@ function formatMetric(kind: "score" | "status" | "processing" | "fee" | "pr", r:
       if (r.processingTimeDaysMax == null) return "—";
       if (r.processingTimeDaysMax === 0) return "Instant";
       return `≤ ${r.processingTimeDaysMax}d`;
-    case "fee":
+    case "fee": {
       if (r.feeAmountMinor == null) return "Fee-free";
-      try {
-        return new Intl.NumberFormat("en", {
-          style: "currency",
-          currency: r.feeCurrency ?? "USD",
-          maximumFractionDigits: 0,
-        }).format(r.feeAmountMinor / 100);
-      } catch {
-        return `~${Math.round(r.feeAmountMinor / 100)} ${r.feeCurrency ?? ""}`;
+      const sourceCurrency = r.feeCurrency ?? "USD";
+      const localised = formatFeeLocalised(r.feeAmountMinor, sourceCurrency, userCurrency);
+      // Strip the leading "≈ " (formatFeeLocalised prefixes the converted
+      // value with an approximation sign — fine on result-page tables, too
+      // chatty in a compact tile metric).
+      const localTight = localised.local ? localised.local.replace(/^≈\s*/, "") : null;
+      if (localTight && localTight !== localised.native) {
+        return `${localised.native} (${localTight})`;
       }
+      return localised.native;
+    }
     case "pr":
       return r.prYears != null ? `${r.prYears} yr${r.prYears === 1 ? "" : "s"} to PR` : "—";
   }

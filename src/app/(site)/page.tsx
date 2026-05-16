@@ -84,29 +84,44 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ─── TRANSPARENCY POSITIONING ───
-          Editorial lede paragraph with drop-cap — the angle that separates
-          us from the content farms and middlemen. */}
-      <section className="mx-auto max-w-3xl px-4 sm:px-6 py-16 sm:py-20">
-        <p className="kicker mb-4">Why we exist</p>
-        <h2 className="section-h2 mb-6">Transparency over profit.</h2>
-        <div className="space-y-5 text-base sm:text-lg text-[var(--color-ink)]/85 leading-relaxed">
-          <p className="lede">
-            Every other &ldquo;visa&rdquo; result you&apos;ll find on Google charges a service
-            fee — typically £30–£100 — to fill in the same form you can fill in yourself, for
-            free, on the government&apos;s own website. We don&apos;t do that. Every Apply
-            button on this site points straight at the destination&apos;s official government
-            portal. No markup, no service fee, no middleman.
-          </p>
-          <p>
-            We make money from other things — and we&apos;re transparent about those too. See{" "}
-            <Link
-              href="/disclosure"
-              className="underline underline-offset-4 hover:no-underline text-[var(--color-ink)]"
-            >
-              how we keep the lights on
-            </Link>.
-          </p>
+      {/* ─── WHY WE EXIST ───
+          Cleaner two-column editorial — a confident H2 on the left,
+          structured prose on the right. No drop-cap (too newspaper-y).
+          Positions the product as "we cut the noise". */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-20 sm:py-24 border-t border-[var(--color-rule)]">
+        <div className="grid lg:grid-cols-[1fr_2fr] gap-10 lg:gap-16">
+          <div>
+            <p className="kicker mb-4">Why Visavu</p>
+            <h2 className="section-h2 leading-[1.1]">
+              We make visa applications simple<span className="text-[var(--color-accent)]">.</span>
+            </h2>
+          </div>
+          <div className="space-y-5 text-base sm:text-lg text-[var(--color-ink)]/85 leading-relaxed max-w-2xl">
+            <p>
+              Visa applications are noisy. Government portals bury the answer in ten layers of
+              menus. Consultants charge £500 to read the same page back to you. Every forum has
+              a different opinion on what &ldquo;genuine and subsisting relationship&rdquo;
+              actually means.
+            </p>
+            <p>
+              We&apos;ve cut the noise. Every visa route — from a weekend in Albania to a
+              five-year work permit in Zimbabwe — researched, structured, and presented the
+              same way. The fee, the timeline, the document checklist, the personal-statement
+              skeleton, and the lawyer-vs-DIY triage all sit on one page. No middleman, no
+              markup, every Apply button pointed straight at the official source.
+            </p>
+            <p className="serif-display text-xl sm:text-2xl text-[var(--color-ink)] pt-3 border-t border-[var(--color-rule)]">
+              Whichever passport you carry, wherever you&apos;re going — we&apos;ve got you.
+            </p>
+            <p className="text-sm text-[var(--color-ink-muted)] pt-2">
+              <Link
+                href="/disclosure"
+                className="underline underline-offset-4 hover:no-underline text-[var(--color-ink)]"
+              >
+                How we keep the lights on →
+              </Link>
+            </p>
+          </div>
         </div>
       </section>
 

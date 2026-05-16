@@ -51,30 +51,24 @@ function bandFor(status: VisaStatus | null, difficulty: number | null): Band {
   return "green";
 }
 
-/** Big editorial headline that answers the question in one sentence. */
+/** Big editorial headline that answers the question in one sentence.
+ *  Intentionally generic ("You need a visa.") — the specific visa class
+ *  (e-Visa, sponsored work, etc.) is described in the subline + status pill,
+ *  not the H1. The headline is the binary yes/no the user came for. */
 function answerHeadlineFor(
   status: VisaStatus | null,
   optionsCount: number,
-  purpose: Purpose,
 ): string {
   if (optionsCount === 0) return "No route is available right now.";
   switch (status) {
     case "visa_free":
       return "You don't need a visa.";
     case "visa_free_with_eta":
-      return "You need an eTA — but no visa.";
+      return "You don't need a visa — just an eTA.";
     case "visa_on_arrival":
-      return "You get a visa at the border.";
     case "e_visa":
-      return "You need an e-Visa.";
     case "embassy_visa":
-      return purpose === "work"
-        ? "You need a sponsored work visa."
-        : purpose === "study"
-        ? "You need a student visa."
-        : purpose === "family"
-        ? "You need a family / partner visa."
-        : "You need an embassy visa.";
+      return "You need a visa.";
     case "restricted":
       return "Your case is reviewed individually.";
     case "refused":
@@ -169,7 +163,7 @@ export function EditorialBillboard({
   const band = bandFor(status, diff);
   const tone = PILL_TONE[band];
 
-  const answer = answerHeadlineFor(status, options.length, purpose);
+  const answer = answerHeadlineFor(status, options.length);
   const pillLabel = pillLabelFor(status, options.length);
   const subline = primary
     ? buildSubline(primary, purpose)
@@ -271,23 +265,27 @@ function buildSubline(option: ResolvedVisaOption, purpose: Purpose): string {
       ? `${Math.round(option.maxStayDays / 365)} years`
       : `${option.maxStayDays} days`
     : null;
+  const purposeLabel = PURPOSE_LABEL[purpose].toLowerCase();
+  // For visa-required statuses, lead with the "no visa-free option" framing
+  // (the absence is the user's question), then name the visa class.
+  const noVisaFreeFor = `There's no visa-free travel between ${nat} passport holders and ${dest} for ${purposeLabel}.`;
   switch (option.status) {
     case "visa_free":
       return `${nat} citizens get ${stay ?? "short-term"} visa-free entry to ${dest}${
         purpose === "tourism" ? " as Temporary Visitors" : ""
       }. Show your passport on arrival.`;
     case "visa_free_with_eta":
-      return `${nat} citizens travel to ${dest} on a simple electronic travel authorisation (eTA) — apply online before boarding, no embassy interview.`;
+      return `${nat} citizens travel to ${dest} on a simple electronic travel authorisation — apply online before boarding, no embassy interview, decision in minutes.`;
     case "visa_on_arrival":
-      return `${nat} citizens get a visa stamped at the ${dest} border. Bring proof of onward travel and the visa fee.`;
+      return `${noVisaFreeFor} ${nat} travellers get the visa stamped at the ${dest} border on arrival — bring proof of onward travel and the visa fee in cash.`;
     case "e_visa":
-      return `${nat} citizens apply for an e-Visa online before flying. Decision typically arrives by email within days.`;
+      return `${noVisaFreeFor} ${nat} citizens apply for an e-Visa online before flying — decision typically arrives by email within days.`;
     case "embassy_visa":
-      return `${nat} citizens apply at the ${dest} embassy or visa application centre before travelling. Plan ahead — appointments and processing both take time.`;
+      return `${noVisaFreeFor} ${nat} citizens apply at the ${dest} embassy or visa application centre before travelling. Plan ahead — appointments and processing both take time.`;
     case "restricted":
       return `${dest} reviews each ${nat} application on its merits. Outcomes vary — consult a qualified immigration adviser before applying.`;
     case "refused":
-      return `Current ${dest} policy refuses entry from ${nat} passport holders for ${PURPOSE_LABEL[purpose].toLowerCase()}. Limited humanitarian or case-by-case exceptions may apply.`;
+      return `Current ${dest} policy refuses entry from ${nat} passport holders for ${purposeLabel}. Limited humanitarian or case-by-case exceptions may apply.`;
     default:
       return `Visa rules for ${nat} citizens travelling to ${dest}.`;
   }

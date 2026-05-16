@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { RankingsTable } from "@/components/RankingsTable";
-import { PassportCollage } from "@/components/PassportCollage";
+import { PassportCollage, passportCollageCount } from "@/components/PassportCollage";
 import { passportRankings } from "@/lib/coverage";
 import { nameFor } from "@/lib/countries";
 import { getPassportCover, type PassportCover } from "@/lib/passportCovers";
@@ -100,8 +100,8 @@ export default async function PassportRankingsPage() {
             full collage view is duplicated at the bottom for browse-by-photo
             users. */}
         <section className="mb-12">
-          <p className="kicker mb-3">Every passport in one view</p>
-          <PassportCollage caption />
+          <p className="kicker mb-3">{passportCollageCount()} passports we cover</p>
+          <PassportCollage />
         </section>
 
         {/* Scoreboard strip — bottom-of-page-style aggregate stats moved

@@ -6,9 +6,16 @@ import { RouteCard } from "@/components/RouteCard";
 import { AllCountriesGrid } from "@/components/AllCountriesGrid";
 import { ClaudeTipCallout } from "@/components/ClaudeTipCallout";
 import { DestinationTileStrip } from "@/components/DestinationTileStrip";
-import { PassportCollage } from "@/components/PassportCollage";
+import { PassportCollage, passportCollageCount } from "@/components/PassportCollage";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { siteStats } from "@/lib/coverage";
+import { getCountryPhotoSync } from "@/lib/pexels";
+
+// Single editorial hero image — Switzerland's Matterhorn. Picked for the
+// clean snow/sky palette (works well with white overlay text), and so it
+// doesn't clash with the country photos used on /about (Acropolis) or
+// /methodology (Colosseum).
+const HERO_ISO = "CH";
 
 const websiteJsonLd = {
   "@context": "https://schema.org",
@@ -55,49 +62,88 @@ export default async function HomePage() {
       />
 
       {/* ─── EDITORIAL HERO ───
-          Paper-backed billboard with the brand mark + benefit-led H1.
-          Single search input dominates; destination tile strip below it
-          gives the hero its visual weight without committing to a single
-          banner image. Soft gradient blob in the background prevents the
-          paper field from feeling flat. */}
-      <section className="relative overflow-hidden border-b border-[var(--color-rule)]">
-        {/* Decorative gradient blobs — purely visual, behind everything. */}
-        <div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(60% 50% at 15% 20%, rgba(16, 185, 129, 0.10) 0%, transparent 70%), radial-gradient(50% 50% at 85% 30%, rgba(59, 130, 246, 0.10) 0%, transparent 70%), radial-gradient(70% 60% at 50% 100%, rgba(139, 92, 246, 0.08) 0%, transparent 70%)",
-          }}
-        />
-        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
-          <p className="kicker mb-6">
-            Every passport · Every destination · No middleman
-          </p>
-          <h1 className="billboard max-w-4xl mx-auto">
-            Find the right visa for your move abroad
-            <span className="text-[var(--color-accent)]">.</span>
-          </h1>
-          <p className="mt-6 text-lg sm:text-xl text-[var(--color-ink-muted)] max-w-2xl mx-auto leading-relaxed">
-            Visa requirements and relocation roadmaps for every passport — answered
-            in minutes, sourced from official government portals, never a content farm.
-          </p>
+          Full-bleed Matterhorn backdrop with the brand mark + benefit-led
+          H1 overlaid. Dark gradient keeps the white headline readable
+          against any part of the photo. The search input + stats remain
+          inside the hero on a white card so the form keeps its weight.
+          Destination tile strip sits on the paper field below the hero. */}
+      {(() => {
+        const heroPhoto = getCountryPhotoSync(HERO_ISO);
+        return (
+          <section className="relative overflow-hidden border-b border-[var(--color-rule)]">
+            {/* Backdrop photo — full-bleed, eager-loaded for LCP. */}
+            {heroPhoto ? (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={heroPhoto.url}
+                  alt={heroPhoto.alt}
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                {/* Dark gradient — heavier at the top so the kicker /
+                    headline / lead stay legible against any photo, lighter
+                    at the bottom so the search card and stats sit on a
+                    softer field. */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/55 to-black/40" />
+                <a
+                  href={heroPhoto.pexelsUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="absolute top-3 right-3 z-10 text-[10px] uppercase tracking-wider font-semibold text-white bg-black/70 backdrop-blur px-2 py-1 rounded shadow hover:bg-black/85 transition"
+                >
+                  Photo: {heroPhoto.photographer} · Pexels
+                </a>
+              </>
+            ) : (
+              <div
+                aria-hidden
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(60% 50% at 15% 20%, rgba(16, 185, 129, 0.30) 0%, transparent 70%), radial-gradient(50% 50% at 85% 30%, rgba(59, 130, 246, 0.30) 0%, transparent 70%), linear-gradient(180deg, #0f172a, #1e293b)",
+                }}
+              />
+            )}
+            <div className="relative mx-auto max-w-5xl px-4 sm:px-6 pt-20 pb-14 sm:pt-28 sm:pb-20 text-center">
+              <p className="text-[11px] sm:text-xs uppercase tracking-[0.18em] font-semibold text-white/85 mb-6 drop-shadow-sm">
+                Every passport · Every destination · No middleman
+              </p>
+              <h1 className="serif-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-medium leading-[1.05] tracking-tight max-w-4xl mx-auto text-white drop-shadow-sm">
+                Find the right visa for your move abroad
+                <span className="text-[var(--color-accent)]">.</span>
+              </h1>
+              <p className="mt-6 text-lg sm:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed drop-shadow-sm">
+                Visa requirements and relocation roadmaps for every passport —
+                answered in minutes, sourced from official government portals,
+                never a content farm.
+              </p>
 
-          <div className="mt-10">
-            <HeroDestinationSearch />
-          </div>
+              <div className="mt-10">
+                <HeroDestinationSearch />
+              </div>
 
-          <DestinationTileStrip />
-
-          {stats && stats.totalRecords > 0 && (
-            <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-px bg-[var(--color-rule)] border border-[var(--color-rule)] rounded-2xl overflow-hidden max-w-3xl mx-auto">
-              <Stat n={stats.totalRecords} label="verified records" />
-              <Stat n={stats.distinctPassports} label="passports covered" />
-              <Stat n={stats.distinctDestinations} label="destinations covered" />
-              <Stat n={stats.distinctSources} label="primary sources" />
+              {stats && stats.totalRecords > 0 && (
+                <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/20 backdrop-blur ring-1 ring-white/20 rounded-2xl overflow-hidden max-w-3xl mx-auto">
+                  <Stat n={stats.totalRecords} label="verified records" tone="dark" />
+                  <Stat n={stats.distinctPassports} label="passports covered" tone="dark" />
+                  <Stat n={stats.distinctDestinations} label="destinations covered" tone="dark" />
+                  <Stat n={stats.distinctSources} label="primary sources" tone="dark" />
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </section>
+        );
+      })()}
+
+      {/* ─── POPULAR DESTINATIONS STRIP ───
+          Sits on the paper field below the hero so the photo tiles read
+          as discrete browsable shortcuts rather than competing with the
+          backdrop. */}
+      <section className="mx-auto max-w-5xl px-4 sm:px-6 pt-10 sm:pt-12">
+        <DestinationTileStrip />
       </section>
 
       {/* ─── WHY WE EXIST ───
@@ -230,14 +276,19 @@ export default async function HomePage() {
 
       {/* ─── PASSPORT COLLAGE ───
           Dense grid of real passport-cover photos — the signature visual
-          we owe the brand. Every passport in our index, on one screen,
-          each clickable into its dedicated page. Caption explains the
-          Wikimedia Commons source so the CC attribution is visible. */}
+          we owe the brand. Every passport our index currently covers,
+          on one screen, each clickable into its dedicated page. */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
         <div className="flex items-end justify-between mb-6 gap-4 flex-wrap">
           <div>
             <p className="kicker mb-3">By passport</p>
-            <h2 className="section-h2">Every passport in the world.</h2>
+            <h2 className="section-h2">
+              {passportCollageCount()} passports we cover<span className="text-[var(--color-accent)]">.</span>
+            </h2>
+            <p className="text-sm text-[var(--color-ink-muted)] mt-2 max-w-xl">
+              Pick yours to see where you can go and what&apos;s required —
+              coverage expands as we add more passports each week.
+            </p>
           </div>
           <Link
             href="/passport-rankings"
@@ -246,7 +297,7 @@ export default async function HomePage() {
             See the full rankings →
           </Link>
         </div>
-        <PassportCollage caption />
+        <PassportCollage />
       </section>
 
       {/* ─── VALUE PROPS ───
@@ -285,7 +336,8 @@ export default async function HomePage() {
         <p className="kicker mb-3">By passport</p>
         <h2 className="section-h2 mb-2">Browse by nationality.</h2>
         <p className="text-[var(--color-ink-muted)] mb-6 max-w-xl">
-          Every passport in the world. Pick yours to see where you can go and what&apos;s required.
+          Pick your passport to see where you can go and what&apos;s required —
+          coverage expands as we add more passports each week.
         </p>
         <AllCountriesGrid mode="passport" />
       </section>
@@ -312,7 +364,30 @@ function VisaTypeCard({ title, body }: { title: string; body: string }) {
   );
 }
 
-function Stat({ n, label }: { n: number; label: string }) {
+function Stat({
+  n,
+  label,
+  tone = "paper",
+}: {
+  n: number;
+  label: string;
+  /** "paper" renders dark text on the elevated paper surface (default).
+   *  "dark" renders white text on a translucent dark surface — used in
+   *  the photo-backdrop hero where the stats sit over a dark gradient. */
+  tone?: "paper" | "dark";
+}) {
+  if (tone === "dark") {
+    return (
+      <div className="bg-black/30 backdrop-blur p-4 sm:p-5">
+        <p className="serif-display text-3xl sm:text-4xl font-medium tabular text-white drop-shadow-sm">
+          {new Intl.NumberFormat("en").format(n)}
+        </p>
+        <p className="text-[11px] uppercase tracking-[0.18em] font-semibold text-white/85 mt-1">
+          {label}
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="bg-[var(--color-paper-elev)] p-4 sm:p-5">
       <p className="serif-display text-3xl sm:text-4xl font-medium tabular text-[var(--color-ink)]">

@@ -29,6 +29,7 @@ export const usGoldCardAdapter: Adapter = {
     defaultIntervalMs: 30 * 24 * 60 * 60 * 1000,
     primaryUrls: [SOURCE_URL],
     fixturePath: "src/scrapers/sources/__fixtures__/us_gold_card.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

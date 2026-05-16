@@ -263,6 +263,7 @@ export const globalTalentVisasAdapter: Adapter = {
     defaultIntervalMs: 30 * 24 * 60 * 60 * 1000,
     primaryUrls: PROGRAMS.map((p) => p.primarySourceUrl),
     fixturePath: "src/scrapers/sources/__fixtures__/global_talent_visas.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

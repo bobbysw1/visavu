@@ -33,6 +33,7 @@ export const topDestinationGapsAdapter: Adapter = {
       "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa.html",
     ],
     fixturePath: "src/scrapers/sources/__fixtures__/top_destination_gaps.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

@@ -31,6 +31,7 @@ export const thailandSuiteAdapter: Adapter = {
     defaultIntervalMs: 30 * 24 * 60 * 60 * 1000,
     primaryUrls: [MFA_VISA_PORTAL, IMMIGRATION_BUREAU, SMART_VISA_URL, DTV_URL],
     fixturePath: "src/scrapers/sources/__fixtures__/thailand_suite.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

@@ -23,6 +23,7 @@ export const vietnamSuiteAdapter: Adapter = {
     defaultIntervalMs: 30 * 24 * 60 * 60 * 1000,
     primaryUrls: [EVISA_URL, POLICE_URL],
     fixturePath: "src/scrapers/sources/__fixtures__/vietnam_suite.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

@@ -670,6 +670,7 @@ export const workingHolidayAdapter: Adapter = {
     defaultIntervalMs: 30 * 24 * 60 * 60 * 1000,
     primaryUrls: PROGRAMS.map((p) => p.primarySourceUrl),
     fixturePath: "src/scrapers/sources/__fixtures__/working_holiday.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

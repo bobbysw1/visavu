@@ -46,6 +46,7 @@ export const totalCoverageCheapPrAdapter: Adapter = {
       "https://www.gob.ec/ministerios/ministerio-del-interior",
     ],
     fixturePath: "src/scrapers/sources/__fixtures__/total_coverage_cheap_pr.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

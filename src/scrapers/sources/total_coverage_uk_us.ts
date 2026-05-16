@@ -73,6 +73,7 @@ export const totalCoverageUkUsAdapter: Adapter = {
       "https://www.gov.uk/marriage-visa",
     ],
     fixturePath: "src/scrapers/sources/__fixtures__/total_coverage_uk_us.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

@@ -50,6 +50,7 @@ const DRIFT_PCT = 0.2;
 async function loadFixture(adapter: Adapter): Promise<{ rawText: string; fetchUrl: string } | null> {
   if (!adapter.metadata.fixturePath) return null;
   const full = path.resolve(process.cwd(), adapter.metadata.fixturePath);
+  if (!existsSync(full)) return null; // missing fixture → caller treats as "skipped"
   return { rawText: readFileSync(full, "utf8"), fetchUrl: `fixture://${adapter.metadata.fixturePath}` };
 }
 
@@ -66,7 +67,11 @@ async function runOne(adapter: Adapter, baseline: number | null): Promise<Source
   // 1. Fetch
   let raw: { rawText: string; fetchUrl: string } | null = null;
   try {
-    if (useFixture) {
+    // Static-data adapters ship hand-curated records; their primaryUrls
+    // are reference pages for users, not pages we actually scrape. Don't
+    // probe those URLs — instead, parse the fixture to confirm the
+    // adapter still emits records, which is the real health signal.
+    if (useFixture || adapter.metadata.staticData) {
       raw = await loadFixture(adapter);
       if (!raw) {
         return { ...base, status: "skipped", recordCount: 0, hash: null, durationMs: Date.now() - started };

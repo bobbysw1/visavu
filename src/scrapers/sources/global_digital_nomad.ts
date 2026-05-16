@@ -444,6 +444,7 @@ export const globalDigitalNomadAdapter: Adapter = {
     defaultIntervalMs: 30 * 24 * 60 * 60 * 1000,
     primaryUrls: PROGRAMS.map((p) => p.primarySourceUrl),
     fixturePath: "src/scrapers/sources/__fixtures__/global_digital_nomad.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

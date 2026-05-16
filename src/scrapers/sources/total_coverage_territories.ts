@@ -121,6 +121,7 @@ export const totalCoverageTerritoriesAdapter: Adapter = {
     defaultIntervalMs: 90 * 24 * 60 * 60 * 1000,
     primaryUrls: TERRITORIES.map((t) => t.applicationUrl),
     fixturePath: "src/scrapers/sources/__fixtures__/total_coverage_territories.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

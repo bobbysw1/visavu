@@ -47,6 +47,7 @@ export const japanSpecialVisasAdapter: Adapter = {
     defaultIntervalMs: 30 * 24 * 60 * 60 * 1000,
     primaryUrls: [J_SKIP_URL, J_FIND_URL, DIGITAL_NOMAD_URL],
     fixturePath: "src/scrapers/sources/__fixtures__/jp_special_visas.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

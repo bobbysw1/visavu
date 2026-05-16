@@ -44,6 +44,7 @@ export const totalCoverageAsiaAdapter: Adapter = {
       "https://www.mom.gov.sg/passes-and-permits/s-pass",
     ],
     fixturePath: "src/scrapers/sources/__fixtures__/total_coverage_asia.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

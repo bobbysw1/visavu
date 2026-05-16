@@ -48,6 +48,7 @@ export const wikipediaLongTailAdapter: Adapter = {
     defaultIntervalMs: 30 * 24 * 60 * 60 * 1000,
     primaryUrls: ["https://en.wikipedia.org/wiki/Category:Visa_requirements_by_nationality"],
     fixturePath: FIXTURE_PATH,
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

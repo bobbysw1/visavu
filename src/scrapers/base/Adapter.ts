@@ -81,6 +81,13 @@ export type AdapterMetadata = {
   // bootstrap/CI/dev when ctx.useFixture is set. Lets us seed the DB without
   // network access and lets tests stay deterministic.
   fixturePath?: string;
+  // True for adapters whose records are hand-curated or fixture-derived
+  // rather than live-scraped. `primaryUrls` on these adapters point at
+  // reference / official pages users can verify against, NOT pages the
+  // adapter actually fetches. The nightly health-checker uses this flag
+  // to skip the live URL probe — without it, every URL change on a gov
+  // reference page lights up as a false-positive failure.
+  staticData?: boolean;
 };
 
 export interface Adapter {

@@ -656,6 +656,7 @@ export const totalCoverageBusinessAdapter: Adapter = {
     defaultIntervalMs: 30 * 24 * 60 * 60 * 1000,
     primaryUrls: [...SHORT_TERM, ...ESTABLISHMENT].map((v) => v.primarySourceUrl),
     fixturePath: "src/scrapers/sources/__fixtures__/total_coverage_business.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

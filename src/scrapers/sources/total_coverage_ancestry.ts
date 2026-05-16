@@ -46,6 +46,7 @@ export const totalCoverageAncestryAdapter: Adapter = {
       "https://migracija.lrv.lt/en/",
     ],
     fixturePath: "src/scrapers/sources/__fixtures__/total_coverage_ancestry.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

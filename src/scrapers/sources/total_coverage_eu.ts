@@ -47,6 +47,7 @@ export const totalCoverageEuAdapter: Adapter = {
       "https://www.iefp.pt/en/tech-visa",
     ],
     fixturePath: "src/scrapers/sources/__fixtures__/total_coverage_eu.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

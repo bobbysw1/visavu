@@ -787,6 +787,7 @@ export const totalCoverageStudyAdapter: Adapter = {
     defaultIntervalMs: 30 * 24 * 60 * 60 * 1000,
     primaryUrls: STUDY_VISAS.map((v) => v.primarySourceUrl),
     fixturePath: "src/scrapers/sources/__fixtures__/total_coverage_study.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

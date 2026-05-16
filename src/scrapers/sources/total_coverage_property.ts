@@ -38,6 +38,7 @@ export const totalCoveragePropertyAdapter: Adapter = {
       "https://extranjeros.inclusion.gob.es/es/InformacionInteres/InformacionProcedimientos/Visadosresidenciainversionistas/",
     ],
     fixturePath: "src/scrapers/sources/__fixtures__/total_coverage_property.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

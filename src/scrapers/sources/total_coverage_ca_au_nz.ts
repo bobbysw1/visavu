@@ -51,6 +51,7 @@ export const totalCoverageCaAuNzAdapter: Adapter = {
       "https://www.immigration.govt.nz/new-zealand-visas/apply-for-a-visa/about-visa/partner-of-a-new-zealander-resident-visa",
     ],
     fixturePath: "src/scrapers/sources/__fixtures__/total_coverage_ca_au_nz.json",
+    staticData: true,
   },
 
   async fetch(_ctx: FetchContext) {

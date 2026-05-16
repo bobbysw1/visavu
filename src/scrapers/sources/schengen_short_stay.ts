@@ -26,10 +26,14 @@ import { COUNTRY_LIST } from "@/lib/countries";
 const SOURCE_URL =
   "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A02018R1806-20240520";
 
-// Schengen member states (as of 2025). Croatia joined 2023-01-01;
+// Schengen member states (as of 2026). Croatia joined 2023-01-01;
 // Romania + Bulgaria gained full land-border membership 2025-01-01.
+// CYPRUS IS NOT in Schengen as of 2026 — it joined the EU in 2004 but
+// still issues its own national short-stay visa, not the uniform-format
+// Schengen visa. Including CY here was a long-standing data bug
+// emitting incorrect Schengen records for the entire Cyprus column.
 const SCHENGEN_STATES: string[] = [
-  "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR",
+  "AT", "BE", "BG", "HR", "CZ", "DK", "EE", "FI", "FR",
   "DE", "GR", "HU", "IS", "IT", "LV", "LI", "LT", "LU", "MT",
   "NL", "NO", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "CH",
 ];

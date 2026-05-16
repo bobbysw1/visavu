@@ -34,6 +34,27 @@ const E2_TREATY_COUNTRIES = new Set([
   "YE",
 ]);
 
+// TN (USMCA Professional): only Canadians + Mexicans are eligible.
+// Source: https://travel.state.gov/content/travel/en/us-visas/employment/visas-canadian-mexican-nafta-professional-workers.html
+const TN_NATIONALITIES = new Set(["CA", "MX"]);
+
+// H-1B1 (US-Chile + US-Singapore FTA set-asides). 1,400 visas/year for CL,
+// 5,400/year for SG, separate from the H-1B 65k cap. No lottery.
+// Source: https://travel.state.gov/content/travel/en/us-visas/employment/temporary-worker-visas.html
+const H1B1_NATIONALITIES = new Set(["CL", "SG"]);
+
+// UK Ancestry visa: Commonwealth citizens (plus British Overseas Citizens
+// and British subjects) with a UK-born grandparent qualify. 5-year work
+// visa leading to ILR. £637 fee, no employer sponsorship needed.
+// Source: https://www.gov.uk/ancestry-visa
+const UK_ANCESTRY_NATIONALITIES = new Set([
+  "AG", "AU", "BS", "BD", "BB", "BZ", "BW", "BN", "CA", "CY", "DM", "FJ",
+  "GD", "GY", "IN", "JM", "KE", "KI", "LS", "MW", "MY", "MV", "MT", "MU",
+  "MZ", "NA", "NR", "NZ", "NG", "PK", "PG", "RW", "WS", "SC", "SL", "SG",
+  "SB", "ZA", "LK", "KN", "LC", "VC", "SZ", "TZ", "TO", "TT", "TV", "UG",
+  "VU", "ZM",
+]);
+
 export const totalCoverageUkUsAdapter: Adapter = {
   metadata: {
     id: "total_coverage_uk_us",
@@ -370,6 +391,180 @@ export const totalCoverageUkUsAdapter: Adapter = {
             { kind: "base", amountMinor: 13800, currency: "GBP", asOf: "2026-05-11", label: "Marriage Visitor visa fee", optional: false },
           ],
           notes: "Strictly for getting married / forming a civil partnership in the UK and then LEAVING. Cannot be switched to Spouse Visa from inside the UK — you must depart and apply via the Spouse route from your home country.",
+        });
+      }
+
+      // ---------- US E-3 Specialty Occupation (AU only — AUSFTA) ----------
+      if (passport === "AU") {
+        records.push({
+          passportIso2: passport,
+          destinationIso2: "US",
+          purpose: "work",
+          status: "embassy_visa",
+          label: "E-3 Specialty Occupation — United States (Australians only)",
+          maxStayDays: 730,
+          validityDays: 730,
+          entriesAllowed: "multiple",
+          passportValidityMonthsRequired: 6,
+          onwardTicketRequired: false,
+          proofOfFundsRequired: false,
+          proofOfAccommodationRequired: false,
+          biometricsRequired: true,
+          biometricsLocation: "US embassy / consulate (Sydney, Melbourne, Perth, Canberra)",
+          requirements: [
+            "Australian citizen at the time of application (dual citizens must apply on the AU passport)",
+            "Job offer in a 'specialty occupation' — minimum bachelor's degree (or equivalent experience: 3 years = 1 year of education under the 'three-for-one' rule) directly relevant to the role",
+            "Employer files a Labor Condition Application (LCA / ETA-9035) with the US Department of Labor (~7 days)",
+            "Bring LCA, employer letter, degree + transcripts, and CV to the consulate interview",
+            "No annual cap pressure — 10,500 visas reserved per year, almost never fully used",
+            "Renewable indefinitely in 2-year increments",
+            "Spouse (E-3D) gets unrestricted EAD on arrival — files I-765 to USCIS",
+          ],
+          processingTimeDaysMin: 14,
+          processingTimeDaysMax: 30,
+          applicationUrl: "https://travel.state.gov/content/travel/en/us-visas/employment/specialty-occupations-e3.html",
+          primarySourceUrl: "https://travel.state.gov/content/travel/en/us-visas/employment/specialty-occupations-e3.html",
+          fees: [
+            { kind: "base", amountMinor: 31500, currency: "USD", asOf: "2026-05-11", label: "DS-160 + MRV fee", optional: false },
+          ],
+          notes:
+            "AUSTRALIAN-ONLY VISA under the Australia-US Free Trade Agreement (in force 2005). Dramatically easier than H-1B (no lottery, no cap pressure, no employer petition required — just LCA + consulate interview) and better dependent terms than TN. Most Australians moving to the US for work should default to E-3, not H-1B.",
+        });
+      }
+
+      // ---------- US TN — USMCA Professional (CA + MX only) ----------
+      if (TN_NATIONALITIES.has(passport)) {
+        const isCanadian = passport === "CA";
+        records.push({
+          passportIso2: passport,
+          destinationIso2: "US",
+          purpose: "work",
+          status: "embassy_visa",
+          label: isCanadian
+            ? "TN visa — United States (Canadian USMCA Professional)"
+            : "TN visa — United States (Mexican USMCA Professional)",
+          maxStayDays: 1095,
+          validityDays: 1095,
+          entriesAllowed: "multiple",
+          passportValidityMonthsRequired: 6,
+          onwardTicketRequired: false,
+          proofOfFundsRequired: false,
+          proofOfAccommodationRequired: false,
+          biometricsRequired: !isCanadian,
+          biometricsLocation: isCanadian ? null : "US embassy / consulate in Mexico",
+          requirements: [
+            isCanadian
+              ? "Canadian citizen at the time of application"
+              : "Mexican citizen at the time of application",
+            "Job offer in one of the ~60 USMCA Appendix 2 occupations (engineer, scientist, accountant, lawyer, teacher, IT specialist, etc.)",
+            "Bachelor's degree or equivalent professional credential matching the occupation",
+            "Employer letter confirming role, salary, length of employment, and TN occupation classification",
+            isCanadian
+              ? "Apply at US port-of-entry (Pearson, YVR, land border) or via I-129 in advance — no petition required for first-time TN at the border"
+              : "Apply at US embassy / consulate in Mexico for TN visa stamp before travel",
+            "Renewable indefinitely in 3-year increments — no statutory limit",
+            "Spouse (TD) CAN attend US public schools but CANNOT work — major dealbreaker for dual-career couples (use L-1 or H-1B if spouse work required)",
+          ],
+          processingTimeDaysMin: isCanadian ? 0 : 14,
+          processingTimeDaysMax: isCanadian ? 1 : 30,
+          applicationUrl: "https://travel.state.gov/content/travel/en/us-visas/employment/visas-canadian-mexican-nafta-professional-workers.html",
+          primarySourceUrl: "https://travel.state.gov/content/travel/en/us-visas/employment/visas-canadian-mexican-nafta-professional-workers.html",
+          fees: isCanadian
+            ? [
+                { kind: "base", amountMinor: 5600, currency: "USD", asOf: "2026-05-11", label: "CBP port-of-entry filing fee", optional: false },
+              ]
+            : [
+                { kind: "base", amountMinor: 18500, currency: "USD", asOf: "2026-05-11", label: "DS-160 + MRV fee", optional: false },
+              ],
+          notes:
+            "USMCA (NAFTA's successor) TN category. Canadians: apply at the US port of entry, no I-129 petition needed, decision in minutes. Mexicans: must apply at a US consulate in Mexico for the TN visa stamp first. No annual cap, no lottery. Dual-intent is technically NOT permitted (unlike H-1B) but pursuing PERM-based green card from TN is common.",
+        });
+      }
+
+      // ---------- US H-1B1 — FTA set-aside (Chile + Singapore only) ----------
+      if (H1B1_NATIONALITIES.has(passport)) {
+        const annualCap = passport === "CL" ? "1,400" : "5,400";
+        records.push({
+          passportIso2: passport,
+          destinationIso2: "US",
+          purpose: "work",
+          status: "embassy_visa",
+          label:
+            passport === "CL"
+              ? "H-1B1 — United States (Chilean FTA set-aside, 1,400/year)"
+              : "H-1B1 — United States (Singaporean FTA set-aside, 5,400/year)",
+          maxStayDays: 540,
+          validityDays: 540,
+          entriesAllowed: "multiple",
+          passportValidityMonthsRequired: 6,
+          onwardTicketRequired: false,
+          proofOfFundsRequired: false,
+          proofOfAccommodationRequired: false,
+          biometricsRequired: true,
+          biometricsLocation: "US embassy / consulate",
+          requirements: [
+            passport === "CL"
+              ? "Chilean citizen at the time of application"
+              : "Singaporean citizen at the time of application",
+            "Job offer in a US 'specialty occupation' — minimum bachelor's degree or equivalent in a field directly related to the role",
+            "Employer files a Labor Condition Application (LCA / ETA-9035) — same as regular H-1B",
+            `Annual cap of ${annualCap} visas set aside under the US-${passport === "CL" ? "Chile" : "Singapore"} Free Trade Agreement — separate from the H-1B 65,000 cap`,
+            "No lottery — first-come, first-served against the FTA quota (which is rarely filled)",
+            "18-month grants, renewable indefinitely",
+            "Spouse and children get H-4 status (H-4 EAD available if principal has approved I-140)",
+          ],
+          processingTimeDaysMin: 21,
+          processingTimeDaysMax: 60,
+          applicationUrl: "https://travel.state.gov/content/travel/en/us-visas/employment/temporary-worker-visas.html",
+          primarySourceUrl: "https://travel.state.gov/content/travel/en/us-visas/employment/temporary-worker-visas.html",
+          fees: [
+            { kind: "base", amountMinor: 19000, currency: "USD", asOf: "2026-05-11", label: "DS-160 + MRV fee", optional: false },
+          ],
+          notes:
+            passport === "CL"
+              ? "CHILEAN-ONLY VISA under the US-Chile FTA (in force 2004). Bypasses the H-1B 65k lottery entirely — 1,400 visas/year set aside, rarely filled. Apply directly at the consulate."
+              : "SINGAPOREAN-ONLY VISA under the US-Singapore FTA (in force 2004). Bypasses the H-1B 65k lottery — 5,400 visas/year set aside, rarely filled. Apply directly at the consulate.",
+        });
+      }
+
+      // ---------- UK Ancestry visa (Commonwealth + UK-born grandparent) ----------
+      if (UK_ANCESTRY_NATIONALITIES.has(passport)) {
+        records.push({
+          passportIso2: passport,
+          destinationIso2: "GB",
+          purpose: "work",
+          status: "embassy_visa",
+          label: "UK Ancestry visa (Commonwealth + UK-born grandparent)",
+          maxStayDays: 1825,
+          validityDays: 1825,
+          entriesAllowed: "multiple",
+          passportValidityMonthsRequired: 6,
+          onwardTicketRequired: false,
+          proofOfFundsRequired: true,
+          proofOfAccommodationRequired: false,
+          biometricsRequired: true,
+          biometricsLocation: "UK Visa Application Centre (TLScontact / VFS) in country of residence",
+          requirements: [
+            "Commonwealth citizen at the time of application (also open to British Overseas Citizens and British subjects)",
+            "At least one grandparent born in the UK, Channel Islands, or Isle of Man — OR before 1922 anywhere in the Republic of Ireland",
+            "Aged 17 or over",
+            "Able and intending to work in the UK (no minimum salary, no employer sponsorship, any job)",
+            "Original grandparent birth certificate(s) showing UK birthplace",
+            "Your own birth certificate, your parent's birth certificate, marriage certificates linking the line",
+            "Proof you can support yourself and any dependants without UK public funds",
+            "Tuberculosis test if you're applying from a listed country",
+            "Sufficient funds for the application + IHS up-front (~£3,500 over 5 years)",
+          ],
+          processingTimeDaysMin: 14,
+          processingTimeDaysMax: 21,
+          applicationUrl: "https://www.gov.uk/ancestry-visa",
+          primarySourceUrl: "https://www.gov.uk/ancestry-visa",
+          fees: [
+            { kind: "base", amountMinor: 63700, currency: "GBP", asOf: "2026-05-11", label: "Ancestry visa application fee", optional: false },
+            { kind: "service", amountMinor: 517500, currency: "GBP", asOf: "2026-05-11", label: "Immigration Health Surcharge (£1,035/year × 5)", optional: false },
+          ],
+          notes:
+            "COMMONWEALTH GRANDPARENT ROUTE. 5-year unrestricted work in the UK leading to Indefinite Leave to Remain at year 5. Vastly cheaper and more flexible than Skilled Worker — no employer sponsorship, no salary floor, you can switch jobs / freelance / be self-employed. Many Australians, Canadians, New Zealanders, South Africans, Indians and Nigerians with a UK-born grandparent miss this entirely and pay 4× more for Skilled Worker. Check the line carefully — adopted grandparents qualify if the adoption was UK-legal; step-grandparents do NOT.",
         });
       }
     }

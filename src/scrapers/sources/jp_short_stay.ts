@@ -30,6 +30,8 @@ const VISA_EXEMPT_DAYS: Record<string, number> = {
   // Shorter stays
   ID: 30, // Indonesia (e-visa-exemption registration required)
   TH: 30,
+  AE: 30, // UAE — bilateral visa-exemption agreement, in force since 2017
+  QA: 30, // Qatar — bilateral visa-exemption agreement, in force since 2022
   BN: 14,
 };
 

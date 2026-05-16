@@ -22,11 +22,14 @@ const CA_ETA_NATIONALITIES: string[] = [
   "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR",
   "HU", "IS", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "NL", "NO", "PL",
   "PT", "RO", "SK", "SI", "ES", "SE", "CH",
-  // Visa-exempt outside EU
+  // Visa-exempt outside EU (PT already listed in EU block above — duplicate
+  // removed). MX: as of 29 February 2024 IRCC reinstated visa requirements
+  // for most Mexican nationals; only Mexicans with a valid US non-immigrant
+  // visa or prior Canadian visa in the past 10 years remain eTA-eligible.
+  // We keep MX in the default-eligible list — the conditional caveat is
+  // surfaced in the record's `notes` field below.
   "AD", "AU", "BS", "BB", "BR", "BN", "CL", "GB", "HK", "IL", "JP", "KR",
-  "MX", "MC", "NZ", "PA", "PT", "SM", "SG", "VA", "TW", "AE",
-  // Conditionally visa-exempt (some Romanians, Bulgarians, Mexicans need visas
-  // depending on history — encoded above as default eligible).
+  "MX", "MC", "NZ", "PA", "SM", "SG", "VA", "TW", "AE",
 ];
 
 export const canadaEtaAdapter: Adapter = {
@@ -87,7 +90,9 @@ export const canadaEtaAdapter: Adapter = {
             { kind: "base", amountMinor: 7_00, currency: "CAD", asOf: today, label: "Canada eTA fee" },
           ],
           notes:
-            "The eTA is required for visa-exempt nationals flying to or transiting through Canada. It is not required for US citizens (visa-free without eTA) or for travel by land or sea (where it does not apply). Most decisions return within minutes.",
+            passport === "MX"
+              ? "MEXICAN CITIZENS: as of 29 February 2024 IRCC reinstated visa requirements for Mexicans. You only qualify for eTA if you hold a valid US non-immigrant visa OR have been issued a Canadian visa in the past 10 years AND are travelling by air. Otherwise you need a regular visitor visa. Verify your eligibility before booking — the IRCC online wizard confirms which stream applies."
+              : "The eTA is required for visa-exempt nationals flying to or transiting through Canada. It is not required for US citizens (visa-free without eTA) or for travel by land or sea (where it does not apply). Most decisions return within minutes.",
         });
       }
     }

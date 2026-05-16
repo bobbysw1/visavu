@@ -26,186 +26,263 @@ const HEROES_DIR = path.resolve(process.cwd(), "public/heroes");
 const MANIFEST_PATH = path.resolve(HEROES_DIR, "manifest.json");
 const FORCE = process.argv.includes("--force");
 
-// Same overrides as src/lib/pexels.ts, kept here so the script doesn't
-// depend on the runtime module. Plain country-name searches are noisy;
-// these hand-picked phrases surface the most recognisable visual.
+/**
+ * Curated landmark queries — each country mapped to its single most-iconic
+ * visual landmark per the editorial brief. These take precedence over the
+ * generic "landmark <Country>" fallback in queryFor() below. Each entry
+ * was hand-picked to feel like a postcard, not a random Google Image result.
+ *
+ * Format: short query (2-4 words) that returns a recognisable, well-shot
+ * Pexels result. Avoid full sentences — Pexels indexes keywords.
+ *
+ * Re-run `PEXELS_API_KEY=... npm run fetch:heroes -- --force` after editing
+ * this map to regenerate the matching JPEGs in public/heroes/.
+ */
 const QUERY_OVERRIDES: Record<string, string> = {
-  US: "new york skyline blue sky",
-  GB: "london sunny day tower bridge",
-  FR: "paris eiffel tower sunny",
-  IT: "rome colosseum sunny day",
-  ES: "barcelona park guell sunny",
-  DE: "berlin brandenburg gate sunny",
-  JP: "tokyo cherry blossom skyline",
-  CN: "great wall of china sunny",
-  IN: "taj mahal blue sky",
-  AU: "sydney opera house harbour sunny",
-  CA: "vancouver mountains sunny",
-  BR: "rio de janeiro christ redeemer sunny",
-  AE: "dubai skyline",
-  TH: "thailand temple",
-  SG: "singapore skyline",
-  KR: "seoul cityscape",
-  RU: "moscow red square",
-  MX: "mexico city architecture",
-  AR: "patagonia landscape",
-  ZA: "cape town table mountain",
-  EG: "pyramids of giza",
-  GR: "santorini greece",
-  TR: "istanbul",
-  NL: "amsterdam canals",
-  CH: "swiss alps",
-  NO: "norwegian fjord",
-  IS: "iceland landscape",
-  NZ: "new zealand landscape",
-  PT: "portugal coast",
-  IE: "ireland coast",
-  MA: "morocco marrakech",
-  PE: "machu picchu",
-  KE: "kenya safari",
-  TZ: "serengeti",
-  ID: "bali landscape",
-  VN: "vietnam landscape",
-  MY: "kuala lumpur skyline",
-  PH: "philippines beach",
-  CU: "havana cuba",
-  CO: "colombia mountains",
-  CL: "chile patagonia",
-  CR: "costa rica jungle",
-  EC: "ecuador andes",
-  BO: "bolivia salt flats",
-  UY: "uruguay coast",
-  VE: "venezuela mountains",
-  PA: "panama city",
-  GT: "guatemala temple",
-  DO: "dominican republic beach",
-  JM: "jamaica beach",
-  TT: "trinidad caribbean",
-  BS: "bahamas beach",
-  HT: "haiti landscape",
-  NG: "lagos nigeria",
-  GH: "ghana coast",
-  SN: "senegal landscape",
-  CI: "ivory coast landscape",
-  ET: "ethiopia mountains",
-  UG: "uganda landscape",
-  RW: "rwanda landscape",
-  ZW: "zimbabwe victoria falls",
-  ZM: "zambia victoria falls",
-  BW: "botswana savanna",
-  NA: "namibia desert",
-  MG: "madagascar landscape",
-  MU: "mauritius beach",
-  SC: "seychelles beach",
-  IL: "jerusalem",
-  JO: "petra jordan",
-  LB: "beirut lebanon",
-  SY: "damascus syria",
-  IQ: "iraq landscape",
-  IR: "iran isfahan",
-  SA: "saudi arabia desert",
-  QA: "doha qatar",
-  KW: "kuwait city",
-  OM: "oman mountains",
-  YE: "yemen architecture",
-  AF: "afghanistan mountains",
-  PK: "pakistan mountains",
-  BD: "bangladesh river",
-  NP: "nepal himalaya",
-  BT: "bhutan monastery",
-  MV: "maldives beach",
-  LK: "sri lanka beach",
-  MM: "myanmar temple",
-  KH: "cambodia angkor wat",
-  LA: "laos temple",
-  MN: "mongolia steppe",
-  KZ: "kazakhstan steppe",
-  UZ: "uzbekistan samarkand",
-  KG: "kyrgyzstan mountains",
-  TJ: "tajikistan mountains",
-  TM: "turkmenistan desert",
-  AZ: "baku azerbaijan",
-  GE: "tbilisi georgia",
-  AM: "armenia mountains",
-  UA: "kyiv ukraine",
-  BY: "minsk belarus",
-  MD: "moldova landscape",
-  PL: "krakow poland",
-  CZ: "prague czech",
-  SK: "slovakia mountains",
-  HU: "budapest hungary",
-  RO: "romania transylvania",
-  BG: "sofia bulgaria",
-  RS: "belgrade serbia",
-  HR: "croatia coast",
-  SI: "slovenia lake",
-  BA: "sarajevo bosnia",
-  ME: "montenegro coast",
-  AL: "albania coast",
-  MK: "macedonia lake",
-  XK: "kosovo landscape",
-  CY: "cyprus coast",
-  MT: "malta coast",
-  AT: "vienna austria",
-  BE: "brussels belgium",
-  LU: "luxembourg castle",
-  DK: "copenhagen denmark",
-  SE: "stockholm sweden",
-  FI: "finland lake",
-  EE: "tallinn estonia",
-  LV: "riga latvia",
-  LT: "vilnius lithuania",
-  MZ: "mozambique beach",
-  AO: "angola landscape",
-  TD: "chad landscape",
-  ML: "mali landscape",
-  NE: "niger landscape",
-  BF: "burkina faso landscape",
-  SD: "sudan landscape",
-  SS: "south sudan landscape",
-  ER: "eritrea landscape",
-  SO: "somalia coast",
-  DJ: "djibouti landscape",
-  LR: "liberia coast",
-  SL: "sierra leone coast",
-  GN: "guinea landscape",
-  GM: "gambia coast",
-  GW: "guinea bissau landscape",
-  CV: "cape verde beach",
-  ST: "sao tome beach",
-  GQ: "equatorial guinea jungle",
-  GA: "gabon jungle",
-  CG: "congo river",
-  CD: "drc jungle",
-  CM: "cameroon landscape",
-  CF: "central african republic landscape",
-  BJ: "benin landscape",
-  TG: "togo landscape",
-  LY: "libya desert",
-  TN: "tunisia coast",
-  DZ: "algeria desert",
-  EH: "western sahara desert",
-  KM: "comoros beach",
-  SZ: "eswatini landscape",
-  LS: "lesotho mountains",
-  MW: "malawi lake",
-  BI: "burundi lake",
-  PG: "papua new guinea jungle",
-  FJ: "fiji beach",
-  SB: "solomon islands beach",
-  VU: "vanuatu beach",
-  WS: "samoa beach",
-  TO: "tonga beach",
-  KI: "kiribati beach",
-  TV: "tuvalu beach",
-  NR: "nauru beach",
-  MH: "marshall islands beach",
-  FM: "micronesia beach",
-  PW: "palau beach",
-  CK: "cook islands beach",
-  NU: "niue beach",
-  // catch-alls for the remaining countries are handled by the default
-  // "<name> landscape" search at runtime.
+  // A
+  AF: "Bamiyan Buddha Afghanistan",
+  AL: "Berat castle Albania",
+  DZ: "Casbah Algiers Algeria",
+  AD: "Casa de la Vall Andorra",
+  AO: "Fortress São Miguel Luanda",
+  AG: "Nelson's Dockyard Antigua",
+  AR: "Iguazu Falls Argentina",
+  AM: "Mount Ararat Armenia",
+  AU: "Sydney Opera House",
+  AT: "Schönbrunn Palace Vienna",
+  AZ: "Flame Towers Baku",
+
+  // B
+  BS: "Pink Sands Bahamas beach",
+  BH: "Bahrain Fort Qal'at al-Bahrain",
+  BD: "Ahsan Manzil Dhaka",
+  BB: "Bridgetown Garrison Barbados",
+  BY: "Mir Castle Belarus",
+  BE: "Grand Place Brussels",
+  BZ: "Great Blue Hole Belize",
+  BJ: "Royal Palaces Abomey Benin",
+  BT: "Tiger's Nest Monastery Bhutan",
+  BO: "Salar de Uyuni Bolivia",
+  BA: "Stari Most Mostar bridge",
+  BW: "Okavango Delta Botswana",
+  BR: "Christ the Redeemer Rio",
+  BN: "Sultan Omar Ali Saifuddien Mosque",
+  BG: "Rila Monastery Bulgaria",
+  BF: "Ruins of Loropéni",
+  BI: "Lake Tanganyika shore",
+
+  // C
+  CV: "Cidade Velha Cape Verde",
+  KH: "Angkor Wat Cambodia",
+  CM: "Mount Cameroon",
+  CA: "CN Tower Toronto",
+  CF: "Manovo Gounda St Floris",
+  TD: "Zakouma National Park Chad",
+  CL: "Easter Island Moai",
+  CN: "Great Wall of China",
+  CO: "Salt Cathedral Zipaquirá Colombia",
+  KM: "Mount Karthala Comoros",
+  CG: "Odzala Kokoua National Park",
+  CD: "Virunga National Park gorillas",
+  CR: "Arenal Volcano Costa Rica",
+  HR: "Dubrovnik old town Croatia",
+  CU: "Old Havana Habana Vieja",
+  CY: "Tombs of the Kings Paphos",
+  CZ: "Charles Bridge Prague",
+
+  // D
+  DK: "Little Mermaid Copenhagen",
+  DJ: "Lake Assal Djibouti",
+  DM: "Boiling Lake Dominica",
+  DO: "Colonial Zone Santo Domingo",
+
+  // E
+  EC: "Galápagos Islands Ecuador",
+  EG: "Pyramids of Giza Sphinx",
+  SV: "Santa Ana Volcano El Salvador",
+  GQ: "Pico Basilé Equatorial Guinea",
+  ER: "Asmara Eritrea Art Deco",
+  EE: "Tallinn old town Estonia",
+  SZ: "Mlilwane Eswatini wildlife",
+  ET: "Rock Hewn Churches Lalibela",
+
+  // F
+  FJ: "Sigatoka sand dunes Fiji",
+  FI: "Suomenlinna Fortress Helsinki",
+  FR: "Eiffel Tower Paris",
+
+  // G
+  GA: "Loango National Park Gabon",
+  GM: "Senegambia stone circles",
+  GE: "Gergeti Trinity Church Georgia",
+  DE: "Brandenburg Gate Berlin",
+  GH: "Cape Coast Castle Ghana",
+  GR: "Acropolis Parthenon Athens",
+  GD: "Underwater sculpture park Grenada",
+  GT: "Tikal Mayan ruins Guatemala",
+  GN: "Mount Nimba Guinea",
+  GW: "Bijagós Archipelago Guinea Bissau",
+  GY: "Kaieteur Falls Guyana",
+
+  // H
+  HT: "Citadelle Laferrière Haiti",
+  HN: "Copán ruins Honduras",
+  HU: "Parliament Building Budapest",
+
+  // I
+  IS: "Blue Lagoon Iceland",
+  IN: "Taj Mahal Agra",
+  ID: "Borobudur Temple Indonesia",
+  IR: "Persepolis Iran ruins",
+  IQ: "Ziggurat of Ur Iraq",
+  IE: "Cliffs of Moher Ireland",
+  IL: "Western Wall Jerusalem",
+  IT: "Colosseum Rome",
+  CI: "Basilica Yamoussoukro Ivory Coast",
+
+  // J
+  JM: "Dunn's River Falls Jamaica",
+  JP: "Mount Fuji Japan",
+  JO: "Petra Jordan",
+
+  // K
+  KZ: "Bayterek Tower Astana",
+  KE: "Maasai Mara Kenya",
+  KI: "Phoenix Islands Kiribati",
+  XK: "Visoki Dečani Monastery Kosovo",
+  KW: "Kuwait Towers",
+  KG: "Issyk Kul Lake Kyrgyzstan",
+
+  // L
+  LA: "Luang Prabang Wat Xieng Thong",
+  LV: "Riga old town Latvia",
+  LB: "Baalbek ruins Lebanon",
+  LS: "Maletsunyane Falls Lesotho",
+  LR: "Sapo National Park Liberia",
+  LY: "Leptis Magna Roman ruins",
+  LI: "Vaduz Castle Liechtenstein",
+  LT: "Hill of Crosses Lithuania",
+  LU: "Luxembourg City fortifications",
+
+  // M
+  MG: "Avenue of the Baobabs Madagascar",
+  MW: "Lake Malawi",
+  MY: "Petronas Twin Towers Kuala Lumpur",
+  MV: "Maldives coral atoll beach",
+  ML: "Great Mosque of Djenné",
+  MT: "Valletta Malta",
+  MH: "Bikini Atoll Marshall Islands",
+  MR: "Banc d'Arguin Mauritania",
+  MU: "Le Morne Brabant Mauritius",
+  MX: "Chichen Itza Mexico pyramid",
+  FM: "Nan Madol Micronesia",
+  MD: "Cricova Winery Moldova",
+  MC: "Monte Carlo Casino Monaco",
+  MN: "Genghis Khan statue Mongolia",
+  ME: "Bay of Kotor Montenegro",
+  MA: "Medina of Marrakech Morocco",
+  MZ: "Island of Mozambique",
+  MM: "Shwedagon Pagoda Myanmar",
+
+  // N
+  NA: "Sossusvlei dunes Namibia",
+  NR: "Anibare Bay Nauru",
+  NP: "Mount Everest Nepal",
+  NL: "Amsterdam canal ring",
+  NZ: "Milford Sound Fiordland New Zealand",
+  NI: "Granada colonial city Nicaragua",
+  NE: "Aïr and Ténéré Niger",
+  NG: "Zuma Rock Nigeria",
+  KP: "Juche Tower Pyongyang",
+  MK: "Ohrid Lake North Macedonia",
+  NO: "Geiranger Fjord Norway",
+
+  // O
+  OM: "Sultan Qaboos Grand Mosque Oman",
+
+  // P
+  PK: "Badshahi Mosque Lahore",
+  PW: "Rock Islands Palau",
+  PS: "Dome of the Rock Jerusalem",
+  PA: "Panama Canal",
+  PG: "Kokoda Track Papua New Guinea",
+  PY: "Itaipu Dam Paraguay",
+  PE: "Machu Picchu Peru",
+  PH: "Chocolate Hills Bohol Philippines",
+  PL: "Wawel Castle Krakow",
+  PT: "Belém Tower Lisbon",
+
+  // Q
+  QA: "Museum of Islamic Art Doha",
+
+  // R
+  RO: "Bran Castle Romania Dracula",
+  RU: "Red Square St Basil's Moscow",
+  RW: "Volcanoes National Park gorillas Rwanda",
+
+  // S
+  KN: "Brimstone Hill Fortress Saint Kitts",
+  LC: "Pitons Saint Lucia",
+  VC: "La Soufrière volcano Saint Vincent",
+  WS: "To Sua Ocean Trench Samoa",
+  SM: "Guaita Tower Mount Titano San Marino",
+  ST: "Pico Cão Grande São Tomé",
+  SA: "Great Mosque Mecca Kaaba",
+  SN: "Lac Rose Pink Lake Senegal",
+  RS: "Belgrade Fortress Serbia",
+  SC: "Anse Source d'Argent Seychelles",
+  SL: "Tacugama Chimpanzee Sanctuary",
+  SG: "Marina Bay Sands Singapore",
+  SK: "Bratislava Castle Slovakia",
+  SI: "Lake Bled Slovenia",
+  SB: "Marovo Lagoon Solomon Islands",
+  SO: "Laas Geel cave paintings Somalia",
+  ZA: "Table Mountain Cape Town",
+  KR: "Gyeongbokgung Palace Seoul",
+  SS: "Boma National Park South Sudan",
+  ES: "Sagrada Família Barcelona",
+  LK: "Sigiriya rock fortress Sri Lanka",
+  SD: "Pyramids of Meroë Sudan",
+  SR: "Central Suriname Nature Reserve",
+  SE: "Gamla Stan Stockholm",
+  CH: "Matterhorn Switzerland",
+  SY: "Krak des Chevaliers Syria",
+
+  // T
+  TW: "Taipei 101 Taiwan",
+  TJ: "Pamir Mountains Tajikistan",
+  TZ: "Mount Kilimanjaro Tanzania",
+  TH: "Grand Palace Wat Arun Bangkok",
+  TL: "Cristo Rei Dili Timor Leste",
+  TG: "Koutammakou landscape Togo",
+  TO: "Haʻamonga a Maui trilithon Tonga",
+  TT: "Pitch Lake Trinidad",
+  TN: "El Djem Amphitheatre Tunisia",
+  TR: "Hagia Sophia Istanbul",
+  TM: "Darvaza gas crater Turkmenistan",
+  TV: "Funafuti Atoll Tuvalu",
+
+  // U
+  UG: "Bwindi Impenetrable Forest gorillas Uganda",
+  UA: "St Sophia's Cathedral Kyiv",
+  AE: "Burj Khalifa Dubai",
+  GB: "Big Ben London",
+  US: "Statue of Liberty New York",
+  UY: "Colonia del Sacramento Uruguay",
+  UZ: "Registan Square Samarkand",
+
+  // V
+  VU: "Mount Yasur volcano Vanuatu",
+  VA: "St Peter's Basilica Vatican",
+  VE: "Angel Falls Venezuela",
+  VN: "Ha Long Bay Vietnam",
+
+  // Y
+  YE: "Old Sana'a Yemen",
+
+  // Z
+  ZM: "Victoria Falls Zambia",
+  ZW: "Great Zimbabwe Ruins",
 };
 
 type PexelsPhoto = {
@@ -231,21 +308,15 @@ type Manifest = Record<
 >;
 
 function queryFor(iso2: string): string {
-  // Simple, predictable query format. "Landmark <Country>" returns the
-  // most recognisable visual icon for each country (Eiffel Tower for FR,
-  // Sydney Opera House for AU, Big Ben for GB) without our editorial
-  // overrides nudging Pexels toward niche shots.
-  //
-  // Compound country names ("United Kingdom", "United States") work fine
-  // — Pexels does keyword-rather-than-phrase matching on these queries.
+  // Curated landmark query takes precedence — the QUERY_OVERRIDES map is
+  // the editorial source of truth ("Sydney Opera House" for AU, "Petra
+  // Jordan" for JO, etc.). Falls back to "landmark <Country>" for any
+  // ISO2 not in the curated list (small territories, micro-states).
+  const override = QUERY_OVERRIDES[iso2.toUpperCase()];
+  if (override) return override;
   const name = nameFor(iso2);
   return `landmark ${name}`;
 }
-
-// Kept for reference / fallback only — not currently consulted. If
-// "landmark X" returns no usable photos for a small country, you can
-// re-enable the lookup below by chaining `QUERY_OVERRIDES[iso2] ?? `.
-void QUERY_OVERRIDES;
 
 function loadManifest(): Manifest {
   if (!existsSync(MANIFEST_PATH)) return {};

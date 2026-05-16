@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { COUNTRY_LIST, flagEmoji, nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
+import { routeHref } from "@/lib/routeHref";
 import {
   findDestinations,
   type FinderGoal,
@@ -261,7 +262,7 @@ function ResultsBlock({
         {results.map((r) => (
           <li key={r.optionId}>
             <Link
-              href={`/${passport.toLowerCase()}/${r.destinationIso2.toLowerCase()}?purpose=${r.purpose}`}
+              href={routeHref(passport, r.destinationIso2, r.purpose)}
               className="block rounded-lg border border-neutral-200 dark:border-neutral-800 p-4 hover:border-blue-400 dark:hover:border-blue-600 hover:shadow-sm transition"
             >
               <div className="flex flex-wrap items-baseline justify-between gap-2 mb-1">

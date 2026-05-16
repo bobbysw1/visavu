@@ -25,6 +25,7 @@ import { BUCKET_PALETTE, BUCKET_LABEL } from "@/lib/difficulty";
 import { metricsFor, ENGLISH_BAND_LABEL } from "@/lib/countryMetrics";
 import { Flag } from "./Flag";
 import { nameFor } from "@/lib/countries";
+import { routeHref } from "@/lib/routeHref";
 
 export type EligibilityEntry = {
   /** Visa-status string from the resolver, kept loosely typed since not
@@ -180,14 +181,9 @@ export function WorldMap({
               const tone = entry ? (STATUS_TONE[entry.status ?? ""] ?? NEUTRAL_TONE) : NEUTRAL_TONE;
               const isHovered = hovered?.iso2 === c.iso2;
               const isSelf = passportIso2 && c.iso2 === passportIso2.toUpperCase();
-              const link =
-                passportIso2 && entry
-                  ? `/${passportIso2.toLowerCase()}/${c.iso2.toLowerCase()}${
-                      entry.purpose ? `?purpose=${entry.purpose}` : ""
-                    }`
-                  : passportIso2
-                  ? `/${passportIso2.toLowerCase()}/${c.iso2.toLowerCase()}`
-                  : `/destination/${c.iso2.toLowerCase()}`;
+              const link = passportIso2
+                ? routeHref(passportIso2, c.iso2, entry?.purpose)
+                : `/destination/${c.iso2.toLowerCase()}`;
               return (
                 <Link key={c.iso2} href={link} prefetch={false} aria-label={c.name}>
                   <path
@@ -255,9 +251,7 @@ function Popover({
   };
 
   const link = passportIso2
-    ? `/${passportIso2.toLowerCase()}/${country.iso2.toLowerCase()}${
-        entry?.purpose ? `?purpose=${entry.purpose}` : ""
-      }`
+    ? routeHref(passportIso2, country.iso2, entry?.purpose)
     : `/destination/${country.iso2.toLowerCase()}`;
 
   return (

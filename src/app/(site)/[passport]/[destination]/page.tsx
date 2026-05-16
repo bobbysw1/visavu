@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import Link from "next/link";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { AlternativesPanel } from "@/components/AlternativesPanel";
@@ -106,6 +107,19 @@ function purposeFrom(s: string | undefined): Purpose {
   return s && isValidPurpose(s) ? s : "tourism";
 }
 
+/**
+ * React-cache'd wrapper around resolveRoute so both generateMetadata and
+ * the page component can call it with the same inputs without paying
+ * the DB cost twice. Cache scope is a single request/render.
+ */
+const cachedResolveRoute = cache(async (p: string, d: string, purpose: Purpose) => {
+  try {
+    return await resolveRoute({ passportIso2: p, destinationIso2: d, purpose });
+  } catch {
+    return null;
+  }
+});
+
 // Title patterns vary by purpose so we capture the long-tail SEO terms users
 // actually search for. "X to Y visa requirements" works for tourism, but for
 // work/study/family people search "X to Y work visa", "Y student visa from X",
@@ -161,9 +175,22 @@ export async function generateMetadata({
       : `/${p.toLowerCase()}/${d.toLowerCase()}/${purpose}`,
   );
 
+  // Thin-page detection — when the resolver returns zero options, the
+  // page renders a boilerplate "no data yet" fallback. Telling Google to
+  // skip indexing these is the right move: a large index of thin pages
+  // hurts overall site quality signals (Google's been demoting these in
+  // "Crawled — currently not indexed"). When the resolver throws or is
+  // unreachable, we default to letting indexing through — better safe.
+  const route = await cachedResolveRoute(p, d, purpose);
+  const hasContent = !route || route.primary.length > 0;
+  const robotsMeta = hasContent
+    ? undefined
+    : { index: false as const, follow: true as const };
+
   return {
     title,
     description,
+    ...(robotsMeta ? { robots: robotsMeta } : {}),
     alternates: {
       canonical,
       types: {
@@ -402,7 +429,10 @@ export default async function Page({
   let baselineTourismStatus: Awaited<ReturnType<typeof resolveRoute>>["baselineTourismStatus"] = null;
   let resolverError: string | null = null;
   try {
-    const route = await resolveRoute({ passportIso2: p, destinationIso2: d, purpose });
+    // Reuse the cached resolver call from generateMetadata so we don't
+    // pay the DB cost twice on a single render.
+    const route = await cachedResolveRoute(p, d, purpose);
+    if (!route) throw new Error("resolver unavailable");
     options = route.primary;
     alternatives = route.alternatives;
     baselineTourismStatus = route.baselineTourismStatus;

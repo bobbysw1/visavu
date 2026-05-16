@@ -20,6 +20,7 @@ import {
 } from "@/lib/difficulty";
 import { flagEmoji, nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
+import { routeHref } from "@/lib/routeHref";
 
 export type HeatMapTile = {
   iso2: string;
@@ -149,7 +150,7 @@ export function DifficultyHeatMapView({
                   return (
                     <Link
                       key={code}
-                      href={`/${passportIso2.toLowerCase()}/${code.toLowerCase()}?purpose=${purpose}`}
+                      href={routeHref(passportIso2, code, purpose)}
                       prefetch={false}
                       title={
                         data

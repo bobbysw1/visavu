@@ -8,6 +8,7 @@ import Link from "next/link";
 import type { ResolvedRoute } from "@/lib/resolver";
 import { PURPOSE_LABEL } from "@/lib/types";
 import { assessDifficulty } from "@/lib/difficulty";
+import { routeHref } from "@/lib/routeHref";
 
 export function AlternativesPanel({
   passportIso2,
@@ -41,7 +42,7 @@ export function AlternativesPanel({
           return (
             <Link
               key={purpose}
-              href={`/${passportIso2.toLowerCase()}/${destinationIso2.toLowerCase()}?purpose=${purpose}`}
+              href={routeHref(passportIso2, destinationIso2, purpose)}
               className={`block p-4 rounded-lg border ${tone} bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition`}
             >
               <header className="flex items-center justify-between mb-1">

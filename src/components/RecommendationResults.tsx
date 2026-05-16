@@ -15,6 +15,7 @@ import type { Recommendations, RecommendationItem, AdviceTier } from "@/lib/find
 import { Flag } from "./Flag";
 import { PROFILE_META } from "@/lib/profiles";
 import { GOAL_LABEL } from "@/lib/questionnaire";
+import { routeHref } from "@/lib/routeHref";
 
 export function RecommendationResults({
   results,
@@ -214,9 +215,7 @@ function CountryCard({
   const tone = ACCENT[accent];
   return (
     <Link
-      href={`/${passportLower}/${item.destinationIso2.toLowerCase()}${
-        item.purpose ? `?purpose=${item.purpose}` : ""
-      }`}
+      href={routeHref(passportLower, item.destinationIso2, item.purpose)}
       prefetch={false}
       className="block rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 hover:border-blue-400 dark:hover:border-blue-600 transition p-4"
     >

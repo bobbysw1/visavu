@@ -23,6 +23,7 @@ import {
   BUCKET_RANGE,
 } from "@/lib/difficulty";
 import { flagEmoji, nameFor } from "@/lib/countries";
+import { routeHref } from "@/lib/routeHref";
 
 type Mode = "passport" | "destination";
 
@@ -230,8 +231,8 @@ function BucketGrid({
               {items.map((item) => {
                 const href =
                   mode === "passport"
-                    ? `/${anchorIso2.toLowerCase()}/${item.otherIso2.toLowerCase()}?purpose=${item.purpose}`
-                    : `/${item.otherIso2.toLowerCase()}/${anchorIso2.toLowerCase()}?purpose=${item.purpose}`;
+                    ? routeHref(anchorIso2, item.otherIso2, item.purpose)
+                    : routeHref(item.otherIso2, anchorIso2, item.purpose);
                 return (
                   <Link
                     key={item.otherIso2}

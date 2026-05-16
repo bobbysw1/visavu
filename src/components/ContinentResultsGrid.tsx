@@ -28,6 +28,7 @@ import {
 } from "@/lib/continents";
 import { BUCKET_PALETTE, BUCKET_LABEL } from "@/lib/difficulty";
 import { flagEmoji, nameFor } from "@/lib/countries";
+import { routeHref } from "@/lib/routeHref";
 
 type Mode = "passport" | "destination";
 
@@ -220,8 +221,8 @@ function Card({
 }) {
   const href =
     mode === "passport"
-      ? `/${anchorIso2.toLowerCase()}/${item.otherIso2.toLowerCase()}?purpose=${item.purpose}`
-      : `/${item.otherIso2.toLowerCase()}/${anchorIso2.toLowerCase()}?purpose=${item.purpose}`;
+      ? routeHref(anchorIso2, item.otherIso2, item.purpose)
+      : routeHref(item.otherIso2, anchorIso2, item.purpose);
 
   const diffTone = BUCKET_PALETTE[item.bucket];
   const status = item.status ?? "";

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { flagEmoji, nameFor } from "@/lib/countries";
+import { routeHref } from "@/lib/routeHref";
 
 export function RouteCard({
   passport,
@@ -12,9 +13,7 @@ export function RouteCard({
   purpose?: string;
   hint?: string;
 }) {
-  const href = purpose
-    ? `/${passport.toLowerCase()}/${destination.toLowerCase()}?purpose=${purpose}`
-    : `/${passport.toLowerCase()}/${destination.toLowerCase()}`;
+  const href = routeHref(passport, destination, purpose);
   return (
     <Link
       href={href}

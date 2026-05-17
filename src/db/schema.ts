@@ -470,3 +470,88 @@ export const feeComponentsRelations = relations(feeComponents, ({ one }) => ({
     references: [visaOptions.id],
   }),
 }));
+
+// ------------------------------------------------------------
+// P30 — accounts, watchlists, and notification events.
+//
+// Lightweight passwordless model: magic-link via email is the only sign-in
+// method. Email is the only PII we store. Watchlists key on (passport,
+// destination, purpose) — same shape the resolver consumes.
+// ------------------------------------------------------------
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  emailVerifiedAt: timestamp("email_verified_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  lastLoginAt: timestamp("last_login_at", { withTimezone: true }),
+}, (t) => ({
+  emailIdx: uniqueIndex("users_email_idx").on(t.email),
+}));
+
+export const watchlistSubscriptions = pgTable("watchlist_subscriptions", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  passportIso2: varchar("passport_iso2", { length: 2 }).notNull(),
+  destinationIso2: varchar("destination_iso2", { length: 2 }).notNull(),
+  purpose: purposeEnum("purpose").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  lastNotifiedAt: timestamp("last_notified_at", { withTimezone: true }),
+}, (t) => ({
+  uniqueUserRoute: uniqueIndex("watchlist_user_route_idx").on(
+    t.userId, t.passportIso2, t.destinationIso2, t.purpose,
+  ),
+  routeIdx: index("watchlist_route_idx").on(t.passportIso2, t.destinationIso2, t.purpose),
+}));
+
+export const notificationKindEnum = pgEnum("notification_kind", [
+  "rule_change",
+  "fee_change",
+  "eligibility_change",
+  "status_change",
+]);
+
+export const notificationEvents = pgTable("notification_events", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  subscriptionId: integer("subscription_id")
+    .notNull()
+    .references(() => watchlistSubscriptions.id, { onDelete: "cascade" }),
+  kind: notificationKindEnum("kind").notNull(),
+  payload: jsonb("payload").notNull(),
+  sentAt: timestamp("sent_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+}, (t) => ({
+  userIdx: index("notif_user_idx").on(t.userId),
+  unsentIdx: index("notif_unsent_idx").on(t.sentAt),
+}));
+
+// Magic-link tokens (passwordless email auth). Issued on sign-in request,
+// expire after 15 minutes, single-use. NextAuth.js / Auth.js compatible
+// shape so we can swap to an adapter library later without re-migrating.
+export const authTokens = pgTable("auth_tokens", {
+  token: varchar("token", { length: 128 }).primaryKey(),
+  email: varchar("email", { length: 255 }).notNull(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  consumedAt: timestamp("consumed_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+}, (t) => ({
+  emailIdx: index("auth_tokens_email_idx").on(t.email),
+}));
+
+export const usersRelations = relations(users, ({ many }) => ({
+  watchlists: many(watchlistSubscriptions),
+  notifications: many(notificationEvents),
+}));
+
+export const watchlistSubscriptionsRelations = relations(watchlistSubscriptions, ({ one, many }) => ({
+  user: one(users, { fields: [watchlistSubscriptions.userId], references: [users.id] }),
+  notifications: many(notificationEvents),
+}));
+
+export const notificationEventsRelations = relations(notificationEvents, ({ one }) => ({
+  user: one(users, { fields: [notificationEvents.userId], references: [users.id] }),
+  subscription: one(watchlistSubscriptions, {
+    fields: [notificationEvents.subscriptionId],
+    references: [watchlistSubscriptions.id],
+  }),
+}));

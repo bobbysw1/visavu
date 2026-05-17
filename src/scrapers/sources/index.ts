@@ -76,6 +76,9 @@ import { usWhtiAdapter } from "./us_whti";
 // confer residence/work rights and need their own adapters.
 import { ukIrelandCtaAdapter } from "./uk_ireland_cta";
 import { auNzTransTasmanAdapter } from "./au_nz_trans_tasman";
+// P33 — bulk EU long-stay D-class adapters (NL/IT/SE/AT/BE/FI/NO/DK/CZ/
+// HU/PL/GR/RO/BG/HR/SK/SI/EE/LT/LV).
+import { EU_LONG_STAY_BULK_ADAPTERS } from "./eu_long_stay_bulk";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -146,6 +149,7 @@ export const ADAPTERS: Adapter[] = [
   usWhtiAdapter,
   ukIrelandCtaAdapter,
   auNzTransTasmanAdapter,
+  ...EU_LONG_STAY_BULK_ADAPTERS,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

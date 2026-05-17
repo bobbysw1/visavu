@@ -34,9 +34,21 @@ async function loadFixture(adapter: Adapter): Promise<{ rawText: string; fetchUr
 }
 
 export async function runAdapter(adapter: Adapter, ctx: FetchContext = {}): Promise<RunResult> {
-  const fetched = ctx.useFixture
-    ? await loadFixture(adapter)
-    : await adapter.fetch(ctx);
+  // P28 — VISAVU_FIXTURE_MODE global override. When set, every adapter
+  // call uses bundled fixtures regardless of the caller's `useFixture`.
+  // Used by preview branches and CI smoke tests that don't have outbound
+  // network access. Production sets this to "false" (or leaves unset) so
+  // refreshes hit the real source.
+  const fixtureModeOverride = process.env.VISAVU_FIXTURE_MODE === "true";
+  const wantFixture = ctx.useFixture || fixtureModeOverride;
+
+  // First try fixture (if requested OR if VISAVU_FIXTURE_MODE forces it).
+  // Fall through to live fetch if the adapter has no fixturePath — many
+  // newer adapters inline their data and skip the fixture entirely.
+  let fetched = wantFixture ? await loadFixture(adapter) : null;
+  if (!fetched && !fixtureModeOverride) {
+    fetched = await adapter.fetch(ctx);
+  }
 
   if (!fetched) {
     return { sourceId: adapter.metadata.id, fetched: false, recordsCount: 0, changed: false };

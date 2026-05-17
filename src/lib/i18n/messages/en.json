@@ -1,0 +1,56 @@
+{
+  "nav": {
+    "findVisa": "Find my visa",
+    "passportRankings": "Passport rankings",
+    "compare": "Compare",
+    "guides": "Guides",
+    "services": "Services",
+    "about": "About",
+    "methodology": "Methodology",
+    "sources": "Sources",
+    "changelog": "Changelog",
+    "signIn": "Sign in",
+    "account": "Account"
+  },
+  "hero": {
+    "title": "Find the right visa for your move abroad.",
+    "subtitle": "Visa requirements and relocation roadmaps for every passport — answered in minutes, sourced from official government portals, never a content farm."
+  },
+  "lookup": {
+    "passport": "My nationality",
+    "destination": "I'm travelling to",
+    "purpose": "Why are you going?",
+    "submit": "Look up visa"
+  },
+  "purpose": {
+    "tourism": "Tourism",
+    "business": "Business",
+    "transit": "Transit",
+    "work": "Work",
+    "study": "Study",
+    "family": "Partner / Family",
+    "diplomatic": "Diplomatic"
+  },
+  "status": {
+    "visa_free": "Visa-free",
+    "visa_free_with_eta": "Visa-free with eTA",
+    "visa_on_arrival": "Visa on arrival",
+    "e_visa": "e-Visa",
+    "embassy_visa": "Embassy visa",
+    "restricted": "Restricted",
+    "refused": "Refused"
+  },
+  "footer": {
+    "tagline": "Every passport, every destination, no middleman.",
+    "privacy": "Privacy",
+    "cookies": "Cookies",
+    "disclaimer": "Disclaimer",
+    "disclosure": "Disclosure"
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong",
+    "tryAgain": "Try again",
+    "translationNotice": "This page is available in English only. UI labels are translated; editorial content is in English."
+  }
+}

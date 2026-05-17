@@ -1,0 +1,56 @@
+{
+  "nav": {
+    "findVisa": "Buscar mi visado",
+    "passportRankings": "Clasificación de pasaportes",
+    "compare": "Comparar",
+    "guides": "Guías",
+    "services": "Servicios",
+    "about": "Sobre nosotros",
+    "methodology": "Metodología",
+    "sources": "Fuentes",
+    "changelog": "Cambios",
+    "signIn": "Iniciar sesión",
+    "account": "Cuenta"
+  },
+  "hero": {
+    "title": "Encuentra el visado adecuado para tu mudanza al extranjero.",
+    "subtitle": "Requisitos de visado y hojas de ruta para reubicarse — para cualquier pasaporte, respondidos en minutos y procedentes de portales oficiales, nunca de granjas de contenido."
+  },
+  "lookup": {
+    "passport": "Mi nacionalidad",
+    "destination": "Viajo a",
+    "purpose": "¿Por qué viajas?",
+    "submit": "Buscar visado"
+  },
+  "purpose": {
+    "tourism": "Turismo",
+    "business": "Negocios",
+    "transit": "Tránsito",
+    "work": "Trabajo",
+    "study": "Estudios",
+    "family": "Pareja / Familia",
+    "diplomatic": "Diplomático"
+  },
+  "status": {
+    "visa_free": "Sin visado",
+    "visa_free_with_eta": "Sin visado con eTA",
+    "visa_on_arrival": "Visado a la llegada",
+    "e_visa": "e-Visa",
+    "embassy_visa": "Visado consular",
+    "restricted": "Restringido",
+    "refused": "Denegado"
+  },
+  "footer": {
+    "tagline": "Cada pasaporte, cada destino, sin intermediarios.",
+    "privacy": "Privacidad",
+    "cookies": "Cookies",
+    "disclaimer": "Aviso legal",
+    "disclosure": "Divulgación"
+  },
+  "common": {
+    "loading": "Cargando…",
+    "error": "Algo salió mal",
+    "tryAgain": "Inténtalo de nuevo",
+    "translationNotice": "Esta página está disponible en inglés. Las etiquetas de la interfaz están traducidas; el contenido editorial está en inglés."
+  }
+}

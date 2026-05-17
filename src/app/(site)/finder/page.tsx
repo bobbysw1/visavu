@@ -375,11 +375,11 @@ function ResultsBlock({
               <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-snug">
                 {r.label}
               </p>
-              <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1.5">
-                {r.maxStayDays != null ? `Up to ${r.maxStayDays} days` : "Stay varies"}
-                {" · "}
-                Fee {fmtMoney(r.feeAmountMinor, r.feeCurrency)}
-              </p>
+              {r.feeAmountMinor != null && r.feeCurrency && (
+                <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1.5">
+                  Fee {fmtMoney(r.feeAmountMinor, r.feeCurrency)}
+                </p>
+              )}
             </Link>
           </li>
         ))}

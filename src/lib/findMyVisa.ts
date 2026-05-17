@@ -88,7 +88,7 @@ export async function recommendForAnswers(
 
   let raw: FinderResult[] = [];
   try {
-    raw = await findDestinations(a.passportIso2, goal, { limit: 60 });
+    raw = await findDestinations(a.passportIso2, goal, { limit: 250 });
   } catch {
     return emptyResult(goal, profile, "Recommendation engine is temporarily unavailable.");
   }

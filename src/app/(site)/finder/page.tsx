@@ -114,7 +114,7 @@ export default async function FinderPage({
   let lookupError: string | null = null;
   if (validPassport && goal) {
     try {
-      results = await findDestinations(validPassport, goal, { limit: 60 });
+      results = await findDestinations(validPassport, goal, { limit: 250 });
     } catch (e) {
       lookupError = e instanceof Error ? e.message : "lookup failed";
       console.error("[finder] findDestinations failed", { passport: validPassport, goal, error: e });

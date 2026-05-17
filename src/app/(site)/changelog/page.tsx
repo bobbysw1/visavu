@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { db } from "@/db/client";
 import { sql } from "drizzle-orm";
-import { absoluteUrl } from "@/lib/site";
+import { SITE, absoluteUrl } from "@/lib/site";
 
 export const metadata = {
   title: "Changelog — visa data updates",
@@ -123,8 +123,30 @@ export default async function ChangelogPage() {
   const events = await loadChangelog();
   const now = new Date();
 
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListOrder: "https://schema.org/ItemListOrderDescending",
+    numberOfItems: events.length,
+    itemListElement: events.slice(0, 50).map((e, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "BlogPosting",
+        headline: `${e.sourceName} · ${diffSummary(e).line}`,
+        datePublished: e.fetchedAt.toISOString(),
+        url: `${SITE.url}/changelog#event-${e.id}`,
+        author: { "@type": "Organization", name: SITE.name },
+      },
+    })),
+  };
+
   return (
     <main className="mx-auto max-w-3xl px-4 py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
       <header className="mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">Changelog</h1>
         <p className="text-slate-600 dark:text-slate-400">
@@ -145,24 +167,32 @@ export default async function ChangelogPage() {
           cadence.
         </div>
       ) : (
-        <ol className="space-y-3">
+        <ol className="space-y-3 list-none p-0">
           {events.map((e) => {
             const summary = diffSummary(e);
+            const iso = e.fetchedAt.toISOString();
+            const daysAgo = Math.round((now.getTime() - e.fetchedAt.getTime()) / 86400000);
             return (
-              <li
-                key={e.id}
-                className={`rounded-lg border p-4 ${summary.tone}`}
-              >
-                <header className="flex flex-wrap items-baseline justify-between gap-2 mb-1">
-                  <p className="font-semibold text-sm">{e.sourceName}</p>
-                  <p className="text-xs text-neutral-500 tabular-nums">
-                    {fmtDate(e.fetchedAt)} · {Math.round((now.getTime() - e.fetchedAt.getTime()) / 86400000)}d ago
+              <li key={e.id}>
+                <article
+                  id={`event-${e.id}`}
+                  className={`rounded-lg border p-4 ${summary.tone}`}
+                >
+                  <header className="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+                    <h2 className="font-semibold text-sm m-0">{e.sourceName}</h2>
+                    <p className="text-xs text-neutral-500 tabular-nums m-0">
+                      <time dateTime={iso} title={iso}>
+                        {fmtDate(e.fetchedAt)}
+                      </time>
+                      {" · "}
+                      <span aria-label={`${daysAgo} days ago`}>{daysAgo}d ago</span>
+                    </p>
+                  </header>
+                  <p className="text-sm text-neutral-700 dark:text-neutral-300">{summary.line}</p>
+                  <p className="text-xs text-neutral-500 mt-1 font-mono">
+                    source_id: {e.sourceId}
                   </p>
-                </header>
-                <p className="text-sm text-neutral-700 dark:text-neutral-300">{summary.line}</p>
-                <p className="text-xs text-neutral-500 mt-1 font-mono">
-                  source_id: {e.sourceId}
-                </p>
+                </article>
               </li>
             );
           })}

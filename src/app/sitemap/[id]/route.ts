@@ -50,6 +50,17 @@ export async function GET(
     getLastmodByDestination(),
   ]);
 
+  // Inner XML escaper for the user-facing strings we inject into
+  // <image:title> / <image:caption>. Photographer names sometimes
+  // contain `&` and Wikimedia alt text occasionally has `<` characters
+  // from broken markdown — both would invalidate the XML.
+  const xmlEscape = (s: string) =>
+    s
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+
   const urls = slice
     .map((u) => {
       let lastmod = SITEMAP_LASTMOD;
@@ -60,12 +71,22 @@ export async function GET(
         const iso = u.lastmodKey.slice("destination:".length);
         lastmod = byDestination[iso] ?? SITEMAP_LASTMOD;
       }
-      return `<url><loc>${u.loc}</loc><lastmod>${lastmod}</lastmod><changefreq>${u.changefreq}</changefreq><priority>${u.priority}</priority></url>`;
+      const imageXml = (u.images ?? [])
+        .map((img) => {
+          const parts = [`<image:loc>${img.loc}</image:loc>`];
+          if (img.title) parts.push(`<image:title>${xmlEscape(img.title)}</image:title>`);
+          if (img.caption) parts.push(`<image:caption>${xmlEscape(img.caption)}</image:caption>`);
+          return `<image:image>${parts.join("")}</image:image>`;
+        })
+        .join("");
+      return `<url><loc>${u.loc}</loc><lastmod>${lastmod}</lastmod><changefreq>${u.changefreq}</changefreq><priority>${u.priority}</priority>${imageXml}</url>`;
     })
     .join("");
 
+  // xmlns:image declares the Image Sitemap extension. Required to
+  // surface the <image:*> elements above to Google's image index.
   const body = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}</urlset>`;
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">${urls}</urlset>`;
 
   return new Response(body, {
     headers: {

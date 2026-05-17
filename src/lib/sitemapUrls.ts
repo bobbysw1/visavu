@@ -35,6 +35,18 @@ import {
 } from "@/lib/countries";
 import { SITE } from "@/lib/site";
 import { HAND_WRITTEN_ROUTES } from "@/content/routeAdvice";
+import { getCountryPhotoSync } from "@/lib/pexels";
+import { getPassportCover } from "@/lib/passportCovers";
+import { nameFor } from "@/lib/countries";
+
+export type SitemapImage = {
+  /** Absolute URL of the image. */
+  loc: string;
+  /** Plain-text caption shown alongside image-search results. */
+  caption?: string;
+  /** Title shown by Google Image Search. */
+  title?: string;
+};
 
 export type SitemapUrl = {
   loc: string;
@@ -46,6 +58,11 @@ export type SitemapUrl = {
    *  maps from lib/sitemapLastmod.ts, falling back to SITEMAP_LASTMOD
    *  when no row exists for that bucket. */
   lastmodKey: "static" | `passport:${string}` | `destination:${string}`;
+  /** Optional images attached to this URL. Surfaces them to Google
+   *  Image Search via the `xmlns:image` sitemap extension. Including
+   *  the hero photo for every passport/destination/pair page boosts
+   *  visibility for "Japan visa" image queries etc. */
+  images?: SitemapImage[];
 };
 
 // Google's hard cap per sitemap is 50,000 URLs / 50 MB. We aim slightly
@@ -114,22 +131,45 @@ export function getAllSitemapUrls(): SitemapUrl[] {
   // 2) Passport / destination index pages — per passport-issuing country.
   //    Each URL is bucketed under its own ISO so the chunk handler can
   //    surface the actual MAX(last_verified_at) for that country.
+  //    Each URL also carries an `image` reference pointing at the hero
+  //    photo for that country — passport cover for /passport/[iso],
+  //    Pexels destination photo for /destination/[iso] — which Google
+  //    indexes for image search via the xmlns:image extension.
   for (const origin of PASSPORT_COUNTRIES) {
     const lower = origin.iso2.toLowerCase();
-    urls.push(
-      {
-        loc: `${SITE.url}/passport/${lower}`,
-        changefreq: "weekly",
-        priority: "0.7",
-        lastmodKey: `passport:${origin.iso2}`,
-      },
-      {
-        loc: `${SITE.url}/destination/${lower}`,
-        changefreq: "weekly",
-        priority: "0.7",
-        lastmodKey: `destination:${origin.iso2}`,
-      },
-    );
+    const passportCover = getPassportCover(origin.iso2);
+    const destPhoto = getCountryPhotoSync(origin.iso2);
+    const countryName = nameFor(origin.iso2);
+    urls.push({
+      loc: `${SITE.url}/passport/${lower}`,
+      changefreq: "weekly",
+      priority: "0.7",
+      lastmodKey: `passport:${origin.iso2}`,
+      images: passportCover
+        ? [
+            {
+              loc: `${SITE.url}${passportCover.url}`,
+              title: `${countryName} passport`,
+              caption: `${countryName} passport cover (Wikimedia Commons, ${passportCover.licence})`,
+            },
+          ]
+        : undefined,
+    });
+    urls.push({
+      loc: `${SITE.url}/destination/${lower}`,
+      changefreq: "weekly",
+      priority: "0.7",
+      lastmodKey: `destination:${origin.iso2}`,
+      images: destPhoto
+        ? [
+            {
+              loc: `${SITE.url}${destPhoto.url}`,
+              title: `${countryName} — visa & travel`,
+              caption: destPhoto.alt,
+            },
+          ]
+        : undefined,
+    });
   }
 
   // 3) Every passport → destination pair + indexed purpose variants.
@@ -137,6 +177,8 @@ export function getAllSitemapUrls(): SitemapUrl[] {
   //    the route's primary content is the passport-perspective rules
   //    for entering the destination, so the passport's verification
   //    cadence is the right signal for crawl freshness.
+  //    The image attached to a pair URL is the DESTINATION's photo —
+  //    that's the visual context for the user (where they're going to).
   for (const origin of PASSPORT_COUNTRIES) {
     if (!issuesPassport(origin.iso2)) continue;
     const lowerOrigin = origin.iso2.toLowerCase();
@@ -144,11 +186,23 @@ export function getAllSitemapUrls(): SitemapUrl[] {
     for (const dest of COUNTRY_LIST) {
       if (dest.iso2 === origin.iso2) continue;
       const lowerDest = dest.iso2.toLowerCase();
+      const destPhoto = getCountryPhotoSync(dest.iso2);
+      const destName = nameFor(dest.iso2);
+      const images = destPhoto
+        ? [
+            {
+              loc: `${SITE.url}${destPhoto.url}`,
+              title: `${destName} — visa requirements`,
+              caption: destPhoto.alt,
+            },
+          ]
+        : undefined;
       urls.push({
         loc: `${SITE.url}/${lowerOrigin}/${lowerDest}`,
         changefreq: "weekly",
         priority: "0.6",
         lastmodKey: passportKey,
+        images,
       });
       for (const purpose of INDEXED_PURPOSES) {
         urls.push({
@@ -156,6 +210,7 @@ export function getAllSitemapUrls(): SitemapUrl[] {
           changefreq: "weekly",
           priority: "0.5",
           lastmodKey: passportKey,
+          images,
         });
       }
     }

@@ -15,6 +15,11 @@ import { coverageForDestination, originSummariesForDestination } from "@/lib/cov
 import { scoreOriginsForDestination } from "@/lib/scoring";
 import { getCountryPhoto } from "@/lib/pexels";
 import { factsFor } from "@/content/countryFacts";
+import { destinationIntroFor } from "@/content/destinationIntros";
+import { generateIntro as generateDestinationIntro } from "@/content/destinationIntroGenerator";
+import { buildDestinationFaqs } from "@/content/destinationFaqGenerator";
+import { OBSTACLES } from "@/content/obstacles";
+import { CountrySilhouette } from "@/components/CountrySilhouette";
 
 // Cost optimisation: SSG every destination profile at build time, ISR-revalidate
 // once a day. Same rationale as /passport/[iso] — Googlebot crawls these
@@ -90,6 +95,15 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
 
   const photo = await getCountryPhoto(upper);
   const facts = factsFor(upper);
+  // Destination-scoped obstacles surface inline in the editorial intro and
+  // in the FAQ JSON-LD, so two destinations never share boilerplate prose.
+  const destinationObstacles = OBSTACLES.filter(
+    (o) => o.appliesTo.kind === "destination" && o.appliesTo.iso === upper,
+  );
+  // Curated intros (50 today) win; otherwise generated from live coverage.
+  const curatedIntro = destinationIntroFor(upper);
+  const intro = curatedIntro
+    ?? generateDestinationIntro({ iso2: upper, name, coverage, summaries, obstacles: destinationObstacles });
 
   const crumbs = [
     { href: "/", label: "Home" },
@@ -126,6 +140,21 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
     inLanguage: "en",
   };
 
+  // FAQ JSON-LD is data-driven — conditional questions per the destination's
+  // actual profile (Schengen / ETIAS / UK ETA / K-ETA / GCC / Mercosur,
+  // plus any current advisory).
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: buildDestinationFaqs({
+      iso2: upper,
+      name,
+      coverage,
+      summaries,
+      obstacles: destinationObstacles,
+    }),
+  };
+
   return (
     <>
       <script
@@ -135,6 +164,10 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       <main className="mx-auto max-w-5xl px-4 py-8">
@@ -150,9 +183,23 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
 
         <CountryFactsBox iso2={upper} mode="destination" />
 
+        {/* OPENING NARRATIVE — curated where available, generated otherwise.
+            SEO-critical unique content per destination, mirrors the passport-page
+            pattern. Sits between facts and the metrics dashboard so the prose
+            grounds the numbers that follow. */}
+        <section className="editorial-body relative mt-8">
+          <div className="absolute top-0 right-0 -translate-y-2 pointer-events-none opacity-[0.10] dark:opacity-[0.18]">
+            <CountrySilhouette iso2={upper} size={180} tone="default" />
+          </div>
+          <h2 className="section-h2 mb-4">Travel to {name}: the picture in 2026</h2>
+          <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+            {intro}
+          </p>
+        </section>
+
         {/* Investment-dashboard-style 9-tile country summary — relocation
             stats answered in <5 seconds before scrolling into the visa lists. */}
-        <div className="mt-6">
+        <div className="mt-8">
           <CountryMetricsDashboard destinationIso2={upper} />
         </div>
 

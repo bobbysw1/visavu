@@ -333,6 +333,334 @@ export const OBSTACLES: Obstacle[] = [
     ],
     updatedAt: "2026-05-10",
   },
+
+  // -----------------------------------------------------------------------
+  // Expansion (P23): sanctioned + high-refusal corridors + crackdown
+  // jurisdictions + post-2022 effects + US-specific patterns.
+  // -----------------------------------------------------------------------
+
+  // --- Additional passport-level entries ---
+  {
+    id: "ng-us-bvisa",
+    severity: "caution",
+    title: "Nigerian passport → US: long interview waits, elevated 214(b) refusals",
+    body:
+      "B-1/B-2 visa interview waits at the Lagos and Abuja US embassies have historically been 6–18 months, with first-time-applicant refusal rates of 30–55% under Section 214(b) (insufficient ties to home country). Best-practice documentation includes long-term employment proof, prior international travel history, fixed-asset evidence, and a detailed travel itinerary with onward bookings.",
+    appliesTo: { kind: "pair", passport: "NG", destination: "US" },
+    references: [
+      { label: "travel.state.gov US visa wait times", url: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/wait-times.html" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "in-us-221g",
+    severity: "info",
+    title: "Indian passport → US: H-1B / L-1 administrative processing under 221(g)",
+    body:
+      "Indian nationals applying for H-1B and L-1 visas at Indian US consulates increasingly face Section 221(g) administrative processing — a non-refusal hold pending additional review. Typical resolution: 30–120 days, sometimes longer for cap-subject H-1B in sensitive industries. Plan international travel timelines with at least 6 weeks of buffer.",
+    appliesTo: { kind: "pair", passport: "IN", destination: "US" },
+    references: [
+      { label: "USCIS H-1B information", url: "https://www.uscis.gov/working-in-the-united-states/h-1b-specialty-occupations" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "bd-schengen",
+    severity: "caution",
+    title: "Bangladeshi passport → Schengen: above-baseline refusal rates",
+    body:
+      "Schengen visa refusal rates for Bangladeshi applicants run 35–60% across most member states. Common refusal grounds: insufficient financial documentation, weak ties to Bangladesh, and unclear travel purpose. Detailed sponsorship letters, prior international travel history, and complete hotel/itinerary documentation materially improve outcomes.",
+    appliesTo: { kind: "passport", iso: "BD" },
+    references: [],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "ng-schengen",
+    severity: "caution",
+    title: "Nigerian passport → Schengen: high refusal corridor",
+    body:
+      "Schengen visa refusal rates for Nigerian applicants are among the highest globally — typically 45–55% across the most-requested member states (France, Germany, Italy, Spain). Strong documentation (12+ months of consistent bank activity, employer letter, fixed-asset evidence, prior international travel) substantially improves outcomes.",
+    appliesTo: { kind: "passport", iso: "NG" },
+    references: [
+      { label: "EU visa statistics dashboard", url: "https://home-affairs.ec.europa.eu/policies/schengen/visa-policy/short-stay-visas-issued-schengen-countries_en" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "pk-us-bvisa",
+    severity: "caution",
+    title: "Pakistani passport → US: extended security review",
+    body:
+      "Pakistani applicants for US visas frequently undergo extended security advisory opinions (SAO) lasting 60–180 days. Routine B-1/B-2 cases are processed but interview waits in Islamabad have historically been 8–14 months. Refusal rates under 214(b) for first-time applicants are typically 30–50%.",
+    appliesTo: { kind: "pair", passport: "PK", destination: "US" },
+    references: [],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "ir-anywhere",
+    severity: "critical",
+    title: "Iranian passport: most Western and many regional destinations require visas with extensive scrutiny",
+    body:
+      "Iranian applicants for the US, UK, Canada, Australia, Schengen, Israel, and Saudi Arabia face embassy applications with case-by-case security review. US Executive Order 13769 successor frameworks restrict most Iranian categories. Allow 60–180 days for processing; refusal rates are above the regional baseline.",
+    appliesTo: { kind: "passport", iso: "IR" },
+    references: [],
+    updatedAt: "2026-05-10",
+  },
+
+  // --- Additional destination-level entries ---
+  {
+    id: "ae-journalists",
+    severity: "caution",
+    title: "UAE: journalists, activists, and security-research professionals face elevated entry scrutiny",
+    body:
+      "UAE authorities have at various times denied entry, detained, or deported journalists, human-rights workers, and academic researchers studying regional security topics. Public social-media posts critical of the UAE government or rulers can trigger questioning at entry. Travelers in these categories should consult the IPI or CPJ travel advisories before booking.",
+    appliesTo: { kind: "destination", iso: "AE" },
+    references: [
+      { label: "Committee to Protect Journalists — UAE", url: "https://cpj.org/asia/uae/" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "cn-hk-passports",
+    severity: "info",
+    title: "Mainland China: HK SAR passport holders use Home Return Permit, not the SAR passport",
+    body:
+      "Hong Kong SAR passport holders cannot enter mainland China on the SAR passport — entry requires a Home Return Permit (Mainland Travel Permit for Hong Kong and Macau Residents) issued by the Chinese authorities. Foreign nationals also holding HK permanent residency travel to the mainland on their foreign passport with the standard China visa.",
+    appliesTo: { kind: "destination", iso: "CN" },
+    references: [],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "ru-allied-passports",
+    severity: "critical",
+    title: "Russia: most Western foreign-affairs ministries advise against all non-essential travel",
+    body:
+      "Foreign ministries of the US, UK, Canada, Australia, and most EU states advise against non-essential travel to Russia. Heightened risk of arbitrary detention has been noted by the US State Department and others. Commercial flight options are limited; consular assistance is constrained.",
+    appliesTo: { kind: "destination", iso: "RU" },
+    references: [
+      { label: "US State Department — Russia advisory", url: "https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/RussianFederation.html" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "ua-conflict",
+    severity: "critical",
+    title: "Ukraine: active armed conflict — most foreign ministries advise against all travel",
+    body:
+      "Ukraine has been in active armed conflict since the February 2022 Russian invasion. Foreign ministries of the US, UK, EU, Canada, Australia, and most others maintain Level-4 (do not travel) advisories. Airspace is closed; consular services are limited.",
+    appliesTo: { kind: "destination", iso: "UA" },
+    references: [
+      { label: "UK FCDO travel advice — Ukraine", url: "https://www.gov.uk/foreign-travel-advice/ukraine" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "by-conflict-adjacent",
+    severity: "critical",
+    title: "Belarus: heightened risk of detention; UK, US, EU advise against all travel",
+    body:
+      "Most Western foreign ministries advise against all travel to Belarus following the 2020 political crisis and its role in Russia's 2022 invasion of Ukraine. Heightened risk of arbitrary detention, especially for dual nationals and individuals with public political views.",
+    appliesTo: { kind: "destination", iso: "BY" },
+    references: [
+      { label: "UK FCDO travel advice — Belarus", url: "https://www.gov.uk/foreign-travel-advice/belarus" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "mm-conflict",
+    severity: "critical",
+    title: "Myanmar: civil conflict — most foreign ministries advise against all travel",
+    body:
+      "Myanmar has been in active civil conflict since the February 2021 military coup. Most Western foreign ministries maintain Level-4 advisories. Air access to many regions is restricted; consular services are limited.",
+    appliesTo: { kind: "destination", iso: "MM" },
+    references: [],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "ht-conflict",
+    severity: "critical",
+    title: "Haiti: gang-related violence — most foreign ministries advise against all travel",
+    body:
+      "Haiti has experienced sustained gang-related violence; Port-au-Prince airport operations have been disrupted at multiple points in 2024–2025. The US, UK, Canada, and EU advise against all travel. Consular services are constrained.",
+    appliesTo: { kind: "destination", iso: "HT" },
+    references: [
+      { label: "US State Department — Haiti", url: "https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/Haiti.html" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "ly-conflict",
+    severity: "critical",
+    title: "Libya: ongoing political instability and intermittent conflict",
+    body:
+      "Libya remains politically divided with periodic outbreaks of armed conflict. Most foreign ministries advise against all travel. Visa-on-arrival systems that previously existed are not operational; entry requires advance arrangement with a domestic sponsor.",
+    appliesTo: { kind: "destination", iso: "LY" },
+    references: [],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "ni-conditions",
+    severity: "caution",
+    title: "Nicaragua: political risk for journalists and opposition-linked travellers",
+    body:
+      "Nicaraguan authorities have at various times denied entry to journalists, opposition figures, and individuals critical of the Ortega government. Routine tourism continues but travellers with public political profiles should consult current FCDO/State Department advisories.",
+    appliesTo: { kind: "destination", iso: "NI" },
+    references: [],
+    updatedAt: "2026-05-10",
+  },
+
+  // --- Additional pair-level entries ---
+  {
+    id: "uk-eu-citizens-90180",
+    severity: "info",
+    title: "UK citizens → Schengen: 90-day-in-180 limit + EES biometric checks",
+    body:
+      "Since Brexit, UK citizens travel to the Schengen Area under the visitor-only 90/180 rule with no automatic right of residence. The EU Entry/Exit System (EES) launches in late 2025, recording every Schengen entry and exit biometrically and automating overstay flagging. ETIAS authorisation rolls out in late 2026 — small fee, three-year validity.",
+    appliesTo: { kind: "pair", passport: "GB", destination: "FR" },
+    references: [
+      { label: "EU EES — official", url: "https://travel-europe.europa.eu/ees_en" },
+      { label: "EU ETIAS — official", url: "https://travel-europe.europa.eu/etias_en" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "cn-au-stem",
+    severity: "info",
+    title: "Chinese passport → Australia: longer security review for STEM postgrad",
+    body:
+      "Chinese applicants for Australian Subclass 500 student and Subclass 482 work visas in sensitive STEM categories (AI/ML, advanced materials, quantum, aerospace) face longer external-checks processing — typically 4–8 months for postgraduate applications under the Defence Trade Controls regime.",
+    appliesTo: { kind: "pair", passport: "CN", destination: "AU" },
+    references: [],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "ir-anywhere-tourist",
+    severity: "caution",
+    title: "Iranian passport → most destinations: extended security review",
+    body:
+      "Iranian applicants for tourist and business visas in most Western destinations face extended security review (Security Advisory Opinion in the US; equivalent processes in UK, Canada, Australia, Schengen). Allow 60–180 days. Refusal rates are above the regional baseline.",
+    appliesTo: { kind: "pair", passport: "IR", destination: "US" },
+    references: [],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "il-icc-states",
+    severity: "info",
+    title: "Israeli officials → ICC member states: arrest-warrant context",
+    body:
+      "Following the November 2024 ICC arrest warrants for senior Israeli officials, certain ICC-member-state jurisdictions have publicly stated they would execute the warrants if relevant individuals entered. This applies to specific named individuals only — ordinary Israeli passport holders are unaffected. Check current FCDO/State Department guidance if travelling on a government-related role.",
+    appliesTo: { kind: "destination", iso: "IL" },
+    references: [
+      { label: "ICC — situation in Palestine", url: "https://www.icc-cpi.int/situations/palestine" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "in-canada-bilateral",
+    severity: "info",
+    title: "Indian passport → Canada: visa processing recovery after 2023–2024 strain",
+    body:
+      "Canada-India diplomatic relations strained in late 2023, leading to reduced consular staffing at Indian missions. Visa processing recovered through 2024–2025; current Visitor Visa and Study Permit processing times for Indian applicants are roughly in line with pre-2023 baselines (8–16 weeks), but check current IRCC processing-time tools before applying.",
+    appliesTo: { kind: "pair", passport: "IN", destination: "CA" },
+    references: [
+      { label: "IRCC processing times", url: "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/check-processing-times.html" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "tr-eu-visit",
+    severity: "info",
+    title: "Turkish passport → Schengen: documentation-heavy applications",
+    body:
+      "Schengen visa applications from Turkish nationals have historically been documentation-heavy and slow. Approval rates vary by member state (highest at Italy, Spain, Greece; lower at Germany and Belgium). Best practice: apply 6–8 weeks ahead, submit complete employment and financial documentation, and book refundable travel.",
+    appliesTo: { kind: "passport", iso: "TR" },
+    references: [],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "ru-icc-states",
+    severity: "caution",
+    title: "Russian officials → ICC member states: arrest-warrant context",
+    body:
+      "Following the March 2023 ICC arrest warrant for President Putin, certain ICC member states have stated they would execute the warrant. Applies to specific named individuals only — ordinary Russian passport holders are unaffected. Government-affiliated travellers should consult current advisories.",
+    appliesTo: { kind: "destination", iso: "RU" },
+    references: [
+      { label: "ICC arrest warrants — Russia situation", url: "https://www.icc-cpi.int/situations/ukraine" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+
+  // --- US-specific patterns surfaced as destination-level context ---
+  {
+    id: "us-section-214b",
+    severity: "info",
+    title: "United States: Section 214(b) presumption of immigrant intent for B-class applicants",
+    body:
+      "All B-1/B-2 visitor visa applicants must overcome the Section 214(b) statutory presumption that they intend to immigrate. Refusal under 214(b) is not a permanent bar — applicants may reapply after material change in circumstances. Documentation of strong ties to home country (employment, property, family, prior compliant travel) materially affects outcomes. Refusal rates vary widely by posting and nationality.",
+    appliesTo: { kind: "destination", iso: "US" },
+    references: [
+      { label: "travel.state.gov — Visa Denials", url: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/visa-denials.html" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "us-section-221g",
+    severity: "info",
+    title: "United States: Section 221(g) administrative processing holds",
+    body:
+      "Section 221(g) is a non-refusal hold pending additional administrative review — common for STEM postgrad, security-sensitive employment, and certain nationalities. Typical resolution: 30–180 days. Applicants are typically advised to wait without further action unless specifically requested for documents.",
+    appliesTo: { kind: "destination", iso: "US" },
+    references: [],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "us-grace-periods",
+    severity: "info",
+    title: "United States: 60-day grace period on most employment-based statuses",
+    body:
+      "H-1B, L-1, O-1, and most other employment-based nonimmigrant statuses include a 60-day grace period following employment termination, during which the worker can change status, find a new employer, or depart. Plan transitions inside this window to maintain status.",
+    appliesTo: { kind: "destination", iso: "US" },
+    references: [
+      { label: "USCIS — Options for Nonimmigrant Workers Following Termination", url: "https://www.uscis.gov/newsroom/news-releases/uscis-clarifies-options-for-nonimmigrant-workers-following-termination-of-employment" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "schengen-ees-2025",
+    severity: "info",
+    title: "Schengen Area: Entry/Exit System (EES) launches late 2025",
+    body:
+      "The EU Entry/Exit System (EES) replaces manual passport stamps with biometric registration at all Schengen external borders from late 2025. Every entry and exit by non-EU short-stay travellers (including UK, US, and visa-required nationalities) is recorded. The 90/180 rule is automatically enforced — overstays generate an automatic flag.",
+    appliesTo: { kind: "destination", iso: "FR" },
+    references: [
+      { label: "EU EES — official", url: "https://travel-europe.europa.eu/ees_en" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "schengen-etias-2026",
+    severity: "info",
+    title: "Schengen Area: ETIAS authorisation required from late 2026",
+    body:
+      "From late 2026, visa-exempt nationals (US, UK, Canada, Australia, Japan, etc.) need an ETIAS authorisation before travel to the Schengen Area. €7 fee for ages 18–70, valid 3 years or until passport expiry, multiple-entry. Apply at travel-europe.europa.eu — not a visa, but airlines will deny boarding without it once active.",
+    appliesTo: { kind: "destination", iso: "ES" },
+    references: [
+      { label: "EU ETIAS — official", url: "https://travel-europe.europa.eu/etias_en" },
+    ],
+    updatedAt: "2026-05-10",
+  },
+  {
+    id: "uk-eta-rollout",
+    severity: "info",
+    title: "United Kingdom: ETA required for visa-exempt nationalities",
+    body:
+      "The UK Electronic Travel Authorisation (ETA) is now mandatory for most visa-exempt nationals — Gulf nationals from 2023, US/Canada/Australia/EU/Japan/Korea/Singapore from early 2025. £10 fee, valid 2 years or until passport expiry, multiple-entry. Apply at gov.uk before travel; airlines will deny boarding without it.",
+    appliesTo: { kind: "destination", iso: "GB" },
+    references: [
+      { label: "UK ETA — official", url: "https://www.gov.uk/guidance/apply-for-an-electronic-travel-authorisation-eta" },
+    ],
+    updatedAt: "2026-05-10",
+  },
 ];
 
 export function obstaclesFor(passportIso: string, destinationIso: string): Obstacle[] {

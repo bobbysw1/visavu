@@ -54,6 +54,9 @@ async function main(): Promise<void> {
   const limit = args.includes("--limit")
     ? parseInt(args[args.indexOf("--limit") + 1] ?? "50", 10)
     : 50;
+  // --persist writes verification_events rows for MISMATCH cases so the
+  // /admin/review-queue can surface them without CSV file access.
+  const persist = args.includes("--persist");
 
   const targets = onePassport ? [onePassport] : TOP_50_PASSPORTS.slice(0, limit);
 
@@ -69,6 +72,9 @@ async function main(): Promise<void> {
       const diff = computeDiff(wikiRows, ourRows);
       const csvPath = join(OUT_DIR, `${iso.toLowerCase()}.csv`);
       await writeCsv(csvPath, diff);
+      if (persist) {
+        await persistMismatchEvents(iso, diff);
+      }
 
       const drift = diff.filter((r) => r.action === "ADD" || r.action === "MISMATCH").length;
       const pct = diff.length === 0 ? 0 : (drift / diff.length) * 100;
@@ -278,6 +284,49 @@ function computeDiff(
   }
   rows.sort((a, b) => a.iso2_dest.localeCompare(b.iso2_dest));
   return rows;
+}
+
+/**
+ * Persist a verification_event row for each MISMATCH discovered. The
+ * /admin/review-queue surfaces these via the same query that pulls
+ * cross-source rows from the existing reconciliation pipeline.
+ */
+async function persistMismatchEvents(
+  passportIso: string,
+  diff: DiffRow[],
+): Promise<void> {
+  const mismatches = diff.filter((r) => r.action === "MISMATCH" || r.action === "ADD");
+  if (mismatches.length === 0) return;
+
+  // Look up the matching visa_option ids so the event ties back to the row.
+  const passportRow = await db
+    .select({ id: schema.passports.id })
+    .from(schema.passports)
+    .where(and(eq(schema.passports.issuerIso2, passportIso), eq(schema.passports.type, "ordinary")))
+    .limit(1);
+  if (passportRow.length === 0) return;
+  const passportId = passportRow[0].id;
+
+  for (const row of mismatches) {
+    const options = await db
+      .select({ id: schema.visaOptions.id })
+      .from(schema.visaOptions)
+      .where(
+        and(
+          eq(schema.visaOptions.passportId, passportId),
+          eq(schema.visaOptions.destinationIso2, row.iso2_dest),
+          eq(schema.visaOptions.purpose, "tourism"),
+        ),
+      )
+      .limit(1);
+    if (options.length === 0) continue;
+    await db.insert(schema.verificationEvents).values({
+      visaOptionId: options[0].id,
+      kind: "cross_source",
+      actor: "wikipedia-reconcile",
+      notes: `Wikipedia ${row.action}: wiki=${row.wiki_status} ours=${row.our_status}`,
+    });
+  }
 }
 
 async function writeCsv(path: string, rows: DiffRow[]): Promise<void> {

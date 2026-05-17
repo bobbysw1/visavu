@@ -131,7 +131,7 @@ export default async function HomePage() {
 
               {stats && stats.totalRecords > 0 && (
                 <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/20 backdrop-blur ring-1 ring-white/20 rounded-2xl overflow-hidden max-w-3xl mx-auto">
-                  <Stat n={stats.totalRecords} label="verified records" tone="dark" />
+                  <Stat n={stats.totalRecords} label="indexed records" tone="dark" />
                   <Stat n={stats.distinctPassports} label="passports covered" tone="dark" />
                   <Stat n={stats.distinctDestinations} label="destinations covered" tone="dark" />
                   <Stat n={stats.distinctSources} label="primary sources" tone="dark" />

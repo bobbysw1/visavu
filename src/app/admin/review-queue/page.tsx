@@ -20,12 +20,14 @@ export default async function AdminReviewQueuePage() {
   let userReports: Awaited<ReturnType<typeof loadUserReports>> = [];
   let lowConfidence: Awaited<ReturnType<typeof loadLowConfidenceRecords>> = [];
   let staleVerified: Awaited<ReturnType<typeof loadStaleRecords>> = [];
+  let wikiMismatches: Awaited<ReturnType<typeof loadWikiMismatches>> = [];
   let error: string | null = null;
   try {
-    [userReports, lowConfidence, staleVerified] = await Promise.all([
+    [userReports, lowConfidence, staleVerified, wikiMismatches] = await Promise.all([
       loadUserReports(),
       loadLowConfidenceRecords(),
       loadStaleRecords(),
+      loadWikiMismatches(),
     ]);
   } catch (e) {
     error = e instanceof Error ? e.message : String(e);
@@ -136,6 +138,50 @@ export default async function AdminReviewQueuePage() {
           <p className="text-sm text-neutral-500">Nothing stale.</p>
         ) : (
           <RouteList rows={staleVerified} />
+        )}
+      </section>
+
+      <section className="mb-10">
+        <h2 className="text-lg font-semibold mb-3">
+          Wikipedia mismatches{" "}
+          <span className="text-sm font-normal text-neutral-500">({wikiMismatches.length})</span>
+        </h2>
+        <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
+          MISMATCH / ADD entries from{" "}
+          <code className="px-1 bg-neutral-100 dark:bg-neutral-800 rounded">npm run reconcile-wikipedia --persist</code>{" "}
+          over the past 30 days. Each row needs a human to verify whether Wikipedia or our
+          source is correct.
+        </p>
+        {wikiMismatches.length === 0 ? (
+          <p className="text-sm text-neutral-500">
+            No recent Wikipedia mismatches. Run{" "}
+            <code className="px-1 bg-neutral-100 dark:bg-neutral-800 rounded">
+              npm run reconcile-wikipedia -- --persist
+            </code>{" "}
+            to populate.
+          </p>
+        ) : (
+          <ul className="space-y-2">
+            {wikiMismatches.map((m) => (
+              <li
+                key={m.id}
+                className="rounded border border-amber-200 dark:border-amber-900 bg-amber-50/40 dark:bg-amber-950/20 p-3 text-sm"
+              >
+                <Link
+                  href={`/${m.passportIso2.toLowerCase()}/${m.destinationIso2.toLowerCase()}`}
+                  className="font-medium hover:underline"
+                >
+                  {nameFor(m.passportIso2)} → {nameFor(m.destinationIso2)}
+                </Link>
+                <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-1">
+                  {m.notes}
+                </p>
+                <p className="text-xs text-neutral-500 mt-1">
+                  Detected {new Date(m.occurredAt).toLocaleString("en")}
+                </p>
+              </li>
+            ))}
+          </ul>
         )}
       </section>
     </main>
@@ -272,4 +318,51 @@ async function loadStaleRecords(): Promise<ReviewRow[]> {
     correctnessBucket: r.correctnessBucket,
     lastVerifiedAt: r.lastVerifiedAt ? new Date(r.lastVerifiedAt as Date).toISOString() : null,
   }));
+}
+
+type WikiMismatch = {
+  id: number;
+  passportIso2: string;
+  destinationIso2: string;
+  notes: string;
+  occurredAt: string;
+};
+
+/**
+ * Surface verification_events written by
+ * `npm run reconcile-wikipedia -- --persist`. Each MISMATCH / ADD row
+ * writes a verification_events row with kind = "cross_source" and actor
+ * = "wikipedia-reconcile".
+ */
+async function loadWikiMismatches(): Promise<WikiMismatch[]> {
+  const cutoff = new Date(Date.now() - 30 * 86_400_000);
+  const rows = await db
+    .select({
+      id: schema.verificationEvents.id,
+      notes: schema.verificationEvents.notes,
+      occurredAt: schema.verificationEvents.occurredAt,
+      destinationIso2: schema.visaOptions.destinationIso2,
+      issuerIso2: schema.passports.issuerIso2,
+    })
+    .from(schema.verificationEvents)
+    .innerJoin(schema.visaOptions, eq(schema.verificationEvents.visaOptionId, schema.visaOptions.id))
+    .innerJoin(schema.passports, eq(schema.passports.id, schema.visaOptions.passportId))
+    .where(
+      and(
+        eq(schema.verificationEvents.actor, "wikipedia-reconcile"),
+        eq(schema.verificationEvents.kind, "cross_source"),
+      ),
+    )
+    .orderBy(desc(schema.verificationEvents.occurredAt))
+    .limit(50);
+
+  return rows
+    .filter((r) => (r.occurredAt as Date) >= cutoff)
+    .map((r) => ({
+      id: r.id,
+      passportIso2: r.issuerIso2,
+      destinationIso2: r.destinationIso2,
+      notes: r.notes ?? "",
+      occurredAt: new Date(r.occurredAt as Date).toISOString(),
+    }));
 }

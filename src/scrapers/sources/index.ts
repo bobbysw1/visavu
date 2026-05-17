@@ -79,6 +79,14 @@ import { auNzTransTasmanAdapter } from "./au_nz_trans_tasman";
 // P33 — bulk EU long-stay D-class adapters (NL/IT/SE/AT/BE/FI/NO/DK/CZ/
 // HU/PL/GR/RO/BG/HR/SK/SI/EE/LT/LV).
 import { EU_LONG_STAY_BULK_ADAPTERS } from "./eu_long_stay_bulk";
+// P34 closure — final long-stay batch (IE CSEP, AU 189, CA PNP, AE Green,
+// SG Tech.Pass, KR D-2).
+import { irelandCriticalSkillsAdapter } from "./ie_critical_skills";
+import { auSubclass189Adapter } from "./au_subclass_189";
+import { canadaPnpAdapter } from "./ca_pnp";
+import { uaeGreenVisaAdapter } from "./ae_green_visa";
+import { singaporeTechPassAdapter } from "./sg_tech_pass";
+import { koreaD2StudentAdapter } from "./kr_d2_student";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -150,6 +158,12 @@ export const ADAPTERS: Adapter[] = [
   ukIrelandCtaAdapter,
   auNzTransTasmanAdapter,
   ...EU_LONG_STAY_BULK_ADAPTERS,
+  irelandCriticalSkillsAdapter,
+  auSubclass189Adapter,
+  canadaPnpAdapter,
+  uaeGreenVisaAdapter,
+  singaporeTechPassAdapter,
+  koreaD2StudentAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

@@ -1,113 +1,125 @@
 "use client";
 
 /**
- * Header-level locale switcher.
+ * Header locale switcher — backed by the P29 i18n scaffold registry
+ * (src/lib/i18n/locales.ts). Switches the ?lang= URL param + cookie so
+ * server components on the next render apply the right message table.
  *
- * Refactored 2026-05 from <details>-based disclosure to an explicit
- * useState + click-outside dropdown. The <details> version was clicking-
- * through-to-summary correctly but the dropdown panel was clipped under
- * the sticky site header on some layouts. This is more reliable.
+ * Honest about translation coverage — surfaces "partial" / "stub" next
+ * to each option so users see which locales are fully translated and
+ * which fall back to English UI. Editorial content (passport intros,
+ * guides) is English-only with an in-page notice; translating the body
+ * copy is on the backlog.
  *
- * Changes the URL's ?lang=xx without losing pathname or other query
- * params. trackEvent fires on every selection so we can see which
- * locales actually get use.
- *
- * Reads state from the URL on the client (no server-side Accept-Language
- * read) so SiteHeader stays statically cacheable. Defaults to "en" until
- * hydrated — preventing SSR mismatch.
+ * The structural App Router migration to /(site)/[locale]/* is the next
+ * step — once that lands, URLs become canonical locale-prefixed and
+ * this switcher only needs to redirect.
  */
 import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Globe } from "lucide-react";
 import {
-  SUPPORTED_LOCALES,
-  LOCALE_DISPLAY_NAMES,
-  isSupportedLocale,
+  LOCALES,
+  LOCALE_LABEL,
+  LOCALE_COVERAGE,
+  isValidLocale,
   type Locale,
-} from "@/i18n/t";
+  DEFAULT_LOCALE,
+} from "@/lib/i18n/locales";
 import { trackEvent } from "./PlausibleScript";
+
+const COVERAGE_SUFFIX: Record<"complete" | "partial" | "stub", string> = {
+  complete: "",
+  partial: " · partial translation",
+  stub: " · English fallback",
+};
 
 export function LocaleSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [current, setCurrent] = useState<Locale>("en");
+  const [current, setCurrent] = useState<Locale>(DEFAULT_LOCALE);
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
-  // Hydrate from URL on mount.
+  // Hydrate from URL on mount; URL ?lang= wins over cookie.
   useEffect(() => {
     const fromUrl = searchParams.get("lang");
-    if (fromUrl && isSupportedLocale(fromUrl)) setCurrent(fromUrl);
+    if (fromUrl && isValidLocale(fromUrl)) {
+      setCurrent(fromUrl);
+      return;
+    }
+    const fromCookie = document.cookie.match(/(?:^|; )visavu_locale=([^;]+)/)?.[1];
+    if (fromCookie && isValidLocale(fromCookie)) {
+      setCurrent(fromCookie);
+    }
   }, [searchParams]);
 
   // Close on outside click.
   useEffect(() => {
     if (!open) return;
-    function onDocClick(e: MouseEvent) {
+    const handler = (e: MouseEvent) => {
       if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
-    }
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
-    }
-    document.addEventListener("mousedown", onDocClick);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDocClick);
-      document.removeEventListener("keydown", onKey);
     };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, [open]);
 
-  function pick(target: Locale) {
-    const params = new URLSearchParams(searchParams.toString());
-    if (target === "en") params.delete("lang");
-    else params.set("lang", target);
-    const qs = params.toString();
-    router.push(qs ? `${pathname}?${qs}` : pathname);
-    trackEvent("LocaleChanged", { from: current, to: target });
+  function pick(next: Locale): void {
     setOpen(false);
+    if (next === current) return;
+    setCurrent(next);
+    document.cookie = `visavu_locale=${next}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+    const sp = new URLSearchParams(searchParams.toString());
+    if (next === DEFAULT_LOCALE) sp.delete("lang");
+    else sp.set("lang", next);
+    const target = sp.size > 0 ? `${pathname}?${sp.toString()}` : pathname;
+    trackEvent("LocaleChanged", { locale: next });
+    router.replace(target);
+    router.refresh();
   }
 
   return (
-    <div ref={rootRef} className="relative text-sm">
+    <div ref={rootRef} className="relative inline-block">
       <button
         type="button"
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-label={`Current language: ${LOCALE_DISPLAY_NAMES[current]}. Click to change.`}
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] hover:bg-[var(--color-muted)] transition"
+        className="inline-flex items-center gap-1.5 rounded-md border border-[var(--color-rule)] bg-[var(--color-paper)] px-2 py-1 text-xs font-medium hover:bg-[var(--color-muted)]/40"
+        aria-expanded={open}
+        aria-haspopup="listbox"
       >
-        <Globe size={14} aria-hidden />
-        <span className="hidden sm:inline">{LOCALE_DISPLAY_NAMES[current]}</span>
-        <span className="sm:hidden uppercase">{current}</span>
-        <span aria-hidden className="text-[10px] opacity-60">▾</span>
+        <Globe size={12} aria-hidden />
+        {LOCALE_LABEL[current]}
+        <span aria-hidden className="text-[10px] text-[var(--color-ink-muted)]">▾</span>
       </button>
       {open && (
-        <div
+        <ul
           role="listbox"
           aria-label="Choose language"
-          className="absolute right-0 top-full mt-2 z-50 ink-card shadow-lg p-1.5 grid grid-cols-1 gap-0.5 min-w-[13rem]"
+          className="absolute right-0 z-50 mt-1 min-w-[12rem] rounded-md border border-[var(--color-rule)] bg-[var(--color-paper)] shadow-lg overflow-hidden"
         >
-          {SUPPORTED_LOCALES.map((l) => (
-            <button
-              key={l}
-              type="button"
-              role="option"
-              aria-selected={l === current}
-              onClick={() => pick(l)}
-              className={`text-left px-3 py-1.5 rounded text-sm transition ${
-                l === current
-                  ? "bg-[var(--color-ink)] text-[var(--color-paper)] font-semibold"
-                  : "hover:bg-[var(--color-muted)]"
-              }`}
-            >
-              {LOCALE_DISPLAY_NAMES[l]}
-            </button>
-          ))}
-        </div>
+          {LOCALES.map((locale) => {
+            const coverage = LOCALE_COVERAGE[locale];
+            return (
+              <li key={locale}>
+                <button
+                  type="button"
+                  onClick={() => pick(locale)}
+                  className={`w-full text-left px-3 py-2 text-xs hover:bg-[var(--color-muted)]/40 ${
+                    locale === current ? "bg-[var(--color-muted)]/30" : ""
+                  }`}
+                >
+                  <span className="font-medium">{LOCALE_LABEL[locale]}</span>
+                  <span className="text-[10px] text-[var(--color-ink-muted)]">
+                    {COVERAGE_SUFFIX[coverage]}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       )}
     </div>
   );

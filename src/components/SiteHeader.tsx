@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { CurrencySwitcher } from "./CurrencySwitcher";
+import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MobileMenu } from "./MobileMenu";
 
-// NOTE: LocaleSwitcher is intentionally hidden site-wide until translation
-// coverage moves beyond status / purpose labels. A switcher that silently
-// no-ops on ~95% of page copy hurts credibility more than offering no
-// switcher at all. When we add locale-prefixed routes (see project
-// backlog), re-import LocaleSwitcher and add it to <nav> below.
+// LocaleSwitcher is now backed by the P29 i18n scaffold registry
+// (src/lib/i18n/locales.ts). Each option labels its translation status
+// (complete / partial / stub) so users see exactly what's translated.
+// Full URL-prefix routing (/(site)/[locale]/*) is the next migration —
+// until then the switcher persists locale via cookie + ?lang= for the
+// strings that already have translations.
 
 /**
  * SiteHeader — editorial chrome.
@@ -67,6 +69,9 @@ export function SiteHeader() {
               client-side; without a boundary, Next bails out of SSG. */}
           <Suspense fallback={null}>
             <CurrencySwitcher />
+          </Suspense>
+          <Suspense fallback={null}>
+            <LocaleSwitcher />
           </Suspense>
           <MobileMenu />
         </nav>

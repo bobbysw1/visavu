@@ -6,6 +6,7 @@ import { MetricComparisonTable } from "@/components/MetricComparisonTable";
 import { PassportCover } from "@/components/PassportCover";
 import { COUNTRY_LIST, flagEmoji, nameFor } from "@/lib/countries";
 import { coverageForPassport } from "@/lib/coverage";
+import { curatedComparisonFor, generateComparisonSummary } from "@/content/compareSummaries";
 import { getPassportCover } from "@/lib/passportCovers";
 import { SITE, absoluteUrl } from "@/lib/site";
 import type { CoverageSnapshot } from "@/lib/coverage";
@@ -135,9 +136,8 @@ export default async function ComparePage({ params }: { params: Promise<Params> 
               </p>
             </div>
           </div>
-          <p className="text-sm sm:text-base text-[var(--color-ink)]/80 text-center max-w-2xl mx-auto leading-relaxed">
-            Side-by-side passport strength — visa-free destinations, eTA coverage, embassy
-            requirements, and the living-conditions tale of the tape.
+          <p className="text-sm sm:text-base text-[var(--color-ink)]/80 text-center max-w-3xl mx-auto leading-relaxed">
+            {curatedComparisonFor(aIso, bIso) ?? generateComparisonSummary(aIso, bIso, coverageA, coverageB)}
           </p>
         </section>
 

@@ -12,6 +12,7 @@ import {
   type ServiceCategory,
 } from "@/lib/services";
 import { ALL_SERVICES } from "@/content/services";
+import { categoryIntroFor } from "@/content/services/categoryIntros";
 
 const SLUG_TO_CATEGORY: Record<string, ServiceCategory> = Object.fromEntries(
   SERVICE_CATEGORIES.map((c) => [CATEGORY_META[c].slug, c]),
@@ -59,6 +60,7 @@ export default async function ServiceCategoryPage({
 
   const meta = CATEGORY_META[category];
   const services = servicesFor(ALL_SERVICES, { category });
+  const intro = categoryIntroFor(category);
 
   const crumbs = [
     { href: "/", label: "Home" },
@@ -105,16 +107,32 @@ export default async function ServiceCategoryPage({
           </div>
         </header>
 
+        {/* Editorial framing — long intro, methodology note, and an
+            honest "when you don't need this" section. Lifts the page above
+            thin-affiliate-grid territory; mirrors the editorial bar set by
+            /methodology and /sources. */}
+        <section className="editorial-body prose prose-sm dark:prose-invert max-w-none mb-10">
+          <h2 className="!mt-0">What this service covers</h2>
+          <p>{intro.longIntro}</p>
+          <h2>How we picked</h2>
+          <p>{intro.howWePicked}</p>
+          <h2>When you don&apos;t need this</h2>
+          <p>{intro.whenYouDontNeedThis}</p>
+        </section>
+
         {services.length === 0 ? (
           <p className="text-sm text-neutral-500 italic">
             No providers in this category yet. Check back soon.
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {services.map((s) => (
-              <ServiceCard key={s.id} service={s} />
-            ))}
-          </div>
+          <>
+            <h2 className="text-lg font-semibold mb-3">Providers we list</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {services.map((s) => (
+                <ServiceCard key={s.id} service={s} />
+              ))}
+            </div>
+          </>
         )}
 
         <section className="mt-12">

@@ -20,6 +20,7 @@
     "check-sources": "tsx src/scripts/checkSources.ts",
     "check-links": "tsx src/scripts/checkLinks.ts",
     "cross-check": "tsx src/scripts/crossCheckWikipedia.ts",
+    "reconcile-wikipedia": "tsx src/scripts/reconcileWikipediaByPassport.ts",
     "check-prod": "tsx src/scripts/checkProductionReadiness.ts",
     "refresh-rates": "tsx src/scripts/refreshExchangeRates.ts",
     "refresh": "tsx src/scripts/refresh.ts",

@@ -150,6 +150,21 @@ export type RelocationService = {
   /** Optional headquartered city — surfaced in tile metadata when
    *  geolocation isn't available, helps users gauge proximity. */
   city?: string;
+
+  // ---- P39 affiliate-ID layer ----
+  /** Per-partner query-parameter name for affiliate attribution. Each
+   *  partner uses a different shape — Booking.com is `aid`, SafetyWing is
+   *  `ref_id`, IMG is `referrer`, etc. When set, this overrides the
+   *  default `ref=visavu` token applied by `affiliateUrl()`. */
+  partnerRefParam?: string;
+  /** Per-partner affiliate token value. Until partner-registration is
+   *  complete this stays `null` and `affiliateUrl()` falls back to the
+   *  default `ref=visavu` placeholder. Once a real partner ID issues,
+   *  drop the token in here and the URL switches automatically. */
+  partnerRefValue?: string | null;
+  /** Optional per-partner subId field for tracking sub-campaigns / split
+   *  tests. Common partner shapes: SafetyWing `Subid1`, Booking `label`. */
+  partnerSubIdParam?: string;
 };
 
 /**
@@ -159,16 +174,43 @@ export type RelocationService = {
  */
 export function affiliateUrl(
   base: string,
-  opts: { passportIso2?: string; destinationIso2?: string; purpose?: Purpose; campaign?: string } = {},
+  opts: {
+    passportIso2?: string;
+    destinationIso2?: string;
+    purpose?: Purpose;
+    campaign?: string;
+    // P39 — when a service record carries a partner-specific param name,
+    // pass it here so the URL uses the partner's shape rather than the
+    // default ref=visavu placeholder.
+    partnerRefParam?: string;
+    partnerRefValue?: string | null;
+    partnerSubIdParam?: string;
+  } = {},
 ): string {
   const url = new URL(base);
-  if (!url.searchParams.has("ref")) url.searchParams.set("ref", "visavu");
+
+  // Partner-specific affiliate token takes precedence over the generic
+  // ref=visavu placeholder. Once a partner-issued ID is registered the
+  // service's record sets partnerRefValue and the URL transitions
+  // automatically without touching every link.
+  const refParam = opts.partnerRefParam ?? "ref";
+  const refValue = opts.partnerRefValue ?? "visavu";
+  if (!url.searchParams.has(refParam)) url.searchParams.set(refParam, refValue);
+
   if (opts.passportIso2) url.searchParams.set("utm_origin", opts.passportIso2);
   if (opts.destinationIso2) url.searchParams.set("utm_country", opts.destinationIso2);
   if (opts.purpose) url.searchParams.set("utm_purpose", opts.purpose);
   url.searchParams.set("utm_source", "visavu");
   url.searchParams.set("utm_medium", "result-page");
   if (opts.campaign) url.searchParams.set("utm_campaign", opts.campaign);
+
+  // Sub-ID for per-route split testing / attribution.
+  if (opts.partnerSubIdParam && opts.passportIso2 && opts.destinationIso2) {
+    url.searchParams.set(
+      opts.partnerSubIdParam,
+      `${opts.passportIso2}-${opts.destinationIso2}`,
+    );
+  }
   return url.toString();
 }
 

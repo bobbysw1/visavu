@@ -52,6 +52,30 @@ export const BLOCS: SeedBloc[] = [
     name: "Mercosur Residency Agreement",
     description: "Mercosur nationals may obtain temporary/permanent residency in member states.",
   },
+  {
+    id: "eu",
+    name: "European Union",
+    description:
+      "EU citizenship grants freedom of movement, labour-market access, and residence rights across all 27 member states.",
+  },
+  {
+    id: "eea",
+    name: "European Economic Area",
+    description:
+      "EEA citizens (EU plus Iceland, Liechtenstein, Norway) have reciprocal freedom of movement and labour-market access with EU member states.",
+  },
+  {
+    id: "cplp",
+    name: "Community of Portuguese-Speaking Countries",
+    description:
+      "CPLP nationals (Portugal, Brazil, Angola, Mozambique, Cape Verde, Guinea-Bissau, São Tomé, Timor-Leste, Equatorial Guinea) benefit from streamlined residence and document recognition under the 2021 CPLP Mobility Agreement.",
+  },
+  {
+    id: "commonwealth",
+    name: "Commonwealth of Nations",
+    description:
+      "56 member states; not a unified visa regime, but several members (UK, AU, NZ, CA) operate Commonwealth-only working-holiday and youth-mobility preferences.",
+  },
 ];
 
 export const BLOC_MEMBERSHIPS: SeedBlocMembership[] = [
@@ -97,6 +121,34 @@ export const BLOC_MEMBERSHIPS: SeedBlocMembership[] = [
     countryIso2: iso2,
     effectiveFrom: "1991-03-26",
   })),
+
+  // EU — 27 member states. Croatia acceded 2013-07-01; UK left 2020-01-31.
+  ...["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].map(
+    (iso2) => ({ blocId: "eu", countryIso2: iso2, effectiveFrom: "1993-11-01" }),
+  ),
+
+  // EEA — EU 27 plus Iceland, Liechtenstein, Norway. Switzerland is NOT EEA
+  // (separate bilateral agreements); intentionally excluded here.
+  ...["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO"].map(
+    (iso2) => ({ blocId: "eea", countryIso2: iso2, effectiveFrom: "1994-01-01" }),
+  ),
+
+  // CPLP — 2021 Mobility Agreement entered into force progressively. Equatorial
+  // Guinea joined CPLP in 2014; mobility framework adoption is uneven.
+  ...["PT", "BR", "AO", "MZ", "CV", "GW", "ST", "TL", "GQ"].map((iso2) => ({
+    blocId: "cplp",
+    countryIso2: iso2,
+    effectiveFrom: "2021-11-17",
+  })),
+
+  // Commonwealth — 56 members. Effective date is the modern Commonwealth
+  // 1949 (London Declaration); recent joiners (Rwanda 2009, Gabon 2022,
+  // Togo 2022) have their own dates.
+  ...["AG", "AU", "BS", "BD", "BB", "BZ", "BW", "BN", "CM", "CA", "CY", "DM", "SZ", "FJ", "GM", "GH", "GD", "GY", "IN", "JM", "KE", "KI", "LS", "MW", "MY", "MV", "MT", "MU", "MZ", "NA", "NR", "NZ", "NG", "PK", "PG", "RW", "KN", "LC", "VC", "WS", "SC", "SL", "SG", "SB", "ZA", "LK", "TZ", "TO", "TT", "TV", "UG", "GB", "VU", "ZM"].map(
+    (iso2) => ({ blocId: "commonwealth", countryIso2: iso2, effectiveFrom: "1949-04-28" }),
+  ),
+  { blocId: "commonwealth", countryIso2: "GA", effectiveFrom: "2022-06-25" },
+  { blocId: "commonwealth", countryIso2: "TG", effectiveFrom: "2022-06-25" },
 ];
 
 // eTA systems — separate from visas. Each has its own scrape adapter (later).

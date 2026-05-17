@@ -15,6 +15,9 @@ import { nationalityFor } from "@/lib/nationalities";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { coverageForPassport, destinationSummariesForPassport } from "@/lib/coverage";
 import { passportIntroFor } from "@/content/passportIntros";
+import { generateIntro } from "@/content/passportIntroGenerator";
+import { buildPassportFaqs } from "@/content/passportFaqGenerator";
+import { OBSTACLES } from "@/content/obstacles";
 import { factsFor } from "@/content/countryFacts";
 import { getCountryPhoto } from "@/lib/pexels";
 
@@ -97,8 +100,13 @@ export default async function PassportIndex({ params }: { params: Promise<Params
   }
 
   const photo = await getCountryPhoto(upper);
-  const intro = passportIntroFor(upper);
+  const curatedIntro = passportIntroFor(upper);
   const facts = factsFor(upper);
+  // Obstacles for this passport — used by the generator + FAQ to surface
+  // sanctions / refusal-rate context inline rather than as a separate panel.
+  const passportObstacles = OBSTACLES.filter(
+    (o) => o.appliesTo.kind === "passport" && o.appliesTo.iso === upper,
+  );
 
   const crumbs = [
     { href: "/", label: "Home" },
@@ -111,46 +119,25 @@ export default async function PassportIndex({ params }: { params: Promise<Params
     ? coverage.byStatus.visa_free + coverage.byStatus.visa_free_with_eta
     : null;
 
+  // Fallback intro is generated from coverage + summaries + obstacles so two
+  // non-curated passports never read the same. Curated entries (75 today)
+  // always win.
+  const intro = curatedIntro
+    ?? generateIntro({ iso2: upper, name, adjective, coverage, summaries, obstacles: passportObstacles });
+
+  // FAQ JSON-LD is data-driven — questions added/removed per the passport's
+  // actual profile (eTA routes, bloc memberships, sanctions advisories).
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: `How many countries can ${name} passport holders visit visa-free?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            mobilityScore !== null
-              ? `${name} passport holders can enter approximately ${mobilityScore} countries visa-free or with a simple electronic travel authorisation (eTA). The remaining countries require an embassy-issued visa or e-Visa applied for in advance.`
-              : `Visa-free access depends on bilateral agreements and policy changes. Use our ${name} passport directory to see current requirements for each destination.`,
-        },
-      },
-      {
-        "@type": "Question",
-        name: `What is the strongest passport in the world?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `As of 2026 the most powerful passports are Japan, Singapore, South Korea and Germany — each offering visa-free or eTA access to ~190 destinations. The ${adjective} passport ranks separately depending on bilateral agreements and EU/Schengen membership.`,
-        },
-      },
-      {
-        "@type": "Question",
-        name: `Can ${name} passport holders work abroad?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `${name} passport holders can apply for work visas in many countries — typically requiring a sponsoring employer and skills assessment. Long-stay routes include the UK Skilled Worker, Australia Subclass 482, Canada Express Entry, and Germany's EU Blue Card. Pick a destination and select 'Work' for the specific rules.`,
-        },
-      },
-      {
-        "@type": "Question",
-        name: `What's the difference between visa-free and visa-free with an eTA?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `Visa-free means no advance authorisation is required before boarding. Visa-free with eTA means you don't need a visa, but you must obtain an electronic travel authorisation (e.g. ESTA, Canada eTA, UK ETA) before travelling. Airlines will deny boarding without it.`,
-        },
-      },
-    ],
+    mainEntity: buildPassportFaqs({
+      iso2: upper,
+      name,
+      adjective,
+      coverage,
+      summaries,
+      obstacles: passportObstacles,
+    }),
   };
 
   const itemListJsonLd = {
@@ -219,25 +206,9 @@ export default async function PassportIndex({ params }: { params: Promise<Params
               <h2 className="section-h2 mb-4">
                 Travel from {name}: the picture in 2026
               </h2>
-              {intro ? (
-                <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {intro}
-                </p>
-              ) : (
-                <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-                  The {adjective.toLowerCase()} passport opens approximately{" "}
-                  <strong>{mobilityScore ?? "—"}</strong> destinations
-                  {coverage?.totalDestinationsCovered
-                    ? ` of the ${coverage.totalDestinationsCovered} we cover`
-                    : ""}{" "}
-                  visa-free or with an electronic travel authorisation. For everything else, an
-                  embassy visa, e-Visa, or sponsored long-stay permit applies — costs, processing
-                  times, and the actual government link sit on every destination page below. The
-                  highest-traffic routes for {adjective.toLowerCase()} travellers tend to be
-                  tourism within the region, study at universities in the US, UK, Canada, Australia
-                  and the EU, and work routes via employer-sponsored skilled-worker programmes.
-                </p>
-              )}
+              <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+                {intro}
+              </p>
             </section>
 
             {/* WORLD MAP — premium interactive geography. Eligible

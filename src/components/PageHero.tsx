@@ -75,7 +75,11 @@ export function PageHero({
           )}
           <h1 className="serif-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight mb-3 drop-shadow-sm">
             {title}
-            {accent && <span className="text-[var(--color-accent)]">{accent}</span>}
+            {accent && !title.trimEnd().endsWith(accent) && (
+              <span className="text-[var(--color-accent)]" aria-hidden>
+                {accent}
+              </span>
+            )}
           </h1>
           {subtitle && (
             <p className="text-base sm:text-lg text-white/90 leading-relaxed max-w-2xl drop-shadow-sm">

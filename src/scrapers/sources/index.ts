@@ -54,6 +54,21 @@ import { koreaShortStayAdapter } from "./kr_short_stay";
 import { singaporeShortStayAdapter } from "./sg_short_stay";
 import { uaeShortStayAdapter } from "./ae_short_stay";
 import { mexicoShortStayAdapter } from "./mx_short_stay";
+// P31 — EU ETIAS (Schengen bloc-wide pre-travel authorisation).
+import { euEtiasAdapter } from "./eu_etias";
+// P32 — GCC unified tourist visa (rolling out 2024-2026 across 6 GCC states).
+import { gccUnifiedTouristAdapter } from "./gcc_unified_tourist";
+// P34 — additional long-stay routes (HSP/ONE Pass/Golden Visa/GEP/E-7).
+import { japanHspAdapter } from "./jp_hsp";
+import { singaporeOnePassAdapter } from "./sg_one_pass";
+import { uaeGoldenVisaAdapter } from "./ae_golden_visa";
+import { hkGepAdapter } from "./hk_gep";
+import { koreaE7Adapter } from "./kr_e7";
+// P33 — EU long-stay D-class (national skilled worker + non-lucrative).
+import { germanySkilledWorkerAdapter } from "./de_skilled_worker";
+import { spainNonLucrativeAdapter } from "./es_non_lucrative";
+// P36 — US State Department reciprocity (per-nationality fee/validity).
+import { usReciprocityAdapter } from "./us_reciprocity";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -111,6 +126,16 @@ export const ADAPTERS: Adapter[] = [
   singaporeShortStayAdapter,
   uaeShortStayAdapter,
   mexicoShortStayAdapter,
+  euEtiasAdapter,
+  gccUnifiedTouristAdapter,
+  japanHspAdapter,
+  singaporeOnePassAdapter,
+  uaeGoldenVisaAdapter,
+  hkGepAdapter,
+  koreaE7Adapter,
+  germanySkilledWorkerAdapter,
+  spainNonLucrativeAdapter,
+  usReciprocityAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

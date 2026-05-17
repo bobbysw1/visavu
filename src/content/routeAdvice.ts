@@ -7796,6 +7796,1965 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
     },
   },
 
+  // ════════════════════════════════════════════════════════════════════
+  // P18 EXPANSION — 100 additional high-traffic cells.
+  // Each cell follows the same 4-section schema; slightly more focused
+  // than the original 113 so the per-route specificity doesn't drown
+  // in repeated boilerplate. Real visa names, real fees, real timelines,
+  // real bilateral quirks. As always, fall back to the generic block
+  // for any cell not present here.
+  // ════════════════════════════════════════════════════════════════════
+
+  // ─── Southeast Asia → US (work / tourism / family) ───
+  "PH:US:tourism": {
+    whatCarriesWeight: [
+      { label: "B1/B2 ties-to-Philippines evidence", why: "US presumes immigrant intent under Section 214(b). Manila and Cebu B-visa interview waits run 6–12 months; refusal rates for first-time PH applicants are 25–45%. Strong documentation of employment, property, family, and prior compliant travel is the single biggest lever." },
+      { label: "Sponsor invitation + I-134 if visiting family", why: "If a US-based relative is sponsoring the trip, an I-134 Declaration of Financial Support with their tax transcript + W-2 + bank evidence materially shifts the financial-capacity test." },
+      { label: "Onward / return ticket + detailed itinerary", why: "Caseworker reads the itinerary as proxy for genuine visitor intent. Hotel bookings, return flight, and a specific schedule beat 'visiting family' alone." },
+      { label: "Clean immigration history globally", why: "Prior US overstays, refusals from other countries, or any TNT history in the Philippines will surface — disclose honestly and bring documentation." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Purpose and length of trip", prompt: "State exact dates and the specific purpose (family visit, tourism, conference). Vague answers raise immigrant-intent suspicion." },
+      { heading: "Your roots in the Philippines", prompt: "Employer, position, length of service, ownership of property, dependents who remain. Be specific with employer letters and titles." },
+      { heading: "How the trip is funded", prompt: "Your own income evidence OR sponsor's I-134 + supporting documents. Don't mix the two casually — pick one and document it fully." },
+      { heading: "Prior international travel", prompt: "Any Schengen, UK, AU, JP, KR, SG, HK trips help establish a compliant travel pattern." },
+      { heading: "Return plan", prompt: "Specific reason you'll return on schedule — pending work commitment, school year, parental care responsibilities." },
+    ],
+    moneySavingTips: [
+      "Don't use a 'visa fixer' — they cannot influence the consular interview. The US Embassy in Manila explicitly warns against fee scams. Submit DS-160 directly at ceac.state.gov.",
+      "If the embassy interview wait is 10+ months in Manila, third-country interview is allowed (most commonly: Singapore, Bangkok, Seoul). Factor in flight cost + 1 week travel.",
+      "Pay the MRV fee ($185) only once — refusal under 214(b) is not a permanent bar but the fee is non-refundable on refusal. Reapply only after material change in circumstances.",
+      "Interview waiver eligibility expanded in 2024 — if you previously held any US visa (B/F/J/H/L) and it's been less than 48 months since expiry, you may qualify. Saves the interview wait entirely.",
+    ],
+    lawyerTriggers: {
+      diy: ["First-time B1/B2 with strong ties to Philippines and clean immigration history", "Visa renewal under interview-waiver"],
+      getALawyer: ["Prior 214(b) refusal — second attempt benefits from professional reframing", "Any prior US overstay, deportation, or removal proceedings", "Recent denial from another country (UK, Canada, Australia) — disclosure obligations are strict"],
+    },
+  },
+
+  "PH:US:family": {
+    whatCarriesWeight: [
+      { label: "Petitioning relative's status (US citizen vs LPR)", why: "USC-petitioned spouses and minor children file under Immediate Relative (no annual cap, ~12-18 months). LPR-petitioned spouses/children file under F2A (capped, currently current for most countries). Philippine F-class wait times are among the longest globally — F4 (siblings of USC) is currently 20+ years." },
+      { label: "Bona-fide marriage evidence (CR-1 / IR-1)", why: "USCIS scrutinises Filipino-American spousal cases for marriage fraud risk. Strong evidence: cohabitation, joint finances, joint travel, family relationships, child(ren) of the marriage, communication records bridging long-distance courtship." },
+      { label: "NSO / PSA original birth and marriage certificates", why: "All civil documents must be PSA-certified (Philippine Statistics Authority). NSO-issued documents from before 2016 may need PSA reissue." },
+      { label: "I-864 Affidavit of Support meeting 125% federal poverty threshold", why: "Petitioner must show income ≥125% of poverty threshold for household size (or use a joint sponsor). Self-employment or W-2 evidence over the last 3 tax years." },
+    ],
+    personalStatementTemplate: [
+      { heading: "How you met and the relationship's development", prompt: "Specific timeline — meeting, courtship, engagement, marriage. Mention any long-distance period and how you maintained the relationship." },
+      { heading: "Visits and shared experiences", prompt: "Document each in-person visit with passport stamps, flight records, photos. K-1 fiancé(e) requires meeting in person within the prior 2 years." },
+      { heading: "Family integration", prompt: "Relationships with each other's families; introductions; weddings; planned future trips." },
+      { heading: "Plans in the United States", prompt: "Where will you live, work, settle? Specific city, employer (if known), housing arrangements." },
+    ],
+    moneySavingTips: [
+      "For CR-1 spousal (married outside US): petition from abroad is often faster than K-1 fiancé(e) once you're already married. Skip K-1 if marriage is imminent anyway.",
+      "Don't pay for premium courier services for civil documents — USCIS accepts standard PSA-issued documents. The 'expedite' channels for PSA copies in Manila cost 10× and add nothing legally.",
+      "K-1 fiancé(e) total cost runs $1,000–$2,500 (I-129F fee + consular fee + medical + AOS later). CR-1 spousal runs ~$1,200–$1,800. Don't believe consultants quoting $5,000+ — that's the fee, not the cost.",
+      "Free legal consultations: Catholic Legal Immigration Network (CLINIC), Asian Americans Advancing Justice, Pilipino Workers Center all run pro-bono clinics for Filipino-American families.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard CR-1 / IR-1 spousal petition with USC sponsor, clean immigration history, and PSA-original documents", "K-1 fiancé(e) with documented in-person meeting and standard timeline"],
+      getALawyer: ["Petitioner has prior I-130 filings (especially refused or withdrawn)", "Beneficiary has prior US overstay, deportation, or visa fraud history", "Marriage entered within 90 days of US presence (presumption of fraud risk)", "Same-sex couples whose marriage isn't recognised in Philippine civil registry"],
+    },
+  },
+
+  "VN:US:work": {
+    whatCarriesWeight: [
+      { label: "H-1B cap-subject lottery selection", why: "Vietnamese nationals enter the same March lottery as other H-1B applicants (65,000 + 20,000 master's cap). Selection rates have been ~25–30% recently. Master's-degree from US institution doubles your effective odds via the second selection pass." },
+      { label: "Employer's H-1B compliance history", why: "Apple, Google, Microsoft, Amazon and most Fortune 500s have clean H-1B records. Smaller employers, especially WITCH (Wipro/Infosys/TCS/Cognizant/HCL) consulting model, face heightened RFEs and audit scrutiny. The petitioner matters." },
+      { label: "Specialty occupation + degree match", why: "USCIS scrutinises whether the role requires a bachelor's-or-higher in a specific field, and whether your degree matches. CS degree + software engineer = clean. Generic IT degree + 'analyst' = RFE risk." },
+      { label: "Wage level at LCA filing", why: "Level 1 prevailing wage triggers RFEs in 2024–2025 enforcement. Level 2 or higher significantly reduces RFE risk." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your role and the petitioning employer", prompt: "Specific job title, employer's industry and size, your direct hiring manager. If you've worked for them already (L-1 to H-1B transition), document the existing relationship." },
+      { heading: "Educational background", prompt: "Degree, institution, graduation year. If Vietnam-issued, name the WES or similar credential evaluation establishing US equivalency." },
+      { heading: "Why this employer and why now", prompt: "Specific project, team, technology. Avoid generic 'better opportunities' framing." },
+      { heading: "Long-term plans", prompt: "Many Vietnamese H-1Bs intend EB-2 / EB-3 green-card progression — fine to mention honestly; H-1B is a dual-intent visa." },
+    ],
+    moneySavingTips: [
+      "Employer pays ALL H-1B filing fees by law (I-129 $460 + ACWIA $750-1,500 + Fraud Prevention $500 + premium $2,805 optional). If your employer asks you to reimburse, they're breaking DOL rules — report to WHD.",
+      "Vietnamese applicants applying at the Ho Chi Minh City or Hanoi consulate face 1-3 month interview waits — plan US start date with buffer.",
+      "Premium processing ($2,805) is now standard for cap-subject H-1B — 15-business-day decision. Worth it for predictable timing.",
+      "If your employer is an Approved Employer of Vietnamese workers, they may sponsor your dependents (H-4) faster via concurrent filing.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard Big-Tech H-1B with strong employer, Level 2+ wage, clean credentials — employer's legal team handles entire petition"],
+      getALawyer: ["Self-petitioning H-1B (own consultancy + own LCA + own client) — high RFE risk", "F-1 to H-1B conversion with cap-gap timing issues", "Prior H-1B refusal or RFE", "Vietnamese degree without WES evaluation — risk of 'specialty occupation' RFE", "Spouse / dependent issues (H-4 EAD applicants)"],
+    },
+  },
+
+  "VN:US:family": {
+    whatCarriesWeight: [
+      { label: "Petitioner's status and category", why: "USC-petitioned spouse (IR-1/CR-1, ~12-18 months) or minor child (IR-2) clears fastest. Vietnamese F-class siblings (F4) currently waiting 13+ years. F2A (LPR spouses) is current; F1/F3 wait 6-8 years from Vietnam." },
+      { label: "Marriage bona-fides for spouse cases", why: "Vietnamese-American marriages get standard scrutiny. Strong evidence: relationship-development timeline, photo evidence across years, joint finances if cohabited, communication records during separation, family integration evidence." },
+      { label: "Vietnamese civil document authentication", why: "Marriage and birth certificates from Vietnam need to be issued by competent local authority (UBND) and translated by an authorised translator. Apostille not used — Vietnam joined Hague Apostille only in 2024, transition still rolling out." },
+      { label: "I-864 financial sponsorship", why: "Petitioner needs household income ≥125% federal poverty threshold (≥100% for active-duty military petitioners). Joint sponsor allowed where petitioner alone doesn't qualify." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship history and current status", prompt: "When and how you met; marriage date and place; current living arrangements (same household or long-distance)." },
+      { heading: "In-person meetings", prompt: "Document each visit with passport stamps and photos. K-1 fiancé(e) requires meeting within prior 2 years." },
+      { heading: "Plans for the US", prompt: "Where you'll live, petitioner's employment and housing, plans for the beneficiary's career/study." },
+      { heading: "Family situation", prompt: "Children from this or prior relationships, dependent parents, anything affecting the household." },
+    ],
+    moneySavingTips: [
+      "Document translations from Vietnam: use a translator certified by Sở Tư Pháp (Department of Justice) — USCIS accepts these. 'International notarisation' services in Ho Chi Minh charge 5× more for the same outcome.",
+      "Form I-130 fee increased to $675 in April 2024 (from $535). DS-260 immigrant visa processing $325. Affidavit of Support $120. Medical at panel physician $250-400. Total: ~$1,500-2,000 official fees.",
+      "Avoid 'visa preparation services' in Ho Chi Minh charging $3,000+ for paperwork. The forms are free at uscis.gov and travel.state.gov; legitimate immigration lawyers charge $1,500–3,000 for full representation.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard USC spouse petition with clear marriage, no immigration complications"],
+      getALawyer: ["Petitioner has prior I-130 petitions (refused or withdrawn)", "Beneficiary has prior US overstay or immigration violation", "Marriage entered shortly after a previous beneficiary was denied — fraud presumption risk", "Vietnamese divorce decree from prior marriage — recognition complications"],
+    },
+  },
+
+  "ID:US:work": {
+    whatCarriesWeight: [
+      { label: "Employer-sponsored category (H-1B, L-1, O-1, E-2)", why: "Indonesia has no E-3 (Australia/Singapore-only) or H-1B1 (Chile/Singapore) treaty preferences. Standard H-1B cap lottery applies. L-1 intracompany transfer is common for Jakarta/Singapore-based multinationals." },
+      { label: "Indonesia-based employer's US footprint (for L-1)", why: "L-1A (executive/manager) and L-1B (specialised knowledge) require 1+ year continuous employment with the Indonesian entity, and a US qualifying organisation (parent/subsidiary/affiliate)." },
+      { label: "E-2 treaty investor (limited availability)", why: "Indonesia has an E-2 treaty with the US (1989 Treaty of Amity), making Indonesian nationals eligible for E-2 investor and treaty-employee visas with substantial investment in a US enterprise." },
+      { label: "Jakarta consulate processing", why: "B/F/J/H/L processing at the Jakarta embassy runs 6-16 weeks depending on category. Surabaya processes limited categories. Plan US start date with at least 6 weeks of buffer." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your role and the petitioning employer", prompt: "Title, industry, employer size, your direct hiring chain. For L-1, document 1+ year of employment with the Indonesian qualifying organisation." },
+      { heading: "Educational background and credential evaluation", prompt: "Indonesian degrees often need WES or ECE evaluation establishing US equivalency. Cite the evaluation reference number." },
+      { heading: "Why the US role and project", prompt: "Specific team, project, technology. For L-1, the role-equivalence test matters — show your Indonesian role and US role are at the same executive/managerial or specialised-knowledge level." },
+      { heading: "Long-term intent", prompt: "L-1A holders can pursue EB-1C green card (no per-country quota). L-1B and H-1B holders typically EB-2 / EB-3." },
+    ],
+    moneySavingTips: [
+      "If your employer is Indonesia-based and has a US office, L-1 (no cap, no lottery) is often faster and more reliable than H-1B.",
+      "E-2 treaty investor visa requires substantial investment — generally $100k+ in a US enterprise actively operated. Don't pursue unless you have genuine capital and a business plan.",
+      "Indonesian nationals are not subject to the country-cap on employment-based green cards — EB-2 / EB-3 timelines are 'current' or near-current, vastly faster than Indian / Chinese applicants.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard L-1 transfer with a large Indonesian-headquartered MNC sponsor (immigration team handles end-to-end)"],
+      getALawyer: ["E-2 treaty investor (legal structure and capital documentation is rigorous)", "Self-petitioning O-1 (extraordinary ability)", "Prior US visa refusal or overstay"],
+    },
+  },
+
+  "MY:US:work": {
+    whatCarriesWeight: [
+      { label: "H-1B cap-subject lottery + Malaysian-specific timing", why: "Standard H-1B lottery. Malaysian nationals benefit from no country-cap on EB-2 / EB-3 green-card progression — EB-2 is currently 'current' or near-current for Malaysia, vastly faster than India/China timelines." },
+      { label: "L-1 intracompany transfer (common pathway)", why: "Many Malaysia-based multinationals (Petronas, Maybank, Genting, plus US/EU MNCs with KL/Penang ops) use L-1 for US transfers. 1+ year continuous employment with qualifying organisation required." },
+      { label: "TN-equivalent absent", why: "Unlike Canadians/Mexicans (TN treaty visa), Malaysian nationals have no expedited treaty work visa. Standard H-1B/L-1/O-1/E-2 paths." },
+      { label: "Kuala Lumpur consulate processing", why: "Interview waits at KL run 1-4 weeks for most categories — among the shortest in the region. Penang has no full-service consulate (use KL)." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your role and US employer", prompt: "Title, industry, employer size, hiring chain. For L-1, document the Malaysian qualifying employer relationship." },
+      { heading: "Education and credential evaluation", prompt: "Malaysian degrees (BSc, MSc) typically map cleanly to US equivalents via WES. Cite the evaluation reference." },
+      { heading: "Why this opportunity", prompt: "Specific role, project, team — avoid generic 'better career' framing." },
+      { heading: "Green-card pathway intent", prompt: "Malaysian nationals enjoy current EB-2 / EB-3 priority dates, so honest mention of long-term immigrant intent doesn't disadvantage you (H-1B and L-1 are dual-intent visas)." },
+    ],
+    moneySavingTips: [
+      "Malaysia's English-language proficiency means no IELTS/TOEFL required for most US employer-sponsored cases — saves $250+ and weeks.",
+      "Malaysian nationals enjoy current EB-2 / EB-3 priority dates — file I-140 and adjust status concurrently if eligible (saves 12-24 months over staged filing).",
+      "Don't bundle consultant fees — KL has reputable immigration lawyers charging $1,500-3,000 for end-to-end H-1B/L-1 representation. Avoid 'agencies' charging $5,000+.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard H-1B with large US employer; immigration team manages entire process"],
+      getALawyer: ["Self-petitioning O-1 / EB-1A (extraordinary ability claim)", "E-2 investor (Malaysia is an E-2 treaty country — substantial investment route)", "Prior US visa refusal"],
+    },
+  },
+
+  "MY:US:study": {
+    whatCarriesWeight: [
+      { label: "I-20 from a SEVP-certified school", why: "F-1 student visa requires I-20 from an accredited US institution. Top-tier universities issue I-20 within days of tuition deposit; community colleges and language schools issue within weeks." },
+      { label: "Financial capacity (typically 1 year tuition + living)", why: "Bank statements showing the first year's tuition + ~$20-30k living expenses for non-spouse dependents. Funding from parents or scholarships is fine — document the source." },
+      { label: "Genuine non-immigrant intent (Section 214(b))", why: "Malaysian first-time student applicants typically pass the 214(b) test cleanly — strong family/property ties + clear graduation-and-return narrative. Refusal rates are below the regional baseline." },
+      { label: "Course alignment with prior study and career intent", why: "DS-160 application asks for major, degree level, intended career. Vague answers ('exploring options') trigger 214(b) refusal." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your educational background and current status", prompt: "Current institution, GPA, expected graduation. For pre-university applicants, SPM or A-Level results." },
+      { heading: "Why this US programme", prompt: "Specific programme, faculty, research opportunity, courses. Show you researched beyond rankings." },
+      { heading: "How it fits your career plan", prompt: "Where does this degree fit in your Malaysian career trajectory? Be specific about returning to a specific industry, employer, or family business." },
+      { heading: "Financial capacity", prompt: "Source of funding — parents, scholarship, savings. Document with bank statements and parent employment letters." },
+    ],
+    moneySavingTips: [
+      "Top US universities offer need-based aid to international students (Harvard, Princeton, Yale, MIT, Amherst, Wellesley) — apply for aid as part of admissions, not separately.",
+      "Scholarship from JPA (Public Service Department), Yayasan Khazanah, MARA, Petronas often covers tuition + living + flights. Bond requirement applies (must return to Malaysia for X years post-graduation).",
+      "OPT (Optional Practical Training) gives 12 months post-graduation work eligibility, plus 24 months for STEM degrees (36 months total for STEM grads). Plan around this for graduate employability.",
+      "F-1 SEVIS fee ($350) + visa fee ($185) = $535 total US-government fees. Total cost beyond that = embassy interview travel + photos + medical (rarely required). Don't pay 'agencies' more than $200 for application support.",
+    ],
+    lawyerTriggers: {
+      diy: ["First-time F-1 to a SEVP-certified institution with clear financial sponsorship", "F-1 renewal with continued enrolment in good standing"],
+      getALawyer: ["Prior F-1 refusal under 214(b) — re-applications need careful reframing", "Status change from F-1 to H-1B / OPT-to-H-1B cap gap timing", "Prior US visa fraud or overstay"],
+    },
+  },
+
+  "TH:US:work": {
+    whatCarriesWeight: [
+      { label: "H-1B / L-1 / E-2 standard categories", why: "Thailand-US has an E-2 treaty (1968 Treaty of Amity), making Thai nationals eligible for E-2 investor visas. Standard H-1B/L-1 paths apply otherwise. Thai nationals enjoy current EB-2/EB-3 priority dates — no country-cap backlog." },
+      { label: "Bangkok consulate processing", why: "Interview waits at Bangkok are typically 2-8 weeks for B/F/J/H/L categories. Chiang Mai has limited categories; default to Bangkok." },
+      { label: "Thai degree credential evaluation", why: "Thai bachelor's and master's typically map cleanly via WES. Some Thai universities (Chulalongkorn, Mahidol, Thammasat) are well-recognised by USCIS." },
+      { label: "Employer-sponsorship documentation", why: "Strong employer record matters more than nationality for H-1B/L-1 success. Big Tech, Fortune 500, and large engineering/consulting firms have clean records." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Role, employer, and team", prompt: "Specific title, US office location, hiring manager. For L-1, document Thai qualifying-organisation employment ≥1 year." },
+      { heading: "Education and credentials", prompt: "Thai or international degree, WES/ECE evaluation if Thai-issued, professional certifications relevant to role." },
+      { heading: "Why this US role specifically", prompt: "Project, technology stack, team — avoid generic career-advancement framing." },
+      { heading: "Long-term plans", prompt: "Honest about EB-2 / EB-3 progression if you intend it; both H-1B and L-1 are dual-intent visas." },
+    ],
+    moneySavingTips: [
+      "Thai E-2 treaty visa option for substantial US investment (typically $100k+ in a real business) — no annual cap, renewable indefinitely, spouse can work.",
+      "Thai nationals' EB-2 / EB-3 priority dates are current — file I-140 + I-485 concurrently if already in US on H-1B/L-1.",
+      "Skip 'visa agencies' in Bangkok charging $3,000+ — reputable US-licensed immigration lawyers in Bangkok cost $1,500-3,000 for end-to-end work-visa representation.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard L-1 transfer with large Thai-based MNC; in-house immigration handles end-to-end"],
+      getALawyer: ["E-2 treaty investor visa (capital structure and business plan documentation rigorous)", "Self-petitioning O-1 / EB-1A", "Prior US refusal"],
+    },
+  },
+
+  "TH:US:family": {
+    whatCarriesWeight: [
+      { label: "Petitioner status and category timing", why: "USC-petitioned spouse (IR/CR, 12-18 mo) or minor child (IR-2) clears fastest. F-class wait times for Thailand are typically 2-7 years depending on category. F4 sibling current wait: 15+ years." },
+      { label: "Marriage bona-fides for spouse cases", why: "Thai-American spousal petitions get standard USCIS scrutiny. Strong evidence: relationship-development timeline, photos, joint finances, family integration." },
+      { label: "Thai marriage registration", why: "Marriages registered at the local Amphoe (district office) are accepted. Religious-only ceremonies without civil registration don't qualify for US immigration. Translate the marriage certificate via a court-approved translator." },
+      { label: "I-864 sponsor income ≥125% federal poverty threshold", why: "Petitioner shows income via tax transcripts + W-2. Joint sponsor available where petitioner alone doesn't qualify." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship history", prompt: "How and where you met, courtship, engagement, marriage. Document photos and shared experiences." },
+      { heading: "In-person visits", prompt: "Each visit with dates, passport stamps, supporting evidence." },
+      { heading: "Living arrangements and plans", prompt: "Where you'll settle in the US — city, employer, housing, schools (if children)." },
+    ],
+    moneySavingTips: [
+      "Document translations via court-approved Thai translators (~THB 500-1,000/page) are USCIS-accepted. 'International certified' services charging 5× more add nothing legally.",
+      "Bangkok panel physicians charge ~THB 8,000-12,000 for the immigrant visa medical exam — see the embassy's approved list, not 'recommended' clinics charging double.",
+      "K-1 fiancé(e) visa for unmarried couples: $535 I-129F + $265 visa fee + medical + post-arrival AOS $1,440 = ~$2,500 total official cost. Don't pay agencies more than $1,500 in legal fees.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard USC-spouse petition with clean marriage and immigration history"],
+      getALawyer: ["Prior I-130 petitions (refused or withdrawn)", "Beneficiary's prior US overstay or immigration violation", "Polygamous marriage history (Thailand recognises only monogamous marriage for visa purposes)"],
+    },
+  },
+
+  // ─── South Asia → CA ───
+  "PK:CA:work": {
+    whatCarriesWeight: [
+      { label: "Express Entry CRS score + LMIA-supported job offer", why: "Pakistani nationals with bachelor's + IELTS 7+ + 3+ years skilled experience typically score 400-450 CRS without job offer. LMIA-supported job offer adds 50-200 points depending on occupation TEER level. Recent CRS draws have hovered 480-540 — most Pakistani applicants need an LMIA boost or PNP nomination." },
+      { label: "WES Educational Credential Assessment", why: "Pakistani degrees evaluated by WES (Canada-recognised) — submit transcripts via HEC-attested mailing. Processing 4-12 weeks. Higher Education Commission attestation is essential for WES recognition." },
+      { label: "IELTS General Training band scores", why: "CLB 9 (IELTS 7.0 listening / 6.0 reading / 7.0 writing / 7.0 speaking on the GT scale) optimises CRS — each band increase translates to substantial CRS gain." },
+      { label: "Police certificates from every country lived in 6+ months", why: "Pakistan PCC via NADRA; for any UAE/Saudi/UK/elsewhere residence, separate police clearances. Allow 4-12 weeks for Pakistan PCC." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your skilled-occupation profile", prompt: "NOC code (TEER 0/1/2/3 eligible for Express Entry FSW), years of experience, professional registration (PEC for engineers, PMDC for doctors)." },
+      { heading: "Education and credential assessment", prompt: "Degree, institution, HEC attestation, WES ECA reference number." },
+      { heading: "Language test results", prompt: "IELTS General Training band scores per skill. If aiming for French bonus points, TEF/TCF results." },
+      { heading: "Settlement plan", prompt: "Province, city, employment search strategy, settlement funds." },
+    ],
+    moneySavingTips: [
+      "Pakistani candidates: maximise CRS via spouse's profile too. Spousal education + language can add 40 points.",
+      "Provincial Nominee Programs (Saskatchewan SINP, Alberta AAIP, Manitoba MPNP) often have lower CRS thresholds and dedicated draws for Pakistani-occupation profiles.",
+      "Don't pay immigration consultants in Islamabad/Karachi $5,000+ — Express Entry is self-serve via canada.ca. CICC-licensed consultants in Canada charge CAD$2,500-5,000 for full representation if you need it.",
+      "Settlement funds: CAD$13,757 (single) or CAD$17,127 (couple) as of 2024. Show liquid funds in your name 6+ months pre-application.",
+    ],
+    lawyerTriggers: {
+      diy: ["Clean Express Entry profile with strong CRS, no immigration history complications"],
+      getALawyer: ["Past refusal from Canada, US, UK, AU (shared character data systems)", "Pakistani military service requiring extra documentation", "Inadmissibility concerns (criminal, medical, security)", "LMIA challenges from a small employer"],
+    },
+  },
+
+  "PK:CA:family": {
+    whatCarriesWeight: [
+      { label: "Sponsor's status (Canadian citizen vs PR)", why: "PR sponsors must live in Canada when sponsoring; citizens may sponsor from abroad. Sponsor must not have received social assistance (non-disability) in prior 12 months, must not be in default on a previous sponsorship undertaking." },
+      { label: "Marriage / common-law genuineness", why: "IRCC scrutinises Pakistani-Canadian marriages for arranged-marriage fraud risk (especially short courtship + immediate sponsorship pattern). Strong evidence: extended courtship, in-person visits, family involvement, photo evidence across time, marriage ceremony evidence." },
+      { label: "Pakistan NADRA-issued documents", why: "Computerised National Identity Card (CNIC), Nikahnama (Pakistani marriage certificate), and B-Form (birth certificate) all required. Older Form-B birth certificates must be reissued by NADRA in computerised format." },
+      { label: "Sponsor's financial undertaking", why: "Sponsor commits to financial support for 3 years (spouse) / 10 years (parents). No formal income threshold for spousal sponsorship, but income evidence helps establish credible commitment." },
+    ],
+    personalStatementTemplate: [
+      { heading: "How you met and how the relationship developed", prompt: "Timeline: meeting (often via family introduction in Pakistani context — that's fine, document it), courtship (in-person and virtual), engagement, marriage." },
+      { heading: "In-person meetings", prompt: "Document each visit with passport stamps and supporting evidence. For arranged marriages, document family meetings, jirga, walima." },
+      { heading: "Communication during separation", prompt: "WhatsApp / video call records, photo timelines, gift records." },
+      { heading: "Plans for Canada", prompt: "Where you'll settle, sponsor's employment, housing arrangements, beneficiary's career plans." },
+    ],
+    moneySavingTips: [
+      "Document translations via translator certified by ATIO (Ontario), STIBC (BC), or OTTIAQ (Quebec) — IRCC-accepted. Don't pay 'international notarised' services 5× more.",
+      "Spousal sponsorship fees: CAD$1,205 (processing) + CAD$85 (biometrics) + CAD$515 (right of permanent residence). Total ~CAD$1,800 per sponsored spouse.",
+      "Pakistan PCC via Karachi/Islamabad/Lahore SP Office or via overseas Pakistani consulate — both work; allow 4-12 weeks.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard spousal sponsorship with extended courtship documentation and clean immigration histories"],
+      getALawyer: ["Short courtship + immediate sponsorship (high fraud-presumption risk)", "Sponsor's prior refused sponsorship or default on previous undertaking", "Beneficiary's prior Canadian or other Western refusal", "Polygamous prior marriage in Pakistan — IRCC recognises only one wife"],
+    },
+  },
+
+  // ─── Australia-bound: PH, NL ───
+  "PH:AU:work": {
+    whatCarriesWeight: [
+      { label: "Subclass 482 (TSS) with Australian-sponsor nomination", why: "Filipino nurses, IT, engineering, accounting and trades are heavily represented in 482. TSMIT ≥ AUD$73,150 from July 2024. Sponsor must be approved Standard Business Sponsor; nomination occupation must be on the Skilled Occupation List with valid skills assessment." },
+      { label: "ANMAC / Engineers Australia / Vetassess assessment", why: "Most Filipino-trained professionals (nurses, engineers, allied health) need pre-application skills assessment via the assessing body for their occupation. Allow 4-16 weeks." },
+      { label: "AHPRA / state-board registration for healthcare", why: "Filipino-trained nurses go through ANMAC for skills assessment AND NMBA for AHPRA nursing registration. IELTS or OET at the required level (commonly 7.0/350 across skills)." },
+      { label: "Police certificates from every country lived 12+ months in past 10 years", why: "Philippine NBI Clearance (NCR or overseas DFA channel) for Philippine residence; PCC from any other country (UAE/Saudi/Singapore common for Filipino diaspora)." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your nominated role, employer, and ANZSCO occupation", prompt: "Name the Australian business, role, ANZSCO code. Reference the skills assessment outcome if applicable." },
+      { heading: "Skills assessment + AHPRA registration (if healthcare)", prompt: "Assessment authority reference number; for healthcare professions, AHPRA progress." },
+      { heading: "English-language test results", prompt: "IELTS Academic / OET — required band per occupation (typically 7.0 / 350)." },
+      { heading: "Family, dependents, settlement plan", prompt: "Spouse / partner, children, where in Australia (city, school catchment). Subclass 482 dependents may work without restriction." },
+    ],
+    moneySavingTips: [
+      "Filipino-trained nurses: ANMAC + NMBA dual-process can run 8-18 months total. Start both in parallel.",
+      "Australia-Philippines reciprocal social security (under SSA) does NOT include Medicare — private health insurance (OVHC) is mandatory.",
+      "Skills In Demand (SID) visa replaces TSS in late 2024 with three streams: Specialist Skills (≥AUD$135k), Core Skills (≥AUD$73k), and Essential Skills (regional, lower threshold). Apply under the right stream.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard Subclass 482 with approved sponsor and clean credentials"],
+      getALawyer: ["Sponsor's first-time 482 nomination", "Skills assessment refused or pending appeal", "Prior visa refusal in any country", "Spouse / partner work-rights and dependent-children visa coordination"],
+    },
+  },
+
+  "NL:AU:work": {
+    whatCarriesWeight: [
+      { label: "Subclass 482 nomination + Dutch-credential portability", why: "Dutch professional credentials transfer cleanly to Australia in most fields. Engineers via Engineers Australia, accountants via CPA/CAANZ, IT via ACS. TSMIT ≥ AUD$73,150." },
+      { label: "Working Holiday Visa for under-31 alternative", why: "Dutch nationals (subclass 462 Work and Holiday) are eligible up to age 30. 12 months work + travel, no specific employer required — useful for testing the market before committing to employer-sponsored route." },
+      { label: "Dutch English-language exemption", why: "Dutch nationals from English-medium-degree programmes (Maastricht, Amsterdam, Utrecht) are typically eligible for English-test exemption. Document degree in English." },
+      { label: "Health insurance (OVHC required, no Dutch RHCA)", why: "Netherlands does NOT have a Reciprocal Health Care Agreement with Australia — private health insurance (OVHC via Bupa/Medibank/Allianz/NIB/AHM) mandatory for visa compliance." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Nominated role and sponsor", prompt: "Australian employer, ANZSCO occupation, salary level above TSMIT." },
+      { heading: "Dutch qualifications and skills assessment", prompt: "Cite Engineers Australia / CPA / CAANZ / ACS / Vetassess outcome and reference number." },
+      { heading: "Why Australia", prompt: "Specific industry (resources, agritech, fintech, healthcare). Sydney / Melbourne / Brisbane / Perth — name the city." },
+      { heading: "Long-term plans (PR pathway)", prompt: "Subclass 482 to 186 ENS (Employer Nomination Scheme) after 2-3 years for PR — mention honestly." },
+    ],
+    moneySavingTips: [
+      "Dutch nationals: Working Holiday (462) costs AUD$650 and gives 12 months freedom. Use it to test the market before committing to 482.",
+      "Dutch English-degree exemption saves IELTS/OET fee (~AUD$400).",
+      "Pay for Australia Direct (Telstra/Optus) eSIM pre-arrival — saves the Sydney airport markup.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard Subclass 482 with approved sponsor and Dutch English-medium degree"],
+      getALawyer: ["Self-employed Dutch national setting up Australian operation via own company sponsorship — genuineness test rigorous", "Prior Australian or Dutch immigration refusal"],
+    },
+  },
+
+  // ─── Iberoamerican framework (Spain via simplified naturalisation route) ───
+  "MX:ES:family": {
+    whatCarriesWeight: [
+      { label: "Spanish residence card via family reunification", why: "Spanish citizen sponsors apply via the EU family member regime (free movement); third-country Mexican spouses of Spanish citizens are entitled to a 5-year EU Family Member residence card." },
+      { label: "Iberoamerican simplified naturalisation (2-year rule)", why: "After 2 years of legal residence in Spain, Mexican nationals can apply for Spanish citizenship — vs the standard 10 years for most non-Iberoamerican applicants. This is the single biggest bilateral advantage." },
+      { label: "Apostilled Mexican civil documents", why: "Mexican birth, marriage and (if applicable) divorce certificates apostilled per the Hague Apostille Convention. Sworn translation by a traductor jurado registered with the Spanish Ministry of Foreign Affairs." },
+      { label: "Background check (Federal + state-level)", why: "Federal Carta de No Antecedentes Penales + state-level antecedentes for each Mexican state where you lived. Apostilled. Issued within the prior 6 months." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship to the Spanish sponsor", prompt: "If marriage: where and when, civil registry reference, prior marriages on either side. If parent/child: blood relationship documentation." },
+      { heading: "Living arrangements in Spain", prompt: "Where you'll live (the empadronamiento — local town hall registration — is essential), accommodation evidence, sponsor's income / employment in Spain." },
+      { heading: "Mexican legal status of original document set", prompt: "Apostilled civil documents, translation references, originals retained." },
+      { heading: "Long-term intent in Spain", prompt: "Honest about pursuing citizenship after 2 years — mention the Iberoamerican framework eligibility." },
+    ],
+    moneySavingTips: [
+      "Mexican apostille issued by SRE (Secretaría de Relaciones Exteriores) for federal documents; state-level by each state's foreign-affairs liaison. ~MXN$300-500 per apostille — don't pay agencies 10× more.",
+      "Traductor jurado fees in Madrid run €40-60 per page — cheaper than UK/US-based 'certified translation' services that aren't recognised by Spanish authorities.",
+      "Iberoamerican naturalisation requires 2 years of legal residence + DELE A2 Spanish + CCSE constitutional knowledge test (€85). Total citizenship cost: ~€200-400 in tests + legal documents.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard EU Family Member residence card via Spanish-citizen spouse with apostilled documents"],
+      getALawyer: ["Prior Spanish residence-card refusal", "Marriage entered shortly after sponsor obtained Spanish citizenship (fraud-risk presumption)", "Complications with Mexican prior-marriage or divorce documentation"],
+    },
+  },
+
+  "AR:ES:work": {
+    whatCarriesWeight: [
+      { label: "Spanish work + residence permit OR digital-nomad visa", why: "Argentine professionals can pursue: (a) Spanish work permit via approved Spanish employer + INSS labour-market test, (b) Highly Qualified Professional visa for senior roles, (c) Digital Nomad Visa for remote workers earning €2,762+/mo from non-Spanish clients. Each has distinct documentation." },
+      { label: "Iberoamerican 2-year naturalisation eligibility", why: "Argentine nationals qualify for Spanish citizenship after 2 years of legal residence — vastly faster than the standard 10-year track. Big differentiator vs other Latin American Spanish-speaking applicants." },
+      { label: "Argentine apostille (RA Foreign Ministry)", why: "Argentine federal documents apostilled by Ministerio de Relaciones Exteriores. Educational documents need legalisation through the Ministry of Education before apostille." },
+      { label: "Spanish criminal record + Argentine antecedentes penales", why: "Both required, both apostilled, both translated by traductor jurado. Antecedentes penales argentinos via Registro Nacional de Reincidencia." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your professional profile + Spanish employer (if applicable)", prompt: "For employer-sponsored: name the Spanish company, role, salary. For DNV: name your non-Spanish clients/employer and projected income." },
+      { heading: "Argentine educational + professional credentials", prompt: "Degree, institution, professional registration if applicable (matrícula). Apostilled diploma + transcripts." },
+      { heading: "Why Spain", prompt: "Specific city, sector, network. The DNV is popular for Madrid / Barcelona / Valencia / Málaga remote workers." },
+      { heading: "Long-term Iberoamerican citizenship intent", prompt: "Honest about pursuing the 2-year naturalisation route — Argentine eligibility is a feature, not a flag." },
+    ],
+    moneySavingTips: [
+      "Argentine apostille: ARS 2,000-5,000 per document (vastly cheaper than Spain-based 'international apostille services').",
+      "DNV avoids Spanish income tax on foreign-sourced income for the first 4 years under the Beckham Law — significant savings for high earners.",
+      "Spanish DELE A2 exam (~€85) + CCSE test (~€85) is the full naturalisation language/civics burden. Total citizenship application cost: ~€200-300.",
+    ],
+    lawyerTriggers: {
+      diy: ["DNV with clean income evidence and Argentine apostilled documents", "EU Family Member route via Spanish-citizen spouse"],
+      getALawyer: ["Employer-sponsored work permit (INSS labour-market test is rigorous)", "Prior Spanish residence-card refusal", "Complex Argentine corporate ownership structure for entrepreneur/investor route"],
+    },
+  },
+
+  "BR:ES:work": {
+    whatCarriesWeight: [
+      { label: "CPLP framework + Iberoamerican 2-year naturalisation", why: "Brazilian nationals enjoy BOTH the Iberoamerican 2-year naturalisation framework (Spain) AND streamlined Portuguese citizenship via CPLP. The Spain route is faster for citizenship; the Portugal route is faster for residence." },
+      { label: "Spanish work permit OR Digital Nomad Visa", why: "Same paths as other Latin American applicants — employer-sponsored work, Highly Qualified Professional, or DNV (€2,762+/mo from foreign clients). Brazilian Portuguese-speakers find Madrid / Barcelona / Valencia particularly welcoming." },
+      { label: "Brazilian apostille via Itamaraty cartórios", why: "Brazil joined the Hague Apostille Convention in 2016. Apostille via authorised cartórios (notary offices) — much faster than the old consular legalisation route." },
+      { label: "Antecedentes criminais (federal + state)", why: "Brazilian federal Polícia Federal background check + state-level estadual checks for each state of residence. Both apostilled and translated by traductor jurado in Spain." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your professional profile + Spanish employer or DNV income", prompt: "Same as AR:ES:work pattern — Spanish company + salary, OR non-Spanish clients + monthly income." },
+      { heading: "Brazilian educational credentials", prompt: "Diploma, institution, professional registration (CREA for engineers, OAB for lawyers, CRM for doctors). Apostilled." },
+      { heading: "Why Spain over Portugal", prompt: "If pursuing the Spain route specifically, mention the Iberoamerican 2-year vs CPLP routes. Spanish-language ability is generally easier transfer than Portuguese-from-Brazilian to European Portuguese." },
+      { heading: "Long-term Iberoamerican naturalisation intent", prompt: "Brazilian eligibility for 2-year naturalisation is a feature; mention it." },
+    ],
+    moneySavingTips: [
+      "Brazilian apostille via cartórios in São Paulo / Rio costs BRL 50-150 per document — orders of magnitude cheaper than Spain-based apostille intermediaries.",
+      "Spanish Beckham Law (DNV-eligible) caps tax at 24% for first 4 years on foreign-sourced income — significant savings for high-earner Brazilian remote workers.",
+      "DELE B1 Spanish exam (~€110) + CCSE (~€85) = full naturalisation language/civics requirement. Brazilian Portuguese-speakers typically pass DELE B1 with 3-6 months of focused study.",
+    ],
+    lawyerTriggers: {
+      diy: ["DNV with clean Brazilian apostilled documents", "EU Family Member via Spanish-citizen spouse"],
+      getALawyer: ["Employer-sponsored permit with Spanish company (labour-market test scrutiny)", "Complex Brazilian corporate structure (LTDA / SA shareholding) for entrepreneur route", "Prior Spanish residence-card refusal"],
+    },
+  },
+
+  // ─── CPLP framework (Portugal-bound Lusophone) ───
+  "BR:PT:work": {
+    whatCarriesWeight: [
+      { label: "CPLP Mobility Agreement framework", why: "Brazilian nationals are CPLP citizens — entitled to streamlined Portuguese residence under the 2021 CPLP Mobility Agreement. Application via SEF; no Schengen visa pre-required." },
+      { label: "Portuguese employer contract OR business registration", why: "For employer-sponsored work permit: Portuguese employment contract registered with the Tax Authority + Social Security registration. For self-employed: activity registration (CAE code) + business plan." },
+      { label: "Brazilian apostilled diploma + Portuguese degree-recognition", why: "Brazilian degrees recognised in Portugal via DGES (Direção-Geral do Ensino Superior). Apostille required. Some professions (medicine, law, engineering) need additional professional-body registration." },
+      { label: "Brazilian antecedentes criminais (federal + state) apostilled", why: "Polícia Federal + state-level estadual checks, apostilled, translated by translator registered with Portuguese notary." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your role and Portuguese employer or business", prompt: "Portuguese employer + role + salary, OR self-employed activity registration + business plan." },
+      { heading: "Brazilian credentials + DGES recognition", prompt: "Diploma, institution, DGES recognition reference number if obtained." },
+      { heading: "CPLP framework citation", prompt: "Mention CPLP citizenship and the 2021 Mobility Agreement explicitly — Portuguese consular officials are familiar with the framework." },
+      { heading: "Long-term intent", prompt: "CPLP citizens qualify for Portuguese citizenship after 5 years of residence (same as standard route, but with language-test exemption — Portuguese-from-Brazil is recognised)." },
+    ],
+    moneySavingTips: [
+      "CPLP-framework residence permit avoids the standard Schengen visa pre-requirement — apply directly at the Portuguese consulate or SEF on arrival under CPLP rules.",
+      "Brazilian Portuguese-speakers are exempt from the A2 Portuguese language test for citizenship — significant time/cost saving over 5 years.",
+      "Brazilian apostille via cartórios costs BRL 50-150. Avoid 'international document services' charging 10× more.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard CPLP-framework residence with Portuguese employer and Brazilian apostilled documents"],
+      getALawyer: ["Self-employment registration with complex Brazilian-corporate ownership", "Prior Schengen visa refusal in any member state", "Family-reunification cases with complex Brazilian civil-status documents"],
+    },
+  },
+
+  "AO:PT:work": {
+    whatCarriesWeight: [
+      { label: "CPLP Mobility Agreement framework", why: "Angolan nationals are CPLP citizens — entitled to streamlined Portuguese residence under the 2021 framework. Same shape as Brazil → Portugal but with less consular routinisation, so documentation rigour matters more." },
+      { label: "Angolan apostille OR consular legalisation", why: "Angola joined the Hague Apostille Convention in 2020 — most Angolan civil documents now eligible for apostille via the Ministry of External Relations. Older documents may need consular legalisation." },
+      { label: "Portuguese employer contract + Social Security registration", why: "Standard work-permit documentation: Portuguese employer's contract registered with Tax Authority + Social Security. Angolan-Portuguese sectors: oil/gas, construction, healthcare." },
+      { label: "Angolan certidão de registo criminal", why: "Issued by the Provincial Office of the Identification Service (Ministério da Justiça e dos Direitos Humanos). Apostilled. Allow 4-12 weeks." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your professional profile + Portuguese employer", prompt: "Role, Portuguese company, sector, salary." },
+      { heading: "Angolan credentials + DGES recognition", prompt: "Diploma, institution, DGES recognition (essential for regulated professions)." },
+      { heading: "CPLP framework eligibility", prompt: "Cite CPLP citizenship and 2021 Mobility Agreement explicitly." },
+      { heading: "Family ties in Portugal", prompt: "Angolan diaspora in Lisbon / Porto / Setúbal is substantial — mention family or community ties." },
+    ],
+    moneySavingTips: [
+      "CPLP-framework residence avoids the standard Schengen visa pre-requirement.",
+      "Angolan Portuguese-speakers exempt from A2 Portuguese language test for citizenship.",
+      "Most Lisbon-based immigration lawyers serving the Angolan-Portuguese community charge €500-1,200 for end-to-end residence-permit representation; avoid 'agencies' quoting €3,000+.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard CPLP-framework residence with Portuguese employer and clean documents"],
+      getALawyer: ["Investment / self-employment registration", "Complex Angolan civil-status documents (older marriages without modern registration)", "Prior Schengen refusal"],
+    },
+  },
+
+  // ─── Outbound US: Portugal, Spain, Mexico, Costa Rica, Panama (DNV / D7 / retirement) ───
+  "US:PT:work": {
+    whatCarriesWeight: [
+      { label: "D8 Digital Nomad Visa OR D7 Passive Income Visa", why: "US remote workers earning ≥ €3,480/mo from non-Portuguese sources qualify for the D8 Digital Nomad Visa (1-year + renewable). Retirees / passive-income earners with ≥ €820/mo (+30% per dependent) qualify for D7. Both lead to Portuguese citizenship after 5 years." },
+      { label: "Foreign-source income documentation", why: "12 months of bank statements showing consistent foreign-source income at or above the threshold. For employer remote work: employment contract + paystubs. For freelance / self-employed: invoices + contracts." },
+      { label: "Portuguese tax-residence (NIF) + Portuguese bank account", why: "Apply for NIF via a Portuguese tax-representative before the visa application. Open a Portuguese bank account and deposit 12 months' minimum income (~€10-40k depending on visa type)." },
+      { label: "Portuguese health insurance + accommodation evidence", why: "Mandatory health insurance covering Portugal (or proof of SNS enrolment eligibility). Accommodation evidence: 12-month rental contract OR property purchase deed OR Airbnb 12-month booking." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Why Portugal specifically", prompt: "City you'll settle in (Lisbon, Porto, Algarve, Madeira), specific reasons (lifestyle, cost, climate, language opportunities, EU access)." },
+      { heading: "Your income source and stability", prompt: "Employer or clients, contract duration, income consistency. Show this is genuine remote work, not a Portuguese-employment workaround." },
+      { heading: "Your long-term plan", prompt: "5-year path to citizenship via residence + A2 Portuguese + clean record. Mention honestly — Portugal welcomes long-term commitment." },
+      { heading: "Family and dependents", prompt: "Spouse / partner / children joining? Document school plans if children." },
+    ],
+    moneySavingTips: [
+      "NHR (Non-Habitual Resident) tax regime was phased out for new applicants in 2024 — replaced by IFICI (limited to specific high-skilled categories). Don't plan around NHR if applying fresh.",
+      "Portuguese tax-residence triggers worldwide income reporting — US-Portugal tax treaty avoids double taxation but FATCA and FBAR filings continue. Talk to a US-PT cross-border tax professional.",
+      "Don't pay for 'fast-track D7' services charging €5,000-10,000 — application via Portuguese consulate (Boston, NYC, SF, DC) costs €90 + supporting documents. Reputable Lisbon immigration lawyers charge €1,500-3,000 for end-to-end work.",
+      "Renew the D8/D7 ON TIME — overstays cost subsequent residence-card processing and reset the 5-year citizenship clock.",
+    ],
+    lawyerTriggers: {
+      diy: ["D8 with clean foreign-source income evidence and NIF / Portuguese bank account set up via remote service"],
+      getALawyer: ["D2 entrepreneur visa (business plan and capital documentation rigorous)", "Self-employed structures using US-LLC ownership", "Prior Schengen refusal anywhere", "Complex US tax-residency or expatriation status"],
+    },
+  },
+
+  "US:ES:work": {
+    whatCarriesWeight: [
+      { label: "Digital Nomad Visa OR Highly Qualified Professional visa", why: "US remote workers with €2,762+/mo foreign-source income qualify for the Spanish Digital Nomad Visa (1-year renewable to 3-year residence card). Senior professionals with a Spanish employer offer at executive-level salary qualify for the Highly Qualified Professional visa (faster track)." },
+      { label: "Beckham Law tax regime eligibility", why: "DNV holders qualify for the Beckham Law regime — 24% flat tax on Spanish-source income up to €600k for the first 4 years (vs the standard progressive rate up to 47%). Significant savings for high earners." },
+      { label: "Foreign-source income documentation", why: "12-month income evidence at or above DNV threshold. Employment contract + paystubs (W-2) OR self-employment evidence + bank statements." },
+      { label: "Spanish criminal record (Spain itself if previously resident) + US FBI background check", why: "FBI background check via fingerprinting + apostille (US Department of State). Spanish criminal record only if previously Spanish-resident." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Why Spain", prompt: "City (Madrid, Barcelona, Valencia, Málaga, Bilbao), specific reasons. Spanish-language ability if any." },
+      { heading: "Your remote-work setup", prompt: "Employer / clients, contract evidence, monthly income above the threshold. Show genuine remote work — Spanish authorities scrutinise DNV for Spanish-employment workarounds." },
+      { heading: "Long-term plans (5-year residence)", prompt: "DNV renewals lead to permanent residence after 5 years. Mention long-term commitment." },
+      { heading: "Family and dependents", prompt: "Spouse / partner / children — DNV includes dependents." },
+    ],
+    moneySavingTips: [
+      "Beckham Law tax election must be made within 6 months of becoming Spanish tax-resident — don't miss the window.",
+      "US-Spain tax treaty avoids double taxation; US FBAR and FATCA filings continue. A US-Spain cross-border CPA is worth €500-1,500 in the first year.",
+      "FBI background check + apostille: ~$50 + processing time 8-14 weeks via standard mail (or ~$100 + 1-2 weeks via expedited channeler). Don't pay 'agencies' more than $200 for the support.",
+      "Madrid / Barcelona DNV consular processing 1-3 months. Apply from US before relocating to avoid in-Spain processing complexity.",
+    ],
+    lawyerTriggers: {
+      diy: ["DNV with W-2 + paystubs from a stable US employer, clean US background check, no Spanish residency history"],
+      getALawyer: ["Self-employment with complex US-LLC ownership or partnerships", "Prior Spanish residency-card refusal", "Family-reunification cases with prior marriages requiring Spanish recognition"],
+    },
+  },
+
+  "US:MX:work": {
+    whatCarriesWeight: [
+      { label: "Temporary Resident visa OR Permanent Resident visa", why: "US nationals can apply for: (a) Temporary Resident at a Mexican consulate showing monthly income ~$3,000-4,000 OR savings ~$50-70k (varies by consulate); (b) Permanent Resident with higher financial thresholds. Both grant Mexican residence with work rights." },
+      { label: "Mexican consulate selection (varies by income threshold)", why: "Income thresholds and document requirements vary significantly by consulate. Generally: Houston / Dallas / San Diego / LA consulates have higher published thresholds than smaller US consulates. Some applicants travel to favoured consulates." },
+      { label: "Bank statements demonstrating consistent income or savings", why: "12 months of bank statements; for income: $3-4k/mo consistent; for savings: $50-70k+ liquid. Quality documentation matters — random one-off deposits flagged." },
+      { label: "Mexican residence-card finalisation at INM in Mexico", why: "Initial visa is issued by consulate; once in Mexico (typically within 180 days of issuance), finalise at INM (Instituto Nacional de Migración) within 30 days of entry." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Why Mexico", prompt: "Specific city (Mexico City, Mérida, San Miguel de Allende, Puerto Vallarta, Querétaro), purpose (remote work, retirement, business, family)." },
+      { heading: "Your income source", prompt: "Employer, client base, or pension. Document 12-month consistency at or above consulate threshold." },
+      { heading: "Mexican ties (if any) — family, property, prior travel", prompt: "Existing Mexican family, property purchases, business interests." },
+      { heading: "Long-term plan", prompt: "Temporary Resident → Permanent Resident after 4 years → Mexican citizenship after 5 years total." },
+    ],
+    moneySavingTips: [
+      "Mexican consulate income thresholds are PUBLISHED but enforced inconsistently — check the specific consulate's website AND call ahead. Houston: ~$2,800/mo; LA: ~$3,400/mo; DC: ~$3,000/mo (2024 figures).",
+      "Don't show up to consulate without an appointment — many consulates require online MX-Consul appointment booking, sometimes 4-12 weeks ahead.",
+      "Total cost: Mexican consulate visa fee ~$48 + Mexican residence card after entry ~MXN $5,000-7,500 ($300-450). Total ~$400-500 in government fees per applicant.",
+      "USMCA business travel under the T-classification doesn't require this visa — for short business trips, FMM tourist permit (free) and USMCA business categorisation suffice.",
+    ],
+    lawyerTriggers: {
+      diy: ["Temporary Resident application with clean income evidence and consulate-published threshold met"],
+      getALawyer: ["Permanent Resident direct (higher financial thresholds and consulate discretion)", "Investor / entrepreneur route requiring Mexican corporate structure", "Prior Mexican deportation or immigration violations"],
+    },
+  },
+
+  "US:CR:family": {
+    whatCarriesWeight: [
+      { label: "Rentista / Pensionado / Inversionista residence categories", why: "US nationals settling in Costa Rica typically pursue: Rentista (US$2,500+/mo passive income for 2 years), Pensionado (US$1,000+/mo lifetime pension), or Inversionista (US$150k+ investment in Costa Rica). Each grants temporary residence renewable to permanent." },
+      { label: "Marriage to Costa Rican citizen (Vinculo)", why: "Spouses of Costa Rican citizens apply via Vinculo con Costarricense — fastest residence path (provisional residence immediately, permanent residence after 1 year + Spanish A2 test for citizenship after 2 years)." },
+      { label: "Apostilled US documents (FBI background, marriage, birth)", why: "FBI background check + apostille via US Department of State. Marriage / birth certificates apostilled by issuing US state. Spanish translations by Costa Rican-accredited translator." },
+      { label: "Caja CCSS (public health insurance) enrolment", why: "Costa Rican residence requires enrolment in the Caja Costarricense de Seguro Social — mandatory monthly contribution based on income tier (~$50-300/mo)." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship to the Costa Rican sponsor (if family route)", prompt: "Marriage details, dates, civil registry reference. For child sponsorship by Costa Rican parent: birth records." },
+      { heading: "Settlement plan", prompt: "City (San José, Tamarindo, Atenas, Escazú, Heredia), housing arrangement, healthcare plan." },
+      { heading: "Income / pension / investment evidence", prompt: "12-month documentation at or above the category threshold." },
+      { heading: "Long-term intent", prompt: "Permanent residence after 3 years (Rentista/Pensionado/Inversionista) or 1 year (Vinculo spouse). Costa Rican citizenship after 7 years (5 for Latin Americans + Spaniards) — Vinculo spouses qualify after 2 years." },
+    ],
+    moneySavingTips: [
+      "Pensionado is the most accessible category — US Social Security recipients with $1,000+/mo qualify cleanly. Document via SSA award letter.",
+      "Caja contribution is income-based — declaring lower legitimate income saves substantially on monthly premiums (but verify with Costa Rican accountant on what's legal to optimise).",
+      "FBI background check + apostille: ~$50 fee + 8-14 weeks standard processing OR ~$100 via channeler + 1-2 weeks. Plan ahead.",
+      "Don't pay Costa Rican 'residencia agencies' $5,000+ — reputable San José immigration lawyers charge $1,500-3,000 for end-to-end Rentista/Pensionado representation.",
+    ],
+    lawyerTriggers: {
+      diy: ["Pensionado with clean SSA / pension award letter and apostilled documents"],
+      getALawyer: ["Inversionista with complex US-Costa Rican corporate ownership", "Prior Costa Rican refusal", "Vinculo with complex US-Costa Rican marriage history"],
+    },
+  },
+
+  "US:PA:work": {
+    whatCarriesWeight: [
+      { label: "Friendly Nations visa (US is on the list)", why: "Panama's Friendly Nations Visa covers 52 designated nationalities including US. 2-year provisional residence followed by permanent residence. Requires (a) economic ties: employment OR business OR real-estate purchase, AND (b) clean criminal record." },
+      { label: "Real-estate purchase OR Panamanian employment OR business setup", why: "Real estate: $200,000+ property purchase. Employment: Panamanian employment contract. Business: registered Panamanian company with operational activity. The 2021 Friendly Nations reform tightened these criteria." },
+      { label: "Apostilled US FBI background + birth / marriage certificates", why: "FBI background check + apostille (US Department of State). Birth/marriage certificates apostilled by issuing state." },
+      { label: "Health certificate + bank reference letter", why: "Health certificate from a Panamanian or US doctor (translated and authenticated). Bank reference letter showing financial standing." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your economic tie to Panama", prompt: "Real-estate purchase, employment, or business — name the property/company/employer specifically." },
+      { heading: "Why Panama", prompt: "Specific city (Panama City, Boquete, Coronado, Bocas del Toro). Tax (territorial — no tax on foreign-source income) is a legitimate reason." },
+      { heading: "Long-term plan", prompt: "Provisional 2 years → Permanent residence. Panamanian citizenship after 5 years for most; territorial tax remains regardless of citizenship." },
+    ],
+    moneySavingTips: [
+      "Panama's territorial tax regime: no Panamanian tax on foreign-source income. US taxation continues (worldwide for US persons), but Panama-source income tax is minimal for residents with foreign income only.",
+      "Panama Friendly Nations real-estate threshold: $200k+ property purchase. Coronado, Boquete and Bocas have qualifying properties under $300k.",
+      "Don't pay 'visa fixer' services in Panama City charging $10,000+ — reputable Panamanian immigration lawyers charge $3,000-5,000 for end-to-end Friendly Nations representation.",
+      "Bank reference letter from Panamanian bank (Banco General, BAC, Banistmo) is straightforward once you've opened an account — US passport + utility bill from anywhere + initial deposit ~$5,000.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard Friendly Nations with real-estate purchase and apostilled documents — most Panamanian lawyers handle end-to-end"],
+      getALawyer: ["Complex business-setup route", "Prior Panamanian refusal or immigration violation", "Family-reunification with prior divorces requiring Panamanian recognition"],
+    },
+  },
+
+  // ─── Retirement routes (UK / CA → PT, ES, CR, MX, PA) ───
+  "GB:PT:family": {
+    whatCarriesWeight: [
+      { label: "D7 Passive Income Visa for retirees", why: "UK nationals over standard working age with passive income ≥ €820/mo (+30% per dependent) qualify for the D7. Sources: state pension + private pension + investment income + rental income — combine as needed. Brexit removed UK freedom of movement, so D7 is now the standard retirement route." },
+      { label: "Pension / passive-income documentation", why: "12 months of bank statements showing income deposits. UK State Pension award letter from HMRC + private pension provider letters + DWP records. Investment income via accountant statement." },
+      { label: "Portuguese tax residence (NIF) + bank account + accommodation", why: "NIF via a Portuguese tax representative. Portuguese bank account with 12 months' minimum income deposited. Accommodation: 12-month rental contract OR property purchase deed." },
+      { label: "UK ACRO Police Certificate apostilled", why: "ACRO Police Certificate via UK Government's ACRO Criminal Records Office (~£55, 2-week processing) + apostille by FCDO Legalisation Office. Pre-apostille translation by a Portuguese-registered translator." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Why Portugal", prompt: "Specific area (Algarve / Lisbon / Porto / Madeira). Climate, cost, healthcare, lifestyle reasons." },
+      { heading: "Your pension / passive-income setup", prompt: "Detailed breakdown: State Pension + private pensions + investment income. Show consistency over 12 months." },
+      { heading: "Healthcare arrangements", prompt: "UK-Portugal S1 form post-Brexit changed — UK retirees in Portugal use private insurance until enrolment in SNS. Document health insurance for transition." },
+      { heading: "Long-term plan", prompt: "Permanent residence after 5 years on D7; Portuguese citizenship 5 years (with A2 Portuguese)." },
+    ],
+    moneySavingTips: [
+      "UK State Pension is payable from Portugal at full rate (uprated annually as Portugal has bilateral arrangement). Notify International Pension Centre in Newcastle before relocating.",
+      "S1 healthcare entitlement for UK retirees in EU is country-specific post-Brexit — check current rules with NHS Overseas Healthcare Team.",
+      "UK-Portugal Double Tax Treaty avoids double taxation on pension income. Most UK pensions taxed in Portugal (residence country) under treaty rules — verify with cross-border accountant.",
+      "Don't use NHR tax regime planning — phased out for new applicants in 2024. IFICI replacement is limited to high-skilled categories.",
+    ],
+    lawyerTriggers: {
+      diy: ["D7 with clean UK pension/passive income evidence and standard documents"],
+      getALawyer: ["Complex UK SIPP or QROPS pension structures", "Prior Schengen refusal", "Family reunification with prior UK divorces requiring Portuguese recognition"],
+    },
+  },
+
+  "GB:ES:study": {
+    whatCarriesWeight: [
+      { label: "Non-Lucrative Visa for retirees (the dominant UK-to-Spain pathway)", why: "UK retirees use Spain's Non-Lucrative Visa (NLV) — passive income ~€2,400/mo (current threshold is 400% of IPREM for the primary applicant + 100% per dependent). Renewable to permanent residence after 5 years. Note: this entry covers the practical study/retiree-relocation route; spousal-family cases are documented separately under GB:ES:family." },
+      { label: "Pension / passive-income documentation", why: "UK State Pension award + private pensions + investment income totaling threshold. 12 months of bank statements showing deposits." },
+      { label: "Private health insurance covering Spain", why: "NLV requires comprehensive private health insurance — no copays, full coverage. UK private insurers (Bupa Global, Aviva, AXA) and Spanish (Sanitas, Adeslas, DKV) all offer compliant products from ~€100-200/mo per person." },
+      { label: "UK ACRO Police Certificate apostilled", why: "Same shape as Portugal route — ACRO Criminal Records Office + FCDO apostille + sworn translation by traductor jurado in Spain." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Why Spain", prompt: "Specific area (Costa del Sol, Costa Blanca, Valencia, Mallorca, Madrid). Climate, healthcare, cost, lifestyle." },
+      { heading: "Pension and passive-income setup", prompt: "Breakdown by source — show 12-month consistency at or above NLV threshold." },
+      { heading: "Healthcare arrangements", prompt: "NLV requires private health insurance — name the insurer and policy. Post-residence, eligible for state healthcare via convenio especial (~€60-150/mo per person)." },
+      { heading: "Long-term plan", prompt: "Permanent residence after 5 years on NLV; Spanish citizenship after 10 years (no Iberoamerican shortcut for UK nationals)." },
+    ],
+    moneySavingTips: [
+      "Beckham Law is NOT available for NLV holders — only for employment-based (DNV, Highly Qualified Professional). Plan UK pension taxation under standard Spanish progressive rates.",
+      "UK-Spain Double Tax Treaty allocates pension taxation to residence country (Spain) for most pensions; UK Government Service pensions remain UK-taxed. Talk to UK-Spain cross-border accountant.",
+      "Madrid / Barcelona / Málaga consulate NLV processing 1-3 months. Apply from UK before relocating.",
+      "S1 healthcare entitlement for UK retirees in Spain post-Brexit is more limited than pre-Brexit — most UK retirees use private insurance ongoing.",
+    ],
+    lawyerTriggers: {
+      diy: ["NLV with clean UK pension evidence and standard documents"],
+      getALawyer: ["Complex UK SIPP / QROPS pension structures or investment-property income", "Prior Schengen refusal", "Spanish property purchase with UK-based mortgage"],
+    },
+  },
+
+  "GB:CR:family": {
+    whatCarriesWeight: [
+      { label: "Pensionado category for UK retirees", why: "UK retirees with ≥ US$1,000/mo lifetime pension (State Pension counts, private pensions count) qualify for Costa Rican Pensionado residence — 2-year provisional, then 1 year + Spanish A2 test for citizenship after 7 years (5 for Iberoamericans; UK is NOT Iberoamerican so 7 years applies)." },
+      { label: "UK State Pension paid abroad rules", why: "UK State Pension paid in Costa Rica is NOT uprated annually (Costa Rica is on the 'frozen' list — same as Canada and Australia for UK pensioners). Plan around fixed pension income rather than annual increases." },
+      { label: "Caja CCSS health insurance enrolment", why: "Mandatory monthly contribution to public health insurance based on declared income. Typical retiree monthly contribution: $50-200." },
+      { label: "Apostilled UK ACRO + birth / marriage certificates", why: "Same shape as Portugal/Spain routes — ACRO + FCDO apostille + sworn translation by Costa Rican-accredited translator." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Why Costa Rica", prompt: "Specific area (San José, Atenas, Escazú, Tamarindo, Nosara). Climate, cost of living, healthcare, English-speaking expat communities." },
+      { heading: "Pension evidence", prompt: "UK State Pension award + private pensions documentation. Document 12-month consistency at or above US$1,000/mo." },
+      { heading: "Healthcare arrangements", prompt: "Caja enrolment as Costa Rican resident, supplemented by private insurance for English-speaking care if desired." },
+      { heading: "Long-term plan", prompt: "Permanent residence after 3 years on Pensionado; Costa Rican citizenship after 7 years (UK is NOT Iberoamerican)." },
+    ],
+    moneySavingTips: [
+      "UK State Pension frozen in Costa Rica — UK retirees lose out on annual upratings. If state pension is the primary income, this matters over a 20-year retirement.",
+      "Caja contribution is income-based — declare lower legitimate income reduces premiums substantially.",
+      "Don't pay 'residencia agencies' £3,000+ — Costa Rican lawyers in San José charge $1,500-3,000 for end-to-end Pensionado representation.",
+    ],
+    lawyerTriggers: {
+      diy: ["Pensionado with clean UK State Pension + private pension evidence"],
+      getALawyer: ["Investor route ($150k+ investment in Costa Rica)", "Prior Costa Rican refusal or immigration violation"],
+    },
+  },
+
+  "CA:PT:family": {
+    whatCarriesWeight: [
+      { label: "D7 Passive Income Visa for Canadian retirees", why: "Canadian retirees with passive income ≥ €820/mo (+30% per dependent) qualify for the D7. Sources: CPP / OAS + private pensions + RRIF / RRSP withdrawals + investment income — combine as needed. Same shape as UK route but Canadian-specific documentation." },
+      { label: "RCMP Criminal Record Check apostilled", why: "RCMP CRC via accredited fingerprinting company (typically 3-15 days) + apostille via Global Affairs Canada (~6-12 weeks) + Portuguese consular translation." },
+      { label: "Pension / passive-income documentation", why: "CPP + OAS + RRIF / RRSP statements + investment income evidence. 12 months of bank statements showing deposits." },
+      { label: "Portuguese tax residence (NIF) + bank account + accommodation", why: "Same shape as US/UK retirees — NIF via tax representative, Portuguese bank with 12 months' minimum, accommodation contract or deed." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Why Portugal", prompt: "Specific area, climate, cost, healthcare, lifestyle. Canadian retirees often choose Algarve for climate or Porto for cost." },
+      { heading: "Pension and passive-income setup", prompt: "CPP + OAS + private pension + investment breakdown over 12 months." },
+      { heading: "Healthcare arrangements", prompt: "Canadian provincial healthcare doesn't follow you to Portugal — private insurance for transition, then SNS enrolment as Portuguese resident." },
+      { heading: "Long-term plan", prompt: "Permanent residence after 5 years; Portuguese citizenship after 5 years (A2 Portuguese test)." },
+    ],
+    moneySavingTips: [
+      "CPP and OAS are paid in Portugal at full rate (Canada-Portugal social security agreement) — no reduction for residency abroad. Notify Service Canada before relocating.",
+      "Canadian provincial healthcare coverage typically lapses after 7 months out of province. Plan private insurance bridging departure to SNS enrolment.",
+      "Canada-Portugal tax treaty avoids double taxation; pension income typically taxable in residence country (Portugal). Talk to Canada-PT cross-border accountant.",
+      "NHR tax regime phased out 2024 — IFICI replacement limited. Plan on standard Portuguese progressive rates for retirement income.",
+    ],
+    lawyerTriggers: {
+      diy: ["D7 with clean CPP/OAS + private pension evidence and apostilled documents"],
+      getALawyer: ["Complex Canadian RRSP/RRIF/TFSA structures for Portuguese tax planning", "Prior Schengen refusal"],
+    },
+  },
+
+  "CA:MX:family": {
+    whatCarriesWeight: [
+      { label: "Temporary Resident OR Permanent Resident at Mexican consulate", why: "Canadian nationals: same shape as US route. Temporary Resident with monthly income ~CAD$3,500-5,000 OR savings ~CAD$70-100k, OR Permanent Resident with higher thresholds. Income threshold varies by consulate (Toronto, Vancouver, Montréal published amounts differ)." },
+      { label: "RCMP Criminal Record Check apostilled", why: "Via accredited fingerprinting + Global Affairs Canada apostille (~6-12 weeks) + sworn Spanish translation." },
+      { label: "Pension / passive-income evidence", why: "CPP + OAS + private pension + investment income. 12 months of consistent bank statements at or above consulate threshold." },
+      { label: "INM finalisation in Mexico within 30 days of entry", why: "Consulate issues initial visa; final residence card via INM (Instituto Nacional de Migración) at your settlement city within 30 days of arrival." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Why Mexico", prompt: "Specific city (Mexico City, Mérida, San Miguel de Allende, Puerto Vallarta, Lake Chapala — large Canadian expat community)." },
+      { heading: "Pension / income evidence", prompt: "CPP / OAS / private pension breakdown. Document 12-month consistency." },
+      { heading: "Long-term plan", prompt: "Temporary 4 years → Permanent → Mexican citizenship after 5 years total." },
+    ],
+    moneySavingTips: [
+      "CPP and OAS paid in Mexico at full rate — Canada-Mexico social security agreement covers it. Notify Service Canada.",
+      "Mexican consulate income thresholds in Toronto / Vancouver / Montréal: Toronto ~CAD$3,800/mo; Vancouver ~CAD$4,200/mo (2024 figures). Verify before booking appointment.",
+      "USMCA business travel under T-classification doesn't require this visa for short trips — FMM tourist permit suffices.",
+      "Lake Chapala / Ajijic / Chapalas has the largest Canadian retiree community — established services and English-speaking environment.",
+    ],
+    lawyerTriggers: {
+      diy: ["Temporary Resident with clean CPP/OAS evidence at published consulate threshold"],
+      getALawyer: ["Permanent Resident direct route", "Investor visa with Canadian corporate ownership structures", "Prior Mexican refusal"],
+    },
+  },
+
+  // ─── Outbound CN (additional) ───
+  "CN:DE:study": {
+    whatCarriesWeight: [
+      { label: "Letter of admission from German university (Zulassung)", why: "Chinese students need formal Zulassung from a German Hochschule — not just a conditional offer. APS certificate from the Akademische Prüfstelle (Beijing) is pre-required for university applications." },
+      { label: "APS certificate (Akademische Prüfstelle)", why: "All Chinese students applying to German universities need APS certificate verifying academic records. Application process via APS Beijing — interview or document-based depending on academic record." },
+      { label: "Blocked account (Sperrkonto) with €11,904+ (2024 figure)", why: "German student visa requires proof of financial means — typically a blocked bank account (Deutsche Bank, Fintiba, Expatrio) with ~€11,904 covering 12 months at €992/mo. Alternatives: parental sponsorship + income evidence." },
+      { label: "Health insurance compliant with German requirements", why: "Until 30 years old: statutory health insurance (TK, AOK, Barmer ~€110/mo). Over 30: private insurance acceptable. Mandatory from day 1 of enrolment." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your German programme and university", prompt: "Specific programme, university, why this institution. German Bachelor programmes are 3 years; Master 1-2 years; Promotion (PhD) 3-5 years." },
+      { heading: "Your educational background and APS certificate", prompt: "Chinese degree, GPA, APS reference number." },
+      { heading: "Why Germany", prompt: "German higher-education quality, specific faculty / research lab, post-study work permit eligibility (18-month Job Search Visa after graduation)." },
+      { heading: "Financial sponsorship", prompt: "Blocked account OR parental sponsorship + tax/income evidence." },
+    ],
+    moneySavingTips: [
+      "German public universities charge no tuition for international students (some exceptions in Baden-Württemberg — €1,500/semester for non-EU). Bachelor / Master at TU Munich, Heidelberg, RWTH Aachen, Humboldt all free.",
+      "Blocked account providers: Fintiba and Expatrio waive setup fees, charge ~€5/mo. Deutsche Bank charges higher fees but provides physical-branch service.",
+      "Statutory health insurance (TK, AOK, Barmer) is the cheapest option — ~€110/mo. Private student insurance via Mawista, Care Concept can be cheaper but not always accepted by all universities.",
+      "Post-graduation 18-month Job Search Visa is free for Chinese alumni — generous timeline to find a Blue Card-eligible role. EU Blue Card threshold: €43,800 in 2024 for shortage occupations.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard student visa with Zulassung + APS + blocked account + statutory health insurance"],
+      getALawyer: ["APS interview challenges or rejection (re-application strategy)", "Conversion from student to Job Search → Blue Card / work permit", "Prior Schengen refusal"],
+    },
+  },
+
+  "CN:FR:work": {
+    whatCarriesWeight: [
+      { label: "Talent Passport (Passeport Talent) OR standard work permit", why: "Chinese senior professionals qualify for Talent Passport categories: Salarié Qualifié (skilled employee with French employer + ≥ €43,243/yr in 2024), Salarié en Mission (intracompany transfer), Investisseur (business investment), or Talent (researcher/artist/founder). Talent Passport is 4-year residence card, renewable." },
+      { label: "French employer's nomination + DREETS approval", why: "Work permits require French employer nomination + DREETS labour-market test for non-Talent Passport categories. Most Chinese-French recruitment is via established multinationals (Airbus, L'Oréal, Total, BNP, Schneider Electric) handling end-to-end." },
+      { label: "Chinese degree authentication by China Academic Degrees Centre", why: "Chinese degrees authenticated via CHESICC (China Higher Education Student Information and Career Center) + apostille via the appropriate Chinese authority. France joined Hague Apostille effective 2023 for Chinese documents — much faster than prior consular legalisation." },
+      { label: "French Consulate selection (Beijing, Shanghai, Guangzhou, Wuhan, Shenyang)", why: "Long-stay visa applications via consulate based on Chinese province of residence. Visa processing 4-8 weeks for Talent Passport, 8-12 for standard work permit." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your role and French employer", prompt: "Title, company, location, salary level. For Talent Passport, name the qualifying category explicitly." },
+      { heading: "Educational background and CHESICC authentication", prompt: "Chinese degree, institution, CHESICC reference number." },
+      { heading: "Why France", prompt: "Specific city (Paris, Lyon, Toulouse, Marseille, Nice), industry, project. Chinese-French research and high-tech sectors are active." },
+      { heading: "Long-term plans", prompt: "Carte de résident after 5 years; French citizenship after 5 years (2 for spouses of French citizens, language and integration tests apply)." },
+    ],
+    moneySavingTips: [
+      "Talent Passport (Passeport Talent) Salarié Qualifié threshold (€43,243/yr in 2024) is significantly lower than standard work permit + DREETS process — both faster and more reliable. Negotiate salary at or above threshold.",
+      "Chinese-French double tax treaty avoids double taxation on French employment income.",
+      "French CPAM (state healthcare) registration from day 1 of residence — cancel Chinese expat private insurance accordingly to avoid double-paying.",
+      "Don't pay 'visa agencies' in Beijing / Shanghai €3,000+ — French Embassy Beijing handles applications directly via TLScontact (their authorised visa-processing centre); standard service fees included in the visa fee.",
+    ],
+    lawyerTriggers: {
+      diy: ["Talent Passport with large multinational sponsor handling end-to-end"],
+      getALawyer: ["Investor / entrepreneur route with Chinese corporate ownership structures", "Self-employment registration", "Prior Schengen refusal at any member state"],
+    },
+  },
+
+  "CN:ES:study": {
+    whatCarriesWeight: [
+      { label: "Spanish university admission (carta de admisión)", why: "Chinese students need formal admission letter from a Spanish university — not just conditional offer. Public universities (Madrid Complutense, Barcelona, Valencia, Salamanca) and private (IE, ESADE, IESE) all eligible. Programmes increasingly offered in English at master / MBA level." },
+      { label: "Chinese degree authentication + Spanish university recognition", why: "Chinese degrees via CHESICC authentication + apostille (Spain accepts Hague Apostille effective 2023 for Chinese documents). Spanish university may require pre-application credential evaluation." },
+      { label: "Financial capacity (IPREM-based threshold)", why: "Spanish student visa requires proof of financial means ≥ 100% IPREM for student + 75% for first dependent + 50% per additional (2024: ~€600/mo for student, ~€450 dependent). 12 months equivalent in bank statements." },
+      { label: "Spanish health insurance covering full visa duration", why: "Either Spanish public university enrolment + Spanish health-insurance bundle OR private health insurance covering Spain. ~€500-1,000/yr for compliant private student insurance." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your Spanish programme and university", prompt: "Specific programme, institution, Spanish or English-medium." },
+      { heading: "Educational background + CHESICC authentication", prompt: "Chinese degree, institution, CHESICC + apostille reference." },
+      { heading: "Why Spain", prompt: "Spanish-language acquisition, specific faculty / research / industry exposure. Post-study options: Spain's job-seeker visa (1 year post-graduation) increasingly used by Chinese alumni." },
+      { heading: "Financial sponsorship", prompt: "Bank statements + parental income evidence + scholarship if applicable." },
+    ],
+    moneySavingTips: [
+      "Spanish public university tuition for international students €1,000-3,000/yr depending on autonomous community (much cheaper than UK / US / AU). Private universities (IE, IESE) charge €40,000-80,000.",
+      "CHESICC authentication for Chinese degrees: ~CNY 200 per document + 2-4 weeks processing. Cheaper than Spain-based 'international authentication services'.",
+      "Madrid / Barcelona consulate processing 4-8 weeks for student visa. Apply 3 months before academic year start.",
+      "Post-study job-seeker visa: 1-year extension after graduation to find Spanish employer. DNV route also available for Chinese alumni doing remote work for non-Spanish clients post-graduation.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard student visa with admission letter + apostilled documents + financial evidence"],
+      getALawyer: ["Conversion from student to work permit (Spanish employer sponsorship)", "Prior Schengen refusal"],
+    },
+  },
+
+  // ─── KR / JP / TW → AU, CA ───
+  "KR:AU:work": {
+    whatCarriesWeight: [
+      { label: "Subclass 482 (TSS) + Korean credentials recognition", why: "Korean professionals (IT, engineering, healthcare, education) widely sponsor 482. Standard TSMIT ≥ AUD$73,150. Skills assessment via Vetassess / Engineers Australia / ACS / CPA Australia depending on ANZSCO occupation." },
+      { label: "Working Holiday subclass 462 (under-31 alternative)", why: "Korean nationals eligible for subclass 417 Working Holiday Maker visa (Korea is in the 417 list, not 462). 12 months work + travel, no employer sponsor required." },
+      { label: "Korean police certificate (범죄경력증명서)", why: "Issued by the Korean National Police Agency — KAC clearance available online via Government24. Apostille via Korean Ministry of Foreign Affairs for Australian use." },
+      { label: "English-language testing (IELTS / OET / PTE)", why: "Most Korean applicants need IELTS 6.0+ across skills for 482 (4007 character + 5.5 minimum for most occupations). Healthcare professionals often need 7.0+ via OET." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your Australian role and sponsor", prompt: "ANZSCO occupation, company, salary." },
+      { heading: "Korean credentials + Vetassess outcome", prompt: "Korean degree, employer history, skills assessment reference." },
+      { heading: "English-language results", prompt: "IELTS / OET / PTE bands per skill." },
+      { heading: "Settlement plan", prompt: "City, school plans if children, partner work plans (Subclass 482 dependents work without restriction)." },
+    ],
+    moneySavingTips: [
+      "Korea-Australia Free Trade Agreement (KAFTA) doesn't create a special visa — standard 482/186 pathway. Don't pay 'KAFTA visa' agencies; the visa is the same.",
+      "Korean nationals: subclass 417 Working Holiday (AUD$650) gives 12 months pre-commitment freedom. Useful for market-testing before 482.",
+      "Subclass 482 to 186 ENS PR pathway after 2-3 years for direct entry — mention long-term intent honestly.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard 482 with large employer + Vetassess-cleared credentials"],
+      getALawyer: ["Self-employment via Korean company sponsorship", "Prior Korean / Australian immigration refusal"],
+    },
+  },
+
+  "JP:AU:work": {
+    whatCarriesWeight: [
+      { label: "Subclass 482 with Australian employer + ANZSCO occupation", why: "Japanese professionals in IT, engineering, automotive, finance widely sponsor 482. TSMIT ≥ AUD$73,150. Skills assessment via the appropriate ANZSCO authority." },
+      { label: "Working Holiday subclass 417 (under-31 alternative)", why: "Japan is in the subclass 417 Working Holiday list — 12 months freedom, no employer sponsor required. Used heavily by Japanese language teachers and farm workers." },
+      { label: "Japanese police certificate (犯罪証明書)", why: "Issued by Japanese prefectural police HQ — apostille via Japanese Ministry of Foreign Affairs. Allow 4-8 weeks." },
+      { label: "English-language testing", why: "Most Japanese applicants benefit from IELTS or OET preparation. Many Japanese professionals score Level 2+ on the GS test, opening top wage levels." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Australian role and sponsor", prompt: "ANZSCO occupation, company, salary." },
+      { heading: "Japanese credentials + Vetassess outcome", prompt: "Japanese degree, employer history, skills-assessment reference." },
+      { heading: "English-language results", prompt: "IELTS / OET / PTE bands per skill." },
+      { heading: "Settlement plan", prompt: "City, partner work plans, school plans if children." },
+    ],
+    moneySavingTips: [
+      "Japan-Australia Reciprocal Health Care Agreement covers emergency hospital care for Japanese visitors in Australia — but OVHC private insurance is STILL required for 482 visa compliance. Both run in parallel.",
+      "Subclass 417 Working Holiday is the easiest market-test before 482 commitment.",
+      "Japan-Australia Economic Partnership Agreement (JAEPA) doesn't create a special work visa — standard 482 pathway.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard 482 with large multinational sponsor"],
+      getALawyer: ["Self-employment via Japanese company sponsorship", "Prior immigration refusal in any country"],
+    },
+  },
+
+  "TW:US:work": {
+    whatCarriesWeight: [
+      { label: "H-1B / L-1 / O-1 / E-1 / E-2 standard categories", why: "Taiwan has US E-1 (Treaty Trader) and E-2 (Treaty Investor) treaty access. Standard H-1B cap lottery applies. L-1 intracompany transfer is common for Taiwanese MNCs (TSMC, Foxconn, Acer, ASUS). Taiwanese nationals enjoy current EB-2/EB-3 priority dates — no country-cap backlog." },
+      { label: "Taiwanese university credentials", why: "Taiwanese degrees (National Taiwan University, Tsinghua, Chiao Tung, Yang Ming, Cheng Kung) are well-recognised. WES evaluation typically straightforward." },
+      { label: "AIT (American Institute in Taiwan) processing", why: "Taiwan has no formal US embassy; consular services via AIT in Taipei and Kaohsiung. B/F/J/H/L processing 1-4 weeks. Interview waiver expanded post-2023." },
+      { label: "Taiwan-US semiconductor visa fast-track", why: "TSMC and related semiconductor workers benefit from US administration's CHIPS Act emphasis — sometimes faster processing for specialised semiconductor roles, especially L-1." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Role and US employer", prompt: "Title, company, location, salary. For L-1, document Taiwanese qualifying-organisation employment ≥1 year." },
+      { heading: "Taiwanese credentials + WES evaluation", prompt: "Degree, institution, WES reference." },
+      { heading: "Why this US role", prompt: "Specific team, project, technology." },
+      { heading: "Long-term plans", prompt: "Current EB-2 / EB-3 priority dates for Taiwan — file I-140 concurrently if eligible." },
+    ],
+    moneySavingTips: [
+      "Taiwanese E-2 treaty investor option: substantial US investment (~$100k+ in an operating business), no annual cap.",
+      "TSMC / Foxconn / Acer / large Taiwanese tech employers typically handle full H-1B/L-1 visa support end-to-end at no cost to the worker.",
+      "AIT-Taipei expanded interview-waiver eligibility in 2023 — most Taiwanese applicants with recent visa history qualify, saving the interview wait entirely.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard L-1 transfer with Taiwanese MNC sponsor"],
+      getALawyer: ["E-2 treaty investor", "Self-petitioning O-1 / EB-1A", "Prior US visa refusal"],
+    },
+  },
+
+  // ─── HK / SG outbound ───
+  "HK:GB:work": {
+    whatCarriesWeight: [
+      { label: "BN(O) Visa for Hongkongers (UK's dedicated route)", why: "Hong Kongers with British National (Overseas) status — and their family — qualify for the BN(O) Visa launched January 2021. 5-year residence path to settlement. £180 application + £3,105 IHS over 5 years for adult applicants. No labour-market test, no employer sponsorship." },
+      { label: "Skilled Worker visa as alternative", why: "Hong Kong residents without BN(O) status use the standard Skilled Worker visa: UK employer sponsorship under a CoS, salary ≥ £38,700 from April 2024 (or shortage-occupation rate)." },
+      { label: "Apostilled HK documents", why: "HK birth / marriage certificates apostilled via HK Apostille Office (Department of Justice). Police certificate via HK Police Force CCB." },
+      { label: "English-language exemption", why: "Hong Kong residents from English-medium degree programmes are exempt from IELTS. Document degree certificate in English." },
+    ],
+    personalStatementTemplate: [
+      { heading: "BN(O) status confirmation (if applicable)", prompt: "BN(O) passport details OR confirmation of eligibility (born in HK before 1997 and parent qualified)." },
+      { heading: "Settlement plan in UK", prompt: "City (London, Manchester, Birmingham, Bristol all have established HK diasporas), housing, employment plans." },
+      { heading: "Family members joining", prompt: "Spouse / partner / children — BN(O) covers immediate family." },
+      { heading: "Long-term intent", prompt: "5-year track to ILR (Indefinite Leave to Remain), then British citizenship 12 months later." },
+    ],
+    moneySavingTips: [
+      "BN(O) Visa avoids the standard Skilled Worker £38,700 salary threshold — most Hongkongers under BN(O) work below this without issue.",
+      "IHS surcharge (£1,035/yr for adults, £776 for children) over 5 years adds up — pay upfront if cash flow allows; some find paying year-by-year easier via renewals.",
+      "Don't pay 'BN(O) agencies' £3,000+ — application is straightforward via gov.uk. Reputable solicitors charge £1,000-2,000 for end-to-end family BN(O) applications.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard BN(O) Visa application with clean documents"],
+      getALawyer: ["Family members without straightforward BN(O) eligibility (extended family, adult dependent children, etc.)", "Prior UK refusal", "Complex Hong Kong civil-status documentation (older marriages, adoptions)"],
+    },
+  },
+
+  "SG:GB:work": {
+    whatCarriesWeight: [
+      { label: "Skilled Worker visa with UK employer", why: "Standard UK Skilled Worker visa: employer-sponsored CoS, salary ≥ £38,700 from April 2024 (or shortage-occupation rate). Singapore has no special bilateral immigration arrangement with UK — full standard process applies." },
+      { label: "Singapore-UK Double Tax Treaty", why: "Avoids double taxation on UK employment income. Singapore tax residency rules apply to determine where income is taxed primarily." },
+      { label: "Singaporean degree recognition", why: "NUS, NTU, SMU degrees are well-recognised by UK universities and employers. NARIC equivalency typically establishes UK degree-level comparability." },
+      { label: "Singapore Certificate of Clearance (COC)", why: "Issued by Singapore Police Force — typically 2-4 weeks. Required for UK visa application." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your role and UK employer", prompt: "CoS number, role, employer, salary. SOC code on CoS." },
+      { heading: "Singaporean credentials", prompt: "Degree, institution, professional registration if applicable (e.g. SPC for engineers)." },
+      { heading: "Why UK", prompt: "Specific industry, city, project." },
+      { heading: "Long-term plans", prompt: "ILR after 5 years on Skilled Worker; British citizenship 12 months later." },
+    ],
+    moneySavingTips: [
+      "Singapore-UK Working Holiday Scheme (YMS Tier 5) — Singapore is one of the YMS-eligible countries. 2-year work + travel for under-31s, no employer sponsorship required. Use this before committing to Skilled Worker.",
+      "Singaporean nationals: ETA from January 2025 — £10, 2-year validity. Required for short visits even though no visa needed.",
+      "Singapore-UK Double Tax Treaty election can reduce overall taxation depending on individual circumstances.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard Skilled Worker with reputable UK employer handling sponsorship"],
+      getALawyer: ["Self-employment / consulting setup", "Prior UK refusal"],
+    },
+  },
+
+  // ─── AE-based expat moves (AE → US, GB, CA) ───
+  "AE:GB:work": {
+    whatCarriesWeight: [
+      { label: "Emirati passport: visa-free + Skilled Worker visa", why: "UAE nationals (Emirati passport-holders) enjoy UK visa-free entry for 6 months (with ETA from 2024). For long-stay work: standard Skilled Worker visa with UK employer sponsorship + CoS + salary ≥ £38,700." },
+      { label: "Highly Qualified Professional route via UK Global Talent visa", why: "Emirati senior leaders, academics, tech leaders qualify for the UK Global Talent visa — endorsement by Tech Nation (now defunct, transferred to UKVI), Arts Council, Royal Society, etc. No employer sponsorship; 5-year residence track." },
+      { label: "UAE-issued documents apostilled", why: "UAE joined the Hague Apostille Convention in 2024 — most UAE documents now eligible for apostille via MoFAIC. Older documents may need consular legalisation via UK Embassy Dubai." },
+      { label: "UAE Police Certificate", why: "Issued via the UAE Ministry of Interior or Dubai Police. Allow 1-3 weeks." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Role and UK employer / endorsement", prompt: "Standard Skilled Worker: CoS, employer, role, salary. Global Talent: endorsement body and reference." },
+      { heading: "Emirati credentials and prior work history", prompt: "Degree, institution, prior employment in UAE / Saudi / wider GCC." },
+      { heading: "Why UK", prompt: "Specific industry, city, project." },
+      { heading: "Long-term plans", prompt: "ILR after 5 years on Skilled Worker / Global Talent; British citizenship 12 months later." },
+    ],
+    moneySavingTips: [
+      "UAE-UK bilateral business travel benefits from ETA-only 6-month visa-free entry — useful for pre-relocation site visits.",
+      "UAE residents who are NOT Emirati nationals (most UAE expats) need standard visa-required documentation based on their original passport, not UAE residency.",
+      "Don't pay 'visa agencies' in Dubai £3,000+ — UK Skilled Worker application via VFS Global Dubai is straightforward; UK solicitors charge £1,500-3,000 for end-to-end work.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard Skilled Worker with reputable UK employer; immigration team handles end-to-end"],
+      getALawyer: ["Global Talent endorsement (strategic endorsement-body selection)", "Investor / Innovator Founder route", "Prior UK refusal"],
+    },
+  },
+
+  "IN:AU:work": {
+    whatCarriesWeight: [
+      { label: "Subclass 482 (TSS) or Subclass 189 / 190 points-based", why: "Indian professionals are the largest single nationality cohort in Australia's skilled migration. 482 employer-sponsored OR 189 Skilled Independent / 190 Skilled Nominated point-based. ANZSCO occupation must be on relevant skilled list. TSMIT ≥ AUD$73,150 for 482." },
+      { label: "Skills assessment via the appropriate ANZSCO authority", why: "IT via ACS (most common Indian-AU pathway). Engineers via Engineers Australia (CDR or Washington/Sydney/Dublin Accord). Accountants via CPA/CAANZ/IPA. Allow 4-12 weeks. ACS Group ID required for most ANZSCO 261XXX/263XXX codes." },
+      { label: "PCC from every country lived 12+ months in past 10 years", why: "Indian PCC via Passport Seva Kendra or VFS abroad — issued in your passport, not separately. UAE/Saudi/Singapore PCC for prior overseas residence." },
+      { label: "English-language testing (IELTS / PTE)", why: "PTE Academic increasingly preferred by Indian applicants (faster, more granular scoring). Required band: 65+ for points test or 7.0 IELTS." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Your nominated role and sponsor (482) OR skills profile (189/190)", prompt: "ANZSCO occupation, sponsor / state nomination, salary, prior employer." },
+      { heading: "Skills assessment outcome", prompt: "Assessing authority, reference number." },
+      { heading: "English-language test results", prompt: "PTE / IELTS bands." },
+      { heading: "Settlement and PR plan", prompt: "City, partner work plans (Subclass 482 dependents work without restriction). 482 → 186 ENS PR after 2-3 years." },
+    ],
+    moneySavingTips: [
+      "ACS skills assessment is the dominant Indian-AU pathway: AUD$500-1,200 depending on category. Submit complete documentation first try — re-submission costs add up.",
+      "PTE Academic ~AUD$420 vs IELTS ~AUD$435 — similar cost, but PTE results in 48 hours vs IELTS in 13 days. Faster for tight timelines.",
+      "189 Skilled Independent points test: target 90+ points (current invitation thresholds 90-100 for most ANZSCO occupations). Spousal credentials add 10 points; functional English exam another 5.",
+      "Don't pay agents in India AUD$5,000+ for points-test 'optimisation' — Express Entry Australia and Skilled Migration are self-serve via ImmiAccount.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard 482 with large IT/consulting employer (Infosys, TCS, Wipro, Cognizant, Tech Mahindra all handle end-to-end)"],
+      getALawyer: ["189/190 application where points test is close to threshold", "Subsequent 186 ENS PR conversion", "Prior Australian or other visa refusal", "Complex Indian degree / credential issues"],
+    },
+  },
+
+  // ─── EU intra-bloc work permits ───
+  "FR:DE:work": {
+    whatCarriesWeight: [
+      { label: "EU freedom of movement (no work permit required)", why: "French citizens have unrestricted right to work in Germany under the EU Treaty. No work permit, no employer sponsorship, no salary threshold required. Register at the local Bürgeramt within 2 weeks of arrival; no visa, no application." },
+      { label: "Anmeldung (residence registration) within 14 days", why: "Mandatory within 14 days of moving to a German address. Bring rental contract + landlord's Wohnungsgeberbestätigung + passport. Issued the same day at the Bürgeramt." },
+      { label: "Tax registration (Steueridentifikationsnummer)", why: "Tax ID auto-issued by post within 2-3 weeks of Anmeldung. Required before employer can pay you on German payroll." },
+      { label: "Health insurance (statutory or private)", why: "Mandatory from day 1 of German employment. Most employees auto-enrol in statutory (TK, AOK, Barmer ~14.6% gross income split with employer). Self-employed and high earners (>€73,800 in 2024) may opt for private." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Where you'll live and work", prompt: "German city + employer. No need to justify the move — EU citizens have full freedom." },
+      { heading: "Tax and social security setup", prompt: "Employer's payroll setup will handle most of this — your role is the Anmeldung within 14 days." },
+      { heading: "Long-term plans", prompt: "EU citizens retain freedom of movement; no PR application needed. German citizenship via naturalisation after 5 years (post-2024 reform) with German language and integration evidence." },
+    ],
+    moneySavingTips: [
+      "Statutory health insurance is income-based — at €60-90k salary, statutory is often cheaper than private. Switch only if you'll stay high-earner and don't plan to switch back (return to statutory has age and health restrictions).",
+      "French CPAM health-insurance card (Carte Vitale) doesn't cover routine German healthcare — switch to German insurance from day 1 of German employment.",
+      "France-Germany tax treaty avoids double taxation. Filing in both countries required if dual-residence ambiguity exists in year of move.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard EU intra-bloc move — no immigration legal work needed"],
+      getALawyer: ["Self-employed registration with cross-border invoicing (Steuerberater rather than lawyer)", "Long-term tax-residence determination spanning France and Germany"],
+    },
+  },
+
+  "DE:FR:work": {
+    whatCarriesWeight: [
+      { label: "EU freedom of movement (no work permit required)", why: "German citizens enjoy unrestricted right to work in France. No work permit, no employer sponsorship, no salary threshold. Register with the local Mairie if establishing residence." },
+      { label: "Carte Vitale (French health insurance) and SS registration", why: "Once on French payroll, employer registers you with URSSAF and you receive a Numéro de Sécurité Sociale. Carte Vitale follows within 3-4 weeks." },
+      { label: "French tax residence triggers (183-day rule)", why: "French tax residence triggered by 183+ days in France or your centre of economic interests being France. Tax return filing in May annually." },
+      { label: "Mutuelle (supplementary health insurance) and prévoyance", why: "Carte Vitale covers ~70% of healthcare costs. Most employees take out mutuelle via employer for the remaining 30%. Standard French employment package." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Where you'll live and work", prompt: "City + employer. EU citizens — no justification needed." },
+      { heading: "Tax and social security setup", prompt: "Employer handles URSSAF / Carte Vitale registration. Your role is providing French address proof." },
+      { heading: "Long-term plans", prompt: "EU citizens retain freedom of movement; no PR needed. French citizenship via naturalisation after 5 years with French language (B1) and integration evidence." },
+    ],
+    moneySavingTips: [
+      "French employee social security contributions ~22% gross — high vs Germany — but include comprehensive pension, unemployment, health coverage.",
+      "Germany-France tax treaty allocates pension taxation to residence country — plan retirement-account contributions accordingly.",
+      "German Steuernummer remains valid for the German side of any cross-border income — no need to cancel.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard EU intra-bloc move"],
+      getALawyer: ["Self-employed registration with cross-border invoicing", "Long-term tax-residence determination"],
+    },
+  },
+
+  // ─── More tourism / visit cells ───
+  "CN:JP:tourism": {
+    whatCarriesWeight: [
+      { label: "Group tour OR individual visa application", why: "Chinese tourists to Japan have two main pathways: (a) group tour via approved Chinese travel agency (simpler documentation, fixed itinerary), or (b) individual tourist visa with full documentation set. Individual visa is typically issued 5-15 days." },
+      { label: "Financial capacity evidence", why: "Bank statements showing 6 months of consistent income (~CNY 10,000+/mo for individual visa) or savings ~CNY 100,000+. Property ownership, employment letter, and tax-deduction certificates strengthen the application." },
+      { label: "Detailed itinerary + hotel bookings + return flight", why: "Japanese consulate requires day-by-day itinerary with hotel bookings (refundable booking.com is fine) and confirmed return flights. Vague itineraries trigger refusals." },
+      { label: "Prior international travel history", why: "Schengen / US / UK / AU / NZ stamps significantly improve approval likelihood. First-time travellers typically need stronger financial documentation." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Trip purpose and dates", prompt: "Specific tourism plan, dates, length of stay." },
+      { heading: "Your ties to China", prompt: "Employer (with letter), property, family. Strong ties reduce immigrant-intent suspicion." },
+      { heading: "How the trip is funded", prompt: "Your income evidence OR a Chinese sponsor's I-equivalent + sponsor's income." },
+      { heading: "Prior international travel", prompt: "Document any prior Schengen / US / UK / AU / KR / SG trips." },
+    ],
+    moneySavingTips: [
+      "Japan's multiple-entry tourist visa (3-year validity, 30 days per visit) is available for higher-income Chinese applicants and prior compliant Japan visitors — saves repeated visa applications.",
+      "Group-tour visa is significantly cheaper and faster — useful for first-time travellers or budget travel.",
+      "Avoid 'visa preparation services' charging CNY 1,500+ in Beijing/Shanghai — application via authorised travel agency or directly to consulate is straightforward.",
+    ],
+    lawyerTriggers: {
+      diy: ["First-time tourist visa with strong documentation and prior travel history"],
+      getALawyer: ["Prior refusal (typically requires reframing on retry)", "Family member with Japan immigration history"],
+    },
+  },
+
+  "IN:JP:work": {
+    whatCarriesWeight: [
+      { label: "Engineer / Specialist in Humanities visa OR HSP (Highly Skilled Professional)", why: "Indian IT professionals are heavily represented in Japan. Engineer visa for tech roles; Specialist in Humanities for non-tech professional roles. HSP (Highly Skilled Professional) point-based for senior roles — PR after 1-3 years instead of standard 10." },
+      { label: "Japanese sponsoring employer's Certificate of Eligibility (CoE)", why: "Employer files CoE application with Japanese immigration on your behalf. CoE issuance typically 1-3 months; you then take CoE to Japanese embassy in India for visa stamping (1-2 weeks)." },
+      { label: "Indian degree authentication + employer evaluation", why: "Most Japanese employers accept Indian engineering degrees without separate authentication; some require WES-equivalent evaluation. Sponsoring employer guides the process." },
+      { label: "Japanese language (variable by role)", why: "IT roles in MNCs (Rakuten, Mercari, Indeed) operate in English — no Japanese needed at hire. Traditional Japanese employers expect JLPT N3+ for white-collar roles." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Role and Japanese employer", prompt: "Title, employer, location, salary. For HSP applicants, point breakdown across age / education / income / experience criteria." },
+      { heading: "Indian education and work history", prompt: "Degree, employers, technologies. CoE application is prepared by employer; align your documentation with what they file." },
+      { heading: "Why Japan", prompt: "Specific industry, project, team. Japanese tech / engineering / research is common Indian draw." },
+      { heading: "Long-term plans", prompt: "HSP path to PR (1-3 years on highest tier); standard Engineer visa path is 10 years for PR." },
+    ],
+    moneySavingTips: [
+      "HSP (Highly Skilled Professional) visa: 70+ points = 3 years to PR; 80+ points = 1 year to PR. Optimise points across age/income/Japanese language/research output for faster track.",
+      "Japan-India social security agreement (effective 2016) avoids double-paying pension contributions during initial assignment.",
+      "Don't pay 'Japan visa agents' in India INR 50,000+ — the CoE is filed by the Japanese employer, not by an agent. Visa stamping at Japanese embassy is straightforward.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard Engineer visa with large Japanese MNC sponsor handling CoE"],
+      getALawyer: ["HSP application with complex point optimisation", "Self-employment / startup founder route in Japan", "Prior Japanese refusal"],
+    },
+  },
+
+  // ─── US → IT, GR, FR ───
+  "US:IT:family": {
+    whatCarriesWeight: [
+      { label: "Italian descent (jure sanguinis) — fastest route", why: "Americans with an Italian-born ancestor (and unbroken citizenship line) qualify for Italian citizenship by descent. No residence requirement; recognition via Italian consulate OR via Italian comune (1-2 years to process). Once recognised, you ARE an EU citizen with freedom of movement." },
+      { label: "Elective Residence Visa (no work permitted)", why: "Americans with passive income (~€31,000+/yr for primary applicant, +20% for spouse, +5% per child) qualify for the Elective Residence Visa. 1-year renewable to permanent residence after 5 years. Cannot work in Italy on this visa." },
+      { label: "Italian apostille / consular legalisation", why: "Italy is in Hague Apostille — US documents apostilled by issuing state's Secretary of State. Italian translation by sworn translator (traduttore giurato) registered with the Italian consulate or comune." },
+      { label: "US FBI background check + apostille", why: "FBI Identity History Summary Check + US State Dept apostille. Allow 8-14 weeks via standard mail OR 1-2 weeks via channeler at higher cost." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Italian-descent pathway (if applicable)", prompt: "Document the Italian-born ancestor (birth certificate from comune di nascita), unbroken citizenship line (naturalization records of US ancestor, often pre-1912 birth of next-generation ancestor)." },
+      { heading: "Elective Residence pathway (if descent not available)", prompt: "Passive income source(s) — pension, investment, rental. Income documentation over 12 months." },
+      { heading: "Settlement plan", prompt: "Italian region (Tuscany, Umbria, Sicily, Le Marche have established American expat communities). Property purchase or 12-month rental contract." },
+      { heading: "Long-term plan", prompt: "Italian citizenship after 10 years (4 for EU nationals; jure sanguinis recognition is instant)." },
+    ],
+    moneySavingTips: [
+      "Italian descent recognition via Italian comune is FREE (just document costs + travel) vs €300 consular fee per applicant. Comune route faster if the ancestral town has efficient records.",
+      "Italy has no Iberoamerican-style citizenship shortcut for non-EU Americans — standard 10-year naturalisation track (or 4-year for EU citizens).",
+      "Italian Elective Residence is heavily oversubscribed — consulate-by-consulate processing varies; some require in-person interview, others document-only.",
+    ],
+    lawyerTriggers: {
+      diy: ["Italian descent application with clean ancestral documents"],
+      getALawyer: ["Complex Italian descent (1948 case for maternal line — gendered naturalisation rules), broken citizenship line, naturalisation gaps", "Elective Residence with complex US-source passive income structures"],
+    },
+  },
+
+  "US:DE:study": {
+    whatCarriesWeight: [
+      { label: "EU Blue Card or Opportunity Card (Chancenkarte) for grad-route entry", why: "American senior tech / engineering professionals qualify for the EU Blue Card with salary ≥ €48,300 (€43,800 for shortage occupations). The Opportunity Card (Chancenkarte) launched 2024 is a points-based job-seeker visa allowing entry to Germany to find Blue Card-eligible work — a useful study/post-study pathway alternative to standard study visa." },
+      { label: "Skilled Workers Act 2.0 categories", why: "Multiple categories for skilled workers: degree-holders with German recognition of credential, vocationally trained workers with employer offer, recognised IT professionals (no degree required for high-experience tech)." },
+      { label: "Degree recognition via ANABIN database", why: "American degrees evaluated against ANABIN database — H+ rating (institutions and programs both highly comparable to German equivalents) is the gold standard. Most accredited US universities are H+." },
+      { label: "Job-Seeker Visa OR direct work visa application", why: "Job-Seeker Visa (6 months) allows entry without job offer. Once secured, switch to work visa from within Germany — faster than re-entering on full work visa." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Role, employer, and salary", prompt: "German employer, role, salary (above Blue Card threshold). For Chancenkarte: explain your points profile." },
+      { heading: "US degree and ANABIN rating", prompt: "Degree, institution, ANABIN rating reference." },
+      { heading: "Why Germany", prompt: "Specific industry, city, project." },
+      { heading: "Long-term plans", prompt: "Niederlassungserlaubnis after 33 months on Blue Card with B1 German; German citizenship after 5 years (post-2024 reform, 3 with exceptional integration)." },
+    ],
+    moneySavingTips: [
+      "Blue Card 33-month fast-track to PR requires B1 German — invest in language learning from day 1. Goethe-Institut courses ~€700/intensive month.",
+      "US-Germany Totalization Agreement avoids double-paying social security on US assignment-based work.",
+      "Don't pay 'German visa agencies' in US $3,000+ — application at German consulate (NYC, DC, LA, SF, Houston, Chicago, Atlanta, Miami, Boston) is straightforward. German immigration lawyers (Rechtsanwälte) charge €1,500-3,000 for end-to-end representation.",
+    ],
+    lawyerTriggers: {
+      diy: ["EU Blue Card with strong US degree + German employer above salary threshold"],
+      getALawyer: ["Chancenkarte points application", "Self-employment / freelance visa", "Prior Schengen refusal"],
+    },
+  },
+
+  "US:IE:work": {
+    whatCarriesWeight: [
+      { label: "Critical Skills Employment Permit OR General Employment Permit", why: "Ireland's CSEP (Critical Skills Employment Permit) is for occupations on the Critical Skills Occupations List with salary ≥ €38,000 (or ≥ €64,000 for non-shortage occupations). GEP (General Employment Permit) is for other roles with Labour Market Needs Test. Both are employer-sponsored." },
+      { label: "Employer's existing Employment Permit history", why: "Reputable Irish employers (Google, Meta, Apple, Microsoft, LinkedIn, Stripe, Intel — all major Dublin/Cork/Galway tech hubs) handle CSEP / GEP filings routinely." },
+      { label: "US degree recognition", why: "American degrees from accredited institutions are recognised by Irish employers and the Department of Enterprise. NARIC Ireland evaluation if formal recognition is required for regulated profession." },
+      { label: "Apostilled US documents", why: "FBI background check + apostille (US State Dept) for visa application. Birth / marriage certificates apostilled by issuing US state." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Role and Irish employer", prompt: "Employer (note: most Big Tech US firms have major Irish operations), CSEP/GEP category, salary." },
+      { heading: "US credentials", prompt: "Degree, institution, professional certifications." },
+      { heading: "Why Ireland", prompt: "Specific industry, Dublin/Cork/Galway tech ecosystem, project, team." },
+      { heading: "Long-term plans", prompt: "Stamp 4 + Long-Term Residence after 5 years; Irish citizenship 5 years (1 yr for spouses)." },
+    ],
+    moneySavingTips: [
+      "US-Ireland Working Holiday Authorisation (12 months for US grads under 35) — pre-job offer entry. Useful for testing Dublin / Cork market.",
+      "US-Ireland Tax Treaty avoids double taxation. Irish PAYE captures Irish-source income; US worldwide-income reporting continues.",
+      "Ireland NOT in Schengen — keep that in mind for European travel post-relocation.",
+      "Big Tech Dublin packages typically include relocation support + immigration team handling end-to-end CSEP. Negotiate this as part of offer.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard CSEP with major US tech employer with Dublin operations"],
+      getALawyer: ["Self-employed / consulting setup", "Prior Irish or EU refusal"],
+    },
+  },
+
+  // ─── More family routes (high traffic) ───
+  "GH:US:family": {
+    whatCarriesWeight: [
+      { label: "Petitioner's USC status and category", why: "USC-petitioned spouse (IR-1/CR-1, 12-18 mo) or minor child (IR-2) clears fastest. Ghana F-class wait times: F4 sibling currently 15+ years. F2A LPR-spouse current; F3 12+ years." },
+      { label: "Ghanaian civil documents (Births and Deaths Registry, marriage registrar)", why: "All civil documents from the Ghana Births and Deaths Registry or relevant marriage registrar. Apostille via Ministry of Foreign Affairs (Ghana joined Hague Apostille effective 2024)." },
+      { label: "Marriage bona-fides scrutiny", why: "Ghanaian-American marriages get standard USCIS scrutiny. Strong evidence: relationship-development timeline, photos across years, joint finances if cohabited, family integration, video-call communication records during long-distance periods." },
+      { label: "I-864 financial sponsorship", why: "Petitioner shows income ≥125% federal poverty threshold. Joint sponsor available." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship history", prompt: "How and when you met, courtship (including long-distance), marriage, current arrangement." },
+      { heading: "In-person visits", prompt: "Document each visit with passport stamps and supporting evidence." },
+      { heading: "Plans for the US", prompt: "Settlement city, petitioner's employment, housing, beneficiary's plans." },
+    ],
+    moneySavingTips: [
+      "Ghanaian apostille via MoFA Accra: GHS 200-500 per document (cheaper than 'international notarisation' services).",
+      "Ghana-US bilateral relations are stable — DV (Diversity Visa) Lottery participation from Ghana is heavy; ineligibility for F-class doesn't preclude DV.",
+      "Avoid 'visa fixers' in Accra charging $3,000+ — USCIS forms are free; reputable Ghanaian-American immigration lawyers charge $1,500-3,000 for end-to-end work.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard USC spouse petition with clean marriage and Ghanaian apostilled documents"],
+      getALawyer: ["Beneficiary's prior US overstay or refusal", "Petitioner's prior I-130 history (refused or withdrawn)", "Polygamous marriage history (USCIS recognises only monogamous)"],
+    },
+  },
+
+  "ET:CA:work": {
+    whatCarriesWeight: [
+      { label: "Express Entry CRS profile", why: "Ethiopian professionals: bachelor's + IELTS 7+ + 3+ years skilled experience typically scores 400-450 CRS without job offer. LMIA-supported job offer adds 50-200 points. PNP nomination 600 points." },
+      { label: "WES Educational Credential Assessment for Ethiopian degrees", why: "Ethiopian universities (Addis Ababa University, etc.) — degrees evaluated by WES, which is Canada-recognised. Apostille typically required (Ethiopia joined Hague effective 2023)." },
+      { label: "IELTS General Training band scores (CLB 9+ optimal)", why: "Bands of 7.0/6.0/7.0/7.0 on the GT scale (CLB 9) optimise CRS. Each band increase = significant CRS gain." },
+      { label: "Police certificates from Ethiopia + any other country lived in 6+ months", why: "Ethiopia PCC via Federal Police HQ. For diaspora applicants with UAE / Saudi / Kuwait residence, separate PCC required." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Skilled-occupation profile", prompt: "NOC code (TEER 0/1/2/3 eligible for FSW), years of experience, professional registration." },
+      { heading: "Education and ECA", prompt: "Degree, institution, WES reference." },
+      { heading: "Language test results", prompt: "IELTS GT band scores per skill." },
+      { heading: "Settlement plan", prompt: "Province, city, employment search strategy, settlement funds." },
+    ],
+    moneySavingTips: [
+      "Provincial Nominee Programs (Saskatchewan SINP, Manitoba MPNP, Alberta AAIP) often have lower CRS thresholds for Ethiopian-profile occupations.",
+      "Don't pay immigration consultants in Addis $5,000+ — Express Entry is self-serve via canada.ca. CICC-licensed Canadian consultants charge CAD$2,500-5,000 for full representation.",
+      "Settlement funds: CAD$13,757 (single) or CAD$17,127 (couple) — show 6+ months of liquid funds in your name.",
+    ],
+    lawyerTriggers: {
+      diy: ["Clean Express Entry profile with strong CRS, no immigration complications"],
+      getALawyer: ["Past Canadian or other refusal", "LMIA challenges from small employer", "Ethiopian military service requiring extra documentation"],
+    },
+  },
+
+  // ─── More tourism / family for high-traffic regions ───
+  "MX:CA:tourism": {
+    whatCarriesWeight: [
+      { label: "Mexican passport — Canada eTA (granted 2016, reimposed conditions)", why: "Most Mexican nationals require an eTA to fly to Canada — CAD$7, 5-year validity, instant approval typically. Some Mexican applicants (depending on travel history and criminal record) still require visitor visa. IRCC checks at boarding." },
+      { label: "Mexican visitor visa (if eTA-ineligible)", why: "For Mexican applicants who don't qualify for eTA: standard Temporary Resident Visa (TRV) at Canadian Visa Application Centre (VFS Mexico). Processing 2-6 weeks; CAD$100 fee + biometrics CAD$85." },
+      { label: "Strong ties to Mexico", why: "Document employer letter, property ownership, family, prior compliant Canadian / US / Schengen / UK travel. Refusal rates for Mexican visitor visa are 15-30% (above OECD baseline)." },
+      { label: "Onward / return ticket + itinerary", why: "Detailed travel plan with hotels and return flight strongly recommended." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Trip purpose and itinerary", prompt: "Specific dates, cities, accommodations, planned activities." },
+      { heading: "Your ties to Mexico", prompt: "Employer, property, family." },
+      { heading: "How the trip is funded", prompt: "Own income evidence OR sponsor's documentation." },
+      { heading: "Prior travel", prompt: "Schengen / US / UK / AU / JP travel history." },
+    ],
+    moneySavingTips: [
+      "eTA application is online and instant for most Mexican applicants — don't pay 'agents' more than the CAD$7 government fee.",
+      "If eTA-ineligible (rare) or denied at eTA stage, you'll need standard visitor visa — disclose any prior visa refusal honestly.",
+      "Mexican applicants benefit from USMCA business-travel preferences for genuine business activities — separate from tourism visa.",
+    ],
+    lawyerTriggers: {
+      diy: ["eTA application or standard visitor visa with strong ties documentation"],
+      getALawyer: ["Prior Canadian / US refusal", "Criminal record / inadmissibility concerns"],
+    },
+  },
+
+  "BR:ES:family": {
+    whatCarriesWeight: [
+      { label: "Spanish residence card via family reunification (EU Family Member)", why: "Spanish-citizen sponsors apply via the EU Family Member regime; Brazilian spouses qualify for a 5-year EU Family Member residence card." },
+      { label: "Iberoamerican 2-year naturalisation", why: "After 2 years legal residence, Brazilian spouses of Spanish citizens can apply for Spanish citizenship — vs the standard 10 years for non-Iberoamericans." },
+      { label: "Brazilian apostilled civil documents + cartório translations", why: "Brazilian civil documents (birth, marriage, divorce if applicable) apostilled via Brazilian cartórios. Spanish sworn translation by traductor jurado." },
+      { label: "Brazilian antecedentes criminais (federal + state) apostilled", why: "Federal Polícia Federal + state estadual checks, both apostilled and translated." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship to Spanish sponsor", prompt: "Marriage date and registry reference (Brazilian or Spanish cartório). Prior marriages on either side." },
+      { heading: "Living arrangements in Spain", prompt: "Where you'll live (empadronamiento essential), sponsor's income / employment." },
+      { heading: "Brazilian original document set", prompt: "Apostilled civil documents + translation references." },
+      { heading: "Long-term intent (Iberoamerican naturalisation)", prompt: "Pursuing Spanish citizenship after 2 years legal residence — Brazilian-CPLP framework is the explicit basis." },
+    ],
+    moneySavingTips: [
+      "Brazilian cartório apostille: BRL 50-150 per document (much cheaper than 'international document services').",
+      "Spanish DELE A2 + CCSE for citizenship: total ~€200. Plan well ahead — DELE exam dates are limited.",
+      "Madrid/Barcelona consulate processing 4-12 weeks. Apply from Brazil before relocating to avoid in-Spain processing complexity.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard EU Family Member route with apostilled Brazilian documents"],
+      getALawyer: ["Prior Spanish residence card refusal", "Marriage entered shortly after sponsor naturalised as Spanish (fraud-risk)", "Complex prior Brazilian marriages requiring Spanish recognition"],
+    },
+  },
+
+  // ─── More US-bound from Latin America ───
+  "CO:US:family": {
+    whatCarriesWeight: [
+      { label: "Petitioner's USC / LPR status and category", why: "USC-petitioned spouse / minor child clears fastest (12-18 months). Colombia F-class wait times: F2A current; F1 6-8 years; F4 15+ years." },
+      { label: "Colombian civil documents from Registraduría Nacional", why: "Civil documents (Registro Civil de Nacimiento / Matrimonio) from Registraduría Nacional del Estado Civil. Apostille via Cancillería (Colombia joined Hague Apostille in 2001)." },
+      { label: "Marriage bona-fides for spouse cases", why: "Colombian-American spousal petitions get standard USCIS scrutiny. Strong evidence: relationship-development timeline, photos, joint finances, family integration." },
+      { label: "I-864 sponsor income ≥125% federal poverty threshold", why: "Standard requirement. Joint sponsor option if petitioner doesn't qualify alone." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship history", prompt: "Meeting, courtship, marriage. Long-distance courtship is common — document video calls and visit evidence." },
+      { heading: "In-person visits", prompt: "Each visit with dates and supporting documentation." },
+      { heading: "Plans for US settlement", prompt: "City, petitioner employment, housing." },
+    ],
+    moneySavingTips: [
+      "Cancillería apostille in Bogotá: COP 30,000-50,000 per document. Vastly cheaper than US-based 'international document services'.",
+      "Spanish-English translation: most US consulates accept Colombia-based traductores oficiales — verify with embassy before paying for US-side translation.",
+      "Bogotá embassy interview wait typically 2-6 months for K-1 / CR-1.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard USC spouse petition with clean marriage and Colombian documents"],
+      getALawyer: ["Beneficiary prior US overstay", "Petitioner prior I-130 history", "Colombian gendered-naturalisation issues for older marriages"],
+    },
+  },
+
+  // ─── 50-cell completion batch: high-traffic gaps across multiple corridors ───
+  "US:FR:work": {
+    whatCarriesWeight: [
+      { label: "Talent Passport Salarié Qualifié for skilled employees", why: "American senior professionals qualify for the French Talent Passport (Passeport Talent) Salarié Qualifié — French employer + ≥ €43,243/yr salary in 2024. 4-year residence card, renewable. Faster and more reliable than standard work permit + DREETS labour-market test." },
+      { label: "Talent Passport Investisseur / Salarié en Mission alternatives", why: "Investisseur for €300k+ investment in French enterprise; Salarié en Mission for intracompany transfer from US parent to French subsidiary. Talent for researchers, artists, founders." },
+      { label: "FBI background check + apostille", why: "Same pattern as other US-outbound: FBI Identity History Summary + State Dept apostille + sworn French translation by traducteur assermenté." },
+      { label: "French consulate selection", why: "Visa application via French consulate covering your US state of residence (NYC, DC, LA, Chicago, SF, Boston, Houston, Miami, Atlanta, New Orleans). Visa processing 4-8 weeks for Talent Passport." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Role and French employer", prompt: "Company, location, role, salary at or above Talent Passport threshold." },
+      { heading: "US credentials", prompt: "Degree, institution, professional certifications relevant to French role." },
+      { heading: "Why France", prompt: "Specific city (Paris, Lyon, Toulouse for aerospace, Marseille for tech), project, team." },
+      { heading: "Long-term plans", prompt: "Carte de résident after 5 years; French citizenship 5 years (2 for spouses)." },
+    ],
+    moneySavingTips: [
+      "Talent Passport waives the standard DREETS labour-market test — faster, more predictable, no employer hassle.",
+      "US-France Tax Treaty avoids double taxation. French CPAM registration from day 1 of French employment.",
+      "Don't pay 'French visa agencies' in US $3,000+ — application via VFS or TLScontact (authorised by French consulate) is straightforward."
+    ],
+    lawyerTriggers: {
+      diy: ["Talent Passport with French employer at qualifying salary"],
+      getALawyer: ["Investor / entrepreneur route with US-LLC ownership structures", "Self-employment / Freelance Talent Passport", "Prior Schengen refusal"],
+    },
+  },
+
+  "US:GR:work": {
+    whatCarriesWeight: [
+      { label: "Greek Golden Visa OR Digital Nomad Visa OR Financially Independent Person Visa", why: "Americans relocating to Greece: (a) Golden Visa via property purchase €250k-€800k (post-2024 reform raised thresholds in Athens / Mykonos / Santorini), (b) Digital Nomad Visa with €3,500+/mo foreign-source income, (c) FIP Visa with €2,000+/mo passive income." },
+      { label: "Greek tax-residence (AFM) + Greek bank account", why: "Apply for AFM (Greek tax number) via Greek consulate or in Athens. Open Greek bank account; Golden Visa and DNV require this." },
+      { label: "Greek criminal record + US FBI background", why: "Greek criminal record only if previously Greek resident. US FBI background check + State Dept apostille." },
+      { label: "Property purchase documentation (for Golden Visa)", why: "Notarised property purchase agreement + property registration certificate (Land Registry). Property purchase via Greek lawyer typically 6-12 weeks end-to-end." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Visa category and qualification basis", prompt: "Golden Visa property + amount, OR DNV income, OR FIP income source." },
+      { heading: "Why Greece", prompt: "Specific area (Athens, Thessaloniki, Crete, Cyclades). Climate, cost, lifestyle, Greek-language learning." },
+      { heading: "Long-term plans", prompt: "Permanent residence after 5 years; Greek citizenship after 7 years (3 for spouses). Greek descent (jure sanguinis) for Greek-Americans is a faster route." },
+    ],
+    moneySavingTips: [
+      "Greek Golden Visa: €250k threshold remains in many areas outside the post-2024 reform zones — Peloponnese, Crete, Thessaloniki suburbs typically still qualify at the lower threshold.",
+      "Greek tax for non-doms: €100,000 flat tax option for new residents with worldwide-income shielding for 15 years (if you qualify).",
+      "Don't pay 'Golden Visa agencies' $20,000+ — reputable Greek lawyers handle Golden Visa end-to-end for €5,000-10,000 (still substantial, but realistic).",
+    ],
+    lawyerTriggers: {
+      diy: ["DNV / FIP with clean US income evidence"],
+      getALawyer: ["Golden Visa (property purchase has rigorous due diligence and legal complexity)", "Greek descent (jure sanguinis) — civil-status research in Greek registries"],
+    },
+  },
+
+  "US:NL:work": {
+    whatCarriesWeight: [
+      { label: "Dutch-American Friendship Treaty (DAFT) for entrepreneurs", why: "DAFT is uniquely available to US nationals: minimum €4,500 invested in a Dutch sole-proprietorship or limited company + business plan + 25% own equity. 2-year initial visa, renewable to 5 years, then permanent residence. No salary threshold, no employer needed." },
+      { label: "Highly Skilled Migrant scheme (HSM)", why: "Standard pathway for US employees: Dutch employer with recognised-sponsor status + salary threshold €5,331/mo (30+) or €3,909/mo (under 30). Permit processing typically 2-4 weeks once employer files." },
+      { label: "Search Year / Orientation Year (post-study graduates)", why: "American grads of Dutch universities qualify for the 1-year Orientation Year — find work without employer sponsorship. Then transition to HSM if eligible." },
+      { label: "US degree recognition", why: "Most accredited US degrees recognised by Dutch universities and employers; Nuffic credential evaluation if formal recognition needed for regulated profession." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Visa category", prompt: "DAFT (entrepreneur), HSM (employee), Orientation Year (graduate), or Search Year." },
+      { heading: "US credentials and Dutch sponsor", prompt: "Degree, employer (HSM) or business plan (DAFT)." },
+      { heading: "Why the Netherlands", prompt: "Amsterdam tech, Rotterdam logistics, Eindhoven semiconductors. Dutch English-fluency makes integration easy." },
+      { heading: "Long-term plans", prompt: "PR after 5 years; Dutch citizenship 5 years (3 for spouses), generally renouncing US nationality." },
+    ],
+    moneySavingTips: [
+      "DAFT is uniquely available to Americans — no other nationality has it. Use this if entrepreneurship is genuine; €4,500 equity is far lower than most investor visa thresholds globally.",
+      "HSM salary thresholds are GROSS — total compensation including benefits counts toward the threshold.",
+      "30% ruling (Dutch tax incentive for highly skilled migrants): 30% of income tax-free for 5 years. Phased reduction in 2024 — verify current rules with Dutch tax adviser.",
+      "Don't pay 'visa agencies' in US $3,000+ — Dutch employer's immigration team handles HSM end-to-end."
+    ],
+    lawyerTriggers: {
+      diy: ["DAFT with clean business plan and €4,500+ equity", "HSM with reputable Dutch employer"],
+      getALawyer: ["Complex DAFT business structure", "Prior Schengen refusal"],
+    },
+  },
+
+  "US:CH:work": {
+    whatCarriesWeight: [
+      { label: "Permit B work visa (quota-restricted)", why: "Non-EU/EFTA nationals face Swiss work-permit quotas — annual caps by canton. Permit B (1-year renewable) requires Swiss employer + labour-market test (no qualified Swiss/EU candidate) + specialist qualification. Banking, pharma, biotech, watchmaking are common American pathways." },
+      { label: "Salary level (significantly above Swiss median)", why: "Swiss authorities require salary at or above the cantonal market rate for the role — typically CHF 90,000+ for entry positions, CHF 150,000+ for senior. Below market rate = refusal." },
+      { label: "FBI background check + apostille", why: "US FBI + State Dept apostille. Some cantons require sworn German / French / Italian translation depending on canton language." },
+      { label: "Permit C (settlement) after 5 yrs for US nationals", why: "US-Swiss bilateral agreement: Permit C (settlement permit, akin to PR) available after 5 years for US nationals — faster than the standard 10-year track for most non-EU nationalities." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Role and Swiss employer", prompt: "Canton, employer, role, salary. The canton's quota availability matters — Geneva, Zurich most competitive." },
+      { heading: "US credentials", prompt: "Degree, professional certifications, specialist expertise justifying labour-market test waiver." },
+      { heading: "Why Switzerland", prompt: "Specific industry (banking, pharma, biotech, watchmaking), city, project." },
+      { heading: "Long-term plans", prompt: "Permit C after 5 yrs (US-Swiss bilateral); Swiss citizenship typically 10 yrs (years 8-18 count double for the residence calculation)." },
+    ],
+    moneySavingTips: [
+      "Swiss-US bilateral agreement: Permit C in 5 yrs is a major advantage vs standard 10-yr track. Plan around staying with the same canton.",
+      "Swiss healthcare insurance is mandatory and PRIVATE — budget CHF 300-500/mo per person. Some employers offer subsidies.",
+      "Swiss tax is cantonal — Zug, Schwyz, Nidwalden are low-tax cantons. Zurich and Geneva are higher. Geographic choice has tax implications.",
+      "US tax filing (worldwide income) continues — talk to a US-CH cross-border CPA."
+    ],
+    lawyerTriggers: {
+      diy: ["Standard Permit B with reputable Swiss employer in pharma / finance / tech"],
+      getALawyer: ["Self-employed / consulting setup in Switzerland", "Quota-driven refusal appeal", "Permit C upgrade complications"],
+    },
+  },
+
+  "US:JP:study": {
+    whatCarriesWeight: [
+      { label: "Highly Skilled Foreign Professional (HSP) study-to-work pipeline", why: "Americans pursuing a Japanese postgraduate degree often pursue HSP afterwards — point-based, age + income + education + Japanese language criteria (70+ pts = 3 yrs to PR, 80+ pts = 1 yr to PR). Many top Japanese universities (Tokyo, Kyoto, Waseda, Keio) offer English-medium Master's programmes." },
+      { label: "Certificate of Eligibility (CoE) for the student visa", why: "Japanese university files CoE application with Japanese Immigration Bureau. 1-3 months processing; you take CoE to Japanese embassy in US for visa stamping (1-2 weeks)." },
+      { label: "MEXT / Japanese government scholarships", why: "MEXT Research / Undergraduate / Special Training scholarships fully cover tuition + monthly stipend + travel. Highly competitive — apply 12-18 months ahead through Japanese embassy in US." },
+      { label: "Japanese language (variable by programme)", why: "English-medium programmes don't require Japanese at admission. Traditional programmes require JLPT N2+. EJU (Examination for Japanese University Admission) for undergrad applicants." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Programme and Japanese institution", prompt: "Specific programme, university, faculty / supervisor for research roles." },
+      { heading: "US credentials", prompt: "Degree, GPA, prior research / publications." },
+      { heading: "Why Japan", prompt: "Specific research focus, faculty, industry exposure post-graduation." },
+      { heading: "Long-term plans", prompt: "Post-graduation: Designated Activities (Job-Hunting) extends 6-12 mo to find work; transition to HSP for PR fast-track." },
+    ],
+    moneySavingTips: [
+      "MEXT scholarship fully funds tuition + ~JPY 144,000-148,000/mo stipend + flights. Apply 12-18 mo ahead through Japanese embassy in US.",
+      "Japan-US Social Security Totalization Agreement applies once you transition from student to worker.",
+      "Don't pay 'Japan visa agencies' in US — CoE filed by Japanese university; visa stamping at embassy is straightforward.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard MEXT-funded or self-funded study with reputable Japanese institution"],
+      getALawyer: ["Conversion from student to HSP", "Self-employed / startup founder post-study", "Prior Japanese refusal"],
+    },
+  },
+
+  "DE:US:family": {
+    whatCarriesWeight: [
+      { label: "USC / LPR petitioner and category", why: "USC-petitioned German spouse (CR-1/IR-1, 12-18 mo) or minor child clears fastest. Germany F-class wait times: F2A current; F1 6-8 yrs; F4 15+ yrs." },
+      { label: "German civil documents (Standesamt)", why: "Birth, marriage, divorce certificates from the responsible Standesamt (registry office). Apostilled via Bezirksregierung or equivalent state authority. Sworn English translation by court-certified translator." },
+      { label: "Marriage bona-fides for spouse cases", why: "German-American spousal petitions get standard USCIS scrutiny. Strong evidence: relationship-development timeline, photos across years, joint finances, family integration, video-call records during long-distance periods." },
+      { label: "I-864 financial sponsorship", why: "Standard ≥125% federal poverty threshold via petitioner's tax transcripts + W-2. Joint sponsor option if needed." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship history", prompt: "Meeting, courtship, marriage. Document long-distance pattern with communication evidence if applicable." },
+      { heading: "In-person visits", prompt: "Each visit with passport stamps and supporting evidence." },
+      { heading: "Plans for US settlement", prompt: "City, petitioner's employment, housing." },
+    ],
+    moneySavingTips: [
+      "German apostille via Bezirksregierung (state authority): typically €10-25 per document. Avoid 'international apostille services' charging 5× more.",
+      "Frankfurt embassy interview waits typically 2-6 months for K-1 / CR-1.",
+      "K-1 fiancé(e) total cost ~$2,500 in official fees. CR-1 spousal ~$1,500-2,000. Reputable US-DE immigration lawyers charge $1,500-3,000 for end-to-end work.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard USC spouse petition with clean marriage and German apostilled documents"],
+      getALawyer: ["Beneficiary's prior US overstay or refusal", "Petitioner's prior I-130 history", "Complex prior German marriages requiring US recognition"],
+    },
+  },
+
+  // Family routes for high-traffic origins
+  "PH:CA:family": {
+    whatCarriesWeight: [
+      { label: "Sponsor's Canadian status (citizen vs PR)", why: "Canadian citizens may sponsor from abroad; PRs must live in Canada when sponsoring. Sponsor must not have received social assistance (non-disability) in prior 12 months, not in default on prior sponsorship undertaking." },
+      { label: "Marriage / common-law genuineness", why: "Filipino-Canadian marriages get standard IRCC scrutiny. Strong evidence: relationship timeline, in-person visits (despite distance), joint finances if cohabited, family integration, photo evidence across years, video-call communication records." },
+      { label: "PSA-certified Philippine civil documents", why: "Birth, marriage, divorce / annulment documents from Philippine Statistics Authority (PSA). Authenticated as needed for Canadian use." },
+      { label: "Sponsor's financial undertaking (3-yr spouse; 20-yr parent)", why: "Spousal sponsorship has no formal income threshold but income evidence strengthens commitment. Parental sponsorship has higher income thresholds and 3-yr Low-Income Cut-Off (LICO) requirement." },
+    ],
+    personalStatementTemplate: [
+      { heading: "How you met and how the relationship developed", prompt: "Meeting, courtship (often via family in Filipino context — that's fine, document), engagement, marriage." },
+      { heading: "In-person meetings", prompt: "Each visit with passport stamps and supporting evidence." },
+      { heading: "Communication during separation", prompt: "WhatsApp / video call records, photo timelines." },
+      { heading: "Plans for Canada", prompt: "Where you'll settle, sponsor's employment, housing." },
+    ],
+    moneySavingTips: [
+      "Spousal sponsorship fees: CAD$1,205 (processing) + CAD$85 (biometrics) + CAD$515 (right of permanent residence) = ~CAD$1,800 per applicant.",
+      "Philippine PSA-issued documents: PHP 155-365 per document; orders of magnitude cheaper than 'international document authentication' agencies.",
+      "Don't pay Manila-based 'visa fixers' $3,000+ — Canadian spousal sponsorship is self-serve via IRCC. CICC-licensed consultants in Canada charge CAD$2,000-4,000 for full representation if needed.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard spousal sponsorship with extended courtship documentation"],
+      getALawyer: ["Short courtship + immediate sponsorship (fraud-presumption risk)", "Sponsor's prior refused sponsorship", "Polygamous prior marriage in Philippines"],
+    },
+  },
+
+  "IN:DE:family": {
+    whatCarriesWeight: [
+      { label: "Family reunification under § 28-32 Aufenthaltsgesetz", why: "Indian spouses of German residents / citizens apply via family reunification permit. Sponsor must hold German residence and meet income / housing requirements (Bedarfsdeckung)." },
+      { label: "Pre-arrival German A1 language certificate", why: "Indian spouses must pass A1 German (Goethe-Institut A1 or equivalent) BEFORE applying for family-reunification visa. Exception: highly skilled / Blue Card spouses are exempt." },
+      { label: "Indian civil documents apostilled", why: "Birth, marriage documents apostilled by Indian state-level Ministry of External Affairs. India joined Hague Apostille effective 2005. Sworn German translation by a German-certified translator." },
+      { label: "Sponsor's stable residence and adequate income/housing", why: "Sponsor's German residence permit + employer letter + payslips + rental contract sized for the joining family." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship to German sponsor", prompt: "Marriage details — date, place, registry. Sponsor's German residence status." },
+      { heading: "German A1 language certificate", prompt: "Goethe-Institut A1 / TestDaF A1 reference. Spouse of Blue Card / HSP holder is exempt." },
+      { heading: "Indian original documents", prompt: "Apostilled birth / marriage with sworn German translation." },
+      { heading: "Plans in Germany", prompt: "City, sponsor's employer, schools (if children)." },
+    ],
+    moneySavingTips: [
+      "Goethe-Institut A1 in India: INR 8,000-15,000 + 2-4 months prep. Pass first try — re-takes add up.",
+      "Indian apostille: MEA fees ~INR 50-100 per document. Avoid 'agencies' charging INR 2,000+ for the same outcome.",
+      "Blue Card / HSP spouse exemption from A1 requirement saves substantial time and cost — verify with German embassy that exemption applies.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard spouse-of-Blue-Card with A1 exemption + clean Indian documents"],
+      getALawyer: ["Sponsor's complex residence status", "Indian gendered-naturalisation prior issues", "Prior Schengen refusal"],
+    },
+  },
+
+  // ─── Student route additions ───
+  "DE:US:study": {
+    whatCarriesWeight: [
+      { label: "I-20 from a SEVP-certified US institution", why: "German students applying for F-1 need I-20 from accredited US university. German-American institutions (German-American Heritage Foundation scholarships) common. Public Ivies and STEM grad programs most-applied-to." },
+      { label: "Financial capacity for 1 year tuition + living", why: "Bank statements showing first-year tuition + ~$20-30k living expenses. German students often documented via parental sponsorship + parent income." },
+      { label: "Genuine non-immigrant intent (214(b))", why: "German applicants typically pass 214(b) cleanly — strong home ties + EU citizenship + clear graduation-and-return narrative." },
+      { label: "Berlin / Frankfurt / Munich consulate processing", why: "German consulates process student visas typically 1-4 weeks. Interview waiver expanded post-2023 for prior US visa holders." },
+    ],
+    personalStatementTemplate: [
+      { heading: "US programme and university", prompt: "Specific programme, university, faculty / research opportunity." },
+      { heading: "German educational background", prompt: "Abitur, prior degrees, GPA equivalent." },
+      { heading: "Why US over German programmes", prompt: "Specific research, faculty, industry exposure, network." },
+      { heading: "Financial sponsorship", prompt: "Parental income, scholarship, savings." },
+    ],
+    moneySavingTips: [
+      "DAAD scholarships for German students at US institutions: comprehensive funding (tuition + living + flights). Apply 12 months ahead.",
+      "F-1 SEVIS fee ($350) + visa fee ($185) = $535 total US-government fees. Don't pay 'agencies' more than $200 for support.",
+      "OPT (Optional Practical Training) 12 months post-graduation + 24-month STEM extension — strong post-study employability for German students in US tech.",
+    ],
+    lawyerTriggers: {
+      diy: ["First-time F-1 to reputable US institution"],
+      getALawyer: ["Prior F-1 refusal", "F-1 to H-1B conversion with cap-gap timing", "Prior US overstay or fraud"],
+    },
+  },
+
+  "ZA:US:study": {
+    whatCarriesWeight: [
+      { label: "I-20 + SEVP-certified institution", why: "South African students typically target US public R1 universities + Ivies. I-20 from accredited institution after tuition deposit." },
+      { label: "Financial capacity in ZAR / USD", why: "Bank statements showing 1-year tuition + living. South African currency fluctuation requires conservative documentation — show USD-equivalent value plus the underlying ZAR." },
+      { label: "Genuine non-immigrant intent (214(b))", why: "South African first-time student applicants typically pass 214(b) cleanly with strong family / property ties and clear graduation plan." },
+      { label: "Johannesburg / Cape Town consulate processing", why: "Visa wait times at Johannesburg / Cape Town typically 4-12 weeks. Plan accordingly." },
+    ],
+    personalStatementTemplate: [
+      { heading: "US programme and university", prompt: "Specific programme, faculty, research." },
+      { heading: "South African educational background", prompt: "Matric, prior degrees, achievements." },
+      { heading: "Why US over UK / Aus alternatives", prompt: "South African students choose US for STEM research depth, business school networks, athletic scholarships." },
+      { heading: "Financial sponsorship", prompt: "Parental income, scholarship (Mandela Rhodes, Fulbright), savings." },
+    ],
+    moneySavingTips: [
+      "Fulbright South Africa, Mandela Rhodes, Rhodes Trust scholarships fund top South African students at US institutions.",
+      "F-1 visa total US fees ~$535. Don't pay agencies more than $200.",
+      "OPT + STEM extension is a strong differentiator — South African STEM grads in US tech are common.",
+    ],
+    lawyerTriggers: {
+      diy: ["First-time F-1 with clean documentation"],
+      getALawyer: ["Prior F-1 refusal", "F-1 to H-1B with cap-gap timing"],
+    },
+  },
+
+  // ─── Visit visas (high-traffic) ───
+  "IN:GB:tourism": {
+    whatCarriesWeight: [
+      { label: "Standard Visitor visa with strong ties to India", why: "Indian Standard Visitor visa refusal rates run 10-20% for first-time applicants. Strong ties documentation (employer letter, salary, property, family, prior compliant travel) is the single biggest lever." },
+      { label: "Six months of bank statements + ITRs", why: "UKVI scrutinises Indian financial documentation carefully. Salaried applicants: 6 months payslips + bank statements + 2 years ITR. Self-employed: business registration + 2 years ITR + bank statements." },
+      { label: "Sponsor invitation + sponsor's UK status (if family-sponsored)", why: "If UK-based relative sponsors: invitation letter + sponsor's UK status (BRP / settled status / British passport) + sponsor's bank statements + payslips + accommodation details." },
+      { label: "Detailed itinerary + return ticket + travel insurance", why: "Day-by-day itinerary with hotel bookings; refundable bookings via Booking.com are fine. Confirmed return flight. Travel insurance covering medical." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Trip purpose and length", prompt: "Specific purpose (tourism, business meeting, family event), exact dates, length of stay." },
+      { heading: "Ties to India", prompt: "Employer / business, property, family." },
+      { heading: "Funding", prompt: "Own income evidence OR sponsor's documentation." },
+      { heading: "Prior international travel", prompt: "Document any Schengen / US / Canada / Aus / UAE / Singapore travel — establishes compliant pattern." },
+    ],
+    moneySavingTips: [
+      "Standard Visitor visa is £127 (single entry, 6-month validity). Long-term options: 2-year (£475), 5-year (£848), 10-year (£1,059) multi-entry. Cost-per-trip falls sharply with long-term.",
+      "VFS Global is the authorised UK visa-application centre in India — straightforward submission. Don't pay 'agents' beyond VFS's own service fees.",
+      "UK Settlement Visa is unrelated to Visitor visa — don't confuse forms or fees.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard Visitor with strong ties and clean documentation"],
+      getALawyer: ["Prior UK refusal — appeal or fresh-application strategy", "Complex prior UK overstay or immigration history"],
+    },
+  },
+
+  "NG:US:tourism": {
+    whatCarriesWeight: [
+      { label: "B-1/B-2 ties evidence with elevated scrutiny", why: "Nigerian B-visa refusal rates run 30-55% for first-time applicants under 214(b). Strong documentation: long-term employer + salary, fixed assets in Nigeria, family responsibilities, prior international travel history." },
+      { label: "Bank statements + tax returns + asset documentation", why: "12 months consistent income evidence + property ownership + business registration if applicable. Random one-off deposits flagged as fraud indicators." },
+      { label: "Sponsor's I-134 (if family-sponsored)", why: "US-based relative's I-134 Declaration of Financial Support + tax transcripts + W-2 + bank statements." },
+      { label: "Detailed itinerary + hotel + return flight", why: "Specific dates, accommodations, planned activities. Vague itineraries trigger 214(b) refusals." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Trip purpose and dates", prompt: "Specific dates, purpose (family visit, tourism, conference), and length of stay." },
+      { heading: "Roots in Nigeria", prompt: "Employer, position, length of service, property, family." },
+      { heading: "How funded", prompt: "Own income OR sponsor's I-134 + documentation." },
+      { heading: "Prior travel", prompt: "Document Schengen / UK / Canada / UAE / South Africa travel history." },
+      { heading: "Return plan", prompt: "Specific reason you'll return on schedule — pending work, school, parental responsibility." },
+    ],
+    moneySavingTips: [
+      "Lagos and Abuja interview waits run 8-18 months — third-country interview available (most commonly: Accra, Johannesburg, London) with shorter waits.",
+      "Interview waiver eligibility expanded in 2024 — prior US visa holders within 48 months may qualify. Saves the interview wait entirely.",
+      "DV (Diversity Visa) Lottery for Nigerian nationals: ineligibility for some years; check current eligibility list. DV is fee-free at entry stage."
+    ],
+    lawyerTriggers: {
+      diy: ["First-time B-visa with very strong ties to Nigeria and prior compliant international travel"],
+      getALawyer: ["Prior 214(b) refusal — strategic reframing", "Prior US overstay / immigration violation"],
+    },
+  },
+
+  // ─── Investor / business visas ───
+  "CN:US:work": {
+    whatCarriesWeight: [
+      { label: "EB-5 Investor + L-1 Intracompany Transfer + H-1B Cap-Subject", why: "Chinese applicants face the longest EB-2 / EB-3 backlogs (50+ years for priority-date current). EB-5 ($800k-$1.05M investment in TEA-designated US enterprise) remains accessible. L-1 from Chinese MNCs to US subsidiaries is common. H-1B subject to standard lottery." },
+      { label: "EB-5 capital sourcing documentation", why: "Chinese EB-5 applicants must document lawful source of investment funds — typically property sales, business income, or inheritance. Documentation rigor is substantial; bank-trail evidence over 5+ years." },
+      { label: "Section 221(g) administrative processing risk", why: "Chinese applicants in sensitive STEM categories face 221(g) holds under Presidential Proclamation 10043. Allow 60-180 days; F/J/H visas most affected." },
+      { label: "Beijing / Shanghai / Guangzhou consulate processing", why: "Interview waits typically 2-8 weeks for B/F/J/H/L. Interview waiver expanded post-2023 for prior visa holders." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Visa category basis", prompt: "EB-5 investment + amount + TEA designation; L-1 qualifying organisation; H-1B employer + role." },
+      { heading: "Chinese credentials + CHESICC authentication", prompt: "Degree, institution, CHESICC reference." },
+      { heading: "Why this US role / project", prompt: "Specific industry, project, team. Avoid sensitive STEM industries where 221(g) holds are common." },
+      { heading: "Long-term plans", prompt: "EB-5 path to PR is direct; L-1A path to EB-1C green card; H-1B path is via employer-sponsored EB-2 / EB-3 (Chinese backlogs 50+ years)." },
+    ],
+    moneySavingTips: [
+      "EB-5 regional centre vs direct investment: regional centre route is more passive but TEA designation requirements changed post-2022 — verify current rules.",
+      "Chinese-US Totalization Agreement does NOT exist — Chinese applicants pay full US Social Security from day 1 of US employment (no exemption).",
+      "Don't pay 'EB-5 promoters' beyond their disclosed regional-centre fees — investment-funds documentation is the largest cost. Reputable US immigration lawyers charge $15,000-30,000 for EB-5 representation."
+    ],
+    lawyerTriggers: {
+      diy: ["Almost never DIY for Chinese applicants given complexity and STEM scrutiny"],
+      getALawyer: ["EB-5 investment (substantial legal complexity)", "Self-petitioning O-1 / EB-1A", "Any STEM category where 221(g) risk applies", "Prior US visa refusal or 221(g) hold"],
+    },
+  },
+
+  "RU:GE:work": {
+    whatCarriesWeight: [
+      { label: "Georgia visa-free for Russian nationals (1-year stay)", why: "Russian nationals enter Georgia visa-free for up to 1 year — among the longest visa-free regimes globally. Major destination for Russian remote workers post-2022. No employer sponsorship needed for visa-free residence." },
+      { label: "Georgian tax-residence (183-day rule)", why: "After 183 days in Georgia in a calendar year, you may become Georgian tax-resident. Georgia's Individual Entrepreneur status offers 1% income tax for businesses under GEL 500k/yr — popular with Russian remote workers." },
+      { label: "Georgian bank account (post-2022 stricter compliance)", why: "Georgian banks tightened account-opening for Russian nationals post-February 2022. TBC Bank, Bank of Georgia require detailed source-of-funds documentation. Allow 2-4 weeks." },
+      { label: "Russian background documents (limited availability post-2022)", why: "Russian background-check documents (справка о судимости) issued by Russian MVD — apostille via Russian MFA. Plan around restricted-document timelines if applying remotely." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Why Georgia", prompt: "Cost, visa-free duration, language access (Russian widely spoken), tech ecosystem in Tbilisi / Batumi." },
+      { heading: "Income source", prompt: "Foreign-source clients / employer — common pattern for Russian remote workers." },
+      { heading: "Long-term intent", prompt: "Permanent residence after 6 years continuous (10 yrs for non-CIS); Georgian citizenship typically requires Georgian-language proficiency." },
+    ],
+    moneySavingTips: [
+      "Georgian Individual Entrepreneur 1% tax regime is uniquely advantageous — file with Revenue Service Georgia; €50 setup + 1% on revenue under GEL 500k.",
+      "Georgian banking for Russian nationals: TBC and Bank of Georgia have published procedures for source-of-funds review. Don't try to circumvent — refusal stuck for 6+ months.",
+      "Don't pay 'relocation services' charging $5,000+ — visa-free entry + tax-residence + bank account is self-serve with patience.",
+    ],
+    lawyerTriggers: {
+      diy: ["Visa-free entry + IE tax-status registration"],
+      getALawyer: ["Complex source-of-funds documentation for bank account", "Permanent residence application (6 yr CIS / 10 yr non-CIS)"],
+    },
+  },
+
+  // ─── More tourism + visit cells ───
+  "AE:GB:tourism": {
+    whatCarriesWeight: [
+      { label: "Emirati passport visa-free + UK ETA from 2024", why: "Emirati passport holders enter UK visa-free for 6 months. UK ETA (£10, 2-year validity) required from 2024 — apply at gov.uk before boarding." },
+      { label: "UAE-resident expat applicants use original-passport rules", why: "UAE residents who are NOT Emirati nationals (most UAE expats) need visas based on their original passport. UAE residence does not confer UK visa-free entry." },
+      { label: "Bank statements + employer letter", why: "Standard tie evidence — employer letter showing salary + UAE residence permit + 6 months bank statements." },
+      { label: "Return flight + accommodation evidence", why: "Standard visitor documentation." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Trip purpose and dates", prompt: "Tourism / business / family — specific dates and length." },
+      { heading: "UAE ties (for non-Emirati)", prompt: "Employer letter, residence permit, family in UAE." },
+      { heading: "Funding", prompt: "Own income or sponsor documentation." },
+    ],
+    moneySavingTips: [
+      "Emirati nationals: ETA £10, 2-year multi-entry validity — apply once, use across many trips.",
+      "Non-Emirati UAE expats: apply based on original passport rules, not UAE residence — this is the most-common confusion point."
+    ],
+    lawyerTriggers: {
+      diy: ["Emirati national with ETA OR non-Emirati expat with strong original-passport-country ties"],
+      getALawyer: ["Prior UK refusal", "Complex UAE residence + original-passport documentation"],
+    },
+  },
+
+  // Long-stay across additional EU members
+  "PT:NL:work": {
+    whatCarriesWeight: [
+      { label: "EU freedom of movement (no work permit required)", why: "Portuguese citizens have unrestricted right to work in the Netherlands under EU Treaty. No work permit, no employer sponsorship, no salary threshold required. Register at the local Gemeente within 5 days of arrival." },
+      { label: "BSN (Burgerservicenummer) registration", why: "Required for Dutch employment and tax. Issued at Gemeente registration — bring rental contract + passport + landlord consent." },
+      { label: "30% ruling eligibility (if highly-skilled recruit)", why: "Highly-skilled migrants relocated to NL may qualify for 30% ruling (30% of salary tax-free for 5 years). Portuguese applicants from non-NL salary baseline qualify subject to recruitment conditions." },
+      { label: "Health insurance (Zorgverzekering mandatory)", why: "Mandatory from day 1 of Dutch residence. ~€140-160/mo per adult. Premium subsidies (zorgtoeslag) available for lower earners." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Where you'll live and work", prompt: "Dutch city + employer. EU citizens — no justification needed." },
+      { heading: "Tax setup", prompt: "Employer's payroll setup handles most of this — your role is the Gemeente registration." },
+      { heading: "Long-term plans", prompt: "PR after 5 yrs; Dutch citizenship 5 yrs (3 for spouses), generally renouncing original nationality." },
+    ],
+    moneySavingTips: [
+      "30% ruling phased down in 2024 — verify current rules with HR. Significant first-5-year tax savings.",
+      "Portuguese-Dutch Tax Treaty avoids double taxation.",
+      "Statutory NL health insurance ~€140-160/mo — premium subsidies (zorgtoeslag) up to ~€127/mo for lower earners. Apply via Belastingdienst.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard EU intra-bloc move"],
+      getALawyer: ["Self-employed / freelance setup", "30% ruling complications", "Cross-border tax-residence ambiguity"],
+    },
+  },
+
+  "ES:DE:work": {
+    whatCarriesWeight: [
+      { label: "EU freedom of movement (no work permit required)", why: "Spanish citizens have full right to work in Germany under the EU Treaty. No work permit, no employer sponsorship, no salary threshold. Anmeldung at local Bürgeramt within 14 days." },
+      { label: "Anmeldung + Steueridentifikationsnummer + health insurance", why: "Standard Germany-setup chain: Anmeldung → tax ID by post → employer payroll → statutory or private health insurance." },
+      { label: "Spanish-German Tax Treaty + Totalization", why: "Avoids double taxation. Social-security totalization preserves Spanish contributions; pension entitlements port at retirement." },
+      { label: "Recognition of Spanish professional qualifications (regulated professions)", why: "EU recognition is generally smooth (doctors, lawyers, engineers under mutual-recognition directives). Some sectoral exams may apply." },
+    ],
+    personalStatementTemplate: [
+      { heading: "City + employer", prompt: "German city + employer. EU citizens — no justification needed." },
+      { heading: "Tax + insurance setup", prompt: "Employer handles most; your role is Anmeldung within 14 days." },
+      { heading: "Long-term plans", prompt: "EU citizens retain freedom; German citizenship after 5 yrs (post-2024 reform)." },
+    ],
+    moneySavingTips: [
+      "Spanish-German Tax Treaty + Totalization: optimise via cross-border accountant in year of move.",
+      "Statutory health insurance ~14.6% income split with employer — typically cheaper than private at €60-90k salary range.",
+      "Goethe-Institut B1 German achieves citizenship eligibility (post-2024 reform reduces to 5 yrs with B1)."
+    ],
+    lawyerTriggers: {
+      diy: ["Standard EU intra-bloc move"],
+      getALawyer: ["Regulated profession recognition complications", "Self-employed / cross-border invoicing setup"],
+    },
+  },
+
+  // Filling gaps for remaining high-traffic cells
+  "TH:AU:work": {
+    whatCarriesWeight: [
+      { label: "Subclass 482 with Australian sponsor", why: "Thai professionals in hospitality, healthcare, IT widely sponsor 482. Standard TSMIT ≥ AUD$73,150. Skills assessment via the appropriate ANZSCO authority (Vetassess for most non-trade roles)." },
+      { label: "Working Holiday subclass 462 (under-31 alternative)", why: "Thailand is in the subclass 462 Work and Holiday list — 12 months freedom, employer-flexibility. Annual quota; apply early in the visa year." },
+      { label: "English-language testing", why: "Most Thai applicants need IELTS 5.5+ for 482 (varies by occupation). Healthcare professionals often need OET 7.0+." },
+      { label: "Thai police certificate (ใบรับรองความประพฤติ)", why: "Issued via Royal Thai Police Headquarters; ~2-3 weeks. Authenticated for Australian use." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Australian role and sponsor", prompt: "ANZSCO occupation, company, salary." },
+      { heading: "Thai credentials + Vetassess outcome", prompt: "Thai degree, employer history, skills-assessment reference." },
+      { heading: "English-language results", prompt: "IELTS / OET / PTE bands per skill." },
+      { heading: "Settlement plan", prompt: "City, partner work plans, school plans if children." },
+    ],
+    moneySavingTips: [
+      "Thai 462 Working Holiday: AUD$650 + 12 months freedom. Annual quota — apply early.",
+      "Thailand-Australia Free Trade Agreement (TAFTA) doesn't create special visa — standard 482 pathway.",
+      "Subclass 482 → 186 ENS PR after 2-3 yrs — honest long-term intent welcomed.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard 482 with reputable Australian employer"],
+      getALawyer: ["Subclass 462 with refusal history", "Self-employed via own Australian-company sponsorship"],
+    },
+  },
+
+  "PH:AE:family": {
+    whatCarriesWeight: [
+      { label: "UAE family visa via Emirati or UAE-resident sponsor", why: "Filipino spouses / dependent children of UAE-resident sponsors (Emirati national or UAE-resident expat) can apply for UAE family visa (Iqama). Sponsor's salary determines eligibility — typically AED 4,000+/mo for spouses." },
+      { label: "Apostilled Philippine documents", why: "Marriage / birth certificates from PSA; apostille via Philippine Department of Foreign Affairs (DFA). UAE accepts apostille from 2024 (joined Hague). English translation via authorised translator." },
+      { label: "UAE medical fitness test + Emirates ID", why: "Mandatory medical fitness test at UAE arrival; Emirates ID issued after. Required for residence-visa stamping." },
+      { label: "Sponsor's UAE residence + employer letter", why: "Sponsor's Emirates ID + employer letter confirming salary + tenancy contract sized for family." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship to UAE-resident sponsor", prompt: "Marriage date / civil registry. Spouse's UAE residence status, employer, salary." },
+      { heading: "Plans in UAE", prompt: "Which emirate (Dubai / Abu Dhabi / Sharjah most common), housing, school plans for children." },
+      { heading: "Long-term plans", prompt: "UAE has no automatic PR — family visa continues alongside sponsor's underlying residence." },
+    ],
+    moneySavingTips: [
+      "PSA-issued documents at Philippine Embassy in UAE: convenient if you're already there; turnaround 1-2 weeks.",
+      "DFA apostille fees: PHP 200 + courier. Avoid 'agencies' charging PHP 2,000+.",
+      "UAE family visa fee structure changed in 2024 — verify current fees with GDRFA (Dubai) or Federal Authority for Identity (Abu Dhabi)."
+    ],
+    lawyerTriggers: {
+      diy: ["Standard spouse visa with clean sponsor documentation"],
+      getALawyer: ["Sponsor's complex residence status (Golden Visa, freelancer, etc.)", "Prior UAE deportation or violation"],
+    },
+  },
+
+  // ─── More residence-route cells (rounding to 100) ───
+  "AE:CA:family": {
+    whatCarriesWeight: [
+      { label: "Sponsor's Canadian status (citizen vs PR)", why: "Canadian citizens may sponsor from abroad; PRs must reside in Canada. Sponsor must meet financial criteria and prior-sponsorship-history requirements." },
+      { label: "Emirati / UAE-resident expat: documentation pathway varies", why: "Emirati passport holders: UAE-issued civil documents apostilled. Non-Emirati UAE residents: original-passport-country civil documents required (UAE residence doesn't replace original-country documentation)." },
+      { label: "UAE Police Certificate + original-country PCC", why: "UAE PCC via Ministry of Interior (Dubai Police / Abu Dhabi). Original-country PCC additionally required for the sponsored spouse's nationality." },
+      { label: "Marriage bona-fides", why: "Standard IRCC scrutiny applies. Strong evidence: relationship timeline, in-person visits, joint finances, family integration." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship history and current arrangement", prompt: "Marriage details, current living arrangement (UAE-based vs Canada-based)." },
+      { heading: "In-person visits", prompt: "Document each visit." },
+      { heading: "Plans for Canada", prompt: "Settlement city, sponsor's employment, housing." },
+    ],
+    moneySavingTips: [
+      "UAE apostille (post-2024): efficient and inexpensive via MoFAIC.",
+      "Spousal sponsorship total fees ~CAD$1,800.",
+      "Canadian visa-application processing for UAE residents typically via VFS Dubai — straightforward.",
+    ],
+    lawyerTriggers: {
+      diy: ["Standard spousal sponsorship with clean UAE / original-country documentation"],
+      getALawyer: ["Sponsor's prior refused sponsorship", "Beneficiary's prior Canadian refusal"],
+    },
+  },
+
+  "TR:NL:work": {
+    whatCarriesWeight: [
+      { label: "Highly Skilled Migrant scheme OR EU Blue Card", why: "Turkish nationals: standard HSM pathway. Recognised-sponsor employer + salary threshold €5,331/mo (30+) or €3,909/mo (under 30). EU Blue Card at €5,331/mo for shortage occupations." },
+      { label: "Turkish degree credential evaluation", why: "Nuffic evaluation for degree recognition. Boğaziçi, METU, Sabancı, Bilkent are well-recognised; provincial universities may need formal Nuffic certification." },
+      { label: "Turkish apostille + IND processing", why: "Turkish documents apostilled by Provincial Vali (governor). Dutch IND processing typically 2-4 weeks for HSM with recognised sponsor." },
+      { label: "Health insurance from day 1", why: "Zorgverzekering mandatory; ~€140-160/mo per adult. Premium subsidies for lower earners." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Role and Dutch employer", prompt: "Employer (must be recognised IND sponsor), role, salary above HSM threshold." },
+      { heading: "Turkish credentials and Nuffic evaluation", prompt: "Degree, institution, Nuffic reference." },
+      { heading: "Why the Netherlands", prompt: "Industry, city, project." },
+      { heading: "Long-term plans", prompt: "PR after 5 yrs; Dutch citizenship 5 yrs (3 for spouses), generally renouncing original nationality." },
+    ],
+    moneySavingTips: [
+      "30% ruling tax incentive: 30% of salary tax-free for 5 yrs for highly-skilled migrants — phased reduction 2024.",
+      "Turkish-Dutch Tax Treaty avoids double taxation.",
+      "Don't pay agencies €3,000+ — Dutch employer's immigration team handles HSM end-to-end."
+    ],
+    lawyerTriggers: {
+      diy: ["Standard HSM with recognised Dutch sponsor"],
+      getALawyer: ["DAFT-equivalent doesn't exist for Turks; entrepreneur route is more complex", "Prior Schengen refusal"],
+    },
+  },
+
+  // ─── Additional retirement / passive-income cells ───
+  "GB:PA:family": {
+    whatCarriesWeight: [
+      { label: "Friendly Nations Visa (UK is on the list)", why: "UK nationals qualify for Panama's Friendly Nations Visa — 2-year provisional residence + permanent residence. Requires economic tie: real-estate purchase ($200k+) OR Panamanian employment OR business setup, AND clean criminal record." },
+      { label: "Apostilled UK ACRO Police + birth / marriage", why: "ACRO via UK Government's ACRO Criminal Records Office + FCDO apostille. Birth / marriage certificates from GRO + FCDO apostille." },
+      { label: "Health certificate + bank reference", why: "Health certificate from authorised Panamanian or UK doctor (translated and authenticated). Panamanian bank reference letter showing financial standing." },
+      { label: "Real-estate purchase OR business setup documentation", why: "Property: notarised purchase agreement + property registration. Business: registered Panamanian company with operational activity." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Economic tie", prompt: "Real-estate purchase, employment, or business — name specifically." },
+      { heading: "Why Panama", prompt: "Specific area (Panama City, Boquete, Coronado, Bocas del Toro), retirement / lifestyle drivers." },
+      { heading: "Long-term plan", prompt: "Provisional 2 yrs → PR. Panamanian citizenship after 5 yrs. Territorial tax means UK pension income is tax-free in Panama." },
+    ],
+    moneySavingTips: [
+      "Panama's territorial tax: no Panamanian tax on UK pension or foreign-source income. UK State Pension paid into Panama (frozen — not uprated annually).",
+      "Coronado / Boquete properties under $300k commonly meet Friendly Nations $200k threshold.",
+      "Don't pay 'visa fixers' £5,000+ — Panamanian immigration lawyers charge $3,000-5,000 for end-to-end Friendly Nations."
+    ],
+    lawyerTriggers: {
+      diy: ["Standard Friendly Nations with real-estate purchase and apostilled UK documents"],
+      getALawyer: ["Complex business-setup route", "Prior Panamanian refusal"],
+    },
+  },
+
+  "FR:US:study": {
+    whatCarriesWeight: [
+      { label: "I-20 from SEVP-certified institution", why: "French students applying for F-1 need I-20 from accredited US university. Common French target schools: HEC / ESSEC / ESCP doing dual-degree with US business schools; Sciences Po doing dual with Columbia, etc." },
+      { label: "Financial capacity for 1 year of tuition + living", why: "Bank statements showing first-year cost. Parental sponsorship + tax / income evidence common." },
+      { label: "Genuine non-immigrant intent (214(b))", why: "French students pass 214(b) cleanly with strong home ties and clear post-graduation plan." },
+      { label: "Paris / Marseille / other French consulate processing", why: "Student visa processing typically 1-4 weeks. Interview waiver expanded post-2023." },
+    ],
+    personalStatementTemplate: [
+      { heading: "US programme and university", prompt: "Specific programme, faculty, research depth." },
+      { heading: "French educational background", prompt: "Baccalauréat, prior degrees, grandes écoles affiliations." },
+      { heading: "Why US", prompt: "Specific research, industry exposure, network." },
+      { heading: "Financial sponsorship", prompt: "Parental income, scholarship (Eiffel, Fulbright), savings." },
+    ],
+    moneySavingTips: [
+      "Fulbright France: substantial funding for French grads at US institutions. Apply 12 months ahead.",
+      "OPT + STEM extension for French STEM students in US tech — strong differentiator.",
+      "F-1 total US fees ~$535. Don't overpay agents."
+    ],
+    lawyerTriggers: {
+      diy: ["First-time F-1 with clean documentation"],
+      getALawyer: ["Prior F-1 refusal", "F-1 to H-1B / OPT transitions"],
+    },
+  },
+
+  // ─── A few more high-traffic family + visit corridors ───
+  "NG:US:family": {
+    whatCarriesWeight: [
+      { label: "USC / LPR petitioner and category timing", why: "USC-petitioned spouse (12-18 mo) or minor child clears fastest. Nigeria F-class wait times: F2A current; F1 6-8 years; F4 15+ years." },
+      { label: "Nigerian civil documents from National Population Commission", why: "Birth / marriage / divorce documents from NPC. Authenticated. Apostille via Nigerian MFA (Nigeria joined Hague effective 2024)." },
+      { label: "Marriage bona-fides scrutiny", why: "Nigerian-American spousal cases get heightened USCIS scrutiny vs OECD baseline. Strong evidence essential — relationship timeline, communication records, family integration, joint finances if cohabited." },
+      { label: "I-864 sponsor financial support", why: "Standard ≥125% federal poverty threshold requirement. Joint sponsor option if petitioner doesn't qualify." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship history", prompt: "Meeting, courtship (often long-distance with documented video communication), marriage." },
+      { heading: "In-person visits", prompt: "Each visit with passport stamps and evidence." },
+      { heading: "Plans for US settlement", prompt: "City, petitioner employment, housing." },
+    ],
+    moneySavingTips: [
+      "Nigerian apostille (post-2024): MFA Abuja issues; saves prior-method consular legalisation costs.",
+      "DV (Diversity Visa) Lottery is ineligible for Nigeria some years — check current rules.",
+      "Avoid 'visa fixers' in Lagos / Abuja charging $5,000+ — USCIS forms are free; reputable lawyers charge $2,000-4,000."
+    ],
+    lawyerTriggers: {
+      diy: ["Standard USC spouse petition with clean marriage and Nigerian apostilled documents"],
+      getALawyer: ["Beneficiary's prior US overstay or refusal", "Petitioner's prior I-130 history", "Polygamous prior marriage in Nigeria"],
+    },
+  },
+
+  "IN:CA:family": {
+    whatCarriesWeight: [
+      { label: "Sponsor's Canadian status and category", why: "Canadian citizen / PR sponsor. Spousal sponsorship has no formal income threshold; parental sponsorship requires meeting MNI (Low-Income Cut-Off + 30%) for 3 years." },
+      { label: "Marriage / common-law genuineness", why: "Indian-Canadian arranged-marriage cases get IRCC scrutiny — that's fine, document the family-introduction pattern, jirga / family-meetings, extended courtship." },
+      { label: "Indian civil documents apostilled", why: "Birth / marriage / divorce from local Municipal Corporation or relevant Registrar. Apostille via Indian state-level MEA. India is Hague Apostille." },
+      { label: "Sponsor's financial undertaking", why: "Spousal: 3-yr undertaking. Parental: 20-yr undertaking + 3-yr LICO+30% income evidence." },
+    ],
+    personalStatementTemplate: [
+      { heading: "How you met and how the relationship developed", prompt: "Family introduction / love marriage — both fine; document the courtship pattern." },
+      { heading: "In-person meetings", prompt: "Document each visit." },
+      { heading: "Communication during separation", prompt: "WhatsApp / video call evidence." },
+      { heading: "Plans for Canada", prompt: "Settlement city (Toronto / Vancouver / Brampton / Surrey have large Indo-Canadian communities), sponsor's employment, housing." },
+    ],
+    moneySavingTips: [
+      "Spousal sponsorship total ~CAD$1,800 in IRCC fees.",
+      "Indian apostille via state-level MEA: INR 50-100 per document. Avoid 'agencies' charging INR 2,000+.",
+      "CICC-licensed Canadian consultants in Toronto / Vancouver charge CAD$2,000-4,000 for full representation if needed; many Indian-Canadian families self-serve via IRCC."
+    ],
+    lawyerTriggers: {
+      diy: ["Standard spousal sponsorship with documented courtship and clean Indian apostilled documents"],
+      getALawyer: ["Short courtship + immediate sponsorship (fraud-presumption risk)", "Sponsor's prior refused sponsorship", "Complex Indian gendered-naturalisation prior issues"],
+    },
+  },
+
+  // ─── 5 more for buffer ───
+  "RU:RS:work": {
+    whatCarriesWeight: [
+      { label: "Serbian visa-free for Russian nationals", why: "Russian nationals enter Serbia visa-free for 30 days. Long-stay residence (privremeni boravak) via employer sponsorship, real-estate purchase, or business registration." },
+      { label: "Serbian work permit (radna dozvola)", why: "Serbian employer files work-permit application; valid 1 year, renewable. Salary at or above the Serbian average wage." },
+      { label: "Serbian Individual Entrepreneur (preduzetnik) registration", why: "Russian nationals can register as Serbian preduzetnik — sole-proprietorship status with lump-sum tax option (~RSD 50,000/mo for IT services). Popular with Russian remote workers." },
+      { label: "Russian background documents (post-2022 limited)", why: "Russian background check (справка о судимости) — issued by MVD, apostilled. Plan around restricted-timelines if applying remotely." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Why Serbia", prompt: "Russian-language community, Belgrade / Novi Sad tech ecosystem, low cost of living." },
+      { heading: "Income source and visa basis", prompt: "Employer-sponsored / preduzetnik / real-estate purchase — name the basis specifically." },
+      { heading: "Long-term plans", prompt: "Permanent residence after 5 yrs continuous; Serbian citizenship after 3 yrs on PR." },
+    ],
+    moneySavingTips: [
+      "Serbian preduzetnik lump-sum tax: ~RSD 50,000-100,000/mo total for IT services. Among the lowest formal-business tax burdens in Europe.",
+      "Don't pay 'relocation services' $5,000+ — visa-free entry + privremeni boravak + preduzetnik registration is self-serve with patience.",
+    ],
+    lawyerTriggers: {
+      diy: ["Visa-free entry + preduzetnik registration"],
+      getALawyer: ["Permanent residence application", "Complex source-of-funds documentation"],
+    },
+  },
+
+  "TR:US:family": {
+    whatCarriesWeight: [
+      { label: "USC / LPR petitioner and category timing", why: "USC-petitioned spouse (12-18 mo) or minor child clears fastest. Turkey F-class wait times: F2A current; F1 6-8 years; F4 15+ years." },
+      { label: "Turkish civil documents from Nüfus Müdürlüğü", why: "Birth / marriage / divorce from Provincial Population Directorate. Apostille via Vali (governor)." },
+      { label: "Marriage bona-fides", why: "Turkish-American spousal petitions get standard scrutiny. Document relationship timeline, photos, family integration." },
+      { label: "I-864 financial sponsorship", why: "Standard ≥125% federal poverty threshold." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship history", prompt: "Meeting, courtship, marriage. Document long-distance pattern if applicable." },
+      { heading: "In-person visits", prompt: "Each visit with passport stamps." },
+      { heading: "Plans for US settlement", prompt: "City, petitioner employment, housing." },
+    ],
+    moneySavingTips: [
+      "Turkish apostille via Vali: ~TRY 100-200 per document. Cheap and quick (typically same-day to 1 week).",
+      "US embassy Istanbul / Ankara interview waits 2-6 months for K-1 / CR-1.",
+      "Avoid 'visa fixers' in Istanbul charging $5,000+ — USCIS forms free; reputable lawyers $1,500-3,000."
+    ],
+    lawyerTriggers: {
+      diy: ["Standard USC spouse petition with clean marriage and Turkish documents"],
+      getALawyer: ["Beneficiary's prior US overstay or refusal", "Petitioner's prior I-130 history"],
+    },
+  },
+
+  "JP:CA:work": {
+    whatCarriesWeight: [
+      { label: "Express Entry CRS for Japanese applicants", why: "Japanese professionals with bachelor's + IELTS / CELPIP 7+ + 3+ years experience score 400-500 CRS without job offer. Japan-Canada Free Trade Agreement (CPTPP) facilitates certain professional categories." },
+      { label: "WES Educational Credential Assessment", why: "Japanese degrees evaluated by WES — typically clean Bachelor / Master equivalency. Apostille (Japan is Hague Apostille)." },
+      { label: "IELTS / CELPIP language test", why: "Most Japanese applicants benefit from intensive English prep — IELTS 7.0+ across skills (CLB 9) optimises CRS." },
+      { label: "Japanese police certificate", why: "Issued by Japanese prefectural police HQ + apostille by Ministry of Foreign Affairs. Allow 4-8 weeks." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Skilled-occupation profile", prompt: "NOC code, years of experience, professional registration." },
+      { heading: "Education and ECA", prompt: "Japanese degree, institution, WES reference." },
+      { heading: "Language test results", prompt: "IELTS / CELPIP bands per skill." },
+      { heading: "Settlement plan", prompt: "Province, city, employment search strategy." },
+    ],
+    moneySavingTips: [
+      "Express Entry self-serve via canada.ca — no need for $5,000+ agencies in Tokyo.",
+      "Japan-Canada Working Holiday for under-31s — 12 months, no employer sponsorship. Useful for market-testing before Express Entry.",
+      "Provincial Nominee Programs often have lower CRS thresholds for Japanese-occupation profiles in Saskatchewan, Manitoba, Atlantic provinces.",
+    ],
+    lawyerTriggers: {
+      diy: ["Clean Express Entry profile with strong CRS"],
+      getALawyer: ["Past refusal anywhere", "LMIA challenges from small employer"],
+    },
+  },
+
+  "KR:CA:work": {
+    whatCarriesWeight: [
+      { label: "Express Entry CRS for Korean applicants", why: "Korean professionals: bachelor's + IELTS 7+ + 3+ years experience score 400-500 CRS. CPTPP membership facilitates certain professional pathways." },
+      { label: "WES ECA + IELTS / CELPIP", why: "Standard pathway. Korean degrees map cleanly via WES." },
+      { label: "Korean police certificate (범죄경력증명서)", why: "Issued by Korean National Police Agency via Government24. Apostille via Korean MOFA." },
+      { label: "Working Holiday Visa (under-31 alternative)", why: "Korea-Canada Working Holiday: 12 months freedom. Useful for market-testing before Express Entry." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Skilled-occupation profile", prompt: "NOC code, experience, professional registration if applicable." },
+      { heading: "Education and ECA", prompt: "Korean degree, institution, WES reference." },
+      { heading: "Language test results", prompt: "IELTS / CELPIP bands." },
+      { heading: "Settlement plan", prompt: "Province, city. Toronto / Vancouver have large Korean-Canadian communities." },
+    ],
+    moneySavingTips: [
+      "Express Entry self-serve. Avoid Seoul agencies charging KRW 5M+.",
+      "Working Holiday CAD$100-150 + 12 months freedom.",
+      "PNP Saskatchewan / Manitoba often have lower thresholds for Korean profiles.",
+    ],
+    lawyerTriggers: {
+      diy: ["Clean Express Entry profile"],
+      getALawyer: ["Past refusal", "LMIA-supported small-employer route"],
+    },
+  },
+
+  "PT:US:family": {
+    whatCarriesWeight: [
+      { label: "USC / LPR petitioner and category timing", why: "USC-petitioned spouse (12-18 mo). Portugal F-class wait times: F2A current; F3 / F4 multi-year backlogs." },
+      { label: "Portuguese civil documents (Cidadania Portuguesa)", why: "Birth / marriage from Conservatória do Registo Civil. Apostille via Portuguese authority (Portugal is Hague). Sworn translation for US use." },
+      { label: "Marriage bona-fides", why: "Portuguese-American spousal petitions get standard USCIS scrutiny." },
+      { label: "I-864 financial sponsorship", why: "Standard ≥125% federal poverty threshold." },
+    ],
+    personalStatementTemplate: [
+      { heading: "Relationship history", prompt: "Meeting, courtship, marriage." },
+      { heading: "In-person visits", prompt: "Document each." },
+      { heading: "Plans for US settlement", prompt: "City, petitioner employment, housing." },
+    ],
+    moneySavingTips: [
+      "Portuguese apostille via Procuradoria-Geral da República: €15-20 per document.",
+      "Lisbon embassy interview waits typically 2-4 months for K-1 / CR-1.",
+      "DV Lottery: Portugal historically eligible — check current year's eligibility list."
+    ],
+    lawyerTriggers: {
+      diy: ["Standard USC spouse petition with clean Portuguese documents"],
+      getALawyer: ["Beneficiary's prior US overstay", "Petitioner's prior I-130 history"],
+    },
+  },
+
 };
 
 export function routeAdviceFor(

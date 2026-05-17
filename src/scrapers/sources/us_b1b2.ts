@@ -27,6 +27,12 @@ const VWP_NATIONALITIES: Set<string> = new Set([
   "PL", "PT", "SM", "SG", "SK", "SI", "ES", "SE", "CH", "TW", "GB",
 ]);
 
+// WHTI (Western Hemisphere Travel Initiative) exempt — Canadian and
+// Bermudian citizens enter the US for tourism/business without a visa,
+// presenting passport + I-94 at the port. They are NOT in VWP / ESTA;
+// they are a separate visa-exempt category covered by the us_whti adapter.
+const WHTI_EXEMPT: Set<string> = new Set(["CA", "BM"]);
+
 // US-citizen-equivalent / no-visa-needed for native US destination.
 const SKIP_PASSPORTS: Set<string> = new Set(["US"]);
 
@@ -75,6 +81,7 @@ export const usB1B2Adapter: Adapter = {
     for (const c of COUNTRY_LIST) {
       if (SKIP_PASSPORTS.has(c.iso2)) continue;
       if (VWP_NATIONALITIES.has(c.iso2)) continue;
+      if (WHTI_EXEMPT.has(c.iso2)) continue;
 
       // Tourism (B-2)
       records.push({

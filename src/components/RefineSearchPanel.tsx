@@ -1,41 +1,48 @@
 "use client";
 
 /**
- * "Refine this result" — top-of-results refinement strip.
+ * "Looking for a different route?" — quiet pivot bar at the top of result
+ * pages. Replaces the earlier 3-section "Refine" panel that bundled three
+ * different concepts (change route + filter by profession + take the
+ * questionnaire) under one collapsible header. User feedback was that the
+ * panel was confusing and the profile-filter pathway frequently linked
+ * to the wrong visas.
  *
- * Editorial redesign 2026-05: replaces the blue-gradient questionnaire CTA
- * with a quieter ink-card row. Three actions, all clearly labelled:
+ * 2026-05-17 redesign:
+ *   - Single intent: pivot to a different passport / destination / purpose
+ *   - The pivot uses the same LookupForm as the homepage — proven to work
+ *   - Profile-filter mechanic moved out (now lives on /find-my-visa where
+ *     it has more room to explain itself)
+ *   - The questionnaire CTA is removed — it's in the main nav and on the
+ *     homepage; bundling it under "Refine" was muddling the concept
  *
- *   1. Change route (pivot passport / destination / purpose without
- *      scrolling back to the homepage)
- *   2. Filter by profile (Doctor / Engineer / Student / etc.)
- *   3. Take the 12-question questionnaire for ranked recommendations
- *
- * Default state is COLLAPSED — this is a power-user tool, not a
- * front-and-centre call to action. The collapsed pill says exactly what
- * the panel does so users aren't confused about whether to expand it.
+ * Default state is COLLAPSED. The header reads exactly what the panel
+ * does ("Different passport, destination, or purpose? Edit the route.")
+ * so users don't have to guess.
  */
 import { Suspense, useState } from "react";
-import Link from "next/link";
-import { ProfileFilter } from "./ProfileFilter";
 import { LookupForm } from "./LookupForm";
 import type { Purpose } from "@/lib/types";
-import { PROFILE_META, type Profile } from "@/lib/profiles";
+import { PURPOSE_LABEL } from "@/lib/types";
+import { nameFor } from "@/lib/countries";
 
 export function RefineSearchPanel({
   passportIso2,
   destinationIso2,
   purpose,
-  profile,
 }: {
   passportIso2: string;
   destinationIso2: string;
   purpose: Purpose;
-  profile: Profile | null;
+  /** Profile filter has moved to /find-my-visa — kept in the prop signature
+   *  so callers don't break, but no longer rendered here. */
+  profile?: unknown;
 }) {
-  // Stays open once a profile is active so users keep visual context for
-  // what's filtering their results.
-  const [open, setOpen] = useState(Boolean(profile));
+  const [open, setOpen] = useState(false);
+
+  const passportName = nameFor(passportIso2);
+  const destinationName = nameFor(destinationIso2);
+  const purposeLabel = PURPOSE_LABEL[purpose].toLowerCase();
 
   return (
     <section className="ink-card overflow-hidden">
@@ -46,16 +53,17 @@ export function RefineSearchPanel({
         className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 hover:bg-[var(--color-muted)]/40 transition"
       >
         <div className="min-w-0 flex-1">
-          <p className="kicker mb-1">Refine</p>
-          <p className="serif-display text-base sm:text-lg font-medium leading-tight">
-            {profile ? (
-              <>
-                Filtered for {PROFILE_META[profile].emoji}{" "}
-                {PROFILE_META[profile].label.toLowerCase()}
-              </>
-            ) : (
-              <>Change route, filter by profession, or get personalised matches.</>
-            )}
+          <p className="kicker mb-1">Edit route</p>
+          <p className="text-sm text-[var(--color-ink)]/85 leading-snug">
+            Currently showing{" "}
+            <strong className="text-[var(--color-ink)]">
+              {passportName} → {destinationName}
+            </strong>{" "}
+            for <strong className="text-[var(--color-ink)]">{purposeLabel}</strong>.{" "}
+            <span className="underline">
+              {open ? "Close" : "Change passport, destination, or purpose"}
+            </span>
+            .
           </p>
         </div>
         <span
@@ -67,44 +75,14 @@ export function RefineSearchPanel({
       </button>
 
       {open && (
-        <div className="px-5 pb-5 pt-2 border-t border-[var(--color-rule)] space-y-5">
-          {/* 1. CHANGE ROUTE */}
-          <div>
-            <p className="kicker mb-2">Change route</p>
-            <Suspense fallback={null}>
-              <LookupForm
-                initialPassport={passportIso2}
-                initialDestination={destinationIso2}
-                initialPurpose={purpose}
-              />
-            </Suspense>
-          </div>
-
-          {/* 2. PROFILE FILTER */}
-          <div>
-            <p className="kicker mb-2">Filter by profession</p>
-            <ProfileFilter initial={profile} />
-          </div>
-
-          {/* 3. QUESTIONNAIRE CTA */}
-          <div>
-            <p className="kicker mb-2">Personalised ranking</p>
-            <Link
-              href="/find-my-visa"
-              className="plausible-event-name=ResultRefineQuestionnaireClicked flex items-center justify-between gap-3 rounded-xl bg-[var(--color-ink)] text-[var(--color-paper)] px-5 py-3.5 transition hover:opacity-90"
-            >
-              <div className="min-w-0">
-                <p className="font-semibold text-sm">
-                  Take the 12-question questionnaire
-                </p>
-                <p className="text-xs opacity-75 mt-0.5 leading-snug">
-                  Education, occupation, capital, family, timeline. We rank the visas you
-                  actually qualify for.
-                </p>
-              </div>
-              <span aria-hidden className="text-lg shrink-0">→</span>
-            </Link>
-          </div>
+        <div className="px-5 pb-5 pt-2 border-t border-[var(--color-rule)]">
+          <Suspense fallback={null}>
+            <LookupForm
+              initialPassport={passportIso2}
+              initialDestination={destinationIso2}
+              initialPurpose={purpose}
+            />
+          </Suspense>
         </div>
       )}
     </section>

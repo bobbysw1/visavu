@@ -176,7 +176,8 @@ export type DashboardProps = {
   difficulty?: DifficultyAssessment | null;
   processingDaysMin?: number | null;
   processingDaysMax?: number | null;
-  /** Render mode: "full" = 3x3 grid, "compact" = 2-col for map popover. */
+  /** Render mode: "full" = stacked list (sidebar / destination page); "compact"
+   *  = 2-col mini-grid (map popover where vertical space is constrained). */
   layout?: "full" | "compact";
 };
 
@@ -191,30 +192,52 @@ export function CountryMetricsDashboard({
 
   const tiles = buildTiles(m, difficulty, processingDaysMin, processingDaysMax);
 
-  const gridClass =
-    layout === "compact"
-      ? "grid grid-cols-2 gap-2"
-      : "grid grid-cols-2 sm:grid-cols-3 gap-2.5";
+  // Map-popover view keeps the compact tile grid (constrained vertical
+  // space). The main-page / sidebar view (layout="full") renders as a
+  // neat label : value list — quieter, scans like a country fact-sheet,
+  // and stops dominating the column with 9 squares of colour.
+  if (layout === "compact") {
+    return (
+      <section
+        className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-4"
+        aria-label={`Living-in-${nameFor(destinationIso2)} dashboard`}
+      >
+        <div className="grid grid-cols-2 gap-2">
+          {tiles.map((t) => (
+            <Tile
+              key={t.key}
+              metricKey={t.key}
+              icon={t.icon}
+              label={t.label}
+              value={t.value}
+              sub={t.sub}
+              rating={t.rating}
+              source={t.source}
+              compact
+            />
+          ))}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
       className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-4 sm:p-5"
       aria-label={`Living-in-${nameFor(destinationIso2)} dashboard`}
     >
-      {layout === "full" && (
-        <header className="mb-3 flex items-baseline justify-between gap-3">
-          <h3 className="font-semibold text-sm sm:text-base">
-            What it&apos;s like in {nameFor(destinationIso2)}
-          </h3>
-          <span className="text-[10px] uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-            {m?.asOf ? `as of ${m.asOf}` : "approximate"}
-          </span>
-        </header>
-      )}
+      <header className="mb-3 flex items-baseline justify-between gap-3">
+        <h3 className="font-semibold text-sm sm:text-base">
+          What it&apos;s like in {nameFor(destinationIso2)}
+        </h3>
+        <span className="text-[10px] uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
+          {m?.asOf ? `as of ${m.asOf}` : "approximate"}
+        </span>
+      </header>
 
-      <div className={gridClass}>
+      <dl className="divide-y divide-neutral-100 dark:divide-neutral-900">
         {tiles.map((t) => (
-          <Tile
+          <ListRow
             key={t.key}
             metricKey={t.key}
             icon={t.icon}
@@ -223,18 +246,59 @@ export function CountryMetricsDashboard({
             sub={t.sub}
             rating={t.rating}
             source={t.source}
-            compact={layout === "compact"}
           />
         ))}
-      </div>
+      </dl>
 
-      {layout === "full" && !m && (
+      {!m && (
         <p className="mt-3 text-xs text-neutral-500 dark:text-neutral-400 italic">
           Some indicators for {nameFor(destinationIso2)} haven&apos;t been curated yet — we&apos;ll
           fill them in as we expand coverage.
         </p>
       )}
     </section>
+  );
+}
+
+function ListRow({
+  icon: Icon,
+  label,
+  value,
+  sub,
+  rating,
+  source,
+  metricKey,
+}: TileProps) {
+  const tone = rating ? RATING_TONE[rating] : UNKNOWN_TONE;
+  const ratingWord = rating ? RATING_LABELS[metricKey][rating] : "No data";
+  const title = source
+    ? `${label} — ${value}${sub ? ` (${sub})` : ""} · Source: ${source.label}`
+    : `${label} — ${value}`;
+  return (
+    <div
+      title={title}
+      className="flex items-center gap-3 py-2.5 first:pt-1 last:pb-1"
+    >
+      <Icon
+        size={14}
+        className="text-neutral-400 dark:text-neutral-500 shrink-0"
+        aria-hidden
+      />
+      <dt className="text-sm text-neutral-700 dark:text-neutral-300 shrink-0 w-[40%] sm:w-[35%]">
+        {label}
+      </dt>
+      <dd className="flex-1 min-w-0 flex items-baseline justify-end gap-2 text-right">
+        <span
+          className={`shrink-0 inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded ${tone.chip}`}
+        >
+          <span className={`w-1.5 h-1.5 rounded-full ${tone.dot}`} aria-hidden />
+          {ratingWord}
+        </span>
+        <span className="font-semibold text-sm sm:text-[15px] text-neutral-900 dark:text-neutral-50 truncate">
+          {value}
+        </span>
+      </dd>
+    </div>
   );
 }
 

@@ -69,6 +69,13 @@ import { germanySkilledWorkerAdapter } from "./de_skilled_worker";
 import { spainNonLucrativeAdapter } from "./es_non_lucrative";
 // P36 — US State Department reciprocity (per-nationality fee/validity).
 import { usReciprocityAdapter } from "./us_reciprocity";
+// Bug fix — Canadians and Bermudians enter the US visa-free under WHTI;
+// the us_b1b2 adapter was incorrectly emitting B-1/B-2 records for them.
+import { usWhtiAdapter } from "./us_whti";
+// Bilateral arrangements distinct from standard visa-free regimes — these
+// confer residence/work rights and need their own adapters.
+import { ukIrelandCtaAdapter } from "./uk_ireland_cta";
+import { auNzTransTasmanAdapter } from "./au_nz_trans_tasman";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -136,6 +143,9 @@ export const ADAPTERS: Adapter[] = [
   germanySkilledWorkerAdapter,
   spainNonLucrativeAdapter,
   usReciprocityAdapter,
+  usWhtiAdapter,
+  ukIrelandCtaAdapter,
+  auNzTransTasmanAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { CurrencySwitcher } from "./CurrencySwitcher";
+import { MobileMenu } from "./MobileMenu";
 
 // NOTE: LocaleSwitcher is intentionally hidden site-wide until translation
 // coverage moves beyond status / purpose labels. A switcher that silently
@@ -67,6 +68,7 @@ export function SiteHeader() {
           <Suspense fallback={null}>
             <CurrencySwitcher />
           </Suspense>
+          <MobileMenu />
         </nav>
       </div>
     </header>

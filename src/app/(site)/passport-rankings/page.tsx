@@ -100,9 +100,9 @@ export default async function PassportRankingsPage() {
             grid represents: we have visa data for every passport, but
             cover PHOTOS for only the ones surfaced here so far. */}
         <section className="mb-12">
-          <p className="kicker mb-3">
+          <h2 className="kicker mb-3 font-normal">
             {passportCollageCount()} passport covers — and counting
-          </p>
+          </h2>
           <PassportCollage />
           <p className="text-xs text-[var(--color-ink-muted)] mt-3 max-w-2xl">
             The leaderboard below ranks every passport-issuing country in our
@@ -114,14 +114,18 @@ export default async function PassportRankingsPage() {
         {/* Scoreboard strip — bottom-of-page-style aggregate stats moved
             to a prominent position to anchor the page in real numbers. */}
         {stats && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-[var(--color-rule)] border border-[var(--color-rule)] rounded-2xl overflow-hidden mb-10">
-            <Stat n={stats.avg} label="avg visa-free" />
-            <Stat n={stats.median} label="median visa-free" />
-            <Stat n={stats.passports} label="passports ranked" />
-            <Stat n={stats.totalRoutes} label="verified routes" />
-          </div>
+          <section className="mb-10">
+            <h2 className="kicker mb-3 font-normal">Global access at a glance</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-[var(--color-rule)] border border-[var(--color-rule)] rounded-2xl overflow-hidden">
+              <Stat n={stats.avg} label="avg visa-free" />
+              <Stat n={stats.median} label="median visa-free" />
+              <Stat n={stats.passports} label="passports ranked" />
+              <Stat n={stats.totalRoutes} label="verified routes" />
+            </div>
+          </section>
         )}
 
+        <h2 className="kicker mb-4 font-normal">Leaderboard</h2>
         {rankings.length === 0 ? (
           <div className="rounded-lg border border-dashed border-[var(--color-rule)] p-6 text-sm text-[var(--color-ink-muted)]">
             <p className="font-medium mb-1">No ranking data yet.</p>
@@ -144,13 +148,23 @@ export default async function PassportRankingsPage() {
           />
         )}
 
-        <p className="mt-8 text-xs text-[var(--color-ink-muted)] italic max-w-2xl">
-          Visa-free count includes both visa-free and visa-free-with-eTA tourism
-          routes, deduplicated per destination. Numbers are derived from the
-          visa records in our database — countries with low counts may simply
-          not yet be fully covered by our scraping pipeline. Coverage is
-          continuously expanding.
-        </p>
+        <section className="mt-10 max-w-2xl">
+          <h2 className="kicker mb-3 font-normal">How we rank passports</h2>
+          <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+            Visa-free count includes both visa-free and visa-free-with-eTA
+            tourism routes, deduplicated per destination. Numbers are derived
+            from the visa records in our database — countries with low counts
+            may simply not yet be fully covered by our scraping pipeline.
+            Coverage is continuously expanding. Full methodology lives on the{" "}
+            <a
+              href="/methodology"
+              className="underline underline-offset-2 hover:text-[var(--color-ink)]"
+            >
+              methodology page
+            </a>
+            .
+          </p>
+        </section>
       </main>
     </>
   );

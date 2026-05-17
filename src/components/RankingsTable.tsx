@@ -164,12 +164,15 @@ export function RankingsTable({
         <ol className="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
           {groups.map((group) => (
             <li key={`${group.rank}-${group.rows[0].iso2}`}>
-              {/* Rank header — shared across all passports tied at this rank. */}
-              <div className="flex items-baseline gap-3 px-2 sm:px-4 py-3 bg-[var(--color-paper-elev)]/50">
+              {/* Rank header — shared across all passports tied at this rank.
+                  Rendered as an <h3> so each rank cluster is its own
+                  crawlable / screen-reader-navigable section. */}
+              <h3 className="flex items-baseline gap-3 px-2 sm:px-4 py-3 bg-[var(--color-paper-elev)]/50 m-0">
                 <span className="serif-display text-2xl sm:text-3xl font-medium tabular text-[var(--color-ink)]">
                   {group.rank}
                 </span>
                 <span className="kicker">
+                  <span className="sr-only">Rank {group.rank}: </span>
                   Passport power rank
                   {group.rows.length > 1 && (
                     <span className="ml-2 text-[var(--color-ink-muted)] normal-case tracking-normal">
@@ -177,7 +180,7 @@ export function RankingsTable({
                     </span>
                   )}
                 </span>
-              </div>
+              </h3>
 
               {/* One row per passport at this rank. */}
               <ul>
@@ -215,6 +218,7 @@ function RankRow({
         <div className="min-w-0">
           <p className="font-semibold text-sm sm:text-base uppercase tracking-wide truncate group-hover:underline underline-offset-4 decoration-1">
             {name}
+            <span className="sr-only">: </span>
           </p>
           <p className="kicker mt-0.5 truncate">
             {totalDestinations} destinations covered
@@ -227,10 +231,14 @@ function RankRow({
         </div>
 
         <div className="text-right shrink-0">
-          <p className="serif-display text-2xl sm:text-3xl font-medium tabular text-emerald-700 dark:text-emerald-400 leading-none">
+          <p
+            className="serif-display text-2xl sm:text-3xl font-medium tabular text-emerald-700 dark:text-emerald-400 leading-none"
+            aria-label={`${visaFreeAccess} visa-free destinations`}
+          >
             {visaFreeAccess}
+            <span className="sr-only"> visa-free destinations</span>
           </p>
-          <p className="kicker mt-1">visa-free</p>
+          <p className="kicker mt-1" aria-hidden>visa-free</p>
         </div>
       </Link>
     </li>
@@ -279,13 +287,18 @@ function StatusBar({
         ))}
       </div>
       <p className="mt-1 flex gap-2 text-[10px] tabular text-[var(--color-ink-muted)]">
-        {segments.map(({ status, count }) => (
+        {segments.map(({ status, count }, i) => (
           <span key={status} className="inline-flex items-center gap-1">
             <span
               className={`w-1.5 h-1.5 rounded-full ${STATUS_COLOR[status]}`}
               aria-hidden
             />
             {count}
+            <span className="sr-only">
+              {" "}
+              {STATUS_LABEL[status].toLowerCase()}
+              {i < segments.length - 1 ? ", " : ""}
+            </span>
           </span>
         ))}
       </p>

@@ -29,7 +29,7 @@ export function PlausibleScript() {
       {/* Initialise the event queue + check the opt-out flag in one
           synchronous pre-script. If the user has opted out, window.plausible
           is reassigned to a no-op so queued calls drop silently AND we skip
-          inserting the tracker <script>. The flag is checked again by GA. */}
+          inserting the tracker <script>. */}
       <script
         dangerouslySetInnerHTML={{
           __html: `

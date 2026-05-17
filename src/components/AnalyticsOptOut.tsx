@@ -4,16 +4,15 @@
  * Opt-out toggle for site analytics. Lives on /cookies (and anywhere
  * else it's useful — footer link goes to /cookies#analytics-control).
  *
+ * Visavu uses Plausible only — cookieless, no cross-site identifiers.
  * Default state: analytics ENABLED. Clicking "Opt out" sets the
- * localStorage flag, immediately neutralises Plausible + GA on the
+ * localStorage flag, immediately neutralises Plausible on the
  * current page, and persists across reloads. Clicking "Opt back in"
- * removes the flag and reloads so the scripts initialise normally.
+ * removes the flag and reloads so the script initialises normally.
  */
 import { useEffect, useState } from "react";
 import { Check, BellOff, BellRing } from "lucide-react";
 import { OPT_OUT_KEY } from "@/lib/analyticsConsent";
-
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-JVHR3D6YJQ";
 
 export function AnalyticsOptOut() {
   const [optedOut, setOptedOut] = useState<boolean | null>(null); // null = pre-hydration
@@ -33,13 +32,11 @@ export function AnalyticsOptOut() {
       /* ignore */
     }
     // Neutralise immediately for the rest of this session.
-    type GADisable = Record<string, boolean>;
     type VisavuWin = Window & {
       __visavu_optout?: boolean;
       plausible?: (...args: unknown[]) => void;
     };
-    const w = window as unknown as VisavuWin & GADisable;
-    w[`ga-disable-${GA_MEASUREMENT_ID}`] = true;
+    const w = window as unknown as VisavuWin;
     w.__visavu_optout = true;
     w.plausible = () => {};
     setOptedOut(true);
@@ -51,7 +48,7 @@ export function AnalyticsOptOut() {
     } catch {
       /* ignore */
     }
-    // Reload so the analytics scripts re-initialise cleanly.
+    // Reload so the analytics script re-initialises cleanly.
     window.location.reload();
   }
 
@@ -84,8 +81,8 @@ export function AnalyticsOptOut() {
           </p>
           <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
             {optedOut
-              ? "Plausible and Google Analytics are disabled on this browser. We won't see your page views or events. The setting is stored locally — clearing site data will reset it."
-              : "We use Plausible (cookie-free, no cross-site identifiers) and Google Analytics 4 to understand which pages help and which don't. You can switch them off any time — we don't gate any content behind tracking."}
+              ? "Plausible is disabled on this browser. We won't see your page views or events. The setting is stored locally — clearing site data will reset it."
+              : "We use Plausible — cookie-free, no cross-site identifiers, no fingerprinting — to understand which pages help and which don't. You can switch it off any time — we don't gate any content behind tracking."}
           </p>
 
           {optedOut ? (

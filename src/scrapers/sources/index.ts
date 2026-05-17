@@ -48,6 +48,12 @@ import { totalCoverageTerritoriesAdapter } from "./total_coverage_territories";
 import { totalCoverageStudyAdapter } from "./total_coverage_study";
 import { totalCoverageBusinessAdapter } from "./total_coverage_business";
 import { totalCoverageTransitAdapter } from "./total_coverage_transit";
+// P35 — tourism matrix-fillers for high-traffic destinations whose visa-free
+// reciprocity wasn't yet indexed.
+import { koreaShortStayAdapter } from "./kr_short_stay";
+import { singaporeShortStayAdapter } from "./sg_short_stay";
+import { uaeShortStayAdapter } from "./ae_short_stay";
+import { mexicoShortStayAdapter } from "./mx_short_stay";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -101,6 +107,10 @@ export const ADAPTERS: Adapter[] = [
   totalCoverageStudyAdapter,
   totalCoverageBusinessAdapter,
   totalCoverageTransitAdapter,
+  koreaShortStayAdapter,
+  singaporeShortStayAdapter,
+  uaeShortStayAdapter,
+  mexicoShortStayAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

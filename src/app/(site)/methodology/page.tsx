@@ -258,11 +258,116 @@ export default async function MethodologyPage() {
           before booking.
         </p>
 
-        <h2>How to challenge a record</h2>
+        <h2>Worked example: how one visa makes it onto the site</h2>
         <p>
-          If you spot something wrong, click <strong>Report incorrect info</strong> on the result
-          card. Reports go to a moderation queue at <code>/admin/review-queue</code>. We respond
-          within a week.
+          Take the <strong>UK Skilled Worker visa</strong> (a route Visavu publishes for
+          every passport-issuing nationality). Here&apos;s the lifecycle of a single record:
+        </p>
+        <ol>
+          <li>
+            <strong>Adapter:</strong>{" "}
+            <code>src/scrapers/sources/gb_skilled_worker.ts</code> fetches
+            <code> gov.uk/skilled-worker-visa</code> with conditional <code>If-None-Match</code>{" "}
+            headers and a 30-second per-host throttle (configured in{" "}
+            <code>src/lib/fetchClient.ts</code>). HTML response cached as a{" "}
+            <code>source_records</code> row keyed by URL + sha-256 hash.
+          </li>
+          <li>
+            <strong>Parser:</strong> the same adapter extracts structured fields — visa name,
+            base fee, IHS rate, salary threshold (£38,700 from April 2024), processing-time
+            band, list of eligibility tests. Numbers are normalised to ISO 4217 currency codes;
+            dates to ISO 8601.
+          </li>
+          <li>
+            <strong>Persist:</strong> output writes to <code>visa_options</code> (one row per
+            passport × destination × purpose). The same row is re-keyed for every nationality
+            that&apos;s eligible — the Skilled Worker route has no nationality restriction.
+          </li>
+          <li>
+            <strong>Confidence:</strong> source authority weight = 1.00 (government).
+            Field-level weights live in <code>CORRECTNESS_WEIGHTS</code> (above). Freshness
+            decay starts at 180 days; we re-fetch nightly so the bucket stays{" "}
+            <strong>high</strong>.
+          </li>
+          <li>
+            <strong>Render:</strong> the result page at <code>/[passport]/gb/work</code> reads
+            from the resolver (<code>src/lib/resolver.ts</code>), applies the difficulty
+            assessment (<code>src/lib/difficulty.ts</code>) using the parsed fields, and surfaces
+            the Apply button straight at <code>gov.uk</code>.
+          </li>
+          <li>
+            <strong>Staleness check:</strong> if the next fetch returns a hash that differs from
+            the prior snapshot, a verification event is logged. If the parsed shape diverges
+            (e.g. salary threshold changes), the row is flagged for{" "}
+            <code>/admin/review-queue</code> before the diff goes live.
+          </li>
+        </ol>
+
+        <h2>How we&apos;d lie if we wanted to</h2>
+        <p>
+          A list of dark patterns common in this category — explicitly so you can hold us
+          accountable for not doing them:
+        </p>
+        <ul>
+          <li>
+            <strong>Fake live-activity widgets.</strong> &ldquo;3 people just applied from
+            London&rdquo; with randomised counters. We have none, on any page. Not in the
+            roadmap.
+          </li>
+          <li>
+            <strong>Invented refusal rates.</strong> Where we publish refusal rates (e.g. UK
+            Standard Visitor for Nigerian applicants), they cite the UK Home Office&apos;s own
+            published statistics. We never make up an &ldquo;estimated approval probability&rdquo;.
+          </li>
+          <li>
+            <strong>Processing-time bands tighter than the government&apos;s.</strong> If
+            gov.uk says &ldquo;up to 3 weeks&rdquo; we say &ldquo;up to 3 weeks&rdquo;, even if
+            our internal data suggests most are faster. Soft-promising fast turnarounds gets
+            people who book non-refundable flights to land before their visa arrives.
+          </li>
+          <li>
+            <strong>Hidden-fee comparisons.</strong> The fee on every page is the official
+            government fee. We do not show inflated &ldquo;comparison&rdquo; figures to make
+            ourselves look cheaper.
+          </li>
+          <li>
+            <strong>Auto-renewing affiliate redirects.</strong> Every Apply button is a plain
+            anchor to the government portal. No JS-side redirect, no tracking interstitial.
+          </li>
+          <li>
+            <strong>Doom-framing on cross-source mismatches.</strong> If Wikipedia and the MFA
+            disagree, we say so. We don&apos;t pick whichever reading drives more clicks.
+          </li>
+        </ul>
+
+        <h2>How to challenge a record (and how fast we fix it)</h2>
+        <p>
+          If you spot something wrong, click <strong>Report incorrect info</strong> on the
+          result card. Reports route to a moderation queue at{" "}
+          <code>/admin/review-queue</code>. Triage targets:
+        </p>
+        <ul>
+          <li>
+            <strong>Government rule change</strong> (e.g. new fee, threshold, eligibility
+            condition): fix within 48 hours of reproducible verification.
+          </li>
+          <li>
+            <strong>Parse error</strong> (the source says X, we display Y): fix within 24 hours.
+          </li>
+          <li>
+            <strong>Outdated record</strong> (source was correct when scraped but is now stale):
+            we trigger an immediate re-fetch; if the source has moved, the relevant adapter is
+            patched within a week.
+          </li>
+          <li>
+            <strong>Disputed interpretation</strong> (e.g. &ldquo;visa-free with conditions&rdquo;):
+            we add the qualifier visibly on the record and link the source line that supports
+            it. No silent edits.
+          </li>
+        </ul>
+        <p>
+          Resolved reports stay public at <Link href="/changelog">/changelog</Link> so the
+          record-correction trail is visible.
         </p>
 
         <h2>Licensing</h2>

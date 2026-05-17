@@ -74,6 +74,83 @@ const STATUS_PHRASE: Record<ResolvedVisaOption["status"], (purpose: Purpose) => 
   refused: () => "are generally refused entry",
 };
 
+// Composition templates vary the summary tone by route category. AI search
+// assistants quote this band heavily — identical wording across every route
+// would lose the situation-specific signal that makes it useful.
+type SummaryContext = {
+  passportNationality: string;
+  destName: string;
+  purposeLabel: string;
+  purpose: Purpose;
+  option: ResolvedVisaOption;
+  hasCriticalObstacle: boolean;
+  hasCautionObstacle: boolean;
+};
+
+function composeSummary(ctx: SummaryContext): string {
+  const { passportNationality, destName, purposeLabel, purpose, option } = ctx;
+  const label = option.label.toLowerCase();
+  const isWorkingHoliday = /working holiday|whv|work and holiday|youth mobility|ymv/.test(label);
+  const isInvestor = /investor|golden visa|investment|capital/.test(label);
+  const isSanctioned = ctx.hasCriticalObstacle || (ctx.hasCautionObstacle && option.status === "embassy_visa");
+
+  // Sanctioned / advisory-flagged routes — cautious tone, no encouragement.
+  if (isSanctioned) {
+    return `${passportNationality} travellers heading to ${destName} face heightened review on ${purposeLabel} applications. Read the obstacle context below before booking — alternative routes may apply faster.`;
+  }
+
+  // Working Holiday — age-eligibility tone, deadline-aware.
+  if (isWorkingHoliday) {
+    return `For ${passportNationality} travellers under the eligible age window, the ${option.label} opens 12-24 months of work-plus-travel in ${destName}. Annual quotas apply — book the application window early.`;
+  }
+
+  // Investor / capital-threshold tone.
+  if (isInvestor) {
+    return `${destName} admits ${passportNationality} investors via the ${option.label} — capital must land in qualifying ${destName}-based assets before the residence card issues. Numbers below; legal advice recommended.`;
+  }
+
+  // Visa-free / eTA / visa-on-arrival — warm encouraging, mentions stay length.
+  if (option.status === "visa_free" || option.status === "visa_free_with_eta" || option.status === "visa_on_arrival") {
+    const stayClause = option.maxStayDays != null ? ` for up to ${option.maxStayDays} days per visit` : "";
+    const etaClause = option.status === "visa_free_with_eta" ? " (the eTA is online and takes minutes)" : option.status === "visa_on_arrival" ? " (pay at the border)" : "";
+    return `${passportNationality} travellers can enter ${destName} without a prior visa${stayClause}${etaClause} — among the most accessible routes for ${purposeLabel}.`;
+  }
+
+  // e-Visa — practical tone, online channel highlighted.
+  if (option.status === "e_visa") {
+    return `${passportNationality} travellers apply for ${destName}'s e-Visa online before travel. Practical and quick — typically issued within days. See the application portal in the route card.`;
+  }
+
+  // Embassy — practical tone, names the bottleneck.
+  if (option.status === "embassy_visa") {
+    const bottleneck = identifyBottleneck(option, purpose);
+    const bottleneckClause = bottleneck ? ` The main friction: ${bottleneck}.` : "";
+    return `${passportNationality} travellers apply through the ${destName} embassy or consulate for ${purposeLabel}.${bottleneckClause}`;
+  }
+
+  // Restricted / refused — clear, non-alarmist.
+  if (option.status === "restricted") {
+    return `${destName} reviews ${passportNationality} ${purposeLabel} applications case-by-case — there's no automatic answer. Documentation rigour and prior compliant travel are the biggest levers.`;
+  }
+  if (option.status === "refused") {
+    return `${destName} generally refuses ${passportNationality} passport holders entry under current policy. Check the obstacle context for current operational status.`;
+  }
+
+  // Default — unreachable, but TypeScript can't prove it without a never check.
+  return `Most ${passportNationality} travellers need to apply through the standard channel for ${purposeLabel} in ${destName}.`;
+}
+
+function identifyBottleneck(option: ResolvedVisaOption, purpose: Purpose): string | null {
+  // Pick the most-salient friction signal from the option's parsed fields.
+  // We name only what we can see in the data — never invent.
+  if (option.biometricsRequired) return "biometrics appointment slot wait";
+  if (purpose === "work" && option.processingTimeDaysMax && option.processingTimeDaysMax > 90) return `processing of up to ${option.processingTimeDaysMax} days`;
+  if (option.proofOfFundsRequired) return "documented financial-capacity evidence";
+  if (option.processingTimeDaysMax && option.processingTimeDaysMax > 21) return `processing of up to ${option.processingTimeDaysMax} days`;
+  if (option.proofOfAccommodationRequired) return "confirmed accommodation evidence";
+  return null;
+}
+
 function headlineFor(band: Band, optionCount: number): string {
   if (band === "green" && optionCount <= 1) return "Very easy · 1 main route";
   if (band === "green") return `Very easy · ${optionCount} options`;
@@ -130,14 +207,24 @@ export function DirectAnswerCard({
   const realism = assessRealism(top, obstacles, baselineTourismStatus);
   const band = bandFor(difficulty.score, options.length, top.status);
   const tone = BAND_TONE[band];
-  const phrase = STATUS_PHRASE[top.status](purpose);
   const headline = headlineFor(band, options.length);
-
-  // Short summary sentence — single line ideally.
-  const summary = `Most ${passportNationality} travellers ${phrase} for ${purposeLabel} in ${destName}.`;
 
   // Critical obstacles get inline mention even in the compact band.
   const critical = obstacles.find((o) => o.severity === "critical");
+  const caution = obstacles.find((o) => o.severity === "caution");
+
+  // Situation-aware summary — varies wording by route category so AI search
+  // assistants quoting this band get the relevant signal per route, not the
+  // same Mad-Libs sentence on every page.
+  const summary = composeSummary({
+    passportNationality,
+    destName,
+    purposeLabel,
+    purpose,
+    option: top,
+    hasCriticalObstacle: !!critical,
+    hasCautionObstacle: !!caution,
+  });
 
   return (
     <div className={`rounded-lg border ${tone.wrap} mb-5 overflow-hidden`}>

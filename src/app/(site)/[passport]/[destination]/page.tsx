@@ -35,6 +35,7 @@ import { assessDifficulty } from "@/lib/difficulty";
 import { isProfile, type Profile } from "@/lib/profiles";
 import { RelatedRoutesRail } from "@/components/RelatedRoutesRail";
 import { obstaclesFor } from "@/content/obstacles";
+import { UsReciprocityPanel } from "@/components/UsReciprocityPanel";
 import { COUNTRY_LIST, flagEmoji, issuesPassport, nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
 import { resolveRoute } from "@/lib/resolver";
@@ -767,6 +768,13 @@ export default async function Page({
                   <SourcesPanel passportIso2={p} destinationIso2={d} options={options} />
                 </div>
               </details>
+
+              {/* US reciprocity panel — renders only when destination is US
+                  and the passport has a curated entry. Captures the
+                  per-nationality fee / validity / entries that the State
+                  Department's reciprocity schedule sets, plus narrative
+                  about what the bilateral rules actually mean in practice. */}
+              {d === "US" && <UsReciprocityPanel passportIso2={p} />}
             </div>
 
             {/* ─── WHILE YOU'RE HERE ───

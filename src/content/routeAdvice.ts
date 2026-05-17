@@ -968,7 +968,7 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
   "NG:GB:work": {
     whatCarriesWeight: [
       {
-        label: "Health & Care Worker visa — the Nigerian NHS pipeline",
+        label: "Health and Care Worker visa — the Nigerian NHS pipeline",
         why: "Nigerian doctors, nurses, midwives, paramedics, social-care workers fast-track to the UK via Health & Care Worker visa. Salary threshold £29,000 (vs £38,700 general Skilled Worker), IHS-EXEMPT (£5,175 saving over 5 years), reduced visa fees. NHS Trusts and major care providers actively recruit Nigerian healthcare professionals.",
       },
       {
@@ -1936,7 +1936,7 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
   "ZA:GB:work": {
     whatCarriesWeight: [
       {
-        label: "Certificate of Sponsorship + Skilled Worker vs Health & Care Worker routing",
+        label: "Certificate of Sponsorship + Skilled Worker vs Health and Care Worker routing",
         why: "South Africans split between standard Skilled Worker (general roles £38,700, IHS £1,035/yr) and Health & Care Worker (£29,000, IHS-exempt). Beyond these, two SA-specific options: Youth Mobility Scheme (18-30, 2-year, ballot system replaced by direct grant for SA from 2024 — 2,000 visas/year), and UK Ancestry Visa (UK-born grandparent — common for white South Africans; 5-year visa, full work rights, no sponsor needed, route to ILR).",
       },
       {
@@ -3681,7 +3681,7 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
   "AU:GB:work": {
     whatCarriesWeight: [
       {
-        label: "Skilled Worker / Health & Care Worker visa OR Youth Mobility Scheme OR UK Ancestry",
+        label: "Skilled Worker / Health and Care Worker visa OR Youth Mobility Scheme OR UK Ancestry",
         why: "Australians have multiple UK routes. Standard Skilled Worker (sponsor licence + £38,700 general / £29,000 Health & Care / £30,960 New Entrant from April 2024). Youth Mobility Scheme — Australians 18-35 (extended from 30 in 2024), 3-year visa (extended from 2), no sponsor needed, ballot replaced by direct grant in 2024 for Australians (35,000 places annually). UK Ancestry — UK-born grandparent, 5-year visa, full work rights, no sponsor, route to ILR (very popular — large Australian populace has British heritage).",
       },
       {
@@ -3830,7 +3830,7 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
   "LK:GB:work": {
     whatCarriesWeight: [
       {
-        label: "Certificate of Sponsorship + Skilled Worker vs Health & Care Worker",
+        label: "Certificate of Sponsorship + Skilled Worker vs Health and Care Worker",
         why: "Sri Lankans enter through Skilled Worker (£38,700 general from April 2024, £29,000 Health & Care Worker / shortage, £30,960 New Entrant). Sri Lankan nurses, doctors, IT engineers, hospitality professionals, and accountants are well-recruited by UK. NHS Trusts, CQC-registered care providers, and tech employers (Revolut, Wise, Monzo, ARM Cambridge) actively hire Sri Lankans. Sri Lanka has strong English-medium education tradition, giving applicants linguistic advantage.",
       },
       {
@@ -3905,7 +3905,7 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
   "GH:GB:work": {
     whatCarriesWeight: [
       {
-        label: "Certificate of Sponsorship + Skilled Worker vs Health & Care Worker",
+        label: "Certificate of Sponsorship + Skilled Worker vs Health and Care Worker",
         why: "Ghanaians enter through Skilled Worker (£38,700 general from April 2024) or Health & Care Worker (£29,000, IHS-exempt). Ghanaian nurses (NMC OSCE/CBT route), doctors (GMC PLAB), care workers, IT professionals, and finance roles dominate UK Ghanaian recruitment. The 2024 care-sector tightening means individual care providers can no longer sponsor — only larger CQC-registered groups. Ghana has strong English-medium education and Commonwealth heritage, both advantages.",
       },
       {
@@ -5340,7 +5340,7 @@ export const ROUTE_ADVICE: Partial<Record<RouteKey, AdviceBlock>> = {
   "DE:GB:work": {
     whatCarriesWeight: [
       {
-        label: "Skilled Worker visa OR Health & Care Worker — Germans need visa post-Brexit",
+        label: "Skilled Worker visa OR Health and Care Worker — Germans need visa post-Brexit",
         why: "Post-Brexit (January 2021), German citizens no longer have EU freedom of movement to UK. Standard Skilled Worker visa: sponsor licence + £38,700 general threshold (April 2024) or £29,000 Health & Care Worker (IHS-exempt). German engineers, doctors, IT professionals, finance, and consulting roles are well-recruited. UK ETA (Electronic Travel Authorization) for short visits — but for work / study / family / settlement you need full visa.",
       },
       {

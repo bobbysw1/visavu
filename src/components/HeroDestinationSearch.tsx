@@ -17,11 +17,24 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { CountryCombobox } from "./CountryCombobox";
 
-export function HeroDestinationSearch() {
+export function HeroDestinationSearch({
+  /** Tone of the surrounding backdrop. "dark" picks white prose so the
+   *  "Where can I move?" footer reads against the homepage's dark hero
+   *  photo; default "light" suits the not-found page paper background. */
+  tone = "light",
+}: { tone?: "light" | "dark" } = {}) {
   const router = useRouter();
   const [destination, setDestination] = useState("");
   const [passport, setPassport] = useState("");
   const [pending, startTransition] = useTransition();
+  const footerClasses =
+    tone === "dark"
+      ? "text-center mt-4 text-sm text-white/90 drop-shadow-sm"
+      : "text-center mt-4 text-sm text-slate-700 dark:text-slate-300";
+  const footerLinkClasses =
+    tone === "dark"
+      ? "plausible-event-name=HeroDiscoveryClicked font-semibold text-white underline underline-offset-2 hover:no-underline"
+      : "plausible-event-name=HeroDiscoveryClicked font-semibold text-blue-700 dark:text-blue-400 underline underline-offset-2 hover:no-underline";
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -69,12 +82,9 @@ export function HeroDestinationSearch() {
         </div>
       </form>
 
-      <p className="text-center mt-4 text-sm text-slate-700 dark:text-slate-300">
+      <p className={footerClasses}>
         Don&apos;t know where you want to go?{" "}
-        <Link
-          href="/finder"
-          className="plausible-event-name=HeroDiscoveryClicked font-semibold text-blue-700 dark:text-blue-400 underline underline-offset-2 hover:no-underline"
-        >
+        <Link href="/finder" className={footerLinkClasses}>
           Where can I move? →
         </Link>
       </p>

@@ -126,7 +126,7 @@ export default async function HomePage() {
               </p>
 
               <div className="mt-10">
-                <HeroDestinationSearch />
+                <HeroDestinationSearch tone="dark" />
               </div>
 
               {stats && stats.totalRecords > 0 && (

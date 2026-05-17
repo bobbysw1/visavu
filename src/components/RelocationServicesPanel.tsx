@@ -75,17 +75,18 @@ export function RelocationServicesPanel({
     <section className="mt-10 pt-8 border-t border-neutral-200 dark:border-neutral-800">
       <header className="mb-4">
         <p className="text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 font-semibold">
-          Relocation services
+          Practical next steps
         </p>
         <h3 className="font-semibold text-base sm:text-lg mt-1 mb-1">
-          Everything else you&apos;ll need for {nameFor(destinationIso2)}
+          Useful links for travel to {nameFor(destinationIso2)}
         </h3>
         <p className="text-xs text-neutral-600 dark:text-neutral-400">
-          Sponsored cards earn us a small commission — it keeps the visa tool free. Official and
-          informational links don&apos;t.{" "}
+          Official government and authority links only. We&apos;ve removed commercial provider
+          listings for travel insurance, health insurance, passport photos and legal services
+          until affiliate-partner agreements are in place — see our{" "}
           <Link href="/disclosure" className="underline hover:no-underline">
-            Our commercial policy →
-          </Link>
+            commercial policy
+          </Link>.
         </p>
       </header>
 

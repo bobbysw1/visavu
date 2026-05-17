@@ -113,7 +113,7 @@ export const DOCUMENTS: Record<string, VisaDocument> = {
     description:
       "Schengen and many other tourist visas require €30,000 / $50,000 minimum medical cover for the duration of your stay.",
     howToObtain:
-      "Buy from SafetyWing, World Nomads, Allianz, or any insurer that issues a Schengen-compliant certificate.",
+      "Buy from any insurer that issues a Schengen-compliant certificate (€30,000+ medical coverage, evacuation included, no-deductible). Compare independently — we don't currently link to specific providers.",
     category: "financial",
     leadDaysMin: 1,
     leadDaysMax: 1,

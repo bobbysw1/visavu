@@ -20,33 +20,30 @@ const REVENUE_SOURCES: RevenueSource[] = [
   {
     n: 1,
     icon: Banknote,
-    title: "Travel-adjacent affiliate commissions",
-    summary: "Insurance, eSIM and flights. Optional, clearly labelled.",
+    title: "Travel-adjacent affiliate commissions (paused)",
+    summary: "Currently no commercial provider listings. Returns once partner agreements are in place.",
     detail: (
       <>
         <p>
-          Below the source list on every result page we show three sponsored cards: travel
-          insurance, eSIM data, and flights. If you click one of those cards and book through the
-          partner, we earn a small commission — typically 5–15% of the partner&apos;s margin, not
-          your booking cost.
+          We used to list a small set of travel-adjacent partners (insurance, eSIM, flights)
+          below the visa answer. As of May 2026 we&apos;ve removed every commercial provider
+          listing — we don&apos;t link to private companies for free, and we don&apos;t put a
+          provider in front of users until a disclosed referral relationship is in place.
         </p>
         <p className="mt-3">
-          We choose partners by user benefit, not by commission rate. Current partners:
+          The categories most likely to return once partner registrations complete:
         </p>
         <ul className="mt-2 space-y-1 list-disc pl-5">
-          <li>
-            <strong>SafetyWing</strong> — travel &amp; remote-worker medical insurance.
-          </li>
-          <li>
-            <strong>Airalo</strong> — pre-paid eSIM data on arrival.
-          </li>
-          <li>
-            <strong>Kiwi.com</strong> — flexible flight comparison.
-          </li>
+          <li>Travel insurance (short-trip + nomad cover, Schengen-compliant policies)</li>
+          <li>International health insurance (long-stay visa-mandated cover)</li>
+          <li>Passport photo services (destination-specific spec guarantees)</li>
+          <li>Pre-paid eSIM data for arrival</li>
+          <li>Flexible flight comparison</li>
         </ul>
         <p className="mt-3 text-sm text-neutral-600 dark:text-neutral-400">
-          These are clearly labelled <em>Sponsored</em>. The visa information above them is
-          independent of any partner.
+          When listings return they&apos;ll be clearly labelled <em>Sponsored</em>. Government,
+          embassy, and authoritative links (CDC, NHS, VFS appointment centres, panel-physician
+          lists) carry on as before — those are genuine user benefit, not commercial.
         </p>
       </>
     ),

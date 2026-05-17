@@ -197,8 +197,9 @@ export default function DnvComparisonGuide() {
         </li>
         <li>
           <strong>Health-insurance compliance.</strong> Most generic travel insurance does
-          NOT meet long-stay-visa requirements. Compliant DNV health insurance from Bupa
-          Global, Cigna Global, IMG, Allianz Care starts at ~€100-200/month per adult.
+          NOT meet long-stay-visa requirements. Compliant DNV health insurance from
+          recognised global underwriters starts at ~€100-200/month per adult — compare
+          independently.
         </li>
         <li>
           <strong>Cross-border tax planning.</strong> US persons retain worldwide tax

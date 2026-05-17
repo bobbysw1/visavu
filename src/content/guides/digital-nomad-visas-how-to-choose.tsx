@@ -169,9 +169,10 @@ export default async function DigitalNomadGuide() {
 
       <h3>Forgetting health insurance.</h3>
       <p>
-        Almost every DN visa requires private health insurance for the full duration. SafetyWing
-        and Cigna Global are the standard nomad options. Local national health systems are
-        generally not available.
+        Almost every DN visa requires private health insurance for the full duration —
+        comprehensive cover, evacuation included, no deductible, valid in the destination
+        country. Compare reputable global insurers independently; local national health systems
+        are generally not available to non-residents.
       </p>
 
       <h3>Missing the income-proof requirement.</h3>

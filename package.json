@@ -28,6 +28,7 @@
     "fetch:passport-covers": "tsx src/scripts/fetchPassportCovers.ts",
     "verify-sources": "tsx src/scripts/verifyManualSources.ts",
     "audit-fixtures": "tsx src/scripts/auditAdapterFixtures.ts",
+    "accuracy": "tsx src/scripts/dataAccuracyMatrix.ts",
     "test": "vitest run"
   },
   "dependencies": {

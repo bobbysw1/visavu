@@ -87,6 +87,8 @@ import { canadaPnpAdapter } from "./ca_pnp";
 import { uaeGreenVisaAdapter } from "./ae_green_visa";
 import { singaporeTechPassAdapter } from "./sg_tech_pass";
 import { koreaD2StudentAdapter } from "./kr_d2_student";
+// Israel-specific diplomatic-refusal pairs not captured by Wikipedia.
+import { ilDiplomaticRefusalsAdapter } from "./il_diplomatic_refusals";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -164,6 +166,7 @@ export const ADAPTERS: Adapter[] = [
   uaeGreenVisaAdapter,
   singaporeTechPassAdapter,
   koreaD2StudentAdapter,
+  ilDiplomaticRefusalsAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

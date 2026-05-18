@@ -25,6 +25,11 @@ import { assessDifficulty } from "@/lib/difficulty";
 import { COUNTRY_LIST, nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
 import type { Purpose, ResolvedVisaOption } from "@/lib/types";
+import {
+  occupationListFor,
+  searchOccupations,
+  formatOccupationListForChat,
+} from "@/content/skilledOccupations";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -279,6 +284,14 @@ export async function POST(request: NextRequest) {
     });
   }
 
+  // Detect occupation-related questions and pull in the relevant
+  // skilled-occupation list so the synthesis can ground on actual
+  // ANZSCO / SOC / NOC codes instead of returning "I don't have data".
+  const occupationContext = buildOccupationContext(
+    lastUser.content,
+    intent.destination_iso2,
+  );
+
   // Step 2: lookup our data if we have a concrete route.
   let dataContext = "No specific route extracted — answering as a general question.";
   if (intent.passport_iso2 && intent.destination_iso2) {
@@ -305,6 +318,9 @@ export async function POST(request: NextRequest) {
   const enrichedMessages: ChatMessage[] = [
     ...body.messages,
     { role: "system", content: `Visavu data for this query:\n${dataContext}` },
+    ...(occupationContext
+      ? [{ role: "system" as const, content: `Skilled-occupation reference data:\n${occupationContext}` }]
+      : []),
   ];
 
   const synthesised = await callMistralText(enrichedMessages, SYNTHESIS_SYSTEM);
@@ -329,4 +345,60 @@ export async function POST(request: NextRequest) {
     type: "fallback",
     intent,
   });
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// Occupation-context builder — detects occupation-related questions and
+// returns the relevant skilled-occupation list as grounding text for
+// the synthesis step.
+// ─────────────────────────────────────────────────────────────────────
+function buildOccupationContext(
+  userMessage: string,
+  destinationIso2: string | null,
+): string | null {
+  // Trigger conditions: explicit list lookup (e.g. "what's on Australia's
+  // skilled occupation list?") OR a job-keyword lookup.
+  const listMention = /(\b(skilled[\s-]?(occupation|migration))\b|\bshortage[\s-]?(occupation|list)\b|\bNOC\b|\bANZSCO\b|\bgreen[\s-]list\b|\bSOL\b|\bCSOL\b|\bdesired profession|\b(in[\s-])?demand (job|occupation|profession|skill))/i.test(
+    userMessage,
+  );
+
+  const jobKeyword = /\b(engineer|nurse|doctor|teacher|programmer|developer|software|chef|electrician|plumber|carpenter|welder|accountant|pharmacist|surveyor|midwife|paramedic|physiotherapist|mechanic|architect|dentist|lawyer|veterinarian)\b/i.test(
+    userMessage,
+  );
+
+  if (!listMention && !jobKeyword) return null;
+
+  // If the destination resolved to AU / GB / CA / NZ, include that country's
+  // full list as the primary context.
+  if (destinationIso2) {
+    const list = occupationListFor(destinationIso2);
+    if (list) return formatOccupationListForChat(list);
+  }
+
+  // Otherwise (or if destination's list isn't curated), try a job-keyword
+  // search across all lists.
+  if (jobKeyword) {
+    const tokens = userMessage.toLowerCase().match(/\b[a-z]{4,}\b/g) ?? [];
+    for (const token of tokens) {
+      const hits = searchOccupations(token, 6);
+      if (hits.length > 0) {
+        const lines = [
+          `Occupation matches across all curated lists for "${token}":`,
+          ...hits.map((h) => {
+            const salary = h.occupation.salaryNote ? ` — ${h.occupation.salaryNote}` : "";
+            return `  • [${h.country.iso2}] ${h.occupation.title} (${h.occupation.code}) → ${h.occupation.visas.join(", ")}${salary}`;
+          }),
+          "",
+          "Official source URLs for full lists:",
+          "  Australia (CSOL) — https://immi.homeaffairs.gov.au/visas/working-in-australia/skill-occupation-list",
+          "  UK (Skilled Worker eligibility) — https://www.gov.uk/skilled-worker-visa/eligibility",
+          "  Canada (NOC 2021) — https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/eligibility/federal-skilled-workers.html",
+          "  New Zealand (Green List) — https://www.immigration.govt.nz/new-zealand-visas/preparing-a-visa-application/working-in-nz/work-visa-options/green-list-occupations",
+        ];
+        return lines.join("\n");
+      }
+    }
+  }
+
+  return null;
 }

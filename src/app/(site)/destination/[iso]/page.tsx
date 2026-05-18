@@ -17,6 +17,7 @@ import { getCountryPhoto } from "@/lib/pexels";
 import { factsFor } from "@/content/countryFacts";
 import { destinationIntroFor } from "@/content/destinationIntros";
 import { destinationPurposeIntro } from "@/content/destinationPurposeIntros";
+import { occupationListFor } from "@/content/skilledOccupations";
 import { generateIntro as generateDestinationIntro } from "@/content/destinationIntroGenerator";
 import { buildDestinationFaqs } from "@/content/destinationFaqGenerator";
 import { OBSTACLES } from "@/content/obstacles";
@@ -265,6 +266,73 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
                     <p className="text-sm leading-relaxed text-[var(--color-ink)]">{content}</p>
                   </article>
                 ))}
+              </div>
+            </section>
+          );
+        })()}
+
+        {/* Skilled-occupation list — renders for AU, GB, CA, NZ. Surfaces
+            the curated subset of in-demand occupations + the official
+            source URL so users can verify the current list state. Same
+            data the chatbot grounds on when answering "what jobs are on
+            the list?" questions. */}
+        {(() => {
+          const list = occupationListFor(upper);
+          if (!list) return null;
+          // Group by first-listed visa programme — broadly maps to the
+          // category headings users expect (e.g. "Skilled Worker" in UK,
+          // "Express Entry" in Canada).
+          return (
+            <section className="mt-12 space-y-5">
+              <div>
+                <p className="kicker mb-2">Skilled migration</p>
+                <h2 className="section-h2 mb-2">{list.systemName}</h2>
+                <p className="text-sm text-[var(--color-ink-muted)] max-w-3xl leading-relaxed">
+                  {list.description}
+                </p>
+                <p className="text-xs text-[var(--color-ink-muted)] mt-2">
+                  As of {list.asOf} ·{" "}
+                  <a href={list.sourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                    official source ↗
+                  </a>
+                </p>
+              </div>
+
+              <div className="ink-card overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="border-b border-[var(--color-rule)] text-left">
+                    <tr>
+                      <th className="px-4 py-2.5 font-semibold">Occupation</th>
+                      <th className="px-4 py-2.5 font-semibold">Code</th>
+                      <th className="px-4 py-2.5 font-semibold">Visa pathways</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {list.occupations.slice(0, 30).map((occ) => (
+                      <tr key={occ.code} className="border-b border-[var(--color-rule)]/40 last:border-0">
+                        <td className="px-4 py-2 align-top">
+                          <p className="font-medium">{occ.title}</p>
+                          {occ.salaryNote && (
+                            <p className="text-xs text-[var(--color-ink-muted)] mt-0.5">{occ.salaryNote}</p>
+                          )}
+                        </td>
+                        <td className="px-4 py-2 align-top font-mono text-xs">{occ.code}</td>
+                        <td className="px-4 py-2 align-top text-xs text-[var(--color-ink-muted)]">
+                          {occ.visas.join(" · ")}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {list.occupations.length > 30 && (
+                  <p className="px-4 py-3 text-xs text-[var(--color-ink-muted)] border-t border-[var(--color-rule)]/40">
+                    Showing top 30 of {list.occupations.length} curated occupations. See the{" "}
+                    <a href={list.sourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                      official list
+                    </a>{" "}
+                    for the full set (~{list.iso2 === "AU" ? "456" : list.iso2 === "GB" ? "150" : list.iso2 === "CA" ? "500+" : "100+"} occupations).
+                  </p>
+                )}
               </div>
             </section>
           );

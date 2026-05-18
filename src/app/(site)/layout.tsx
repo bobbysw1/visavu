@@ -2,6 +2,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { PlausibleScript } from "@/components/PlausibleScript";
 import { SocialProofBannerServer } from "@/components/SocialProofBannerServer";
+import { FloatingChatLauncher } from "@/components/FloatingChatLauncher";
 
 // Site chrome — wraps the public pages but NOT /embed/*, /api/*, /admin/*,
 // /og/*, /sitemap.xml, /robots.txt. Analytics also lives here so admin /
@@ -29,6 +30,11 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
           Honest social proof, not fabricated user counts. No per-request
           DB work — see SocialProofBannerServer comment. */}
       <SocialProofBannerServer />
+      {/* Floating chat launcher — bottom-right on every site page.
+          Hides itself on /chat (redundant) and /embed/* / /admin/* via
+          client-side path check. Shares localStorage with the full
+          /chat page so conversations carry between surfaces. */}
+      <FloatingChatLauncher />
     </div>
   );
 }

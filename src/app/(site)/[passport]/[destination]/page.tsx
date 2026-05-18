@@ -13,6 +13,7 @@ import { DualPassportHint } from "@/components/DualPassportHint";
 import { AlertOptIn } from "@/components/AlertOptIn";
 import { ResultBannerStack } from "@/components/ResultBannerStack";
 import { DisclaimerBanner } from "@/components/DisclaimerBanner";
+import { pairIntroFor } from "@/content/pairIntros";
 import { VisaPrepTimeline } from "@/components/VisaPrepTimeline";
 import { VisaApplicationAdvice } from "@/components/VisaApplicationAdvice";
 import { getCountryPhoto } from "@/lib/pexels";
@@ -634,6 +635,22 @@ export default async function Page({
         <div className="my-6">
           <DisclaimerBanner tone="amber" compact />
         </div>
+
+        {/* Curated pair-level framing paragraph for top-traffic routes.
+            Adds narrative context (bilateral agreements, diaspora, professional
+            pipelines, refusal patterns) above the structured visa cards. */}
+        {(() => {
+          const pairIntro = pairIntroFor(p, d);
+          if (!pairIntro) return null;
+          return (
+            <section className="ink-card p-5 sm:p-6 mb-6 border-l-4 border-l-[var(--color-accent)]">
+              <p className="kicker text-xs uppercase tracking-wider mb-2 text-[var(--color-ink-muted)]">
+                The story of {nameFor(p)} → {nameFor(d)}
+              </p>
+              <p className="text-base leading-relaxed text-[var(--color-ink)]">{pairIntro}</p>
+            </section>
+          );
+        })()}
 
         {category === "long_stay" && (
           <div className="mb-8 ink-card p-5 text-sm border-l-4 border-l-[var(--color-accent)]">

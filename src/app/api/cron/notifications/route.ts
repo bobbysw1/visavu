@@ -15,7 +15,7 @@
  */
 import type { NextRequest } from "next/server";
 import { db, schema } from "@/db/client";
-import { and, eq, gt, isNull, sql } from "drizzle-orm";
+import { and, eq, isNull, sql } from "drizzle-orm";
 import type { Purpose } from "@/lib/types";
 
 export const maxDuration = 60;
@@ -191,7 +191,3 @@ async function sendChangeEmail(
     return false;
   }
 }
-
-// Suppress unused-import warning for `gt` — kept available for a future
-// `since`-based watermark query if we move off the lastFetchedAt proxy.
-export const _gtUnused = gt;

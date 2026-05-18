@@ -94,6 +94,9 @@ import { ilDiplomaticRefusalsAdapter } from "./il_diplomatic_refusals";
 import { ukStandardVisitorAdapter } from "./uk_standard_visitor";
 // Hand-curated overrides for cells where Wikipedia is wrong or missing.
 import { dataCorrectionsAdapter } from "./data_corrections";
+// More long-stay adapters — KR D-10 job seeker + CH cantonal skilled worker.
+import { koreaD10JobseekerAdapter } from "./kr_d10_jobseeker";
+import { switzerlandSkilledWorkerAdapter } from "./ch_skilled_worker";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -174,6 +177,8 @@ export const ADAPTERS: Adapter[] = [
   ilDiplomaticRefusalsAdapter,
   ukStandardVisitorAdapter,
   dataCorrectionsAdapter,
+  koreaD10JobseekerAdapter,
+  switzerlandSkilledWorkerAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

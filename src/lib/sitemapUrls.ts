@@ -38,6 +38,9 @@ import { HAND_WRITTEN_ROUTES } from "@/content/routeAdvice";
 import { getCountryPhotoSync } from "@/lib/pexels";
 import { getPassportCover } from "@/lib/passportCovers";
 import { nameFor } from "@/lib/countries";
+import { allMythSlugs } from "@/content/myths";
+
+const MYTH_SLUGS = allMythSlugs();
 
 export type SitemapImage = {
   /** Absolute URL of the image. */
@@ -118,7 +121,18 @@ export function getAllSitemapUrls(): SitemapUrl[] {
     ["/services/medical-checks", "weekly", "0.5"],
     ["/services/passport-photos", "weekly", "0.5"],
     ["/services/legal-services", "weekly", "0.5"],
+    ["/myths", "weekly", "0.7"],
   ];
+
+  // Per-myth pages — high-quality SEO content with FAQ JSON-LD.
+  for (const slug of MYTH_SLUGS) {
+    urls.push({
+      loc: `${SITE.url}/myths/${slug}`,
+      changefreq: "monthly",
+      priority: "0.6",
+      lastmodKey: "static",
+    });
+  }
   for (const [path, freq, prio] of staticPages) {
     urls.push({
       loc: `${SITE.url}${path}`,

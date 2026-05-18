@@ -32,6 +32,7 @@ export function SiteFooter() {
             <li><Link href="/destination/jp" className="hover:text-[var(--color-ink)] transition">By destination</Link></li>
             <li><Link href="/services" className="hover:text-[var(--color-ink)] transition">Relocation services</Link></li>
             <li><Link href="/find-my-visa" className="hover:text-[var(--color-ink)] transition">Find my visa</Link></li>
+            <li><Link href="/myths" className="hover:text-[var(--color-ink)] transition">Myths &amp; rumours</Link></li>
           </ul>
         </div>
         <div>

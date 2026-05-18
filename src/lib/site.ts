@@ -11,6 +11,7 @@ export const SITE = {
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
     "https://visavu.com",
   twitter: "@visavu", // placeholder until the handle is registered
+  contactEmail: "contact@visavu.com",
   defaultLocale: "en",
 } as const;
 

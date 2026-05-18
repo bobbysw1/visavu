@@ -149,10 +149,12 @@ function plainText(html: string): string {
     .trim();
 }
 
-/** Restrict to Creative Commons / public domain. Anything else we
- *  explicitly skip so we never ship copyrighted material. */
+/** Restrict to Creative Commons / public domain / OGL (UK Open Government
+ *  Licence). Anything else we explicitly skip so we never ship copyrighted
+ *  material. OGL 3 permits copy + adapt + commercial use with attribution
+ *  — equivalent to CC BY for our purposes. */
 function isFreeLicence(licence: string): boolean {
-  return /^(cc[\s-]|public domain|cc0|pdm|attribution)/i.test(licence) || /pd-/i.test(licence);
+  return /^(cc[\s-]|public domain|cc0|pdm|attribution|ogl)/i.test(licence) || /pd-/i.test(licence);
 }
 
 /** Search Commons category "Passports of {Country}" for any CC-licensed
@@ -192,6 +194,14 @@ function rankCommonsFile(filename: string): number {
   if (/\bspecimen\b|\bblank\b/.test(lower)) score -= 30;
   if (/\bdiplomatic\b|\bofficial\b|\bservice\b/.test(lower)) score -= 40;
   if (/\bvintage\b|\bhistoric|\b19\d\d\b|\b18\d\d\b|\b20[01]\d\b/.test(lower)) score -= 30;
+  // Strongly negative — variant / dependency passports living in the
+  // parent's Commons category. Picking these for the parent (GB ←
+  // BNO / Gibraltar / Bermuda; FR ← Saint-Pierre; NL ← Aruba) is the
+  // exact bug fixed for GB in 2026-05.
+  if (/\bbno\b|british_national/i.test(lower)) score -= 200;
+  if (/\bgibraltar\b|\bbermuda\b|\bcayman\b|\banguilla\b|\bturks\b|\bmontserrat\b|\bvirgin[_-]?islands\b/i.test(lower)) score -= 200;
+  if (/\baruba\b|\bsint[_-]?maarten\b|\bcuracao\b|\bcuraçao\b|\bbonaire\b/i.test(lower)) score -= 200;
+  if (/\bsaint[_-]?pierre\b|\bnew[_-]?caledonia\b|\bfrench[_-]?polynesia\b|\bwallis\b|\bmayotte\b|\bréunion\b|\breunion\b/i.test(lower)) score -= 200;
 
   // Format preferences — actual photos win over SVG icons
   if (/\.svg$/i.test(filename)) score -= 60;

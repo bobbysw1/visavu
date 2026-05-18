@@ -1673,14 +1673,14 @@
   },
   "GB": {
     "file": "/passports/gb.jpg",
-    "source": "https://commons.wikimedia.org/wiki/Category:Passports_of_United%20Kingdom",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:BNO_passport_cover_1.jpg",
-    "artist": "Zeuscho at Cantonese Wikipedia",
-    "licence": "CC BY-SA 1.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by-sa/1.0",
-    "width": 439,
-    "height": 616,
-    "fetchedAt": "2026-05-18T21:40:04.952Z"
+    "source": "https://commons.wikimedia.org/wiki/File:UK%20New%20Blue%20Passport.jpg",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:UK_New_Blue_Passport.jpg",
+    "artist": "Home Office, HM Government",
+    "licence": "OGL 3",
+    "licenceUrl": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3",
+    "width": 290,
+    "height": 410,
+    "fetchedAt": "2026-05-18T23:16:02.751Z"
   },
   "AO": {
     "file": "/passports/ao.jpg",
@@ -2644,14 +2644,14 @@
   },
   "UK": {
     "file": "/passports/uk.jpg",
-    "source": "https://commons.wikimedia.org/wiki/Category:Passports_of_United%20Kingdom",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:BNO_passport_cover_1.jpg",
-    "artist": "Zeuscho at Cantonese Wikipedia",
-    "licence": "CC BY-SA 1.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by-sa/1.0",
-    "width": 439,
-    "height": 616,
-    "fetchedAt": "2026-05-18T21:40:04.952Z",
+    "source": "https://commons.wikimedia.org/wiki/File:UK%20New%20Blue%20Passport.jpg",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:UK_New_Blue_Passport.jpg",
+    "artist": "Home Office, HM Government",
+    "licence": "OGL 3",
+    "licenceUrl": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3",
+    "width": 290,
+    "height": 410,
+    "fetchedAt": "2026-05-18T23:16:02.751Z",
     "inheritedFrom": "GB"
   },
   "CI": {

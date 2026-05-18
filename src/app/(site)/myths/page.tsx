@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { MYTHS, VERDICT_LABEL, VERDICT_BLURB, type Verdict } from "@/content/myths";
+import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 
 export const dynamic = "force-static";
 export const revalidate = 86_400;
@@ -85,6 +86,8 @@ export default function MythsIndexPage() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-10">
         <Breadcrumbs crumbs={crumbs} />
+
+        <DisclaimerBanner tone="info" />
 
         <header className="space-y-4">
           <h1 className="text-3xl sm:text-5xl font-semibold tracking-tight">Immigration myths &amp; rumours</h1>

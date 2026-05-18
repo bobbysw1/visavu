@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ChatInterface } from "@/components/ChatInterface";
+import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 
 export const metadata: Metadata = {
   title: "Ask Visavu — AI visa assistant",
@@ -38,6 +39,8 @@ export default function ChatPage() {
           adviser.
         </p>
       </header>
+
+      <DisclaimerBanner tone="info" />
 
       <Suspense fallback={<div className="text-sm text-neutral-500">Loading chat…</div>}>
         <ChatInterface />

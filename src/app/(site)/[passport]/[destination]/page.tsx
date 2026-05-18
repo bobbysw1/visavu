@@ -12,6 +12,7 @@ import { EmptyStateCard } from "@/components/EmptyStateCard";
 import { DualPassportHint } from "@/components/DualPassportHint";
 import { AlertOptIn } from "@/components/AlertOptIn";
 import { ResultBannerStack } from "@/components/ResultBannerStack";
+import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 import { VisaPrepTimeline } from "@/components/VisaPrepTimeline";
 import { VisaApplicationAdvice } from "@/components/VisaApplicationAdvice";
 import { getCountryPhoto } from "@/lib/pexels";
@@ -629,6 +630,10 @@ export default async function Page({
           policyChanges={policyChangesFor(p, d, purpose)}
           realism={primary ? assessRealism(primary, obstacles, baselineTourismStatus) : null}
         />
+
+        <div className="my-6">
+          <DisclaimerBanner tone="amber" compact />
+        </div>
 
         {category === "long_stay" && (
           <div className="mb-8 ink-card p-5 text-sm border-l-4 border-l-[var(--color-accent)]">

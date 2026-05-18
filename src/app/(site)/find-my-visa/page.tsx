@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { QuestionnaireWizard } from "@/components/QuestionnaireWizard";
+import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 import { PageHero } from "@/components/PageHero";
 import { absoluteUrl } from "@/lib/site";
 
@@ -40,6 +41,9 @@ export default function FindMyVisaPage() {
           heroIso2="PT"
           variant="full"
         />
+      </div>
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 -mt-4 mb-6">
+        <DisclaimerBanner tone="info" compact />
       </div>
       <QuestionnaireWizard />
     </>

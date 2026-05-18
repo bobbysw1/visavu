@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { allMythSlugs, mythBySlug, VERDICT_LABEL, type Verdict } from "@/content/myths";
+import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -80,6 +81,8 @@ export default async function MythDetailPage({ params }: { params: Promise<Param
 
       <article className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
         <Breadcrumbs crumbs={crumbs} />
+
+        <DisclaimerBanner tone="info" compact />
 
         <header className="space-y-4">
           <div className="flex items-center gap-3 flex-wrap">

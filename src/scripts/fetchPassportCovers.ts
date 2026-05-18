@@ -161,30 +161,108 @@ function isFreeLicence(licence: string): boolean {
  *  usually has freely-licensed alternates. This is what rescues the
  *  countries the page-summary path missed (GB, CA, NZ, GR, KR, CH, FI). */
 type CategoryMember = { title: string };
+
+/**
+ * Smart ranker for Commons filenames. Prefers explicit passport-cover
+ * photos over stamps, coats of arms, inner-page scans, visas, etc. The
+ * page-summary strategy regularly picks the lead image which is often
+ * a stamp or emblem; this ranker rescues the category fallback by
+ * sorting candidates intelligently before picking.
+ */
+function rankCommonsFile(filename: string): number {
+  const lower = filename.toLowerCase();
+  let score = 0;
+
+  // Strong positive — explicit cover / front-of-passport indicators
+  if (/\bcover\b/.test(lower)) score += 120;
+  if (/\bfront\b/.test(lower)) score += 90;
+  if (/\bpassport_?cover\b/.test(lower)) score += 150;
+  if (/\bbiometric\b/.test(lower)) score += 60;
+  if (/\bnew_?passport\b/.test(lower)) score += 80;
+  if (/^passport_/.test(lower) || / passport\.(jpe?g|png|webp)$/.test(lower)) score += 50;
+
+  // Generic positive
+  if (/passport/.test(lower)) score += 30;
+
+  // Negative — things that aren't a passport cover photo
+  if (/\bpage\b/.test(lower)) score -= 100;
+  if (/\bstamp\b/.test(lower) || /\bvisa\b/.test(lower)) score -= 100;
+  if (/coat[_-]?of[_-]?arms|emblem|seal|crest|logo|map\b/.test(lower)) score -= 150;
+  if (/\binside\b|\bbio[_-]?page\b|\bdata[_-]?page\b/.test(lower)) score -= 80;
+  if (/\bspecimen\b|\bblank\b/.test(lower)) score -= 30;
+  if (/\bdiplomatic\b|\bofficial\b|\bservice\b/.test(lower)) score -= 40;
+  if (/\bvintage\b|\bhistoric|\b19\d\d\b|\b18\d\d\b|\b20[01]\d\b/.test(lower)) score -= 30;
+
+  // Format preferences — actual photos win over SVG icons
+  if (/\.svg$/i.test(filename)) score -= 60;
+  if (/\.jpe?g$/i.test(filename)) score += 15;
+  if (/\.png$/i.test(filename)) score += 5;
+
+  return score;
+}
+
 async function commonsCategoryFiles(country: string): Promise<string[]> {
   const variants = [
     `Category:Passports of ${country}`,
     `Category:Passports of the ${country}`,
+    `Category:${country} passports`,
   ];
   for (const cat of variants) {
     const url =
       "https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*" +
-      "&list=categorymembers&cmtype=file&cmlimit=20" +
+      "&list=categorymembers&cmtype=file&cmlimit=50" +
       `&cmtitle=${encodeURIComponent(cat)}`;
     const res = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
     if (!res.ok) continue;
     const data = (await res.json()) as { query?: { categorymembers?: CategoryMember[] } };
     const members = data.query?.categorymembers ?? [];
     if (members.length === 0) continue;
-    // Strip "File:" prefix; restrict to actual image extensions so we
-    // skip stray PDFs, audio clips, etc. that sometimes land in passport
-    // categories.
     const files = members
       .map((m) => m.title.replace(/^File:/, ""))
-      .filter((f) => /\.(jpe?g|png|webp|svg)$/i.test(f));
+      .filter((f) => /\.(jpe?g|png|webp|svg)$/i.test(f))
+      .sort((a, b) => rankCommonsFile(b) - rankCommonsFile(a));
     if (files.length > 0) return files;
   }
   return [];
+}
+
+/**
+ * Strategy 3 — broad Commons file-namespace search.
+ * Rescues passports whose category is empty or mis-named (Equatorial
+ * Guinea, Kiribati, etc.). The smart ranker keeps stamp/page hits
+ * down-weighted vs actual cover photos.
+ */
+async function commonsSearchFiles(country: string): Promise<string[]> {
+  const queries = [
+    `${country} passport cover`,
+    `Passport of ${country}`,
+    `${country} biometric passport`,
+  ];
+  const seen = new Set<string>();
+  const collected: string[] = [];
+  for (const q of queries) {
+    const url =
+      "https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*" +
+      "&list=search&srnamespace=6&srlimit=20" +
+      `&srsearch=${encodeURIComponent(q)}`;
+    const res = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
+    if (!res.ok) continue;
+    const data = (await res.json()) as { query?: { search?: { title: string }[] } };
+    for (const hit of data.query?.search ?? []) {
+      const filename = hit.title.replace(/^File:/, "");
+      if (!/\.(jpe?g|png|webp)$/i.test(filename)) continue;
+      // Defensive — require the country name to appear in the filename
+      // so we don't pull a UK passport cover when querying for Kiribati.
+      const cleanCountry = country.toLowerCase().replace(/[^a-z]+/g, "_");
+      if (!filename.toLowerCase().replace(/[^a-z]+/g, "_").includes(cleanCountry.split("_")[0])) {
+        continue;
+      }
+      if (seen.has(filename)) continue;
+      seen.add(filename);
+      collected.push(filename);
+    }
+  }
+  return collected.sort((a, b) => rankCommonsFile(b) - rankCommonsFile(a));
 }
 
 async function fetchOne(iso2: string): Promise<ManifestEntry | null> {
@@ -229,9 +307,7 @@ async function fetchOne(iso2: string): Promise<ManifestEntry | null> {
     };
   }
 
-  // Strategy 2: Commons category fallback. The lead image was missing,
-  // non-Commons, or non-free — but the "Passports of {Country}" Commons
-  // category often has CC-licensed alternates we can use instead.
+  // Strategy 2: Commons category fallback (smart-ranked).
   const country = nameFor(iso2);
   const files = await commonsCategoryFiles(country);
   for (const filename of files) {
@@ -249,6 +325,34 @@ async function fetchOne(iso2: string): Promise<ManifestEntry | null> {
     return {
       file: `/passports/${iso2.toLowerCase()}.jpg`,
       source: `https://commons.wikimedia.org/wiki/Category:Passports_of_${encodeURIComponent(country)}`,
+      commonsFile: info.descriptionurl,
+      artist,
+      licence,
+      licenceUrl,
+      width: info.width,
+      height: info.height,
+      fetchedAt: new Date().toISOString(),
+    };
+  }
+
+  // Strategy 3: broad Commons search — catches passports whose category
+  // is empty or mis-named (Equatorial Guinea, Kiribati, etc.).
+  const searchFiles = await commonsSearchFiles(country);
+  for (const filename of searchFiles) {
+    const info = await fetchImageInfo(filename);
+    if (!info) continue;
+    const licence = info.extmetadata?.LicenseShortName?.value ?? "Unknown";
+    if (!isFreeLicence(licence)) continue;
+    const licenceUrl = info.extmetadata?.LicenseUrl?.value ?? null;
+    const artistHtml = info.extmetadata?.Artist?.value ?? "";
+    const artist = plainText(artistHtml) || "Unknown";
+
+    const dest = path.resolve(DIR, `${iso2.toLowerCase()}.jpg`);
+    await downloadImage(info.url, dest);
+
+    return {
+      file: `/passports/${iso2.toLowerCase()}.jpg`,
+      source: `https://commons.wikimedia.org/wiki/Special:Search?search=${encodeURIComponent(country + " passport cover")}`,
       commonsFile: info.descriptionurl,
       artist,
       licence,

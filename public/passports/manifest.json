@@ -1273,7 +1273,7 @@
     "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
     "width": 1280,
     "height": 852,
-    "fetchedAt": "2026-05-18T20:38:01.424Z"
+    "fetchedAt": "2026-05-18T21:31:38.301Z"
   },
   "PE": {
     "file": "/passports/pe.jpg",
@@ -1619,24 +1619,24 @@
   "FI": {
     "file": "/passports/fi.jpg",
     "source": "https://commons.wikimedia.org/wiki/Category:Passports_of_Finland",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:1st_page_of_the_finnish_passport.jpg",
-    "artist": "Lukawww",
-    "licence": "CC BY-SA 4.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "width": 3024,
-    "height": 4032,
-    "fetchedAt": "2026-05-18T20:37:01.916Z"
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Georg_Schneevoigt_Passport.jpg",
+    "artist": "Unknown authorUnknown author",
+    "licence": "Public domain",
+    "licenceUrl": null,
+    "width": 2381,
+    "height": 1701,
+    "fetchedAt": "2026-05-18T21:27:44.877Z"
   },
   "GR": {
     "file": "/passports/gr.jpg",
     "source": "https://commons.wikimedia.org/wiki/Category:Passports_of_Greece",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:1943_Italian_visa_-_occupied_Athens.jpg",
-    "artist": "huddyhuddy",
-    "licence": "Public domain",
-    "licenceUrl": null,
-    "width": 1249,
-    "height": 1833,
-    "fetchedAt": "2026-05-18T20:37:11.466Z"
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Bystroletov%27s_Greek_Passport.jpg",
+    "artist": "Ctac",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 2790,
+    "height": 2143,
+    "fetchedAt": "2026-05-18T21:28:29.999Z"
   },
   "NZ": {
     "file": "/passports/nz.jpg",
@@ -1674,13 +1674,13 @@
   "GB": {
     "file": "/passports/gb.jpg",
     "source": "https://commons.wikimedia.org/wiki/Category:Passports_of_United%20Kingdom",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:1927_British_issued_Nansen_identity_certificate.jpg",
-    "artist": "the government of the United Kingdom.",
-    "licence": "Public domain",
-    "licenceUrl": null,
-    "width": 2450,
-    "height": 3917,
-    "fetchedAt": "2026-05-18T20:38:33.181Z"
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:BNO_passport_cover_1.jpg",
+    "artist": "Zeuscho at Cantonese Wikipedia",
+    "licence": "CC BY-SA 1.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/1.0",
+    "width": 439,
+    "height": 616,
+    "fetchedAt": "2026-05-18T21:40:04.952Z"
   },
   "AO": {
     "file": "/passports/ao.jpg",
@@ -1729,13 +1729,13 @@
   "BA": {
     "file": "/passports/ba.jpg",
     "source": "https://commons.wikimedia.org/wiki/Category:Passports_of_Bosnia%20and%20Herzegovina",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:Bosnia_passport_2017_data_page.jpg",
-    "artist": "Rakoon",
-    "licence": "Public domain",
-    "licenceUrl": null,
-    "width": 1080,
-    "height": 740,
-    "fetchedAt": "2026-05-18T20:36:33.389Z"
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Republic_of_Bosnia_and_Herzegovina_passport_(front_cover).jpg",
+    "artist": "BiHVolim",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 1889,
+    "height": 2647,
+    "fetchedAt": "2026-05-18T21:22:40.664Z"
   },
   "VG": {
     "file": "/passports/vg.jpg",
@@ -1828,13 +1828,13 @@
   "GQ": {
     "file": "/passports/gq.jpg",
     "source": "https://commons.wikimedia.org/wiki/Category:Passports_of_Equatorial%20Guinea",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:Equatorial_Guinea_entry_stamp.jpg",
-    "artist": "Ketchupsos",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Equatorial_Guinea_Entry.jpg",
+    "artist": "Dantorsiello",
     "licence": "CC BY-SA 4.0",
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "width": 2565,
-    "height": 1491,
-    "fetchedAt": "2026-05-18T20:36:44.614Z"
+    "width": 2188,
+    "height": 1522,
+    "fetchedAt": "2026-05-18T21:27:11.167Z"
   },
   "SZ": {
     "file": "/passports/sz.jpg",
@@ -1856,7 +1856,7 @@
     "licenceUrl": null,
     "width": 960,
     "height": 674,
-    "fetchedAt": "2026-05-18T20:36:53.500Z"
+    "fetchedAt": "2026-05-18T21:27:19.533Z"
   },
   "GT": {
     "file": "/passports/gt.jpg",
@@ -1900,7 +1900,7 @@
     "licenceUrl": null,
     "width": 768,
     "height": 1163,
-    "fetchedAt": "2026-05-18T20:37:37.040Z"
+    "fetchedAt": "2026-05-18T21:29:01.175Z"
   },
   "HK": {
     "file": "/passports/hk.jpg",
@@ -1922,7 +1922,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
     "width": 2048,
     "height": 1367,
-    "fetchedAt": "2026-05-18T20:37:48.301Z"
+    "fetchedAt": "2026-05-18T21:29:11.924Z"
   },
   "KW": {
     "file": "/passports/kw.jpg",
@@ -1960,13 +1960,13 @@
   "OM": {
     "file": "/passports/om.jpg",
     "source": "https://commons.wikimedia.org/wiki/Category:Passports_of_Oman",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:Oman_2014_passport_biodata_page.jpg",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Oman_2014_passport_Front_Endpaper.jpg",
     "artist": "Government of Oman",
     "licence": "Public domain",
     "licenceUrl": null,
     "width": 1040,
-    "height": 742,
-    "fetchedAt": "2026-05-18T20:37:59.078Z"
+    "height": 733,
+    "fetchedAt": "2026-05-18T21:31:22.214Z"
   },
   "PG": {
     "file": "/passports/pg.jpg",
@@ -2098,7 +2098,7 @@
     "licenceUrl": null,
     "width": 2388,
     "height": 1600,
-    "fetchedAt": "2026-05-18T20:38:41.465Z"
+    "fetchedAt": "2026-05-18T21:40:11.228Z"
   },
   "VU": {
     "file": "/passports/vu.jpg",
@@ -2121,5 +2121,280 @@
     "width": 559,
     "height": 779,
     "fetchedAt": "2026-05-16T12:07:45.078Z"
+  },
+  "AW": {
+    "file": "/passports/aw.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Aruba%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Aruba_passport_entry_2014Apr.jpg",
+    "artist": "Cpile wiki",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "width": 2015,
+    "height": 1294,
+    "fetchedAt": "2026-05-18T21:21:50.028Z"
+  },
+  "BS": {
+    "file": "/passports/bs.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Bahamas%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Bahamas_Passport_Stamp_2008.jpg",
+    "artist": "TheEagerlyWaitingTraveler777",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 103,
+    "height": 75,
+    "fetchedAt": "2026-05-18T21:22:01.604Z"
+  },
+  "BW": {
+    "file": "/passports/bw.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Botswana%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Botswana_zanzibar.jpg",
+    "artist": "Passportguy",
+    "licence": "CC BY 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+    "width": 884,
+    "height": 339,
+    "fetchedAt": "2026-05-18T21:22:52.511Z"
+  },
+  "CV": {
+    "file": "/passports/cv.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Cabo%20Verde%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Cabo_Verde_passaporte.jpg",
+    "artist": "Blagomeni",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "width": 446,
+    "height": 657,
+    "fetchedAt": "2026-05-18T21:23:11.241Z"
+  },
+  "CG": {
+    "file": "/passports/cg.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Congo%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Cover_of_Congolese_Passport.jpg",
+    "artist": "Government of the Democratic Republic of the Congo",
+    "licence": "Public domain",
+    "licenceUrl": null,
+    "width": 424,
+    "height": 600,
+    "fetchedAt": "2026-05-18T21:23:32.590Z"
+  },
+  "CD": {
+    "file": "/passports/cd.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Congo%20(DRC)%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Cover_of_Congolese_Passport.jpg",
+    "artist": "Government of the Democratic Republic of the Congo",
+    "licence": "Public domain",
+    "licenceUrl": null,
+    "width": 424,
+    "height": 600,
+    "fetchedAt": "2026-05-18T21:23:49.479Z"
+  },
+  "CW": {
+    "file": "/passports/cw.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Cura%C3%A7ao%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Curacao_passport_stamp.jpg",
+    "artist": "Rowindreef",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "width": 550,
+    "height": 356,
+    "fetchedAt": "2026-05-18T21:26:45.190Z"
+  },
+  "SV": {
+    "file": "/passports/sv.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=El%20Salvador%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:El_Salvador_Passport_Visa_Free_Travel.png",
+    "artist": "Milomir jovanovic",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "width": 2000,
+    "height": 1015,
+    "fetchedAt": "2026-05-18T21:27:01.153Z"
+  },
+  "FJ": {
+    "file": "/passports/fj.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Fiji%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Fijientryimmigation.jpg",
+    "artist": "GeocacheNZ",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "width": 2808,
+    "height": 1688,
+    "fetchedAt": "2026-05-18T21:27:34.688Z"
+  },
+  "GF": {
+    "file": "/passports/gf.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=French%20Guiana%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:French_Guiana_Bac_International_du_Maroni_Passport_stamp.jpg",
+    "artist": "Bac International du Maroni passport stamp.jpg: Jonny Blair (http://www.northernirishmaninpoland.com/ and http://dontstopliving.net/) derivative work: Journeys2020",
+    "licence": "Public domain",
+    "licenceUrl": null,
+    "width": 1297,
+    "height": 957,
+    "fetchedAt": "2026-05-18T21:27:56.946Z"
+  },
+  "PF": {
+    "file": "/passports/pf.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=French%20Polynesia%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:French_Polynesia_Exit.jpg",
+    "artist": "Cpc chine",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "width": 1655,
+    "height": 1169,
+    "fetchedAt": "2026-05-18T21:28:09.804Z"
+  },
+  "GM": {
+    "file": "/passports/gm.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Gambia%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Gambia_stamp_entry.jpg",
+    "artist": "Alexander.Kaplunovsky",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 220,
+    "height": 218,
+    "fetchedAt": "2026-05-18T21:28:20.976Z"
+  },
+  "GP": {
+    "file": "/passports/gp.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Guadeloupe%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Guadeloupe-Stempel.png",
+    "artist": "André Devecseri",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 952,
+    "height": 676,
+    "fetchedAt": "2026-05-18T21:28:43.008Z"
+  },
+  "LS": {
+    "file": "/passports/ls.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Lesotho%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Lesotho_exit_stamp.jpg",
+    "artist": "Ayaanle",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 583,
+    "height": 402,
+    "fetchedAt": "2026-05-18T21:29:23.999Z"
+  },
+  "MW": {
+    "file": "/passports/mw.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Malawi%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Current_Malawi_health_passport_showing_3_languages_most_used_in_Malawi,_English,_Tumbuka_and_Chewa.jpg",
+    "artist": "Tumbuka Arch",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 1944,
+    "height": 2592,
+    "fetchedAt": "2026-05-18T21:29:35.833Z"
+  },
+  "ML": {
+    "file": "/passports/ml.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Mali%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Mali_wyjazd.jpg",
+    "artist": "Lukaszjan",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 611,
+    "height": 359,
+    "fetchedAt": "2026-05-18T21:29:47.636Z"
+  },
+  "MQ": {
+    "file": "/passports/mq.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Martinique%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Martinique-Stempel.png",
+    "artist": "André Devecseri",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 1065,
+    "height": 1425,
+    "fetchedAt": "2026-05-18T21:30:04.639Z"
+  },
+  "YT": {
+    "file": "/passports/yt.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Mayotte%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Mayotte_exit_stamp.png",
+    "artist": "not provided",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "width": 400,
+    "height": 280,
+    "fetchedAt": "2026-05-18T21:30:16.611Z"
+  },
+  "NC": {
+    "file": "/passports/nc.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=New%20Caledonia%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:New_Caledonia_-_Entry.jpg",
+    "artist": "Cpc chine",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 352,
+    "height": 240,
+    "fetchedAt": "2026-05-18T21:30:37.469Z"
+  },
+  "NU": {
+    "file": "/passports/nu.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Niue%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Niue_passport_stamp_(entry).png",
+    "artist": "Hshook",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 1808,
+    "height": 1119,
+    "fetchedAt": "2026-05-18T21:30:53.196Z"
+  },
+  "PW": {
+    "file": "/passports/pw.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Palau%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Palau_entry.png",
+    "artist": "Flicker user dcgreer, United States government, government of Palau",
+    "licence": "Public domain",
+    "licenceUrl": null,
+    "width": 1088,
+    "height": 689,
+    "fetchedAt": "2026-05-18T21:31:35.580Z"
+  },
+  "RE": {
+    "file": "/passports/re.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=R%C3%A9union%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Entry_Reunion.jpg",
+    "artist": "Juvet.tristan",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 333,
+    "height": 270,
+    "fetchedAt": "2026-05-18T21:31:59.608Z"
+  },
+  "BL": {
+    "file": "/passports/bl.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Saint%20Barth%C3%A9lemy%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Saint_Barthelemy_entry_passport_stamp.jpg",
+    "artist": "Rowindreef",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "width": 550,
+    "height": 282,
+    "fetchedAt": "2026-05-18T21:32:12.066Z"
+  },
+  "TO": {
+    "file": "/passports/to.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Tonga%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Tonga_Passport_Stamps.jpg",
+    "artist": "tm-tm",
+    "licence": "CC BY-SA 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "width": 716,
+    "height": 800,
+    "fetchedAt": "2026-05-18T21:38:47.134Z"
+  },
+  "ZM": {
+    "file": "/passports/zm.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Zambia%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Zambia_kazungula.jpg",
+    "artist": "Passportguy",
+    "licence": "CC BY 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+    "width": 753,
+    "height": 1214,
+    "fetchedAt": "2026-05-18T21:40:25.774Z"
   }
 }

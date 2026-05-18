@@ -34,6 +34,7 @@ export function SiteFooter() {
             <li><Link href="/find-my-visa" className="hover:text-[var(--color-ink)] transition">Find my visa</Link></li>
             <li><Link href="/myths" className="hover:text-[var(--color-ink)] transition">Myths &amp; rumours</Link></li>
             <li><Link href="/chat" className="hover:text-[var(--color-ink)] transition">Ask Visavu (AI chat)</Link></li>
+            <li><Link href="/consultation" className="hover:text-[var(--color-ink)] transition">Paid consultation</Link></li>
           </ul>
         </div>
         <div>

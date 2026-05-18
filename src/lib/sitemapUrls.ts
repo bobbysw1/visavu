@@ -123,6 +123,8 @@ export function getAllSitemapUrls(): SitemapUrl[] {
     ["/services/legal-services", "weekly", "0.5"],
     ["/myths", "weekly", "0.7"],
     ["/chat", "weekly", "0.6"],
+    ["/consultation", "weekly", "0.7"],
+    ["/consultation/book", "weekly", "0.5"],
   ];
 
   // Per-myth pages — high-quality SEO content with FAQ JSON-LD.

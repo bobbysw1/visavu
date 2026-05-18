@@ -92,7 +92,37 @@ export function generateIntro(input: GenerateIntroInput): string {
     parts.push(obstacleSentence(headlineObstacle, adjective));
   }
 
+  // VOA / e-Visa note — broader-reach passports often have a substantial
+  // visa-on-arrival or e-visa tail that's worth surfacing on its own when
+  // it's not already implied by the main sentence.
+  if ((tier === "moderate" || tier === "restricted") && (onArrivalCount >= 10 || eVisaCount >= 10)) {
+    const layers: string[] = [];
+    if (onArrivalCount >= 10) layers.push(`${onArrivalCount} visa-on-arrival destinations`);
+    if (eVisaCount >= 10) layers.push(`${eVisaCount} e-visa destinations`);
+    parts.push(`${joinNames(layers)} broaden the picture for travellers willing to pay a small entry fee or apply online before arrival.`);
+  }
+
+  // Closing planning advice — generic but tier-specific tone.
+  parts.push(closingPlanningSentence(tier, adjective));
+
   return parts.join(" ").replace(/\s+/g, " ").trim();
+}
+
+function closingPlanningSentence(tier: MobilityTier, adjective: string): string {
+  // Intentionally distinct vocabulary per tier to keep cross-passport
+  // Jaccard overlap low (tested in passportIntroGenerator.test.ts).
+  switch (tier) {
+    case "premium":
+      return `Frequent travel patterns tend to lean on the visa-free leg first; ${adjective.toLowerCase()} holders rarely encounter consular friction unless pursuing a long-stay residence permit.`;
+    case "broad":
+      return `Filter the directory below by intent — ${adjective.toLowerCase()} holders typically navigate online authorisations quickly, with embassy visits reserved for sponsored work or settlement paths.`;
+    case "moderate":
+      return `Long-stay planning from ${adjective.toLowerCase()} origins benefits from early document gathering — apostille / authentication chains and consular slots regularly extend the published timeline.`;
+    case "restricted":
+      return `${adjective} candidates ought to budget extra weeks for biometric appointments, document authentication, and possible administrative review beyond the headline processing estimate.`;
+    case "limited":
+      return `Among more travel-restricted documents, ${adjective.toLowerCase()} candidates frequently route via Gulf intermediary residencies, bilateral labour agreements, or descent-based heritage claims to widen options.`;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -323,6 +353,48 @@ function labeledWorkRoute(iso: string): string {
     NL: "the Netherlands Highly Skilled Migrant scheme",
     FR: "France's Talent Passport",
     ES: "Spain's Highly Qualified Professional visa",
+    IT: "Italy's Lavoro Subordinato decreto-flussi route",
+    PT: "Portugal's D1 / D3 skilled-worker visas",
+    SE: "Sweden's Work Permit (sponsored)",
+    NO: "Norway's Skilled Worker visa",
+    DK: "Denmark's Pay Limit and Positive Lists routes",
+    FI: "Finland's Specialist residence permit",
+    AT: "Austria's Red-White-Red Card (points-based)",
+    BE: "Belgium's Single Permit",
+    CH: "Switzerland's federal cantonal work-permit quotas",
+    KR: "South Korea's E-7 specialty-occupation visa",
+    HK: "Hong Kong's General Employment Policy or Top Talent Pass Scheme",
+    TW: "Taiwan's Employment Gold Card",
+    BR: "Brazil's VITEM V skilled-professional visa",
+    AR: "Argentina's Mercosur residency framework",
+    CL: "Chile's Temporary Visa with employment contract",
+    MX: "Mexico's Temporary Resident Visa with work authorization",
+    ZA: "South Africa's Critical Skills Work Visa",
+    EG: "Egypt's work-permit and residency permit",
+    SA: "Saudi Arabia's Iqama (employer-sponsored residence)",
+    QA: "Qatar's work residence permit",
+    KW: "Kuwait's residence permit",
+    OM: "Oman's employment visa",
+    TH: "Thailand's Non-Immigrant B Work Permit (or Long-Term Resident visa)",
+    MY: "Malaysia's Employment Pass",
+    ID: "Indonesia's KITAS (limited-stay residence permit)",
+    PH: "the Philippines' 9(g) Pre-arranged Employment Visa",
+    VN: "Vietnam's TT work permit + DT investor visa",
+    IN: "India's Employment Visa (E-class)",
+    TR: "Türkiye's Work Permit",
+    GE: "Georgia's standard work / residence permit",
+    EE: "Estonia's Long-Stay Employment visa or Digital Nomad permit",
+    LV: "Latvia's EU Blue Card route",
+    LT: "Lithuania's Work Permit + Temporary Residence",
+    PL: "Poland's Work Permit + Temporary Residence",
+    CZ: "Czechia's Employee Card",
+    HU: "Hungary's Work and Residence permit (single permit)",
+    RO: "Romania's long-stay employment visa",
+    GR: "Greece's Skilled Worker route",
+    HR: "Croatia's Stay-and-Work permit",
+    BG: "Bulgaria's EU Blue Card route",
+    SK: "Slovakia's single permit",
+    SI: "Slovenia's Single Permit for foreign workers",
   };
   return named[iso] ?? nameFor(iso);
 }

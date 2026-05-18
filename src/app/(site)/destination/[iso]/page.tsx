@@ -16,6 +16,7 @@ import { scoreOriginsForDestination } from "@/lib/scoring";
 import { getCountryPhoto } from "@/lib/pexels";
 import { factsFor } from "@/content/countryFacts";
 import { destinationIntroFor } from "@/content/destinationIntros";
+import { destinationPurposeIntro } from "@/content/destinationPurposeIntros";
 import { generateIntro as generateDestinationIntro } from "@/content/destinationIntroGenerator";
 import { buildDestinationFaqs } from "@/content/destinationFaqGenerator";
 import { OBSTACLES } from "@/content/obstacles";
@@ -230,6 +231,44 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
           <h2 className="section-h2 mb-4">Browse by visa type.</h2>
           <VisaCategoryNav iso={upper} mode="destination" />
         </section>
+
+        {/* Per-purpose editorial — surfaces curated content for tourism /
+            work / study / family on the destination page itself, even
+            before the user picks a specific origin passport. Renders only
+            for destinations with curated entries (top 20 today). */}
+        {(() => {
+          const purposeBlocks = (["tourism", "work", "study", "family"] as const)
+            .map((purpose) => ({
+              purpose,
+              content: destinationPurposeIntro(upper, purpose),
+            }))
+            .filter((b) => b.content);
+          if (purposeBlocks.length === 0) return null;
+          const purposeLabels: Record<"tourism"|"work"|"study"|"family", string> = {
+            tourism: "Visiting as a tourist",
+            work: "Working in",
+            study: "Studying in",
+            family: "Family / partner routes for",
+          };
+          return (
+            <section className="mt-10 space-y-6">
+              <h2 className="section-h2">Visa routes by purpose</h2>
+              <div className="grid gap-5 md:grid-cols-2">
+                {purposeBlocks.map(({ purpose, content }) => (
+                  <article
+                    key={purpose}
+                    className="ink-card p-5 space-y-2"
+                  >
+                    <h3 className="kicker text-xs uppercase tracking-wider">
+                      {purposeLabels[purpose as "tourism"|"work"|"study"|"family"]} {name}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-[var(--color-ink)]">{content}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          );
+        })()}
 
         <section className="mt-12">
           <p className="kicker mb-2">Popular origins</p>

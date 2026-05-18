@@ -31,13 +31,17 @@ export function VisaCategoryNav({
   return (
     <nav aria-label="Visa types" className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 text-sm">
       {ALL_PURPOSES.map((p) => {
-        // Path-form URLs for country-pair routes (clean shareable);
-        // query form for single-country directory views.
+        // URL form depends on mode:
+        //  - Pair (partnerIso set) → /[passport]/[destination]/[purpose] path
+        //  - Passport mode, single → /passport/[iso]/purpose/[p] static page
+        //  - Destination mode, single → /destination/[iso]?purpose=[p] (still uses query)
         const href = partnerLower
           ? mode === "passport"
             ? `/${lower}/${partnerLower}/${p}`
             : `/${partnerLower}/${lower}/${p}`
-          : `/${mode}/${lower}?purpose=${p}`;
+          : mode === "passport"
+            ? `/passport/${lower}/purpose/${p}`
+            : `/destination/${lower}?purpose=${p}`;
         const isActive = active === p;
         return (
           <Link

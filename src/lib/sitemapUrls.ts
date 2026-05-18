@@ -136,6 +136,19 @@ export function getAllSitemapUrls(): SitemapUrl[] {
       lastmodKey: "static",
     });
   }
+
+  // /passport/[iso]/purpose/[purpose] — filtered passport views.
+  // 230 passport ISOs × 7 purposes = ~1,600 URLs (large but SEO-valuable).
+  for (const c of PASSPORT_COUNTRIES) {
+    for (const p of ["tourism", "business", "transit", "work", "study", "family", "diplomatic"]) {
+      urls.push({
+        loc: `${SITE.url}/passport/${c.iso2.toLowerCase()}/purpose/${p}`,
+        changefreq: "weekly",
+        priority: "0.5",
+        lastmodKey: `passport:${c.iso2}` as const,
+      });
+    }
+  }
   for (const [path, freq, prio] of staticPages) {
     urls.push({
       loc: `${SITE.url}${path}`,

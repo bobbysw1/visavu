@@ -36,6 +36,11 @@ type Territory = {
   status?: "embassy_visa" | "visa_free" | "restricted";
   /** Treat as uninhabited — produces a single "no civilian visa" record. */
   uninhabited?: boolean;
+  /** Set true for territories whose parent's own citizens still need a permit
+   *  (Saint Helena entry permit, Pitcairn licence-to-land). When false
+   *  (default), a parent-passport → territory query emits a `visa_free` row
+   *  because citizens of the realm have automatic right of entry. */
+  parentCitizensNeedPermit?: boolean;
 };
 
 // Parent-country mapping + territory-specific notes. Sources: each parent
@@ -53,10 +58,10 @@ const TERRITORIES: Territory[] = [
   { iso2: "FK", parent: "GB", policyNote: "Falkland Islands run their own immigration. Most short visits don't need a visa (different to UK ETA); long stays require a Falkland Islands work or residence permit.", applicationUrl: "https://www.falklands.gov.fk/policy/customs-and-immigration" },
   { iso2: "GI", parent: "GB", policyNote: "Gibraltar has its own immigration (Civil Status & Registration Office). Aligned with UK policy but operates an independent entry system. Spanish nationals enter under bilateral agreement.", applicationUrl: "https://www.gibraltar.gov.gi/government-departments/civil-status-and-registration-office" },
   { iso2: "MS", parent: "GB", policyNote: "Montserrat issues its own visas via the Immigration Department. UK passport holders enter visa-free.", applicationUrl: "https://www.gov.ms/" },
-  { iso2: "SH", parent: "GB", policyNote: "Saint Helena, Ascension and Tristan da Cunha — Saint Helena requires an Entry Permit, even for UK passport holders. Charge to land applies.", applicationUrl: "https://www.sainthelena.gov.sh/visiting/immigration/" },
+  { iso2: "SH", parent: "GB", parentCitizensNeedPermit: true, policyNote: "Saint Helena, Ascension and Tristan da Cunha — Saint Helena requires an Entry Permit, even for UK passport holders. Charge to land applies.", applicationUrl: "https://www.sainthelena.gov.sh/visiting/immigration/" },
   { iso2: "TC", parent: "GB", policyNote: "Turks and Caicos run their own Immigration Department. Most visa-free nationalities for UK get the same here, but always check — TCI maintains its own list.", applicationUrl: "https://www.gov.tc/immigration/" },
   { iso2: "IO", parent: "GB", policyNote: "British Indian Ocean Territory (Diego Garcia) — closed to civilians. Permit required from the Commissioner; effectively limited to military, contractors, and approved researchers.", applicationUrl: "https://www.gov.uk/government/organisations/the-commissioner-for-the-british-indian-ocean-territory", status: "restricted" },
-  { iso2: "PN", parent: "GB", policyNote: "Pitcairn Islands — population ~50. Day-visit landing fee for cruise ship visitors. Anyone staying overnight needs a Licence to Land application weeks in advance.", applicationUrl: "https://www.government.pn/immigration/" },
+  { iso2: "PN", parent: "GB", parentCitizensNeedPermit: true, policyNote: "Pitcairn Islands — population ~50. Day-visit landing fee for cruise ship visitors. Anyone staying overnight needs a Licence to Land application weeks in advance.", applicationUrl: "https://www.government.pn/immigration/" },
   { iso2: "GG", parent: "GB", policyNote: "Guernsey is a Crown Dependency, NOT in the UK. Operates the Common Travel Area: UK / Ireland / Channel Islands / Isle of Man move freely between each other, but Guernsey runs its own immigration for non-CTA arrivals.", applicationUrl: "https://www.gov.gg/immigration" },
   { iso2: "JE", parent: "GB", policyNote: "Jersey is a Crown Dependency in the Common Travel Area. Non-CTA arrivals follow UK-aligned visa policy administered locally.", applicationUrl: "https://www.gov.je/immigration/" },
   { iso2: "IM", parent: "GB", policyNote: "Isle of Man is a Crown Dependency in the Common Travel Area. UK visa policy applies for non-CTA arrivals, administered by the Manx Immigration office.", applicationUrl: "https://www.gov.im/immigration/" },
@@ -161,6 +166,44 @@ export const totalCoverageTerritoriesAdapter: Adapter = {
             primarySourceUrl: t.applicationUrl,
             fees: [],
             notes: `${tName} is uninhabited or limited to research staff. There is no traditional visa channel — see the responsible authority for permit applications.`,
+          });
+          continue;
+        }
+
+        // Parent passport → territory = visa-free as of right.
+        // Citizens of the realm have automatic right of entry to their own
+        // territories. Previously every (passport, territory) cell defaulted
+        // to embassy_visa, which was wrong for GB→FK, GB→GI, GB→TC, FR→NC,
+        // NL→AW, DK→GL, NZ→CK, AU→NF, US→PR, and ~25 others.
+        // Exceptions: territories with their own permit regime even for
+        // parent citizens (SH, PN) are flagged parentCitizensNeedPermit;
+        // restricted territories (IO) keep their explicit status.
+        if (
+          passport === t.parent &&
+          t.status !== "restricted" &&
+          !t.parentCitizensNeedPermit
+        ) {
+          records.push({
+            passportIso2: passport,
+            destinationIso2: t.iso2,
+            purpose: "tourism",
+            status: "visa_free",
+            label: `Visa-free entry as a ${parentName} citizen`,
+            maxStayDays: null,
+            entriesAllowed: "multiple",
+            passportValidityMonthsRequired: 6,
+            onwardTicketRequired: false,
+            proofOfFundsRequired: false,
+            proofOfAccommodationRequired: false,
+            biometricsRequired: false,
+            requirements: [
+              `As a ${parentName} citizen, you have automatic right of entry to ${tName} — no visa required.`,
+              t.policyNote,
+            ],
+            applicationUrl: t.applicationUrl,
+            primarySourceUrl: t.applicationUrl,
+            fees: [],
+            notes: `${tName} is a ${parentName} territory; ${parentName} citizens enter as of right.`,
           });
           continue;
         }

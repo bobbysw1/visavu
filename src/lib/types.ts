@@ -40,7 +40,7 @@ export const PURPOSE_LABEL: Record<Purpose, string> = {
   transit: "Transit",
   work: "Work",
   study: "Study",
-  family: "Partner / Family",
+  family: "Family",
   diplomatic: "Diplomatic",
 };
 

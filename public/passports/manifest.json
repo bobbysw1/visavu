@@ -1652,24 +1652,24 @@
   "KR": {
     "file": "/passports/kr.jpg",
     "source": "https://commons.wikimedia.org/wiki/Category:Passports_of_South%20Korea",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:20180623_%ED%94%84%EB%A1%9C%EB%AF%B8%EC%8A%A4%EB%82%98%EC%9D%B8_%EB%89%B4%EC%9A%95_%EC%BC%80%EC%9D%B4%EC%BD%98_%EC%B6%9C%EA%B5%AD_(3).jpg",
-    "artist": "f2.8",
-    "licence": "CC BY 4.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
-    "width": 960,
-    "height": 1280,
-    "fetchedAt": "2026-05-18T20:38:08.352Z"
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Kor_passport.jpg",
+    "artist": "Heaven n earth at English Wikipedia",
+    "licence": "Public domain",
+    "licenceUrl": null,
+    "width": 461,
+    "height": 668,
+    "fetchedAt": "2026-05-18T21:45:27.837Z"
   },
   "CH": {
     "file": "/passports/ch.jpg",
     "source": "https://commons.wikimedia.org/wiki/Category:Passports_of_Switzerland",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_-_Passport_issued_by_the_Swiss_Embassy_in_Berlin,_Germany,_1923.jpg",
-    "artist": "Unknown authorUnknown author",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Swiss_passport,_model_Pass_03,_cover.jpg",
+    "artist": "Adrian Michael",
     "licence": "Public domain",
     "licenceUrl": null,
-    "width": 640,
-    "height": 387,
-    "fetchedAt": "2026-05-18T20:38:24.018Z"
+    "width": 623,
+    "height": 855,
+    "fetchedAt": "2026-05-18T21:45:54.593Z"
   },
   "GB": {
     "file": "/passports/gb.jpg",
@@ -2059,13 +2059,13 @@
   "SD": {
     "file": "/passports/sd.jpg",
     "source": "https://commons.wikimedia.org/wiki/Category:Passports_of_Sudan",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:1947_Colonial_Sudanese_passport.jpg",
-    "artist": "British government for the crown colony of Anglo-Egyptian Sudan (1899–1956)",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Sudan_passport_cover.JPG",
+    "artist": "Serongadamwiki",
     "licence": "Public domain",
     "licenceUrl": null,
-    "width": 2476,
-    "height": 1857,
-    "fetchedAt": "2026-05-18T20:38:16.810Z"
+    "width": 314,
+    "height": 446,
+    "fetchedAt": "2026-05-18T21:45:32.708Z"
   },
   "TT": {
     "file": "/passports/tt.jpg",
@@ -2396,5 +2396,82 @@
     "width": 753,
     "height": 1214,
     "fetchedAt": "2026-05-18T21:40:25.774Z"
+  },
+  "PM": {
+    "file": "/passports/pm.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Saint%20Pierre%20and%20Miquelon%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Saint-Pierre_and_Miquelon_entry_and_exit_(by_ferry)_stamps.jpg",
+    "artist": "Keizers",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 3024,
+    "height": 4032,
+    "fetchedAt": "2026-05-18T21:44:37.088Z"
+  },
+  "WS": {
+    "file": "/passports/ws.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Samoa%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:American_Samoa_US_national_not_US_citizen_passport_message.jpg",
+    "artist": "This is a scan of a public domain work created by the US government.",
+    "licence": "Public domain",
+    "licenceUrl": null,
+    "width": 400,
+    "height": 547,
+    "fetchedAt": "2026-05-18T21:44:44.412Z"
+  },
+  "SM": {
+    "file": "/passports/sm.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=San%20Marino%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Sanmarino.jpeg",
+    "artist": "Nicolaoriggi",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 390,
+    "height": 434,
+    "fetchedAt": "2026-05-18T21:44:52.208Z"
+  },
+  "ST": {
+    "file": "/passports/st.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Sao%20Tome%20and%20Principe%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:SaoTomeEntrystamp.jpg",
+    "artist": "BERtoWORLD",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 1784,
+    "height": 1338,
+    "fetchedAt": "2026-05-18T21:45:03.027Z"
+  },
+  "SB": {
+    "file": "/passports/sb.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Solomon%20Islands%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:SOLOMON_ISLANDS_ENTRY_STAMP.JPG",
+    "artist": "FinedonRes",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "width": 1580,
+    "height": 1071,
+    "fetchedAt": "2026-05-18T21:45:22.708Z"
+  },
+  "SR": {
+    "file": "/passports/sr.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Suriname%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Suriname_departure_stamp.png",
+    "artist": "LionFlyer",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "width": 657,
+    "height": 400,
+    "fetchedAt": "2026-05-18T21:45:40.644Z"
+  },
+  "VI": {
+    "file": "/passports/vi.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=U.S.%20Virgin%20Islands%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Assignment-_48-DPA-08-23-08_SOI_K_Johns)_Visit_of_Secretary_Dirk_Kempthorne_(and_aides)_to_St._John,_U.S._Virgin_Islands,_(for_tour_of_Virgin_Islands_National_Park_and_other_natural_-_DPLA_-_a78fe640beb9a1f2a8d2f92ee4b587a1.JPG",
+    "artist": "Department of the Interior. National Business Center. Administrative Operations Directorate. Division of Employee and Public Services. Creative Communications Branch. Photographic Services. 2000",
+    "licence": "Public domain",
+    "licenceUrl": null,
+    "width": 4288,
+    "height": 2848,
+    "fetchedAt": "2026-05-18T21:46:12.456Z"
   }
 }

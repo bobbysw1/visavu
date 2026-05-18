@@ -35,6 +35,7 @@ export function SiteFooter() {
             <li><Link href="/myths" className="hover:text-[var(--color-ink)] transition">Myths &amp; rumours</Link></li>
             <li><Link href="/chat" className="hover:text-[var(--color-ink)] transition">Ask Visavu (AI chat)</Link></li>
             <li><Link href="/consultation" className="hover:text-[var(--color-ink)] transition">Paid consultation</Link></li>
+            <li><Link href="/signin" className="hover:text-[var(--color-ink)] transition">Sign in / Account</Link></li>
           </ul>
         </div>
         <div>

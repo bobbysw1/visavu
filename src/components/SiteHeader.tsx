@@ -65,6 +65,13 @@ export function SiteHeader() {
           >
             Find my visa
           </Link>
+          <Link
+            href="/signin"
+            className="hidden sm:inline px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition text-xs"
+            aria-label="Sign in or view account"
+          >
+            Account
+          </Link>
           {/* Suspense wraps the switchers because they call useSearchParams()
               client-side; without a boundary, Next bails out of SSG. */}
           <Suspense fallback={null}>

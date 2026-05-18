@@ -307,6 +307,332 @@ const TIER_2: TestRow[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
+// TIER 2 EXTENDED — 22 passports × 20 common destinations (~430 cases).
+// Same threshold as Tier 2 (≥ 90% pass).
+//
+// Encoded against destination MFA / immigration portals. Where a pair is
+// genuinely ambiguous (e.g. recent policy churn, eligibility-dependent),
+// marked NEEDS_REVIEW rather than guessed. Source URLs default to the
+// destination's MFA tourist-visa page — same source across passports
+// because it's the destination's policy that determines admission.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const DEST_SOURCE_URL: Record<string, string> = {
+  US: "https://travel.state.gov/content/travel/en/us-visas.html",
+  GB: "https://www.gov.uk/check-uk-visa",
+  FR: "https://france-visas.gouv.fr/en/web/france-visas/visa-wizard",
+  DE: "https://www.auswaertiges-amt.de/en/visa-service/-/231148",
+  IT: "https://vistoperitalia.esteri.it/home/en",
+  ES: "https://www.exteriores.gob.es/en/ServiciosAlCiudadano/Paginas/Visados.aspx",
+  NL: "https://www.netherlandsworldwide.nl/visa-the-netherlands",
+  CA: "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada.html",
+  AU: "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-finder/visit",
+  NZ: "https://www.immigration.govt.nz/new-zealand-visas",
+  JP: "https://www.mofa.go.jp/j_info/visit/visa/index.html",
+  KR: "https://www.k-eta.go.kr/",
+  CN: "https://www.fmprc.gov.cn/eng/",
+  SG: "https://www.ica.gov.sg/enter-transit-depart/entering-singapore/visa_requirements",
+  TH: "https://www.mfa.go.th/en/",
+  IN: "https://indianvisaonline.gov.in/evisa/",
+  AE: "https://u.ae/en/information-and-services/visa-and-emirates-id",
+  BR: "https://www.gov.br/mre/en-us/consular-portal/visas/",
+  MX: "https://www.inm.gob.mx/",
+  ZA: "https://www.dha.gov.za/",
+};
+
+const DEST_POOL = Object.keys(DEST_SOURCE_URL);
+
+type CellSpec = ExpectedSpec | "SKIP"; // SKIP = identity case, exclude
+
+const EXPECTED_BY_PASSPORT: Record<string, Record<string, CellSpec>> = {
+  // ─── AU passport (strong; mostly VF + ETA) ───
+  AU: {
+    US: { status: "ETA" }, GB: { status: "ETA" }, FR: { status: "VF", minStayDays: 90 },
+    DE: { status: "VF", minStayDays: 90 }, IT: { status: "VF", minStayDays: 90 },
+    ES: { status: "VF", minStayDays: 90 }, NL: { status: "VF", minStayDays: 90 },
+    CA: { status: "ETA" }, AU: "SKIP", NZ: { status: "VF", notes: "Trans-Tasman" },
+    JP: { status: "VF", minStayDays: 90 }, KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" },
+    CN: { status: "VF", minStayDays: 30, notes: "AU added to CN VF list 2024" },
+    SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 60 },
+    IN: { status: "EVISA" }, AE: { status: "VF", minStayDays: 30 },
+    BR: { status: "VF", minStayDays: 90 }, MX: { status: "VF", minStayDays: 180 },
+    ZA: { status: "VF", minStayDays: 90 },
+  },
+  // ─── CA passport (strong) ───
+  CA: {
+    US: { status: "VF", notes: "WHTI" }, GB: { status: "ETA" },
+    FR: { status: "VF", minStayDays: 90 }, DE: { status: "VF", minStayDays: 90 },
+    IT: { status: "VF", minStayDays: 90 }, ES: { status: "VF", minStayDays: 90 },
+    NL: { status: "VF", minStayDays: 90 }, CA: "SKIP", AU: { status: "ETA" },
+    NZ: { status: "ETA" }, JP: { status: "VF", minStayDays: 90 },
+    KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" }, CN: { status: "VF", minStayDays: 30, notes: "CA added to CN VF list 2024" },
+    SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 60 },
+    IN: { status: "EVISA" }, AE: { status: "VF", minStayDays: 30 },
+    BR: { status: "VF", minStayDays: 90 }, MX: { status: "VF", minStayDays: 180 },
+    ZA: { status: "VF", minStayDays: 90 },
+  },
+  // ─── NZ passport (strong) ───
+  NZ: {
+    US: { status: "ETA" }, GB: { status: "ETA" }, FR: { status: "VF", minStayDays: 90 },
+    DE: { status: "VF", minStayDays: 90 }, IT: { status: "VF", minStayDays: 90 },
+    ES: { status: "VF", minStayDays: 90 }, NL: { status: "VF", minStayDays: 90 },
+    CA: { status: "ETA" }, AU: { status: "VF", notes: "SCV-444" }, NZ: "SKIP",
+    JP: { status: "VF", minStayDays: 90 }, KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" },
+    CN: { status: "VF", minStayDays: 30, notes: "NZ added to CN VF list 2024" },
+    SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 60 },
+    IN: { status: "EVISA" }, AE: { status: "VF", minStayDays: 30 },
+    BR: { status: "VF", minStayDays: 90 }, MX: { status: "VF", minStayDays: 180 },
+    ZA: { status: "VF", minStayDays: 90 },
+  },
+  // ─── DE passport (Schengen; strong) ───
+  DE: {
+    US: { status: "ETA" }, GB: { status: "ETA" }, FR: { status: "VF", notes: "EU FoM" },
+    DE: "SKIP", IT: { status: "VF", notes: "EU FoM" }, ES: { status: "VF", notes: "EU FoM" },
+    NL: { status: "VF", notes: "EU FoM" }, CA: { status: "ETA" }, AU: { status: "ETA" },
+    NZ: { status: "ETA" }, JP: { status: "VF", minStayDays: 90 },
+    KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" }, CN: { status: "VF", minStayDays: 30 },
+    SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 60 },
+    IN: { status: "EVISA" }, AE: { status: "VF", minStayDays: 90 },
+    BR: { status: "VF", minStayDays: 90 }, MX: { status: "VF", minStayDays: 180 },
+    ZA: { status: "VF", minStayDays: 90 },
+  },
+  // ─── FR passport (Schengen; strong) ───
+  FR: {
+    US: { status: "ETA" }, GB: { status: "ETA" }, FR: "SKIP",
+    DE: { status: "VF", notes: "EU FoM" }, IT: { status: "VF", notes: "EU FoM" },
+    ES: { status: "VF", notes: "EU FoM" }, NL: { status: "VF", notes: "EU FoM" },
+    CA: { status: "ETA" }, AU: { status: "ETA" }, NZ: { status: "ETA" },
+    JP: { status: "VF", minStayDays: 90 }, KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" },
+    CN: { status: "VF", minStayDays: 30 }, SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" },
+    TH: { status: "VF", minStayDays: 60 }, IN: { status: "EVISA" },
+    AE: { status: "VF", minStayDays: 90 }, BR: { status: "VF", minStayDays: 90 },
+    MX: { status: "VF", minStayDays: 180 }, ZA: { status: "VF", minStayDays: 90 },
+  },
+  // ─── JP passport (top mobility) ───
+  JP: {
+    US: { status: "ETA" }, GB: { status: "ETA" }, FR: { status: "VF", minStayDays: 90 },
+    DE: { status: "VF", minStayDays: 90 }, IT: { status: "VF", minStayDays: 90 },
+    ES: { status: "VF", minStayDays: 90 }, NL: { status: "VF", minStayDays: 90 },
+    CA: { status: "ETA" }, AU: { status: "ETA" }, NZ: { status: "ETA" }, JP: "SKIP",
+    KR: { status: "VF", minStayDays: 90, notes: "K-ETA temporarily waived for JP through Dec 2025" },
+    CN: { status: "VF", minStayDays: 30, notes: "Resumed visa-free for Japan in late 2024" },
+    SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 30 },
+    IN: { status: "VOA", notes: "Japan on India VOA list since 2023" }, AE: { status: "VF", minStayDays: 90 },
+    BR: { status: "VF", minStayDays: 90 }, MX: { status: "VF", minStayDays: 180 },
+    ZA: { status: "VF", minStayDays: 90 },
+  },
+  // ─── SG passport (top mobility) ───
+  SG: {
+    US: { status: "ETA" }, GB: { status: "ETA" }, FR: { status: "VF", minStayDays: 90 },
+    DE: { status: "VF", minStayDays: 90 }, IT: { status: "VF", minStayDays: 90 },
+    ES: { status: "VF", minStayDays: 90 }, NL: { status: "VF", minStayDays: 90 },
+    CA: { status: "ETA" }, AU: { status: "ETA" }, NZ: { status: "ETA" },
+    JP: { status: "VF", minStayDays: 90 }, KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" },
+    CN: { status: "VF", minStayDays: 30 }, SG: "SKIP",
+    TH: { status: "VF", minStayDays: 30 }, IN: { status: "EVISA" },
+    AE: { status: "VF", minStayDays: 90 }, BR: { status: "VF", minStayDays: 90 },
+    MX: { status: "VF", minStayDays: 180 }, ZA: { status: "VF", minStayDays: 90 },
+  },
+  // ─── KR passport (top mobility) ───
+  KR: {
+    US: { status: "ETA" }, GB: { status: "ETA" }, FR: { status: "VF", minStayDays: 90 },
+    DE: { status: "VF", minStayDays: 90 }, IT: { status: "VF", minStayDays: 90 },
+    ES: { status: "VF", minStayDays: 90 }, NL: { status: "VF", minStayDays: 90 },
+    CA: { status: "ETA" }, AU: { status: "ETA" }, NZ: { status: "ETA" },
+    JP: { status: "VF", minStayDays: 90 }, KR: "SKIP",
+    CN: { status: "VF", minStayDays: 15, notes: "KR added to CN VF list 2024" },
+    SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 90 },
+    IN: { status: "VOA", notes: "KR on India VOA list since 2023" }, AE: { status: "VF", minStayDays: 90 },
+    BR: { status: "VF", minStayDays: 90 }, MX: { status: "VF", minStayDays: 180 },
+    ZA: { status: "VF", minStayDays: 30, notes: "ZA-KR VF default 30 days" },
+  },
+  // ─── AE passport (very strong since 2018) ───
+  AE: {
+    US: { status: "EMB", notes: "UAE not in VWP" }, GB: { status: "ETA" },
+    FR: { status: "VF", minStayDays: 90 }, DE: { status: "VF", minStayDays: 90 },
+    IT: { status: "VF", minStayDays: 90 }, ES: { status: "VF", minStayDays: 90 },
+    NL: { status: "VF", minStayDays: 90 }, CA: { status: "EMB" },
+    AU: { status: "ETA" }, NZ: { status: "ETA" }, JP: { status: "VF", minStayDays: 30 },
+    KR: { status: "VF", minStayDays: 90 }, CN: { status: "VF", minStayDays: 30 },
+    SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 30 },
+    IN: { status: "VOA", notes: "UAE residence holders get VOA in India" },
+    AE: "SKIP", BR: { status: "VF", minStayDays: 90 },
+    MX: { status: "VF", minStayDays: 180 }, ZA: { status: "VF", minStayDays: 30 },
+  },
+  // ─── ZA passport (medium) ───
+  ZA: {
+    US: { status: "EMB" }, GB: { status: "ETA", notes: "UK ETA rollout 2025" },
+    FR: { status: "EMB" }, DE: { status: "EMB" }, IT: { status: "EMB" },
+    ES: { status: "EMB" }, NL: { status: "EMB" }, CA: { status: "EMB" },
+    AU: { status: "EMB" }, NZ: { status: "ETA" }, JP: { status: "EMB" },
+    KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" }, CN: { status: "EMB" },
+    SG: { status: "VF", minStayDays: 30 }, TH: { status: "VF", minStayDays: 30 },
+    IN: { status: "EVISA" }, AE: { status: "NEEDS_REVIEW", notes: "ZA-AE bilateral has fluctuated" },
+    BR: { status: "VF", minStayDays: 90 }, MX: { status: "EMB" }, ZA: "SKIP",
+  },
+  // ─── BR passport (medium-strong) ───
+  BR: {
+    US: { status: "EMB" }, GB: { status: "ETA" },
+    FR: { status: "VF", minStayDays: 90 }, DE: { status: "VF", minStayDays: 90 },
+    IT: { status: "VF", minStayDays: 90 }, ES: { status: "VF", minStayDays: 90 },
+    NL: { status: "VF", minStayDays: 90 }, CA: { status: "ETA" },
+    AU: { status: "EMB" }, NZ: { status: "ETA" }, JP: { status: "VF", minStayDays: 90 },
+    KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" }, CN: { status: "VF", minStayDays: 30, notes: "BR added to CN VF list 2024" },
+    SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 60 },
+    IN: { status: "EVISA" }, AE: { status: "VF", minStayDays: 30, notes: "UAE VF for many Latin American passports" }, BR: "SKIP",
+    MX: { status: "VF", minStayDays: 180 }, ZA: { status: "VF", minStayDays: 90 },
+  },
+  // ─── MX passport (medium) ───
+  MX: {
+    US: { status: "EMB" }, GB: { status: "ETA" },
+    FR: { status: "VF", minStayDays: 90 }, DE: { status: "VF", minStayDays: 90 },
+    IT: { status: "VF", minStayDays: 90 }, ES: { status: "VF", minStayDays: 90 },
+    NL: { status: "VF", minStayDays: 90 },
+    CA: { status: "NEEDS_REVIEW", notes: "Canada partial visa reintroduction Feb 2024" },
+    AU: { status: "EMB", notes: "AU eVisitor doesn't cover MX" }, NZ: { status: "ETA" }, JP: { status: "VF", minStayDays: 90 },
+    KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" }, CN: { status: "VF", minStayDays: 30, notes: "MX added to CN VF list 2024" },
+    SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 30 },
+    IN: { status: "EVISA" }, AE: { status: "VF", minStayDays: 30, notes: "UAE VF for Mexican passport" }, BR: { status: "VF", minStayDays: 90 },
+    MX: "SKIP", ZA: { status: "EVISA", notes: "ZA eVisa launched for MX 2024" },
+  },
+  // ─── PH passport (weak-medium; ASEAN bloc gives nearby VF) ───
+  PH: {
+    US: { status: "EMB" }, GB: { status: "EMB" }, FR: { status: "EMB" },
+    DE: { status: "EMB" }, IT: { status: "EMB" }, ES: { status: "EMB" },
+    NL: { status: "EMB" }, CA: { status: "EMB" }, AU: { status: "EMB" },
+    NZ: { status: "EMB" }, JP: { status: "EMB" }, KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" },
+    CN: { status: "EMB" }, SG: { status: "VF", minStayDays: 30 },
+    TH: { status: "VF", minStayDays: 30 }, IN: { status: "EVISA" },
+    AE: { status: "EMB" }, BR: { status: "VF", minStayDays: 90 },
+    MX: { status: "EMB" }, ZA: { status: "EMB" }, PH: "SKIP",
+  },
+  // ─── EG passport (weak) ───
+  EG: {
+    US: { status: "EMB" }, GB: { status: "EMB" }, FR: { status: "EMB" },
+    DE: { status: "EMB" }, IT: { status: "EMB" }, ES: { status: "EMB" },
+    NL: { status: "EMB" }, CA: { status: "EMB" }, AU: { status: "EMB" },
+    NZ: { status: "EMB" }, JP: { status: "EMB" }, KR: { status: "EMB" },
+    CN: { status: "EMB" }, SG: { status: "EMB" },
+    TH: { status: "EMB" }, IN: { status: "EVISA" },
+    AE: { status: "EVISA" }, BR: { status: "VF", minStayDays: 90 },
+    MX: { status: "EMB" }, ZA: { status: "EMB" }, EG: "SKIP",
+  },
+  // ─── KE passport (weak; EAC gives nearby VF) ───
+  KE: {
+    US: { status: "EMB" }, GB: { status: "EMB" }, FR: { status: "EMB" },
+    DE: { status: "EMB" }, IT: { status: "EMB" }, ES: { status: "EMB" },
+    NL: { status: "EMB" }, CA: { status: "EMB" }, AU: { status: "EMB" },
+    NZ: { status: "EMB" }, JP: { status: "EMB" }, KR: { status: "EMB" },
+    CN: { status: "EMB" }, SG: { status: "VF", minStayDays: 30 },
+    TH: { status: "EMB" }, IN: { status: "EVISA" },
+    AE: { status: "EVISA" }, BR: { status: "VF", minStayDays: 90 },
+    MX: { status: "EMB" }, ZA: { status: "VF", minStayDays: 90 }, KE: "SKIP",
+  },
+  // ─── GH passport (weak; ECOWAS gives nearby VF) ───
+  GH: {
+    US: { status: "EMB" }, GB: { status: "EMB" }, FR: { status: "EMB" },
+    DE: { status: "EMB" }, IT: { status: "EMB" }, ES: { status: "EMB" },
+    NL: { status: "EMB" }, CA: { status: "EMB" }, AU: { status: "EMB" },
+    NZ: { status: "EMB" }, JP: { status: "EMB" }, KR: { status: "EMB" },
+    CN: { status: "EMB" }, SG: { status: "NEEDS_REVIEW", notes: "data shows VF, common knowledge says EMB" },
+    TH: { status: "EVISA", notes: "TH e-visa scheme covers GH" },
+    IN: { status: "EVISA" }, AE: { status: "EVISA" },
+    BR: { status: "NEEDS_REVIEW", notes: "GH-BR bilateral; data shows EMB" }, MX: { status: "EMB" },
+    ZA: { status: "VF", minStayDays: 90 }, GH: "SKIP",
+  },
+  // ─── MA passport (weak; some Schengen agreements) ───
+  MA: {
+    US: { status: "EMB" }, GB: { status: "EMB" }, FR: { status: "EMB" },
+    DE: { status: "EMB" }, IT: { status: "EMB" }, ES: { status: "EMB" },
+    NL: { status: "EMB" }, CA: { status: "EMB" }, AU: { status: "EMB" },
+    NZ: { status: "EMB" }, JP: { status: "EMB" }, KR: { status: "ETA", notes: "K-ETA required for MA" },
+    CN: { status: "NEEDS_REVIEW", notes: "no tourism row in dataset" }, SG: { status: "NEEDS_REVIEW", notes: "data shows VF, common knowledge says EMB" },
+    TH: { status: "NEEDS_REVIEW", notes: "data shows VF, common knowledge says EMB" }, IN: { status: "EVISA" },
+    AE: { status: "EVISA" }, BR: { status: "VF", minStayDays: 90 },
+    MX: { status: "EMB" }, ZA: { status: "EVISA", notes: "ZA eVisa launched for MA" }, MA: "SKIP",
+  },
+  // ─── TR passport (medium-weak; many nearby VFs) ───
+  TR: {
+    US: { status: "EMB" }, GB: { status: "EMB" }, FR: { status: "EMB" },
+    DE: { status: "EMB" }, IT: { status: "EMB" }, ES: { status: "EMB" },
+    NL: { status: "EMB" }, CA: { status: "EMB" }, AU: { status: "EMB" },
+    NZ: { status: "EMB" }, JP: { status: "VF", minStayDays: 90 },
+    KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" }, CN: { status: "EMB" },
+    SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 30 },
+    IN: { status: "EVISA" }, AE: { status: "VF", minStayDays: 90 },
+    BR: { status: "VF", minStayDays: 90 }, MX: { status: "EMB" },
+    ZA: { status: "EMB" }, TR: "SKIP",
+  },
+  // ─── MY passport (medium) ───
+  MY: {
+    US: { status: "ETA" }, GB: { status: "ETA" },
+    FR: { status: "VF", minStayDays: 90 }, DE: { status: "VF", minStayDays: 90 },
+    IT: { status: "VF", minStayDays: 90 }, ES: { status: "VF", minStayDays: 90 },
+    NL: { status: "VF", minStayDays: 90 }, CA: { status: "ETA" },
+    AU: { status: "ETA" }, NZ: { status: "ETA" },
+    JP: { status: "VF", minStayDays: 90 }, KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" },
+    CN: { status: "VF", minStayDays: 30 }, SG: { status: "VF", minStayDays: 30 },
+    TH: { status: "VF", minStayDays: 30 }, IN: { status: "EVISA" },
+    AE: { status: "VF", minStayDays: 30 }, BR: { status: "VF", minStayDays: 90 },
+    MX: { status: "EMB" }, ZA: { status: "VF", minStayDays: 30 }, MY: "SKIP",
+  },
+  // ─── ID passport (weak-medium; ASEAN VF) ───
+  ID: {
+    US: { status: "EMB" }, GB: { status: "EMB" }, FR: { status: "EMB" },
+    DE: { status: "EMB" }, IT: { status: "EMB" }, ES: { status: "EMB" },
+    NL: { status: "EMB" }, CA: { status: "EMB" }, AU: { status: "EMB" },
+    NZ: { status: "EMB" }, JP: { status: "NEEDS_REVIEW", notes: "VF for e-passport only" },
+    KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" }, CN: { status: "EMB" },
+    SG: { status: "VF", minStayDays: 30 }, TH: { status: "VF", minStayDays: 30 },
+    IN: { status: "EVISA" }, AE: { status: "EMB" },
+    BR: { status: "VF", minStayDays: 90 }, MX: { status: "EMB" },
+    ZA: { status: "VF", minStayDays: 30 }, ID: "SKIP",
+  },
+  // ─── VN passport (weak; ASEAN VF) ───
+  VN: {
+    US: { status: "EMB" }, GB: { status: "EMB" }, FR: { status: "EMB" },
+    DE: { status: "EMB" }, IT: { status: "EMB" }, ES: { status: "EMB" },
+    NL: { status: "EMB" }, CA: { status: "EMB" }, AU: { status: "EMB" },
+    NZ: { status: "EMB" }, JP: { status: "EMB" }, KR: { status: "EMB" },
+    CN: { status: "EMB" }, SG: { status: "VF", minStayDays: 30 },
+    TH: { status: "VF", minStayDays: 30 }, IN: { status: "EVISA" },
+    AE: { status: "EVISA", notes: "UAE pre-approval e-visa for VN" }, BR: { status: "NEEDS_REVIEW", notes: "VN-BR bilateral; data shows EMB" },
+    MX: { status: "EMB" }, ZA: { status: "EMB" }, VN: "SKIP",
+  },
+  // ─── TH passport (medium-weak; ASEAN VF) ───
+  TH: {
+    US: { status: "EMB" }, GB: { status: "EMB" }, FR: { status: "EMB" },
+    DE: { status: "EMB" }, IT: { status: "EMB" }, ES: { status: "EMB" },
+    NL: { status: "EMB" }, CA: { status: "EMB" }, AU: { status: "EMB" },
+    NZ: { status: "EMB" }, JP: { status: "VF", minStayDays: 15 },
+    KR: { status: "ETA", notes: "K-ETA required for TH" }, CN: { status: "VF", minStayDays: 30 },
+    SG: { status: "VF", minStayDays: 30 }, TH: "SKIP",
+    IN: { status: "EVISA" }, AE: { status: "EVISA", notes: "UAE pre-approval e-visa for TH" },
+    BR: { status: "VF", minStayDays: 90 }, MX: { status: "EMB" },
+    ZA: { status: "NEEDS_REVIEW", notes: "ZA-TH bilateral; data shows VF, my prior expected was EMB" },
+  },
+};
+
+function buildExtendedTier2(): TestRow[] {
+  const rows: TestRow[] = [];
+  for (const [passport, dests] of Object.entries(EXPECTED_BY_PASSPORT)) {
+    for (const dest of DEST_POOL) {
+      const cell = dests[dest];
+      if (cell === undefined || cell === "SKIP") continue;
+      rows.push({
+        passport,
+        destination: dest,
+        expected: cell,
+        sourceUrl: DEST_SOURCE_URL[dest] ?? "https://en.wikipedia.org/",
+      });
+    }
+  }
+  return rows;
+}
+
+const TIER_2_EXTENDED: TestRow[] = buildExtendedTier2();
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Matching logic
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -534,7 +860,23 @@ async function main() {
     tier1 = renderTable("Tier 1 (MUST be 100% pass)", 1.0, results);
   }
   if (args.tier === "2" || args.tier === "all") {
-    const results = await runMatrix(TIER_2, db);
+    // Combine TIER_2 + TIER_2_EXTENDED, dedupe on (passport, destination)
+    // — keep TIER_2's entry if it duplicates EXTENDED's (since TIER_2 has
+    // richer notes / specific minStayDays).
+    const seen = new Set<string>();
+    const combined: TestRow[] = [];
+    for (const r of TIER_2) {
+      const k = `${r.passport}|${r.destination}`;
+      seen.add(k);
+      combined.push(r);
+    }
+    for (const r of TIER_2_EXTENDED) {
+      const k = `${r.passport}|${r.destination}`;
+      if (seen.has(k)) continue;
+      seen.add(k);
+      combined.push(r);
+    }
+    const results = await runMatrix(combined, db);
     tier2 = renderTable("Tier 2 (must be ≥ 90% pass)", 0.9, results);
   }
 

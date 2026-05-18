@@ -89,6 +89,11 @@ import { singaporeTechPassAdapter } from "./sg_tech_pass";
 import { koreaD2StudentAdapter } from "./kr_d2_student";
 // Israel-specific diplomatic-refusal pairs not captured by Wikipedia.
 import { ilDiplomaticRefusalsAdapter } from "./il_diplomatic_refusals";
+// UK Standard Visitor visa for visa-required nationalities (Appendix V).
+// Fills the *→GB rows that Wikipedia's parser systematically drops.
+import { ukStandardVisitorAdapter } from "./uk_standard_visitor";
+// Hand-curated overrides for cells where Wikipedia is wrong or missing.
+import { dataCorrectionsAdapter } from "./data_corrections";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -167,6 +172,8 @@ export const ADAPTERS: Adapter[] = [
   singaporeTechPassAdapter,
   koreaD2StudentAdapter,
   ilDiplomaticRefusalsAdapter,
+  ukStandardVisitorAdapter,
+  dataCorrectionsAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

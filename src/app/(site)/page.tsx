@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { HeroDestinationSearch } from "@/components/HeroDestinationSearch";
+import { ChatBar } from "@/components/ChatBar";
 import { LookupForm } from "@/components/LookupForm";
 import { RouteCard } from "@/components/RouteCard";
 import { AllCountriesGrid } from "@/components/AllCountriesGrid";
@@ -125,7 +126,11 @@ export default async function HomePage() {
                 never a content farm.
               </p>
 
-              <div className="mt-10">
+              <div className="mt-10 flex flex-col items-center gap-6">
+                <div className="w-full max-w-2xl">
+                  <ChatBar tone="dark" />
+                </div>
+                <div className="text-xs uppercase tracking-wider text-white/60">or browse by country</div>
                 <HeroDestinationSearch tone="dark" />
               </div>
 

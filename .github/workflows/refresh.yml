@@ -53,13 +53,21 @@ jobs:
             git diff --stat HEAD -- 'src/scrapers/sources/__fixtures__/' 'src/data/'
           fi
 
-      - name: Commit refreshed fixtures
+      - name: Rebuild PGlite snapshot from refreshed fixtures
+        if: steps.changes.outputs.changed == 'true' && inputs.dry_run != true
+        run: |
+          rm -rf .pglite/data
+          npm run bootstrap
+          npm run db:snapshot
+
+      - name: Commit refreshed fixtures + snapshot
         if: steps.changes.outputs.changed == 'true' && inputs.dry_run != true
         run: |
           git config user.name "visa-data-bot"
           git config user.email "data@visalookup.example"
           git add 'src/scrapers/sources/__fixtures__/' 'src/data/'
-          git commit -m "data: nightly refresh ($(date -u +%Y-%m-%d))" -m "Workflow run: $GITHUB_RUN_URL"
+          git commit -m "data: nightly refresh ($(date -u +%Y-%m-%d))" -m "Workflow run: $GITHUB_RUN_URL" \
+            -m "Rebuilt snapshot from refreshed fixtures so runtime data on Vercel updates on next deploy."
           git push
 
       - name: Run source-health check

@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-type Message = { role: "user" | "assistant"; content: string };
+type Message = { role: "user" | "assistant"; content: string; ts?: number };
 
 const STORAGE_KEY = "visavu.chat.v1";
 
@@ -14,7 +14,137 @@ const STORAGE_KEY = "visavu.chat.v1";
  * Persists conversation to localStorage so refresh doesn't lose it.
  * If ?q= is in the URL on first load, auto-submits that as the opening
  * message (used by the homepage ChatBar widget).
+ *
+ * Polish: categorised empty-state suggestions, animated typing indicator,
+ * inline link autolinking, role avatars, copy-to-clipboard on assistant
+ * replies, auto-resizing textarea, accessible labels.
  */
+
+const SUGGESTION_CATEGORIES: Array<{
+  label: string;
+  emoji: string;
+  examples: string[];
+}> = [
+  {
+    label: "Short stays",
+    emoji: "🛂",
+    examples: [
+      "Does my UK passport need an ETA for the US?",
+      "How long can I stay in Schengen on the 90/180 rule?",
+      "Do I need a visa for Japan as an Indian citizen?",
+    ],
+  },
+  {
+    label: "Work routes",
+    emoji: "💼",
+    examples: [
+      "What visa do I need to move to Canada from India?",
+      "Can I work remotely in Portugal on a tourist visa?",
+      "Is my software-engineer job on Australia's skill list?",
+    ],
+  },
+  {
+    label: "Long stays",
+    emoji: "🏠",
+    examples: [
+      "What's the cheapest digital-nomad visa in Europe?",
+      "How does Spain's Non-Lucrative Visa work?",
+      "Can I retire in Thailand on £1,500 a month?",
+    ],
+  },
+  {
+    label: "Family & study",
+    emoji: "🎓",
+    examples: [
+      "What's the UK spouse-visa income requirement?",
+      "How do I apply for an F-1 student visa for the US?",
+      "Can my partner work on a UK student visa dependant?",
+    ],
+  },
+];
+
+// Simple linkifier — converts http(s) URLs in text to <a> tags.
+function linkify(text: string): React.ReactNode[] {
+  const urlRe = /https?:\/\/[^\s)\]]+/g;
+  const parts: React.ReactNode[] = [];
+  let last = 0;
+  let i = 0;
+  for (const match of text.matchAll(urlRe)) {
+    const idx = match.index ?? 0;
+    if (idx > last) parts.push(text.slice(last, idx));
+    const url = match[0].replace(/[.,;)]+$/, ""); // strip trailing punctuation
+    parts.push(
+      <a
+        key={`u-${i++}`}
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-700 dark:text-blue-300 underline decoration-blue-300/60 hover:decoration-blue-500"
+      >
+        {url}
+      </a>,
+    );
+    last = idx + match[0].length;
+    if (url.length < match[0].length) parts.push(match[0].slice(url.length));
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts;
+}
+
+function RoleAvatar({ role }: { role: "user" | "assistant" }) {
+  if (role === "user") {
+    return (
+      <div
+        aria-hidden="true"
+        className="size-7 shrink-0 rounded-full bg-blue-600 text-white grid place-items-center text-xs font-semibold"
+      >
+        You
+      </div>
+    );
+  }
+  return (
+    <div
+      aria-hidden="true"
+      className="size-7 shrink-0 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 text-white grid place-items-center text-xs font-semibold"
+      title="Visavu AI"
+    >
+      V
+    </div>
+  );
+}
+
+function TypingDots() {
+  return (
+    <span className="inline-flex items-center gap-1" aria-label="Assistant is typing">
+      <span className="inline-block size-1.5 rounded-full bg-neutral-500 animate-bounce [animation-delay:-0.3s]" />
+      <span className="inline-block size-1.5 rounded-full bg-neutral-500 animate-bounce [animation-delay:-0.15s]" />
+      <span className="inline-block size-1.5 rounded-full bg-neutral-500 animate-bounce" />
+    </span>
+  );
+}
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={async () => {
+        try {
+          await navigator.clipboard.writeText(text);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1500);
+        } catch {
+          /* ignore */
+        }
+      }}
+      className="text-xs text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200 transition"
+      aria-label="Copy reply to clipboard"
+    >
+      {copied ? "Copied ✓" : "Copy"}
+    </button>
+  );
+}
+
 export function ChatInterface() {
   const search = useSearchParams();
   const [messages, setMessages] = useState<Message[]>([]);
@@ -22,6 +152,7 @@ export function ChatInterface() {
   const [busy, setBusy] = useState(false);
   const [autoSubmitted, setAutoSubmitted] = useState(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   // Load persisted history on mount.
   useEffect(() => {
@@ -29,7 +160,7 @@ export function ChatInterface() {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) setMessages(JSON.parse(stored) as Message[]);
     } catch {
-      // ignore
+      /* ignore */
     }
   }, []);
 
@@ -38,7 +169,7 @@ export function ChatInterface() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
     } catch {
-      // ignore
+      /* ignore */
     }
   }, [messages]);
 
@@ -46,6 +177,14 @@ export function ChatInterface() {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, busy]);
+
+  // Auto-resize textarea on input change.
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${Math.min(el.scrollHeight, 200)}px`;
+  }, [input]);
 
   // Auto-submit ?q= on first mount.
   useEffect(() => {
@@ -62,7 +201,10 @@ export function ChatInterface() {
 
   async function send(text: string) {
     if (!text.trim() || busy) return;
-    const newMessages: Message[] = [...messages, { role: "user", content: text }];
+    const newMessages: Message[] = [
+      ...messages,
+      { role: "user", content: text, ts: Date.now() },
+    ];
     setMessages(newMessages);
     setInput("");
     setBusy(true);
@@ -75,10 +217,13 @@ export function ChatInterface() {
       });
       const data = (await res.json()) as { reply?: string; error?: string };
       const reply = data.reply ?? data.error ?? "Sorry — the assistant didn't return a reply.";
-      setMessages((m) => [...m, { role: "assistant", content: reply }]);
+      setMessages((m) => [...m, { role: "assistant", content: reply, ts: Date.now() }]);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "network error";
-      setMessages((m) => [...m, { role: "assistant", content: `Sorry, something went wrong: ${msg}` }]);
+      setMessages((m) => [
+        ...m,
+        { role: "assistant", content: `Sorry, something went wrong: ${msg}`, ts: Date.now() },
+      ]);
     } finally {
       setBusy(false);
     }
@@ -86,54 +231,129 @@ export function ChatInterface() {
 
   const clear = () => {
     setMessages([]);
-    try { localStorage.removeItem(STORAGE_KEY); } catch { /* ignore */ }
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      /* ignore */
+    }
   };
+
+  const hasMessages = messages.length > 0;
+
+  // Show suggested follow-ups after first assistant reply.
+  const followUps = useMemo<string[]>(() => {
+    if (!hasMessages || busy) return [];
+    const last = messages[messages.length - 1];
+    if (last.role !== "assistant") return [];
+    return [
+      "What documents do I need?",
+      "How long does processing take?",
+      "What are the most common reasons for refusal?",
+    ];
+  }, [messages, busy, hasMessages]);
 
   return (
     <div className="flex flex-col gap-4">
       {/* Conversation */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto space-y-4 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-900/40 p-4 min-h-[300px] max-h-[60vh]"
+        className="flex-1 overflow-y-auto rounded-xl border border-neutral-200 dark:border-neutral-800 bg-gradient-to-b from-white to-neutral-50 dark:from-neutral-900 dark:to-neutral-950 p-4 sm:p-5 min-h-[320px] max-h-[60vh] shadow-sm"
       >
-        {messages.length === 0 && (
-          <div className="text-sm text-neutral-500 dark:text-neutral-400 space-y-3">
-            <p>Try asking:</p>
-            <ul className="space-y-1.5">
-              {[
-                "Can I work remotely in Portugal on a tourist visa?",
-                "What visa do I need to move to Canada from India?",
-                "Does my UK passport need an ETA for the US?",
-                "How long can I stay in Schengen on the 90/180 rule?",
-              ].map((q, i) => (
-                <li key={i}>
-                  <button
-                    type="button"
-                    onClick={() => void send(q)}
-                    className="text-left text-blue-700 dark:text-blue-300 hover:underline"
-                  >
-                    “{q}”
-                  </button>
-                </li>
+        {!hasMessages && (
+          <div className="space-y-5">
+            <div className="flex items-start gap-3">
+              <RoleAvatar role="assistant" />
+              <div className="flex-1 text-sm text-neutral-700 dark:text-neutral-200">
+                <p className="font-medium text-neutral-900 dark:text-neutral-100 mb-1">
+                  Hi, I&apos;m Visavu.
+                </p>
+                <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                  Ask me anything about visas, work routes, study options, or
+                  short-stay rules. I&apos;ll cite my sources and won&apos;t
+                  guess — if I don&apos;t know, I&apos;ll say so.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              {SUGGESTION_CATEGORIES.map((cat) => (
+                <div
+                  key={cat.label}
+                  className="rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white/60 dark:bg-neutral-900/60 p-3 space-y-2"
+                >
+                  <div className="text-xs font-semibold text-neutral-600 dark:text-neutral-300 uppercase tracking-wide">
+                    <span className="mr-1.5">{cat.emoji}</span>
+                    {cat.label}
+                  </div>
+                  <ul className="space-y-1">
+                    {cat.examples.map((q) => (
+                      <li key={q}>
+                        <button
+                          type="button"
+                          onClick={() => void send(q)}
+                          className="text-left text-sm text-blue-700 dark:text-blue-300 hover:underline decoration-blue-300/60"
+                        >
+                          {q}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         )}
-        {messages.map((m, i) => (
-          <div
-            key={i}
-            className={
-              m.role === "user"
-                ? "ml-auto max-w-[90%] sm:max-w-[80%] rounded-lg bg-blue-600 text-white px-3.5 py-2.5 text-sm whitespace-pre-wrap"
-                : "mr-auto max-w-[95%] sm:max-w-[85%] rounded-lg bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-3.5 py-2.5 text-sm whitespace-pre-wrap"
-            }
-          >
-            {m.content}
-          </div>
-        ))}
-        {busy && (
-          <div className="mr-auto rounded-lg bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-3.5 py-2.5 text-sm text-neutral-500 italic">
-            Thinking…
+
+        {hasMessages && (
+          <div className="space-y-4">
+            {messages.map((m, i) => (
+              <div key={i} className={m.role === "user" ? "flex flex-row-reverse gap-2.5" : "flex gap-2.5"}>
+                <RoleAvatar role={m.role} />
+                <div className="flex-1 min-w-0 space-y-1">
+                  <div
+                    className={
+                      m.role === "user"
+                        ? "ml-auto max-w-[90%] sm:max-w-[80%] rounded-2xl rounded-tr-md bg-blue-600 text-white px-3.5 py-2.5 text-sm whitespace-pre-wrap break-words shadow-sm"
+                        : "mr-auto max-w-[95%] sm:max-w-[85%] rounded-2xl rounded-tl-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-3.5 py-2.5 text-sm whitespace-pre-wrap break-words shadow-sm"
+                    }
+                  >
+                    {linkify(m.content)}
+                  </div>
+                  {m.role === "assistant" && (
+                    <div className="flex items-center gap-3 pl-1">
+                      <CopyButton text={m.content} />
+                      {m.ts && (
+                        <span className="text-[10px] text-neutral-400" suppressHydrationWarning>
+                          {new Date(m.ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+            {busy && (
+              <div className="flex gap-2.5">
+                <RoleAvatar role="assistant" />
+                <div className="mr-auto rounded-2xl rounded-tl-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-3.5 py-3 text-sm shadow-sm">
+                  <TypingDots />
+                </div>
+              </div>
+            )}
+            {followUps.length > 0 && (
+              <div className="flex flex-wrap gap-2 pl-10 pt-1">
+                {followUps.map((q) => (
+                  <button
+                    key={q}
+                    type="button"
+                    onClick={() => void send(q)}
+                    className="text-xs rounded-full border border-neutral-300 dark:border-neutral-700 bg-white/80 dark:bg-neutral-900/60 hover:bg-blue-50 dark:hover:bg-neutral-800 hover:border-blue-300 dark:hover:border-blue-700 text-neutral-700 dark:text-neutral-200 px-3 py-1.5 transition"
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -144,9 +364,10 @@ export function ChatInterface() {
           e.preventDefault();
           void send(input);
         }}
-        className="flex items-end gap-2"
+        className="flex items-end gap-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20 transition px-2 py-1.5 shadow-sm"
       >
         <textarea
+          ref={textareaRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
@@ -155,26 +376,37 @@ export function ChatInterface() {
               void send(input);
             }
           }}
-          rows={2}
-          placeholder="Type a visa question…"
+          rows={1}
+          placeholder="Ask a visa question…  (Shift+Enter for newline)"
           aria-label="Type your question"
-          className="flex-1 min-w-0 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-blue-500 resize-none"
+          className="flex-1 min-w-0 bg-transparent px-2 py-2 text-sm outline-none resize-none placeholder:text-neutral-400 max-h-[200px]"
         />
         <button
           type="submit"
           disabled={busy || !input.trim()}
-          className="shrink-0 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-neutral-400 text-white font-semibold px-4 py-2 text-sm transition"
+          className="shrink-0 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-neutral-300 dark:disabled:bg-neutral-700 disabled:cursor-not-allowed text-white font-semibold px-4 py-2 text-sm transition"
+          aria-label="Send message"
         >
-          Send
+          {busy ? "…" : "Send"}
         </button>
       </form>
 
       {/* Footer actions */}
       <div className="flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
-        {messages.length > 0 ? (
-          <button onClick={clear} className="hover:text-neutral-700 dark:hover:text-neutral-200">Clear conversation</button>
-        ) : <span />}
-        <Link href="/find-my-visa" className="hover:text-neutral-700 dark:hover:text-neutral-200">
+        {hasMessages ? (
+          <button
+            onClick={clear}
+            className="hover:text-neutral-700 dark:hover:text-neutral-200 underline-offset-2 hover:underline"
+          >
+            Clear conversation
+          </button>
+        ) : (
+          <span />
+        )}
+        <Link
+          href="/find-my-visa"
+          className="hover:text-neutral-700 dark:hover:text-neutral-200 underline-offset-2 hover:underline"
+        >
           Want a structured intake instead? →
         </Link>
       </div>

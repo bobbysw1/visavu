@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { MYTHS, VERDICT_LABEL, VERDICT_BLURB, type Verdict } from "@/content/myths";
+import { COUNTRY_MYTHS, allMythCountries } from "@/content/myths/countries";
+import { nameFor, flagEmoji } from "@/lib/countries";
 import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 
 export const dynamic = "force-static";
@@ -118,9 +120,60 @@ export default function MythsIndexPage() {
           </ul>
         </section>
 
+        {/* Country-specific myths (grouped by country) */}
+        {COUNTRY_MYTHS.length > 0 && (
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">Country &amp; visa-specific myths</h2>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              Common rumours about specific visa programmes in major destinations — H-1B lottery scams,
+              UK ETA vs visa, French Talent Passport, Italian jure sanguinis, Spanish Golden Visa,
+              Portuguese D7, Singapore PR, Japanese HSP, Indian OCI, and more.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {allMythCountries().map((iso) => {
+                const countryMythsForIso = COUNTRY_MYTHS.filter((m) => m.countries?.includes(iso));
+                if (countryMythsForIso.length === 0) return null;
+                return (
+                  <div
+                    key={iso}
+                    className="rounded-lg border border-neutral-200 dark:border-neutral-800 p-4 space-y-2 bg-white/60 dark:bg-neutral-900/40"
+                  >
+                    <div className="flex items-center gap-2 font-semibold">
+                      <span className="text-lg" aria-hidden="true">{flagEmoji(iso)}</span>
+                      <span>{nameFor(iso)}</span>
+                      <span className="text-xs font-normal text-neutral-500">
+                        ({countryMythsForIso.length} myth{countryMythsForIso.length === 1 ? "" : "s"})
+                      </span>
+                    </div>
+                    <ul className="space-y-1.5 pl-0.5">
+                      {countryMythsForIso.map((m) => {
+                        const tone = VERDICT_TONE[m.verdict];
+                        return (
+                          <li key={m.slug} className="flex items-start gap-2 text-sm">
+                            <span className={`shrink-0 inline-block w-1.5 h-1.5 rounded-full mt-1.5 ${tone.dot}`} />
+                            <Link
+                              href={`/myths/${m.slug}`}
+                              className="text-blue-700 dark:text-blue-300 hover:underline leading-snug"
+                            >
+                              {m.question}
+                              {m.visa && (
+                                <span className="text-xs text-neutral-500 ml-1">— {m.visa}</span>
+                              )}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
         {/* Grid of myths */}
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold">All twenty</h2>
+          <h2 className="text-2xl font-semibold">All general myths</h2>
           <ul className="space-y-3">
             {MYTHS.map((m) => {
               const tone = VERDICT_TONE[m.verdict];

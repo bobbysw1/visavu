@@ -58,6 +58,10 @@ export type Myth = {
   sources: Array<{ label: string; url: string }>;
   /** ISO date the underlying sources were last reviewed by a human. */
   lastVerified: string;
+  /** ISO2 country codes this myth specifically concerns. Empty / unset = general. */
+  countries?: string[];
+  /** Optional: specific visa name this myth concerns ("H-1B", "Skilled Worker", "Golden Visa"). */
+  visa?: string;
 };
 
 export const MYTHS: Myth[] = [
@@ -641,12 +645,24 @@ export const MYTHS: Myth[] = [
   },
 ];
 
-/** Lookup by slug. */
+/** Lookup by slug — checks both general MYTHS and COUNTRY_MYTHS. */
 export function mythBySlug(slug: string): Myth | undefined {
-  return MYTHS.find((m) => m.slug === slug);
+  // Lazy-import to avoid circular dependency at module load.
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { COUNTRY_MYTHS } = require("./countries") as { COUNTRY_MYTHS: Myth[] };
+  return MYTHS.find((m) => m.slug === slug) ?? COUNTRY_MYTHS.find((m) => m.slug === slug);
 }
 
-/** All slugs — used for generateStaticParams. */
+/** All slugs — used for generateStaticParams. Includes both general + country myths. */
 export function allMythSlugs(): string[] {
-  return MYTHS.map((m) => m.slug);
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { COUNTRY_MYTHS } = require("./countries") as { COUNTRY_MYTHS: Myth[] };
+  return [...MYTHS.map((m) => m.slug), ...COUNTRY_MYTHS.map((m) => m.slug)];
+}
+
+/** All myths (general + country) — for index pages that want to show everything. */
+export function allMyths(): Myth[] {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { COUNTRY_MYTHS } = require("./countries") as { COUNTRY_MYTHS: Myth[] };
+  return [...MYTHS, ...COUNTRY_MYTHS];
 }

@@ -16,6 +16,8 @@ import { scoreOriginsForDestination } from "@/lib/scoring";
 import { getCountryPhoto } from "@/lib/pexels";
 import { factsFor } from "@/content/countryFacts";
 import { destinationIntroFor } from "@/content/destinationIntros";
+import { countryMythsFor } from "@/content/myths/countries";
+import { VERDICT_LABEL } from "@/content/myths";
 import { destinationPurposeIntro } from "@/content/destinationPurposeIntros";
 import { occupationListFor } from "@/content/skilledOccupations";
 import { generateIntro as generateDestinationIntro } from "@/content/destinationIntroGenerator";
@@ -334,6 +336,52 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
                   </p>
                 )}
               </div>
+            </section>
+          );
+        })()}
+
+        {(() => {
+          const myths = countryMythsFor(upper);
+          if (myths.length === 0) return null;
+          return (
+            <section className="mt-12">
+              <p className="kicker mb-2">Common rumours about {name}</p>
+              <h2 className="section-h2 mb-2">Myths &amp; misconceptions.</h2>
+              <p className="text-sm text-[var(--color-ink-muted)] mb-5">
+                Common claims about {name}&apos;s visas — fact-checked against the
+                government sources we use site-wide.
+              </p>
+              <ul className="space-y-3">
+                {myths.map((m) => (
+                  <li key={m.slug}>
+                    <Link
+                      href={`/myths/${m.slug}`}
+                      prefetch={false}
+                      className="block rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-elev)] p-4 hover:border-[var(--color-ink)] transition"
+                    >
+                      <div className="flex items-start gap-3">
+                        <span className="shrink-0 inline-block px-2 py-0.5 text-[10px] font-semibold rounded uppercase tracking-wide bg-amber-100 text-amber-900 dark:bg-amber-900/30 dark:text-amber-200">
+                          {VERDICT_LABEL[m.verdict]}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium text-[var(--color-ink)] leading-snug">{m.question}</div>
+                          {m.visa && (
+                            <div className="text-xs text-[var(--color-ink-muted)] mt-0.5">
+                              About: {m.visa}
+                            </div>
+                          )}
+                          <p className="text-sm text-[var(--color-ink-muted)] mt-1.5 leading-snug">
+                            {m.headline}
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs text-[var(--color-ink-muted)] mt-3">
+                <Link href="/myths" className="underline hover:text-[var(--color-ink)]">All {myths.length === 1 ? "general + country" : "myths"} →</Link>
+              </p>
             </section>
           );
         })()}

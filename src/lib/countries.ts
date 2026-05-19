@@ -33,22 +33,128 @@ export function flagEmoji(iso2: string): string {
 // produces fabricated thin content (Google "Crawled — currently not indexed"
 // territory). Routes 410-Gone them; sitemap/internal-link callers must
 // filter via `passportCountries()`.
+/**
+ * Territories whose residents use a parent country's passport rather
+ * than issuing their own. Excluded from PASSPORT_COUNTRIES so they
+ * don't appear on /passport-rankings, the homepage passport collage,
+ * /passport/[iso] pages, or the documents library — surfaces where a
+ * "passport" entry implies an actually-issued document.
+ *
+ * They ARE still in COUNTRY_LIST as destinations (a UK passport
+ * holder visiting Aruba still wants to look up the rules for that
+ * trip; the destination-iso resolves to Aruba while the passport-iso
+ * resolves to NL).
+ *
+ * The PARENT_PASSPORT map below records which country's passport
+ * residents actually carry — surfaced in the UI when a user lands on
+ * a removed iso ("Curaçao residents use Dutch passports → see /passport/nl").
+ */
 export const NO_PASSPORT_CODES: ReadonlySet<string> = new Set([
-  "AQ", // Antarctica — no civilian population, no passports
+  // Uninhabited / research-only territories
+  "AQ", // Antarctica — no civilian population
   "BV", // Bouvet Island — uninhabited (Norway)
   "HM", // Heard Island & McDonald Islands — uninhabited (Australia)
   "TF", // French Southern Territories — research stations only
   "UM", // US Minor Outlying Islands — no permanent residents
   "IO", // British Indian Ocean Territory — military only
   "GS", // South Georgia & South Sandwich — uninhabited
-  "PN", // Pitcairn — UK BOTC, no own passport
-  "BQ", // Bonaire, Sint Eustatius, Saba — Dutch passports
-  "CC", // Cocos (Keeling) Islands — Australian
-  "CX", // Christmas Island — Australian
-  "NF", // Norfolk Island — Australian
-  "SJ", // Svalbard & Jan Mayen — Norwegian
   "EH", // Western Sahara — disputed, no internationally recognized passport
+
+  // Dutch Kingdom — constituent countries + special municipalities all use
+  // Dutch passports (Kingdom of the Netherlands passport):
+  "AW", // Aruba
+  "CW", // Curaçao
+  "SX", // Sint Maarten (Dutch)
+  "BQ", // Bonaire, Sint Eustatius, Saba
+
+  // French overseas departments/collectivities — all use French passports:
+  "GP", // Guadeloupe
+  "MQ", // Martinique
+  "GF", // French Guiana
+  "RE", // Réunion
+  "YT", // Mayotte
+  "PM", // Saint Pierre and Miquelon
+  "WF", // Wallis and Futuna
+  "NC", // New Caledonia
+  "PF", // French Polynesia
+  "BL", // Saint Barthélemy
+  "MF", // Saint Martin (French)
+
+  // Danish Kingdom realm — use Danish passports (with FO/GL variants):
+  "FO", // Faroe Islands
+  "GL", // Greenland
+
+  // Finnish autonomy — use Finnish passports:
+  "AX", // Åland Islands
+
+  // Australian external territories — use Australian passports:
+  "CC", // Cocos (Keeling) Islands
+  "CX", // Christmas Island
+  "NF", // Norfolk Island
+
+  // Norwegian special — use Norwegian passports:
+  "SJ", // Svalbard & Jan Mayen
+
+  // US territories — residents are US citizens (or nationals for AS)
+  // using US passports. Listed here so the iso doesn't appear as its
+  // own passport entry; rules under the parent US passport instead.
+  "AS", // American Samoa — US nationals (not full citizens), still US passport
+  "GU", // Guam — US citizens, US passport
+  "MP", // Northern Mariana Islands — US citizens, US passport
+  "PR", // Puerto Rico — US citizens, US passport
+  "VI", // US Virgin Islands — US citizens, US passport
+
+  // New Zealand realm — Cook Islanders / Niueans / Tokelauans are
+  // automatically NZ citizens at birth and use NZ passports:
+  "CK", // Cook Islands
+  "NU", // Niue
+  "TK", // Tokelau
+
+  // British Overseas Territories — issue BOTC variant passports but
+  // residents typically use full British Citizen passports. Excluded
+  // from PASSPORT_COUNTRIES because the rules for inbound visas to a
+  // BOT-passport holder == UK-passport holder for all practical
+  // purposes. NB: Gibraltar uniquely issues an EU-recognised variant.
+  "PN", // Pitcairn
+  "AI", // Anguilla
+  "BM", // Bermuda
+  "KY", // Cayman Islands
+  "VG", // British Virgin Islands
+  "MS", // Montserrat
+  "TC", // Turks and Caicos
+  "FK", // Falkland Islands
+  "SH", // Saint Helena, Ascension and Tristan da Cunha
+
+  // British Crown Dependencies — Jersey/Guernsey/Isle of Man passports
+  // are British Islands variants. Residents commonly hold full British
+  // passports. Excluded for the same reason as BOTs above.
+  "JE", // Jersey
+  "GG", // Guernsey
+  "IM", // Isle of Man
+
+  // NB Gibraltar (GI) — KEPT in the passport list because it's the most
+  // distinctive of the BOTs and routinely searched as its own passport.
 ]);
+
+/**
+ * Map of non-issuing-territory → parent-passport iso2. Used by the UI
+ * when a user lands on a /passport/[iso] URL for an excluded territory
+ * — we redirect them to the right place with a contextual note.
+ */
+export const PARENT_PASSPORT: Record<string, string> = {
+  AW: "NL", CW: "NL", SX: "NL", BQ: "NL",
+  GP: "FR", MQ: "FR", GF: "FR", RE: "FR", YT: "FR", PM: "FR",
+  WF: "FR", NC: "FR", PF: "FR", BL: "FR", MF: "FR",
+  FO: "DK", GL: "DK",
+  AX: "FI",
+  CC: "AU", CX: "AU", NF: "AU",
+  SJ: "NO",
+  AS: "US", GU: "US", MP: "US", PR: "US", VI: "US",
+  CK: "NZ", NU: "NZ", TK: "NZ",
+  PN: "GB", AI: "GB", BM: "GB", KY: "GB", VG: "GB",
+  MS: "GB", TC: "GB", FK: "GB", SH: "GB",
+  JE: "GB", GG: "GB", IM: "GB",
+};
 
 export function issuesPassport(iso2: string): boolean {
   return !NO_PASSPORT_CODES.has(iso2.toUpperCase());

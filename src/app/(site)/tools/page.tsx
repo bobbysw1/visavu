@@ -12,7 +12,7 @@
  */
 import Link from "next/link";
 import { absoluteUrl } from "@/lib/site";
-import { flagEmoji } from "@/lib/countries";
+import { flagEmoji, nameFor } from "@/lib/countries";
 import { PageHero } from "@/components/PageHero";
 import { VISA_FORMS, destinationsWithForms } from "@/content/visaForms";
 import { MYTHS } from "@/content/myths";
@@ -561,31 +561,41 @@ export default function ToolsPage() {
             </>
           }
           right={
-            <ul className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-              {destIsos.map((iso) => {
-                const entries = VISA_FORMS.filter((e) => e.destinationIso2 === iso);
-                const count = entries.reduce((acc, e) => acc + e.forms.length, 0);
-                return (
-                  <li key={iso}>
-                    <Link
-                      href={`/documents/${iso.toLowerCase()}`}
-                      className="
-                        flex items-center gap-2 rounded-lg border border-[var(--color-rule)]
-                        bg-[var(--color-paper)] px-3 py-2 hover:border-[var(--color-ink)]
-                        hover:shadow-sm transition text-sm
-                      "
-                    >
-                      <span className="text-lg leading-none" aria-hidden>{flagEmoji(iso)}</span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block font-medium text-[var(--color-ink)] truncate">{iso}</span>
-                        <span className="block text-[10px] text-[var(--color-ink-muted)]">
-                          {count} form{count === 1 ? "" : "s"}
+            // Sorted alphabetically by full country name so a UK user
+            // looking for "Saudi Arabia" can scan the grid linearly
+            // instead of having to know SA's iso2. Matches the order
+            // on /documents hub for consistency.
+            <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {[...destIsos]
+                .sort((a, b) => nameFor(a).localeCompare(nameFor(b)))
+                .map((iso) => {
+                  const entries = VISA_FORMS.filter((e) => e.destinationIso2 === iso);
+                  const count = entries.reduce((acc, e) => acc + e.forms.length, 0);
+                  return (
+                    <li key={iso}>
+                      <Link
+                        href={`/documents/${iso.toLowerCase()}`}
+                        className="
+                          flex items-center gap-2 rounded-lg border border-[var(--color-rule)]
+                          bg-[var(--color-paper)] px-3 py-2 hover:border-[var(--color-ink)]
+                          hover:shadow-sm transition text-sm
+                        "
+                      >
+                        <span className="text-lg leading-none shrink-0" aria-hidden>
+                          {flagEmoji(iso)}
                         </span>
-                      </span>
-                    </Link>
-                  </li>
-                );
-              })}
+                        <span className="min-w-0 flex-1">
+                          <span className="block font-medium text-[var(--color-ink)] truncate">
+                            {nameFor(iso)}
+                          </span>
+                          <span className="block text-[10px] text-[var(--color-ink-muted)]">
+                            {count} form{count === 1 ? "" : "s"}
+                          </span>
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
             </ul>
           }
         />

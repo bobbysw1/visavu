@@ -583,7 +583,11 @@ export const turkeyVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
       applicationUrl: "https://ecalisma.csgb.gov.tr/",
       primarySourceUrl: "https://www.csgb.gov.tr/",
       fees: [
-        { amountMinor: 76000, currency: "TRY", label: "Work permit (annual, ~TRY 760)" },
+        // TRY visa fees raised significantly post-2024 due to lira
+        // depreciation. Current Çalışma İzni (work permit) is ~TRY 7,200
+        // annual per Ministry of Family, Labour and Social Services
+        // schedule. Prior value TRY 760 was a pre-2023 figure (~$22 USD).
+        { amountMinor: 720000, currency: "TRY", label: "Work permit (annual, ~TRY 7,200)" },
       ],
       notes: "Türkiye's work-permit system is employer-sponsored via the Ministry of Family, Labour and Social Services. Common foreign-worker sectors: tourism (Antalya / Bodrum), education (English teachers), construction, healthcare. EU+US+UK+Japan+Korea expatriate professionals concentrated in Istanbul finance + corporate roles.",
       purposeMetadata: { sponsorshipRequired: true, jobOfferRequired: true, routeToSettlement: true },
@@ -612,7 +616,10 @@ export const turkeyVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
       applicationUrl: TR_SOURCE,
       primarySourceUrl: "https://www.yok.gov.tr/",
       fees: [
-        { amountMinor: 20000, currency: "TRY", label: "Student residence permit (annual)" },
+        // Türkiye Student ikamet izni: ~TRY 1,200 annual (raised from
+        // the pre-2023 ~TRY 200 base rate; lira depreciation drove
+        // residence-fee revisions across the board).
+        { amountMinor: 120000, currency: "TRY", label: "Student residence permit (annual, ~TRY 1,200)" },
       ],
       notes: "Tuition at public universities: USD 200–1,000/year for international students. Private universities (Bilkent, Koç, Sabancı) USD 5,000–15,000/year. Many programmes in English. Türkiye is a major education destination for African + Central Asian + Balkan students under Türkiye Bursları.",
       purposeMetadata: { financialProofMonthlyMinor: 40000, financialProofCurrency: "USD" },
@@ -641,7 +648,9 @@ export const turkeyVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
       applicationUrl: TR_SOURCE,
       primarySourceUrl: TR_NVI,
       fees: [
-        { amountMinor: 80000, currency: "TRY", label: "Family residence permit (2-year)" },
+        // Türkiye Aile ikamet izni: ~TRY 5,000 for 2-year permit
+        // (TRY 2,500 annual). Prior value TRY 800 was pre-2023.
+        { amountMinor: 500000, currency: "TRY", label: "Family residence permit (2-year, ~TRY 5,000)" },
       ],
       notes: "Türkiye's family-route is among the most foreigner-friendly in the region. Spouse of Turkish citizen: immediate family residence + naturalisation after 3 years of marriage. Same-sex marriage NOT recognised legally. Children of Turkish-parent automatically Turkish citizens.",
       purposeMetadata: { sponsorIncomeThresholdMinor: 1000000, sponsorIncomeCurrency: "TRY", cohabitationProofRequired: true },
@@ -669,7 +678,9 @@ export const turkeyVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
       applicationUrl: TR_SOURCE,
       primarySourceUrl: TR_SOURCE,
       fees: [
-        { amountMinor: 60000, currency: "TRY", label: "Touristic residence permit (annual, ~TRY 600)" },
+        // Türkiye Touristic ikamet izni: ~TRY 3,000 annual post-2024
+        // (varies by reciprocity tier). Prior TRY 600 was pre-2023 base.
+        { amountMinor: 300000, currency: "TRY", label: "Touristic residence permit (annual, ~TRY 3,000)" },
       ],
       notes: "Türkiye's quiet retirement / digital-nomad route. Particularly popular with Russian, Iranian, Iraqi, Pakistani, Afghan applicants since 2022. Antalya, Bodrum, Istanbul, Alanya, Mersin are the dominant expat enclaves. NOTE: Restrictions on touristic residence permits in select neighbourhoods (closed districts) since 2022 — verify with the local Migration office.",
     },
@@ -696,7 +707,10 @@ export const turkeyVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
       applicationUrl: TR_SOURCE,
       primarySourceUrl: "https://www.tkgm.gov.tr/",
       fees: [
-        { amountMinor: 60000, currency: "TRY", label: "Real-estate residence permit (annual)" },
+        // Real-estate ikamet izni: same fee tier as Touristic (~TRY 3,000
+        // annual). The property valuation + title deed costs are separate
+        // and far larger (typically TRY 30,000+ in legal + valuation fees).
+        { amountMinor: 300000, currency: "TRY", label: "Real-estate residence permit (annual, ~TRY 3,000)" },
       ],
       notes: "Real-estate residence permit is a stepping stone to the CBI program — both require SPK valuation + 3-year sale restriction. Particularly common with Iranian, Iraqi, Russian, Chinese, Ukrainian buyers. Istanbul (Beyoğlu, Şişli, Kadıköy, Beylikdüzü), Antalya, Bodrum dominate.",
     },

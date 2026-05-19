@@ -287,7 +287,11 @@ const SHORT_TERM: BusinessVisa[] = [
     status: "embassy_visa",
     applicationUrl: "https://www.mofa.go.jp/j_info/visit/visa/short/business.html",
     primarySourceUrl: "https://www.mofa.go.jp/j_info/visit/visa/index.html",
-    feeMinor: 300000,
+    // JPY has no subunit (minorFactor=1). Short-term business visa to
+    // Japan is ¥3,000 single-entry per MOFA schedule. Prior value
+    // 300000 = ¥300,000 (~$2,000 USD) was the same minor-factor confusion
+    // that bit jp_ssw / jp_special_visas / total_coverage_asia.
+    feeMinor: 3000,
     feeCurrency: "JPY",
     processingDaysMin: 5,
     processingDaysMax: 14,

@@ -206,7 +206,12 @@ const TRANSIT_VISAS: TransitVisa[] = [
     status: "e_visa",
     applicationUrl: "https://stopover.sa/",
     primarySourceUrl: "https://www.visitsaudi.com/en/plan-and-book/visa-and-passport",
-    feeMinor: 30000,
+    // Saudia / flyadeal connecting passengers get the 96-hour Stopover
+    // Visa for free. Paid variant for non-Saudia connections is
+    // SAR 300-450 (~$80-120 USD) but is rarely used — dominant path is
+    // the bundled-with-ticket free route. Prior value $300 was a
+    // misreading of the SAR 300 figure as USD.
+    feeMinor: 0,
     feeCurrency: "USD",
     processingDaysMin: 1,
     processingDaysMax: 7,

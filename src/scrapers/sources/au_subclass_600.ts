@@ -81,7 +81,9 @@ export const auSubclass600Adapter: Adapter = {
         applicationUrl: APPLY_URL,
         primarySourceUrl: APPLY_URL,
         fees: [
-          { kind: "base", amountMinor: 20000_0, currency: "AUD", asOf: today, label: "Visitor 600 Tourist stream base fee (AUD $200, July 2024 schedule)" },
+          // AUD minor factor = 100, so 200_00 = $200. Prior value 20000_0
+          // was $2,000 — off by 10x vs the labelled "$200" value.
+          { kind: "base", amountMinor: 200_00, currency: "AUD", asOf: today, label: "Visitor 600 Tourist stream base fee (AUD $200, July 2024 schedule)" },
         ],
         notes: "Australia's standard embassy-issued visitor visa. For ETA / eVisitor-eligible nationalities (US, Canada, UK, EU, Japan etc.), use ETA (subclass 601, AUD $20) or eVisitor (subclass 651, free) for stays up to 3 months — cheaper and faster. The Visitor 600 is the right route for: visa-required nationalities, stays longer than 3 months, complex itineraries, or where ETA/eVisitor was refused.",
       });
@@ -114,7 +116,9 @@ export const auSubclass600Adapter: Adapter = {
         applicationUrl: APPLY_URL,
         primarySourceUrl: APPLY_URL,
         fees: [
-          { kind: "base", amountMinor: 20000_0, currency: "AUD", asOf: today, label: "Visitor 600 Business stream base fee (AUD $200, July 2024 schedule)" },
+          // AUD minor factor = 100, so 200_00 = $200. Same off-by-10x typo
+          // as the Tourist stream above; fixed in lockstep.
+          { kind: "base", amountMinor: 200_00, currency: "AUD", asOf: today, label: "Visitor 600 Business stream base fee (AUD $200, July 2024 schedule)" },
         ],
         notes: "Business Visitor stream of subclass 600. Use cases beyond ETA/eVisitor business activities: longer stays, complex bilateral business projects, conference series, training secondments. For productive paid work, the right visa is Subclass 482 (TSS) or 400 (Specialist Activity) — not the 600.",
       });

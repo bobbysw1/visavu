@@ -710,7 +710,12 @@ const STUDY_VISAS: StudyVisa[] = [
     label: "Student Residence (Residencia Temporaria — Estudiante) — Argentina",
     applicationUrl: "https://www.migraciones.gov.ar/",
     primarySourceUrl: "https://www.educ.ar/",
-    feeMinor: 30000,
+    // Argentine peso depreciation makes any ARS value stale within
+    // months. Tasa de Migraciones for student temporary residence is
+    // ~ARS 50,000 as of mid-2024 (~$50 USD via official rate). Prior
+    // ARS 300 was from a pre-2020 schedule. Volatility means we should
+    // recommend Migraciones' live calculator at the application step.
+    feeMinor: 5000000,
     feeCurrency: "ARS",
     processingDaysMin: 30,
     processingDaysMax: 90,

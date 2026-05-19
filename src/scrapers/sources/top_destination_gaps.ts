@@ -74,7 +74,11 @@ export const topDestinationGapsAdapter: Adapter = {
           applicationUrl: "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600",
           primarySourceUrl: "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600",
           fees: [
-            { kind: "base", amountMinor: 19000, currency: "AUD", asOf: "2026-05-10", label: "Tourist stream base fee", optional: false },
+            // AU Visitor 600 base fee raised July 2024: $190 → $200 AUD.
+            // The au_subclass_600.ts adapter already has the correct value;
+            // this is a duplicate destination in top_destination_gaps which
+            // also needs to match.
+            { kind: "base", amountMinor: 20000, currency: "AUD", asOf: "2026-05-19", label: "Tourist stream base fee" },
           ],
           notes:
             "Used by passport holders not eligible for ETA (Subclass 601) or eVisitor (Subclass 651). Stay typically 3, 6 or 12 months at decision officer's discretion.",
@@ -149,8 +153,12 @@ export const topDestinationGapsAdapter: Adapter = {
           primarySourceUrl:
             "https://travel.state.gov/content/travel/en/us-visas/employment/intracompany-transferee-l1.html",
           fees: [
-            { kind: "base", amountMinor: 19000, currency: "USD", asOf: "2026-05-10", label: "I-129 petition fee", optional: false },
-            { kind: "service", amountMinor: 50000, currency: "USD", asOf: "2026-05-10", label: "Premium processing (15-day)", optional: true },
+            // USCIS fee schedule Apr 2024: I-129 base fee jumped to $780
+            // (small employer ≤25 FTE; large employer $1,055). Premium
+            // Processing jumped to $2,805 for I-129. Prior values ($190 +
+            // $500) were pre-2019 rates — wildly stale.
+            { kind: "base", amountMinor: 78000, currency: "USD", asOf: "2026-05-19", label: "I-129 petition fee (small employer)" },
+            { kind: "service", amountMinor: 280500, currency: "USD", asOf: "2026-05-19", label: "Premium processing (15-day decision)", optional: true },
           ],
           notes:
             "Not subject to the H-1B lottery or annual cap — major advantage for employers expanding to the US. Spouse gets work authorisation automatically.",
@@ -186,8 +194,10 @@ export const topDestinationGapsAdapter: Adapter = {
           primarySourceUrl:
             "https://travel.state.gov/content/travel/en/us-visas/immigrate/family-immigration/nonimmigrant-visa-fiance.html",
           fees: [
-            { kind: "base", amountMinor: 53500, currency: "USD", asOf: "2026-05-10", label: "I-129F petition fee", optional: false },
-            { kind: "service", amountMinor: 26500, currency: "USD", asOf: "2026-05-10", label: "Consular processing fee", optional: false },
+            // USCIS fee schedule Apr 2024: I-129F (K-1 fiancé) raised from
+            // $535 → $675. Consular DS-160/K visa processing remains $265.
+            { kind: "base", amountMinor: 67500, currency: "USD", asOf: "2026-05-19", label: "I-129F petition fee" },
+            { kind: "service", amountMinor: 26500, currency: "USD", asOf: "2026-05-19", label: "Consular processing fee" },
           ],
           notes:
             "Bringing a foreign fiancé(e) to the US for marriage. Marriage must happen within 90 days. Then adjust status for green card. K-2 covers minor children of the fiancé(e).",
@@ -223,8 +233,11 @@ export const topDestinationGapsAdapter: Adapter = {
           applicationUrl: "https://www.gov.uk/innovator-founder-visa",
           primarySourceUrl: "https://www.gov.uk/innovator-founder-visa",
           fees: [
-            { kind: "base", amountMinor: 161500, currency: "GBP", asOf: "2026-05-10", label: "Application fee (out-of-country)", optional: false },
-            { kind: "service", amountMinor: 103500, currency: "GBP", asOf: "2026-05-10", label: "Immigration Health Surcharge (3 years)", optional: false },
+            // UK Home Office Apr 2024 schedule: Innovator Founder visa
+            // outside UK is £1,191. IHS for 3-year visa is £1,035 × 3 =
+            // £3,105 (the prior value £1,035 was 1 year only, mis-labeled).
+            { kind: "base", amountMinor: 119100, currency: "GBP", asOf: "2026-05-19", label: "Application fee (out-of-country)" },
+            { kind: "service", amountMinor: 310500, currency: "GBP", asOf: "2026-05-19", label: "Immigration Health Surcharge (3 years × £1,035)" },
           ],
           notes:
             "Replaced the older Start-up + Innovator visas in April 2023. The £50k investment requirement was removed — endorsement now hinges on the idea, not capital.",

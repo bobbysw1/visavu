@@ -135,8 +135,11 @@ export const totalCoverageCaAuNzAdapter: Adapter = {
           applicationUrl: "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/start-visa.html",
           primarySourceUrl: "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/start-visa.html",
           fees: [
-            { kind: "base", amountMinor: 173075, currency: "CAD", asOf: "2026-05-11", label: "Application fee (principal)", optional: false },
-            { kind: "service", amountMinor: 57500, currency: "CAD", asOf: "2026-05-11", label: "Right of Permanent Residence Fee", optional: false },
+            // IRCC fee schedule Apr 2024: Start-up Visa principal applicant
+            // processing fee is C$2,140 (raised from C$1,810). RPRF C$575.
+            // Prior value (C$1,730.75) was a pre-Apr-2024 mid-cycle rate.
+            { kind: "base", amountMinor: 214000, currency: "CAD", asOf: "2026-05-19", label: "Application fee (principal)" },
+            { kind: "service", amountMinor: 57500, currency: "CAD", asOf: "2026-05-19", label: "Right of Permanent Residence Fee" },
           ],
           notes: "Caps introduced 2024: max 10 applications per designated organisation per year. Processing extended significantly — most cases now 2–3 years. The Open Work Permit while waiting keeps founders legally building in Canada.",
         });
@@ -174,7 +177,11 @@ export const totalCoverageCaAuNzAdapter: Adapter = {
           applicationUrl: "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship/sponsor-spouse.html",
           primarySourceUrl: "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship/sponsor-spouse.html",
           fees: [
-            { kind: "base", amountMinor: 169250, currency: "CAD", asOf: "2026-05-11", label: "Sponsorship + processing + RPRF (couple)", optional: false },
+            // IRCC fee schedule (couple, no dependants): Sponsorship $85 +
+            // Principal applicant processing $570 + RPRF $575 = $1,230.
+            // Prior value (C$1,692.50) included unclear add-ons that don't
+            // map to the current schedule.
+            { kind: "base", amountMinor: 123000, currency: "CAD", asOf: "2026-05-19", label: "Sponsorship + processing + RPRF (no dependants)" },
             { kind: "biometrics", amountMinor: 8500, currency: "CAD", asOf: "2026-05-11", label: "Biometrics fee", optional: false },
           ],
           notes: "Canada is among the most spouse-immigration-friendly countries — no minimum income requirement for the sponsor, no language test for the foreign spouse. Same-sex partnerships fully recognised.",

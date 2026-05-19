@@ -247,8 +247,15 @@ export function getAllSitemapUrls(): SitemapUrl[] {
   }
 
   // 4) Hand-written non-INDEXED-purpose URLs (transit / family / etc.).
+  //    Filter non-issuing-territory origins — those URLs 301 via the
+  //    middleware to the parent iso anyway, so emitting them in the
+  //    sitemap just wastes Google's crawl budget. (Hand-written data
+  //    is curated by us, but adding the filter here means a future
+  //    accidental non-issuing entry can't silently leak into the
+  //    sitemap.)
   for (const [lowerOrigin, entries] of HAND_WRITTEN_BY_ORIGIN) {
     const iso2 = lowerOrigin.toUpperCase();
+    if (!issuesPassport(iso2)) continue;
     for (const { destination, purpose } of entries) {
       urls.push({
         loc: `${SITE.url}/${lowerOrigin}/${destination}/${purpose}`,

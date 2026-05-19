@@ -502,4 +502,217 @@ export const EU_LONG_STAY_BULK_ADAPTERS: Adapter[] = [
     notes:
       "Latvia operates a separate Investor Residence (subordinated capital + state donation) route. Permanent residence after 5 years; Latvian citizenship typically after 10 years with B1 Latvian.",
   }),
+
+  // ===== Cyprus — Category F (self-supporting / pensioner) =====
+  //
+  // Cyprus's most-used long-stay route for non-EU nationals is Category F —
+  // proof of secured annual income from outside Cyprus, no local work
+  // permission. The other heavily-used route is Pink Slip (Temporary
+  // Residence Permit) for those staying on a long-stay basis without
+  // categorised purpose. The Permanent Residence Permit via real-estate
+  // investment (€300k+) is a separate fast-track.
+  makeEuLongStayAdapter({
+    id: "cy_category_f",
+    name: "Cyprus Category F long-stay residence — Civil Registry",
+    destinationIso2: "CY",
+    sourceUrl: "https://www.moi.gov.cy/",
+    liveness: /Cyprus|residence|Category\s*F|Civil Registry|pensioner|self-supporting/i,
+    label: "Cyprus Category F (long-stay residence)",
+    initialValidityDays: 365,
+    processingDaysMin: 60,
+    processingDaysMax: 120,
+    applicationFeeMinor: 7_000,
+    applicationFeeCurrency: "EUR",
+    requirements: [
+      "Secured annual income from sources OUTSIDE Cyprus (no local employment) — generally €9,568/year for the primary applicant + €4,613 per dependent",
+      "Proof of accommodation in Cyprus (rental contract or property deed)",
+      "Comprehensive private health insurance valid in Cyprus",
+      "Apostilled birth + marriage certificates with sworn Greek translation",
+      "Clean criminal record certificate from each country lived > 6 months in last 10 years",
+    ],
+    notes:
+      "Category F doesn't grant work rights — applicants must be retirees / passive-income recipients / remote workers paid by foreign entities. PR after 5 years' continuous residence (max 3 months absence/year). Naturalisation typically requires 7 years' residence + B1 Greek (recent tightening).",
+    purpose: "family",
+  }),
+
+  // ===== Malta — Single Permit (employment + residence) =====
+  makeEuLongStayAdapter({
+    id: "mt_single_permit",
+    name: "Malta Single Permit (Employment Licence + Residence) — Identità",
+    destinationIso2: "MT",
+    sourceUrl: "https://identita.gov.mt/single-permit/",
+    liveness: /Malta|Single\s*Permit|Identit[aà]|employment\s*licence/i,
+    label: "Malta Single Permit (work + residence)",
+    initialValidityDays: 365,
+    processingDaysMin: 60,
+    processingDaysMax: 120,
+    applicationFeeMinor: 28_050,
+    applicationFeeCurrency: "EUR",
+    requirements: [
+      "Job offer from a Maltese-licensed employer (employer files the application via Identità's portal)",
+      "Labour-market test — employer must demonstrate no suitable EU/EEA candidate available (waived for shortage-occupation roles + Specialist Employee Initiative)",
+      "Apostilled qualifications + employment contract in English",
+      "Police clearance from countries lived > 6 months in last 10 years",
+      "Private health insurance valid in Malta for the first year",
+    ],
+    notes:
+      "Single Permit combines work permit + residence permit into one document — issued by Identità (formerly Identity Malta). Specialist Employee Initiative fast-tracks roles paying ≥ €25,000/year. Key Employee Initiative for managerial/professional roles at €30,000+ gets 5-day fast-track. After 5 years of legal residence, applicants can switch to EU Long-Term Resident status.",
+  }),
+
+  // ===== Luxembourg — Salaried Worker authorisation =====
+  makeEuLongStayAdapter({
+    id: "lu_salaried_worker",
+    name: "Luxembourg Salaried Worker authorisation — Guichet.lu",
+    destinationIso2: "LU",
+    sourceUrl: "https://guichet.public.lu/",
+    liveness: /Luxembourg|salaried\s*worker|travailleur\s*salari|authorisation/i,
+    label: "Luxembourg Salaried Worker authorisation",
+    initialValidityDays: 365,
+    processingDaysMin: 60,
+    processingDaysMax: 90,
+    applicationFeeMinor: 8_000,
+    applicationFeeCurrency: "EUR",
+    requirements: [
+      "Job offer from a Luxembourg-based employer (employer notifies ADEM of the vacancy first; if no EU/EEA candidate found within ~3 weeks, ADEM issues a labour-market test certificate)",
+      "Temporary authorisation to stay obtained BEFORE entry — apply at the Immigration Directorate (Ministry of Foreign Affairs)",
+      "Apostilled qualifications + sworn translation into French / German / Luxembourgish",
+      "Comprehensive health insurance for the first 3 months",
+      "Once granted, type-D visa from a Luxembourg consulate before travel",
+    ],
+    notes:
+      "Luxembourg's labour-market test is genuinely binding — ADEM advertises the role for ~3 weeks and if a suitable EU/EEA candidate applies, the third-country authorisation is refused. EU Blue Card route is the faster alternative for high-qualified workers (gross annual salary ≥ €58,968 in 2024). PR after 5 years; naturalisation after 5 years with A2 spoken / B1 listening Luxembourgish.",
+  }),
+
+  // ===== Portugal — D8 Digital Nomad =====
+  makeEuLongStayAdapter({
+    id: "pt_d8_digital_nomad",
+    name: "Portugal D8 Digital Nomad visa — AIMA",
+    destinationIso2: "PT",
+    sourceUrl: "https://vistos.mne.gov.pt/en",
+    liveness: /Portugal|D8|digital\s*nomad|remote\s*work|residen/i,
+    label: "Portugal D8 (Digital Nomad visa)",
+    initialValidityDays: 120,
+    processingDaysMin: 60,
+    processingDaysMax: 90,
+    applicationFeeMinor: 9_000,
+    applicationFeeCurrency: "EUR",
+    requirements: [
+      "Proof of remote employment / freelance income from OUTSIDE Portugal — gross monthly income ≥ 4× Portuguese minimum wage (€3,280/month in 2024, ~€39,360/year)",
+      "Last 3 months' bank statements + 3 months' payslips / freelance invoices",
+      "Tax residency certificate from current country of residence",
+      "Proof of accommodation in Portugal (rental contract ≥ 12 months OR property deed)",
+      "Clean criminal record from each country lived > 1 year in last 5 years",
+      "Private health insurance valid in Portugal for the first year (replaced by SNS registration after AIMA appointment)",
+    ],
+    notes:
+      "D8 launched October 2022. Two sub-categories: 'temporary stay' (1-year visa, up to 1 year total) OR 'residence' (4-month entry visa convertible to a 2-year residence permit + renewable). The residence path leads to permanent residence after 5 years and citizenship eligibility after 5 years (10 years for non-CPLP nationals as of 2024 reform). NHR 2.0 tax regime (IFICI) applies to qualifying activities.",
+  }),
+
+  // ===== Germany — Family Reunification =====
+  //
+  // Family Reunification (Familiennachzug) is the most-used long-stay
+  // visa after the Skilled Worker / Blue Card routes. Modeled under
+  // purpose=family. Has materially different requirements (A1 German
+  // for spouses, sponsor's residence status, joint living space) from
+  // the work routes already covered by de_blue_card + de_skilled_worker.
+  makeEuLongStayAdapter({
+    id: "de_family_reunification",
+    name: "Germany Family Reunification visa (Familiennachzug) — BAMF",
+    destinationIso2: "DE",
+    sourceUrl: "https://www.auswaertiges-amt.de/en/visa-service/-/231148",
+    liveness: /Germany|family\s*reunification|Familiennachzug|spouse|kinder/i,
+    label: "Germany Family Reunification visa (Familiennachzug)",
+    initialValidityDays: 90,
+    processingDaysMin: 60,
+    processingDaysMax: 180,
+    applicationFeeMinor: 7_500,
+    applicationFeeCurrency: "EUR",
+    requirements: [
+      "Sponsor is a German citizen, EU Blue Card holder, settlement-permit holder, or qualifying residence-permit holder",
+      "Apostilled marriage certificate + sworn German translation (or birth certificate for parent/child reunification)",
+      "A1-level German language certificate for spouses (exemptions: highly-qualified sponsor, A1 not reasonably attainable, recognisable shortage)",
+      "Proof of secured livelihood (sponsor's income covers the whole household) + adequate joint living space",
+      "Comprehensive private health insurance until enrolment in statutory insurance after entry",
+      "Long-stay (D) visa at the German consulate BEFORE travel — embassy assessment can take 3-6 months",
+    ],
+    notes:
+      "Spouses of EU Blue Card holders + holders of an EU Long-Term Resident permit are exempt from the A1 German requirement under recent reforms. Visa is initially issued for 90 days then converted at the local Ausländerbehörde into a 3-year residence permit (renewable). Settlement permit eligibility kicks in after 5 years with B1 German + economic integration.",
+    purpose: "family",
+  }),
+
+  // ===== France — Vie Privée et Familiale (VPF) =====
+  makeEuLongStayAdapter({
+    id: "fr_vpf_family",
+    name: "France Vie Privée et Familiale residence permit — Préfecture",
+    destinationIso2: "FR",
+    sourceUrl: "https://www.service-public.fr/particuliers/vosdroits/F2208",
+    liveness: /France|Vie\s*Priv[eé]e|VPF|titre\s*de\s*s[eé]jour|conjoint|famille/i,
+    label: "France Vie Privée et Familiale (family / spouse residence)",
+    initialValidityDays: 365,
+    processingDaysMin: 60,
+    processingDaysMax: 180,
+    applicationFeeMinor: 22_500,
+    applicationFeeCurrency: "EUR",
+    requirements: [
+      "Spouse of a French citizen, parent of a French child, or qualifying long-term resident of France (10+ years' continuous residence) — eligibility is purpose-specific",
+      "Long-stay visa Conjoint de Français (VLS-TS Conjoint) at the French consulate before travel — 6-month marriage minimum, OFII-led on arrival",
+      "Apostilled marriage / birth certificates + sworn French translation by an expert traducteur",
+      "Proof of common life — joint accommodation, joint utility bills, joint bank account",
+      "B1 French within 3 years for renewal (recent 2024 tightening)",
+      "Online VLS-TS validation within 3 months of arrival + €200 timbre fee at timbres.impots.gouv.fr",
+    ],
+    notes:
+      "VPF grants the right to work + study without separate authorisation. Initial 1-year card → 2-year renewal → 10-year resident card on third renewal (subject to integration + language proof). Distinct from Regroupement Familial (sponsor is a foreign resident in France, OFII-led pre-approval, much slower). Naturalisation by marriage to a French citizen requires 4 years' marriage + 4 years' living together.",
+    purpose: "family",
+  }),
+
+  // ===== Italy — Lavoro Autonomo (self-employment) =====
+  makeEuLongStayAdapter({
+    id: "it_lavoro_autonomo",
+    name: "Italy Lavoro Autonomo (self-employment visa) — Ministero dell'Interno",
+    destinationIso2: "IT",
+    sourceUrl: "https://www.esteri.it/en/servizi-consolari-e-visti/entrare-e-soggiornare-in-italia/",
+    liveness: /Italy|lavoro\s*autonomo|self[- ]employment|nulla\s*osta/i,
+    label: "Italy Lavoro Autonomo (self-employment visa)",
+    initialValidityDays: 365,
+    processingDaysMin: 90,
+    processingDaysMax: 180,
+    applicationFeeMinor: 11_600,
+    applicationFeeCurrency: "EUR",
+    requirements: [
+      "Italy operates an ANNUAL quota (decreto flussi) for non-EU self-employment — applications open in narrow click-day windows; check the current decree before planning",
+      "Categories: freelancer (registered professional), corporate director / executive, artist, qualified-startup founder",
+      "Nulla osta from the Italian Chamber of Commerce confirming professional qualifications + adequate financial means (minimum ~€8,500/year personal income)",
+      "Proof of suitable accommodation in Italy (registered tenancy / property deed)",
+      "Type-D visa application at the Italian consulate AFTER nulla osta is issued",
+      "On arrival, apply for permesso di soggiorno at the Questura within 8 days",
+    ],
+    notes:
+      "Lavoro Autonomo is the only realistic non-employer route into Italy for non-EU nationals (excluding investor visa or Elective Residence). The decreto flussi quotas often exhaust within hours — outside of those windows, only intra-corporate transferees and specific shortage-occupation freelancers can apply. Italian Startup Visa (separate) is the parallel route for innovative tech ventures.",
+  }),
+
+  // ===== Spain — Lucrative work permit =====
+  makeEuLongStayAdapter({
+    id: "es_lucrativa_work",
+    name: "Spain Lucrative Work Visa (Cuenta Ajena) — Ministerio de Inclusión",
+    destinationIso2: "ES",
+    sourceUrl: "https://www.inclusion.gob.es/",
+    liveness: /Spain|trabajo|lucrativa|cuenta\s*ajena|residen/i,
+    label: "Spain Lucrative Work Visa (Cuenta Ajena)",
+    initialValidityDays: 365,
+    processingDaysMin: 90,
+    processingDaysMax: 180,
+    applicationFeeMinor: 9_400,
+    applicationFeeCurrency: "EUR",
+    requirements: [
+      "Job offer from a Spanish employer (employer files the work-authorisation application in Spain BEFORE the worker applies for the visa abroad)",
+      "Catálogo de Ocupaciones de Difícil Cobertura (shortage list) match OR a labour-market test demonstrating no EU/EEA candidate available",
+      "Apostilled qualifications + sworn Spanish translation by a Traductor Jurado",
+      "Police clearance from each country lived > 5 years (within the last 5)",
+      "Medical certificate confirming no public-health threat",
+      "Type-D visa at the Spanish consulate after the Spanish employer's authorisation is granted",
+    ],
+    notes:
+      "The cuenta ajena process is employer-led + slow (3-6 months end-to-end). EU Blue Card / Highly Qualified Professional route is the faster alternative for higher-salaried roles (≥1.5× Spanish national average ~€33k/year). Initial 1-year permit → 2-year renewal → 5-year long-term residence. Naturalisation typically requires 10 years' legal residence (2 years for nationals of CPLP / Andorra / Philippines / Equatorial Guinea / Sephardic origin).",
+  }),
 ];

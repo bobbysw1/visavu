@@ -101,6 +101,16 @@ import { switzerlandSkilledWorkerAdapter } from "./ch_skilled_worker";
 // e-Medical, e-Conference, OCI, VOA) — covers the gap where only e-Tourist
 // was surfaced from Wikipedia.
 import { indiaVisaCategoriesAdapter } from "./in_visa_categories";
+// Batch-1 destination category adapters — closes worst gaps in top-20 audit
+// (EG/MA/MX/TR/GR had 0 in 1+ purpose categories). Each emits 5-7 categories
+// × ~250 nationalities via the destination factory.
+import {
+  egyptVisaCategoriesAdapter,
+  moroccoVisaCategoriesAdapter,
+  mexicoVisaCategoriesAdapter,
+  turkeyVisaCategoriesAdapter,
+  greeceVisaCategoriesAdapter,
+} from "./destination_categories_batch1";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -184,6 +194,11 @@ export const ADAPTERS: Adapter[] = [
   koreaD10JobseekerAdapter,
   switzerlandSkilledWorkerAdapter,
   indiaVisaCategoriesAdapter,
+  egyptVisaCategoriesAdapter,
+  moroccoVisaCategoriesAdapter,
+  mexicoVisaCategoriesAdapter,
+  turkeyVisaCategoriesAdapter,
+  greeceVisaCategoriesAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

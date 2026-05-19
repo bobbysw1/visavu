@@ -160,6 +160,43 @@ export function issuesPassport(iso2: string): boolean {
   return !NO_PASSPORT_CODES.has(iso2.toUpperCase());
 }
 
+/**
+ * Common informal country-code aliases the middleware accepts +
+ * redirects to the canonical ISO-3166-1 alpha-2. People type "uk"
+ * far more than "gb", "usa" more than "us", "uae" more than "ae",
+ * and most users default to ISO-3166-1 alpha-3 (the three-letter
+ * form) when typing URLs. Without this map, /passport/uk → 404.
+ *
+ * The alpha-3 → alpha-2 entries are derived from ISO_3166 in
+ * seed/iso3166.ts at the bottom of this file. Informal aliases
+ * (uk, usa, uae, eng) are hand-added on top.
+ */
+export const COUNTRY_CODE_ALIASES: Readonly<Record<string, string>> = (() => {
+  const aliases: Record<string, string> = {
+    // Informal aliases users actually type
+    UK: "GB", ENG: "GB", BRITAIN: "GB",
+    USA: "US", AMERICA: "US",
+    UAE: "AE", EMIRATES: "AE",
+  };
+  // Alpha-3 → alpha-2 for every ISO-3166 country (UND→DEU→DE, etc).
+  // Iterated at module load — ISO_3166 is the source.
+  for (const [a2, a3] of ISO_3166) {
+    if (a3 && a3 !== a2 && !aliases[a3]) aliases[a3] = a2;
+  }
+  return Object.freeze(aliases);
+})();
+
+/** Resolve any iso2 / iso3 / informal alias to a canonical iso2.
+ *  Returns null if the input doesn't match any known country. */
+export function resolveCountryCode(input: string): string | null {
+  const upper = input.toUpperCase();
+  // Direct iso2 match
+  if (COUNTRY_LIST.some((c) => c.iso2 === upper)) return upper;
+  // Alias / iso3 match
+  const aliased = COUNTRY_CODE_ALIASES[upper];
+  return aliased ?? null;
+}
+
 /** Countries that issue passports — the canonical set for /passport/[iso]
  *  generation, /passport-rankings, the homepage popular grids, and the
  *  destination-page "all passports" list. */

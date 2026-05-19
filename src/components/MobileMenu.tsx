@@ -8,6 +8,8 @@ const LINKS: { href: string; label: string; hint?: string }[] = [
   { href: "/finder", label: "Where can I go?", hint: "Filter every destination by your goal" },
   { href: "/find-my-visa", label: "Find my visa", hint: "Answer a few questions, get ranked routes" },
   { href: "/passport-rankings", label: "Passport rankings", hint: "Every passport, sorted by access" },
+  { href: "/myths", label: "Myths & rumours", hint: "60+ common immigration claims, fact-checked" },
+  { href: "/chat", label: "Ask Visavu (AI)", hint: "AI assistant grounded in our verified data" },
   { href: "/guides", label: "Guides", hint: "ETIAS, EES, Schengen explainers" },
   { href: "/services", label: "Services", hint: "Vetted relocation providers" },
   { href: "/methodology", label: "Methodology" },

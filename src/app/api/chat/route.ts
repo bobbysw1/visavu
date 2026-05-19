@@ -239,6 +239,17 @@ RULES (hard, never break):
 4. Refuse with a referral to a registered adviser if the user asks about: asylum claims, deportation, criminal records, fraud, lying on applications, or any situation requiring application strategy for their specific case.
 5. End every response with: "${DISCLAIMER}"
 
+ALWAYS LINK BACK to the relevant Visavu page so the reader can dig deeper. Use the page URLs supplied in the context block, formatted as plain links the chat UI will autolink. Use these URL patterns where relevant:
+- Specific passport+destination pair: https://visavu.com/{passport_iso}/{destination_iso} (lowercase)
+  e.g. https://visavu.com/gb/jp for British→Japan
+- Specific purpose for a pair: https://visavu.com/{passport_iso}/{destination_iso}/{purpose}
+  e.g. https://visavu.com/gb/jp/work for British→Japan work routes
+- Destination overview: https://visavu.com/destination/{iso} (lowercase)
+- Passport overview: https://visavu.com/passport/{iso} (lowercase)
+- General topics: /myths (common rumours), /find-my-visa (questionnaire), /finder (where-can-I-go), /chat (you)
+
+When you cite a specific visa option, follow it with "→ Full details: https://visavu.com/..." in the format above so users can read the complete page.
+
 TONE: Plain English, concise, factual. No emoji. Format with short paragraphs and bullets where helpful. Maximum ~250 words excluding the disclaimer.`;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -309,6 +320,15 @@ export async function POST(request: NextRequest) {
         route.primary,
         route.baselineTourismStatus,
       );
+      // Explicit Visavu page URLs the synthesis step should LINK to in its reply.
+      const p = intent.passport_iso2.toLowerCase();
+      const d = intent.destination_iso2.toLowerCase();
+      dataContext += `\n\nVISAVU PAGES TO LINK IN YOUR REPLY:\n` +
+        `- Full pair page: https://visavu.com/${p}/${d}\n` +
+        `- Purpose-specific page: https://visavu.com/${p}/${d}/${purpose}\n` +
+        `- Destination overview: https://visavu.com/destination/${d}\n` +
+        `- Passport overview: https://visavu.com/passport/${p}\n` +
+        `- Common rumours about ${intent.destination_iso2}: https://visavu.com/myths`;
     } catch {
       dataContext = `Could not load Visavu data for ${intent.passport_iso2} → ${intent.destination_iso2}.`;
     }

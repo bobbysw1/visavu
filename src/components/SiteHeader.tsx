@@ -60,6 +60,12 @@ export function SiteHeader() {
             Rankings
           </Link>
           <Link
+            href="/myths"
+            className="hidden lg:inline px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
+          >
+            Myths
+          </Link>
+          <Link
             href="/find-my-visa"
             className="ml-1 inline-flex items-center gap-1.5 rounded-full border border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-paper)] px-3.5 py-1.5 text-xs font-semibold hover:opacity-90 transition whitespace-nowrap"
           >

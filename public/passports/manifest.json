@@ -1273,7 +1273,7 @@
     "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
     "width": 1280,
     "height": 852,
-    "fetchedAt": "2026-05-18T21:31:38.301Z"
+    "fetchedAt": "2026-05-19T08:42:46.583Z"
   },
   "PE": {
     "file": "/passports/pe.jpg",
@@ -1625,7 +1625,7 @@
     "licenceUrl": null,
     "width": 2381,
     "height": 1701,
-    "fetchedAt": "2026-05-18T21:27:44.877Z"
+    "fetchedAt": "2026-05-19T08:41:37.113Z"
   },
   "GR": {
     "file": "/passports/gr.jpg",
@@ -1636,18 +1636,18 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 2790,
     "height": 2143,
-    "fetchedAt": "2026-05-18T21:28:29.999Z"
+    "fetchedAt": "2026-05-19T08:41:53.780Z"
   },
   "NZ": {
     "file": "/passports/nz.jpg",
     "source": "https://commons.wikimedia.org/wiki/Category:Passports_of_New%20Zealand",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:Citizenship_Ceremony,_Wellington.jpg",
-    "artist": "Charles Chauvel",
-    "licence": "CC BY 2.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
-    "width": 2048,
-    "height": 1536,
-    "fetchedAt": "2026-05-16T11:55:51.157Z"
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:New_Zealand_Emergency_Passport_Outside_Front_Cover.png",
+    "artist": "New Zealand Government",
+    "licence": "Public domain",
+    "licenceUrl": null,
+    "width": 416,
+    "height": 588,
+    "fetchedAt": "2026-05-19T08:42:27.922Z"
   },
   "KR": {
     "file": "/passports/kr.jpg",
@@ -1724,7 +1724,7 @@
     "licenceUrl": null,
     "width": 495,
     "height": 600,
-    "fetchedAt": "2026-05-16T11:58:26.855Z"
+    "fetchedAt": "2026-05-19T08:40:52.543Z"
   },
   "BA": {
     "file": "/passports/ba.jpg",
@@ -1834,7 +1834,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 2188,
     "height": 1522,
-    "fetchedAt": "2026-05-18T21:27:11.167Z"
+    "fetchedAt": "2026-05-19T08:41:19.017Z"
   },
   "SZ": {
     "file": "/passports/sz.jpg",
@@ -1900,7 +1900,7 @@
     "licenceUrl": null,
     "width": 768,
     "height": 1163,
-    "fetchedAt": "2026-05-18T21:29:01.175Z"
+    "fetchedAt": "2026-05-19T08:42:00.630Z"
   },
   "HK": {
     "file": "/passports/hk.jpg",
@@ -1966,7 +1966,7 @@
     "licenceUrl": null,
     "width": 1040,
     "height": 733,
-    "fetchedAt": "2026-05-18T21:31:22.214Z"
+    "fetchedAt": "2026-05-19T08:42:33.869Z"
   },
   "PG": {
     "file": "/passports/pg.jpg",
@@ -2142,7 +2142,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 103,
     "height": 75,
-    "fetchedAt": "2026-05-18T21:22:01.604Z"
+    "fetchedAt": "2026-05-19T08:40:46.163Z"
   },
   "BW": {
     "file": "/passports/bw.jpg",
@@ -2153,7 +2153,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
     "width": 884,
     "height": 339,
-    "fetchedAt": "2026-05-18T21:22:52.511Z"
+    "fetchedAt": "2026-05-19T08:41:02.366Z"
   },
   "CV": {
     "file": "/passports/cv.jpg",
@@ -2208,7 +2208,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
     "width": 2000,
     "height": 1015,
-    "fetchedAt": "2026-05-18T21:27:01.153Z"
+    "fetchedAt": "2026-05-19T08:41:12.858Z"
   },
   "FJ": {
     "file": "/passports/fj.jpg",
@@ -2219,7 +2219,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
     "width": 2808,
     "height": 1688,
-    "fetchedAt": "2026-05-18T21:27:34.688Z"
+    "fetchedAt": "2026-05-19T08:41:28.985Z"
   },
   "GF": {
     "file": "/passports/gf.jpg",
@@ -2252,7 +2252,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 220,
     "height": 218,
-    "fetchedAt": "2026-05-18T21:28:20.976Z"
+    "fetchedAt": "2026-05-19T08:41:46.297Z"
   },
   "GP": {
     "file": "/passports/gp.jpg",
@@ -2274,7 +2274,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 583,
     "height": 402,
-    "fetchedAt": "2026-05-18T21:29:23.999Z"
+    "fetchedAt": "2026-05-19T08:42:09.749Z"
   },
   "MW": {
     "file": "/passports/mw.jpg",
@@ -2290,13 +2290,13 @@
   "ML": {
     "file": "/passports/ml.jpg",
     "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Mali%20passport%20cover",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:Mali_wyjazd.jpg",
-    "artist": "Lukaszjan",
-    "licence": "CC BY-SA 4.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "width": 611,
-    "height": 359,
-    "fetchedAt": "2026-05-18T21:29:47.636Z"
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:British_Peacekeepers_in_Mali.jpg",
+    "artist": "Capt George Christie",
+    "licence": "OGL 3",
+    "licenceUrl": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3",
+    "width": 5835,
+    "height": 3890,
+    "fetchedAt": "2026-05-19T08:42:19.734Z"
   },
   "MQ": {
     "file": "/passports/mq.jpg",
@@ -2345,13 +2345,13 @@
   "PW": {
     "file": "/passports/pw.jpg",
     "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Palau%20passport%20cover",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:Palau_entry.png",
-    "artist": "Flicker user dcgreer, United States government, government of Palau",
-    "licence": "Public domain",
-    "licenceUrl": null,
-    "width": 1088,
-    "height": 689,
-    "fetchedAt": "2026-05-18T21:31:35.580Z"
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:HMS_Tamar_leaves_Palau_MOD_45170072.jpg",
+    "artist": "LPhot Lee Blease",
+    "licence": "OGL 3",
+    "licenceUrl": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3",
+    "width": 7264,
+    "height": 4843,
+    "fetchedAt": "2026-05-19T08:42:43.847Z"
   },
   "RE": {
     "file": "/passports/re.jpg",
@@ -2384,7 +2384,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.0",
     "width": 716,
     "height": 800,
-    "fetchedAt": "2026-05-18T21:38:47.134Z"
+    "fetchedAt": "2026-05-19T08:43:18.975Z"
   },
   "ZM": {
     "file": "/passports/zm.jpg",
@@ -2395,7 +2395,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
     "width": 753,
     "height": 1214,
-    "fetchedAt": "2026-05-18T21:40:25.774Z"
+    "fetchedAt": "2026-05-19T08:43:27.848Z"
   },
   "PM": {
     "file": "/passports/pm.jpg",
@@ -2417,7 +2417,7 @@
     "licenceUrl": null,
     "width": 400,
     "height": 547,
-    "fetchedAt": "2026-05-18T21:44:44.412Z"
+    "fetchedAt": "2026-05-19T08:42:55.483Z"
   },
   "SM": {
     "file": "/passports/sm.jpg",
@@ -2432,14 +2432,14 @@
   },
   "ST": {
     "file": "/passports/st.jpg",
-    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Sao%20Tome%20and%20Principe%20passport%20cover",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:SaoTomeEntrystamp.jpg",
-    "artist": "BERtoWORLD",
-    "licence": "CC BY-SA 4.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "width": 1784,
-    "height": 1338,
-    "fetchedAt": "2026-05-18T21:45:03.027Z"
+    "source": "https://en.wikipedia.org/wiki/Santomean_passport",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Cover_of_Santomean_Passport.jpg",
+    "artist": "Noble",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "width": 424,
+    "height": 603,
+    "fetchedAt": "2026-05-19T08:42:57.577Z"
   },
   "SB": {
     "file": "/passports/sb.jpg",
@@ -2461,7 +2461,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
     "width": 657,
     "height": 400,
-    "fetchedAt": "2026-05-18T21:45:40.644Z"
+    "fetchedAt": "2026-05-19T08:43:08.444Z"
   },
   "VI": {
     "file": "/passports/vi.jpg",

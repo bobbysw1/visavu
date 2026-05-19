@@ -122,6 +122,8 @@ export const indiaVisaCategoriesAdapter: Adapter = {
           salaryThresholdMinor: 25_000_00, // USD 25k/year stored as cents
           salaryCurrency: "USD",
           routeToSettlement: false,
+          // Surface this on /finder?goal=live_work for the relevant passport.
+          finderGoals: ["live_work"],
         },
       });
 
@@ -197,6 +199,7 @@ export const indiaVisaCategoriesAdapter: Adapter = {
           financialProofMonthlyMinor: 800_00, // ~USD 800/month
           financialProofCurrency: "USD",
           englishRequirement: "Course-dependent — most courses are English-medium",
+          finderGoals: ["study"],
         },
       });
 

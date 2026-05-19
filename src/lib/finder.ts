@@ -186,6 +186,7 @@ export async function findDestinations(
       processingTimeDaysMax: schema.visaOptions.processingTimeDaysMax,
       primarySourceUrl: schema.visaOptions.primarySourceUrl,
       applicationUrl: schema.visaOptions.applicationUrl,
+      purposeMetadata: schema.visaOptions.purposeMetadata,
     })
     .from(schema.visaOptions)
     .where(
@@ -216,14 +217,28 @@ export async function findDestinations(
     else if (existing.currency === f.currency) existing.amount += f.amountMinor;
   }
 
-  // Apply label-substring filters in JS — simpler than building dynamic SQL.
+  // Apply finder-goal matching. A row qualifies if EITHER:
+  //  (a) its label matches the goal's labelIncludes substrings (legacy adapters
+  //      without structured tags); OR
+  //  (b) its purposeMetadata.finderGoals explicitly tags this goal (preferred —
+  //      new destination-category adapters opt in here to avoid fragile label
+  //      pattern-matching for visas like "Touristic Residence Permit" that
+  //      serve a retire/family use case without "retire" in the label).
+  // labelExcludes still wins — explicit exclusion (e.g. live_work excluding
+  // working-holiday + digital-nomad labels) is honoured.
   const includes = filter.labelIncludes?.map((s) => s.toLowerCase()) ?? null;
   const excludes = filter.labelExcludes?.map((s) => s.toLowerCase()) ?? null;
   const filtered = rows.filter((r) => {
     const label = r.label.toLowerCase();
-    if (includes && !includes.some((s) => label.includes(s))) return false;
     if (excludes && excludes.some((s) => label.includes(s))) return false;
-    return true;
+    // Structured-tag match (preferred for new adapters)
+    const meta = r.purposeMetadata as { finderGoals?: string[] } | null;
+    if (meta?.finderGoals?.includes(goal)) return true;
+    // Label-substring fallback (legacy adapters)
+    if (includes && includes.some((s) => label.includes(s))) return true;
+    // If the goal has no includes filter, any purpose match qualifies.
+    if (!includes) return true;
+    return false;
   });
 
   // Best record per destination — keep the one with the highest easiness score.

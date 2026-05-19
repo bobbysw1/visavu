@@ -11,6 +11,7 @@ import { EmptyStateCard } from "@/components/EmptyStateCard";
 // for future inline use via the policyChangesFor() helper.
 import { DualPassportHint } from "@/components/DualPassportHint";
 import { AlertOptIn } from "@/components/AlertOptIn";
+import { PassportApplicantPanel } from "@/components/PassportApplicantPanel";
 import { ResultBannerStack } from "@/components/ResultBannerStack";
 import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 import { pairIntroFor } from "@/content/pairIntros";
@@ -785,6 +786,13 @@ export default async function Page({
             {(primary?.status === "embassy_visa" || primary?.status === "restricted") && (
               <EmbassyLocator passportIso2={p} destinationIso2={d} />
             )}
+
+            {/* ─── Per-applicant documentation panel ───
+                Renders the country-specific process for the applicant's
+                passport (e.g. ACRO for UK, FBI for US). Closes the gap
+                where generic "police clearance" rendered identically
+                for every nationality. */}
+            <PassportApplicantPanel passportIso2={p} />
 
             {/* ─── Get notified ─── */}
             {options.length > 0 && (

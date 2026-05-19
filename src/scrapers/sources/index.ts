@@ -111,6 +111,16 @@ import {
   turkeyVisaCategoriesAdapter,
   greeceVisaCategoriesAdapter,
 } from "./destination_categories_batch1";
+// Batch-2 destination category adapters — closes next round of top-20 gaps
+// (FR/IT/ID/ES/DE had thin work/study/family/business). Each emits 6 categories
+// × ~250 nationalities.
+import {
+  franceVisaCategoriesAdapter,
+  italyVisaCategoriesAdapter,
+  indonesiaVisaCategoriesAdapter,
+  spainVisaCategoriesAdapter,
+  germanyVisaCategoriesAdapter,
+} from "./destination_categories_batch2";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -199,6 +209,11 @@ export const ADAPTERS: Adapter[] = [
   mexicoVisaCategoriesAdapter,
   turkeyVisaCategoriesAdapter,
   greeceVisaCategoriesAdapter,
+  franceVisaCategoriesAdapter,
+  italyVisaCategoriesAdapter,
+  indonesiaVisaCategoriesAdapter,
+  spainVisaCategoriesAdapter,
+  germanyVisaCategoriesAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

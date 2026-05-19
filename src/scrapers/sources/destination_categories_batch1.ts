@@ -35,6 +35,7 @@ export const egyptVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
   categories: [
     {
       label: "Work Permit (Tasreeh Amal) — Egypt",
+      finderGoals: ["live_work"],
       purpose: "work",
       status: "embassy_visa",
       maxStayDays: 365,
@@ -67,6 +68,7 @@ export const egyptVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Student Residence Permit — Egypt",
+      finderGoals: ["study"],
       purpose: "study",
       status: "embassy_visa",
       maxStayDays: 365 * 4,
@@ -124,6 +126,7 @@ export const egyptVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Business / Investor Visa — Egypt",
+      finderGoals: ["invest"],
       purpose: "business",
       status: "embassy_visa",
       maxStayDays: 90,
@@ -149,6 +152,7 @@ export const egyptVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Real-Estate Residence Permit — Egypt",
+      finderGoals: ["invest"],
       purpose: "family",
       status: "embassy_visa",
       maxStayDays: 365 * 5,
@@ -192,6 +196,7 @@ export const moroccoVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
   categories: [
     {
       label: "Carte de Séjour Salarié (Salaried Worker) — Morocco",
+      finderGoals: ["live_work"],
       purpose: "work",
       status: "embassy_visa",
       maxStayDays: 365,
@@ -221,6 +226,7 @@ export const moroccoVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Carte de Séjour Étudiant (Student) — Morocco",
+      finderGoals: ["study"],
       purpose: "study",
       status: "embassy_visa",
       maxStayDays: 365 * 5,
@@ -274,6 +280,7 @@ export const moroccoVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Carte de Séjour Visiteur — Retiree / Passive Income — Morocco",
+      finderGoals: ["retire"],
       purpose: "family",
       status: "embassy_visa",
       maxStayDays: 365 * 10,
@@ -301,6 +308,7 @@ export const moroccoVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Carte de Séjour Travail Indépendant (Self-Employed) — Morocco",
+      finderGoals: ["live_work"],
       purpose: "work",
       status: "embassy_visa",
       maxStayDays: 365,
@@ -373,6 +381,7 @@ export const mexicoVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
   categories: [
     {
       label: "Residente Temporal (Temporary Resident) — Mexico",
+      finderGoals: ["retire"],
       purpose: "family",
       status: "embassy_visa",
       maxStayDays: 365 * 4,
@@ -403,6 +412,7 @@ export const mexicoVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Residente Permanente (Permanent Resident) — Mexico",
+      finderGoals: ["retire"],
       purpose: "family",
       status: "embassy_visa",
       maxStayDays: 365 * 100,
@@ -430,6 +440,7 @@ export const mexicoVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Permiso de Trabajo (Work Permit) — Mexico",
+      finderGoals: ["live_work"],
       purpose: "work",
       status: "embassy_visa",
       maxStayDays: 365 * 4,
@@ -457,6 +468,7 @@ export const mexicoVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Visa de Estudiante (Student) — Mexico",
+      finderGoals: ["study"],
       purpose: "study",
       status: "embassy_visa",
       maxStayDays: 365 * 4,
@@ -549,6 +561,7 @@ export const turkeyVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
   categories: [
     {
       label: "Work Permit (Çalışma İzni) — Türkiye",
+      finderGoals: ["live_work"],
       purpose: "work",
       status: "embassy_visa",
       maxStayDays: 365,
@@ -577,6 +590,7 @@ export const turkeyVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Student Residence Permit — Türkiye",
+      finderGoals: ["study"],
       purpose: "study",
       status: "embassy_visa",
       maxStayDays: 365 * 5,
@@ -634,6 +648,7 @@ export const turkeyVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Touristic Residence Permit — Türkiye",
+      finderGoals: ["retire"],
       purpose: "family",
       status: "embassy_visa",
       maxStayDays: 365 * 2,
@@ -660,6 +675,7 @@ export const turkeyVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Real-Estate Residence Permit — Türkiye",
+      finderGoals: ["invest"],
       purpose: "family",
       status: "embassy_visa",
       maxStayDays: 365 * 2,
@@ -727,6 +743,7 @@ export const greeceVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
   categories: [
     {
       label: "Skilled Worker Visa — Greece",
+      finderGoals: ["live_work"],
       purpose: "work",
       status: "embassy_visa",
       maxStayDays: 365 * 2,
@@ -755,6 +772,7 @@ export const greeceVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Student Residence Permit — Greece",
+      finderGoals: ["study"],
       purpose: "study",
       status: "embassy_visa",
       maxStayDays: 365 * 5,
@@ -811,6 +829,7 @@ export const greeceVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Financially Independent Person (FIP) — Greece",
+      finderGoals: ["retire"],
       purpose: "family",
       status: "embassy_visa",
       maxStayDays: 365 * 3,
@@ -837,6 +856,7 @@ export const greeceVisaCategoriesAdapter: Adapter = buildDestinationAdapter({
     },
     {
       label: "Digital Nomad Visa — Greece",
+      finderGoals: ["remote_work"],
       purpose: "work",
       status: "embassy_visa",
       maxStayDays: 365 * 2,

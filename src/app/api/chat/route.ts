@@ -30,6 +30,7 @@ import {
   searchOccupations,
   formatOccupationListForChat,
 } from "@/content/skilledOccupations";
+import { applicantContextSentence } from "@/components/PassportApplicantPanel";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -329,6 +330,13 @@ export async function POST(request: NextRequest) {
         `- Destination overview: https://visavu.com/destination/${d}\n` +
         `- Passport overview: https://visavu.com/passport/${p}\n` +
         `- Common rumours about ${intent.destination_iso2}: https://visavu.com/myths`;
+
+      // Per-applicant documentation overlay — what the generic "police
+      // clearance" + "apostille" actually mean for this passport-holder.
+      const applicantCtx = applicantContextSentence(intent.passport_iso2);
+      if (applicantCtx) {
+        dataContext += `\n\nAPPLICANT-SPECIFIC DOCUMENTATION (use this to make answers concrete instead of generic):\n${applicantCtx}`;
+      }
     } catch {
       dataContext = `Could not load Visavu data for ${intent.passport_iso2} → ${intent.destination_iso2}.`;
     }

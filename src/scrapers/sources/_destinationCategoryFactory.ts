@@ -35,8 +35,16 @@
 import type { Adapter, ParsedRecord, FetchContext } from "../base/Adapter";
 import { COUNTRY_LIST } from "@/lib/countries";
 import type { Purpose, VisaStatus } from "@/lib/types";
+import type { FinderGoal } from "@/lib/finder";
 
 export type CategorySpec = {
+  /** Structured tags for the /finder + AI chat — declare which finder goals
+   *  this visa serves so the matcher can surface it WITHOUT relying on
+   *  fragile label-substring matching. Persisted via purposeMetadata.finderGoals.
+   *  Example: a "Touristic Residence Permit — Türkiye" used as a retirement
+   *  route should set ["retire"] so /finder?goal=retire surfaces it even
+   *  though "retire" doesn't appear in the label. */
+  finderGoals?: FinderGoal[];
   /** Display label — must be unique within the destination. */
   label: string;
   purpose: Purpose;
@@ -148,7 +156,12 @@ export function buildDestinationAdapter(spec: DestinationAdapterSpec): Adapter {
               optional: f.optional,
             })),
             notes: cat.notes ?? null,
-            purposeMetadata: cat.purposeMetadata ?? null,
+            // Persist finderGoals alongside other purpose-specific metadata so
+            // the finder can match without label-substring fragility. If a spec
+            // sets BOTH purposeMetadata and finderGoals, merge them.
+            purposeMetadata: cat.finderGoals && cat.finderGoals.length > 0
+              ? { ...(cat.purposeMetadata ?? {}), finderGoals: cat.finderGoals }
+              : (cat.purposeMetadata ?? null),
           });
         }
       }

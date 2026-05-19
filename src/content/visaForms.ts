@@ -1138,6 +1138,50 @@ const AE_GOLDEN: FormsEntry = {
   notes: "Golden Visa categories: investors (AED 2M+ real estate or business), entrepreneurs, specialised talents (PhDs, senior executives, doctors), outstanding students. 10-year multi-entry, no sponsor needed, sponsor own family. Renewable indefinitely.",
 };
 
+const AE_GREEN_VISA: FormsEntry = {
+  destinationIso2: "AE",
+  programmeLabel: "United Arab Emirates — Green Visa (5-year self-sponsored residence)",
+  programmeSlug: "/destination/ae",
+  applicationPortal: "https://icp.gov.ae/en/",
+  applicableTo: { purposes: ["work"], labelKeywords: ["green visa", "5-year", "self-sponsored", "freelancer permit"] },
+  forms: [
+    { code: "ICP online application", name: "Green Visa application via ICP portal", description: "Online application via the Federal Authority for Identity, Citizenship, Customs & Port Security (ICP) for all emirates except Dubai (use GDRFA instead). Pick the qualifying sub-category: Skilled Employee (AED 15,000+ salary + bachelor's degree + occupation in MoHRE's classification levels 1-3), Freelancer (MoHRE freelance permit + bachelor's or equivalent + AED 360,000 cumulative two-year income or financial solvency proof), or Investor (commercial-licence holder for sole proprietorship or limited-liability company).", downloadUrl: "https://icp.gov.ae/en/services/", filedBy: "applicant", stage: "with_application" },
+    { code: "MoHRE freelance permit", name: "Freelance work permit (Ministry of Human Resources & Emiratisation)", description: "Required ONLY for the Freelancer Green Visa pathway. Issued by MoHRE before the residence visa application — confirms recognised freelance professional status. AED 750 issuance fee, valid 1 year, renewable.", downloadUrl: "https://www.mohre.gov.ae/en/", filedBy: "applicant", stage: "before_applying" },
+    { code: "Emirates ID issuance", name: "ICA / GDRFA Emirates ID registration", description: "Mandatory ID card processed simultaneously with the Green Visa — biometrics + medical fitness test. AED 100/year card fee + AED 300 medical test. Without an Emirates ID you cannot open a bank account, sign a residential lease, or register children in school.", downloadUrl: "https://icp.gov.ae/en/services/", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Green Visa was introduced 2022 alongside the Golden Visa to fix the kafala-binding problem — Green Visa holders are NOT bound to a single employer (unlike standard Employment Visa) and can self-sponsor their families. 5-year validity with 6-month grace period on cancellation (compared to standard 30-day exit for Employment Visa holders). The freelancer subtype is the most-used by remote workers + creators who don't qualify under Golden Visa.",
+};
+
+const AE_EMPLOYMENT_VISA: FormsEntry = {
+  destinationIso2: "AE",
+  programmeLabel: "United Arab Emirates — Standard Employment Visa (2-year sponsored)",
+  programmeSlug: "/destination/ae",
+  applicationPortal: "https://www.mohre.gov.ae/en/",
+  applicableTo: { purposes: ["work"], labelKeywords: ["employment visa", "work permit", "labour card", "sponsor"] },
+  forms: [
+    { code: "Work permit / Entry permit", name: "MoHRE work permit + ICP entry permit (employer-led)", description: "UAE-licensed employer applies to the Ministry of Human Resources & Emiratisation for a work permit + simultaneously to ICP (or GDRFA in Dubai) for the entry permit. Pre-arrival step — the worker enters the UAE on the entry permit and converts to residence within 60 days.", downloadUrl: "https://www.mohre.gov.ae/en/services/work-permits.aspx", filedBy: "employer", stage: "before_applying", notes: "Standard Employment Visa is bound to the sponsoring employer (kafala). Change of employer requires the old sponsor's NOC + new MoHRE permit — the 2022 reform removed the 6-month ban for early termination in many cases." },
+    { code: "Medical fitness test", name: "MoH medical screening + chest X-ray", description: "Mandatory medical at an authorised UAE medical centre within 30 days of entry — full blood panel + chest X-ray for TB + HIV/hepatitis screening. AED 320-700 depending on speed of result. Failure (active TB, HIV positive, hepatitis B/C) → automatic deportation, no appeal.", downloadUrl: "https://www.dha.gov.ae/", filedBy: "applicant", stage: "before_applying" },
+    { code: "Emirates ID + residence visa stamping", name: "Final residence visa stamp on passport + Emirates ID", description: "Combined Emirates ID enrolment (biometrics) + residence visa printing in the passport. Done at ICP / GDRFA service centres. AED 1,070-1,200 total government fees for a 2-year visa; employer typically pays.", downloadUrl: "https://icp.gov.ae/en/services/", filedBy: "joint", stage: "after_decision" },
+    { code: "Labour contract registration", name: "MoHRE labour contract — must mirror offer letter exactly", description: "Within 14 days of issuance, the worker signs the MoHRE-registered labour contract in Arabic + English. The contract terms (salary, role, benefits, probation period) MUST match the original offer — discrepancies that disadvantage the worker invalidate the contract.", downloadUrl: "https://www.mohre.gov.ae/en/services/labor-contracts.aspx", filedBy: "joint", stage: "with_application", notes: "If the registered contract differs from the offer letter, file a complaint via the MoHRE Tawjeeh service — the company is legally required to honour the original offer or face penalties." },
+  ],
+  notes: "Standard Employment Visa is the most common UAE work route — bound to a specific employer (sponsor), valid 2 years, renewable indefinitely while employed. Probation can be up to 6 months. Free-zone employees follow a separate but similar process via the free-zone authority (DMCC, JAFZA, DIFC, ADGM etc.) instead of MoHRE.",
+};
+
+const AE_FAMILY_SPONSOR: FormsEntry = {
+  destinationIso2: "AE",
+  programmeLabel: "United Arab Emirates — Family sponsorship (spouse / children)",
+  programmeSlug: "/destination/ae",
+  applicationPortal: "https://icp.gov.ae/en/",
+  applicableTo: { purposes: ["family"], labelKeywords: ["family sponsor", "spouse visa", "dependent visa", "family visa"] },
+  forms: [
+    { code: "Sponsorship application (ICP / GDRFA)", name: "Family residence visa application by UAE resident sponsor", description: "Filed by the UAE-resident sponsor (must hold a valid residence visa + meet AED 4,000/month salary if sponsoring spouse + children, AED 3,000/month if employer provides accommodation). For Dubai residents use GDRFA; all other emirates use ICP.", downloadUrl: "https://icp.gov.ae/en/services/", filedBy: "sponsor", stage: "with_application" },
+    { code: "Attested marriage / birth certificates", name: "Apostilled + UAE MOFA-attested relationship documents", description: "Foreign marriage certificates require: (1) apostille or notarisation in the country of issue; (2) attestation by the UAE embassy in that country; (3) translation to Arabic by a UAE Ministry of Justice-licensed translator; (4) final attestation by the UAE MOFA. Five-step chain — budget 4-8 weeks + AED 800-2,000 per document.", downloadUrl: "https://www.mofaic.gov.ae/en", filedBy: "sponsor", stage: "before_applying" },
+    { code: "Ejari / tenancy contract", name: "Registered tenancy contract proving suitable accommodation", description: "Sponsor must prove residential accommodation suitable for the family — registered tenancy contract (Ejari in Dubai) showing a minimum 2-bedroom flat for spouse + children. Studios are not accepted for family sponsorship.", downloadUrl: "https://dubailand.gov.ae/en/", filedBy: "sponsor", stage: "before_applying" },
+    { code: "Medical + Emirates ID", name: "Family member medical fitness + Emirates ID enrolment", description: "Each family member ≥ 18 undergoes the same medical fitness test as employees (blood panel + chest X-ray + HIV/hepatitis). Children < 18 skip the medical but still require Emirates ID biometrics. Failures → visa refusal.", downloadUrl: "https://www.dha.gov.ae/", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Family sponsorship in the UAE is salary-gated — the AED 4,000/month minimum (or AED 3,000 + employer accommodation) is strictly enforced. Daughters can be sponsored indefinitely; sons only until 18 (extendable while in full-time UAE university education or armed-forces service). Parents can be sponsored but require a higher salary threshold (AED 20,000/month) + medical insurance for them.",
+};
+
 // ─────────────────────────────────────────────────────────────────────────
 // NEW ZEALAND — AEWV + SMC
 // ─────────────────────────────────────────────────────────────────────────
@@ -1837,6 +1881,9 @@ export const VISA_FORMS: FormsEntry[] = [
   SG_EMPLOYMENT_PASS,
   SG_ONE_PASS,
   AE_GOLDEN,
+  AE_GREEN_VISA,
+  AE_EMPLOYMENT_VISA,
+  AE_FAMILY_SPONSOR,
   NZ_AEWV,
   NZ_SMC,
   IE_CRITICAL_SKILLS,

@@ -206,16 +206,10 @@ details[open] .chev { transform: rotate(180deg); }
 }
 .editorial-body p + p { margin-top: 0.9em; }
 
-/* Drop-cap for the first letter of a lede paragraph. */
-.lede::first-letter {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  float: left;
-  font-size: 3.6em;
-  line-height: 0.85;
-  padding: 0.05em 0.1em 0 0;
-  color: var(--color-ink);
-}
+/* Note: the `.lede` class used to render a newspaper-style 3-line drop-cap
+ * on the first letter. Removed at editorial direction (too newspaper-y for
+ * a digital reference site). The class itself is kept as a semantic hook
+ * for lede paragraphs in case we want a different treatment later. */
 
 /* Reduce motion for users who request it. */
 @media (prefers-reduced-motion: reduce) {

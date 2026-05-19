@@ -187,7 +187,7 @@
     "fetchedAt": "2026-05-16T09:52:10.946Z"
   },
   "LT": {
-    "file": "/passports/lt.svg",
+    "file": "/passports/lt.jpg",
     "source": "https://en.wikipedia.org/wiki/Lithuanian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Lithuanian_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -195,10 +195,10 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 334,
     "height": 473,
-    "fetchedAt": "2026-05-16T09:52:13.031Z"
+    "fetchedAt": "2026-05-19T08:18:54.266Z"
   },
   "LU": {
-    "file": "/passports/lu.svg",
+    "file": "/passports/lu.jpg",
     "source": "https://en.wikipedia.org/wiki/Luxembourgish_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Luxembourg_Passport.svg",
     "artist": "Jonas Magnus Lystad",
@@ -206,7 +206,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 400,
     "height": 567,
-    "fetchedAt": "2026-05-16T09:52:14.477Z"
+    "fetchedAt": "2026-05-19T08:18:56.275Z"
   },
   "MT": {
     "file": "/passports/mt.jpg",
@@ -275,7 +275,7 @@
     "fetchedAt": "2026-05-16T09:52:32.075Z"
   },
   "RO": {
-    "file": "/passports/ro.svg",
+    "file": "/passports/ro.jpg",
     "source": "https://en.wikipedia.org/wiki/Romanian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Romania_Passport_(2024).svg",
     "artist": "มองโกเลีย๔๔",
@@ -283,10 +283,10 @@
     "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
     "width": 334,
     "height": 473,
-    "fetchedAt": "2026-05-16T09:52:34.229Z"
+    "fetchedAt": "2026-05-19T08:20:07.434Z"
   },
   "SG": {
-    "file": "/passports/sg.svg",
+    "file": "/passports/sg.jpg",
     "source": "https://en.wikipedia.org/wiki/Singapore_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Singapore_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -294,7 +294,7 @@
     "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
     "width": 497,
     "height": 704,
-    "fetchedAt": "2026-05-16T09:52:35.978Z"
+    "fetchedAt": "2026-05-19T08:20:18.716Z"
   },
   "SK": {
     "file": "/passports/sk.jpg",
@@ -319,7 +319,7 @@
     "fetchedAt": "2026-05-16T09:52:40.372Z"
   },
   "ES": {
-    "file": "/passports/es.svg",
+    "file": "/passports/es.jpg",
     "source": "https://en.wikipedia.org/wiki/Spanish_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Pasaporte_ES.svg",
     "artist": "Spain Government vectorized by:Amartin2671",
@@ -327,7 +327,7 @@
     "licenceUrl": null,
     "width": 512,
     "height": 726,
-    "fetchedAt": "2026-05-16T09:52:46.090Z"
+    "fetchedAt": "2026-05-19T08:20:29.872Z"
   },
   "SE": {
     "file": "/passports/se.jpg",
@@ -341,7 +341,7 @@
     "fetchedAt": "2026-05-16T09:52:48.456Z"
   },
   "AE": {
-    "file": "/passports/ae.svg",
+    "file": "/passports/ae.jpg",
     "source": "https://en.wikipedia.org/wiki/Emirati_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:UAE_Passport.svg",
     "artist": "Swapnil1101",
@@ -349,10 +349,10 @@
     "licenceUrl": null,
     "width": 333,
     "height": 473,
-    "fetchedAt": "2026-05-16T09:52:53.813Z"
+    "fetchedAt": "2026-05-19T08:20:47.354Z"
   },
   "US": {
-    "file": "/passports/us.svg",
+    "file": "/passports/us.jpg",
     "source": "https://en.wikipedia.org/wiki/United_States_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:United_States_Passport.svg",
     "artist": "Siirski",
@@ -360,10 +360,10 @@
     "licenceUrl": null,
     "width": 333,
     "height": 472,
-    "fetchedAt": "2026-05-16T09:52:59.789Z"
+    "fetchedAt": "2026-05-19T08:20:48.687Z"
   },
   "AF": {
-    "file": "/passports/af.svg",
+    "file": "/passports/af.jpg",
     "source": "https://en.wikipedia.org/wiki/Afghan_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Afghan_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -371,7 +371,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
     "width": 607,
     "height": 861,
-    "fetchedAt": "2026-05-16T09:53:15.718Z"
+    "fetchedAt": "2026-05-19T08:18:09.492Z"
   },
   "AL": {
     "file": "/passports/al.jpg",
@@ -462,7 +462,7 @@
     "fetchedAt": "2026-05-16T09:53:53.824Z"
   },
   "AZ": {
-    "file": "/passports/az.svg",
+    "file": "/passports/az.jpg",
     "source": "https://en.wikipedia.org/wiki/Azerbaijani_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Azerbaijan_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -470,7 +470,7 @@
     "licenceUrl": null,
     "width": 334,
     "height": 473,
-    "fetchedAt": "2026-05-16T09:53:55.832Z"
+    "fetchedAt": "2026-05-19T08:18:22.826Z"
   },
   "BH": {
     "file": "/passports/bh.jpg",
@@ -495,7 +495,7 @@
     "fetchedAt": "2026-05-16T09:54:04.048Z"
   },
   "BY": {
-    "file": "/passports/by.svg",
+    "file": "/passports/by.jpg",
     "source": "https://en.wikipedia.org/wiki/Belarusian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Belarus_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -503,7 +503,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 334,
     "height": 473,
-    "fetchedAt": "2026-05-16T09:54:09.450Z"
+    "fetchedAt": "2026-05-19T08:18:25.101Z"
   },
   "BJ": {
     "file": "/passports/bj.jpg",
@@ -814,7 +814,7 @@
     "fetchedAt": "2026-05-16T09:57:21.767Z"
   },
   "IN": {
-    "file": "/passports/in.svg",
+    "file": "/passports/in.jpg",
     "source": "https://en.wikipedia.org/wiki/Indian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Indian_Passport_(e-Passport,_2024).svg",
     "artist": "FireDragonValo",
@@ -822,7 +822,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 400,
     "height": 568,
-    "fetchedAt": "2026-05-16T09:57:27.358Z"
+    "fetchedAt": "2026-05-19T08:18:40.693Z"
   },
   "ID": {
     "file": "/passports/id.jpg",
@@ -869,7 +869,7 @@
     "fetchedAt": "2026-05-16T09:57:35.046Z"
   },
   "IL": {
-    "file": "/passports/il.svg",
+    "file": "/passports/il.jpg",
     "source": "https://en.wikipedia.org/wiki/Israeli_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Israeli_Passport.svg",
     "artist": "Swapnil1101",
@@ -877,7 +877,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 400,
     "height": 568,
-    "fetchedAt": "2026-05-16T09:57:37.042Z"
+    "fetchedAt": "2026-05-19T08:18:43.184Z"
   },
   "JM": {
     "file": "/passports/jm.jpg",
@@ -902,7 +902,7 @@
     "fetchedAt": "2026-05-16T09:57:40.413Z"
   },
   "JO": {
-    "file": "/passports/jo.webp",
+    "file": "/passports/jo.jpg",
     "source": "https://en.wikipedia.org/wiki/Jordanian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Biometric_Jordanian_Passport.webp",
     "artist": "Thafor3he",
@@ -910,10 +910,10 @@
     "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
     "width": 602,
     "height": 860,
-    "fetchedAt": "2026-05-16T09:57:42.051Z"
+    "fetchedAt": "2026-05-19T08:18:45.291Z"
   },
   "KZ": {
-    "file": "/passports/kz.svg",
+    "file": "/passports/kz.jpg",
     "source": "https://en.wikipedia.org/wiki/Kazakhstani_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Kazakhstan_Passport.svg",
     "artist": "Murat Karibay",
@@ -921,7 +921,7 @@
     "licenceUrl": null,
     "width": 249,
     "height": 354,
-    "fetchedAt": "2026-05-16T09:57:43.724Z"
+    "fetchedAt": "2026-05-19T08:18:46.987Z"
   },
   "KE": {
     "file": "/passports/ke.jpg",
@@ -946,7 +946,7 @@
     "fetchedAt": "2026-05-16T09:57:53.151Z"
   },
   "KG": {
-    "file": "/passports/kg.svg",
+    "file": "/passports/kg.jpg",
     "source": "https://en.wikipedia.org/wiki/Kyrgyzstani_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Kyrgyz_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -954,10 +954,10 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 334,
     "height": 473,
-    "fetchedAt": "2026-05-16T09:57:57.291Z"
+    "fetchedAt": "2026-05-19T08:18:49.048Z"
   },
   "LA": {
-    "file": "/passports/la.svg",
+    "file": "/passports/la.jpg",
     "source": "https://en.wikipedia.org/wiki/Laotian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Laos_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -965,7 +965,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 465,
     "height": 659,
-    "fetchedAt": "2026-05-16T09:57:58.919Z"
+    "fetchedAt": "2026-05-19T08:18:51.106Z"
   },
   "LB": {
     "file": "/passports/lb.jpg",
@@ -1023,7 +1023,7 @@
     "fetchedAt": "2026-05-16T09:58:11.824Z"
   },
   "MY": {
-    "file": "/passports/my.svg",
+    "file": "/passports/my.jpg",
     "source": "https://en.wikipedia.org/wiki/Malaysian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Malaysia_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -1031,10 +1031,10 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 334,
     "height": 473,
-    "fetchedAt": "2026-05-16T09:58:17.659Z"
+    "fetchedAt": "2026-05-19T08:18:58.236Z"
   },
   "MV": {
-    "file": "/passports/mv.svg",
+    "file": "/passports/mv.jpg",
     "source": "https://en.wikipedia.org/wiki/Maldivian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Maldives_passport.svg",
     "artist": "Maldives Immigration, Republic of Maldives",
@@ -1042,7 +1042,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
     "width": 1280,
     "height": 1814,
-    "fetchedAt": "2026-05-16T09:58:20.697Z"
+    "fetchedAt": "2026-05-19T08:19:10.442Z"
   },
   "MH": {
     "file": "/passports/mh.jpg",
@@ -1067,7 +1067,7 @@
     "fetchedAt": "2026-05-16T09:58:31.067Z"
   },
   "MX": {
-    "file": "/passports/mx.svg",
+    "file": "/passports/mx.jpg",
     "source": "https://en.wikipedia.org/wiki/Mexican_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Pasaporte_electr%C3%B3nico_Mexicano_2021.svg",
     "artist": "Colohisto",
@@ -1075,7 +1075,7 @@
     "licenceUrl": null,
     "width": 416,
     "height": 600,
-    "fetchedAt": "2026-05-16T09:58:38.962Z"
+    "fetchedAt": "2026-05-19T08:19:12.678Z"
   },
   "FM": {
     "file": "/passports/fm.jpg",
@@ -1100,7 +1100,7 @@
     "fetchedAt": "2026-05-16T09:58:42.080Z"
   },
   "MN": {
-    "file": "/passports/mn.svg",
+    "file": "/passports/mn.jpg",
     "source": "https://en.wikipedia.org/wiki/Mongolian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Mongolia_Passport_2023.svg",
     "artist": "Chinneeb",
@@ -1108,10 +1108,10 @@
     "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
     "width": 334,
     "height": 473,
-    "fetchedAt": "2026-05-16T09:58:45.053Z"
+    "fetchedAt": "2026-05-19T08:19:14.538Z"
   },
   "ME": {
-    "file": "/passports/me.svg",
+    "file": "/passports/me.jpg",
     "source": "https://en.wikipedia.org/wiki/Montenegrin_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Montenegro_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -1119,7 +1119,7 @@
     "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
     "width": 400,
     "height": 568,
-    "fetchedAt": "2026-05-16T09:58:47.849Z"
+    "fetchedAt": "2026-05-19T08:19:16.628Z"
   },
   "MS": {
     "file": "/passports/ms.jpg",
@@ -1133,7 +1133,7 @@
     "fetchedAt": "2026-05-16T09:58:49.939Z"
   },
   "MA": {
-    "file": "/passports/ma.svg",
+    "file": "/passports/ma.jpg",
     "source": "https://en.wikipedia.org/wiki/Moroccan_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Moroccan_passport.svg",
     "artist": "Pintaxy",
@@ -1141,7 +1141,7 @@
     "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
     "width": 512,
     "height": 727,
-    "fetchedAt": "2026-05-16T09:58:51.992Z"
+    "fetchedAt": "2026-05-19T08:19:19.430Z"
   },
   "MZ": {
     "file": "/passports/mz.jpg",
@@ -1155,7 +1155,7 @@
     "fetchedAt": "2026-05-16T09:58:54.118Z"
   },
   "MM": {
-    "file": "/passports/mm.webp",
+    "file": "/passports/mm.jpg",
     "source": "https://en.wikipedia.org/wiki/Myanmar_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Cover_of_Burmese_Passport.webp",
     "artist": "KhantNaing527",
@@ -1163,7 +1163,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 667,
     "height": 1000,
-    "fetchedAt": "2026-05-16T09:58:55.775Z"
+    "fetchedAt": "2026-05-19T08:19:21.356Z"
   },
   "NA": {
     "file": "/passports/na.jpg",
@@ -1199,7 +1199,7 @@
     "fetchedAt": "2026-05-16T09:59:15.011Z"
   },
   "NG": {
-    "file": "/passports/ng.webp",
+    "file": "/passports/ng.jpg",
     "source": "https://en.wikipedia.org/wiki/Nigerian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Nigerian_Enhanced_ePassport.webp",
     "artist": "Peters Temiloluwa",
@@ -1207,7 +1207,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 1056,
     "height": 1500,
-    "fetchedAt": "2026-05-16T09:59:17.242Z"
+    "fetchedAt": "2026-05-19T08:19:33.454Z"
   },
   "KP": {
     "file": "/passports/kp.jpg",
@@ -1221,7 +1221,7 @@
     "fetchedAt": "2026-05-16T09:59:23.937Z"
   },
   "MK": {
-    "file": "/passports/mk.svg",
+    "file": "/passports/mk.jpg",
     "source": "https://en.wikipedia.org/wiki/North_Macedonian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Macedonian_passport_types.svg",
     "artist": "Pta345MK",
@@ -1229,7 +1229,7 @@
     "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
     "width": 1001,
     "height": 921,
-    "fetchedAt": "2026-05-16T09:59:26.493Z"
+    "fetchedAt": "2026-05-19T08:19:44.681Z"
   },
   "PK": {
     "file": "/passports/pk.jpg",
@@ -1254,7 +1254,7 @@
     "fetchedAt": "2026-05-16T09:59:40.991Z"
   },
   "PA": {
-    "file": "/passports/pa.webp",
+    "file": "/passports/pa.jpg",
     "source": "https://en.wikipedia.org/wiki/Panamanian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Pasaporte_paname%C3%B1o_2025.webp",
     "artist": "Jatniel100",
@@ -1262,7 +1262,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 463,
     "height": 662,
-    "fetchedAt": "2026-05-16T09:59:43.104Z"
+    "fetchedAt": "2026-05-19T08:19:54.851Z"
   },
   "PY": {
     "file": "/passports/py.jpg",
@@ -1287,7 +1287,7 @@
     "fetchedAt": "2026-05-16T09:59:50.603Z"
   },
   "PH": {
-    "file": "/passports/ph.svg",
+    "file": "/passports/ph.jpg",
     "source": "https://en.wikipedia.org/wiki/Philippine_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Regular_Philippine_Passport.svg",
     "artist": "Department of Foreign Affairs Vectorization: Sean Ronquillo (Ubediplomacy)",
@@ -1295,7 +1295,7 @@
     "licenceUrl": null,
     "width": 312,
     "height": 443,
-    "fetchedAt": "2026-05-16T09:59:55.497Z"
+    "fetchedAt": "2026-05-19T08:19:56.423Z"
   },
   "QA": {
     "file": "/passports/qa.jpg",
@@ -1309,7 +1309,7 @@
     "fetchedAt": "2026-05-16T10:00:04.042Z"
   },
   "RU": {
-    "file": "/passports/ru.svg",
+    "file": "/passports/ru.jpg",
     "source": "https://en.wikipedia.org/wiki/Russian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Russian_Passport_(External).svg",
     "artist": "Swapnil1101",
@@ -1317,10 +1317,10 @@
     "licenceUrl": null,
     "width": 312,
     "height": 443,
-    "fetchedAt": "2026-05-16T10:00:10.779Z"
+    "fetchedAt": "2026-05-19T08:20:12.875Z"
   },
   "RW": {
-    "file": "/passports/rw.webp",
+    "file": "/passports/rw.jpg",
     "source": "https://en.wikipedia.org/wiki/Rwandan_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Rwandan_Passport.webp",
     "artist": "Moise Segikwiye",
@@ -1328,10 +1328,10 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 667,
     "height": 1000,
-    "fetchedAt": "2026-05-16T10:00:12.764Z"
+    "fetchedAt": "2026-05-19T08:20:14.960Z"
   },
   "SA": {
-    "file": "/passports/sa.svg",
+    "file": "/passports/sa.jpg",
     "source": "https://en.wikipedia.org/wiki/Saudi_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Saudi_Arabia_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -1339,7 +1339,7 @@
     "licenceUrl": null,
     "width": 334,
     "height": 473,
-    "fetchedAt": "2026-05-16T10:00:44.841Z"
+    "fetchedAt": "2026-05-19T08:20:16.647Z"
   },
   "RS": {
     "file": "/passports/rs.svg",
@@ -1397,7 +1397,7 @@
     "fetchedAt": "2026-05-16T10:01:15.966Z"
   },
   "SY": {
-    "file": "/passports/sy.svg",
+    "file": "/passports/sy.jpg",
     "source": "https://en.wikipedia.org/wiki/Syrian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Syrian_passport.svg",
     "artist": "JohnGold6000",
@@ -1405,10 +1405,10 @@
     "licenceUrl": null,
     "width": 338,
     "height": 473,
-    "fetchedAt": "2026-05-16T10:01:27.582Z"
+    "fetchedAt": "2026-05-19T08:20:35.221Z"
   },
   "TW": {
-    "file": "/passports/tw.svg",
+    "file": "/passports/tw.jpg",
     "source": "https://en.wikipedia.org/wiki/Taiwan_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Republic_of_China_(Taiwan)_Passport_2020.svg",
     "artist": "中華民國外交部 Ministry of Foreign Affairs, Republic of China (Taiwan)",
@@ -1416,10 +1416,10 @@
     "licenceUrl": null,
     "width": 512,
     "height": 715,
-    "fetchedAt": "2026-05-16T10:01:29.440Z"
+    "fetchedAt": "2026-05-19T08:20:37.451Z"
   },
   "TJ": {
-    "file": "/passports/tj.svg",
+    "file": "/passports/tj.jpg",
     "source": "https://en.wikipedia.org/wiki/Tajik_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Tajikistan_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -1427,7 +1427,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 334,
     "height": 473,
-    "fetchedAt": "2026-05-16T10:01:35.978Z"
+    "fetchedAt": "2026-05-19T08:20:39.597Z"
   },
   "TZ": {
     "file": "/passports/tz.jpg",
@@ -1441,7 +1441,7 @@
     "fetchedAt": "2026-05-16T10:01:38.579Z"
   },
   "TH": {
-    "file": "/passports/th.svg",
+    "file": "/passports/th.jpg",
     "source": "https://en.wikipedia.org/wiki/Thai_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Thai_Passport_V.3_(2020-2021).svg",
     "artist": "มองโกเลีย๔๔",
@@ -1449,7 +1449,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 466,
     "height": 660,
-    "fetchedAt": "2026-05-16T10:01:40.262Z"
+    "fetchedAt": "2026-05-19T08:20:41.359Z"
   },
   "TL": {
     "file": "/passports/tl.jpg",
@@ -1485,7 +1485,7 @@
     "fetchedAt": "2026-05-16T10:01:56.662Z"
   },
   "TR": {
-    "file": "/passports/tr.svg",
+    "file": "/passports/tr.jpg",
     "source": "https://en.wikipedia.org/wiki/Turkish_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Turkish_Passport.svg",
     "artist": "Swapnil1101",
@@ -1493,10 +1493,10 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 249,
     "height": 355,
-    "fetchedAt": "2026-05-16T10:01:58.955Z"
+    "fetchedAt": "2026-05-19T08:20:43.735Z"
   },
   "TM": {
-    "file": "/passports/tm.svg",
+    "file": "/passports/tm.jpg",
     "source": "https://en.wikipedia.org/wiki/Turkmen_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Turkmen_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -1504,7 +1504,7 @@
     "licenceUrl": null,
     "width": 334,
     "height": 473,
-    "fetchedAt": "2026-05-16T10:02:01.371Z"
+    "fetchedAt": "2026-05-19T08:20:45.878Z"
   },
   "TV": {
     "file": "/passports/tv.jpg",
@@ -1540,7 +1540,7 @@
     "fetchedAt": "2026-05-16T10:02:17.068Z"
   },
   "UZ": {
-    "file": "/passports/uz.svg",
+    "file": "/passports/uz.jpg",
     "source": "https://en.wikipedia.org/wiki/Uzbekistan_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Uzbekistan_passport.svg",
     "artist": "Government of Uzbekistan",
@@ -1548,7 +1548,7 @@
     "licenceUrl": null,
     "width": 512,
     "height": 727,
-    "fetchedAt": "2026-05-16T10:02:27.085Z"
+    "fetchedAt": "2026-05-19T08:20:51.472Z"
   },
   "VA": {
     "file": "/passports/va.jpg",
@@ -1595,7 +1595,7 @@
     "fetchedAt": "2026-05-16T10:02:43.286Z"
   },
   "YE": {
-    "file": "/passports/ye.svg",
+    "file": "/passports/ye.jpg",
     "source": "https://en.wikipedia.org/wiki/Yemeni_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Yemen_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -1603,7 +1603,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
     "width": 334,
     "height": 473,
-    "fetchedAt": "2026-05-16T10:02:45.416Z"
+    "fetchedAt": "2026-05-19T08:20:54.093Z"
   },
   "CA": {
     "file": "/passports/ca.jpg",
@@ -1705,7 +1705,7 @@
     "fetchedAt": "2026-05-16T11:58:13.635Z"
   },
   "BZ": {
-    "file": "/passports/bz.webp",
+    "file": "/passports/bz.jpg",
     "source": "https://commons.wikimedia.org/wiki/Category:Passports_of_Belize",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Belize.webp",
     "artist": "chatgpt",
@@ -1713,7 +1713,7 @@
     "licenceUrl": null,
     "width": 674,
     "height": 1000,
-    "fetchedAt": "2026-05-16T11:58:22.726Z"
+    "fetchedAt": "2026-05-19T08:18:32.021Z"
   },
   "BT": {
     "file": "/passports/bt.jpg",
@@ -2583,16 +2583,15 @@
     "inheritedFrom": "FI"
   },
   "AS": {
-    "file": "/passports/as.svg",
-    "source": "https://en.wikipedia.org/wiki/United_States_passport",
-    "commonsFile": "https://commons.wikimedia.org/wiki/File:United_States_Passport.svg",
-    "artist": "Siirski",
+    "file": "/passports/as.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=American%20Samoa%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:American_Samoa_US_national_not_US_citizen_passport_message.jpg",
+    "artist": "This is a scan of a public domain work created by the US government.",
     "licence": "Public domain",
     "licenceUrl": null,
-    "width": 333,
-    "height": 472,
-    "fetchedAt": "2026-05-16T09:52:59.789Z",
-    "inheritedFrom": "US"
+    "width": 400,
+    "height": 547,
+    "fetchedAt": "2026-05-19T08:18:20.360Z"
   },
   "GU": {
     "file": "/passports/gu.svg",
@@ -2664,5 +2663,16 @@
     "width": 1447,
     "height": 1051,
     "fetchedAt": "2026-05-18T22:39:37.565Z"
+  },
+  "NR": {
+    "file": "/passports/nr.jpg",
+    "source": "https://commons.wikimedia.org/wiki/Special:Search?search=Nauru%20passport%20cover",
+    "commonsFile": "https://commons.wikimedia.org/wiki/File:Zac_Goldsmith_meets_with_HE_Russ_Joseph_Kun_President_of_the_Republic_of_Nauru.jpg",
+    "artist": "Foreign, Commonwealth &amp; Development Office",
+    "licence": "OGL 3",
+    "licenceUrl": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3",
+    "width": 6522,
+    "height": 4891,
+    "fetchedAt": "2026-05-19T08:19:30.948Z"
   }
 }

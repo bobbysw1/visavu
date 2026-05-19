@@ -66,14 +66,34 @@ function saveManifest(m: Manifest) {
   writeFileSync(MANIFEST_PATH, JSON.stringify(m, null, 2));
 }
 
-/** Article titles to try in order. Most reliable forms first. */
+/** Article titles to try in order. Most reliable forms first.
+ *
+ *  Bug history: the original list missed "{country} passport" — the
+ *  format Wikipedia actually uses for the most-trafficked passports
+ *  (United States passport, Indian passport, Singapore passport,
+ *  Spanish passport, etc). All those were falling through to flag-
+ *  SVG fallbacks because none of the original candidates resolved.
+ *
+ *  Order now: most likely → least likely so we hit the right title
+ *  on the first API call for the common case.
+ */
 function candidateTitles(iso2: string): string[] {
   const country = nameFor(iso2);
   const nat = nationalityFor(iso2);
   const titles = new Set<string>();
+  // 1. "United States passport", "Indian passport", "Singapore passport",
+  //    "Spanish passport" — by FAR the most common Wikipedia title format.
+  titles.add(`${country} passport`);
+  // 2. Demonym-form: "American passport", "Italian passport" — used when
+  //    the article author preferred the nationality adjective.
   if (nat) titles.add(`${nat} passport`);
+  // 3. "Passport of X" / "Passport of the X" — used by a small set of
+  //    countries where the demonym is awkward (Côte d'Ivoire, etc).
   titles.add(`Passport of ${country}`);
   titles.add(`Passport of the ${country}`);
+  // 4. Compound country names sometimes use "Passport of {Adjective}",
+  //    e.g. "Passport of the United Kingdom" already covered above,
+  //    "Passport of Hong Kong" via direct country name.
   return Array.from(titles);
 }
 

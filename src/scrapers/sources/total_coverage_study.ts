@@ -432,7 +432,12 @@ const STUDY_VISAS: StudyVisa[] = [
     label: "Student Visa (留学 Ryūgaku) — Japan",
     applicationUrl: "https://www.moj.go.jp/isa/applications/procedures/16-7.html",
     primarySourceUrl: "https://www.studyinjapan.go.jp/en/",
-    feeMinor: 400000,
+    // JPY has no subunit (minorFactor=1). Japan Student Visa stamp at
+    // consulate = ¥3,000 single-entry per MOFA schedule. COE issuance
+    // is free. Prior 400000 = ¥400,000 (~$2,680 USD) was the same
+    // minor-factor confusion that bit jp_ssw / jp_special_visas /
+    // total_coverage_asia / total_coverage_business.
+    feeMinor: 3000,
     feeCurrency: "JPY",
     processingDaysMin: 30,
     processingDaysMax: 90,

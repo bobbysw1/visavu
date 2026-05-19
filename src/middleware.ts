@@ -48,18 +48,6 @@ const GONE_PATTERNS: RegExp[] = [
   /^\/license\.txt$/,
 ];
 
-// Iso pattern for the pair-redirect matcher — must match the actual
-// non-issuing iso codes we need to catch. Hard-coded as a regex group
-// rather than wildcarding `:iso([a-z]{2})` to avoid catching the
-// 100+ legitimate /xx/yy pair routes on every request. List built
-// from PARENT_PASSPORT keys in lib/countries.ts; if you add a new
-// non-issuing territory there, also add it to this regex.
-// Build from PARENT_PASSPORT keys in lib/countries.ts — keep these in
-// sync. Listed inline rather than imported so the matcher is a static
-// string Next.js can compile at build time.
-const NON_ISSUING_PAIR_MATCHER =
-  "/:iso(ai|as|aw|ax|bl|bm|bq|cc|ck|cw|cx|fk|fo|gf|gg|gl|gp|gu|im|je|ky|mf|mp|mq|ms|nc|nf|nu|pf|pm|pn|pr|re|sh|sj|sx|tc|tk|vg|vi|wf|yt)/:rest*";
-
 export const config = {
   matcher: [
     "/admin/:path*",
@@ -69,11 +57,14 @@ export const config = {
     // redirecting. Static pages for actually-issuing countries pass
     // through to the Next.js route handler as before.
     "/passport/:iso",
-    // Non-issuing-territory pair URLs — same fix as /passport/[iso]
-    // but for /[iso]/[dest] and /[iso]/[dest]/[purpose]. Hard-coded
-    // iso list (not a generic :iso([a-z]{2}) wildcard) keeps the
-    // matcher cheap on every legitimate pair-page request.
-    NON_ISSUING_PAIR_MATCHER,
+    // Pair pages: catch ALL 3-or-fewer-segment URLs whose first segment
+    // is exactly 2 chars (the iso shape). The handler then filters to
+    // non-issuing-territory ISOs via PARENT_PASSPORT lookup. Embedding
+    // the iso list in the matcher itself didn't reliably compile
+    // through Next.js's path-to-regexp transformation in production
+    // builds — broad-match + handler-filter is robust and the per-
+    // request cost is one Map lookup before falling through.
+    "/:iso((?:[a-zA-Z]{2}))/:rest*",
     // WordPress legacy URLs — 410 Gone.
     "/wp-admin/:path*",
     "/wp-content/:path*",

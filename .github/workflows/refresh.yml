@@ -60,11 +60,19 @@ jobs:
           npm run bootstrap
           npm run db:snapshot
 
+      - name: Regenerate /updates digest from recent commits
+        # Always runs (even if no fixture changes) so the /updates page
+        # picks up adapter-code commits that came in over the past week.
+        if: inputs.dry_run != true
+        run: npx tsx src/scripts/buildRecentUpdates.ts
+
       - name: Commit refreshed fixtures + snapshot
         if: steps.changes.outputs.changed == 'true' && inputs.dry_run != true
         run: |
           git config user.name "visa-data-bot"
           git config user.email "data@visalookup.example"
+          # Include src/data/recent_updates.json too — the /updates page
+          # reads it, the buildRecentUpdates step above keeps it current.
           git add 'src/scrapers/sources/__fixtures__/' 'src/data/'
           git commit -m "data: nightly refresh ($(date -u +%Y-%m-%d))" -m "Workflow run: $GITHUB_RUN_URL" \
             -m "Rebuilt snapshot from refreshed fixtures so runtime data on Vercel updates on next deploy."

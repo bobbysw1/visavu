@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-05-19T07:41:02.768Z",
+  "windowDays": 30,
+  "updates": [
+    {
+      "kind": "adapter_change",
+      "date": "2026-05-19",
+      "destinationIso2": null,
+      "destinationName": null,
+      "title": "Visa catalogue expanded",
+      "detail": "batch-4 long-tail destinations (KE/NG/AR/CO/PE/CL/PH/MY/PK/BD)",
+      "sourceSha": "216eed3"
+    }
+  ]
+}

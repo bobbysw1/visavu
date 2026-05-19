@@ -173,20 +173,60 @@ async function callMistralText(messages: ChatMessage[], systemPrompt: string): P
 // Fallback intent extractor — used when MISTRAL_API_KEY is unset, OR when
 // Mistral returns no usable JSON. Best-effort regex; better than nothing.
 // ─────────────────────────────────────────────────────────────────────────────
+/** Short-form nationality aliases users actually write. Users say "uk"
+ *  far more often than "British"; "usa" / "us" more than "American";
+ *  "aussie" / "kiwi" colloquially. The fallback regex matches the full
+ *  demonym (nationalityFor) but those terms can be the only signal in
+ *  a casual message like "can I move to Russia from uk for a job". */
+const NATIONALITY_ALIASES: Record<string, string> = {
+  uk: "GB", "u.k.": "GB", britain: "GB", "great britain": "GB",
+  us: "US", "u.s.": "US", usa: "US", "u.s.a.": "US", america: "US",
+  aussie: "AU", oz: "AU",
+  kiwi: "NZ",
+  canuck: "CA",
+  brit: "GB", brits: "GB",
+  yank: "US", yankee: "US",
+  euro: null as unknown as string, european: null as unknown as string,
+};
+
 function fallbackExtract(userMessage: string): ExtractedIntent {
   const text = userMessage.toLowerCase();
   let passport_iso2: string | null = null;
   let destination_iso2: string | null = null;
   let purpose: Purpose | null = null;
 
-  // Match passport country / nationality
-  for (const c of COUNTRY_LIST) {
-    const demonym = nationalityFor(c.iso2)?.toLowerCase();
-    if (!demonym) continue;
-    const reD = new RegExp(`\\b${demonym}\\b`, "i");
-    if (reD.test(text)) {
-      passport_iso2 = c.iso2;
+  // Match passport country — try the short-form aliases FIRST (uk, us,
+  // aussie, kiwi etc.) because the iso2 those resolve to is more
+  // reliable than partial-demonym matches against COUNTRY_LIST.
+  for (const [alias, iso] of Object.entries(NATIONALITY_ALIASES)) {
+    if (!iso) continue;
+    if (new RegExp(`\\b${alias}\\b`, "i").test(text)) {
+      passport_iso2 = iso;
       break;
+    }
+  }
+  // Then full demonyms — only if no alias matched.
+  if (!passport_iso2) {
+    for (const c of COUNTRY_LIST) {
+      const demonym = nationalityFor(c.iso2)?.toLowerCase();
+      if (!demonym) continue;
+      const reD = new RegExp(`\\b${demonym}\\b`, "i");
+      if (reD.test(text)) {
+        passport_iso2 = c.iso2;
+        break;
+      }
+    }
+  }
+  // And "from <country>" as a final fallback for casual phrasing like
+  // "moving to Russia from UK for work" where the alias loop also
+  // catches it but a longer-form country name might be there too.
+  if (!passport_iso2) {
+    for (const c of COUNTRY_LIST) {
+      const name = c.name.toLowerCase();
+      if (new RegExp(`\\bfrom\\s+(the\\s+)?${name}\\b`, "i").test(text)) {
+        passport_iso2 = c.iso2;
+        break;
+      }
     }
   }
 
@@ -646,14 +686,16 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  // Fallback if Mistral unavailable: return the context as-is, with the
-  // disclaimer. Better than 500'ing.
-  const routeHint = intent.passport_iso2 && intent.destination_iso2
-    ? `\n\nFor a structured view, visit https://visavu.com/${intent.passport_iso2.toLowerCase()}/${intent.destination_iso2.toLowerCase()}`
-    : "";
-  const fallbackReply =
-    `${dataContext}${routeHint}\n\n${DISCLAIMER}` +
-    (process.env.MISTRAL_API_KEY ? "" : "\n\n(Note: AI synthesis unavailable — MISTRAL_API_KEY not configured. Showing raw data.)");
+  // Mistral synthesis unavailable (API key missing OR the call returned
+  // null / timed out). Build a CLEAN human-readable reply instead of
+  // dumping the LLM-facing dataContext (which contains instruction
+  // text like "ASK CLARIFYING QUESTIONS" and "VISAVU PAGES YOU CAN
+  // LINK" that's confusing as a user-facing message). The reply
+  // pattern follows the same shape Mistral would produce: brief
+  // direct answer when we have a full route, brief clarifying
+  // question when we're missing one variable, polite catch-all when
+  // we can't ground at all.
+  const fallbackReply = buildCleanFallback(intent, lastUser.content);
   await logAssistantReply(fallbackReply, { model: null });
   return NextResponse.json({
     reply: fallbackReply,
@@ -661,6 +703,72 @@ export async function POST(request: NextRequest) {
     intent,
     sessionId,
   });
+}
+
+/** Build a user-facing reply when Mistral synthesis isn't available.
+ *  Three cases:
+ *    1. We have passport + destination + purpose → direct catalogue
+ *       pointer (the data is there, we just can't prose-compose it).
+ *    2. We have destination + purpose but no passport → ask for the
+ *       single missing piece in plain English.
+ *    3. We have nothing concrete → point at the questionnaire. */
+function buildCleanFallback(intent: ExtractedIntent, userMessage: string): string {
+  const p = intent.passport_iso2;
+  const d = intent.destination_iso2;
+  const purpose = intent.purpose ?? "tourism";
+
+  if (p && d) {
+    const purposeLabel = purpose === "tourism" ? "visit" : purpose;
+    return [
+      `For a ${nationalityFor(p)} citizen moving to ${nameFor(d)} to ${purposeLabel}, the full catalogue of routes Visavu has indexed sits here:`,
+      ``,
+      `- **All visa routes:** https://visavu.com/${p.toLowerCase()}/${d.toLowerCase()}`,
+      `- **Filtered by ${purposeLabel}:** https://visavu.com/${p.toLowerCase()}/${d.toLowerCase()}/${purpose}`,
+      `- **Country overview:** https://visavu.com/destination/${d.toLowerCase()}`,
+      ``,
+      `Each route page shows the visa name, fee in your currency, processing time, and source link.`,
+      ``,
+      DISCLAIMER,
+    ].join("\n");
+  }
+
+  if (d && !p) {
+    const destName = nameFor(d);
+    const purposeLabel = purpose === "tourism" ? "visit" : purpose;
+    return [
+      `To answer for ${destName} (${purposeLabel}), I need to know which passport you hold — visa rules vary enormously by nationality. Could you tell me your nationality, and I'll give you the specific routes?`,
+      ``,
+      `If you'd rather browse rather than chat, the [${destName} overview](https://visavu.com/destination/${d.toLowerCase()}) lists every visa category, or [Find my visa](https://visavu.com/find-my-visa) walks you through a 12-question wizard.`,
+      ``,
+      DISCLAIMER,
+    ].join("\n");
+  }
+
+  if (p && !d) {
+    return [
+      `Got it — you're a ${nationalityFor(p)} citizen. Which country are you trying to go to, and for what purpose (visit / work / study / family)?`,
+      ``,
+      `If you want to see every destination at once, [Where can ${nationalityFor(p)} go?](https://visavu.com/passport/${p.toLowerCase()}) is the per-passport overview.`,
+      ``,
+      DISCLAIMER,
+    ].join("\n");
+  }
+
+  // Nothing concrete extracted. Point at the wizard.
+  // userMessage echoed in a "you asked:" header so the user knows we
+  // received them (useful when the chat looks like it ignored input).
+  const trimmed = userMessage.length > 120 ? userMessage.slice(0, 120) + "…" : userMessage;
+  return [
+    `I couldn't pull a specific (passport, destination) combination from "${trimmed}". To get a useful answer, tell me:`,
+    ``,
+    `- Your nationality (e.g. UK, Indian, Australian)`,
+    `- Where you want to go`,
+    `- Why (visit / work / study / family / business)`,
+    ``,
+    `Or skip the chat entirely and use [Find my visa](https://visavu.com/find-my-visa) — 12 questions and you get five ranked lists of routes that fit your profile.`,
+    ``,
+    DISCLAIMER,
+  ].join("\n");
 }
 
 // ─────────────────────────────────────────────────────────────────────

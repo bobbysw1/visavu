@@ -992,6 +992,306 @@ export const COUNTRY_MYTHS: Myth[] = [
   // ════════════════════════════════════════════════════════════════
   // SOUTH AFRICA
   // ════════════════════════════════════════════════════════════════
+  // ════════════════════════════════════════════════════════════════
+  // TÜRKIYE
+  // ════════════════════════════════════════════════════════════════
+  {
+    slug: "tr-citizenship-investment-250k",
+    question: "Can you still get Turkish citizenship for USD $250,000 property investment?",
+    metaDescription:
+      "No. Turkey raised the property-investment threshold for Citizenship by Investment from USD $250k to $400k in June 2022. Plus 3-year hold requirement, due diligence, and processing checks.",
+    verdict: "false",
+    headline:
+      "Turkey raised the CBI property minimum from USD $250k to $400k in June 2022. The $400k applies to new applications + the 3-year hold requirement is strictly enforced.",
+    truth:
+      "Turkey's Citizenship by Investment (CBI) program — introduced 2017 — became the world's most popular CBI route, attracting Iranian, Iraqi, Afghan, Pakistani, Russian, Chinese and Ukrainian applicants in volume. Original property threshold was USD $1M (2017), reduced to $250k in 2018 (driving a 600% increase in applications), then raised to USD $400k in June 2022 to address overheated property markets in Istanbul + Ankara + Antalya + Bodrum. Current requirements: (1) USD $400k+ property purchase (single property OR multiple totaling $400k+); (2) property valuation by SPK-licensed valuation firms — over-valuation has been a fraud problem and is now strictly checked; (3) 3-year hold commitment (cannot sell within 3 years of citizenship grant — title registration includes an annotation); (4) clean criminal record from country of residence + Interpol check; (5) due diligence by Turkish General Directorate of Land Registry + Census Affairs; (6) Turkish bank account + USD payment in Turkish lira at official central bank rate. Alternative CBI routes: USD $500k+ in Turkish bank deposit (3-year hold), USD $500k+ in capital investment, USD $500k+ in Turkish government bonds, or job creation for 50+ Turkish citizens. Application via local lawyers + Land Registry + General Directorate of Population and Citizenship Affairs (Nüfus). Processing 3-8 months. Citizenship grants full Turkish passport + family members included. Note: Turkish citizenship requires no residence + no language test — uniquely permissive among CBI programs.",
+    whyExists:
+      "Pre-June 2022 marketing dominated the diaspora press in Iran, Iraq, Afghanistan, Pakistan, Russia, Ukraine — many websites + agencies continue to advertise the $250k threshold despite the increase. Plus aggressive Turkish property developers benefit from the confusion.",
+    whatToDo: [
+      "Confirm USD $400k threshold (USD valuation at Turkish central bank conversion rate to TRY)",
+      "Engage an SPK-licensed property valuation firm + lawyer experienced with CBI — fraud has triggered application refusals",
+      "Property must be held 3 years post-citizenship — title-deed annotation prevents sale, ignore agents offering 'sell-after-1-year' workarounds",
+      "Due diligence is real — applicants from PEP (Politically Exposed Person) categories or Interpol-listed nationals face refusal",
+      "Family members (spouse + minor children) included in primary application — no separate fee",
+      "Turkish citizenship permits dual citizenship + no language test + no residence requirement — among the most permissive globally",
+    ],
+    sources: [
+      { label: "Turkey Directorate General of Population and Citizenship Affairs", url: "https://www.nvi.gov.tr/" },
+      { label: "Turkey Investment Office — Citizenship by Investment", url: "https://www.invest.gov.tr/" },
+      { label: "Turkey Tapu — Land Registry General Directorate", url: "https://www.tkgm.gov.tr/" },
+    ],
+    lastVerified: VERIFIED,
+    countries: ["TR"],
+    visa: "Citizenship by Investment",
+  },
+
+  // ════════════════════════════════════════════════════════════════
+  // GREECE
+  // ════════════════════════════════════════════════════════════════
+  {
+    slug: "gr-golden-visa-250k-still-available",
+    question: "Is the Greek Golden Visa still €250,000 for property?",
+    metaDescription:
+      "No. Greece raised the Golden Visa threshold to €800,000 in Attica (Athens), Thessaloniki + high-demand islands as of August 2024. Lower-tier regions remain at €250,000-€400,000.",
+    verdict: "false",
+    headline:
+      "Greece raised its Golden Visa property threshold from €250k to €800k in Attica (Athens), Thessaloniki + high-tier islands (Mykonos, Santorini) from August 2024. Lower-tier regions remain at €250-400k.",
+    truth:
+      "Greece's Golden Visa Program (introduced 2013) operates on a tiered system since the August 2024 reform under Law 5100/2024: (1) Tier 1 (€800,000+) — Attica (Athens + surrounding region), Thessaloniki, Mykonos, Santorini, and islands with 3,100+ population; (2) Tier 2 (€400,000+) — all other Greek municipalities not in Tier 1; (3) Tier 3 (€250,000+) — special preserved tier for property conversions from commercial to residential use + restoration of listed historical buildings (the lowest entry into the program). Plus standard requirements: minimum 80m² apartment OR single property purchase, single property (no aggregation of multiple smaller units), no minimum residence requirement, no Greek language test. Initial 5-year residence permit, renewable indefinitely, leads to Permanent Residence after 5 years + Greek citizenship after 7 years (Greek citizenship requires Greek language B1 + integration test + clean criminal record). Family included: spouse + minor children + dependent parents of both spouses (uniquely generous — Greece is the only EU Golden Visa to include parents of both spouses). Application via the Greek consulate in country of residence + Decentralised Administration office in Greece. Processing 4-6 months typically.",
+    whyExists:
+      "Property marketing in Greece + agency websites continued to advertise €250k after the August 2024 reform took effect. Plus the tiered system creates confusion — the lower tiers do exist, but only for restoration / preservation purchases.",
+    whatToDo: [
+      "Confirm which tier applies to your target location BEFORE committing — Attica + Thessaloniki + high-tier islands are €800k",
+      "Tier 3 (€250k) requires commercial-to-residential conversion or historical-building restoration — verify property eligibility",
+      "Single property purchase only — cannot aggregate multiple smaller units to reach the threshold",
+      "Engage a Greek lawyer for due diligence on the property + tax compliance",
+      "Family members (spouse, minor children, dependent parents of both spouses) included — uniquely generous",
+      "Greek citizenship at 7 years requires B1 Greek + integration test — NOT automatic from residence",
+    ],
+    sources: [
+      { label: "Greece Ministry of Foreign Affairs — Golden Visa", url: "https://www.mfa.gr/" },
+      { label: "Greece Migration Policy — Permanent Investor", url: "https://migration.gov.gr/" },
+      { label: "Greece Law 5100/2024 — Golden Visa reform (Government Gazette)", url: "https://www.et.gr/" },
+    ],
+    lastVerified: VERIFIED,
+    countries: ["GR"],
+    visa: "Golden Visa",
+  },
+
+  // ════════════════════════════════════════════════════════════════
+  // SWITZERLAND
+  // ════════════════════════════════════════════════════════════════
+  {
+    slug: "ch-permit-easy-eu-blue-card",
+    question: "Is the EU Blue Card valid in Switzerland?",
+    metaDescription:
+      "No. Switzerland is not in the EU and does not participate in the EU Blue Card. Swiss work permits operate under federal + cantonal rules (L, B, C permits) with annual quotas.",
+    verdict: "false",
+    headline:
+      "Switzerland is NOT in the EU and does NOT participate in the EU Blue Card. Swiss work runs through the federal L (short-term), B (residence), C (settlement) permit system with quotas + cantonal approval.",
+    truth:
+      "Switzerland is uniquely positioned in European immigration — Schengen member (open borders) + EFTA member + EEA-Switzerland Bilateral Agreement on Free Movement of Persons (AFMP) for EU/EFTA nationals + bilateral immigration regimes for third-country nationals. The EU Blue Card (Council Directive 2009/50/EC, revised 2021/1883) is an EU-only instrument — Switzerland never opted in. Swiss work permits for third-country nationals (i.e. non-EU/EFTA) operate under: (1) Federal Foreign Nationals Act (FNIA) + Foreign Nationals Ordinance (VZAE); (2) Annual federal quotas (~8,500 L Permits + 4,500 B Permits in 2024, set annually by Federal Council); (3) Cantonal-level pre-approval — each canton has its own labour-market priority test + processing; (4) Employer-sponsored — labour-market check confirming no qualified Swiss/EU candidate available, salary at regional prevailing wage. L Permit (short-term, 1 year + extensions to 24 months max), B Permit (1-year residence, renewable for 5-year ledger), C Permit (permanent settlement, 5 years for US/Canada nationals + select preferred countries, 10 years standard). EU/EFTA nationals work under the AFMP — no quota, simplified registration, full labour-market access. Citizenship requires 10 years of qualifying residence + B1 in canton language (German/French/Italian/Romansh). Application via cantonal migration office.",
+    whyExists:
+      "EU + Swiss confusion is common — Switzerland uses CHF instead of EUR, isn't in the EU, but is in Schengen + EFTA. Plus the EU Blue Card's brand recognition in immigration marketing materials gets carelessly applied to Switzerland.",
+    whatToDo: [
+      "For non-EU/EFTA nationals seeking Swiss work, apply for L or B Permit via Swiss employer + cantonal migration office",
+      "Annual quotas fill — apply early in the year for best chance",
+      "EU/EFTA nationals enjoy AFMP free movement — no permit needed for short stays, simplified registration for long stays",
+      "Salary must meet regional prevailing wage — varies by canton + occupation",
+      "C Permit (settlement) requires 5 years for US/Canada + Vatican + Andorra + Monaco + San Marino nationals, 10 years for others",
+      "Naturalisation at 10 years + B1 canton language + integration test + clean tax / criminal record",
+    ],
+    sources: [
+      { label: "Switzerland State Secretariat for Migration (SEM)", url: "https://www.sem.admin.ch/sem/en/home.html" },
+      { label: "Switzerland Federal Council — Foreign Nationals Act", url: "https://www.admin.ch/" },
+      { label: "Switzerland Cantonal Migration Authorities (varies)", url: "https://www.ch.ch/en/working-in-switzerland/" },
+    ],
+    lastVerified: VERIFIED,
+    countries: ["CH"],
+    visa: "Work Permit (L / B / C)",
+  },
+
+  // ════════════════════════════════════════════════════════════════
+  // ISRAEL
+  // ════════════════════════════════════════════════════════════════
+  {
+    slug: "il-aliyah-anyone-jewish-heritage",
+    question: "Can anyone with Jewish heritage make Aliyah to Israel?",
+    metaDescription:
+      "Israel's Law of Return covers Jews + their children + grandchildren + spouses — but documentary evidence is strict. The Chief Rabbinate's Orthodox standard governs religious recognition.",
+    verdict: "partial",
+    headline:
+      "Law of Return covers Jews + children + grandchildren + spouses — but requires Orthodox-recognised documentary evidence. Conversion-based Aliyah is contentious + Reform conversions face extra scrutiny.",
+    truth:
+      "Israel's Law of Return (1950, amended 1970) grants the right to Aliyah (immigration + citizenship) to: (1) any Jew (defined as having a Jewish mother under Orthodox Halacha OR Orthodox-recognised conversion); (2) children + grandchildren of a Jew; (3) spouses of Jews / children of Jews / grandchildren of Jews. Excluded: those who have actively converted to another religion (since the 1989 Brother Daniel case + 1990s rulings). Application via The Jewish Agency for Israel (Sochnut) consultants in country of residence, then submitted to the Israeli Ministry of Interior. Required evidence: (a) for Jews — documentary proof of Jewish maternal lineage (rabbinical letters, synagogue membership records, ketubah of mother's parents) OR Orthodox conversion certificate from a recognised beit din; (b) for spouses + descendants of Jews — proof of relationship + Jewish ancestor's documentation. Reform + Conservative + Reconstructionist conversions: legally accepted under Law of Return (since 1989 Supreme Court rulings) but disputed by the Chief Rabbinate, affecting marriage + burial rights in Israel. After Aliyah: 'Returning Citizen' status with tax benefits (income tax exemption for 10 years on overseas income for new Olim), free Hebrew Ulpan classes, healthcare immediately, IDF service obligations (typically waived for new Olim aged 22+). Citizenship issued automatically upon Aliyah — no naturalisation process. Olim can also choose Permanent Residence (Ezrachut Toshav) initially with delayed citizenship for those wanting to retain another nationality.",
+    whyExists:
+      "Aliyah promotion materials from Jewish Agency + Nefesh B'Nefesh + Aish HaTorah emphasise accessibility ('anyone Jewish can move to Israel'). The documentary evidence rigour + Reform-Conservative conversion disputes are real constraints.",
+    whatToDo: [
+      "Engage Jewish Agency / Sochnut early — they help compile documentation + arrange Aliyah flight",
+      "Compile maternal Jewish lineage documentation: synagogue records, ketubah, mother's birth certificate, grandparents' documentation",
+      "If converted, ensure the conversion is via a recognised beit din — Orthodox conversions are unproblematic; Reform / Conservative are legally accepted but may face additional scrutiny",
+      "Spouses + grandchildren of Jews can make Aliyah even without being Jewish themselves — bring relationship + ancestor documentation",
+      "Plan for Hebrew language Ulpan + IDF service (mostly waived for adults) + integration",
+      "Israel permits dual citizenship for Olim — you retain your original nationality unless you formally renounce",
+    ],
+    sources: [
+      { label: "Israel Ministry of Aliyah and Integration", url: "https://www.gov.il/en/departments/ministry_of_aliyah_and_integration" },
+      { label: "Jewish Agency for Israel (Sochnut)", url: "https://www.jewishagency.org/" },
+      { label: "Nefesh B'Nefesh — North American + UK Aliyah", url: "https://www.nbn.org.il/" },
+    ],
+    lastVerified: VERIFIED,
+    countries: ["IL"],
+    visa: "Aliyah / Law of Return",
+  },
+
+  // ════════════════════════════════════════════════════════════════
+  // NEW ZEALAND
+  // ════════════════════════════════════════════════════════════════
+  {
+    slug: "nz-skilled-points-180-guaranteed-pr",
+    question: "Does 180 points on NZ's Skilled Migrant Category guarantee a Resident Visa?",
+    metaDescription:
+      "180 points (post-October 2023 reform) is the minimum to express interest. Selection is at the discretion of Immigration NZ, and queue position depends on occupation, job offer, and category demand.",
+    verdict: "mostly_false",
+    headline:
+      "180 points is the minimum — not a guarantee. INZ runs draws periodically + selection prioritises Green List occupations + verified job offers. Many high-point candidates wait months for Invitation to Apply.",
+    truth:
+      "New Zealand's Skilled Migrant Category (SMC, reformed October 2023) operates as a points-based Expression of Interest (EOI) → Invitation to Apply (ITA) → Resident Visa pipeline. Points awarded for: (1) Skilled Employment in NZ — 3, 6 or 12 points based on job seniority + salary tier; (2) Qualifications — Tier 1 (PhD), Tier 2 (master's / 6+ years bachelor's), Tier 3 (3-year bachelor's), Tier 4 (NZ Diploma 6 / 7), Tier 5 (NZ Diploma 4 / 5); (3) Occupational registration — 3 points if registered with NZ professional body (NZ Medical Council, Engineering NZ etc.); (4) Income at high multiples of median wage — up to 6 points; (5) Age — 30+ years young attracts 10-15 points; (6) Work experience in NZ. Minimum 180 points to submit EOI. INZ runs selection draws monthly typically. Selection prioritises: Green List occupations (high-demand list — engineering, IT, construction, healthcare), Tier 1-2 jobs, candidates with confirmed NZ job offers. Without a NZ job offer, scoring 180 is very competitive — most successful 2024-2025 ITA recipients had a job offer + at least 200 points. SMC eligibility leads to Resident Visa (permanent residence), eligibility to apply for NZ citizenship after 5 years.",
+    whyExists:
+      "Pre-October 2023 SMC had different scoring (160 points + EOI). The new 180-point threshold gets quoted without explaining the competitive Invitation phase that follows. Immigration agents marketing 'just hit 180!' over-simplifies.",
+    whatToDo: [
+      "Confirm your occupation is on the Green List or Long Term Skill Shortage List — these have priority + lower thresholds",
+      "Secure a NZ job offer BEFORE submitting EOI — substantially increases ITA chances",
+      "Calculate points honestly using the INZ points calculator — claim qualifications, age, experience accurately",
+      "Boost points: NZ work experience (+3 per year), occupational registration, NZ qualification (NZ degree adds bonus)",
+      "Accredited Employer Work Visa (AEWV) provides a NZ job offer route — work for 2 years then transition to SMC",
+      "Plan for 6-12 months EOI → ITA wait + 3-6 months further for Resident Visa decision",
+    ],
+    sources: [
+      { label: "Immigration NZ — Skilled Migrant Category Resident Visa", url: "https://www.immigration.govt.nz/new-zealand-visas/visas/visa/skilled-migrant-category-resident-visa" },
+      { label: "Immigration NZ — Green List occupations", url: "https://www.immigration.govt.nz/new-zealand-visas/preparing-a-visa-application/working-in-nz/qualifications-for-work/work-to-residence" },
+      { label: "Immigration NZ — Points Calculator", url: "https://www.immigration.govt.nz/" },
+    ],
+    lastVerified: VERIFIED,
+    countries: ["NZ"],
+    visa: "Skilled Migrant Category",
+  },
+
+  // ════════════════════════════════════════════════════════════════
+  // VIETNAM
+  // ════════════════════════════════════════════════════════════════
+  {
+    slug: "vn-evisa-all-purposes",
+    question: "Does Vietnam's e-visa cover all visit purposes including work?",
+    metaDescription:
+      "No. Vietnam's e-visa (USD $25 single, $50 multiple, 90 days) covers tourism + business meetings, not work. Working without a Work Permit is a deportation offence.",
+    verdict: "false",
+    headline:
+      "Vietnam e-visa is for tourism + permitted business activities only — NOT work. Working requires a Work Permit + Temporary Residence Card; e-visa work attempts trigger deportation + ban.",
+    truth:
+      "Vietnam's e-visa system (expanded August 2023 to most nationalities — ~80+ countries) provides 90-day single or multiple-entry electronic visas at USD $25 / $50. Eligible purposes: tourism, family visits, business meetings (not productive work), conferences, exploratory market research, intra-company training, attending trade fairs. NOT eligible: paid work for Vietnamese employers, productive employment, delivery of paid services to Vietnamese clients, journalism (separate Press Card required), missionary or religious activity, education / study (separate visa needed). Working in Vietnam requires: (1) Work Permit (Giấy phép lao động) issued by DOLISA (provincial Department of Labour, Invalids and Social Affairs) — employer-sponsored, requires demonstration of need + Vietnamese-citizen recruitment effort; (2) LB visa (Working visa) issued after Work Permit; (3) Temporary Residence Card (Thẻ tạm trú) for stays beyond 90 days, validity 2-5 years. Exemptions from Work Permit: senior managers of companies established in Vietnam, intra-company transfers for 30 days or less, marriage to Vietnamese citizens, owners of Vietnam-registered companies. Working on e-visa is a violation of the Law on Foreigners' Entry, Exit + Transit (2014) — deportation + 3-year re-entry ban + fine ($300-3,500 USD typical).",
+    whyExists:
+      "Vietnam's e-visa expansion + low cost makes it feel like a general-purpose entry — many travel + remote-work blogs incorrectly advise digital nomads to enter on e-visa + work for foreign employers, which is a grey area at best.",
+    whatToDo: [
+      "Confirm your nationality is e-visa eligible — list updated periodically by Vietnamese Ministry of Public Security",
+      "Use the official e-visa portal evisa.xuatnhapcanh.gov.vn — not third-party agencies that mark up the fee",
+      "For paid work for Vietnamese employer, apply for Work Permit + LB visa BEFORE arrival — DOLISA processing 2-3 months",
+      "Remote work for FOREIGN employers while on tourist e-visa is in a legal grey area — Vietnam has not formally legalised digital-nomad working",
+      "For paid services to Vietnamese clients, register either as a Vietnamese-employed worker or as a Vietnam-registered company",
+      "Working without Work Permit triggers deportation + ban — not worth the risk for short-term financial gain",
+    ],
+    sources: [
+      { label: "Vietnam e-visa portal", url: "https://evisa.xuatnhapcanh.gov.vn/" },
+      { label: "Vietnam Ministry of Public Security — Immigration Department", url: "https://xuatnhapcanh.gov.vn/" },
+      { label: "Vietnam DOLISA — Work Permit application", url: "https://www.dolisa.gov.vn/" },
+    ],
+    lastVerified: VERIFIED,
+    countries: ["VN"],
+    visa: "e-Visa",
+  },
+
+  // ════════════════════════════════════════════════════════════════
+  // MOROCCO
+  // ════════════════════════════════════════════════════════════════
+  {
+    slug: "ma-residence-easy-after-3-months",
+    question: "Do you get Moroccan residence automatically after 3 months as a tourist?",
+    metaDescription:
+      "No. Tourists must leave Morocco at the 90-day mark or apply for a Carte de Séjour BEFORE day 90 with proof of income, accommodation, and reason for stay. Overstays trigger fines + ban.",
+    verdict: "false",
+    headline:
+      "Tourists must leave by day 90 OR apply for Carte de Séjour BEFORE day 90 with proof of income, accommodation + reason for long stay. There is no automatic conversion + overstays trigger fines + ban.",
+    truth:
+      "Morocco permits visa-free entry up to 90 days for ~60 nationalities (most of Europe, US, Canada, Australia, NZ, Japan, South Korea, Singapore, Brazil, Argentina, etc.). After 90 days, foreign nationals must either: (1) Leave Morocco — many short-stay visitors do a 'visa run' to Ceuta / Melilla (Spanish enclaves on Moroccan coast, technically EU territory) or to Algeciras / Tarifa Spain by ferry; (2) Apply for Carte de Séjour (residence permit) BEFORE day 90 expires, at the Bureau des Étrangers of the local Préfecture de Police. Carte de Séjour categories: Student, Salaried Worker (employer-sponsored), Self-Employed Worker, Spouse/Family of Moroccan, Visitor (retired person with proven income, ~MAD 5,000-15,000/month equivalent), Investor. Application requires: passport, accommodation evidence (rental contract registered with local authorities), proof of income / pension (MAD 5,000+/month minimum for visitor, higher for working categories), bank certification, photographs, application fee MAD 100. Processing 1-3 months typically. Initial card valid 1 year, renewable for 5-year periods, leads to Permanent Residence after 5 years of legal residence. Overstaying tourist period: fines starting MAD 500/day, possible ban from re-entry. Visa-required nationals (most of Africa, Asia, Middle East) must apply at Moroccan consulate before travel.",
+    whyExists:
+      "Morocco's casual feel + the convenience of visa-runs to Ceuta makes the 90-day limit feel flexible. Plus Morocco's residence-by-property programmes for European retirees (Tangier, Marrakech, Essaouira) create the impression of easier paths than the formal Carte de Séjour requires.",
+    whatToDo: [
+      "Track your 90-day clock from entry stamp — overstaying triggers MAD 500/day fine + possible ban",
+      "If planning to stay longer, apply for Carte de Séjour BEFORE day 90 at the Préfecture de Police (Service des Étrangers)",
+      "Get a registered rental contract — informal accommodation arrangements don't satisfy Carte de Séjour requirements",
+      "For 'Visitor' category, prove pension / passive income at MAD 5,000+/month",
+      "Visa-required nationals: apply for Moroccan visa at consulate before travel + then Carte de Séjour within first 90 days",
+      "Visa-runs to Ceuta / Melilla (Spanish enclaves) or back to Europe are tolerated but not infinitely — Moroccan border officers can refuse re-entry",
+    ],
+    sources: [
+      { label: "Morocco Ministry of Interior — Direction Générale de la Sûreté Nationale", url: "https://www.dgsn.gov.ma/" },
+      { label: "Morocco Ministry of Foreign Affairs — Consular Affairs", url: "https://www.consulat.ma/" },
+      { label: "Morocco Carte de Séjour (Service Public)", url: "https://www.servicepublic.ma/" },
+    ],
+    lastVerified: VERIFIED,
+    countries: ["MA"],
+    visa: "Carte de Séjour",
+  },
+
+  // ════════════════════════════════════════════════════════════════
+  // EGYPT
+  // ════════════════════════════════════════════════════════════════
+  {
+    slug: "eg-visa-on-arrival-all-nationalities",
+    question: "Can everyone get an Egyptian visa-on-arrival at Cairo airport?",
+    metaDescription:
+      "No. Visa-on-arrival (USD $25, 30 days, single-entry) is available to ~80 nationalities. Many African + Asian nationalities require advance e-visa or consular visa.",
+    verdict: "partial",
+    headline:
+      "VOA is available for ~80 nationalities (US, EU, UK, Canada, Australia, NZ, Japan, Korea, GCC, etc.) — but many African, Asian, and Middle Eastern nationalities need advance e-visa or consular visa.",
+    truth:
+      "Egypt's Visa-on-Arrival (VOA) at airports + Sharm El-Sheikh + Hurghada + Marsa Alam land borders applies to ~80 nationalities: most of Europe (EU + Switzerland + Norway + Iceland + UK), the US, Canada, Australia, NZ, Japan, South Korea, Singapore, Malaysia, GCC states (Saudi Arabia, UAE, Kuwait, Bahrain, Qatar, Oman — visa-free), several Latin American (Brazil, Argentina, Chile, Mexico — VOA). Single-entry VOA: USD $25, 30 days. Multiple-entry VOA: USD $60, 30-90 days depending on origin. Visa-required nationalities: most of Africa (excluding GCC + Maghreb states), most of Asia (Pakistan, Bangladesh, Sri Lanka, Vietnam, Philippines, etc.), most of Eastern Europe + post-Soviet space, all of Caribbean except a few. For visa-required nationals, Egypt offers: e-Visa via visa2egypt.gov.eg (USD $25, applied 7+ days before travel, valid for 90 days from issue) for ~75 nationalities, OR consular visa at Egyptian embassy in country of residence for others. Special arrangements: Sharm El-Sheikh / Red Sea Riviera entry with Sinai-only stamp (free, 14 days, restricted to Sinai resort areas — does not allow travel to Cairo / Luxor / Aswan). For longer stays: Tourist Residence Permit (renewable up to 6 months), Student Visa, Work Permit (employer-sponsored via Ministry of Labour), Investor Visa (USD $1M+ investment), Property-based residence (proven property purchase USD $50k+).",
+    whyExists:
+      "Travel guides + booking sites often headline 'Egypt visa-on-arrival for $25' without the nationality caveats. Plus Egypt's tourism authority promotes the VOA route to maximise tourist arrivals.",
+    whatToDo: [
+      "Check eligibility on the Egyptian Ministry of Foreign Affairs site OR via the e-Visa portal visa2egypt.gov.eg",
+      "If eligible for VOA, prepare USD $25 cash (USD payment expected at airport) + passport with 6+ months validity",
+      "If not eligible for VOA, apply for e-Visa via visa2egypt.gov.eg at least 7 days before travel",
+      "For Sinai-only travel (Sharm El-Sheikh, Dahab, Nuweiba), free 14-day Sinai stamp available — but no Cairo / Nile Valley travel",
+      "For long-stay or work, apply for the appropriate residence category at the Mogamma El Tahrir or local immigration office in Cairo",
+      "VOA visas can be extended 60 days at local immigration office (Mogamma + regional offices) — no overstay charge if extension requested before expiry",
+    ],
+    sources: [
+      { label: "Egypt Ministry of Foreign Affairs — Visa Information", url: "https://www.mfa.gov.eg/" },
+      { label: "Egypt e-Visa Portal", url: "https://www.visa2egypt.gov.eg/" },
+      { label: "Egypt Ministry of Interior — Immigration", url: "https://www.moiegypt.gov.eg/" },
+    ],
+    lastVerified: VERIFIED,
+    countries: ["EG"],
+    visa: "Visa-on-Arrival",
+  },
+
+  // ════════════════════════════════════════════════════════════════
+  // SECOND BATCH for under-served countries
+  // ════════════════════════════════════════════════════════════════
+
+  // ─── US: H-2A / H-2B agricultural & seasonal ───
+  {
+    slug: "us-tourism-visa-easy-after-refusal",
+    question: "Can I easily get a US visitor visa after a previous refusal?",
+    metaDescription:
+      "Re-applying after a US visa refusal requires demonstrating material change in circumstances since the refusal. Section 214(b) refusals can be appealed by re-application + new evidence — but high success requires substantive change.",
+    verdict: "depends",
+    headline:
+      "You can re-apply, but you must demonstrate material change since the prior Section 214(b) refusal — new job, new ties, new evidence of intent to return. Mere re-application without change usually refuses again.",
+    truth:
+      "US B-1/B-2 visitor visa refusals are almost always under INA Section 214(b) — failure to demonstrate the applicant has overcome the presumption of immigrant intent (i.e. the consular officer was not convinced you'll return home). 214(b) is not a permanent bar; it just means THIS application was refused. You can re-apply anytime — but each application requires the $185 fee, in-person interview, and most importantly, demonstration of changed circumstances. What constitutes 'material change': (1) new full-time job in home country (the strongest factor); (2) marriage or new child providing ties to home country; (3) new property ownership; (4) new educational enrolment in home country; (5) new evidence of strong family / business / investment connections requiring your return; (6) clarification of trip purpose with detailed itinerary + invitation letters; (7) demonstration of sufficient funds for the trip + clear return ticket. Re-applying within weeks of refusal without material change almost always refuses again. Re-applying 12+ months later with documented changed circumstances has substantially higher success. Other refusal categories require different action: 221(g) (administrative processing) — wait for processing to complete; 212(a) (inadmissibility) requires a waiver application (Form I-601 / I-601A). Always disclose the prior refusal on the new DS-160 — failing to disclose is grounds for permanent misrepresentation finding (212(a)(6)(C)).",
+    whyExists:
+      "Consulates rarely explain refusals in detail — the standard 214(b) letter is vague, leading applicants to think 're-applying' is the answer. Plus immigration consultants market 're-application packages' that don't address the underlying ties issue.",
+    whatToDo: [
+      "Wait at least 6-12 months after refusal before re-applying — long enough to establish meaningful change",
+      "Build new ties: full-time employment letter, marriage / family changes, property purchase, business establishment, educational enrolment",
+      "Prepare a clear trip purpose with detailed itinerary, accommodation bookings, return ticket, and invitation letters if applicable",
+      "Disclose the prior refusal on Form DS-160 — non-disclosure is misrepresentation + permanent bar (INA 212(a)(6)(C))",
+      "Consider a US-licensed immigration attorney for borderline cases — DIY re-applications after multiple refusals are rarely successful",
+      "Do NOT attempt to enter on another nationality's passport (e.g. dual citizens) without disclosing the US refusal — that's misrepresentation",
+    ],
+    sources: [
+      { label: "US Travel.State.Gov — Visitor Visa Refusals", url: "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html" },
+      { label: "US Travel.State.Gov — Section 214(b) Refusals", url: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/visa-denials.html" },
+      { label: "USCIS — Inadmissibility Waivers", url: "https://www.uscis.gov/i-601a" },
+    ],
+    lastVerified: VERIFIED,
+    countries: ["US"],
+    visa: "B-1/B-2",
+  },
+
+  // ─── ZA placeholder so previous one isn't last ───
   {
     slug: "za-critical-skills-list-anyone",
     question: "Can anyone with skills on South Africa's Critical Skills List get the work visa?",

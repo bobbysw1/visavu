@@ -33,6 +33,8 @@ import {
 import { applicantContextSentence } from "@/components/PassportApplicantPanel";
 import { bilateralContext, destinationSummary, workingHolidayContextHint } from "@/lib/chatBilateralContext";
 import { sanitiseChatReply } from "@/lib/linkAllowlist";
+import { passportProfileFor } from "@/content/passportProfiles";
+import { convertMinor, formatMoney, ratesAsOf } from "@/lib/exchange";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -250,6 +252,24 @@ function buildGeneralContext(intent: ExtractedIntent): string {
   return lines.join("\n");
 }
 
+/** Format a fee with the applicant's preferred currency conversion alongside.
+ *  Example: formatFeeForApplicant({amountMinor: 65000, currency: "AUD"}, "GBP")
+ *  → "AUD $650 (≈ £335)"
+ *  If applicantCurrency is not given, or equals source, or rate unavailable,
+ *  returns the native string only.  */
+function formatFeeForApplicant(
+  fee: { amountMinor: number; currency: string; label?: string | null },
+  applicantCurrency: string | null,
+): string {
+  const native = formatMoney(fee.amountMinor, fee.currency);
+  if (!applicantCurrency || applicantCurrency === fee.currency) {
+    return native;
+  }
+  const converted = convertMinor(fee.amountMinor, fee.currency, applicantCurrency);
+  if (converted == null) return native;
+  return `${native} (≈ ${formatMoney(converted, applicantCurrency)})`;
+}
+
 function formatRouteForContext(
   passport: string,
   destination: string,
@@ -260,9 +280,17 @@ function formatRouteForContext(
   if (options.length === 0) {
     return `No verified data in Visavu for ${nationalityFor(passport)} passport → ${nameFor(destination)} (${purpose}). The user should check the ${nameFor(destination)} immigration authority directly.`;
   }
+  const profile = passportProfileFor(passport);
+  const applicantCurrency = profile?.preferredCurrency ?? null;
+
   const lines: string[] = [
     `Visavu verified data for ${nationalityFor(passport)} passport → ${nameFor(destination)} (${purpose}):`,
   ];
+  if (applicantCurrency) {
+    lines.push(
+      `Applicant's preferred currency: ${applicantCurrency}. Fees below are shown in both native + ${applicantCurrency} (≈ converted at FX rate as of ${ratesAsOf()}).`,
+    );
+  }
   for (const opt of options) {
     const diff = assessDifficulty(opt, baselineTourismStatus as never);
     lines.push(`  - [${opt.status.toUpperCase()}] ${opt.label}`);
@@ -270,10 +298,13 @@ function formatRouteForContext(
     if (opt.processingTimeDaysMax)
       lines.push(`    Processing: ${opt.processingTimeDaysMin ?? "?"}-${opt.processingTimeDaysMax} days`);
     lines.push(`    Difficulty: ${diff.score}/10 (${diff.bucket})`);
-    if (opt.fees.length > 0)
+    if (opt.fees.length > 0) {
       lines.push(
-        `    Fees: ${opt.fees.map((f) => `${f.kind} ${f.amountMinor / 100} ${f.currency}`).join(", ")}`,
+        `    Fees: ${opt.fees
+          .map((f) => `${f.kind ?? "base"} ${formatFeeForApplicant(f, applicantCurrency)}${f.label ? ` (${f.label})` : ""}`)
+          .join("; ")}`,
       );
+    }
     if (opt.requirements.length > 0)
       lines.push(`    Requirements: ${opt.requirements.slice(0, 3).join("; ")}`);
     if (opt.primarySourceUrl) lines.push(`    Source: ${opt.primarySourceUrl}`);

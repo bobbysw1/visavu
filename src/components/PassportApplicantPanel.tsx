@@ -23,7 +23,33 @@ import { nameFor } from "@/lib/countries";
 
 export function PassportApplicantPanel({ passportIso2 }: { passportIso2: string }) {
   const profile = passportProfileFor(passportIso2);
-  if (!profile) return null;
+  if (!profile) {
+    // No detailed profile yet for this nationality — render a generic
+    // helper panel pointing at the right authority types so the user
+    // isn't left with NO guidance.
+    return (
+      <section className="mt-8 rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-elev)] overflow-hidden">
+        <div className="px-5 sm:px-6 py-4 space-y-2">
+          <p className="kicker">For {nameFor(passportIso2)} applicants</p>
+          <p className="text-sm text-[var(--color-ink)] leading-relaxed">
+            Detailed per-document process for the {nameFor(passportIso2)} passport (police clearance, apostille,
+            tax records, translator accreditation) isn&apos;t in our index yet. The generic mapping below
+            applies to most jurisdictions — verify with the destination&apos;s consulate.
+          </p>
+          <ul className="text-xs text-[var(--color-ink-muted)] leading-relaxed list-disc pl-5 space-y-0.5">
+            <li>Police clearance — your national police authority or interior ministry</li>
+            <li>Apostille or legalisation — your ministry of foreign affairs (if your country is a Hague signatory) or destination embassy (if not)</li>
+            <li>Tax records — your national tax authority&apos;s annual return + assessment</li>
+            <li>Translation — court-sworn translator or notary public certified</li>
+          </ul>
+          <p className="text-xs text-[var(--color-ink-muted)] italic pt-1">
+            Email contact@visavu.com if you want us to prioritise a detailed profile for{" "}
+            {nameFor(passportIso2)}.
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

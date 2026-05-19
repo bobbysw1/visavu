@@ -4,7 +4,17 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-type Message = { role: "user" | "assistant"; content: string; ts?: number };
+type Message = {
+  role: "user" | "assistant";
+  content: string;
+  ts?: number;
+  /** When the assistant returned a clarifying question, the options
+   *  array drives the multiple-choice pill row below the message.
+   *  Clicking a pill submits the option text verbatim as the next
+   *  user message. Cleared from subsequent messages once the user
+   *  has answered (don't re-render stale pills after the turn). */
+  clarifyingOptions?: string[];
+};
 
 const STORAGE_KEY = "visavu.chat.v1";
 /** Conversation/session identifier persisted in localStorage so the
@@ -306,7 +316,13 @@ export function ChatInterface() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ messages: newMessages, sessionId: sessionId ?? undefined }),
       });
-      const data = (await res.json()) as { reply?: string; error?: string; sessionId?: string };
+      const data = (await res.json()) as {
+        reply?: string;
+        error?: string;
+        sessionId?: string;
+        type?: string;
+        clarifying?: { options?: string[] };
+      };
       const reply = data.reply ?? data.error ?? "Sorry — the assistant didn't return a reply.";
       // Persist whatever the server returned so the next request
       // stitches onto the same conversation row.
@@ -317,7 +333,19 @@ export function ChatInterface() {
           /* ignore */
         }
       }
-      setMessages((m) => [...m, { role: "assistant", content: reply, ts: Date.now() }]);
+      // Strip clarifying pills from any previous assistant message
+      // before adding the new turn — only the most recent assistant
+      // message should ever offer clarifying options. Otherwise stale
+      // pill rows pile up as the conversation progresses.
+      setMessages((m) => [
+        ...m.map((msg) => (msg.role === "assistant" ? { ...msg, clarifyingOptions: undefined } : msg)),
+        {
+          role: "assistant",
+          content: reply,
+          ts: Date.now(),
+          clarifyingOptions: data.clarifying?.options,
+        },
+      ]);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "network error";
       setMessages((m) => [
@@ -422,6 +450,32 @@ export function ChatInterface() {
                   >
                     {m.role === "assistant" ? renderMarkdown(m.content) : m.content}
                   </div>
+                  {/* Clarifying-question pills — rendered when the
+                      assistant returned options. Click submits the
+                      pill text verbatim as the user's next message.
+                      Disabled while another request is in flight
+                      (busy) so users can't double-fire. */}
+                  {m.role === "assistant" && m.clarifyingOptions && m.clarifyingOptions.length > 0 && (
+                    <div className="flex flex-wrap gap-2 pt-1 pl-1">
+                      {m.clarifyingOptions.map((opt) => (
+                        <button
+                          key={opt}
+                          type="button"
+                          onClick={() => void send(opt)}
+                          disabled={busy}
+                          className="
+                            px-3 py-1.5 rounded-full text-xs font-medium
+                            border border-[var(--color-rule-strong)] bg-[var(--color-paper)]
+                            text-[var(--color-ink)] hover:bg-[var(--color-ink)]
+                            hover:text-[var(--color-paper)] hover:border-[var(--color-ink)]
+                            transition disabled:opacity-50 disabled:cursor-not-allowed
+                          "
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                   {m.role === "assistant" && (
                     <div className="flex items-center gap-3 pl-1">
                       <CopyButton text={m.content} />

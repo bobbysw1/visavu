@@ -143,30 +143,86 @@ async function callMistralJSON(messages: ChatMessage[]): Promise<ExtractedIntent
   }
 }
 
+/**
+ * Robust Mistral call with retry + automatic fallback to mistral-small
+ * if mistral-large is unavailable (429 rate limit, 5xx outage). Logs
+ * every failure to stderr so Vercel function logs surface them — the
+ * previous silent-return-null behaviour meant the chat would degrade
+ * to the buildCleanFallback path without any signal in production
+ * logs as to WHY synthesis was failing.
+ *
+ * Retry behaviour:
+ *   - 1 retry on 429 (rate limit) after 800ms
+ *   - 1 retry on 5xx (server error) after 400ms
+ *   - On second failure, retry once more against mistral-small
+ *   - All other errors (4xx other than 429, network, JSON parse): one log + return null
+ *
+ * Total worst-case latency: ~3s including two backoffs and the model
+ * fallback. Under maxDuration: 30s budget.
+ */
 async function callMistralText(messages: ChatMessage[], systemPrompt: string): Promise<string | null> {
   const apiKey = process.env.MISTRAL_API_KEY;
-  if (!apiKey) return null;
-
-  try {
-    const res = await fetch(MISTRAL_API, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: MISTRAL_MODEL_SYNTHESIS,
-        messages: [{ role: "system", content: systemPrompt }, ...messages],
-        max_tokens: 1200,
-        temperature: 0.4,
-      }),
-    });
-    if (!res.ok) return null;
-    const json = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> };
-    return json.choices?.[0]?.message?.content ?? null;
-  } catch {
+  if (!apiKey) {
+    console.warn("[chat] MISTRAL_API_KEY unset — synthesis disabled");
     return null;
   }
+
+  const attempts: Array<{ model: string; backoffMs: number }> = [
+    { model: MISTRAL_MODEL_SYNTHESIS, backoffMs: 0 },
+    { model: MISTRAL_MODEL_SYNTHESIS, backoffMs: 600 },
+    { model: MISTRAL_MODEL_INTENT, backoffMs: 800 }, // cheaper fallback model
+  ];
+
+  for (let i = 0; i < attempts.length; i++) {
+    const { model, backoffMs } = attempts[i];
+    if (backoffMs > 0) await new Promise((r) => setTimeout(r, backoffMs));
+    try {
+      const res = await fetch(MISTRAL_API, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages: [{ role: "system", content: systemPrompt }, ...messages],
+          // Structured-output mode — we ask Mistral to return JSON of
+          // shape {type: "answer"|"ask", content: "...", options?: [...]}.
+          // See SYNTHESIS_CORE for the schema spec.
+          response_format: { type: "json_object" },
+          max_tokens: 1400,
+          temperature: 0.4,
+        }),
+      });
+      if (!res.ok) {
+        const body = await res.text().catch(() => "");
+        console.warn(
+          `[chat] mistral ${model} returned ${res.status} (attempt ${i + 1}/${attempts.length}): ${body.slice(0, 200)}`,
+        );
+        // 4xx other than 429 = our bug, retrying won't help
+        if (res.status >= 400 && res.status < 500 && res.status !== 429) break;
+        continue;
+      }
+      const json = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> };
+      const content = json.choices?.[0]?.message?.content;
+      if (!content) {
+        console.warn(`[chat] mistral ${model} returned empty content`);
+        continue;
+      }
+      if (i > 0) {
+        console.log(`[chat] mistral synthesis recovered on attempt ${i + 1} (model=${model})`);
+      }
+      return content;
+    } catch (err) {
+      console.warn(
+        `[chat] mistral ${model} threw (attempt ${i + 1}/${attempts.length}):`,
+        err instanceof Error ? err.message : err,
+      );
+      // network error — retry the loop
+    }
+  }
+  console.error("[chat] mistral synthesis exhausted all retries");
+  return null;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -377,6 +433,38 @@ function formatRouteForContext(
  * pickSynthesisSystem(messageCount) returns the right prompt.
  */
 const SYNTHESIS_CORE = `You are Visavu — a knowledgeable, conversational visa expert. You sound like a smart friend who happens to know every visa programme inside out, not a robotic fact-machine. You combine the structured Visavu data in CONTEXT blocks below with general visa knowledge to lead users through DISCOVERY — one or two questions at a time, then a confident specific recommendation.
+
+═══ OUTPUT FORMAT — MANDATORY ═══
+
+You MUST respond with valid JSON in one of two shapes:
+
+  (A) When you have enough context to give a specific recommendation:
+    {
+      "type": "answer",
+      "content": "<your prose answer in markdown, ~200-300 words, with bold visa names, ## headers, - bullets>"
+    }
+
+  (B) When you need ONE specific piece of information to give a useful answer
+      (most commonly: missing nationality, missing destination, missing purpose):
+    {
+      "type": "ask",
+      "content": "<a warm, conversational ONE-LINE question — like 'Which passport do you hold? UK rules differ a lot from EU or Indian rules.'>",
+      "options": [
+        "<short concrete answer pill, e.g. 'UK / British'>",
+        "<short concrete answer pill, e.g. 'US / American'>",
+        "<short concrete answer pill, e.g. 'Indian'>",
+        "<short concrete answer pill, e.g. 'EU citizen'>"
+      ]
+    }
+
+OPTIONS rules:
+  - Provide 3-5 options, each a short concrete answer (1-3 words ideally)
+  - Make them the MOST LIKELY answers for THIS user's context (e.g. if they asked about Russia work, list common UK/EU/Indian/Other not random nationalities)
+  - The last option should always be a generic alternative like "Other (I'll type it)" or "Not sure — show me everything"
+  - Options must be self-contained — when the user clicks one, the text becomes their next message verbatim, so it must read naturally as a reply
+  - Never use options for purpose unless purpose is genuinely unclear — usually the user's question reveals work/study/family/visit
+
+You must NEVER output prose outside the JSON. The renderer will display content as markdown and (if present) options as clickable pills.
 
 ═══ THE CONVERSATION SHAPE ═══
 
@@ -674,9 +762,29 @@ export async function POST(request: NextRequest) {
   const synthesised = await callMistralText(enrichedMessages, pickSynthesisSystem(body.messages));
 
   if (synthesised) {
-    // Strip any non-allowlisted URLs the model may have invented (only
-    // visavu.com + verified government domains are permitted as links).
-    const cleanReply = sanitiseChatReply(synthesised);
+    // Mistral now responds in structured JSON ({type: answer|ask,
+    // content, options?}). Parse + route to the right response shape.
+    const parsed = parseStructured(synthesised);
+
+    if (parsed.type === "ask") {
+      // Clarifying-question turn — content is the question text, options
+      // are the multiple-choice pills the chat UI will render. No URL
+      // sanitisation needed (questions don't link); options pass through
+      // verbatim so they become the user's literal next message on click.
+      const reply = sanitiseChatReply(parsed.content);
+      await logAssistantReply(reply, { model: MISTRAL_MODEL_SYNTHESIS });
+      return NextResponse.json({
+        reply,
+        type: "ask",
+        intent,
+        sessionId,
+        clarifying: { options: parsed.options ?? [] },
+      });
+    }
+
+    // type === "answer" — strip non-allowlisted URLs the model may have
+    // invented (only visavu.com + verified gov domains permitted).
+    const cleanReply = sanitiseChatReply(parsed.content);
     await logAssistantReply(cleanReply, { model: MISTRAL_MODEL_SYNTHESIS });
     return NextResponse.json({
       reply: cleanReply,
@@ -687,22 +795,64 @@ export async function POST(request: NextRequest) {
   }
 
   // Mistral synthesis unavailable (API key missing OR the call returned
-  // null / timed out). Build a CLEAN human-readable reply instead of
-  // dumping the LLM-facing dataContext (which contains instruction
-  // text like "ASK CLARIFYING QUESTIONS" and "VISAVU PAGES YOU CAN
-  // LINK" that's confusing as a user-facing message). The reply
-  // pattern follows the same shape Mistral would produce: brief
-  // direct answer when we have a full route, brief clarifying
-  // question when we're missing one variable, polite catch-all when
-  // we can't ground at all.
+  // null / timed out after all retries). Build a CLEAN human-readable
+  // fallback instead of dumping the LLM-facing dataContext (which
+  // contains instruction text meant for the LLM). The fallback either
+  // gives a catalogue pointer (if we have full route) or asks the
+  // missing piece in plain English — same UX shape as the Mistral
+  // path, just without the warmth of a real LLM-composed reply.
   const fallbackReply = buildCleanFallback(intent, lastUser.content);
+  const fallbackOptions = buildFallbackOptions(intent);
   await logAssistantReply(fallbackReply, { model: null });
   return NextResponse.json({
     reply: fallbackReply,
-    type: "fallback",
+    type: fallbackOptions ? "ask" : "fallback",
     intent,
     sessionId,
+    ...(fallbackOptions ? { clarifying: { options: fallbackOptions } } : {}),
   });
+}
+
+/**
+ * Parse the structured JSON Mistral now returns. The system prompt
+ * mandates {type: "answer" | "ask", content: string, options?: string[]}
+ * but we defensively fall back to treating any non-JSON output as a
+ * plain answer (older Mistral versions or transient json-mode failures
+ * shouldn't break the UX).
+ */
+function parseStructured(raw: string): { type: "answer" | "ask"; content: string; options?: string[] } {
+  // Strip markdown code fences if Mistral wrapped the JSON.
+  const cleaned = raw.trim().replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/, "");
+  try {
+    const obj = JSON.parse(cleaned) as { type?: string; content?: string; options?: unknown };
+    const type = obj.type === "ask" ? "ask" : "answer";
+    const content = typeof obj.content === "string" ? obj.content : raw;
+    const options = Array.isArray(obj.options)
+      ? obj.options
+          .filter((o): o is string => typeof o === "string" && o.trim().length > 0)
+          .slice(0, 6)
+      : undefined;
+    return { type, content, options };
+  } catch {
+    // Mistral returned prose despite the system-prompt instruction —
+    // treat the whole thing as an answer.
+    return { type: "answer", content: raw };
+  }
+}
+
+/** Build sensible clarifying-options for the FALLBACK path (when
+ *  Mistral is unavailable). Mirrors what Mistral would produce so the
+ *  UI works identically. Returns null when we have a full route — no
+ *  clarification needed in that case. */
+function buildFallbackOptions(intent: ExtractedIntent): string[] | null {
+  // Full route — no ask
+  if (intent.passport_iso2 && intent.destination_iso2) return null;
+  // Missing passport — offer the 4 most common nationalities + Other
+  if (!intent.passport_iso2) {
+    return ["UK / British", "US / American", "Indian", "EU citizen", "Other (I'll type it)"];
+  }
+  // Have passport, missing destination — offer top destinations
+  return ["United States", "United Kingdom", "Australia", "Canada", "Schengen Europe", "Other (I'll type it)"];
 }
 
 /** Build a user-facing reply when Mistral synthesis isn't available.

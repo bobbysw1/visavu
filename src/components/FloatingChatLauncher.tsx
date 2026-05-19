@@ -3,7 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
-type Message = { role: "user" | "assistant"; content: string };
+type Message = {
+  role: "user" | "assistant";
+  content: string;
+  /** Multiple-choice pills the assistant offered for clarification.
+   *  Cleared from previous messages when a new turn lands. */
+  clarifyingOptions?: string[];
+};
 
 const STORAGE_KEY = "visavu.chat.v1"; // shares state with the full /chat page
 const DISMISS_STORAGE_KEY = "visavu.chat.floating.dismissedAt";
@@ -98,7 +104,12 @@ export function FloatingChatLauncher() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ messages: newMessages, sessionId: sessionId ?? undefined }),
       });
-      const data = (await res.json()) as { reply?: string; error?: string; sessionId?: string };
+      const data = (await res.json()) as {
+        reply?: string;
+        error?: string;
+        sessionId?: string;
+        clarifying?: { options?: string[] };
+      };
       const reply = data.reply ?? data.error ?? "Sorry — the assistant didn't return a reply.";
       if (data.sessionId) {
         try {
@@ -107,7 +118,14 @@ export function FloatingChatLauncher() {
           /* ignore */
         }
       }
-      setMessages((m) => [...m, { role: "assistant", content: reply }]);
+      // Clear stale clarifying pills from previous assistant messages —
+      // only the latest assistant turn should ever show pills.
+      setMessages((m) => [
+        ...m.map((msg) =>
+          msg.role === "assistant" ? { ...msg, clarifyingOptions: undefined } : msg,
+        ),
+        { role: "assistant", content: reply, clarifyingOptions: data.clarifying?.options },
+      ]);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "network error";
       setMessages((m) => [...m, { role: "assistant", content: `Sorry, something went wrong: ${msg}` }]);
@@ -198,15 +216,39 @@ export function FloatingChatLauncher() {
           </div>
         ) : (
           messages.map((m, i) => (
-            <div
-              key={i}
-              className={
-                m.role === "user"
-                  ? "ml-auto max-w-[85%] rounded-lg bg-[var(--color-ink)] text-[var(--color-paper)] px-3 py-2 text-xs whitespace-pre-wrap"
-                  : "mr-auto max-w-[90%] rounded-lg bg-[var(--color-paper-elev)] border border-[var(--color-rule)] px-3 py-2 text-xs whitespace-pre-wrap text-[var(--color-ink)]"
-              }
-            >
-              {m.content}
+            <div key={i} className="space-y-1.5">
+              <div
+                className={
+                  m.role === "user"
+                    ? "ml-auto max-w-[85%] rounded-lg bg-[var(--color-ink)] text-[var(--color-paper)] px-3 py-2 text-xs whitespace-pre-wrap"
+                    : "mr-auto max-w-[90%] rounded-lg bg-[var(--color-paper-elev)] border border-[var(--color-rule)] px-3 py-2 text-xs whitespace-pre-wrap text-[var(--color-ink)]"
+                }
+              >
+                {m.content}
+              </div>
+              {/* Clarifying pill buttons — click sends the option text
+                  as the next user message. Same UX as full /chat page. */}
+              {m.role === "assistant" && m.clarifyingOptions && m.clarifyingOptions.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {m.clarifyingOptions.map((opt) => (
+                    <button
+                      key={opt}
+                      type="button"
+                      onClick={() => void send(opt)}
+                      disabled={busy}
+                      className="
+                        px-2.5 py-1 rounded-full text-[11px] font-medium
+                        border border-[var(--color-rule-strong)] bg-[var(--color-paper)]
+                        text-[var(--color-ink)] hover:bg-[var(--color-ink)]
+                        hover:text-[var(--color-paper)] hover:border-[var(--color-ink)]
+                        transition disabled:opacity-50 disabled:cursor-not-allowed
+                      "
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           ))
         )}

@@ -629,3 +629,52 @@ export const chatMessagesRelations = relations(chatMessages, ({ one }) => ({
     references: [chatConversations.id],
   }),
 }));
+
+// ------------------------------------------------------------
+// News candidates (2026-05-20) — Tier 2 of the verified-news
+// pipeline. The nightly detect-news-candidates script compares
+// the current visa-records snapshot against the previous one and
+// inserts a candidate row for material drift (fee delta ≥ 10%,
+// status enum flip, new visa option, removed visa option).
+//
+// Candidates are NOT published automatically. An admin reviews
+// them on /admin/news; approval generates a manualPolicyNews.ts
+// snippet to paste in (keeps git as the audit trail). Rejected
+// candidates stay in the table flagged so the same drift doesn't
+// keep regenerating the same candidate every night.
+// ------------------------------------------------------------
+export const newsCandidateStatusEnum = pgEnum("news_candidate_status", [
+  "pending",
+  "approved",
+  "rejected",
+]);
+
+export const newsCandidates = pgTable("news_candidates", {
+  id: serial("id").primaryKey(),
+  /** Stable fingerprint of the detected change so the same drift
+   *  detected on multiple nights doesn't insert duplicate rows.
+   *  Example: "fee_delta:gb→au:work:189:AUD:4640→4825". */
+  fingerprint: varchar("fingerprint", { length: 256 }).notNull(),
+  /** What kind of change was detected — drives the suggested-title
+   *  template + the news kind that ends up in manualPolicyNews. */
+  driftKind: varchar("drift_kind", { length: 32 }).notNull(),
+  destinationIso2: varchar("destination_iso2", { length: 2 }),
+  passportIso2: varchar("passport_iso2", { length: 2 }),
+  /** Pre-filled draft title — admin can override on approval. */
+  suggestedTitle: text("suggested_title").notNull(),
+  /** Pre-filled draft detail with the actual before/after numbers. */
+  suggestedDetail: text("suggested_detail").notNull(),
+  /** The gov page our adapter scraped from — best-available primary source. */
+  sourceUrl: text("source_url"),
+  /** Raw diff payload (before/after snapshot of the changed fields)
+   *  so the admin can sanity-check what we detected without leaving
+   *  the admin page. */
+  driftPayload: jsonb("drift_payload").notNull(),
+  status: newsCandidateStatusEnum("status").notNull().default("pending"),
+  detectedAt: timestamp("detected_at", { withTimezone: true }).notNull().defaultNow(),
+  reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+  reviewerNote: text("reviewer_note"),
+}, (t) => ({
+  fingerprintIdx: uniqueIndex("news_candidate_fingerprint_idx").on(t.fingerprint),
+  statusIdx: index("news_candidate_status_idx").on(t.status, t.detectedAt),
+}));

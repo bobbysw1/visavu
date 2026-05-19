@@ -75,6 +75,17 @@ jobs:
         if: inputs.dry_run != true
         run: npm run verify-news -- --soft
 
+      - name: Detect news candidates from adapter drift
+        # Tier 2 of the verified-news pipeline — diffs today's fee
+        # state against the baseline committed last refresh. Material
+        # drift (≥10% fee delta, status enum flip) inserts a
+        # candidate row into news_candidates for /admin/news review.
+        # Requires DATABASE_URL — silent no-op when unset.
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        if: inputs.dry_run != true && env.DATABASE_URL != ''
+        run: npm run detect-news-candidates
+
       - name: Commit refreshed fixtures + snapshot
         if: steps.changes.outputs.changed == 'true' && inputs.dry_run != true
         run: |

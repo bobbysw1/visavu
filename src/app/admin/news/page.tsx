@@ -11,9 +11,12 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
+import { desc, eq } from "drizzle-orm";
 import { activePolicyNews, MANUAL_POLICY_NEWS } from "@/content/manualPolicyNews";
 import { verificationFor, relativeVerificationTime } from "@/lib/newsVerification";
 import { flagEmoji, nameFor } from "@/lib/countries";
+import { userDb, schema } from "@/db/client";
+import { approveCandidate, rejectCandidate } from "./actions";
 
 export const metadata: Metadata = {
   title: "Admin · News review",
@@ -43,8 +46,57 @@ const STATUS_LABEL: Record<string, string> = {
   unchecked: "? Unchecked",
 };
 
-export default function AdminNewsPage() {
+type Candidate = {
+  id: number;
+  fingerprint: string;
+  driftKind: string;
+  destinationIso2: string | null;
+  passportIso2: string | null;
+  suggestedTitle: string;
+  suggestedDetail: string;
+  sourceUrl: string | null;
+  driftPayload: unknown;
+  status: "pending" | "approved" | "rejected";
+  detectedAt: Date;
+  reviewedAt: Date | null;
+  reviewerNote: string | null;
+};
+
+async function loadPendingCandidates(): Promise<Candidate[]> {
+  try {
+    const rows = await userDb
+      .select()
+      .from(schema.newsCandidates)
+      .where(eq(schema.newsCandidates.status, "pending"))
+      .orderBy(desc(schema.newsCandidates.detectedAt))
+      .limit(50);
+    return rows as unknown as Candidate[];
+  } catch {
+    // Migration not yet run / DB unavailable — return empty.
+    return [];
+  }
+}
+
+/** Generate a paste-ready manualPolicyNews.ts snippet from a candidate. */
+function generateSnippet(c: Candidate): string {
+  const today = new Date().toISOString().slice(0, 10);
+  const id = `${c.destinationIso2?.toLowerCase() ?? "global"}-${c.driftKind}-${today}`;
+  return `  {
+    id: "${id}",
+    date: "${today}",
+    kind: "${c.driftKind === "fee_delta" ? "fee_change" : "rule_change"}",
+    destinationIso2: ${c.destinationIso2 ? `"${c.destinationIso2}"` : "null"},
+    destinationName: ${c.destinationIso2 ? `"${nameFor(c.destinationIso2)}"` : "null"},
+    title: ${JSON.stringify(c.suggestedTitle)},
+    detail: ${JSON.stringify(c.suggestedDetail)},
+    sourceUrl: ${c.sourceUrl ? JSON.stringify(c.sourceUrl) : "undefined"},
+    urgency: "normal",
+  },`;
+}
+
+export default async function AdminNewsPage() {
   const live = activePolicyNews();
+  const candidates = await loadPendingCandidates();
   const expired = MANUAL_POLICY_NEWS.filter(
     (n) => n.expiresAt && n.expiresAt < new Date().toISOString().slice(0, 10),
   );
@@ -92,6 +144,112 @@ export default function AdminNewsPage() {
         <Stat label="Need review" value={counts.needsReview.toString()} tone="amber" />
         <Stat label="Unchecked" value={counts.unchecked.toString()} tone="neutral" />
       </div>
+
+      {/* Tier 2 — auto-discovered candidates pending review.
+          Populated by `npm run detect-news-candidates` (wired into
+          nightly cron). Approval generates a paste-ready snippet
+          for manualPolicyNews.ts. */}
+      <section>
+        <h2 className="text-lg font-semibold mb-3 flex items-baseline gap-2">
+          Pending candidates ({candidates.length})
+          <span className="text-xs font-normal text-neutral-500">
+            auto-detected from adapter drift — review + paste into{" "}
+            <code className="text-[10px]">manualPolicyNews.ts</code>
+          </span>
+        </h2>
+        {candidates.length === 0 ? (
+          <p className="text-sm text-neutral-500 italic">
+            No pending candidates. Run <code>npm run detect-news-candidates</code> after a
+            nightly adapter refresh to populate the queue.
+          </p>
+        ) : (
+          <ul className="space-y-4">
+            {candidates.map((c) => (
+              <li
+                key={c.id}
+                className="rounded-xl border-2 border-dashed border-amber-300 dark:border-amber-800 bg-amber-50/30 dark:bg-amber-950/20 p-4"
+              >
+                <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                  <div className="flex items-baseline gap-2 min-w-0">
+                    {c.destinationIso2 && (
+                      <span className="text-lg leading-none" aria-hidden>
+                        {flagEmoji(c.destinationIso2)}
+                      </span>
+                    )}
+                    <h3 className="font-semibold">{c.suggestedTitle}</h3>
+                    <span className="text-[10px] font-bold uppercase tracking-wider rounded bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-100 px-1.5 py-0.5">
+                      Auto-detected
+                    </span>
+                  </div>
+                  <span className="text-xs text-neutral-500">
+                    detected {relativeVerificationTime(c.detectedAt.toISOString())}
+                  </span>
+                </div>
+                <p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed mb-3">
+                  {c.suggestedDetail}
+                </p>
+                <dl className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-1.5 text-xs mb-3">
+                  <DL label="Drift kind" value={c.driftKind} />
+                  <DL label="Fingerprint" value={<code className="text-[10px] break-all">{c.fingerprint}</code>} />
+                  <DL label="Destination" value={c.destinationIso2 ?? "—"} />
+                  <DL label="Passport" value={c.passportIso2 ?? "—"} />
+                </dl>
+                {c.sourceUrl && (
+                  <p className="text-xs mb-3">
+                    <a
+                      href={c.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-700 dark:text-blue-300 underline hover:no-underline break-all"
+                    >
+                      Adapter source ↗
+                    </a>
+                  </p>
+                )}
+                <details className="mb-3 text-xs">
+                  <summary className="cursor-pointer text-neutral-600 dark:text-neutral-400 font-medium">
+                    Paste-ready manualPolicyNews.ts snippet
+                  </summary>
+                  <pre className="mt-2 p-3 rounded bg-neutral-100 dark:bg-neutral-900 overflow-x-auto text-[11px] leading-relaxed">
+                    {generateSnippet(c)}
+                  </pre>
+                  <p className="mt-1 text-[10px] text-neutral-500">
+                    Verify the source URL backs the specific claim, edit the wording,
+                    paste into <code>src/content/manualPolicyNews.ts</code>, run
+                    <code className="ml-1">npm run verify-news</code>, then commit.
+                  </p>
+                </details>
+                <div className="flex gap-2">
+                  <form action={approveCandidate}>
+                    <input type="hidden" name="id" value={c.id} />
+                    <button
+                      type="submit"
+                      className="text-xs font-semibold rounded-full bg-emerald-700 text-white px-3 py-1.5 hover:bg-emerald-800 transition"
+                    >
+                      ✓ Approve
+                    </button>
+                  </form>
+                  <form action={rejectCandidate} className="flex gap-2 items-center">
+                    <input type="hidden" name="id" value={c.id} />
+                    <input
+                      type="text"
+                      name="note"
+                      placeholder="Rejection note (optional)"
+                      className="text-xs rounded-full border border-neutral-300 dark:border-neutral-700 px-3 py-1.5 bg-white dark:bg-neutral-950 w-64"
+                    />
+                    <button
+                      type="submit"
+                      className="text-xs font-semibold rounded-full bg-neutral-700 text-white px-3 py-1.5 hover:bg-neutral-800 transition"
+                    >
+                      ✗ Reject
+                    </button>
+                  </form>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
       <section>
         <h2 className="text-lg font-semibold mb-3">Active items ({live.length})</h2>

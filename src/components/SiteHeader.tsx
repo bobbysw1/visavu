@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import { CurrencySwitcher } from "./CurrencySwitcher";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MobileMenu } from "./MobileMenu";
+import { UpdatesNavLink } from "./UpdatesNavLink";
+import recentUpdates from "@/data/recent_updates.json";
 
 // LocaleSwitcher is now backed by the P29 i18n scaffold registry
 // (src/lib/i18n/locales.ts). Each option labels its translation status
@@ -65,6 +67,13 @@ export function SiteHeader() {
           >
             Myths
           </Link>
+          {/* Updates link with a small badge showing count of new entries
+              since the user's last visit. Data passed in server-side so the
+              count is correct on first paint. Cookie-driven so no account
+              required. */}
+          <UpdatesNavLink
+            updates={(recentUpdates as { updates: Array<{ date: string }> }).updates ?? []}
+          />
           <Link
             href="/find-my-visa"
             className="ml-1 inline-flex items-center gap-1.5 rounded-full border border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-paper)] px-3.5 py-1.5 text-xs font-semibold hover:opacity-90 transition whitespace-nowrap"

@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { HeroDestinationSearch } from "@/components/HeroDestinationSearch";
+import { RecentUpdatesRail } from "@/components/RecentUpdatesRail";
 import { ChatBar } from "@/components/ChatBar";
 import { LookupForm } from "@/components/LookupForm";
 import { RouteCard } from "@/components/RouteCard";
@@ -146,6 +147,13 @@ export default async function HomePage() {
           </section>
         );
       })()}
+
+      {/* ─── VISA NEWS RAIL ───
+          Surfaces the rolling 30-day digest from /updates as scrollable
+          cards. Sits immediately below the hero so users see at-a-glance
+          "this site is live + visa rules just changed" before scrolling
+          into the destination tiles. Returns null when no recent updates. */}
+      <RecentUpdatesRail />
 
       {/* ─── POPULAR DESTINATIONS STRIP ───
           Sits on the paper field below the hero so the photo tiles read

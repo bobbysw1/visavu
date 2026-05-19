@@ -84,6 +84,11 @@ export const metadata: Metadata = {
       ),
       "x-default": absoluteUrl("/"),
     },
+    // RSS feed auto-discovery — browsers + feed-reader extensions surface
+    // a subscribe affordance when this <link rel="alternate"> is present.
+    types: {
+      "application/rss+xml": absoluteUrl("/updates.xml"),
+    },
   },
 };
 

@@ -22,6 +22,7 @@
 import Link from "next/link";
 import { flagEmoji } from "@/lib/countries";
 import { absoluteUrl } from "@/lib/site";
+import { MarkUpdatesSeen } from "@/components/UpdatesNavLink";
 import data from "@/data/recent_updates.json";
 
 export const metadata = {
@@ -75,6 +76,9 @@ export default function UpdatesPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
+      {/* Bumps the cookie that drives the nav badge — visiting this page
+          clears the "X new updates" pill for the next 90 days. */}
+      <MarkUpdatesSeen />
       <header className="mb-10">
         <p className="kicker">Policy updates</p>
         <h1 className="serif-display text-4xl sm:text-5xl mt-2 mb-4">
@@ -86,9 +90,16 @@ export default function UpdatesPage() {
           our adapter commits. Each entry links back to the source code
           change so the trail is reproducible.
         </p>
-        <p className="text-sm text-[var(--color-ink-muted)] mt-3">
-          Last regenerated: {formatHumanDate(payload.generatedAt)}
-        </p>
+        <div className="text-sm text-[var(--color-ink-muted)] mt-3 flex items-center gap-3 flex-wrap">
+          <span>Last regenerated: {formatHumanDate(payload.generatedAt)}</span>
+          <span className="text-[var(--color-rule-strong)]">·</span>
+          <a
+            href="/updates.xml"
+            className="inline-flex items-center gap-1.5 hover:text-[var(--color-ink)] underline-offset-2 hover:underline"
+          >
+            <span aria-hidden>📡</span> Subscribe via RSS
+          </a>
+        </div>
       </header>
 
       {sorted.length === 0 ? (

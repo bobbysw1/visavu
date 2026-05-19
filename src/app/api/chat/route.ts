@@ -35,6 +35,9 @@ import { bilateralContext, destinationSummary, workingHolidayContextHint } from 
 import { sanitiseChatReply } from "@/lib/linkAllowlist";
 import { passportProfileFor } from "@/content/passportProfiles";
 import { convertMinor, formatMoney, ratesAsOf } from "@/lib/exchange";
+import { checkRateLimit, extractIp, hashIp } from "@/lib/chatRateLimit";
+import { getOrCreateConversation, logMessage, estimateTokens } from "@/lib/chatLogger";
+import { randomUUID } from "node:crypto";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -73,6 +76,10 @@ type ChatMessage = { role: "user" | "assistant" | "system"; content: string };
 
 type ChatRequest = {
   messages: ChatMessage[];
+  /** Client-generated UUID stored in a first-party cookie for the
+   *  duration of the conversation. Server falls back to generating
+   *  one if absent. Not PII. */
+  sessionId?: string;
 };
 
 type ExtractedIntent = {
@@ -440,14 +447,69 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "no user message found" }, { status: 400 });
   }
 
+  // ── Rate limit + logging setup ────────────────────────────────────
+  // Pulled in front of everything else so an abusive client can't burn
+  // through our Mistral budget before we say no. IP is hashed
+  // immediately and never held in raw form. Session ID is client-
+  // generated when possible (so the conversation persists across
+  // refreshes) or server-generated otherwise.
+  const ip = extractIp(request);
+  const ipHash = hashIp(ip);
+  const sessionId = body.sessionId ?? randomUUID();
+  // TODO: when /signin auth is wired into the chat client, derive
+  // userId from the session here. For now treat all callers as anon.
+  const userId: number | null = null;
+
+  const rateLimit = await checkRateLimit({ ipHash, isSignedIn: userId !== null });
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      {
+        reply: rateLimit.message + "\n\n" + DISCLAIMER,
+        type: "rate_limited",
+        reason: rateLimit.reason,
+      },
+      {
+        status: 429,
+        headers: { "retry-after": String(rateLimit.retryAfterSeconds) },
+      },
+    );
+  }
+
+  // Resolve / create the conversation row + log the user message
+  // BEFORE any Mistral call so abuse-review can reconstruct what was
+  // sent even if Mistral times out mid-call.
+  const conversationId = await getOrCreateConversation({ sessionId, userId, ipHash });
+  if (conversationId !== null) {
+    await logMessage({
+      conversationId,
+      role: "user",
+      content: lastUser.content,
+      tokens: estimateTokens(lastUser.content),
+    });
+  }
+
+  /** Helper: log an assistant reply (refusal or generated). Token
+   *  estimate is length/4 since the cheap Mistral path doesn't surface
+   *  exact usage stats — within ~30% which is plenty for cost-cap. */
+  async function logAssistantReply(content: string, opts: { isRefusal?: boolean; model?: string | null } = {}) {
+    if (conversationId === null) return;
+    await logMessage({
+      conversationId,
+      role: "assistant",
+      content,
+      tokens: estimateTokens(content),
+      model: opts.model ?? null,
+      isRefusal: opts.isRefusal ?? false,
+    });
+  }
+
   // Hard refusal pre-check — don't waste a Mistral call on these.
   if (REFUSAL_PATTERNS.some((p) => p.test(lastUser.content))) {
-    return NextResponse.json({
-      reply:
-        "Questions involving asylum, deportation, criminal records, or how to present an application in a particular way are outside what Visavu's information assistant covers. These need a registered immigration adviser (UK: IAA-registered, AU: MARA, CA: CICC, US: state-bar-admitted attorney or BIA-accredited representative).\n\n" +
-        DISCLAIMER,
-      type: "refusal",
-    });
+    const reply =
+      "Questions involving asylum, deportation, criminal records, or how to present an application in a particular way are outside what Visavu's information assistant covers. These need a registered immigration adviser (UK: IAA-registered, AU: MARA, CA: CICC, US: state-bar-admitted attorney or BIA-accredited representative).\n\n" +
+      DISCLAIMER;
+    await logAssistantReply(reply, { isRefusal: true });
+    return NextResponse.json({ reply, type: "refusal", sessionId });
   }
 
   // Step 1: extract intent (Mistral preferred, fallback regex).
@@ -455,12 +517,11 @@ export async function POST(request: NextRequest) {
   const intent = intentFromMistral ?? fallbackExtract(lastUser.content);
 
   if (intent.needs_human_advice) {
-    return NextResponse.json({
-      reply:
-        "This sounds like a situation where a registered immigration adviser would help you more than general information can. Look up an IAA-registered adviser (UK), MARA agent (Australia), or CICC consultant (Canada), or a bar-admitted attorney in your destination jurisdiction.\n\n" +
-        DISCLAIMER,
-      type: "refusal",
-    });
+    const reply =
+      "This sounds like a situation where a registered immigration adviser would help you more than general information can. Look up an IAA-registered adviser (UK), MARA agent (Australia), or CICC consultant (Canada), or a bar-admitted attorney in your destination jurisdiction.\n\n" +
+      DISCLAIMER;
+    await logAssistantReply(reply, { isRefusal: true });
+    return NextResponse.json({ reply, type: "refusal", sessionId });
   }
 
   // Detect occupation-related questions and pull in the relevant
@@ -576,10 +637,12 @@ export async function POST(request: NextRequest) {
     // Strip any non-allowlisted URLs the model may have invented (only
     // visavu.com + verified government domains are permitted as links).
     const cleanReply = sanitiseChatReply(synthesised);
+    await logAssistantReply(cleanReply, { model: MISTRAL_MODEL_SYNTHESIS });
     return NextResponse.json({
       reply: cleanReply,
       type: "synthesised",
       intent,
+      sessionId,
     });
   }
 
@@ -588,12 +651,15 @@ export async function POST(request: NextRequest) {
   const routeHint = intent.passport_iso2 && intent.destination_iso2
     ? `\n\nFor a structured view, visit https://visavu.com/${intent.passport_iso2.toLowerCase()}/${intent.destination_iso2.toLowerCase()}`
     : "";
+  const fallbackReply =
+    `${dataContext}${routeHint}\n\n${DISCLAIMER}` +
+    (process.env.MISTRAL_API_KEY ? "" : "\n\n(Note: AI synthesis unavailable — MISTRAL_API_KEY not configured. Showing raw data.)");
+  await logAssistantReply(fallbackReply, { model: null });
   return NextResponse.json({
-    reply:
-      `${dataContext}${routeHint}\n\n${DISCLAIMER}` +
-      (process.env.MISTRAL_API_KEY ? "" : "\n\n(Note: AI synthesis unavailable — MISTRAL_API_KEY not configured. Showing raw data.)"),
+    reply: fallbackReply,
     type: "fallback",
     intent,
+    sessionId,
   });
 }
 

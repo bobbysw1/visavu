@@ -73,6 +73,31 @@ export default function PrivacyPage() {
         profiling.
       </p>
 
+      <h3>5. AI chat conversations</h3>
+      <p>
+        When you use the <Link href="/chat">AI chat assistant</Link>, we record the messages
+        you send + the assistant&apos;s replies, alongside an HMAC-SHA256 hash of your IP
+        address (never the raw IP) and a randomly-generated session ID. We use this data for
+        two purposes only: (1) to enforce per-IP rate limits + a site-wide daily token cap so
+        the chat stays free + cost-controlled, and (2) so we can review conversations where
+        the assistant gave a wrong or unhelpful answer + improve the underlying prompts. We do
+        not analyse your chat content for profiling or sell it to anyone. You can clear your
+        local conversation history (and detach future messages from previous ones) by hitting
+        the &ldquo;Clear&rdquo; button in the chat interface.
+      </p>
+      <p>
+        Chat content is shared with <strong>Mistral AI</strong> (our language-model provider)
+        to generate the reply — see their{" "}
+        <a
+          href="https://mistral.ai/terms#privacy-policy"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          privacy policy
+        </a>
+        . We do not send your IP or any account identifier to Mistral.
+      </p>
+
       <h2>What we do NOT do</h2>
       <ul>
         <li>We do not sell your data to anyone, ever.</li>

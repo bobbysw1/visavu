@@ -555,3 +555,77 @@ export const notificationEventsRelations = relations(notificationEvents, ({ one 
     references: [watchlistSubscriptions.id],
   }),
 }));
+
+// ------------------------------------------------------------
+// Chat conversation logging + cost cap (2026-05-19)
+//
+// Two reasons to log:
+//   1. Abuse prevention — count messages per IP/user in the last 24h
+//      and last 60s to block scrapers + runaway clients before they
+//      cost us Mistral API spend.
+//   2. Quality review — when chat gives a bad reply, we can pull the
+//      conversation context to figure out which prompt / data branch
+//      misfired.
+//
+// Privacy posture: we never store raw IPs. `ip_hash` is HMAC-SHA256
+// (env-salt) of the IP — sufficient for rate-limit lookups, useless
+// for reverse-mapping. `session_id` is a UUID generated client-side
+// and held in a first-party cookie; not derived from PII.
+// ------------------------------------------------------------
+export const chatRoleEnum = pgEnum("chat_role", ["system", "user", "assistant"]);
+
+export const chatConversations = pgTable("chat_conversations", {
+  id: serial("id").primaryKey(),
+  /** Client-generated UUID stored in a first-party cookie. Lets a
+   *  conversation persist across page refreshes without requiring a
+   *  signed-in account. Not PII. */
+  sessionId: varchar("session_id", { length: 64 }).notNull(),
+  /** Signed-in user (optional). FK omitted intentionally — chat logs
+   *  must survive account deletion for abuse-review purposes; the
+   *  user_id becomes orphaned but the row is retained. */
+  userId: integer("user_id"),
+  /** HMAC-SHA256(env-salt, ip) — opaque, used only for rate-limit
+   *  lookups. We don't store raw IPs and we don't try to reverse this. */
+  ipHash: varchar("ip_hash", { length: 64 }).notNull(),
+  startedAt: timestamp("started_at", { withTimezone: true }).notNull().defaultNow(),
+  lastMessageAt: timestamp("last_message_at", { withTimezone: true }).notNull().defaultNow(),
+  messageCount: integer("message_count").notNull().default(0),
+  totalTokens: integer("total_tokens").notNull().default(0),
+}, (t) => ({
+  sessionIdx: index("chat_conv_session_idx").on(t.sessionId),
+  ipRecentIdx: index("chat_conv_ip_recent_idx").on(t.ipHash, t.lastMessageAt),
+  userIdx: index("chat_conv_user_idx").on(t.userId),
+}));
+
+export const chatMessages = pgTable("chat_messages", {
+  id: serial("id").primaryKey(),
+  conversationId: integer("conversation_id")
+    .notNull()
+    .references(() => chatConversations.id, { onDelete: "cascade" }),
+  role: chatRoleEnum("role").notNull(),
+  content: text("content").notNull(),
+  /** Best-effort token count. Mistral returns usage stats on the
+   *  response; for the user message we estimate via content length /
+   *  4 (rough approximation, good enough for the cost cap). */
+  tokens: integer("tokens").notNull().default(0),
+  /** Which model generated the assistant reply. Null for user messages. */
+  model: varchar("model", { length: 64 }),
+  /** Was this reply a hard refusal (asylum / fraud / etc.) — counted
+   *  but doesn't incur Mistral cost. */
+  isRefusal: boolean("is_refusal").notNull().default(false),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+}, (t) => ({
+  convIdx: index("chat_msg_conv_idx").on(t.conversationId),
+  recentIdx: index("chat_msg_recent_idx").on(t.createdAt),
+}));
+
+export const chatConversationsRelations = relations(chatConversations, ({ many }) => ({
+  messages: many(chatMessages),
+}));
+
+export const chatMessagesRelations = relations(chatMessages, ({ one }) => ({
+  conversation: one(chatConversations, {
+    fields: [chatMessages.conversationId],
+    references: [chatConversations.id],
+  }),
+}));

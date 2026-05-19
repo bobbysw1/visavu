@@ -7,6 +7,10 @@ import Link from "next/link";
 type Message = { role: "user" | "assistant"; content: string; ts?: number };
 
 const STORAGE_KEY = "visavu.chat.v1";
+/** Conversation/session identifier persisted in localStorage so the
+ *  server can stitch follow-up messages onto the same conversation
+ *  row for abuse review + token rollup. Not PII — just a UUID. */
+const SESSION_KEY = "visavu.chat.session";
 
 /**
  * Visavu chat — client UI talking to /api/chat.
@@ -288,13 +292,31 @@ export function ChatInterface() {
     setBusy(true);
 
     try {
+      // Read existing session id (if any) so follow-ups continue the
+      // same server-side conversation row. If absent, the server
+      // generates one + returns it in the response, and we persist it.
+      let sessionId: string | null = null;
+      try {
+        sessionId = localStorage.getItem(SESSION_KEY);
+      } catch {
+        /* ignore */
+      }
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ messages: newMessages, sessionId: sessionId ?? undefined }),
       });
-      const data = (await res.json()) as { reply?: string; error?: string };
+      const data = (await res.json()) as { reply?: string; error?: string; sessionId?: string };
       const reply = data.reply ?? data.error ?? "Sorry — the assistant didn't return a reply.";
+      // Persist whatever the server returned so the next request
+      // stitches onto the same conversation row.
+      if (data.sessionId) {
+        try {
+          localStorage.setItem(SESSION_KEY, data.sessionId);
+        } catch {
+          /* ignore */
+        }
+      }
       setMessages((m) => [...m, { role: "assistant", content: reply, ts: Date.now() }]);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "network error";
@@ -311,6 +333,9 @@ export function ChatInterface() {
     setMessages([]);
     try {
       localStorage.removeItem(STORAGE_KEY);
+      // Also drop the session id so the next message starts a fresh
+      // conversation row (matches the user's "clear" expectation).
+      localStorage.removeItem(SESSION_KEY);
     } catch {
       /* ignore */
     }

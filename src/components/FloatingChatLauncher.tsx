@@ -84,13 +84,29 @@ export function FloatingChatLauncher() {
     setBusy(true);
 
     try {
+      // Read/persist session id so the server can stitch follow-up
+      // messages onto the same conversation row (used by the chat
+      // rate-limit + abuse-review system).
+      let sessionId: string | null = null;
+      try {
+        sessionId = localStorage.getItem("visavu.chat.session");
+      } catch {
+        /* ignore */
+      }
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ messages: newMessages, sessionId: sessionId ?? undefined }),
       });
-      const data = (await res.json()) as { reply?: string; error?: string };
+      const data = (await res.json()) as { reply?: string; error?: string; sessionId?: string };
       const reply = data.reply ?? data.error ?? "Sorry — the assistant didn't return a reply.";
+      if (data.sessionId) {
+        try {
+          localStorage.setItem("visavu.chat.session", data.sessionId);
+        } catch {
+          /* ignore */
+        }
+      }
       setMessages((m) => [...m, { role: "assistant", content: reply }]);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "network error";

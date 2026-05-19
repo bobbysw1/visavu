@@ -1457,6 +1457,255 @@ const BR_VITEM_XI_FAMILY: FormsEntry = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────
+// AUSTRALIA — Subclass 190 Skilled Nominated
+// ─────────────────────────────────────────────────────────────────────────
+const AU_SKILLED_190: FormsEntry = {
+  destinationIso2: "AU",
+  programmeLabel: "Australia — Subclass 190 Skilled Nominated visa",
+  programmeSlug: "/destination/au",
+  applicationPortal: "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skilled-nominated-190",
+  applicableTo: { purposes: ["work"], labelKeywords: ["subclass 190", "skilled nominated"] },
+  forms: [
+    { code: "SkillSelect EOI", name: "Expression of Interest with state nomination", description: "Submitted via SkillSelect with state/territory nomination preference. Each state/territory has its own occupation list + nomination criteria.", downloadUrl: "https://immi.homeaffairs.gov.au/visas/working-in-australia/skillselect", filedBy: "applicant", stage: "before_applying" },
+    { code: "State nomination", name: "Nomination from state/territory government", description: "Apply directly to the state/territory (NSW, VIC, QLD, SA, WA, TAS, NT, ACT). Approval triggers a SkillSelect invitation.", downloadUrl: "https://immi.homeaffairs.gov.au/visas/working-in-australia/state-and-territory-government", filedBy: "applicant", stage: "before_applying", notes: "State nomination gives +5 points + access to a wider occupation list (STSOL) compared with 189." },
+    { code: "Form 80", name: "Personal particulars for character assessment", description: "10-year address/employment/travel history. Standard for all skilled migration.", downloadUrl: "https://immi.homeaffairs.gov.au/form-listing/forms/80.pdf", filedBy: "applicant", stage: "with_application" },
+    { code: "Skills assessment", name: "Authority-issued positive skills assessment", description: "From the assessing authority for your nominated occupation (ACS / EA / VETASSESS / CPA Australia etc.) — required before EOI.", downloadUrl: "https://immi.homeaffairs.gov.au/visas/working-in-australia/skill-occupation-list", filedBy: "applicant", stage: "before_applying" },
+  ],
+  notes: "Subclass 190 is permanent residence — direct PR grant. 2-year residence commitment to the nominating state, but no enforcement mechanism after grant. STSOL access opens occupations like translator, marketing professional that 189 doesn't cover.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// UNITED STATES — O-1 + E-2
+// ─────────────────────────────────────────────────────────────────────────
+const US_O1_EXTRAORDINARY: FormsEntry = {
+  destinationIso2: "US",
+  programmeLabel: "United States — O-1 Extraordinary Ability visa",
+  programmeSlug: "/destination/us",
+  applicationPortal: "https://www.uscis.gov/working-in-the-united-states/temporary-workers/o-1-visa-individuals-with-extraordinary-ability-or-achievement",
+  applicableTo: { purposes: ["work"], labelKeywords: ["o-1", "o1", "extraordinary ability"] },
+  forms: [
+    { code: "Form I-129", name: "Petition for a Nonimmigrant Worker", description: "Filed by the US employer / agent. O-1 supplement attached. Most O-1 applicants use an 'agent' rather than an employer to preserve multi-employer flexibility.", downloadUrl: "https://www.uscis.gov/sites/default/files/document/forms/i-129.pdf", filedBy: "employer", stage: "before_applying" },
+    { code: "O and P Classification Supplement (I-129O/P)", name: "O classification supplement to I-129", description: "Specifies the extraordinary-ability evidence + advisory-opinion letters from peer organisations.", downloadUrl: "https://www.uscis.gov/sites/default/files/document/forms/i-129.pdf", filedBy: "employer", stage: "with_application" },
+    { code: "Advisory opinion", name: "Peer organisation consultation letter", description: "Required from a US peer group / labour union / management organisation in the applicant's field. Confirms the qualification + intended work.", downloadUrl: "https://www.uscis.gov/working-in-the-united-states/temporary-workers/o-1-visa-individuals-with-extraordinary-ability-or-achievement", filedBy: "employer", stage: "before_applying", notes: "Some fields don't have a peer group (e.g. niche athletes); USCIS accepts a 'no peer group exists' attestation in those cases." },
+    { code: "Form I-907", name: "Request for Premium Processing", description: "Optional $2,805 — 15-day USCIS adjudication.", downloadUrl: "https://www.uscis.gov/sites/default/files/document/forms/i-907.pdf", filedBy: "employer", stage: "with_application" },
+    { code: "DS-160", name: "Online Nonimmigrant Visa Application", description: "Worker files at consulate stage post-I-129 approval.", downloadUrl: "https://ceac.state.gov/genniv/", filedBy: "applicant", stage: "with_application" },
+  ],
+  notes: "O-1 has no cap, no lottery, no degree requirement, and renewable indefinitely. Three categories: O-1A (sciences/education/business/athletics), O-1B (arts), O-1B (motion picture/TV). Pathway to EB-1A green card for the strongest cases.",
+};
+
+const US_E2_TREATY: FormsEntry = {
+  destinationIso2: "US",
+  programmeLabel: "United States — E-2 Treaty Investor visa",
+  programmeSlug: "/destination/us",
+  applicationPortal: "https://travel.state.gov/content/travel/en/us-visas/employment/treaty-trader-investor-visa-e.html",
+  applicableTo: { purposes: ["work"], labelKeywords: ["e-2", "e2", "treaty investor"] },
+  forms: [
+    { code: "DS-160", name: "Online Nonimmigrant Visa Application", description: "Filed at the US consulate in the applicant's country of citizenship. Treaty country required — full list at travel.state.gov.", downloadUrl: "https://ceac.state.gov/genniv/", filedBy: "applicant", stage: "with_application" },
+    { code: "DS-156E", name: "Nonimmigrant Treaty Trader/Investor Application", description: "E-visa-specific supplement detailing the investment, business structure, source-of-funds, employee plans.", downloadUrl: "https://eforms.state.gov/Forms/ds156e.pdf", filedBy: "applicant", stage: "with_application", notes: "The case rests on this form's narrative — $150k-$500k 'substantial' investment, real-and-operating enterprise, applicant develops + directs the business, employs US workers." },
+  ],
+  notes: "E-2 is unique among US work visas: no minimum stated investment (case-by-case 'substantial'); no LCA / no labour-market test; spouse + children get E-2D dependent visas with full work authorisation. Renewable indefinitely in 2-5 year increments. NOT a PR pathway directly — must convert to EB-5 or another category.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// UK — Ancestry + Health & Care Worker + Youth Mobility
+// ─────────────────────────────────────────────────────────────────────────
+const UK_ANCESTRY: FormsEntry = {
+  destinationIso2: "GB",
+  programmeLabel: "United Kingdom — Ancestry visa (UK-born grandparent)",
+  programmeSlug: "/destination/gb",
+  applicationPortal: "https://www.gov.uk/ancestry-visa",
+  applicableTo: { purposes: ["work", "family"], labelKeywords: ["ancestry", "ukancestry"] },
+  forms: [
+    { code: "Online application", name: "UK Ancestry visa application (gov.uk)", description: "Online wizard at gov.uk. £637 outside-UK fee + £1,035/year IHS.", downloadUrl: "https://www.gov.uk/ancestry-visa/apply", filedBy: "applicant", stage: "with_application" },
+    { code: "Grandparent birth certificate", name: "UK birth certificate (long-form, with parents listed)", description: "Original or certified copy of your grandparent's UK birth certificate. The link between you and the UK-born grandparent must be documentable through every generation.", downloadUrl: "https://www.gov.uk/order-copy-birth-death-marriage-certificate", filedBy: "applicant", stage: "before_applying", notes: "If grandparent was born in present-day Ireland before 1922, that doesn't count (Ireland was independent). Northern Ireland born after 1921 does count." },
+  ],
+  notes: "Commonwealth-citizen-exclusive route. Applicant must be a Commonwealth citizen (AU/NZ/CA/ZA + 50 others) with a grandparent born in the UK. 5-year visa, then ILR. Open work, no salary threshold, no sponsor. Sometimes easier than Skilled Worker for Commonwealth applicants.",
+};
+
+const UK_HEALTH_CARE: FormsEntry = {
+  destinationIso2: "GB",
+  programmeLabel: "United Kingdom — Health and Care Worker visa",
+  programmeSlug: "/destination/gb",
+  applicationPortal: "https://www.gov.uk/health-care-worker-visa",
+  applicableTo: { purposes: ["work"], labelKeywords: ["health and care worker", "health care worker"] },
+  forms: [
+    { code: "Online application", name: "Health and Care Worker visa application", description: "Online via gov.uk. £304 (3-year) / £590 (5-year) — significantly cheaper than Skilled Worker.", downloadUrl: "https://www.gov.uk/health-care-worker-visa/apply-outside-uk", filedBy: "applicant", stage: "with_application" },
+    { code: "Certificate of Sponsorship", name: "CoS from a Home Office-licensed NHS / care sponsor", description: "Employer-issued. The job must be on the eligible health / care SOC code list (doctors, nurses, paramedics, social workers, senior care workers).", downloadUrl: "https://www.gov.uk/uk-visa-sponsorship-employers", filedBy: "employer", stage: "before_applying" },
+  ],
+  notes: "Health and Care Worker visa: IHS WAIVED + reduced fees + lower salary threshold (£29k vs £38.7k for Skilled Worker). NHS's primary international-recruitment lever. ILR after 5 years. NB: senior care worker (SOC 6135) is closed to in-country switching from other routes as of 2024.",
+};
+
+const UK_YOUTH_MOBILITY: FormsEntry = {
+  destinationIso2: "GB",
+  programmeLabel: "United Kingdom — Youth Mobility Scheme (T5)",
+  programmeSlug: "/destination/gb",
+  applicationPortal: "https://www.gov.uk/youth-mobility",
+  applicableTo: { purposes: ["work"], labelKeywords: ["youth mobility", "tier 5", "yms"] },
+  forms: [
+    { code: "Online application", name: "Youth Mobility visa application (gov.uk)", description: "Online wizard. £298 + £1,035/year IHS = ~£3,403 over the 2-year (or 3-year for some nationalities) visa.", downloadUrl: "https://www.gov.uk/youth-mobility", filedBy: "applicant", stage: "with_application" },
+  ],
+  notes: "Bilateral scheme — eligibility: 18-30 (35 for some nationalities) from AU/NZ/CA/HK/JP/KR/TW/SM/IS/MC + uncapped for AU/NZ/CA. 2-year visa (3 for AU/NZ/CA from 2024), open work, no sponsor needed. Time on YMS doesn't count towards ILR — must switch to Skilled Worker for long-term route.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// HONG KONG — General Employment Policy + Top Talent Pass
+// ─────────────────────────────────────────────────────────────────────────
+const HK_GEP: FormsEntry = {
+  destinationIso2: "HK",
+  programmeLabel: "Hong Kong — General Employment Policy (GEP)",
+  programmeSlug: "/destination/hk",
+  applicationPortal: "https://www.immd.gov.hk/eng/services/visas/employment.html",
+  applicableTo: { purposes: ["work"], labelKeywords: ["gep", "general employment policy"] },
+  forms: [
+    { code: "ID 990A", name: "Application for entry for employment as professionals", description: "Main GEP application form. Filed by the applicant via the Hong Kong Immigration Department.", downloadUrl: "https://www.immd.gov.hk/pdforms/id990a.pdf", filedBy: "applicant", stage: "with_application" },
+    { code: "ID 990B", name: "Recommendation letter from sponsoring employer", description: "Hong Kong-registered employer confirms the job offer + that no suitable local candidate is available.", downloadUrl: "https://www.immd.gov.hk/pdforms/id990b.pdf", filedBy: "employer", stage: "with_application" },
+  ],
+  notes: "GEP is the standard HK work-visa route. Renewable; permanent residence after 7 continuous years of ordinary residence. No salary threshold formally, but offered packages typically need to be 'commensurate with the local market'.",
+};
+
+const HK_TOP_TALENT: FormsEntry = {
+  destinationIso2: "HK",
+  programmeLabel: "Hong Kong — Top Talent Pass Scheme (TTPS)",
+  programmeSlug: "/destination/hk",
+  applicationPortal: "https://www.immd.gov.hk/eng/services/visas/TTPS.html",
+  applicableTo: { purposes: ["work"], labelKeywords: ["top talent", "ttps"] },
+  forms: [
+    { code: "ID 1100A", name: "Application for entry under Top Talent Pass Scheme", description: "Filed online via Immigration Department portal.", downloadUrl: "https://www.immd.gov.hk/pdforms/id1100a.pdf", filedBy: "applicant", stage: "with_application", notes: "Three tiers: Category A (HK$2.5M+ income last year, 2-year pass); Category B (top-100 university degree + 3+ years work experience, 2-year); Category C (top-100 university degree, <3 years work experience, 1-year capped at 10,000/year)." },
+  ],
+  notes: "Top Talent Pass launched Dec 2022 — fast-track work visa with no employer sponsor needed at entry. Hong Kong's response to talent outflow post-2020. Convert to GEP / IANG / other for long-term residence; same 7-year PR pathway.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// TAIWAN — Employment Gold Card + ARC
+// ─────────────────────────────────────────────────────────────────────────
+const TW_GOLD_CARD: FormsEntry = {
+  destinationIso2: "TW",
+  programmeLabel: "Taiwan — Employment Gold Card",
+  programmeSlug: "/destination/tw",
+  applicationPortal: "https://goldcard.nat.gov.tw/en/",
+  applicableTo: { purposes: ["work"], labelKeywords: ["gold card", "employment gold"] },
+  forms: [
+    { code: "Online application", name: "Employment Gold Card application", description: "Fully online at goldcard.nat.gov.tw. Single combined document covering work permit + resident visa + Alien Resident Certificate (ARC) + re-entry permit.", downloadUrl: "https://goldcard.nat.gov.tw/en/", filedBy: "applicant", stage: "with_application" },
+    { code: "Field-specific evidence", name: "Eligibility evidence (one of 8 fields)", description: "Science / Tech / Economics / Education / Culture & Arts / Sports / Finance / Architecture / National Defence — provide credentials or 3-year salary ≥ NT$160k/month (~US$5,300/month).", downloadUrl: "https://goldcard.nat.gov.tw/en/eligibility/", filedBy: "applicant", stage: "before_applying" },
+  ],
+  notes: "Gold Card is Taiwan's headline talent visa — 1 to 3 year multi-entry combined work + residence. NO sponsor needed. After 5 continuous years on Gold Card + 183+ days/year residence, eligible for permanent residence (APRC). 18-month tax holiday on foreign income for first-time applicants.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// EGYPT — Work Permit
+// ─────────────────────────────────────────────────────────────────────────
+const EG_WORK: FormsEntry = {
+  destinationIso2: "EG",
+  programmeLabel: "Egypt — Work Permit + Residence",
+  programmeSlug: "/destination/eg",
+  applicationPortal: "https://www.manpower.gov.eg/",
+  applicableTo: { purposes: ["work"], labelKeywords: ["work permit", "tasreeh", "tasreeh amal"] },
+  forms: [
+    { code: "Work Permit application", name: "Ministry of Manpower Tasreeh Amal", description: "Filed by the Egyptian employer at the Ministry of Manpower. Foreign-worker quota: max 10% of workforce (with exceptions for specialised roles).", downloadUrl: "https://www.manpower.gov.eg/", filedBy: "employer", stage: "before_applying" },
+    { code: "Residence permit (annual)", name: "Iqama at Mogamma' al-Tahrir", description: "Annual residence permit filed at Mogamma' al-Tahrir (Cairo) or regional Mogamma'. EGP 3,000 typical fee.", downloadUrl: "https://moi.gov.eg/", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Egypt employer-sponsored route. Common sectors: oil-and-gas (Red Sea + Western Desert); education (AUC + GUC + BUE in New Cairo); medical (Dar Al Fouad, Cleveland Clinic Abu Dhabi-Egypt). Residence permit must be renewed annually.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// MOROCCO — Carte de Séjour
+// ─────────────────────────────────────────────────────────────────────────
+const MA_CARTE_SEJOUR: FormsEntry = {
+  destinationIso2: "MA",
+  programmeLabel: "Morocco — Carte de Séjour (Residence Card)",
+  programmeSlug: "/destination/ma",
+  applicationPortal: "https://www.dgsn.gov.ma/",
+  applicableTo: { purposes: ["work", "family"], labelKeywords: ["carte de séjour", "carte de sejour", "residence card"] },
+  forms: [
+    { code: "ANAPEC contract approval", name: "Agence Nationale de Promotion de l'Emploi (work category only)", description: "Required for foreign-worker contracts in Morocco — the ANAPEC certifies that no Moroccan candidate is available. MAD 300 fee.", downloadUrl: "https://www.anapec.org/", filedBy: "employer", stage: "before_applying" },
+    { code: "Carte de Séjour application", name: "Sûreté Nationale (DGSN) at préfecture", description: "Filed in person at the regional préfecture within 90 days of arrival. MAD 100 + MAD 60 timbres typical.", downloadUrl: "https://www.dgsn.gov.ma/fr/services-au-public", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Morocco's main long-stay residence document. 1-year initial, renewable. 10-year permanent residence after 4 years of continuous Carte de Séjour. Common in Casablanca (finance), Tangier (Tanger Med automotive), Rabat (diplomatic + NGO), Marrakech (tourism + hospitality).",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// NIGERIA — STR / TWP / CERPAC
+// ─────────────────────────────────────────────────────────────────────────
+const NG_STR_CERPAC: FormsEntry = {
+  destinationIso2: "NG",
+  programmeLabel: "Nigeria — Subject To Regularisation (STR) → CERPAC",
+  programmeSlug: "/destination/ng",
+  applicationPortal: "https://immigration.gov.ng/",
+  applicableTo: { purposes: ["work"], labelKeywords: ["str", "subject to regularisation", "cerpac"] },
+  forms: [
+    { code: "Expatriate Quota approval", name: "NIS Form T/1 + Quota approval letter", description: "Filed by the Nigerian-registered employer at NIS HQ Abuja. Without the Expatriate Quota the STR cannot be approved.", downloadUrl: "https://immigration.gov.ng/", filedBy: "employer", stage: "before_applying", notes: "Large multinationals in oil-and-gas / telecom / banking hold pre-approved quotas. New employers face 4-8 week processing." },
+    { code: "STR visa application", name: "STR visa application (online + consular)", description: "Online via portal.immigration.gov.ng, then collect at the Nigerian embassy abroad. Single-entry 90-day visa to enter Nigeria.", downloadUrl: "https://portal.immigration.gov.ng/", filedBy: "applicant", stage: "with_application" },
+    { code: "CERPAC application", name: "Combined Expatriate Residence Permit & Aliens Card", description: "Within 90 days of arrival, register at NIS regional office for the 2-year multi-entry residence permit. USD 2,000 annual fee.", downloadUrl: "https://portal.immigration.gov.ng/", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Nigeria's primary employer-sponsored route. CERPAC processed at NIS regional offices (Lagos, Abuja, Port Harcourt). Common bottleneck — allow 4-8 weeks beyond the official timeline. Permanent residence after 7 years of continuous CERPAC.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// KENYA — Class G Investor + Class D Employment
+// ─────────────────────────────────────────────────────────────────────────
+const KE_CLASS_G: FormsEntry = {
+  destinationIso2: "KE",
+  programmeLabel: "Kenya — Class G Investor Work Permit",
+  programmeSlug: "/destination/ke",
+  applicationPortal: "https://immigration.go.ke/",
+  applicableTo: { purposes: ["work"], labelKeywords: ["class g", "investor permit"] },
+  forms: [
+    { code: "Form 25", name: "Application for entry permit (Class G)", description: "Filed via the eFNS (electronic Foreign Nationals Services) portal. Kenyan-registered company + USD 100k+ investment evidence required.", downloadUrl: "https://fns.immigration.go.ke/", filedBy: "applicant", stage: "with_application" },
+    { code: "KRA PIN", name: "Kenya Revenue Authority Personal Identification Number", description: "Apply at the KRA online portal. Required BEFORE the Class G application — no permit without a PIN.", downloadUrl: "https://itax.kra.go.ke/KRA-Portal/", filedBy: "applicant", stage: "before_applying" },
+  ],
+  notes: "Class G is Kenya's headline investor route — used by most US/UK/IN/CN business migration. Processed at Nyayo House in Nairobi; remote applications via High Commission then transferred. KRA PIN is the bottleneck for first-time applicants.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// ARGENTINA — Mercosur Residencia
+// ─────────────────────────────────────────────────────────────────────────
+const AR_MERCOSUR_FULL: FormsEntry = {
+  destinationIso2: "AR",
+  programmeLabel: "Argentina — Residencia Temporaria Mercosur (consular + RaDeX)",
+  programmeSlug: "/destination/ar",
+  applicationPortal: "https://www.argentina.gob.ar/migraciones",
+  applicableTo: { purposes: ["family", "work"], labelKeywords: ["residencia temporaria mercosur", "mercosur"] },
+  forms: [
+    { code: "RaDeX online application", name: "Radicación a Distancia de Extranjeros", description: "DNM's online residency portal. Mercosur subtype requires apostilled birth certificate proving nationality of a full / associate state (BR/PY/UY/BO/CL/CO/EC/PE).", downloadUrl: "https://www.argentina.gob.ar/interior/migraciones/radex", filedBy: "applicant", stage: "with_application" },
+    { code: "Reincidencia certificate", name: "Argentine criminal-record certificate", description: "Issued at the Registro Nacional de Reincidencia in Buenos Aires (or via consulate abroad). Required for every residence application.", downloadUrl: "https://www.argentina.gob.ar/justicia/reincidencia", filedBy: "applicant", stage: "with_application" },
+    { code: "DNI Extranjeros", name: "Argentine national ID for foreigners", description: "Issued by RENAPER after residency approval — ~3 weeks after Migraciones decision. Essential for banking + healthcare.", downloadUrl: "https://www.argentina.gob.ar/interior/renaper", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Mercosur Residencia = simplest LatAm long-stay route — no employment / income / savings test, just nationality. Argentine citizenship after just 2 years of residence (one of the fastest globally).",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// CHILE — Visa Sujeta a Contrato + Visa Temporaria
+// ─────────────────────────────────────────────────────────────────────────
+const CL_SUJETA_CONTRATO: FormsEntry = {
+  destinationIso2: "CL",
+  programmeLabel: "Chile — Visa Sujeta a Contrato (Employer-Sponsored)",
+  programmeSlug: "/destination/cl",
+  applicationPortal: "https://serviciomigraciones.cl/",
+  applicableTo: { purposes: ["work"], labelKeywords: ["sujeta a contrato", "employer-sponsored"] },
+  forms: [
+    { code: "Online application", name: "Servicio Nacional de Migraciones portal", description: "Online at serviciomigraciones.cl. The applicant files; the Chilean employer provides notarised employment contract with mandatory return-trip + tax clauses.", downloadUrl: "https://serviciomigraciones.cl/", filedBy: "applicant", stage: "with_application" },
+    { code: "Cédula de Identidad", name: "Chilean ID at Civil Registry within 30 days", description: "After PDI (Policía de Investigaciones) registration, obtain the Cédula at any Civil Registry office. Required for banking + healthcare.", downloadUrl: "https://www.registrocivil.cl/", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Chile's employer-sponsored work route. The notarised-contract requirement is unusual — must include mandatory return-trip + Chilean-tax clauses. Mining (Antofagasta, Calama) and finance/tech (Santiago — Las Condes / Providencia) dominate.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// COLOMBIA — Visa M (Migrant)
+// ─────────────────────────────────────────────────────────────────────────
+const CO_VISA_M: FormsEntry = {
+  destinationIso2: "CO",
+  programmeLabel: "Colombia — Visa M (Migrante — Cónyuge / Trabajador)",
+  programmeSlug: "/destination/co",
+  applicationPortal: "https://tramitesmre.cancilleria.gov.co/",
+  applicableTo: { purposes: ["family", "work"], labelKeywords: ["visa m", "migrante", "cónyuge", "conyuge"] },
+  forms: [
+    { code: "Online application", name: "Cancillería Trámites en Línea", description: "Online at tramitesmre.cancilleria.gov.co. USD 50 study fee + USD 230 issuance fee on approval.", downloadUrl: "https://tramitesmre.cancilleria.gov.co/", filedBy: "applicant", stage: "with_application" },
+    { code: "Cédula de Extranjería", name: "Foreign-resident ID at Migración Colombia", description: "Within 15 days of arrival, register at Migración Colombia for the Cédula de Extranjería. Essential for banking + healthcare + work.", downloadUrl: "https://www.migracioncolombia.gov.co/", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Visa M (Migrante) is the longest-established Colombia long-stay category. Cónyuge subtype (spouse of Colombian citizen) is the dominant family route. Convertible to Visa R Resident after 2-5 years depending on subtype.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
 // Registry export
 // ─────────────────────────────────────────────────────────────────────────
 export const VISA_FORMS: FormsEntry[] = [
@@ -1533,6 +1782,23 @@ export const VISA_FORMS: FormsEntry[] = [
   BR_VITEM_V_EMPLOYMENT,
   BR_VITEM_II_BUSINESS,
   BR_VITEM_XI_FAMILY,
+  // Batch 4 — fill remaining top-traffic gaps
+  AU_SKILLED_190,
+  US_O1_EXTRAORDINARY,
+  US_E2_TREATY,
+  UK_ANCESTRY,
+  UK_HEALTH_CARE,
+  UK_YOUTH_MOBILITY,
+  HK_GEP,
+  HK_TOP_TALENT,
+  TW_GOLD_CARD,
+  EG_WORK,
+  MA_CARTE_SEJOUR,
+  NG_STR_CERPAC,
+  KE_CLASS_G,
+  AR_MERCOSUR_FULL,
+  CL_SUJETA_CONTRATO,
+  CO_VISA_M,
 ];
 
 /** All distinct destinations that have a forms library. */

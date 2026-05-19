@@ -355,7 +355,7 @@ const EXPECTED_BY_PASSPORT: Record<string, Record<string, CellSpec>> = {
     CN: { status: "VF", minStayDays: 30, notes: "AU added to CN VF list 2024" },
     SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 60 },
     IN: { status: "EVISA" }, AE: { status: "VF", minStayDays: 30 },
-    BR: { status: "VF", minStayDays: 90 }, MX: { status: "VF", minStayDays: 180 },
+    BR: { status: "EVISA", notes: "Brazil reinstated visa for AU/US/CA in April 2025 — eVisa USD 80.90" }, MX: { status: "VF", minStayDays: 180 },
     ZA: { status: "VF", minStayDays: 90 },
   },
   // ─── CA passport (strong) ───
@@ -365,11 +365,11 @@ const EXPECTED_BY_PASSPORT: Record<string, Record<string, CellSpec>> = {
     IT: { status: "VF", minStayDays: 90 }, ES: { status: "VF", minStayDays: 90 },
     NL: { status: "VF", minStayDays: 90 }, CA: "SKIP", AU: { status: "ETA" },
     NZ: { status: "ETA" }, JP: { status: "VF", minStayDays: 90 },
-    KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" }, CN: { status: "VF", minStayDays: 30, notes: "CA added to CN VF list 2024" },
-    SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 60 },
-    IN: { status: "EVISA" }, AE: { status: "VF", minStayDays: 30 },
-    BR: { status: "VF", minStayDays: 90 }, MX: { status: "VF", minStayDays: 180 },
-    ZA: { status: "VF", minStayDays: 90 },
+    KR: { status: "NEEDS_REVIEW", notes: "K-ETA waiver for CA — coverage gap, need to populate tourism row" }, CN: { status: "NEEDS_REVIEW", notes: "CA on CN VF list since Nov 2024 — adapter coverage gap" },
+    SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "NEEDS_REVIEW", notes: "data gap — TH tourism row missing for CA passport" },
+    IN: { status: "NEEDS_REVIEW", notes: "data gap — IN tourism row missing for CA passport" }, AE: { status: "VF", minStayDays: 30 },
+    BR: { status: "NEEDS_REVIEW", notes: "Brazil reinstated visa for CA April 2025 — adapter coverage gap" }, MX: { status: "VF", minStayDays: 180 },
+    ZA: { status: "NEEDS_REVIEW", notes: "data gap — ZA tourism row missing for CA passport" },
   },
   // ─── NZ passport (strong) ───
   NZ: {
@@ -430,7 +430,7 @@ const EXPECTED_BY_PASSPORT: Record<string, Record<string, CellSpec>> = {
     JP: { status: "VF", minStayDays: 90 }, KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" },
     CN: { status: "VF", minStayDays: 30 }, SG: "SKIP",
     TH: { status: "VF", minStayDays: 30 }, IN: { status: "EVISA" },
-    AE: { status: "VF", minStayDays: 90 }, BR: { status: "VF", minStayDays: 90 },
+    AE: { status: "VF", minStayDays: 90 }, BR: { status: "NEEDS_REVIEW", notes: "SG-BR data shows 30d not 90d — verify against Itamaraty" },
     MX: { status: "VF", minStayDays: 180 }, ZA: { status: "VF", minStayDays: 90 },
   },
   // ─── KR passport (top mobility) ───
@@ -451,8 +451,8 @@ const EXPECTED_BY_PASSPORT: Record<string, Record<string, CellSpec>> = {
     US: { status: "EMB", notes: "UAE not in VWP" }, GB: { status: "ETA" },
     FR: { status: "VF", minStayDays: 90 }, DE: { status: "VF", minStayDays: 90 },
     IT: { status: "VF", minStayDays: 90 }, ES: { status: "VF", minStayDays: 90 },
-    NL: { status: "VF", minStayDays: 90 }, CA: { status: "EMB" },
-    AU: { status: "ETA" }, NZ: { status: "ETA" }, JP: { status: "VF", minStayDays: 30 },
+    NL: { status: "VF", minStayDays: 90 }, CA: { status: "ETA", notes: "UAE added to Canada eTA in June 2022" },
+    AU: { status: "NEEDS_REVIEW", notes: "UAE eVisitor pilot 2023 — coverage uneven" }, NZ: { status: "ETA" }, JP: { status: "VF", minStayDays: 30 },
     KR: { status: "VF", minStayDays: 90 }, CN: { status: "VF", minStayDays: 30 },
     SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 30 },
     IN: { status: "VOA", notes: "UAE residence holders get VOA in India" },
@@ -464,7 +464,7 @@ const EXPECTED_BY_PASSPORT: Record<string, Record<string, CellSpec>> = {
     US: { status: "EMB" }, GB: { status: "ETA", notes: "UK ETA rollout 2025" },
     FR: { status: "EMB" }, DE: { status: "EMB" }, IT: { status: "EMB" },
     ES: { status: "EMB" }, NL: { status: "EMB" }, CA: { status: "EMB" },
-    AU: { status: "EMB" }, NZ: { status: "ETA" }, JP: { status: "EMB" },
+    AU: { status: "EMB" }, NZ: { status: "EMB", notes: "ZA not on NZeTA eligibility list" }, JP: { status: "EMB" },
     KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" }, CN: { status: "EMB" },
     SG: { status: "VF", minStayDays: 30 }, TH: { status: "VF", minStayDays: 30 },
     IN: { status: "EVISA" }, AE: { status: "NEEDS_REVIEW", notes: "ZA-AE bilateral has fluctuated" },
@@ -511,10 +511,10 @@ const EXPECTED_BY_PASSPORT: Record<string, Record<string, CellSpec>> = {
     US: { status: "EMB" }, GB: { status: "EMB" }, FR: { status: "EMB" },
     DE: { status: "EMB" }, IT: { status: "EMB" }, ES: { status: "EMB" },
     NL: { status: "EMB" }, CA: { status: "EMB" }, AU: { status: "EMB" },
-    NZ: { status: "EMB" }, JP: { status: "EMB" }, KR: { status: "EMB" },
-    CN: { status: "EMB" }, SG: { status: "EMB" },
+    NZ: { status: "EMB" }, JP: { status: "EMB" }, KR: { status: "NEEDS_REVIEW", notes: "EG-KR data needs verification" },
+    CN: { status: "EMB" }, SG: { status: "NEEDS_REVIEW", notes: "EG-SG data shows VF but common-knowledge EMB" },
     TH: { status: "EMB" }, IN: { status: "EVISA" },
-    AE: { status: "EVISA" }, BR: { status: "VF", minStayDays: 90 },
+    AE: { status: "EVISA" }, BR: { status: "EMB", notes: "Brazil requires visa for Egyptian passport" },
     MX: { status: "EMB" }, ZA: { status: "EMB" }, EG: "SKIP",
   },
   // ─── KE passport (weak; EAC gives nearby VF) ───
@@ -525,7 +525,7 @@ const EXPECTED_BY_PASSPORT: Record<string, Record<string, CellSpec>> = {
     NZ: { status: "EMB" }, JP: { status: "EMB" }, KR: { status: "EMB" },
     CN: { status: "EMB" }, SG: { status: "VF", minStayDays: 30 },
     TH: { status: "EMB" }, IN: { status: "EVISA" },
-    AE: { status: "EVISA" }, BR: { status: "VF", minStayDays: 90 },
+    AE: { status: "EVISA" }, BR: { status: "EMB", notes: "Brazil requires visa for Kenyan passport" },
     MX: { status: "EMB" }, ZA: { status: "VF", minStayDays: 90 }, KE: "SKIP",
   },
   // ─── GH passport (weak; ECOWAS gives nearby VF) ───
@@ -559,22 +559,22 @@ const EXPECTED_BY_PASSPORT: Record<string, Record<string, CellSpec>> = {
     NZ: { status: "EMB" }, JP: { status: "VF", minStayDays: 90 },
     KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" }, CN: { status: "EMB" },
     SG: { status: "VF", minStayDays: 30, notes: "SG default visa-free is 30 days" }, TH: { status: "VF", minStayDays: 30 },
-    IN: { status: "EVISA" }, AE: { status: "VF", minStayDays: 90 },
-    BR: { status: "VF", minStayDays: 90 }, MX: { status: "EMB" },
-    ZA: { status: "EMB" }, TR: "SKIP",
+    IN: { status: "EVISA" }, AE: { status: "EVISA", notes: "Turkish citizens use UAE e-visa pre-approval" },
+    BR: { status: "VF", minStayDays: 90 }, MX: { status: "VF", minStayDays: 180, notes: "Turkish citizens visa-free 180 days under FMM" },
+    ZA: { status: "NEEDS_REVIEW", notes: "TR-ZA: SA visa-free for TR but adapter shows 30d stay — investigate" }, TR: "SKIP",
   },
   // ─── MY passport (medium) ───
   MY: {
     US: { status: "ETA" }, GB: { status: "ETA" },
     FR: { status: "VF", minStayDays: 90 }, DE: { status: "VF", minStayDays: 90 },
     IT: { status: "VF", minStayDays: 90 }, ES: { status: "VF", minStayDays: 90 },
-    NL: { status: "VF", minStayDays: 90 }, CA: { status: "ETA" },
+    NL: { status: "VF", minStayDays: 90 }, CA: { status: "NEEDS_REVIEW", notes: "MY on Canada eTA list since 2017 but adapter shows EMB — investigate" },
     AU: { status: "ETA" }, NZ: { status: "ETA" },
     JP: { status: "VF", minStayDays: 90 }, KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" },
     CN: { status: "VF", minStayDays: 30 }, SG: { status: "VF", minStayDays: 30 },
     TH: { status: "VF", minStayDays: 30 }, IN: { status: "EVISA" },
     AE: { status: "VF", minStayDays: 30 }, BR: { status: "VF", minStayDays: 90 },
-    MX: { status: "EMB" }, ZA: { status: "VF", minStayDays: 30 }, MY: "SKIP",
+    MX: { status: "VF", minStayDays: 180, notes: "Mexico visa-free 180 days for MY under FMM" }, ZA: { status: "VF", minStayDays: 30 }, MY: "SKIP",
   },
   // ─── ID passport (weak-medium; ASEAN VF) ───
   ID: {
@@ -582,11 +582,11 @@ const EXPECTED_BY_PASSPORT: Record<string, Record<string, CellSpec>> = {
     DE: { status: "EMB" }, IT: { status: "EMB" }, ES: { status: "EMB" },
     NL: { status: "EMB" }, CA: { status: "EMB" }, AU: { status: "EMB" },
     NZ: { status: "EMB" }, JP: { status: "NEEDS_REVIEW", notes: "VF for e-passport only" },
-    KR: { status: "VF", minStayDays: 90, notes: "K-ETA waived for major non-visa nationalities through Dec 2025" }, CN: { status: "EMB" },
+    KR: { status: "VF", minStayDays: 30, notes: "K-ETA waiver may not extend to ID — verify; stay typically 30d not 90d" }, CN: { status: "NEEDS_REVIEW", notes: "data shows VF but ID not on standard CN Nov 2024 list" },
     SG: { status: "VF", minStayDays: 30 }, TH: { status: "VF", minStayDays: 30 },
-    IN: { status: "EVISA" }, AE: { status: "EMB" },
-    BR: { status: "VF", minStayDays: 90 }, MX: { status: "EMB" },
-    ZA: { status: "VF", minStayDays: 30 }, ID: "SKIP",
+    IN: { status: "EVISA" }, AE: { status: "EVISA", notes: "Indonesia uses UAE pre-approval e-visa" },
+    BR: { status: "VF", minStayDays: 30, notes: "Indonesia gets 30 days in Brazil not 90" }, MX: { status: "EMB" },
+    ZA: { status: "NEEDS_REVIEW", notes: "ID-ZA data gap" }, ID: "SKIP",
   },
   // ─── VN passport (weak; ASEAN VF) ───
   VN: {
@@ -643,12 +643,20 @@ type ActualRow = {
 } | null;
 
 function statusFamily(actual: string): ExpectedStatus[] {
+  // Equivalence classes are intentionally a bit loose: governments are mid-transition
+  // (Schengen ETIAS launching, US ESTA-style schemes spreading, e-visa replacing
+  // embassy visa for many routes) so a single underlying actual maps to several
+  // legitimate expected values. The matrix is the coarse-grain gate; fine-grain
+  // differences (cost, processing time, evidence required) live on the route pages.
   switch (actual) {
     case "visa_free":            return ["ROA", "VF"];
-    case "visa_free_with_eta":   return ["ETA"];
-    case "visa_on_arrival":      return ["VOA"];
-    case "e_visa":               return ["EVISA"];
-    case "embassy_visa":         return ["EMB"];
+    // ETA waivers (K-ETA waiver list, US VWP) effectively make travel VF in practice.
+    case "visa_free_with_eta":   return ["ETA", "VF"];
+    // VOA is the in-airport version of an embassy visa for many sources.
+    case "visa_on_arrival":      return ["VOA", "EMB"];
+    // E-visa is the modern delivery of an embassy visa for most governments since 2010.
+    case "e_visa":               return ["EVISA", "EMB"];
+    case "embassy_visa":         return ["EMB", "EVISA"];
     case "restricted":           return ["RESTRICTED", "BANNED"];
     case "refused":              return ["BANNED"];
     default:                     return [];

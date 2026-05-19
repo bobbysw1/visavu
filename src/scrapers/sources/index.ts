@@ -9,6 +9,9 @@ import { ukEtaAdapter } from "./uk_eta";
 import { auSubclass500Adapter } from "./au_subclass_500";
 import { auSubclass482Adapter } from "./au_subclass_482";
 import { auSubclass601Adapter } from "./au_subclass_601";
+// AU embassy-issued Visitor Visa — closes the gap where only ETA ($20) +
+// eVisitor (free) were surfaced; subclass 600 base fee is AUD $200.
+import { auSubclass600Adapter } from "./au_subclass_600";
 import { australiaEvisitorAdapter } from "./au_evisitor";
 import { caExpressEntryAdapter } from "./ca_express_entry";
 import { canadaEtaAdapter } from "./ca_eta";
@@ -147,6 +150,7 @@ export const ADAPTERS: Adapter[] = [
   auSubclass500Adapter,
   auSubclass482Adapter,
   auSubclass601Adapter,
+  auSubclass600Adapter,
   australiaEvisitorAdapter,
   caExpressEntryAdapter,
   canadaEtaAdapter,

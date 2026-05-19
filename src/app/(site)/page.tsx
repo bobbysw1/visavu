@@ -150,13 +150,6 @@ export default async function HomePage() {
         );
       })()}
 
-      {/* ─── VISA NEWS RAIL ───
-          Surfaces the rolling 30-day digest from /updates as scrollable
-          cards. Sits immediately below the hero so users see at-a-glance
-          "this site is live + visa rules just changed" before scrolling
-          into the destination tiles. Returns null when no recent updates. */}
-      <RecentUpdatesRail />
-
       {/* ─── POPULAR DESTINATIONS STRIP ───
           Sits on the paper field below the hero so the photo tiles read
           as discrete browsable shortcuts rather than competing with the
@@ -369,6 +362,13 @@ export default async function HomePage() {
         </p>
         <AllCountriesGrid mode="destination" compact />
       </section>
+
+      {/* ─── VISA NEWS CAROUSEL ───
+          Recent visa-rules updates as a small horizontal carousel near
+          the bottom — the right place for "what changed in visa rules
+          recently" rather than as a top-of-homepage callout. Returns
+          null gracefully when no recent updates. */}
+      <RecentUpdatesRail />
     </>
   );
 }

@@ -83,14 +83,17 @@ export function RecentUpdatesRail() {
               id="recent-updates-heading"
               className="serif-display text-xl sm:text-2xl mt-1 font-medium"
             >
-              What changed in the last 30 days
+              Recent visa-rule changes
             </h2>
+            <p className="text-sm text-[var(--color-ink-muted)] mt-1">
+              Policy + fee updates from the last 30 days, pulled from our adapter commits.
+            </p>
           </div>
           <Link
             href="/updates"
             className="text-sm font-medium text-[var(--color-ink)] hover:opacity-80 underline-offset-2 hover:underline shrink-0"
           >
-            See all updates →
+            See all news →
           </Link>
         </div>
 

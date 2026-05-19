@@ -3,9 +3,7 @@ import { Suspense } from "react";
 import { CurrencySwitcher } from "./CurrencySwitcher";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MobileMenu } from "./MobileMenu";
-import { UpdatesNavLink } from "./UpdatesNavLink";
 import { ToolsDropdown } from "./ToolsDropdown";
-import recentUpdates from "@/data/recent_updates.json";
 
 // LocaleSwitcher is now backed by the P29 i18n scaffold registry
 // (src/lib/i18n/locales.ts). Each option labels its translation status
@@ -47,34 +45,28 @@ export function SiteHeader() {
             Where can I go?
           </Link>
           {/* Tools dropdown — bundles chat / find-my-visa / documents /
-              myths / guides / rankings / updates into a single nav entry
-              instead of 7 top-level items. */}
+              myths / guides / rankings into a single nav entry. Updates
+              removed per user — that surface is now the visa-news
+              carousel at the bottom of the homepage, not its own nav item. */}
           <ToolsDropdown />
-          {/* Services kept inline — it's the monetised revenue surface so
-              we want it discoverable. */}
+          {/* Services — coming-soon state until partner programmes are
+              actually registered. Marked with a 'Soon' badge so users
+              know it's intentional, not broken. */}
           <Link
             href="/services"
-            className="hidden md:inline px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
+            className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
           >
-            Services
+            <span>Services</span>
+            <span className="text-[9px] font-semibold uppercase tracking-wider rounded-full bg-[var(--color-muted)] text-[var(--color-ink-muted)] px-1.5 py-0.5 leading-none">
+              Soon
+            </span>
           </Link>
-          {/* Updates badge stays inline (next to Tools) so the new-items
-              pill stays visible. Clicking opens /updates as before. */}
-          <UpdatesNavLink
-            updates={(recentUpdates as { updates: Array<{ date: string }> }).updates ?? []}
-          />
+          {/* Find my visa — circled CTA at the end of the row. */}
           <Link
             href="/find-my-visa"
             className="ml-1 inline-flex items-center gap-1.5 rounded-full border border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-paper)] px-3.5 py-1.5 text-xs font-semibold hover:opacity-90 transition whitespace-nowrap"
           >
             Find my visa
-          </Link>
-          <Link
-            href="/signin"
-            className="hidden sm:inline px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition text-xs"
-            aria-label="Sign in or view account"
-          >
-            Account
           </Link>
           {/* Suspense wraps the switchers because they call useSearchParams()
               client-side; without a boundary, Next bails out of SSG. */}

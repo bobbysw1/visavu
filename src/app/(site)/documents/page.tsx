@@ -27,6 +27,10 @@ export default function DocumentsHubPage() {
   const destIsos = destinationsWithForms();
   const totalForms = VISA_FORMS.reduce((acc, e) => acc + e.forms.length, 0);
 
+  const sortedDests = [...destIsos].sort((a, b) =>
+    nameFor(a).localeCompare(nameFor(b)),
+  );
+
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
       <header className="mb-10">
@@ -41,14 +45,28 @@ export default function DocumentsHubPage() {
           link directly to the official government download page so you skip
           the consultant fee for &quot;here&apos;s the form&quot;.
         </p>
+
+        {/* Perspective clarifier — common user confusion is whether the
+            forms are 'from your country' or 'for the country you're
+            going to'. Spell it out. */}
+        <div className="mt-5 rounded-lg border-l-4 border-[var(--color-accent)] bg-[var(--color-muted)]/40 px-4 py-3">
+          <p className="text-sm text-[var(--color-ink)] leading-relaxed">
+            <strong>What you&apos;re looking at:</strong> these are forms you
+            file <em>to apply for a visa to that destination country</em>,
+            regardless of your own nationality. A Danish or Indian or
+            Australian applicant who wants to move to Canada all use the same
+            IMM-series Canadian forms below.
+          </p>
+        </div>
+
         <p className="text-sm text-[var(--color-ink-muted)] mt-3">
-          {totalForms} curated forms across {destIsos.length} destinations.
-          Re-verified quarterly against the official sources.
+          {totalForms} curated forms across {sortedDests.length} destinations.
+          Re-verified quarterly.
         </p>
       </header>
 
       <div className="grid sm:grid-cols-2 gap-4">
-        {destIsos.map((iso) => {
+        {sortedDests.map((iso) => {
           const entries = VISA_FORMS.filter((e) => e.destinationIso2 === iso);
           const formCount = entries.reduce((acc, e) => acc + e.forms.length, 0);
           return (
@@ -65,10 +83,14 @@ export default function DocumentsHubPage() {
                   {flagEmoji(iso)}
                 </span>
                 <div className="min-w-0 flex-1">
+                  {/* Full country name as the headline — never just the
+                      iso2 code. User flagged: 'AU' on its own is confusing,
+                      'Australia' is obvious. */}
                   <h2 className="font-semibold text-lg text-[var(--color-ink)] leading-tight">
                     {nameFor(iso)}
                   </h2>
                   <p className="text-xs text-[var(--color-ink-muted)] mt-0.5">
+                    Forms to apply <em>to</em> {nameFor(iso)} ·{" "}
                     {entries.length} programme{entries.length === 1 ? "" : "s"} ·{" "}
                     {formCount} form{formCount === 1 ? "" : "s"}
                   </p>
@@ -89,53 +111,8 @@ export default function DocumentsHubPage() {
         })}
       </div>
 
-      {/* ──── AI-polish-your-application prompt — contextualised here
-              rather than as a banner pitch on every page. Surfaces only
-              once, alongside the actual forms it helps with. */}
-      <section className="mt-14 rounded-2xl border border-[var(--color-rule)] bg-[var(--color-muted)]/40 p-6 sm:p-8">
-        <p className="kicker mb-2">Polish before you submit</p>
-        <h2 className="serif-display text-2xl sm:text-3xl font-medium mb-3 text-[var(--color-ink)]">
-          A free way to tighten your application
-        </h2>
-        <p className="text-[var(--color-ink-muted)] leading-relaxed mb-4">
-          Once you&apos;ve filled in the forms above, paste your draft
-          personal-statement, relationship narrative, or sponsor declaration
-          into any capable AI (Claude, ChatGPT, Mistral, Gemini — all have free
-          tiers) and ask it to tighten the language to what caseworkers expect.
-          The forms themselves are mechanical; the prose you attach is where
-          most refusals happen.
-        </p>
-        <details className="rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper)] p-4">
-          <summary className="cursor-pointer text-sm font-medium text-[var(--color-ink)]">
-            The exact prompt to paste
-          </summary>
-          <pre className="mt-3 text-xs leading-relaxed text-[var(--color-ink)]/90 whitespace-pre-wrap font-mono bg-[var(--color-muted)]/40 p-4 rounded">
-{`I'm preparing a [destination — e.g. Australian Partner Visa Subclass 820]
-application. Below is my draft [personal statement / relationship narrative
-/ sponsor declaration]. Tighten it for a [destination] case officer:
-
-  - Cut filler and repetition.
-  - Match the structured, plain-prose tone caseworkers expect (no flowery
-    language, no advocacy, no padding).
-  - Flag anything missing that the officer will ask about (timeline gaps,
-    inconsistent dates, unsupported claims).
-  - Keep my actual voice — don't make it sound generated. Edit, don't
-    re-write.
-  - Aim for [target word count, e.g. ~600 words for an AU Form 888 stat-dec].
-
-Here's my draft:
-
-[PASTE YOUR TEXT HERE]`}
-          </pre>
-        </details>
-        <p className="text-xs text-[var(--color-ink-muted)] italic mt-4">
-          For complex cases (refusal history, criminal record, prior overstay,
-          sham-marriage concern) hire a regulated immigration adviser. For
-          everything else, documentation quality matters more than legal
-          representation.
-        </p>
-      </section>
-
+      {/* AI-polish prompt library now lives only on /tools — not duplicated
+          here. Kept this page focused on the forms themselves. */}
       <div className="mt-10 pt-8 border-t border-[var(--color-rule)] text-sm text-[var(--color-ink-muted)]">
         <p>
           Don&apos;t see your destination?{" "}

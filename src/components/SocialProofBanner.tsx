@@ -119,7 +119,11 @@ export function SocialProofBanner({
     <div
       role="status"
       aria-live="polite"
-      className="fixed bottom-3 left-3 z-40 max-w-[20rem] sm:max-w-sm pointer-events-auto"
+      // Sits ABOVE the NewsFlashToast (bottom-4 left-4) when both are
+      // visible — news is the priority surface. Bottom spacing here
+      // leaves ~88px clearance which matches the news pill's height
+      // with a small gap.
+      className="fixed bottom-24 left-3 z-40 max-w-[20rem] sm:max-w-sm pointer-events-auto"
     >
       <div className="flex items-start gap-2 rounded-full pl-3 pr-1.5 py-1.5 bg-white/95 dark:bg-neutral-900/95 backdrop-blur border border-neutral-200 dark:border-neutral-800 shadow-lg text-xs">
         <Sparkles

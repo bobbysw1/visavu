@@ -19,9 +19,10 @@
 import Link from "next/link";
 import { flagEmoji } from "@/lib/countries";
 import data from "@/data/recent_updates.json";
+import { activePolicyNews } from "@/content/manualPolicyNews";
 
 type Update = {
-  kind: "adapter_change" | "new_adapter" | "fee_correction";
+  kind: "adapter_change" | "new_adapter" | "fee_correction" | "rule_change" | "fee_change" | "new_route" | "route_closed" | "deadline";
   date: string;
   destinationIso2: string | null;
   destinationName: string | null;
@@ -40,6 +41,13 @@ const KIND_LABEL: Record<Update["kind"], string> = {
   adapter_change: "Catalogue updated",
   new_adapter: "New destination",
   fee_correction: "Fee corrected",
+  // Hand-curated manualPolicyNews kinds — surfaced when a real
+  // policy change happens between adapter-update cycles.
+  rule_change: "Rule change",
+  fee_change: "Fee change",
+  new_route: "New route",
+  route_closed: "Route closed",
+  deadline: "Deadline alert",
 };
 
 const KIND_TONE: Record<Update["kind"], string> = {
@@ -49,6 +57,18 @@ const KIND_TONE: Record<Update["kind"], string> = {
     "bg-emerald-50 text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-100 ring-1 ring-emerald-200/50 dark:ring-emerald-900",
   fee_correction:
     "bg-amber-50 text-amber-900 dark:bg-amber-950/40 dark:text-amber-100 ring-1 ring-amber-200/50 dark:ring-amber-900",
+  // Manual-policy variants — red/orange tone to flag urgency since
+  // these are the "real news" items vs the routine catalogue updates.
+  rule_change:
+    "bg-red-50 text-red-900 dark:bg-red-950/40 dark:text-red-100 ring-1 ring-red-200/50 dark:ring-red-900",
+  fee_change:
+    "bg-amber-50 text-amber-900 dark:bg-amber-950/40 dark:text-amber-100 ring-1 ring-amber-200/50 dark:ring-amber-900",
+  new_route:
+    "bg-emerald-50 text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-100 ring-1 ring-emerald-200/50 dark:ring-emerald-900",
+  route_closed:
+    "bg-red-50 text-red-900 dark:bg-red-950/40 dark:text-red-100 ring-1 ring-red-200/50 dark:ring-red-900",
+  deadline:
+    "bg-orange-50 text-orange-900 dark:bg-orange-950/40 dark:text-orange-100 ring-1 ring-orange-200/50 dark:ring-orange-900",
 };
 
 function relativeDay(iso: string): string {
@@ -64,9 +84,23 @@ function relativeDay(iso: string): string {
 
 export function RecentUpdatesRail() {
   const payload = data as Payload;
-  if (!payload.updates || payload.updates.length === 0) return null;
 
-  const recent = [...payload.updates]
+  // Merge auto-generated adapter updates with hand-curated policy
+  // news. Manual items take precedence in sorting when same-day
+  // (urgency: "high" pins them to the front regardless of date).
+  const manualItems: Update[] = activePolicyNews().map((n) => ({
+    kind: n.kind,
+    date: n.date,
+    destinationIso2: n.destinationIso2,
+    destinationName: n.destinationName,
+    title: n.title,
+    detail: n.detail,
+  }));
+
+  const merged = [...payload.updates, ...manualItems];
+  if (merged.length === 0) return null;
+
+  const recent = merged
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 8);
 

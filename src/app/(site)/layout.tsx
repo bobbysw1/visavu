@@ -3,6 +3,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { PlausibleScript } from "@/components/PlausibleScript";
 import { SocialProofBannerServer } from "@/components/SocialProofBannerServer";
 import { FloatingChatLauncher } from "@/components/FloatingChatLauncher";
+import { NewsFlashToast } from "@/components/NewsFlashToast";
 
 // Site chrome — wraps the public pages but NOT /embed/*, /api/*, /admin/*,
 // /og/*, /sitemap.xml, /robots.txt. Analytics also lives here so admin /
@@ -25,10 +26,17 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
           outermost role=main is consumed by assistive tech. */}
       <div id="main-content" role="main" className="flex-1">{children}</div>
       <SiteFooter />
+      {/* Visa-news flash pill — bottom-left, rotates through active
+          hand-curated policy news (Thailand 30-day cut, Spain DNV
+          changes, etc). Dismissible per-item with localStorage. The
+          news surface is the priority; SocialProofBanner stacks
+          above it. */}
+      <NewsFlashToast />
       {/* Small, dismissible insights pill — bottom-left, rotates through
           build-time-baked dataset stats + curated visa-route facts.
           Honest social proof, not fabricated user counts. No per-request
-          DB work — see SocialProofBannerServer comment. */}
+          DB work — see SocialProofBannerServer comment. Stacked ABOVE
+          NewsFlashToast (it sits at bottom-24 vs the toast's bottom-4). */}
       <SocialProofBannerServer />
       {/* Floating chat launcher — bottom-right on every site page.
           Hides itself on /chat (redundant) and /embed/* / /admin/* via

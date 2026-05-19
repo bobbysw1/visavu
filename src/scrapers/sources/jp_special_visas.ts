@@ -90,11 +90,16 @@ export const japanSpecialVisasAdapter: Adapter = {
         primarySourceUrl: J_SKIP_URL,
         fees: [
           {
+            // JPY has no subunit (minorFactor=1). The Certificate of
+            // Eligibility itself is FREE in Japan — the only fee is the
+            // visa stamp at the consulate, currently ¥6,000 multi-entry
+            // per MOFA schedule. Prior value of 400000 implied ¥400,000
+            // (~$2,700 USD) which was off by ~70x.
             kind: "base",
-            amountMinor: 400000,
+            amountMinor: 6000,
             currency: "JPY",
-            asOf: "2026-05-10",
-            label: "Certificate of Eligibility issuance fee",
+            asOf: "2026-05-19",
+            label: "Visa issuance fee (multi-entry) — COE itself is free",
             optional: false,
           },
         ],
@@ -131,11 +136,16 @@ export const japanSpecialVisasAdapter: Adapter = {
         primarySourceUrl: J_FIND_URL,
         fees: [
           {
+            // JPY has no subunit (minorFactor=1). The Certificate of
+            // Eligibility itself is FREE in Japan — the only fee is the
+            // visa stamp at the consulate, currently ¥6,000 multi-entry
+            // per MOFA schedule. Prior value of 400000 implied ¥400,000
+            // (~$2,700 USD) which was off by ~70x.
             kind: "base",
-            amountMinor: 400000,
+            amountMinor: 6000,
             currency: "JPY",
-            asOf: "2026-05-10",
-            label: "Certificate of Eligibility issuance fee",
+            asOf: "2026-05-19",
+            label: "Visa issuance fee (multi-entry) — COE itself is free",
             optional: false,
           },
         ],

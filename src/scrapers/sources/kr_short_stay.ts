@@ -97,7 +97,11 @@ export const koreaShortStayAdapter: Adapter = {
         applicationUrl: ketaRequired ? "https://www.k-eta.go.kr/" : null,
         primarySourceUrl: SOURCE_URL,
         fees: ketaRequired
-          ? [{ kind: "base", amountMinor: 1000_000, currency: "KRW", asOf: new Date().toISOString().slice(0, 10), optional: false }]
+          ? [
+              // K-ETA fee per K-ETA portal: ₩10,000 (KRW has no subunit, so
+              // amountMinor is whole won). Multiple-entry, 3-year validity.
+              { kind: "base", amountMinor: 10_000, currency: "KRW", asOf: new Date().toISOString().slice(0, 10), label: "K-ETA authorisation fee" },
+            ]
           : [],
         notes: ketaRequired
           ? `Stay up to ${days} days. K-ETA mandatory pre-boarding for most visa-exempt nationalities; KRW 10,000, multiple-entry, 3-year validity. Apply at least 72 hours before travel at k-eta.go.kr.`

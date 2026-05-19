@@ -84,8 +84,11 @@ export const koreaD10JobseekerAdapter: Adapter = {
         applicationUrl: APPLY_URL,
         primarySourceUrl: SOURCE_URL,
         fees: [
-          { kind: "base" as const, amountMinor: 8000_00, currency: "KRW", asOf: today, label: "D-10 single-entry visa fee" },
-          { kind: "service" as const, amountMinor: 3000_00, currency: "KRW", asOf: today, label: "Alien Registration Card on arrival", optional: false },
+          // KRW has no subunit (minorFactor=1). HiKorea schedule: D-10
+          // single-entry ₩60,000, multi-entry ₩90,000. ARC issuance is
+          // ₩30,000.
+          { kind: "base" as const, amountMinor: 60_000, currency: "KRW", asOf: today, label: "D-10 single-entry visa fee" },
+          { kind: "service" as const, amountMinor: 30_000, currency: "KRW", asOf: today, label: "Alien Registration Card on arrival" },
         ],
         notes: "D-10 is a residence permit, not a tourist or work permit in itself. The holder may not work for an employer until they secure a job and switch to the appropriate visa category (E-7 specialty occupation, D-8 corporate investor, D-9 trade management). Cumulative D-10 stays may not exceed 2 years. Extensions are at the discretion of the Korean Immigration Service.",
       });

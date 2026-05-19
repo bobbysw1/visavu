@@ -95,7 +95,10 @@ export const jpSpecifiedSkilledWorkerAdapter: Adapter = {
         applicationUrl: "https://www.moj.go.jp/isa/applications/procedures/ssw_index.html",
         primarySourceUrl: SOURCE_URL,
         fees: [
-          { kind: "base" as const, amountMinor: 4000, currency: "JPY", asOf: today, label: "Visa issuance fee" },
+          // JPY has no subunit (minorFactor=1). MOFA fee schedule: ¥3,000
+          // single-entry / ¥6,000 multi-entry / ¥3,000 transit. SSW workers
+          // need multi-entry to travel home during their 5-year stay.
+          { kind: "base" as const, amountMinor: 6000, currency: "JPY", asOf: today, label: "Visa issuance fee (multi-entry)" },
         ],
         notes:
           "SSW(i) provides up to 5 years total residence; family sponsorship is not permitted at this tier. SSW(ii) (16 sectors as of 2024) removes the renewal cap and permits family. Bilateral cooperation MoUs exist with the Philippines, Indonesia, Vietnam, Cambodia, Nepal, Myanmar, Mongolia, Bangladesh, Thailand, Sri Lanka, Pakistan, and others — these countries' candidates use streamlined processes.",

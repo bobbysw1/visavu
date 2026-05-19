@@ -273,7 +273,10 @@ export const totalCoverageUkUsAdapter: Adapter = {
           fees: [
             { kind: "base", amountMinor: 1117500, currency: "USD", asOf: "2026-05-11", label: "Form I-526E filing fee", optional: false },
             { kind: "service", amountMinor: 32500, currency: "USD", asOf: "2026-05-11", label: "EB-5 Integrity Fund fee", optional: false },
-            { kind: "service", amountMinor: 4750000, currency: "USD", asOf: "2026-05-11", label: "Investment (rural / TEA minimum)", optional: false },
+            // EB-5 Reform Act 2022: rural / TEA minimum is $800,000 (was
+            // $500,000 pre-Mar 2022). Standard minimum is $1,050,000. The
+            // prior value (4,750,000 minor = $47,500) was off by ~17x.
+            { kind: "service", amountMinor: 80_000_000, currency: "USD", asOf: "2026-05-19", label: "Investment (rural / TEA minimum, $800k)", optional: false },
           ],
           notes: "Reform & Integrity Act 2022 reserved 20% of annual visas for rural projects, 10% for high-unemployment TEAs, 2% for infrastructure. China + India are heavily backlogged for non-reserved categories; reserved categories had current priority dates as of 2026.",
         });
@@ -313,9 +316,15 @@ export const totalCoverageUkUsAdapter: Adapter = {
           applicationUrl: "https://www.gov.uk/global-talent",
           primarySourceUrl: "https://www.gov.uk/global-talent",
           fees: [
-            { kind: "base", amountMinor: 76600, currency: "GBP", asOf: "2026-05-11", label: "Endorsement fee", optional: false },
-            { kind: "base", amountMinor: 19400, currency: "GBP", asOf: "2026-05-11", label: "Visa application fee", optional: false },
-            { kind: "service", amountMinor: 103500, currency: "GBP", asOf: "2026-05-11", label: "Immigration Health Surcharge (per year)", optional: false },
+            // UK Home Office visa fees (Apr 2024 schedule):
+            //   - GBT endorsement: £561 (raised from £524)
+            //   - GBT visa application (outside UK, main): £716
+            //   - Immigration Health Surcharge: £1,035 / year (Feb 2024)
+            // Prior values (£766 / £194 / £1,035) had endorsement + visa
+            // figures swapped and wrong vs the current schedule.
+            { kind: "base", amountMinor: 56100, currency: "GBP", asOf: "2026-05-19", label: "Endorsement fee" },
+            { kind: "base", amountMinor: 71600, currency: "GBP", asOf: "2026-05-19", label: "Visa application fee (outside UK)" },
+            { kind: "service", amountMinor: 103500, currency: "GBP", asOf: "2026-05-19", label: "Immigration Health Surcharge (per year)" },
           ],
           notes: "Faster route to settlement than Skilled Worker (3 years vs 5 for Exceptional Talent endorsement). No salary threshold. Tech Nation was decommissioned in 2024 — the digital-tech route is now run by DSIT.",
         });

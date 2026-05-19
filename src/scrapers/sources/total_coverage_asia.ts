@@ -89,7 +89,10 @@ export const totalCoverageAsiaAdapter: Adapter = {
           applicationUrl: "https://www.moj.go.jp/isa/applications/procedures/16-2.html",
           primarySourceUrl: "https://www.moj.go.jp/isa/applications/procedures/16-2.html",
           fees: [
-            { kind: "base", amountMinor: 400000, currency: "JPY", asOf: "2026-05-11", label: "Visa issuance fee", optional: false },
+            // JPY has no subunit (minorFactor=1). Japanese long-stay visa
+            // multi-entry stamp = ¥6,000 per MOFA schedule. COE itself is
+            // free; consular stamping is the only out-of-pocket cost.
+            { kind: "base", amountMinor: 6000, currency: "JPY", asOf: "2026-05-11", label: "Visa issuance fee (multi-entry)", optional: false },
           ],
           notes: "Japan's most common skilled-worker visa. Distinct from Highly Skilled Professional (which uses a points test and gives 5-year stays from day one). COE is the slow step — visa stamping is quick once COE arrives.",
         });
@@ -124,7 +127,10 @@ export const totalCoverageAsiaAdapter: Adapter = {
           applicationUrl: "https://www.moj.go.jp/isa/applications/procedures/16-3.html",
           primarySourceUrl: "https://www.moj.go.jp/isa/applications/procedures/16-3.html",
           fees: [
-            { kind: "base", amountMinor: 400000, currency: "JPY", asOf: "2026-05-11", label: "Visa issuance fee", optional: false },
+            // JPY has no subunit (minorFactor=1). Japanese long-stay visa
+            // multi-entry stamp = ¥6,000 per MOFA schedule. COE itself is
+            // free; consular stamping is the only out-of-pocket cost.
+            { kind: "base", amountMinor: 6000, currency: "JPY", asOf: "2026-05-11", label: "Visa issuance fee (multi-entry)", optional: false },
           ],
           notes: "Common route for founders and SME importers. The ¥5M capital can come from personal funds. First renewal scrutinises whether the business is actually operating — pre-revenue plans face tougher review.",
         });
@@ -161,7 +167,10 @@ export const totalCoverageAsiaAdapter: Adapter = {
           applicationUrl: "https://www.moj.go.jp/isa/applications/procedures/16-9-2.html",
           primarySourceUrl: "https://www.moj.go.jp/isa/applications/procedures/16-9-2.html",
           fees: [
-            { kind: "base", amountMinor: 400000, currency: "JPY", asOf: "2026-05-11", label: "Visa issuance fee", optional: false },
+            // JPY has no subunit (minorFactor=1). Japanese long-stay visa
+            // multi-entry stamp = ¥6,000 per MOFA schedule. COE itself is
+            // free; consular stamping is the only out-of-pocket cost.
+            { kind: "base", amountMinor: 6000, currency: "JPY", asOf: "2026-05-11", label: "Visa issuance fee (multi-entry)", optional: false },
           ],
           notes: "Fastest route to Permanent Residence in Japan — 3 years vs the standard 10. Full work rights from day one, no employer / role restriction. Marriage must be genuine; immigration interviews are common at renewal for short-marriage cases.",
         });

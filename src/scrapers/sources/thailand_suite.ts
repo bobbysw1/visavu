@@ -106,7 +106,10 @@ export const thailandSuiteAdapter: Adapter = {
         applicationUrl: MFA_VISA_PORTAL,
         primarySourceUrl: MFA_VISA_PORTAL,
         fees: [
-          { kind: "base", amountMinor: 2_000_000, currency: "THB", asOf: "2026-05-10", label: "ED visa fee (single entry)", optional: false },
+          // THB minor factor = 100. Thai MFA schedule for ED visa is
+          // ฿2,000 single-entry / ฿5,000 multi-entry. ED is normally
+          // issued single-entry then extended in-country every 90 days.
+          { kind: "base", amountMinor: 200_000, currency: "THB", asOf: "2026-05-19", label: "ED visa fee (single entry)", optional: false },
         ],
         notes:
           "Used for Thai language schools, universities, dharma study, and cooking schools. 90-day initial entry, " +
@@ -142,7 +145,10 @@ export const thailandSuiteAdapter: Adapter = {
         applicationUrl: MFA_VISA_PORTAL,
         primarySourceUrl: MFA_VISA_PORTAL,
         fees: [
-          { kind: "base", amountMinor: 5_000_000, currency: "THB", asOf: "2026-05-10", label: "O-A visa fee (multi-entry)", optional: false },
+          // THB minor factor = 100. O-A multi-entry retirement visa is
+          // ฿5,000 single-entry / ฿12,000 multi-entry per MFA. Retirees
+          // need multi-entry for trips home.
+          { kind: "base", amountMinor: 1_200_000, currency: "THB", asOf: "2026-05-19", label: "O-A visa fee (multi-entry)", optional: false },
         ],
         notes:
           "1-year renewable retirement visa. Can be extended indefinitely while financial conditions continue to be met. " +
@@ -177,7 +183,10 @@ export const thailandSuiteAdapter: Adapter = {
         applicationUrl: MFA_VISA_PORTAL,
         primarySourceUrl: MFA_VISA_PORTAL,
         fees: [
-          { kind: "base", amountMinor: 2_000_000, currency: "THB", asOf: "2026-05-10", label: "O visa fee", optional: false },
+          // THB minor factor = 100. Non-Imm O (Thai spouse) is ฿2,000
+          // single-entry / ฿5,000 multi-entry per MFA. Marriage visa is
+          // normally multi-entry for trips home.
+          { kind: "base", amountMinor: 500_000, currency: "THB", asOf: "2026-05-19", label: "O visa fee (multi-entry)", optional: false },
         ],
         notes:
           "Married to a Thai national. Annual renewals at Immigration Bureau. After 3 years on the marriage visa, eligible to apply for permanent residence. Limited work rights with separate work permit.",
@@ -211,8 +220,12 @@ export const thailandSuiteAdapter: Adapter = {
         applicationUrl: MFA_VISA_PORTAL,
         primarySourceUrl: MFA_VISA_PORTAL,
         fees: [
-          { kind: "base", amountMinor: 5_000_000, currency: "THB", asOf: "2026-05-10", label: "Non-Immigrant B fee (multi-entry)", optional: false },
-          { kind: "service", amountMinor: 600_000, currency: "THB", asOf: "2026-05-10", label: "Work permit fee (typical)", optional: true },
+          // THB minor factor = 100. Non-Imm B multi-entry per MFA: ฿12,000
+          // (single-entry is ฿2,000 — but B-visa workers need multi-entry).
+          // Work permit is a separate Dept of Employment fee, typically
+          // ฿3,000-10,000 by duration (฿6,000 = 1-year is the modal).
+          { kind: "base", amountMinor: 1_200_000, currency: "THB", asOf: "2026-05-19", label: "Non-Immigrant B fee (multi-entry)", optional: false },
+          { kind: "service", amountMinor: 600_000, currency: "THB", asOf: "2026-05-19", label: "Work permit fee (1 year, typical)", optional: true },
         ],
         notes:
           "Employer-sponsored. Visa + Work Permit are separate documents — both required. After 3 years, eligible for permanent-residence application.",

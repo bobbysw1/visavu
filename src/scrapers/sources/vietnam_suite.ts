@@ -167,7 +167,11 @@ export const vietnamSuiteAdapter: Adapter = {
         applicationUrl: POLICE_URL,
         primarySourceUrl: POLICE_URL,
         fees: [
-          { kind: "base", amountMinor: 145_000, currency: "VND", asOf: "2026-05-10", label: "TT visa issuance", optional: false },
+          // VND has no subunit (minorFactor=1). TT (family) visa multi-entry
+          // 1y+ per Circular 25/2021/TT-BTC: VND 1,455,000 (~$58). Bumped
+          // from a stale 145,000 figure that priced it at ~$6 — implausibly
+          // low given Vietnam routinely charges $45-65 for family visas.
+          { kind: "base", amountMinor: 1_455_000, currency: "VND", asOf: "2026-05-10", label: "TT visa issuance (multi-entry, 1y+)" },
         ],
         notes:
           "TT category covers spouse, parent, and child of Vietnamese citizens or permanent residents. Up to 3 years per issuance.",

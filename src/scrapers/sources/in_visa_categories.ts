@@ -112,7 +112,7 @@ export const indiaVisaCategoriesAdapter: Adapter = {
         applicationUrl: APPLY_URL,
         primarySourceUrl: BOI_URL,
         fees: [
-          { kind: "base" as const, amountMinor: 10000_00, currency: "USD", asOf: today, label: "Employment Visa (1-year, USD 100)" },
+          { kind: "base" as const, amountMinor: 100_00, currency: "USD", asOf: today, label: "Employment Visa (1-year, USD 100)" },
           { kind: "service" as const, amountMinor: 1900_00, currency: "INR", asOf: today, label: "FRRO registration fee", optional: false },
         ],
         notes: "India's main work-permit route. Salary threshold of USD 25,000/year filters out lower-skilled employment. Renewable in-country at the FRRO for cumulative stays up to 5 years. Dependants (spouse + children under 18) get the X-Misc visa as accompanying family.",
@@ -158,7 +158,7 @@ export const indiaVisaCategoriesAdapter: Adapter = {
         applicationUrl: APPLY_URL,
         primarySourceUrl: BOI_URL,
         fees: [
-          { kind: "base" as const, amountMinor: 10000_00, currency: "USD", asOf: today, label: "Business Visa (1-year, USD 100)" },
+          { kind: "base" as const, amountMinor: 100_00, currency: "USD", asOf: today, label: "Business Visa (1-year, USD 100)" },
         ],
         notes: "For meetings, conferences, contract negotiations, and trade-fair attendance only — paid employment requires an Employment Visa. Multi-year (5-year / 10-year) options available for US, UK, EU, Japanese, Korean, Australian, Singaporean business travellers with prior India travel history.",
       });
@@ -192,7 +192,7 @@ export const indiaVisaCategoriesAdapter: Adapter = {
         applicationUrl: APPLY_URL,
         primarySourceUrl: BOI_URL,
         fees: [
-          { kind: "base" as const, amountMinor: 10000_00, currency: "USD", asOf: today, label: "Student Visa (full course, USD 100)" },
+          { kind: "base" as const, amountMinor: 100_00, currency: "USD", asOf: today, label: "Student Visa (full course, USD 100)" },
         ],
         notes: "Issued for the full duration of the academic course (typically 3-5 years). Permits part-time work only with explicit authorisation. Medical (MBBS) and Engineering (B.Tech) are the most-applied programmes for international students. India is the world's third-largest education exporter after the US and UK.",
         purposeMetadata: {
@@ -232,7 +232,7 @@ export const indiaVisaCategoriesAdapter: Adapter = {
         applicationUrl: APPLY_URL,
         primarySourceUrl: BOI_URL,
         fees: [
-          { kind: "base" as const, amountMinor: 10000_00, currency: "USD", asOf: today, label: "Research Visa (annual, USD 100)" },
+          { kind: "base" as const, amountMinor: 100_00, currency: "USD", asOf: today, label: "Research Visa (annual, USD 100)" },
         ],
         notes: "Specifically for research / PhD-level work at Indian institutions. The MHA clearance step (90+ days additional processing) applies if research touches defence / nuclear / biotech / cartography / satellite / drone fields. Renewable annually for the duration of the research project.",
       });
@@ -268,7 +268,7 @@ export const indiaVisaCategoriesAdapter: Adapter = {
           applicationUrl: EVISA_URL,
           primarySourceUrl: EVISA_URL,
           fees: [
-            { kind: "base" as const, amountMinor: 8000_00, currency: "USD", asOf: today, label: "e-Medical Visa (60 days, triple entry, USD 80)" },
+            { kind: "base" as const, amountMinor: 80_00, currency: "USD", asOf: today, label: "e-Medical Visa (60 days, triple entry, USD 80)" },
           ],
           notes: "India is a major medical-tourism destination — cardiac surgery, organ transplant, joint replacement, oncology, IVF, ayurveda treatments at NABH / JCI-accredited hospitals in Chennai, Bangalore, Hyderabad, Mumbai, Delhi. The e-Medical Attendant visa lets a spouse + one blood relative accompany the patient. Eligible for 165+ nationalities.",
         });
@@ -303,7 +303,7 @@ export const indiaVisaCategoriesAdapter: Adapter = {
           applicationUrl: EVISA_URL,
           primarySourceUrl: EVISA_URL,
           fees: [
-            { kind: "base" as const, amountMinor: 8000_00, currency: "USD", asOf: today, label: "e-Conference Visa (30 days, single entry, USD 80)" },
+            { kind: "base" as const, amountMinor: 80_00, currency: "USD", asOf: today, label: "e-Conference Visa (30 days, single entry, USD 80)" },
           ],
           notes: "Conference Visa is dedicated to attending pre-approved academic / professional events. The conference organiser must obtain MHA clearance and provide attendees with the clearance reference — without it, the e-Conference Visa application will be rejected.",
         });
@@ -341,7 +341,7 @@ export const indiaVisaCategoriesAdapter: Adapter = {
         applicationUrl: "https://ociservices.gov.in/",
         primarySourceUrl: "https://www.mha.gov.in/",
         fees: [
-          { kind: "base" as const, amountMinor: 27500_00, currency: "USD", asOf: today, label: "OCI Card (lifetime, USD 275)" },
+          { kind: "base" as const, amountMinor: 275_00, currency: "USD", asOf: today, label: "OCI Card (lifetime, USD 275)" },
         ],
         notes: "OCI is the closest India offers to dual citizenship (India does not formally permit dual citizenship under Constitution Article 9). Lifetime status, but the card must be re-issued each time you renew your foreign passport before age 20 + after age 50. Particularly common for second-generation Indian-Americans, Indo-Canadians, Indo-Brits using it for extended India stays + business + education.",
       });

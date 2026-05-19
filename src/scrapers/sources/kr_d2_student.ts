@@ -64,7 +64,15 @@ export const koreaD2StudentAdapter: Adapter = {
         processingTimeDaysMax: 28,
         applicationUrl: "https://www.studyinkorea.go.kr/en/",
         primarySourceUrl: SOURCE_URL,
-        fees: [{ kind: "base", amountMinor: 6_000_000, currency: "KRW", asOf: today, optional: false }],
+        // KRW has no subunit (minorFactor=1), so amountMinor is whole won.
+        // D-2 multi-entry visa issuance: ₩90,000 per HiKorea schedule
+        // (₩60,000 single-entry; D-2 students need multi-entry for breaks
+        // home + side travel). Plus optional ₩30,000 Certificate of
+        // Eligibility, typically issued by the host university.
+        fees: [
+          { kind: "base", amountMinor: 90_000, currency: "KRW", asOf: today, label: "D-2 multi-entry visa issuance fee" },
+          { kind: "service", amountMinor: 30_000, currency: "KRW", asOf: today, label: "Certificate of Eligibility (사증발급인정서)" },
+        ],
         notes:
           "D-2 holders can work up to 25 hours/week off-campus during semester with university authorisation. Post-graduation: convert to D-10 Job Seeker visa (6-month renewable) or directly to E-7 employment visa if a Korean employer issues an offer. PR pathway via F-2 (after 3 years on E-class) → F-5.",
       });

@@ -62,7 +62,15 @@ export const koreaE7Adapter: Adapter = {
         processingTimeDaysMax: 28,
         applicationUrl: "https://www.hikorea.go.kr/",
         primarySourceUrl: SOURCE_URL,
-        fees: [{ kind: "base", amountMinor: 6_000_000, currency: "KRW", asOf: today, optional: false }],
+        // KRW has no subunit (minorFactor=1), so amountMinor is whole won.
+        // E-7 multi-entry issuance fee is ₩90,000 per HiKorea schedule
+        // (₩60,000 single-entry; multi-entry is what an E-7 holder needs to
+        // travel in/out for work). Plus optional ₩30,000 Certificate of
+        // Eligibility (사증발급인정서) — bundled below as a service line.
+        fees: [
+          { kind: "base", amountMinor: 90_000, currency: "KRW", asOf: today, label: "E-7 multi-entry visa issuance fee" },
+          { kind: "service", amountMinor: 30_000, currency: "KRW", asOf: today, label: "Certificate of Eligibility (사증발급인정서)" },
+        ],
         notes: `E-7 is the most common foreign-professional work visa in Korea. Path to F-2 long-term residence after 3 years on E-class + Korean language B1+; F-5 Permanent Resident after 5 years on F-2. Quotas exist for some sub-categories; competitive in IT and engineering.`,
       });
     }

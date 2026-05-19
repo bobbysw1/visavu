@@ -869,6 +869,84 @@ const FR_TALENT: FormsEntry = {
   notes: "Passeport Talent variants: Salarié Qualifié (Master's + €43,243+ salary); Chercheur (research convention); Profession Artistique (€18,500+); Investisseur (€300k+ + 10 jobs). 4-year multi-year residence permit on first issue.",
 };
 
+const FR_STUDENT_VLS_TS: FormsEntry = {
+  destinationIso2: "FR",
+  programmeLabel: "France — Student long-stay visa (VLS-TS Étudiant)",
+  programmeSlug: "/destination/fr",
+  applicationPortal: "https://france-visas.gouv.fr/en/web/france-visas/long-stay-visa",
+  applicableTo: { purposes: ["study"], labelKeywords: ["vls-ts étudiant", "vls-ts etudiant", "student", "étudiant", "campus france"] },
+  forms: [
+    { code: "Campus France acceptance", name: "Études en France procedure (mandatory for ~70 nationalities)", description: "Pre-application step run by Campus France in the home country. Online dossier + interview before the consular visa application is even opened. Mandatory for nationals of countries with a Campus France office (covers most of Africa, MENA, LatAm, China, India, SE Asia).", downloadUrl: "https://www.campusfrance.org/en", filedBy: "applicant", stage: "before_applying", notes: "Skipping the Études en France step when required → automatic refusal at the visa stage." },
+    { code: "Long-stay visa application (online)", name: "France-Visas online wizard — VLS-TS Étudiant", description: "Single online application at france-visas.gouv.fr. Attach Campus France acceptance, university enrolment letter, proof of €615/month subsistence (typically 12 months × €615 = €7,380 in a French bank account or guarantor undertaking), accommodation proof.", downloadUrl: "https://france-visas.gouv.fr/en/web/france-visas/", filedBy: "applicant", stage: "with_application" },
+    { code: "OFII validation", name: "Validation of the VLS-TS within 3 months of arrival", description: "Online validation at the OFII portal within 90 days of entering France — €60 timbre fee. Required to convert the visa into a valid residence permit; without validation, the visa expires at month 4 and you're out of status.", downloadUrl: "https://administration-etrangers-en-france.interieur.gouv.fr/particuliers/", filedBy: "applicant", stage: "after_decision", notes: "The €60 student timbre is lower than the €200 worker timbre — pay via timbres.impots.gouv.fr." },
+  ],
+  notes: "VLS-TS Étudiant is the standard long-stay student visa for stays > 6 months. Tuition fees vary: EU/EEA nationals + non-EU nationals enrolled before 2019 pay ~€170-380/year; new non-EU undergraduates pay €2,770/year, postgraduates €3,770/year (with many exemptions via grants/scholarships).",
+};
+
+const FR_REGROUPEMENT_FAMILIAL: FormsEntry = {
+  destinationIso2: "FR",
+  programmeLabel: "France — Family reunification (Regroupement Familial / Visa de long séjour conjoint)",
+  programmeSlug: "/destination/fr",
+  applicationPortal: "https://administration-etrangers-en-france.interieur.gouv.fr/particuliers/",
+  applicableTo: { purposes: ["family"], labelKeywords: ["regroupement familial", "family reunification", "conjoint", "visa famille", "vls-ts conjoint"] },
+  forms: [
+    { code: "Cerfa 11436", name: "Demande de regroupement familial (sponsor side)", description: "Filed in France by the legally-resident sponsor (the French resident requesting that their spouse/children join them). Submitted to OFII; OFII conducts the housing + resources verification before the consular visa is granted.", downloadUrl: "https://www.service-public.fr/particuliers/vosdroits/F11167", filedBy: "sponsor", stage: "before_applying", notes: "OFII verifies: stable accommodation (size by household), resources at or above SMIC over the past 12 months, lawful residence ≥ 18 months for the sponsor. Without OFII approval, the consulate will not issue the family visa." },
+    { code: "Long-stay visa application (online)", name: "France-Visas wizard — VLS-TS Conjoint / Famille", description: "Once OFII has approved the regroupement, the family member files the consular long-stay visa at france-visas.gouv.fr. Attach the OFII approval, marriage/birth certificates with French translation by a sworn translator, sponsor's titre de séjour copy.", downloadUrl: "https://france-visas.gouv.fr/en/web/france-visas/", filedBy: "applicant", stage: "with_application" },
+    { code: "Visite médicale OFII", name: "Medical exam on arrival (OFII)", description: "Mandatory medical examination at OFII within the first months after arrival — chest X-ray + general check. The OFII summons by post; missing the appointment delays the carte de séjour.", downloadUrl: "https://www.ofii.fr/", filedBy: "applicant", stage: "after_decision" },
+    { code: "OFII validation + timbre fiscal", name: "Online VLS-TS validation + €200 timbre", description: "Online validation of the VLS-TS within 3 months at the administration-etrangers portal — €200 timbre fee payable at timbres.impots.gouv.fr. Failure to validate → visa lapses at month 4.", downloadUrl: "https://administration-etrangers-en-france.interieur.gouv.fr/particuliers/", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Two distinct French family routes: (a) Regroupement familial — for spouses/children of foreign residents in France (OFII-led, 18-month sponsor residence threshold, lengthy process averaging 9-18 months); (b) Visa long séjour conjoint de Français — for spouses of French citizens (faster, no OFII pre-approval, no resources/housing test, married for ≥ 6 months at the time of application). The right route depends on the sponsor's nationality.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// SWITZERLAND
+// ─────────────────────────────────────────────────────────────────────────
+const CH_WORK_PERMIT_B: FormsEntry = {
+  destinationIso2: "CH",
+  programmeLabel: "Switzerland — Work residence permit (Permit B / Permit L)",
+  programmeSlug: "/destination/ch",
+  applicationPortal: "https://www.sem.admin.ch/sem/en/home/themen/arbeit.html",
+  applicableTo: { purposes: ["work"], labelKeywords: ["permit b", "permit l", "work permit", "swiss work", "permis b"] },
+  forms: [
+    { code: "Cantonal work-permit application", name: "Demande / Antrag for Permit B (employer-led)", description: "Filed by the Swiss-based employer at the canton's labour-market office (Office cantonal de l'emploi / Amt für Wirtschaft). For non-EU/EFTA nationals, the employer must demonstrate that no suitable EU/EFTA candidate was available + that the salary matches local/sectoral norms.", downloadUrl: "https://www.sem.admin.ch/sem/en/home/themen/arbeit/nicht-eu_efta-angehoerige.html", filedBy: "employer", stage: "before_applying", notes: "Each canton has its own form; check the cantonal portal. Annual federal quotas apply for non-EU/EFTA nationals — typically exhausted by Q3-Q4." },
+    { code: "Type D national visa application", name: "Type D long-stay visa from a Swiss consulate", description: "Once the cantonal authority pre-approves, the worker applies for a Type D entry visa at the Swiss consulate in their home country. Attach the cantonal approval letter, signed employment contract, passport, biometrics.", downloadUrl: "https://www.sem.admin.ch/sem/en/home/themen/einreise.html", filedBy: "applicant", stage: "with_application" },
+    { code: "Cantonal residence registration", name: "Registration at the commune within 14 days", description: "Within 14 days of arrival in Switzerland, register at the local commune (Einwohnerkontrolle / contrôle des habitants) — bring rental contract, passport, employment contract, marriage/birth certificates for family. Triggers issuance of the physical Permit B card.", downloadUrl: "https://www.ch.ch/en/", filedBy: "applicant", stage: "after_decision", notes: "Missing the 14-day window is a CHF 100-1,000 fine in most cantons and can complicate the permit issuance." },
+  ],
+  notes: "Permit B = 1-year renewable residence permit (5-year for EU/EFTA). Permit L = short-term up to 12 months for specific assignments. Switzerland operates a quota system for non-EU/EFTA nationals (~8,500 B-permits, ~4,500 L-permits per year, allocated quarterly to cantons). EU/EFTA nationals benefit from free movement under the AFMP and don't face quotas. Swiss salary floors are real — €70,000-90,000 minimums depending on canton + sector.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// SAUDI ARABIA
+// ─────────────────────────────────────────────────────────────────────────
+const SA_PREMIUM_RESIDENCY: FormsEntry = {
+  destinationIso2: "SA",
+  programmeLabel: "Saudi Arabia — Premium Residency (Saudi Green Card)",
+  programmeSlug: "/destination/sa",
+  applicationPortal: "https://premiumresidency.sa/en",
+  applicableTo: { purposes: ["work", "family"], labelKeywords: ["premium residency", "saudi green card", "iqama momayazah"] },
+  forms: [
+    { code: "Online application", name: "Premium Residency portal application", description: "Single online application at premiumresidency.sa. Pick one of five tiers: Special Talent (SAR 4,000/year), Gifted Capacity (SAR 4,000/year), Investor (SAR 4,000/year), Entrepreneur (SAR 4,000/year), Real-Estate Owner (SAR 4,000/year), Distinguished (one-off SAR 800,000) or Limited-Duration (SAR 100,000/year). Each tier has different financial / qualification thresholds.", downloadUrl: "https://premiumresidency.sa/en", filedBy: "applicant", stage: "with_application", notes: "Distinguished one-off lifetime tier is SAR 800,000 (~USD 213,000). The annual tiers require qualifying activity each year (e.g. continued investment, distinguished talent recognition)." },
+    { code: "Notarised supporting documents", name: "Apostilled / MOFA-attested credentials", description: "All foreign-issued credentials (degree certificates, employment letters, criminal-record certificates, financial statements) must be apostilled in the country of issue then attested by the Saudi MOFA. Premium Residency officers reject incomplete attestation chains.", downloadUrl: "https://www.mofa.gov.sa/en/Pages/default.aspx", filedBy: "applicant", stage: "before_applying" },
+    { code: "Medical examination", name: "Mandatory medical screening (GCC-approved centre)", description: "Same medical-fitness regime as the standard Iqama — full blood panel + chest X-ray + HIV/hepatitis screening at a Gulf-approved medical centre in the applicant's home country before travel.", downloadUrl: "https://www.moh.gov.sa/en/Pages/Default.aspx", filedBy: "applicant", stage: "before_applying" },
+  ],
+  notes: "Launched 2019, the Saudi Premium Residency unlocks long-term residence rights without a Saudi sponsor (kafeel) — you can own businesses + real estate, sponsor your family, leave + re-enter without exit permits. NOT a path to citizenship — Saudi nationality remains effectively closed to non-Arabs. The 2024 reform added the Special Talent / Gifted Capacity / Entrepreneur tiers; under-30s with niche skills qualify under Gifted Capacity without the high financial bar.",
+};
+
+const SA_WORK_IQAMA: FormsEntry = {
+  destinationIso2: "SA",
+  programmeLabel: "Saudi Arabia — Work visa + Iqama (sponsored)",
+  programmeSlug: "/destination/sa",
+  applicationPortal: "https://www.moi.gov.sa/wps/portal/Home/sectors/passportsandexpatriatesaffairs",
+  applicableTo: { purposes: ["work"], labelKeywords: ["work visa", "iqama", "saudi work", "kafala", "block visa"] },
+  forms: [
+    { code: "Block visa allocation", name: "MoHRSD block visa (employer-led)", description: "Saudi employer applies to the Ministry of Human Resources & Social Development for a 'block' visa allocation for the role + nationality. The block visa is a country-+ occupation-bound permit; the named worker is identified later via Enjaz.", downloadUrl: "https://hrsd.gov.sa/en", filedBy: "employer", stage: "before_applying", notes: "Saudisation (Nitaqat) quotas constrain how many foreign workers a company can hire by sector + size. Premium-quota companies (Platinum / Green Nitaqat) face fewer blocks." },
+    { code: "Enjaz e-visa application", name: "Enjaz application by worker's home country", description: "After the block visa is issued, the worker applies via Enjaz (the Saudi consular portal in the home country). Submit passport, medical-fitness certificate, attested educational credentials, signed employment contract, police clearance. Visa fee SAR 2,000.", downloadUrl: "https://visa.mofa.gov.sa/", filedBy: "applicant", stage: "with_application" },
+    { code: "Iqama issuance + Muqeem", name: "Iqama card + Muqeem profile within 90 days of arrival", description: "Within 90 days of entering Saudi Arabia, the employer-sponsor processes the Iqama (residence permit card) via the Absher / Muqeem portals. Annual renewal fee SAR 650 + Iqama issuance fee SAR 250 — paid by the employer or recovered from the worker.", downloadUrl: "https://www.absher.sa/", filedBy: "employer", stage: "after_decision", notes: "The Iqama is bound to the sponsor (kafeel) — though 2021 Labour Reform allows mid-contract sponsor transfers WITHOUT the old employer's consent if certain conditions are met (e.g. unpaid wages > 3 months, expired Iqama, judicial dispute)." },
+    { code: "Exit / Re-entry visa", name: "Exit / Re-entry permit via Absher (per trip)", description: "Iqama holders need an Exit/Re-entry visa each time they leave Saudi Arabia. Single re-entry SAR 200, multiple re-entry SAR 500/2 months. Employer must release the request via Absher Business — common bottleneck for workers in disputes.", downloadUrl: "https://www.absher.sa/", filedBy: "joint", stage: "after_decision", notes: "The Final Exit Visa is the legal end of the employment relationship — once granted, the worker has to leave; the Iqama is cancelled simultaneously. Don't accept a Final Exit when you intended a temporary departure." },
+  ],
+  notes: "Saudi Arabia uses the Kafala (sponsorship) system, partly reformed in 2021 by the Labour Reform Initiative — workers can now change employer mid-contract under certain conditions and apply for Exit/Re-entry without sponsor approval after the Iqama's first year. Saudisation (Nitaqat) quotas continue to restrict expat hiring by sector. Public-sector + Saudi-citizen-only occupations are off-limits to non-Saudis.",
+};
+
 // ─────────────────────────────────────────────────────────────────────────
 // SPAIN — Digital Nomad + Non-Lucrative
 // ─────────────────────────────────────────────────────────────────────────
@@ -1741,6 +1819,11 @@ export const VISA_FORMS: FormsEntry[] = [
   DE_CHANCENKARTE,
   DE_BLUE_CARD,
   FR_TALENT,
+  FR_STUDENT_VLS_TS,
+  FR_REGROUPEMENT_FAMILIAL,
+  CH_WORK_PERMIT_B,
+  SA_PREMIUM_RESIDENCY,
+  SA_WORK_IQAMA,
   ES_DIGITAL_NOMAD,
   ES_NLV,
   PT_D7,

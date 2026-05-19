@@ -49,14 +49,14 @@ export type ManualPolicyNews = {
 export const MANUAL_POLICY_NEWS: ManualPolicyNews[] = [
   {
     id: "th-visa-exempt-30days-2026-05",
-    date: "2026-05-20",
+    date: "2026-05-19",
     kind: "rule_change",
     destinationIso2: "TH",
     destinationName: "Thailand",
-    title: "Thailand cuts visa-exempt stay back to 30 days",
+    title: "Thailand cuts visa-exempt stays from 60 → 30 days",
     detail:
-      "Thailand has tightened its visa-exemption scheme — visa-free stays for ~90 nationalities (including the UK, US, EU and Australia) are reduced from the previously-extended period back to 30 days per entry. Longer-stay visitors now need the 60-day Tourist Visa (TR) from a Thai embassy or the new Destination Thailand Visa (DTV) for remote workers + retirees.",
-    sourceUrl: "https://www.mfa.go.th/en/",
+      "Thai cabinet approved (19 May 2026) a rollback of the 60-day visa-exemption scheme introduced in July 2024. Most affected nationalities — ~54 countries including the UK, US, EU, Australia, Japan, South Korea, Singapore, GCC — drop back to 30 days per visa-free entry. Maldives, Mauritius + Seychelles drop to just 15 days. Effective 15 days after publication in the Royal Gazette (no formal date yet). Longer-stay visitors will need the 60-day Tourist Visa (TR) from a Thai embassy or the Destination Thailand Visa (DTV) for remote workers + retirees.",
+    sourceUrl: "https://www.nationthailand.com/news/policy/40066405",
     urgency: "high",
   },
 ];

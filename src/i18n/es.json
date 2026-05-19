@@ -1,4 +1,11 @@
 {
+  "_meta": {
+    "locale": "es",
+    "completionStatus": "stub",
+    "translatedKeys": 44,
+    "totalKeys": 124,
+    "note": "Status / purpose / confidence / realism / difficulty / core UI labels translated. Nav / footer / CTAs / form labels / section headings NOT yet translated — fall through to EN at runtime via t.ts. Re-status to 'partial' once first translator pass lands; 'complete' once 100% covered."
+  },
   "status.visa_free": "Sin visado",
   "status.visa_free_with_eta": "Sin visado, con autorización electrónica",
   "status.visa_on_arrival": "Visado a la llegada",

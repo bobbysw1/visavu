@@ -1,4 +1,11 @@
 {
+  "_meta": {
+    "locale": "zh",
+    "completionStatus": "stub",
+    "translatedKeys": 44,
+    "totalKeys": 124,
+    "note": "Status / purpose / confidence / realism / difficulty / core UI labels translated. Nav / footer / CTAs / form labels / section headings NOT yet translated — fall through to EN at runtime via t.ts. Re-status to 'partial' once first translator pass lands; 'complete' once 100% covered."
+  },
   "status.visa_free": "免签",
   "status.visa_free_with_eta": "免签 + 电子旅行授权",
   "status.visa_on_arrival": "落地签",

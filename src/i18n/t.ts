@@ -26,16 +26,22 @@ export const DEFAULT_LOCALE: Locale = "en";
 
 const RTL_LOCALES: Locale[] = ["ar"];
 
-const TABLES: Record<Locale, Record<string, string>> = {
-  en,
-  es,
-  fr,
-  pt,
-  ar,
-  hi,
-  zh,
-  ru,
-  id,
+// Each locale's JSON has a `_meta` block (object) used by tooling +
+// LocaleSwitcher to surface completion status, plus the actual
+// translation strings (all string-valued). The cast widens past the
+// _meta typing so the helpers downstream can index by key freely;
+// t() ignores _meta when resolving lookups.
+type LocaleTable = Record<string, unknown>;
+const TABLES: Record<Locale, LocaleTable> = {
+  en: en as LocaleTable,
+  es: es as LocaleTable,
+  fr: fr as LocaleTable,
+  pt: pt as LocaleTable,
+  ar: ar as LocaleTable,
+  hi: hi as LocaleTable,
+  zh: zh as LocaleTable,
+  ru: ru as LocaleTable,
+  id: id as LocaleTable,
 };
 
 export const LOCALE_DISPLAY_NAMES: Record<Locale, string> = {
@@ -74,5 +80,23 @@ export function resolveLocaleFromAcceptLanguage(headerValue: string | null | und
 }
 
 export function t(key: string, locale: Locale = DEFAULT_LOCALE): string {
-  return TABLES[locale]?.[key] ?? TABLES.en[key] ?? key;
+  // Resolution: locale-specific → en fallback → key itself (so missing
+  // strings render as the key, which is easy to spot in QA).
+  const localised = TABLES[locale]?.[key];
+  if (typeof localised === "string") return localised;
+  const en = TABLES.en[key];
+  if (typeof en === "string") return en;
+  return key;
+}
+
+/** Reads the _meta.completionStatus from a locale file so the
+ *  LocaleSwitcher can show 'complete / partial / stub' badges next
+ *  to each language without each surface having to re-derive it. */
+export function localeCompletionStatus(locale: Locale): "complete" | "partial" | "stub" {
+  const meta = TABLES[locale]?._meta as { completionStatus?: string } | undefined;
+  if (meta?.completionStatus === "complete" || meta?.completionStatus === "partial" || meta?.completionStatus === "stub") {
+    return meta.completionStatus;
+  }
+  // Default — assume stub if not stamped.
+  return locale === DEFAULT_LOCALE ? "complete" : "stub";
 }

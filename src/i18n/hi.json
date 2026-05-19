@@ -1,4 +1,11 @@
 {
+  "_meta": {
+    "locale": "hi",
+    "completionStatus": "stub",
+    "translatedKeys": 44,
+    "totalKeys": 124,
+    "note": "Status / purpose / confidence / realism / difficulty / core UI labels translated. Nav / footer / CTAs / form labels / section headings NOT yet translated — fall through to EN at runtime via t.ts. Re-status to 'partial' once first translator pass lands; 'complete' once 100% covered."
+  },
   "status.visa_free": "वीज़ा-मुक्त",
   "status.visa_free_with_eta": "वीज़ा-मुक्त, इलेक्ट्रॉनिक यात्रा प्राधिकरण के साथ",
   "status.visa_on_arrival": "आगमन पर वीज़ा",

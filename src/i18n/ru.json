@@ -1,4 +1,11 @@
 {
+  "_meta": {
+    "locale": "ru",
+    "completionStatus": "stub",
+    "translatedKeys": 44,
+    "totalKeys": 124,
+    "note": "Status / purpose / confidence / realism / difficulty / core UI labels translated. Nav / footer / CTAs / form labels / section headings NOT yet translated — fall through to EN at runtime via t.ts. Re-status to 'partial' once first translator pass lands; 'complete' once 100% covered."
+  },
   "status.visa_free": "Без визы",
   "status.visa_free_with_eta": "Без визы, с электронным разрешением",
   "status.visa_on_arrival": "Виза по прибытии",

@@ -6,6 +6,7 @@ import { AlternativesPanel } from "@/components/AlternativesPanel";
 // ObstaclesPanel was removed — its content now feeds ResultBannerStack
 // (single-banner zone) and the inline disclosure on each ResultCard.
 import { EditorialBillboard } from "@/components/EditorialBillboard";
+import { QuickActionsStrip } from "@/components/QuickActionsStrip";
 import { EmptyStateCard } from "@/components/EmptyStateCard";
 // PolicyChangeBanner content now feeds ResultBannerStack — kept available
 // for future inline use via the policyChangesFor() helper.
@@ -641,6 +642,12 @@ export default async function Page({
           <DisclaimerBanner tone="amber" compact />
         </div>
 
+        {/* Jump-nav strip — surfaces the four most-asked actions for
+            long pages. Hidden on mobile (chips don't scroll well on phones);
+            sticky on tablet+ so users can jump to apply/docs/timeline/fees
+            without scrolling back up. */}
+        <QuickActionsStrip primaryStatus={primary?.status ?? null} />
+
         {/* Curated pair-level framing paragraph for top-traffic routes.
             Adds narrative context (bilateral agreements, diaspora, professional
             pipelines, refusal patterns) above the structured visa cards. */}
@@ -726,13 +733,17 @@ export default async function Page({
                 The meat of the page. Each option rendered as an editorial
                 card via VisaOptionsByPurpose → ResultCard. */}
             {options.length > 0 && (
-              <section>
+              // id=apply + id=fees both live here — the visa-options cards
+              // host both the Apply CTA and the per-fee breakdown. scroll-mt
+              // accounts for the sticky header (16) + jump-nav strip (~40px).
+              <section id="apply" className="scroll-mt-32">
                 <div className="flex items-baseline justify-between mb-5 gap-4 flex-wrap">
                   <h2 className="section-h2">Your visa options</h2>
                   <span className="kicker">
                     {options.length} {options.length === 1 ? "route" : "routes"} available
                   </span>
                 </div>
+                <span id="fees" className="block scroll-mt-32" aria-hidden />
                 <VisaOptionsByPurpose
                   options={options}
                   baselineTourismStatus={baselineTourismStatus}
@@ -749,7 +760,7 @@ export default async function Page({
                 routes that actually require an application. */}
             {options.length > 0 && purpose !== "diplomatic" && primary?.status !== "refused" &&
               primary?.status !== "visa_free" && (
-                <section>
+                <section id="timeline" className="scroll-mt-32">
                   <div className="flex items-baseline justify-between mb-5 gap-4 flex-wrap">
                     <h2 className="section-h2">Do this next</h2>
                     <span className="kicker">application timeline</span>
@@ -794,7 +805,9 @@ export default async function Page({
                 passport (e.g. ACRO for UK, FBI for US). Closes the gap
                 where generic "police clearance" rendered identically
                 for every nationality. */}
-            <PassportApplicantPanel passportIso2={p} />
+            <div id="documents" className="scroll-mt-32">
+              <PassportApplicantPanel passportIso2={p} />
+            </div>
 
             {/* ─── Get notified ─── */}
             {options.length > 0 && (

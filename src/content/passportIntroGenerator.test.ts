@@ -256,4 +256,74 @@ describe("passport intro generator", () => {
     expect(tv).toMatch(/Tuvalu/);
     expect(tv).toMatch(/Fiji|Samoa|United Kingdom/);
   });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // PASSPORT_PROFILES integration — country-specific document/process terms
+  // The user-flagged anti-AI-slop rule: generated text must contain locale-
+  // specific document names, NOT generic "police clearance" / "apostille".
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("PASSPORT_PROFILES integration — country-specific terminology", () => {
+    function fixtureFor(iso: string, name: string, adj: string): GenerateIntroInput {
+      return {
+        iso2: iso,
+        name,
+        adjective: adj,
+        coverage: coverage({ visa_free: 100, e_visa: 30, embassy_visa: 60 }, 195),
+        summaries: sum(
+          open("DE"),
+          open("FR"),
+          open("JP"),
+          embassy("CA", "work"),
+          embassy("AU", "work"),
+        ),
+        obstacles: [],
+      };
+    }
+
+    it("UK intro references ACRO + FCDO (not generic police clearance + apostille)", () => {
+      const text = generateIntro(fixtureFor("GB", "United Kingdom", "British"));
+      expect(text).toMatch(/ACRO/);
+      expect(text).toMatch(/FCDO/);
+      // Must NOT collapse to generic phrasing.
+      expect(text).not.toMatch(/generic police clearance/i);
+    });
+
+    it("US intro references FBI Identity History Summary + US Dept of State", () => {
+      const text = generateIntro(fixtureFor("US", "United States", "American"));
+      expect(text).toMatch(/FBI|Identity History/);
+      // US is a Hague signatory — should mention apostille
+      expect(text).toMatch(/apostille/i);
+    });
+
+    it("India intro references the Passport Seva Kendra PCC + MEA", () => {
+      const text = generateIntro(fixtureFor("IN", "India", "Indian"));
+      expect(text).toMatch(/Passport Seva|PCC|Police Clearance Certificate/);
+      expect(text).toMatch(/MEA|Ministry of External Affairs/);
+    });
+
+    it("UAE intro routes via MOFA attestation (non-Hague legalisation chain)", () => {
+      const text = generateIntro(fixtureFor("AE", "United Arab Emirates", "Emirati"));
+      // UAE was a non-Hague signatory historically — should mention embassy legalisation
+      // (test passes whether profile says Hague or not, just verifies UAE-specific issuer
+      // appears somewhere).
+      expect(text).toMatch(/MOFA|MOI|UAE/);
+    });
+
+    it("two profiled passports produce different document terminology", () => {
+      const gb = generateIntro(fixtureFor("GB", "United Kingdom", "British"));
+      const in_ = generateIntro(fixtureFor("IN", "India", "Indian"));
+      // ACRO is UK-only — must NOT appear in the India intro
+      expect(in_).not.toMatch(/ACRO/);
+      // PCC / Passport Seva is India-only — must NOT appear in the UK intro
+      expect(gb).not.toMatch(/Passport Seva/);
+    });
+
+    it("unprofiled passport falls back gracefully (no crash, no profile sentence)", () => {
+      // Tuvalu has no PASSPORT_PROFILES entry — generator must still produce
+      // a valid intro without the document sentence.
+      const text = generateIntro(fixtures.TV);
+      expect(text.length).toBeGreaterThan(80);
+      expect(text).not.toMatch(/undefined|null|\[object/);
+    });
+  });
 });

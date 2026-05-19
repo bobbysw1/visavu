@@ -19,6 +19,7 @@ import type { CoverageSnapshot, DestinationSummaryForPassport } from "@/lib/cove
 import type { Obstacle } from "@/content/obstacles";
 import { blocsFor, type BlocSummary } from "@/lib/blocs";
 import { nameFor, TOP_DESTINATIONS } from "@/lib/countries";
+import { passportProfileFor, type PassportProfile } from "@/content/passportProfiles";
 
 export type GenerateIntroInput = {
   iso2: string;
@@ -102,10 +103,64 @@ export function generateIntro(input: GenerateIntroInput): string {
     parts.push(`${joinNames(layers)} broaden the picture for travellers willing to pay a small entry fee or apply online before arrival.`);
   }
 
+  // Country-specific document + process sentence — pulls from PASSPORT_PROFILES
+  // so an Indian applicant reads "Passport Seva Kendra PCC + MEA apostille"
+  // while a UK applicant reads "ACRO + FCDO apostille". Critical anti-AI-slop
+  // signal: terminology is locale-specific, not generic "police clearance".
+  const profile = passportProfileFor(upper);
+  if (profile) {
+    parts.push(profileDocumentSentence(profile, tier));
+  }
+
   // Closing planning advice — generic but tier-specific tone.
   parts.push(closingPlanningSentence(tier, adjective));
 
   return parts.join(" ").replace(/\s+/g, " ").trim();
+}
+
+/**
+ * Country-specific document + process sentence. References the actual
+ * background-check name, issuing authority, and apostille/legalisation
+ * pathway used by this nationality — not generic "police clearance and
+ * apostille". Drops country-locked terminology that distinguishes a UK
+ * intro (ACRO + FCDO + HMRC) from an Indian one (PSK PCC + MEA + ITR)
+ * from a UAE one (MOI clearance + MOFA attestation).
+ *
+ * Sentence shape varies by tier so two same-document-profile passports
+ * still read differently. We pick AT MOST two profile elements per
+ * sentence to keep it concise — usually the background check + the
+ * legalisation route (which is the most-asked-about pair for any
+ * long-stay visa application).
+ */
+function profileDocumentSentence(profile: PassportProfile, tier: MobilityTier): string {
+  const bc = profile.backgroundCheck.name;
+  const bcIssuer = profile.backgroundCheck.issuer;
+  const ap = profile.apostille.issuer;
+  const legalisationRoute = profile.apostille.hagueSignatory ? "Hague apostille" : "embassy legalisation chain";
+
+  // Choose the headline document fact for this nationality. Order of
+  // priority: police-clearance (asked-for on virtually every long-stay
+  // visa) > legalisation route > tax records.
+  const docFact = `${bc} from ${bcIssuer}`;
+  const legalisationFact = profile.apostille.hagueSignatory
+    ? `${ap} apostille`
+    : `${ap} attestation followed by destination-embassy legalisation`;
+
+  // Tier-specific framing — premium-tier applicants typically only need
+  // documentation for residence / long-stay applications, while limited-tier
+  // applicants often need it even for short-stay visas.
+  switch (tier) {
+    case "premium":
+      return `For settlement or long-stay applications, ${profile.country} applicants typically need a ${docFact} and a ${legalisationFact} for civil documents — both routinely turned around within weeks rather than months.`;
+    case "broad":
+      return `Document requirements for ${profile.country} applicants commonly include the ${docFact} plus a ${legalisationFact} on birth, marriage, and qualification certificates.`;
+    case "moderate":
+      return `The standard documentation chain for ${profile.country} applicants — ${docFact} plus ${legalisationFact} of supporting civil records — is the rate-limiting step on most long-stay applications and should be started before booking consular appointments.`;
+    case "restricted":
+      return `${profile.country} applicants should expect to produce a ${docFact} and route civil documents through the ${legalisationFact} early in the timeline; consular appointments are often booked weeks ahead of when the documentation is ready.`;
+    case "limited":
+      return `Documentation for ${profile.country} applicants typically combines the ${docFact} with the ${legalisationFact} — fee, processing time, and the consulate's queue at peak season together set the realistic floor on how fast any application can move.`;
+  }
 }
 
 function closingPlanningSentence(tier: MobilityTier, adjective: string): string {

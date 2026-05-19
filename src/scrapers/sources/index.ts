@@ -152,6 +152,16 @@ import {
   pakistanVisaCategoriesAdapter,
   bangladeshVisaCategoriesAdapter,
 } from "./destination_categories_batch4";
+// Batch-5 — Central Asia + Africa + ME long-tail (KZ/UZ/TZ/GH/JO/ET/UG)
+import {
+  kazakhstanVisaCategoriesAdapter,
+  uzbekistanVisaCategoriesAdapter,
+  tanzaniaVisaCategoriesAdapter,
+  ghanaVisaCategoriesAdapter,
+  jordanVisaCategoriesAdapter,
+  ethiopiaVisaCategoriesAdapter,
+  ugandaVisaCategoriesAdapter,
+} from "./destination_categories_batch5";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -264,6 +274,14 @@ export const ADAPTERS: Adapter[] = [
   malaysiaVisaCategoriesAdapter,
   pakistanVisaCategoriesAdapter,
   bangladeshVisaCategoriesAdapter,
+  // Batch-5 long-tail
+  kazakhstanVisaCategoriesAdapter,
+  uzbekistanVisaCategoriesAdapter,
+  tanzaniaVisaCategoriesAdapter,
+  ghanaVisaCategoriesAdapter,
+  jordanVisaCategoriesAdapter,
+  ethiopiaVisaCategoriesAdapter,
+  ugandaVisaCategoriesAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

@@ -1,45 +1,44 @@
 "use client";
 
 /**
- * Bottom-left rotating-pill widget that surfaces visa-policy news
- * (Thailand cuts visa-exempt stay, Spain digital nomad threshold
- * change, US ESTA fee bump, etc).
+ * Visa-news ticker — thin, full-width bar pinned to the bottom of
+ * the viewport. Inspired by Sky Sports News' bottom ticker: subtle,
+ * editorial, doesn't shout.
  *
- * Why this exists: the homepage carousel only surfaces news to
- * users who scroll all the way down. Many people land on a
- * destination or pair page and never see it. The toast pings on
- * every page so genuinely-urgent news (rule changes, new fees,
- * scheme closures) reaches users mid-research.
+ * Replaced the original boxy bottom-left toast (looked like a popup
+ * ad) with this slimmer design per user feedback "thin, classy,
+ * Sky Sports News-style."
  *
- * UX rules — be useful, not annoying:
- *   - One pill at a time, bottom-left (opposite the floating chat).
- *   - Auto-cycle every 8 seconds if multiple items.
- *   - Dismissable per-item (X button) — persists in localStorage
- *     so the same user doesn't see the same pill twice.
- *   - Whole pill is clickable → /destination/{iso} or /updates.
- *   - urgency: "high" items shown first; routine items rotate.
- *   - Hide entirely if no live items or all dismissed.
- *   - Mounts with a short delay (1.5s) so it doesn't fight with
- *     initial page paint.
+ * Layout (single row, ~36-40px tall):
+ *   [● VISA NEWS ·]  [flag] [headline · auto-rotates]  [1/3] [↗] [×]
+ *
+ * UX rules:
+ *   - Single line of text — fades between items every 8s
+ *   - Pulsing accent dot only on urgency=high items
+ *   - "Source" link sits inline (no click stealing the headline tap)
+ *   - Dismiss per-item via localStorage (won't re-show to same user)
+ *   - Right-padded to clear FloatingChatLauncher (bottom-right 56px)
+ *   - 1.5s mount delay so it doesn't fight initial paint
+ *   - Hides when no live items or all dismissed
  */
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { flagEmoji, nameFor } from "@/lib/countries";
 import { activePolicyNews, type ManualPolicyNews } from "@/content/manualPolicyNews";
-import { verificationFor, relativeVerificationTime } from "@/lib/newsVerification";
+import { verificationFor } from "@/lib/newsVerification";
 
 const DISMISSED_KEY = "visavu.news.dismissed";
 const ROTATION_MS = 8_000;
 const MOUNT_DELAY_MS = 1_500;
+const FADE_MS = 400;
 
-type Dismissed = Record<string, number>; // id → epoch ms dismissed at
+type Dismissed = Record<string, number>;
 
 function loadDismissed(): Dismissed {
   if (typeof window === "undefined") return {};
   try {
     const raw = window.localStorage.getItem(DISMISSED_KEY);
-    if (!raw) return {};
-    return JSON.parse(raw) as Dismissed;
+    return raw ? (JSON.parse(raw) as Dismissed) : {};
   } catch {
     return {};
   }
@@ -49,7 +48,7 @@ function persistDismissed(d: Dismissed): void {
   try {
     window.localStorage.setItem(DISMISSED_KEY, JSON.stringify(d));
   } catch {
-    /* ignore — private mode, quota, etc. */
+    /* ignore */
   }
 }
 
@@ -57,9 +56,8 @@ export function NewsFlashToast() {
   const [mounted, setMounted] = useState(false);
   const [dismissed, setDismissed] = useState<Dismissed>({});
   const [activeIdx, setActiveIdx] = useState(0);
+  const [fading, setFading] = useState(false);
 
-  // Defer first paint so the toast doesn't steal attention during
-  // initial page load.
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), MOUNT_DELAY_MS);
     return () => clearTimeout(t);
@@ -72,7 +70,6 @@ export function NewsFlashToast() {
   const visible = useMemo<ManualPolicyNews[]>(() => {
     const live = activePolicyNews();
     const undismissed = live.filter((n) => !dismissed[n.id]);
-    // urgency:"high" items pinned to the front of the rotation.
     return undismissed.sort((a, b) => {
       const ua = a.urgency === "high" ? 0 : 1;
       const ub = b.urgency === "high" ? 0 : 1;
@@ -81,31 +78,28 @@ export function NewsFlashToast() {
     });
   }, [dismissed]);
 
-  // Rotate through items every ROTATION_MS. Pause if only one item
-  // (no point rotating to itself).
+  // Cross-fade between items every ROTATION_MS.
   useEffect(() => {
     if (visible.length <= 1) return;
     const t = setInterval(() => {
-      setActiveIdx((i) => (i + 1) % visible.length);
+      setFading(true);
+      setTimeout(() => {
+        setActiveIdx((i) => (i + 1) % visible.length);
+        setFading(false);
+      }, FADE_MS);
     }, ROTATION_MS);
     return () => clearInterval(t);
   }, [visible.length]);
 
-  // Keep activeIdx in-bounds when items are dismissed mid-rotation.
+  // Keep activeIdx in-bounds when items dismissed mid-rotation.
   useEffect(() => {
-    if (activeIdx >= visible.length && visible.length > 0) {
-      setActiveIdx(0);
-    }
+    if (activeIdx >= visible.length && visible.length > 0) setActiveIdx(0);
   }, [visible.length, activeIdx]);
 
-  if (!mounted) return null;
-  if (visible.length === 0) return null;
-
+  if (!mounted || visible.length === 0) return null;
   const item = visible[activeIdx];
   if (!item) return null;
 
-  // Click destination: per-country page for items with an iso,
-  // /updates list for general items.
   const href = item.destinationIso2
     ? `/destination/${item.destinationIso2.toLowerCase()}`
     : "/updates";
@@ -118,97 +112,93 @@ export function NewsFlashToast() {
     persistDismissed(next);
   };
 
+  const verified = verificationFor(item.id).status === "verified";
+
   return (
     <div
       role="status"
       aria-live="polite"
-      // Bottom-left so it doesn't fight with the floating chat (bottom-right).
-      // sm:max-w-sm so it's a focused pill, not a full-width banner.
+      // Full-width thin bar pinned to viewport bottom. Right padding
+      // clears the FloatingChatLauncher bubble (bottom-4 right-4,
+      // ~56-64px diameter); enough room for chat to sit clear.
       className="
-        fixed bottom-4 left-4 z-40 max-w-[88vw] sm:max-w-sm
+        fixed bottom-0 left-0 right-0 z-30
+        border-t border-[var(--color-rule)] bg-[var(--color-paper)]/95 backdrop-blur
+        text-[12px] sm:text-[13px] text-[var(--color-ink)]
         animate-in slide-in-from-bottom-2 fade-in duration-500
       "
     >
-      <Link
-        href={href}
-        className="
-          group flex items-start gap-2.5
-          rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper)]/95
-          backdrop-blur shadow-lg hover:shadow-xl hover:border-[var(--color-ink)]
-          transition px-3.5 py-2.5 text-left
-        "
-      >
-        {/* Pulsing accent dot — signals "this is news, not chrome". */}
-        <span
-          aria-hidden
-          className={`
-            mt-1 inline-block h-2 w-2 rounded-full shrink-0
-            ${item.urgency === "high" ? "bg-red-500 animate-pulse" : "bg-[var(--color-accent)]"}
-          `}
-        />
-        <div className="flex-1 min-w-0">
-          <p className="text-[10px] uppercase tracking-[0.14em] font-bold text-[var(--color-ink-muted)] mb-0.5">
-            {item.destinationIso2 ? (
-              <>
-                <span aria-hidden className="mr-1">{flagEmoji(item.destinationIso2)}</span>
-                {item.destinationName ?? nameFor(item.destinationIso2)} · Visa news
-              </>
-            ) : (
-              "Visa news"
+      <div className="mx-auto max-w-7xl pl-3 sm:pl-5 pr-20 sm:pr-24">
+        <div className="flex items-center gap-2.5 sm:gap-4 h-9 sm:h-10">
+          {/* Kicker — small uppercase brand label + pulsing dot for urgency.
+              Pulsing only when urgency=high so routine news doesn't twitch. */}
+          <span className="flex items-center gap-1.5 shrink-0">
+            <span
+              aria-hidden
+              className={`
+                inline-block h-1.5 w-1.5 rounded-full
+                ${item.urgency === "high" ? "bg-red-500 animate-pulse" : "bg-[var(--color-accent)]"}
+              `}
+            />
+            <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.16em] font-semibold text-[var(--color-ink-muted)]">
+              Visa News
+            </span>
+            <span aria-hidden className="text-[var(--color-rule-strong)] hidden sm:inline">·</span>
+          </span>
+
+          {/* Headline — flex-1 truncate so a long title stays one line.
+              Wrapper has the cross-fade opacity transition. */}
+          <Link
+            href={href}
+            className={`
+              flex-1 min-w-0 flex items-center gap-2
+              hover:text-[var(--color-ink)] hover:underline underline-offset-4
+              decoration-[var(--color-rule-strong)] transition-opacity
+              ${fading ? "opacity-0" : "opacity-100"}
+            `}
+            style={{ transitionDuration: `${FADE_MS}ms` }}
+          >
+            {item.destinationIso2 && (
+              <span className="text-sm leading-none shrink-0" aria-hidden>
+                {flagEmoji(item.destinationIso2)}
+              </span>
             )}
-          </p>
-          <p className="text-sm font-medium text-[var(--color-ink)] leading-snug group-hover:underline underline-offset-2 decoration-[var(--color-rule-strong)]">
-            {item.title}
-          </p>
-          {(() => {
-            const v = verificationFor(item.id);
-            const verified = v.status === "verified";
-            return (
-              <p className="text-[10px] text-[var(--color-ink-muted)] mt-1 flex items-baseline flex-wrap gap-x-2 gap-y-0.5">
-                {verified ? (
-                  <span className="text-emerald-700 dark:text-emerald-400 font-medium">
-                    ✓ Verified {relativeVerificationTime(v.checkedAt)}
-                  </span>
-                ) : v.status === "unchecked" ? (
-                  <span className="text-[var(--color-ink-muted)]">Verification pending</span>
-                ) : (
-                  <span className="text-amber-700 dark:text-amber-400 font-medium">⚠ Source needs review</span>
-                )}
-                {item.sourceUrl && (
-                  <a
-                    href={item.sourceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="underline hover:no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
-                  >
-                    Source ↗
-                  </a>
-                )}
-                {visible.length > 1 && (
-                  <span className="tabular-nums opacity-70">
-                    {activeIdx + 1}/{visible.length}
-                  </span>
-                )}
-              </p>
-            );
-          })()}
+            <span className="hidden sm:inline text-[10px] uppercase tracking-wide font-bold text-[var(--color-ink-muted)] shrink-0">
+              {item.destinationName ?? (item.destinationIso2 ? nameFor(item.destinationIso2) : "Global")}
+            </span>
+            <span className="truncate font-medium">{item.title}</span>
+          </Link>
+
+          {/* Source + verified inline — small, doesn't distract */}
+          {item.sourceUrl && (
+            <a
+              href={item.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              title={verified ? "Source verified" : "Source"}
+              className="hidden md:inline text-[10px] uppercase tracking-wider font-semibold text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] shrink-0"
+            >
+              {verified ? "Verified ↗" : "Source ↗"}
+            </a>
+          )}
+
+          {/* Rotation indicator + dismiss */}
+          {visible.length > 1 && (
+            <span className="text-[10px] tabular-nums text-[var(--color-ink-muted)] shrink-0 hidden sm:inline">
+              {activeIdx + 1}/{visible.length}
+            </span>
+          )}
+          <button
+            type="button"
+            onClick={handleDismiss}
+            aria-label={`Dismiss: ${item.title}`}
+            className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] hover:bg-[var(--color-muted)]/60 transition text-xs"
+          >
+            ✕
+          </button>
         </div>
-        {/* Dismiss — separate hit area so click doesn't navigate. */}
-        <button
-          type="button"
-          onClick={handleDismiss}
-          aria-label={`Dismiss news: ${item.title}`}
-          className="
-            shrink-0 -mr-1 -mt-1 w-6 h-6 rounded-full
-            flex items-center justify-center
-            text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]
-            hover:bg-[var(--color-muted)]/50 transition text-sm
-          "
-        >
-          ✕
-        </button>
-      </Link>
+      </div>
     </div>
   );
 }

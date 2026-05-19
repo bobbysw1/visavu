@@ -143,7 +143,9 @@ export function FloatingChatLauncher() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Open Visavu chat assistant"
-        className="fixed bottom-4 right-4 z-40 inline-flex items-center gap-2 rounded-full bg-[var(--color-ink)] hover:opacity-90 text-[var(--color-paper)] shadow-lg shadow-black/15 transition px-4 py-3 text-sm font-semibold"
+        // bottom-14 (instead of bottom-4) so the button sits cleanly
+        // above the full-width news ticker that's pinned to bottom-0.
+        className="fixed bottom-14 right-4 z-40 inline-flex items-center gap-2 rounded-full bg-[var(--color-ink)] hover:opacity-90 text-[var(--color-paper)] shadow-lg shadow-black/15 transition px-4 py-3 text-sm font-semibold"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path
@@ -166,7 +168,8 @@ export function FloatingChatLauncher() {
     <div
       role="dialog"
       aria-label="Visavu chat assistant"
-      className="fixed bottom-4 right-4 z-40 w-[calc(100vw-2rem)] sm:w-[380px] max-h-[calc(100vh-2rem)] sm:max-h-[600px] flex flex-col rounded-xl shadow-2xl shadow-black/15 border border-[var(--color-rule)] bg-[var(--color-paper-elev)] overflow-hidden"
+      // bottom-14 so the open chat panel sits above the news ticker.
+      className="fixed bottom-14 right-4 z-40 w-[calc(100vw-2rem)] sm:w-[380px] max-h-[calc(100vh-5rem)] sm:max-h-[600px] flex flex-col rounded-xl shadow-2xl shadow-black/15 border border-[var(--color-rule)] bg-[var(--color-paper-elev)] overflow-hidden"
     >
       {/* HEADER */}
       <div className="shrink-0 flex items-center justify-between gap-2 border-b border-[var(--color-rule)] px-3 py-2.5 bg-[var(--color-muted)]">

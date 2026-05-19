@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Newsreader } from "next/font/google";
+import { headers } from "next/headers";
 import "./globals.css";
 import { SITE, absoluteUrl } from "@/lib/site";
+import { SUPPORTED_LOCALES, DEFAULT_LOCALE, isRtl, resolveLocaleFromAcceptLanguage, type Locale } from "@/i18n/t";
 
 // Inter — the cleanest neutral sans-serif for content sites. Loaded via the
 // Next font system so it's self-hosted, eliminates layout shift, and the
@@ -68,9 +70,46 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: absoluteUrl("/"),
-    languages: { en: absoluteUrl("/") },
+    // Reciprocal hreflang cluster — every supported locale advertises every
+    // other supported locale + an x-default fallback. Right now we resolve
+    // locale via ?lang= query param (URL-routing migration to /[locale]/...
+    // is the larger followup). Google reads ?lang= alternates correctly
+    // when they're stable and reciprocal — every page emits the same set.
+    languages: {
+      ...Object.fromEntries(
+        SUPPORTED_LOCALES.map((loc) => [
+          loc,
+          loc === DEFAULT_LOCALE ? absoluteUrl("/") : absoluteUrl(`/?lang=${loc}`),
+        ]),
+      ),
+      "x-default": absoluteUrl("/"),
+    },
   },
 };
+
+/**
+ * Resolve the visitor's locale on the server BEFORE rendering the html
+ * element, so the html lang attribute is correct for the very first byte
+ * sent to the browser (matters for screen readers + SEO crawlers that
+ * read lang from the opening tag, not after a client-side hydration).
+ *
+ * Resolution order, matching src/i18n/t.ts:
+ *   1. ?lang= query param (URL-driven, beats everything for shareability)
+ *   2. Accept-Language header (first matching supported locale)
+ *   3. DEFAULT_LOCALE = "en"
+ *
+ * Wrapped in a try because next/headers throws when accessed from a
+ * statically-rendered route segment — we silently fall back to default
+ * rather than break static generation of the homepage.
+ */
+async function detectLocale(): Promise<Locale> {
+  try {
+    const h = await headers();
+    return resolveLocaleFromAcceptLanguage(h.get("accept-language"));
+  } catch {
+    return DEFAULT_LOCALE;
+  }
+}
 
 export const viewport: Viewport = {
   themeColor: [
@@ -79,9 +118,14 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const locale = await detectLocale();
   return (
-    <html lang="en" className={`${inter.variable} ${newsreader.variable}`}>
+    <html
+      lang={locale}
+      dir={isRtl(locale) ? "rtl" : "ltr"}
+      className={`${inter.variable} ${newsreader.variable}`}
+    >
       <body className="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen">
         {children}
       </body>

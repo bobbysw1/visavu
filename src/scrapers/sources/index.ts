@@ -136,6 +136,22 @@ import {
   switzerlandVisaCategoriesAdapter,
   israelVisaCategoriesAdapter,
 } from "./destination_categories_batch3";
+// Batch-4: high-traffic long-tail (KE/NG/AR/CO/PE/CL/PH/MY/PK/BD).
+// Country-specific local terminology (Class G, STR, Residencia Mercosur,
+// Visa M/V/R, 9(g), MM2H, SRRV, NICOP) to avoid the AI-slop pattern of
+// generic "work visa" / "student visa" labels across destinations.
+import {
+  kenyaVisaCategoriesAdapter,
+  nigeriaVisaCategoriesAdapter,
+  argentinaVisaCategoriesAdapter,
+  colombiaVisaCategoriesAdapter,
+  peruVisaCategoriesAdapter,
+  chileVisaCategoriesAdapter,
+  philippinesVisaCategoriesAdapter,
+  malaysiaVisaCategoriesAdapter,
+  pakistanVisaCategoriesAdapter,
+  bangladeshVisaCategoriesAdapter,
+} from "./destination_categories_batch4";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -237,6 +253,17 @@ export const ADAPTERS: Adapter[] = [
   newZealandVisaCategoriesAdapter,
   switzerlandVisaCategoriesAdapter,
   israelVisaCategoriesAdapter,
+  // Batch-4 long-tail high-traffic destinations
+  kenyaVisaCategoriesAdapter,
+  nigeriaVisaCategoriesAdapter,
+  argentinaVisaCategoriesAdapter,
+  colombiaVisaCategoriesAdapter,
+  peruVisaCategoriesAdapter,
+  chileVisaCategoriesAdapter,
+  philippinesVisaCategoriesAdapter,
+  malaysiaVisaCategoriesAdapter,
+  pakistanVisaCategoriesAdapter,
+  bangladeshVisaCategoriesAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

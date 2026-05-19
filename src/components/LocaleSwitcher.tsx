@@ -1,125 +1,150 @@
 "use client";
 
 /**
- * Header locale switcher — backed by the P29 i18n scaffold registry
- * (src/lib/i18n/locales.ts). Switches the ?lang= URL param + cookie so
- * server components on the next render apply the right message table.
+ * "Translate this page" — simplified header widget.
  *
- * Honest about translation coverage — surfaces "partial" / "stub" next
- * to each option so users see which locales are fully translated and
- * which fall back to English UI. Editorial content (passport intros,
- * guides) is English-only with an in-page notice; translating the body
- * copy is on the backlog.
+ * The previous version tried to switch the ?lang= URL param to apply our
+ * in-house i18n message tables, which were "partial" / "stub" for most
+ * locales — meaning users picking a language saw English content with a
+ * "partial translation" footnote. Misleading + broken.
  *
- * The structural App Router migration to /(site)/[locale]/* is the next
- * step — once that lands, URLs become canonical locale-prefixed and
- * this switcher only needs to redirect.
+ * This version just hands off to Google Translate's *.translate.goog proxy,
+ * which translates the live page in the user's browser, supports 130+
+ * languages, requires no API key, and survives without our backend doing
+ * anything. Same approach as HeroLanguageToggle.tsx.
+ *
+ * The page itself stays `<html lang="en">`, so Chrome's built-in translate
+ * prompt continues to trigger automatically for non-English-speaking
+ * visitors. This widget is the manual escape hatch when the auto-prompt
+ * isn't fired (e.g. Brave / Firefox / Edge / Safari users, or anyone who
+ * dismissed the Chrome banner once).
  */
 import { useEffect, useRef, useState } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Globe } from "lucide-react";
-import {
-  LOCALES,
-  LOCALE_LABEL,
-  LOCALE_COVERAGE,
-  isValidLocale,
-  type Locale,
-  DEFAULT_LOCALE,
-} from "@/lib/i18n/locales";
-import { trackEvent } from "./PlausibleScript";
 
-const COVERAGE_SUFFIX: Record<"complete" | "partial" | "stub", string> = {
-  complete: "",
-  partial: " · partial translation",
-  stub: " · English fallback",
-};
+// Short curated list of the most-requested translation targets — every option
+// works because we hand off to Google Translate, which speaks all of them.
+// English is excluded (the page is already English).
+const TARGET_LANGS: Array<{ code: string; native: string; englishName: string }> = [
+  { code: "es", native: "Español", englishName: "Spanish" },
+  { code: "fr", native: "Français", englishName: "French" },
+  { code: "de", native: "Deutsch", englishName: "German" },
+  { code: "it", native: "Italiano", englishName: "Italian" },
+  { code: "pt", native: "Português", englishName: "Portuguese" },
+  { code: "ru", native: "Русский", englishName: "Russian" },
+  { code: "zh-CN", native: "简体中文", englishName: "Chinese (Simplified)" },
+  { code: "ja", native: "日本語", englishName: "Japanese" },
+  { code: "ko", native: "한국어", englishName: "Korean" },
+  { code: "hi", native: "हिन्दी", englishName: "Hindi" },
+  { code: "ar", native: "العربية", englishName: "Arabic" },
+  { code: "tr", native: "Türkçe", englishName: "Turkish" },
+];
+
+/** Build the Google Translate *.translate.goog proxy URL for the current page.
+ *  This format actually translates the live page (the legacy
+ *  `translate.google.com/translate?u=...` was deprecated and just shows
+ *  Google's own "enter a URL" landing). */
+function translateProxyUrl(currentHref: string, targetLang: string): string {
+  try {
+    const u = new URL(currentHref);
+    // visavu.com → visavu-com.translate.goog
+    const proxyHost = `${u.hostname.replace(/\./g, "-")}.translate.goog`;
+    const path = `${u.pathname}${u.search ?? ""}`;
+    const sep = u.search ? "&" : "?";
+    return `https://${proxyHost}${path}${sep}_x_tr_sl=en&_x_tr_tl=${encodeURIComponent(targetLang)}&_x_tr_hl=${encodeURIComponent(targetLang)}`;
+  } catch {
+    // Fallback to the Google Translate landing page with the URL prefilled.
+    return `https://translate.google.com/translate?sl=en&tl=${encodeURIComponent(targetLang)}&u=${encodeURIComponent(currentHref)}`;
+  }
+}
 
 export function LocaleSwitcher() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [current, setCurrent] = useState<Locale>(DEFAULT_LOCALE);
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const [currentHref, setCurrentHref] = useState<string>("");
 
-  // Hydrate from URL on mount; URL ?lang= wins over cookie.
+  // Capture window.location at open-time (avoid SSR mismatch by deferring to mount).
   useEffect(() => {
-    const fromUrl = searchParams.get("lang");
-    if (fromUrl && isValidLocale(fromUrl)) {
-      setCurrent(fromUrl);
-      return;
-    }
-    const fromCookie = document.cookie.match(/(?:^|; )visavu_locale=([^;]+)/)?.[1];
-    if (fromCookie && isValidLocale(fromCookie)) {
-      setCurrent(fromCookie);
-    }
-  }, [searchParams]);
-
-  // Close on outside click.
+    if (typeof window !== "undefined") setCurrentHref(window.location.href);
+  }, []);
+  // Refresh href whenever the dropdown opens (handles client-side nav).
   useEffect(() => {
-    if (!open) return;
-    const handler = (e: MouseEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+    if (open && typeof window !== "undefined") setCurrentHref(window.location.href);
   }, [open]);
 
-  function pick(next: Locale): void {
-    setOpen(false);
-    if (next === current) return;
-    setCurrent(next);
-    document.cookie = `visavu_locale=${next}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
-    const sp = new URLSearchParams(searchParams.toString());
-    if (next === DEFAULT_LOCALE) sp.delete("lang");
-    else sp.set("lang", next);
-    const target = sp.size > 0 ? `${pathname}?${sp.toString()}` : pathname;
-    trackEvent("LocaleChanged", { locale: next });
-    router.replace(target);
-    router.refresh();
-  }
+  // Close on outside click + Escape.
+  useEffect(() => {
+    if (!open) return;
+    const click = (e: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    const key = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", click);
+    document.addEventListener("keydown", key);
+    return () => {
+      document.removeEventListener("mousedown", click);
+      document.removeEventListener("keydown", key);
+    };
+  }, [open]);
 
   return (
     <div ref={rootRef} className="relative inline-block">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-1.5 rounded-md border border-[var(--color-rule)] bg-[var(--color-paper)] px-2 py-1 text-xs font-medium hover:bg-[var(--color-muted)]/40"
+        className="inline-flex items-center gap-1.5 rounded-md border border-[var(--color-rule)] bg-[var(--color-paper)] px-2 py-1 text-xs font-medium text-[var(--color-ink)] hover:bg-[var(--color-muted)]/60 transition"
         aria-expanded={open}
         aria-haspopup="listbox"
+        title="Translate this page"
+        aria-label="Translate this page"
       >
         <Globe size={12} aria-hidden />
-        {LOCALE_LABEL[current]}
+        <span>Translate</span>
         <span aria-hidden className="text-[10px] text-[var(--color-ink-muted)]">▾</span>
       </button>
-      {open && (
-        <ul
+      {open && currentHref && (
+        <div
           role="listbox"
-          aria-label="Choose language"
-          className="absolute right-0 z-50 mt-1 min-w-[12rem] rounded-md border border-[var(--color-rule)] bg-[var(--color-paper)] shadow-lg overflow-hidden"
+          aria-label="Translate this page to…"
+          className="absolute right-0 z-50 mt-1 w-[14rem] rounded-md border border-[var(--color-rule)] bg-[var(--color-paper-elev)] shadow-lg overflow-hidden"
         >
-          {LOCALES.map((locale) => {
-            const coverage = LOCALE_COVERAGE[locale];
-            return (
-              <li key={locale}>
-                <button
-                  type="button"
-                  onClick={() => pick(locale)}
-                  className={`w-full text-left px-3 py-2 text-xs hover:bg-[var(--color-muted)]/40 ${
-                    locale === current ? "bg-[var(--color-muted)]/30" : ""
-                  }`}
+          <div className="px-3 py-2 border-b border-[var(--color-rule)] text-[11px] text-[var(--color-ink-muted)]">
+            Translate this page to…
+          </div>
+          <ul className="max-h-[18rem] overflow-y-auto">
+            {TARGET_LANGS.map((l) => (
+              <li key={l.code}>
+                <a
+                  href={translateProxyUrl(currentHref, l.code)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setOpen(false)}
+                  className="flex items-baseline justify-between gap-2 px-3 py-2 text-xs hover:bg-[var(--color-muted)]/60 text-[var(--color-ink)]"
+                  title={`Open this page translated to ${l.englishName} via Google Translate`}
                 >
-                  <span className="font-medium">{LOCALE_LABEL[locale]}</span>
-                  <span className="text-[10px] text-[var(--color-ink-muted)]">
-                    {COVERAGE_SUFFIX[coverage]}
-                  </span>
-                </button>
+                  <span lang={l.code} className="font-medium">{l.native}</span>
+                  <span className="text-[10px] text-[var(--color-ink-muted)]">{l.englishName}</span>
+                </a>
               </li>
-            );
-          })}
-        </ul>
+            ))}
+            <li className="border-t border-[var(--color-rule)] mt-1">
+              <a
+                href={`https://translate.google.com/translate?sl=en&u=${encodeURIComponent(currentHref)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="block px-3 py-2 text-xs text-[var(--color-ink)] hover:bg-[var(--color-muted)]/60"
+              >
+                <span className="font-medium">Other languages →</span>
+                <span className="block text-[10px] text-[var(--color-ink-muted)] mt-0.5">
+                  Open in Google Translate (130+ languages)
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
       )}
     </div>
   );

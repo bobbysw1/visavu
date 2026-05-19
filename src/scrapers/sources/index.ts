@@ -97,6 +97,10 @@ import { dataCorrectionsAdapter } from "./data_corrections";
 // More long-stay adapters — KR D-10 job seeker + CH cantonal skilled worker.
 import { koreaD10JobseekerAdapter } from "./kr_d10_jobseeker";
 import { switzerlandSkilledWorkerAdapter } from "./ch_skilled_worker";
+// India full visa-category coverage (Employment, Business, Student, Research,
+// e-Medical, e-Conference, OCI, VOA) — covers the gap where only e-Tourist
+// was surfaced from Wikipedia.
+import { indiaVisaCategoriesAdapter } from "./in_visa_categories";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -179,6 +183,7 @@ export const ADAPTERS: Adapter[] = [
   dataCorrectionsAdapter,
   koreaD10JobseekerAdapter,
   switzerlandSkilledWorkerAdapter,
+  indiaVisaCategoriesAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

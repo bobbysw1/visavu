@@ -37,7 +37,13 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
 const MISTRAL_API = "https://api.mistral.ai/v1/chat/completions";
-const MISTRAL_MODEL = "mistral-small-latest";
+// Synthesis uses mistral-large-latest for the higher reasoning needed to
+// ask the right clarifying questions, weave applicant context with route
+// data, and produce confident grounded answers. Intent extraction still
+// uses mistral-small (a structured JSON task that doesn't need the big
+// model — keeps cost down for the high-volume first call).
+const MISTRAL_MODEL_INTENT = "mistral-small-latest";
+const MISTRAL_MODEL_SYNTHESIS = "mistral-large-latest";
 
 const DISCLAIMER =
   "This is general information, not legal advice. Visa rules change. " +
@@ -109,7 +115,7 @@ async function callMistralJSON(messages: ChatMessage[]): Promise<ExtractedIntent
         authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: MISTRAL_MODEL,
+        model: MISTRAL_MODEL_INTENT,
         messages: [{ role: "system", content: EXTRACTION_SYSTEM }, ...messages],
         response_format: { type: "json_object" },
         max_tokens: 200,
@@ -138,10 +144,10 @@ async function callMistralText(messages: ChatMessage[], systemPrompt: string): P
         authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: MISTRAL_MODEL,
+        model: MISTRAL_MODEL_SYNTHESIS,
         messages: [{ role: "system", content: systemPrompt }, ...messages],
-        max_tokens: 800,
-        temperature: 0.3,
+        max_tokens: 1200,
+        temperature: 0.4,
       }),
     });
     if (!res.ok) return null;
@@ -199,6 +205,49 @@ function fallbackExtract(userMessage: string): ExtractedIntent {
 // ─────────────────────────────────────────────────────────────────────────────
 // Format the resolved data as a string the synthesis step can ground on
 // ─────────────────────────────────────────────────────────────────────────────
+/** When intent extraction didn't get a full (passport, destination) tuple,
+ *  give the synthesis a useful fallback context: what fields it KNOWS, what's
+ *  MISSING, and a hint to ask clarifying questions before answering.
+ *  Also injects the same Visavu page URLs the synthesis is required to link. */
+function buildGeneralContext(intent: ExtractedIntent): string {
+  const known: string[] = [];
+  const missing: string[] = [];
+  if (intent.passport_iso2) known.push(`passport=${intent.passport_iso2} (${nationalityFor(intent.passport_iso2)})`);
+  else missing.push("passport / nationality");
+  if (intent.destination_iso2) known.push(`destination=${intent.destination_iso2} (${nameFor(intent.destination_iso2)})`);
+  else missing.push("destination country");
+  if (intent.purpose) known.push(`purpose=${intent.purpose}`);
+  else missing.push("purpose (tourism / work / study / family / business / retirement)");
+
+  const lines = [
+    `No specific Visavu route data fetched — intent was incomplete.`,
+    known.length > 0 ? `Known from user message: ${known.join(", ")}` : `Nothing concrete known from user yet.`,
+    missing.length > 0 ? `Missing (ASK CLARIFYING QUESTIONS to get these before answering): ${missing.join(", ")}` : ``,
+    ``,
+    `If the user's question is purely informational (e.g. "what's the 90/180 Schengen rule?", "what's the Hague Apostille?", "how does the EU Blue Card work?", "what's a Working Holiday visa?"), answer directly from general visa knowledge — you don't need to ask clarifying questions for those.`,
+    ``,
+    `VISAVU PAGES YOU CAN LINK (include at least 2 in any answer):`,
+    `- /find-my-visa — questionnaire that asks 12 questions and ranks routes`,
+    `- /finder — "where can I go?" filter by nationality + goal`,
+    `- /myths — fact-checked common immigration rumours`,
+    `- /chat — you are here`,
+    `- /destination/{iso} — destination-overview pages for every country`,
+    `- /passport/{iso} — passport-overview pages for every nationality`,
+    intent.passport_iso2 ? `- /passport/${intent.passport_iso2.toLowerCase()} — overview for the ${nationalityFor(intent.passport_iso2)} passport` : ``,
+    intent.destination_iso2 ? `- /destination/${intent.destination_iso2.toLowerCase()} — overview for ${nameFor(intent.destination_iso2)}` : ``,
+  ].filter((s) => s.length > 0);
+
+  // Per-applicant context if we know nationality.
+  if (intent.passport_iso2) {
+    const applicantCtx = applicantContextSentence(intent.passport_iso2);
+    if (applicantCtx) {
+      lines.push(``, `APPLICANT-SPECIFIC DOCUMENTATION (use this to make answers concrete):`, applicantCtx);
+    }
+  }
+
+  return lines.join("\n");
+}
+
 function formatRouteForContext(
   passport: string,
   destination: string,
@@ -231,27 +280,60 @@ function formatRouteForContext(
   return lines.join("\n");
 }
 
-const SYNTHESIS_SYSTEM = `You are Visavu's visa-information assistant. You answer ONLY using the supplied Visavu context data.
+const SYNTHESIS_SYSTEM = `You are Visavu's expert visa-information assistant. You combine the structured visa data you are given (in CONTEXT blocks below) with general visa knowledge to give CONFIDENT, SPECIFIC, ACTIONABLE answers. You are NOT a hedging fact-machine.
 
-RULES (hard, never break):
-1. Use information language, NEVER advice language. Say "Available routes include..." or "The published requirements are..." — NEVER "you should apply for..." or "the best visa for you is...".
-2. Cite the source URL and last-verified date when you reference a specific data point.
-3. If the supplied context says "No verified data," tell the user honestly — do NOT invent answers.
-4. Refuse with a referral to a registered adviser if the user asks about: asylum claims, deportation, criminal records, fraud, lying on applications, or any situation requiring application strategy for their specific case.
-5. End every response with: "${DISCLAIMER}"
+═══ HOW TO BEHAVE ═══
 
-ALWAYS LINK BACK to the relevant Visavu page so the reader can dig deeper. Use the page URLs supplied in the context block, formatted as plain links the chat UI will autolink. Use these URL patterns where relevant:
-- Specific passport+destination pair: https://visavu.com/{passport_iso}/{destination_iso} (lowercase)
-  e.g. https://visavu.com/gb/jp for British→Japan
-- Specific purpose for a pair: https://visavu.com/{passport_iso}/{destination_iso}/{purpose}
-  e.g. https://visavu.com/gb/jp/work for British→Japan work routes
-- Destination overview: https://visavu.com/destination/{iso} (lowercase)
-- Passport overview: https://visavu.com/passport/{iso} (lowercase)
-- General topics: /myths (common rumours), /find-my-visa (questionnaire), /finder (where-can-I-go), /chat (you)
+(1) ASK ONE OR TWO SHARP CLARIFYING QUESTIONS FIRST if the user's question is missing critical context — then in the next turn give the specific answer.
 
-When you cite a specific visa option, follow it with "→ Full details: https://visavu.com/..." in the format above so users can read the complete page.
+  Critical context is usually: NATIONALITY (always), plus one of:
+    - Field / occupation (for work questions)
+    - Age (for working-holiday / under-30 routes)
+    - Income / savings (for retirement / passive-income / investor)
+    - Marital status / family (for spouse / family-reunification)
+    - Time already spent (for citizenship / PR)
 
-TONE: Plain English, concise, factual. No emoji. Format with short paragraphs and bullets where helpful. Maximum ~250 words excluding the disclaimer.`;
+  Examples of GOOD opening questions:
+    User: "What Australian visa can I get? I'm a university graduate."
+    You: "To narrow this down — which passport do you hold? Australian visa rules vary heavily by nationality. And is your degree FROM an Australian institution (you'd unlock Subclass 485 Temporary Graduate) or from elsewhere (different routes apply)?"
+
+    User: "How do I retire in Spain?"
+    You: "Spain's main retirement route is the Non-Lucrative Visa (NLV). To answer specifically: what's your nationality, and roughly what passive income do you have monthly (pension / annuity / rental / dividends — Spain wants ~€2,400/month for the principal applicant)?"
+
+    User: "Can I work in Germany?"
+    You: "Three main routes — EU Blue Card (€48,300+ salary), Skilled Worker (€41,000+ shortage occupations), Chancenkarte job-seeker (12-month entry to find work). To say which fits, what's your nationality, your field, and do you already have a German job offer?"
+
+  DO NOT dump a generic list of every visa as your first response. That's the broken behaviour we're fixing.
+
+(2) WHEN YOU HAVE ENOUGH CONTEXT, GIVE A CONFIDENT SPECIFIC ANSWER:
+  - Lead with the most-likely-relevant visa route for their situation, named by its actual visa code (e.g. "Subclass 482 TSS", "EU Blue Card", "D7", "OCI Card", "K-ETA", "ETIAS")
+  - State the salary / income / age threshold in their currency where possible
+  - Give the processing time + fee
+  - Mention the route to settlement / PR if relevant
+  - Reference the applicant-specific documents (ACRO for British, FBI check for American, ANAPEC for Moroccan, etc.) — use the APPLICANT-SPECIFIC DOCUMENTATION block when it's in your context
+  - Cite the source URL
+
+(3) ALWAYS LINK BACK to the relevant Visavu page so the reader can dig deeper. Use the URLs supplied in the VISAVU PAGES TO LINK block. Specifically:
+  - For a specific pair like British → Japan: https://visavu.com/gb/jp
+  - For a purpose-specific page: https://visavu.com/gb/jp/work
+  - For a destination overview: https://visavu.com/destination/jp
+  - For a passport overview: https://visavu.com/passport/gb
+  - For myths about a country / visa: https://visavu.com/myths
+  - Always include at least 2 relevant Visavu URLs in every substantive answer
+
+(4) NEVER:
+  - Use advice language ("you should...", "the best visa for you is...") — use information language ("Available routes include...", "The published requirements are...", "The route most people in your situation use is...")
+  - Invent visa names or fees you weren't told
+  - Refuse to engage when the CONTEXT block has data — use it confidently
+  - Add long disclaimers in the middle of the answer (the disclaimer is at the end only)
+
+(5) REFUSE WITH A REFERRAL if the user asks about: asylum, deportation, criminal records, fraud, lying on applications, or strategy for their specific application case (those need a regulated adviser).
+
+═══ TONE ═══
+Plain English, confident, specific, helpful. Short paragraphs and bullets. No emoji. ~250 words excluding disclaimer.
+
+═══ END WITH ═══
+Always close with: "${DISCLAIMER}"`;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Handler
@@ -305,7 +387,7 @@ export async function POST(request: NextRequest) {
   );
 
   // Step 2: lookup our data if we have a concrete route.
-  let dataContext = "No specific route extracted — answering as a general question.";
+  let dataContext = buildGeneralContext(intent);
   if (intent.passport_iso2 && intent.destination_iso2) {
     const purpose = intent.purpose ?? "tourism";
     try {
@@ -321,15 +403,34 @@ export async function POST(request: NextRequest) {
         route.primary,
         route.baselineTourismStatus,
       );
+
+      // Surface ALTERNATIVE purposes for the same pair so the chat can
+      // compare — e.g. user asks about Australia work, we also show study,
+      // family, retirement options so the model can suggest the better-fit
+      // route if work isn't the right answer for their situation.
+      const altLines: string[] = [];
+      for (const alt of route.alternatives) {
+        if (alt.purpose === purpose) continue;
+        if (alt.options.length === 0) continue;
+        const top = alt.options[0];
+        altLines.push(
+          `  - ${alt.purpose}: ${top.label} (${top.status}${top.maxStayDays ? `, ${top.maxStayDays}d` : ""}${top.fees[0] ? `, ${top.fees[0].amountMinor / 100} ${top.fees[0].currency}` : ""})`,
+        );
+      }
+      if (altLines.length > 0) {
+        dataContext += `\n\nOTHER PURPOSES for ${nationalityFor(intent.passport_iso2)} → ${nameFor(intent.destination_iso2)} (mention as alternatives if relevant):\n${altLines.join("\n")}`;
+      }
+
       // Explicit Visavu page URLs the synthesis step should LINK to in its reply.
       const p = intent.passport_iso2.toLowerCase();
       const d = intent.destination_iso2.toLowerCase();
-      dataContext += `\n\nVISAVU PAGES TO LINK IN YOUR REPLY:\n` +
+      dataContext += `\n\nVISAVU PAGES TO LINK IN YOUR REPLY (include at least 2 of these in every substantive answer):\n` +
         `- Full pair page: https://visavu.com/${p}/${d}\n` +
         `- Purpose-specific page: https://visavu.com/${p}/${d}/${purpose}\n` +
         `- Destination overview: https://visavu.com/destination/${d}\n` +
         `- Passport overview: https://visavu.com/passport/${p}\n` +
-        `- Common rumours about ${intent.destination_iso2}: https://visavu.com/myths`;
+        `- Common rumours / myths about ${nameFor(intent.destination_iso2)}: https://visavu.com/myths\n` +
+        `- Where can ${nationalityFor(intent.passport_iso2)} go? https://visavu.com/finder?passport=${intent.passport_iso2.toUpperCase()}`;
 
       // Per-applicant documentation overlay — what the generic "police
       // clearance" + "apostille" actually mean for this passport-holder.

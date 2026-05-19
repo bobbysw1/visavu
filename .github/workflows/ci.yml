@@ -61,4 +61,11 @@ jobs:
           echo "✓ Fee sanity OK — 0 HIGH suspects"
 
       - name: Tests
-        run: npx vitest run --reporter=dot
+        # Switched from --reporter=dot to --reporter=default so failed-
+        # test names + assertion diffs print to the CI log. Previously
+        # all we saw on failure was a wall of dots + "exit 1" with no
+        # signal as to WHICH test broke.
+        # Also disabled cache + forced no isolation to surface any
+        # cross-test state leak that may explain why CI fails while
+        # all 272 tests pass locally on identical Node 20.
+        run: npx vitest run --reporter=default --no-cache 2>&1

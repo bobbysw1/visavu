@@ -15,7 +15,9 @@ import { routeAdviceFor } from "@/content/routeAdvice";
 import { PURPOSE_LABEL, type Purpose, type VisaStatus } from "@/lib/types";
 import { nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
-import { ClaudeTipCallout } from "@/components/ClaudeTipCallout";
+// ClaudeTipCallout was deleted in favour of the new /documents hub —
+// the AI-polish-your-documents prompt now lives there alongside the
+// downloadable forms it applies to, rather than as a standalone pitch.
 
 export function VisaApplicationAdvice({
   purpose,
@@ -124,9 +126,6 @@ export function VisaApplicationAdvice({
             </li>
           ))}
         </ol>
-        <div className="mt-5">
-          <ClaudeTipCallout />
-        </div>
       </section>
 
       {/* ── DIY vs LAWYER ── */}

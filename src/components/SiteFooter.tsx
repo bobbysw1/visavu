@@ -62,12 +62,6 @@ export function SiteFooter() {
       <div className="border-t border-[var(--color-rule)]">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4 text-xs text-[var(--color-ink-muted)] flex flex-wrap items-center justify-between gap-3">
           <span>© {new Date().getFullYear()} {SITE.name}</span>
-          <span className="serif-display italic text-[var(--color-ink-muted)]">
-            &ldquo;Don&apos;t pay £500 for an answer that&apos;s free.&rdquo;
-          </span>
-          <span className="hidden sm:inline">
-            A valid visa permits entry subject to officer discretion. Always confirm with the embassy.
-          </span>
         </div>
       </div>
     </footer>

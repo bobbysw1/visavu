@@ -7,7 +7,9 @@ import { ChatBar } from "@/components/ChatBar";
 import { LookupForm } from "@/components/LookupForm";
 import { RouteCard } from "@/components/RouteCard";
 import { AllCountriesGrid } from "@/components/AllCountriesGrid";
-import { ClaudeTipCallout } from "@/components/ClaudeTipCallout";
+// ClaudeTipCallout removed — the AI-polish-your-documents prompt now
+// lives in the new /documents hub alongside the downloadable forms it
+// applies to. Homepage doesn't need its own pitch for it.
 import { DestinationTileStrip } from "@/components/DestinationTileStrip";
 import { PassportCollage, passportCollageCount } from "@/components/PassportCollage";
 import { SITE, absoluteUrl } from "@/lib/site";
@@ -345,11 +347,6 @@ export default async function HomePage() {
             with the government. Our incentive is being right, not collecting commissions.
           </p>
         </div>
-      </section>
-
-      {/* ─── CLAUDE TIP — founder story ─── */}
-      <section className="mx-auto max-w-4xl px-4 sm:px-6 py-8">
-        <ClaudeTipCallout />
       </section>
 
       {/* ─── BROWSE BY NATIONALITY ─── */}

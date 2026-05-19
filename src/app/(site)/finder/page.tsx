@@ -12,6 +12,7 @@ import { absoluteUrl } from "@/lib/site";
 import { PageHero } from "@/components/PageHero";
 import { PassportCover } from "@/components/PassportCover";
 import { getPassportCover } from "@/lib/passportCovers";
+import { Money } from "@/components/Money";
 
 // Popular nationalities — the same TOP_ORIGINS that drive the homepage
 // route grid. Filtered to those with a real Wikimedia cover so the
@@ -80,19 +81,6 @@ const STATUS_BADGE: Record<string, string> = {
 
 function isFinderGoal(value: string | null | undefined): value is FinderGoal {
   return !!value && (GOALS as string[]).includes(value);
-}
-
-function fmtMoney(amount: number | null, currency: string | null): string {
-  if (amount == null || !currency) return "—";
-  try {
-    return new Intl.NumberFormat("en", {
-      style: "currency",
-      currency,
-      maximumFractionDigits: 0,
-    }).format(amount / 100);
-  } catch {
-    return `${(amount / 100).toFixed(0)} ${currency}`;
-  }
 }
 
 export default async function FinderPage({
@@ -377,7 +365,7 @@ function ResultsBlock({
               </p>
               {r.feeAmountMinor != null && r.feeCurrency && (
                 <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1.5">
-                  Fee {fmtMoney(r.feeAmountMinor, r.feeCurrency)}
+                  Fee <Money amountMinor={r.feeAmountMinor} currency={r.feeCurrency} />
                 </p>
               )}
             </Link>

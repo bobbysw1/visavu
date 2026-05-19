@@ -12,14 +12,7 @@ import type {
   FamilyVisaMetadata,
   DiplomaticVisaMetadata,
 } from "@/lib/types";
-
-function formatMoneyMinor(amountMinor: number, currency: string): string {
-  try {
-    return new Intl.NumberFormat("en", { style: "currency", currency }).format(amountMinor / 100);
-  } catch {
-    return `${(amountMinor / 100).toFixed(2)} ${currency}`;
-  }
-}
+import { Money } from "./Money";
 
 const RELATIONSHIP_LABEL: Record<string, string> = {
   spouse: "Spouse",
@@ -40,7 +33,7 @@ export function PurposeMetadataPanel({
 
   if (purpose === "work") {
     const m = metadata as WorkVisaMetadata;
-    const items: { label: string; value: string }[] = [];
+    const items: { label: string; value: React.ReactNode }[] = [];
     if (m.sponsorshipRequired !== undefined)
       items.push({ label: "Sponsorship", value: m.sponsorshipRequired ? "Required" : "Not required" });
     if (m.sponsorType)
@@ -56,7 +49,12 @@ export function PurposeMetadataPanel({
     if (m.salaryThresholdMinor && m.salaryCurrency)
       items.push({
         label: "Minimum salary",
-        value: formatMoneyMinor(m.salaryThresholdMinor, m.salaryCurrency) + " / year",
+        value: (
+          <>
+            <Money amountMinor={m.salaryThresholdMinor} currency={m.salaryCurrency} />
+            {" / year"}
+          </>
+        ),
       });
     if (m.jobOfferRequired !== undefined)
       items.push({ label: "Job offer", value: m.jobOfferRequired ? "Required" : "Not required" });
@@ -98,7 +96,7 @@ export function PurposeMetadataPanel({
 
   if (purpose === "study") {
     const m = metadata as StudyVisaMetadata;
-    const items: { label: string; value: string }[] = [];
+    const items: { label: string; value: React.ReactNode }[] = [];
     if (m.institutionAccreditationRequired !== undefined)
       items.push({
         label: "Institution accreditation",
@@ -109,7 +107,12 @@ export function PurposeMetadataPanel({
     if (m.financialProofMonthlyMinor && m.financialProofCurrency)
       items.push({
         label: "Financial proof (monthly)",
-        value: formatMoneyMinor(m.financialProofMonthlyMinor, m.financialProofCurrency),
+        value: (
+          <Money
+            amountMinor={m.financialProofMonthlyMinor}
+            currency={m.financialProofCurrency}
+          />
+        ),
       });
     if (m.partTimeWorkAllowedHours !== undefined)
       items.push({
@@ -130,7 +133,7 @@ export function PurposeMetadataPanel({
 
   if (purpose === "family") {
     const m = metadata as FamilyVisaMetadata;
-    const items: { label: string; value: string }[] = [];
+    const items: { label: string; value: React.ReactNode }[] = [];
     if (m.relationshipTypes && m.relationshipTypes.length > 0)
       items.push({
         label: "Eligible relationships",
@@ -139,7 +142,15 @@ export function PurposeMetadataPanel({
     if (m.sponsorIncomeThresholdMinor && m.sponsorIncomeCurrency)
       items.push({
         label: "Sponsor income threshold",
-        value: formatMoneyMinor(m.sponsorIncomeThresholdMinor, m.sponsorIncomeCurrency) + " / year",
+        value: (
+          <>
+            <Money
+              amountMinor={m.sponsorIncomeThresholdMinor}
+              currency={m.sponsorIncomeCurrency}
+            />
+            {" / year"}
+          </>
+        ),
       });
     if (m.sponsorMustBeCitizenOrResident !== undefined)
       items.push({
@@ -168,7 +179,7 @@ export function PurposeMetadataPanel({
 
   if (purpose === "diplomatic") {
     const m = metadata as DiplomaticVisaMetadata;
-    const items: { label: string; value: string }[] = [];
+    const items: { label: string; value: React.ReactNode }[] = [];
     if (m.authorizationLetterRequired !== undefined)
       items.push({
         label: "Authorisation letter",
@@ -216,7 +227,11 @@ function Section({
   );
 }
 
-function DetailGrid({ items }: { items: { label: string; value: string }[] }) {
+function DetailGrid({
+  items,
+}: {
+  items: { label: string; value: React.ReactNode }[];
+}) {
   if (items.length === 0) return null;
   return (
     <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">

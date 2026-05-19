@@ -432,12 +432,11 @@ export default async function Page({
   // Cost optimisation: no per-request headers()/cookies() reads here. The
   // page is ISR-cached by Vercel based on its URL (passport + destination +
   // purpose searchParam), so per-visitor variation (locale, currency) is
-  // resolved on the CLIENT by LocaleSwitcher + CurrencySwitcher + ResultCard
-  // reading the same cookie/URL state. SSR renders the universal default;
-  // hydration upgrades it.
+  // resolved on the CLIENT — the <Money> component inside each ResultCard
+  // reads the vl_currency cookie at hydration time and renders the native
+  // amount + a converted "(≈ £X)" hint when the user has picked a different
+  // currency via the header switcher.
   const locale: Locale = sp.lang && isSupportedLocale(sp.lang) ? sp.lang : "en";
-  const userCurrency = "USD";
-  const userSecondaryCurrency: string | null = null;
 
   // Auth + watchlist state for the "Watch this route" button. Anonymous
   // visitors see a sign-in CTA; signed-in users see the toggle.
@@ -735,8 +734,6 @@ export default async function Page({
                   passportIso2={p}
                   destinationIso2={d}
                   locale={locale}
-                  userCurrency={userCurrency}
-                  secondaryCurrency={userSecondaryCurrency}
                 />
               </section>
             )}

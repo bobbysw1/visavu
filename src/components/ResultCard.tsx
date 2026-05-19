@@ -10,7 +10,7 @@ import { DifficultyMeter } from "./DifficultyMeter";
 import { RealismMeter } from "./RealismMeter";
 import { ApplicationChecklist } from "./ApplicationChecklist";
 import { t, type Locale, DEFAULT_LOCALE } from "@/i18n/t";
-import { formatFeeLocalised } from "@/lib/exchange";
+import { Money } from "./Money";
 import { GlossaryText } from "./GlossaryText";
 
 const STATUS_LABEL: Record<ResolvedVisaOption["status"], string> = {
@@ -47,14 +47,6 @@ const BUCKET_DOT: Record<ResolvedVisaOption["correctnessBucket"], string> = {
   unverified: "bg-neutral-400",
 };
 
-function formatMoney(amountMinor: number, currency: string): string {
-  try {
-    return new Intl.NumberFormat("en", { style: "currency", currency }).format(amountMinor / 100);
-  } catch {
-    return `${(amountMinor / 100).toFixed(2)} ${currency}`;
-  }
-}
-
 function formatDate(iso: string | null, locale: Locale = DEFAULT_LOCALE): string {
   if (!iso) return "—";
   // Map our internal locale codes to BCP-47 tags. Most match directly.
@@ -81,21 +73,12 @@ export function ResultCard({
   option,
   baselineTourismStatus = null,
   locale = DEFAULT_LOCALE,
-  userCurrency = null,
-  secondaryCurrency = null,
 }: {
   option: ResolvedVisaOption;
   /** The passport's tourism baseline access to the destination. Drives the
    *  passport-aware portion of the difficulty/realism scores. */
   baselineTourismStatus?: VisaStatus | null;
   locale?: Locale;
-  /** User's preferred currency (e.g. GBP, EUR). When set, fees are shown
-   *  alongside an approximate conversion in their currency. */
-  userCurrency?: string | null;
-  /** Optional de-facto secondary currency widely used in the visitor's
-   *  market (e.g. EUR for an Albanian visitor). Renders as a third line
-   *  below the primary local conversion. */
-  secondaryCurrency?: string | null;
 }) {
   const totalFees = option.fees
     .filter((f) => !f.optional)
@@ -212,16 +195,12 @@ export function ResultCard({
           />
           <Stat
             label="Fee"
-            value={totalFees ? formatMoney(totalFees.amountMinor, totalFees.currency) : "—"}
-            sub={
-              totalFees && userCurrency
-                ? formatFeeLocalised(totalFees.amountMinor, totalFees.currency, userCurrency).local ?? undefined
-                : undefined
-            }
-            sub2={
-              totalFees && secondaryCurrency && secondaryCurrency !== (totalFees.currency ?? "") && secondaryCurrency !== userCurrency
-                ? formatFeeLocalised(totalFees.amountMinor, totalFees.currency, secondaryCurrency).local ?? undefined
-                : undefined
+            value={
+              totalFees ? (
+                <Money amountMinor={totalFees.amountMinor} currency={totalFees.currency} />
+              ) : (
+                "—"
+              )
             }
           />
         </dl>
@@ -352,30 +331,22 @@ export function ResultCard({
               <div>
                 <h4 className="text-sm font-semibold mb-1.5">Fee breakdown</h4>
                 <ul>
-                  {option.fees.map((f, i) => {
-                    const localised = userCurrency
-                      ? formatFeeLocalised(f.amountMinor, f.currency, userCurrency)
-                      : null;
-                    return (
-                    <li key={i} className="flex justify-between border-b border-neutral-100 dark:border-neutral-800 py-1.5">
+                  {option.fees.map((f, i) => (
+                    <li
+                      key={i}
+                      className="flex justify-between border-b border-neutral-100 dark:border-neutral-800 py-1.5"
+                    >
                       <span>
                         {f.label ?? f.kind}
-                        {f.optional && <span className="text-neutral-500 text-xs"> (optional)</span>}
-                      </span>
-                      <span className="text-right">
-                        <span className="font-medium">{formatMoney(f.amountMinor, f.currency)}</span>
-                        {localised?.local && (
-                          <span
-                            className="block text-xs text-neutral-500 dark:text-neutral-400"
-                            title={`Approximate, converted at mid-market rate on ${localised.asOf}`}
-                          >
-                            {localised.local}
-                          </span>
+                        {f.optional && (
+                          <span className="text-neutral-500 text-xs"> (optional)</span>
                         )}
                       </span>
+                      <span className="text-right font-medium">
+                        <Money amountMinor={f.amountMinor} currency={f.currency} />
+                      </span>
                     </li>
-                    );
-                  })}
+                  ))}
                 </ul>
               </div>
             )}
@@ -417,7 +388,17 @@ export function ResultCard({
   );
 }
 
-function Stat({ label, value, sub, sub2 }: { label: string; value: string; sub?: string; sub2?: string }) {
+function Stat({
+  label,
+  value,
+  sub,
+  sub2,
+}: {
+  label: string;
+  value: React.ReactNode;
+  sub?: React.ReactNode;
+  sub2?: React.ReactNode;
+}) {
   return (
     <div>
       <dt className="text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 mb-1">

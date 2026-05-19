@@ -89,16 +89,12 @@ export function VisaOptionsByPurpose({
   passportIso2,
   destinationIso2,
   locale,
-  userCurrency,
-  secondaryCurrency,
 }: {
   options: ResolvedVisaOption[];
   baselineTourismStatus: VisaStatus | null;
   passportIso2: string;
   destinationIso2: string;
   locale: Locale;
-  userCurrency: string | null;
-  secondaryCurrency: string | null;
 }) {
   const params = useSearchParams();
   const profileParam = params.get("profile");
@@ -160,8 +156,6 @@ export function VisaOptionsByPurpose({
             items={items}
             baselineTourismStatus={baselineTourismStatus}
             locale={locale}
-            userCurrency={userCurrency}
-            secondaryCurrency={secondaryCurrency}
             passportIso2={passportIso2}
             destinationIso2={destinationIso2}
           />
@@ -185,8 +179,6 @@ export function VisaOptionsByPurpose({
                 items={items}
                 baselineTourismStatus={baselineTourismStatus}
                 locale={locale}
-                userCurrency={userCurrency}
-                secondaryCurrency={secondaryCurrency}
                 passportIso2={passportIso2}
                 destinationIso2={destinationIso2}
               />
@@ -214,8 +206,6 @@ export function VisaOptionsByPurpose({
                 option={option}
                 baselineTourismStatus={baselineTourismStatus}
                 locale={locale}
-                userCurrency={userCurrency}
-                secondaryCurrency={secondaryCurrency}
               />
             ))}
           </div>
@@ -229,8 +219,6 @@ type PurposeGroupProps = {
   items: ClassifiedOption[];
   baselineTourismStatus: VisaStatus | null;
   locale: Locale;
-  userCurrency: string | null;
-  secondaryCurrency: string | null;
   passportIso2: string;
   destinationIso2: string;
 } & (
@@ -311,8 +299,6 @@ function PurposeGroup(props: PurposeGroupProps) {
                       option={option}
                       baselineTourismStatus={props.baselineTourismStatus}
                       locale={props.locale}
-                      userCurrency={props.userCurrency}
-                      secondaryCurrency={props.secondaryCurrency}
                     />
                   ))}
                 </div>

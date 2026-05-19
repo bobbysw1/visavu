@@ -19,6 +19,7 @@ import { flagEmoji, nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
 import { assessDifficulty, bucketFor, BUCKET_LABEL } from "@/lib/difficulty";
 import type { CountryPhoto } from "@/lib/pexels";
+import { Money } from "./Money";
 
 type Band = "green" | "amber" | "red" | "neutral";
 
@@ -92,7 +93,7 @@ function pillLabelFor(status: VisaStatus | null, optionsCount: number): string {
   }
 }
 
-function formatFee(option: ResolvedVisaOption): string {
+function feeNode(option: ResolvedVisaOption): React.ReactNode {
   const total = option.fees
     .filter((f) => !f.optional)
     .reduce<{ amountMinor: number; currency: string } | null>((acc, f) => {
@@ -111,15 +112,9 @@ function formatFee(option: ResolvedVisaOption): string {
     return "See breakdown";
   }
   if (total.amountMinor === 0) return "Free";
-  try {
-    return new Intl.NumberFormat("en", {
-      style: "currency",
-      currency: total.currency,
-      maximumFractionDigits: 0,
-    }).format(total.amountMinor / 100);
-  } catch {
-    return `${(total.amountMinor / 100).toFixed(0)} ${total.currency}`;
-  }
+  // <Money> renders native amount + (≈ £X) hint after hydration, using the
+  // user's vl_currency cookie. Pre-hydration it shows the native amount only.
+  return <Money amountMinor={total.amountMinor} currency={total.currency} />;
 }
 
 function formatProcessing(option: ResolvedVisaOption): string {
@@ -237,7 +232,7 @@ export function EditorialBillboard({
       {/* Metric strip — paper-backed band glued to the bottom of the hero. */}
       {primary && (
         <div className="relative bg-[var(--color-paper-elev)]/95 backdrop-blur grid grid-cols-2 sm:grid-cols-4 divide-x divide-[var(--color-rule)]">
-          <Metric label="Cost" value={formatFee(primary)} />
+          <Metric label="Cost" value={feeNode(primary)} />
           <Metric label="Time to get it" value={formatProcessing(primary)} />
           <Metric
             label="Difficulty"
@@ -251,7 +246,15 @@ export function EditorialBillboard({
   );
 }
 
-function Metric({ label, value, sub }: { label: string; value: string; sub?: string }) {
+function Metric({
+  label,
+  value,
+  sub,
+}: {
+  label: string;
+  value: React.ReactNode;
+  sub?: string;
+}) {
   return (
     <div className="px-5 py-4">
       <div className="kicker">{label}</div>

@@ -32,6 +32,7 @@ import {
 } from "@/content/skilledOccupations";
 import { applicantContextSentence } from "@/components/PassportApplicantPanel";
 import { bilateralContext, destinationSummary, workingHolidayContextHint } from "@/lib/chatBilateralContext";
+import { sanitiseChatReply } from "@/lib/linkAllowlist";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -325,19 +326,34 @@ Most chats follow this arc:
     - "Where can I go?" finder: https://visavu.com/finder?passport={ISO}
     - Personalised questionnaire: https://visavu.com/find-my-visa
 
-(5) NEVER:
+(5) LINK RULES — STRICT:
+    - ONLY link to https://visavu.com/* OR official government sources (.gov, .gov.uk, .gov.au, .gov.in, .gob.es, .gouv.fr, .go.jp, canada.ca, europa.eu, admin.ch, immi.homeaffairs.gov.au, etc.).
+    - NEVER link to immigration consultants, paid visa services, Wikipedia, Reddit, blogs, IATA, Henley Index, Times Higher Education, or any other third party. These are competitors.
+    - When citing a fact from a government source, link the gov URL only.
+    - If you would otherwise link to a non-allowlisted source, link to the equivalent Visavu page instead (e.g. our /myths page covers most common misconceptions; our /passport/{iso} covers passport-specific gov-source data).
+
+(6) NEVER:
     - Dump a long generic visa list as your first response — that's the broken old behaviour.
     - Use advice language ("you should..."). Use information language ("the route most 26-year-old UK applicants take is...").
     - Invent visas, fees, or thresholds you weren't told.
     - Add long disclaimers mid-answer — the disclaimer is at the end only.
 
-(6) REFUSE WITH A REFERRAL if the user asks about: asylum, deportation, criminal records, fraud, lying on applications, or strategy for a specific application case. Those need a regulated adviser (IAA / MARA / CICC / bar-admitted attorney).
+(7) REFUSE WITH A REFERRAL if the user asks about: asylum, deportation, criminal records, fraud, lying on applications, or strategy for a specific application case. Those need a regulated adviser (IAA / MARA / CICC / bar-admitted attorney).
 
-═══ TONE ═══
-Conversational, warm, knowledgeable, confident. Use natural language ("here's the thing", "the obvious starting point", "you'd typically", "what most people do"). Short paragraphs. Bullets only when listing 3+ items. No emoji. ~200-300 words.
+═══ TONE + FORMATTING ═══
+Conversational, warm, knowledgeable, confident. Use natural language ("here's the thing", "the obvious starting point", "you'd typically", "what most people do"). No emoji.
+
+Format for SCANNABILITY using lightweight Markdown — the chat UI renders **bold**, *italic*, bullets, and headers:
+
+  - **Use bold (\`**text**\`)** for key visa names, salary thresholds, processing times, and other facts the reader needs to spot at a glance. Example: "The starting point is the **Working Holiday Visa Subclass 417** — **3-year max stay** (UK-specific extension), **AUD $650 fee**, **1–30 days processing**."
+  - Use mini section headers with \`## Header\` style (rendered as bold block titles) when you have 2+ distinct sections in one answer. Example: "## Right now" / "## Long-term route to PR" / "## What you'll need to apply".
+  - Use bullet lists (\`- item\`) when listing 3+ short items (visa requirements, document list, options to compare). Don't bullet 1-2 items — write them as a sentence.
+  - Use SHORT paragraphs (1–3 sentences each). Break visually between thoughts with blank lines.
+  - AVOID parenthetical clutter — instead of "(USD $25 / £20)" or "(subclass 417 — three year max stay, no regional work, available for UK, CA, FR, IT, IE)" → write "**USD $25**" or "**Subclass 417** — three-year max stay, no regional-work requirement, available for UK / Canada / France / Italy / Ireland applicants." Break long parentheticals into sentences or bullets.
+  - Target ~200–300 words. Quality > quantity.
 
 ═══ END WITH ═══
-Always close with: "${DISCLAIMER}"`;
+Always close with the disclaimer on its own line (no header). The disclaimer text: "${DISCLAIMER}"`;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Handler
@@ -490,8 +506,11 @@ export async function POST(request: NextRequest) {
   const synthesised = await callMistralText(enrichedMessages, SYNTHESIS_SYSTEM);
 
   if (synthesised) {
+    // Strip any non-allowlisted URLs the model may have invented (only
+    // visavu.com + verified government domains are permitted as links).
+    const cleanReply = sanitiseChatReply(synthesised);
     return NextResponse.json({
-      reply: synthesised,
+      reply: cleanReply,
       type: "synthesised",
       intent,
     });

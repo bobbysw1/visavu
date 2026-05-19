@@ -63,32 +63,110 @@ const SUGGESTION_CATEGORIES: Array<{
   },
 ];
 
-// Simple linkifier — converts http(s) URLs in text to <a> tags.
-function linkify(text: string): React.ReactNode[] {
-  const urlRe = /https?:\/\/[^\s)\]]+/g;
+// Lightweight inline formatter — handles **bold**, *italic*, and URLs.
+// Used inside renderMarkdown() for per-line inline rendering.
+function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
+  // Split on a combined pattern: **bold**, *italic*, or URL.
+  const re = /(\*\*[^*\n]+\*\*|\*[^*\n]+\*|https?:\/\/[^\s)\]]+)/g;
   const parts: React.ReactNode[] = [];
   let last = 0;
   let i = 0;
-  for (const match of text.matchAll(urlRe)) {
-    const idx = match.index ?? 0;
+  for (const m of text.matchAll(re)) {
+    const idx = m.index ?? 0;
     if (idx > last) parts.push(text.slice(last, idx));
-    const url = match[0].replace(/[.,;)]+$/, ""); // strip trailing punctuation
-    parts.push(
-      <a
-        key={`u-${i++}`}
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-[var(--color-ink)] underline decoration-blue-300/60 hover:decoration-blue-500"
-      >
-        {url}
-      </a>,
-    );
-    last = idx + match[0].length;
-    if (url.length < match[0].length) parts.push(match[0].slice(url.length));
+    const tok = m[0];
+    if (tok.startsWith("**") && tok.endsWith("**")) {
+      parts.push(<strong key={`${keyPrefix}-b${i++}`} className="font-semibold text-[var(--color-ink)]">{tok.slice(2, -2)}</strong>);
+    } else if (tok.startsWith("*") && tok.endsWith("*")) {
+      parts.push(<em key={`${keyPrefix}-i${i++}`}>{tok.slice(1, -1)}</em>);
+    } else {
+      const url = tok.replace(/[.,;)]+$/, "");
+      parts.push(
+        <a
+          key={`${keyPrefix}-u${i++}`}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[var(--color-ink)] underline decoration-blue-300/60 hover:decoration-blue-500"
+        >
+          {url}
+        </a>,
+      );
+    }
+    last = idx + tok.length;
   }
   if (last < text.length) parts.push(text.slice(last));
   return parts;
+}
+
+/** Lightweight markdown-ish renderer for the assistant's replies. Handles
+ *  ## Headers (rendered as bold block titles), - / * bullets, **bold**,
+ *  *italic*, and URLs. Paragraphs separated by blank lines. No HTML, no
+ *  external markdown lib. */
+function renderMarkdown(text: string): React.ReactNode {
+  const lines = text.split(/\r?\n/);
+  const blocks: React.ReactNode[] = [];
+  let buf: string[] = [];
+  let bullets: string[] = [];
+  let key = 0;
+
+  function flushParagraph() {
+    if (buf.length === 0) return;
+    const joined = buf.join(" ").trim();
+    if (joined) {
+      blocks.push(
+        <p key={`p${key++}`} className="leading-relaxed">{renderInline(joined, `p${key}`)}</p>,
+      );
+    }
+    buf = [];
+  }
+  function flushBullets() {
+    if (bullets.length === 0) return;
+    blocks.push(
+      <ul key={`u${key++}`} className="my-1.5 ml-4 list-disc space-y-1">
+        {bullets.map((b, i) => (
+          <li key={i} className="leading-relaxed pl-0.5">{renderInline(b, `u${key}-${i}`)}</li>
+        ))}
+      </ul>,
+    );
+    bullets = [];
+  }
+
+  for (const rawLine of lines) {
+    const line = rawLine.replace(/\s+$/, "");
+    // Blank line — paragraph/list break
+    if (!line.trim()) {
+      flushParagraph();
+      flushBullets();
+      continue;
+    }
+    // Headers
+    const h = line.match(/^(#{1,4})\s+(.+)$/);
+    if (h) {
+      flushParagraph();
+      flushBullets();
+      blocks.push(
+        <p key={`h${key++}`} className="font-semibold text-[var(--color-ink)] mt-2 first:mt-0">
+          {renderInline(h[2], `h${key}`)}
+        </p>,
+      );
+      continue;
+    }
+    // Bullets — "- " or "* " or "• "
+    const b = line.match(/^\s*(?:[-*•])\s+(.+)$/);
+    if (b) {
+      flushParagraph();
+      bullets.push(b[1]);
+      continue;
+    }
+    // Regular text line
+    flushBullets();
+    buf.push(line);
+  }
+  flushParagraph();
+  flushBullets();
+
+  return <>{blocks}</>;
 }
 
 function RoleAvatar({ role }: { role: "user" | "assistant" }) {
@@ -314,10 +392,10 @@ export function ChatInterface() {
                     className={
                       m.role === "user"
                         ? "ml-auto max-w-[90%] sm:max-w-[80%] rounded-2xl rounded-tr-md bg-[var(--color-ink)] text-[var(--color-paper)] px-3.5 py-2.5 text-sm whitespace-pre-wrap break-words shadow-sm"
-                        : "mr-auto max-w-[95%] sm:max-w-[85%] rounded-2xl rounded-tl-md bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] px-3.5 py-2.5 text-sm whitespace-pre-wrap break-words shadow-sm"
+                        : "mr-auto max-w-[95%] sm:max-w-[85%] rounded-2xl rounded-tl-md bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] px-4 py-3 text-sm break-words shadow-sm space-y-2"
                     }
                   >
-                    {linkify(m.content)}
+                    {m.role === "assistant" ? renderMarkdown(m.content) : m.content}
                   </div>
                   {m.role === "assistant" && (
                     <div className="flex items-center gap-3 pl-1">

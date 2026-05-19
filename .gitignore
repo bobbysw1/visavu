@@ -20,3 +20,4 @@ src/scrapers/sources/__fixtures__/wikipedia_long_tail.json
 # git so Vercel can serve them — ~22 MB total, fine for the repo size.
 # Re-fetch missing ones with: npm run fetch:heroes
 mockups/
+public/passports/originals/

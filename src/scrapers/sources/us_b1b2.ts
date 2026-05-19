@@ -14,6 +14,7 @@ import * as cheerio from "cheerio";
 import type { Adapter, ParsedRecord, FetchContext } from "../base/Adapter";
 import { politeFetch } from "../base/fetchClient";
 import { COUNTRY_LIST } from "@/lib/countries";
+import { b1b2ReciprocityFor } from "../data/usReciprocity";
 
 const SOURCE_URL =
   "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html";
@@ -83,6 +84,42 @@ export const usB1B2Adapter: Adapter = {
       if (VWP_NATIONALITIES.has(c.iso2)) continue;
       if (WHTI_EXEMPT.has(c.iso2)) continue;
 
+      // Per-passport reciprocity overlay — validity, entries, and any
+      // additional reciprocity fee on top of the $185 MRV. Defaults to
+      // 10-year multi-entry $185-only when the iso isn't explicitly
+      // listed; the ~30 listed iso2s get the State Dept's correct
+      // restricted schedule (Iran 3-month single, Vietnam 1y, Nigeria
+      // 2y + $110 fee, etc.). See src/scrapers/data/usReciprocity.ts.
+      const recip = b1b2ReciprocityFor(c.iso2);
+
+      // Fee components — always include the MRV ($185), conditionally
+      // add the reciprocity fee for nationalities that owe one.
+      const feeComponents: Array<{
+        kind: "base" | "service";
+        amountMinor: number;
+        currency: string;
+        asOf: string;
+        label: string;
+      }> = [
+        { kind: "base", amountMinor: 18500, currency: "USD", asOf: today, label: "MRV application fee" },
+      ];
+      if (recip.reciprocityFeeMinor > 0) {
+        feeComponents.push({
+          kind: "service",
+          amountMinor: recip.reciprocityFeeMinor,
+          currency: "USD",
+          asOf: today,
+          label: "Reciprocity fee (per State Dept schedule)",
+        });
+      }
+
+      // Compose the notes to include the reciprocity rationale so users
+      // see the why, not just the validity number. Falls back to the
+      // generic reciprocity-schedule note when no per-country note exists.
+      const reciprocityNote = recip.note
+        ? ` Reciprocity: ${recip.note}`
+        : ` Visa validity (${Math.round(recip.validityDays / 365)}-year ${recip.entries}-entry) is set by the State Dept reciprocity schedule for ${c.name}.`;
+
       // Tourism (B-2)
       records.push({
         passportIso2: c.iso2,
@@ -90,9 +127,9 @@ export const usB1B2Adapter: Adapter = {
         purpose: "tourism",
         status: "embassy_visa",
         label: "B-2 Visitor visa (Tourism)",
-        maxStayDays: 180, // typical admission period
-        validityDays: 10 * 365, // up to 10 years for many nationalities; per-country reciprocity in real data
-        entriesAllowed: "multiple (typically)",
+        maxStayDays: 180, // typical admission period set by CBP, not reciprocity
+        validityDays: recip.validityDays,
+        entriesAllowed: recip.entries,
         passportValidityMonthsRequired: 6,
         biometricsRequired: true,
         biometricsLocation: "US Embassy / Consulate (interview + fingerprints)",
@@ -101,14 +138,12 @@ export const usB1B2Adapter: Adapter = {
         onwardTicketRequired: true,
         requirements,
         processingTimeDaysMin: 14,
-        processingTimeDaysMax: 90, // wait times vary widely by post; can be much longer
+        processingTimeDaysMax: 90,
         applicationUrl: "https://ceac.state.gov/genniv/",
-        primarySourceUrl: SOURCE_URL,
-        fees: [
-          { kind: "base", amountMinor: 18500, currency: "USD", asOf: today, label: "MRV application fee" },
-        ],
+        primarySourceUrl: recip.sourceUrl,
+        fees: feeComponents,
         notes:
-          "B-2 covers tourism, visiting friends/family, medical treatment, and short recreational courses. Maximum admission period is determined by the CBP officer at the port of entry — typically up to 6 months. Visa validity (multi-year, multi-entry) is set by reciprocity schedule per nationality.",
+          `B-2 covers tourism, visiting friends/family, medical treatment, and short recreational courses. Maximum admission period is determined by the CBP officer at the port of entry — typically up to 6 months.${reciprocityNote}`,
       });
 
       // Business (B-1)
@@ -119,8 +154,8 @@ export const usB1B2Adapter: Adapter = {
         status: "embassy_visa",
         label: "B-1 Visitor visa (Business)",
         maxStayDays: 180,
-        validityDays: 10 * 365,
-        entriesAllowed: "multiple (typically)",
+        validityDays: recip.validityDays,
+        entriesAllowed: recip.entries,
         passportValidityMonthsRequired: 6,
         biometricsRequired: true,
         biometricsLocation: "US Embassy / Consulate (interview + fingerprints)",
@@ -134,12 +169,10 @@ export const usB1B2Adapter: Adapter = {
         processingTimeDaysMin: 14,
         processingTimeDaysMax: 90,
         applicationUrl: "https://ceac.state.gov/genniv/",
-        primarySourceUrl: SOURCE_URL,
-        fees: [
-          { kind: "base", amountMinor: 18500, currency: "USD", asOf: today, label: "MRV application fee" },
-        ],
+        primarySourceUrl: recip.sourceUrl,
+        fees: feeComponents,
         notes:
-          "B-1 permits attending meetings, conferences, contract negotiations, and short consultations. It does NOT permit gainful employment in the US. Often issued as a combined B-1/B-2 visa.",
+          `B-1 permits attending meetings, conferences, contract negotiations, and short consultations. It does NOT permit gainful employment in the US. Often issued as a combined B-1/B-2 visa.${reciprocityNote}`,
       });
     }
 

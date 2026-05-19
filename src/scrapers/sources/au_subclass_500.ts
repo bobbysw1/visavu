@@ -46,7 +46,10 @@ export const auSubclass500Adapter: Adapter = {
     const feeMatches = [...main.matchAll(/AUD?\s?\$?(\d{1,3}(?:,\d{3})*)/gi)]
       .map((m) => parseInt(m[1].replace(/,/g, ""), 10))
       .filter((n) => n >= 1000 && n <= 5000);
-    const baseFee = feeMatches.length > 0 ? Math.max(...feeMatches) : 1600;
+    // Fallback: AUD $1,840 — the July 2024 fee-schedule increase value for
+    // Subclass 500 primary applicants (raised from $710 → $1,600 → $1,840
+    // in 2024). Stays valid until next AU government fee schedule.
+    const baseFee = feeMatches.length > 0 ? Math.max(...feeMatches) : 1840;
 
     const purposeMetadata: StudyVisaMetadata = {
       institutionAccreditationRequired: true,

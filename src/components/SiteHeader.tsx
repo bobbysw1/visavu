@@ -4,6 +4,7 @@ import { CurrencySwitcher } from "./CurrencySwitcher";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MobileMenu } from "./MobileMenu";
 import { UpdatesNavLink } from "./UpdatesNavLink";
+import { ToolsDropdown } from "./ToolsDropdown";
 import recentUpdates from "@/data/recent_updates.json";
 
 // LocaleSwitcher is now backed by the P29 i18n scaffold registry
@@ -37,40 +38,28 @@ export function SiteHeader() {
           <span className="text-[var(--color-accent)]">.</span>
         </Link>
         <nav className="flex items-center gap-1 sm:gap-2 text-sm">
+          {/* Primary headline link — the discoverability tool. Kept inline
+              because it's the one most-clicked nav entry per analytics. */}
           <Link
             href="/finder"
             className="hidden md:inline px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
           >
             Where can I go?
           </Link>
-          <Link
-            href="/guides"
-            className="hidden sm:inline px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
-          >
-            Guides
-          </Link>
+          {/* Tools dropdown — bundles chat / find-my-visa / documents /
+              myths / guides / rankings / updates into a single nav entry
+              instead of 7 top-level items. */}
+          <ToolsDropdown />
+          {/* Services kept inline — it's the monetised revenue surface so
+              we want it discoverable. */}
           <Link
             href="/services"
             className="hidden md:inline px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
           >
             Services
           </Link>
-          <Link
-            href="/passport-rankings"
-            className="hidden lg:inline px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
-          >
-            Rankings
-          </Link>
-          <Link
-            href="/myths"
-            className="hidden lg:inline px-2.5 py-1.5 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
-          >
-            Myths
-          </Link>
-          {/* Updates link with a small badge showing count of new entries
-              since the user's last visit. Data passed in server-side so the
-              count is correct on first paint. Cookie-driven so no account
-              required. */}
+          {/* Updates badge stays inline (next to Tools) so the new-items
+              pill stays visible. Clicking opens /updates as before. */}
           <UpdatesNavLink
             updates={(recentUpdates as { updates: Array<{ date: string }> }).updates ?? []}
           />

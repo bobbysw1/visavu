@@ -1,0 +1,131 @@
+name: Bootstrap + snapshot on adapter change
+
+# Triggers when an adapter source file changes on main. Adapter code
+# changes don't update the cold-start snapshot automatically — the
+# nightly refresh workflow only watches fixture files. This workflow
+# closes that gap so a fee fix in a .ts adapter is reflected in the
+# committed src/data/pglite-dump.tar.gz within ~20 min of the push.
+#
+# Why not run on every push: bootstrap takes ~15 min + commits a 40 MB
+# tarball back to the repo. Limiting to adapter-code changes keeps
+# noise low. Concurrency-limited to 1 so two pushes can't race each
+# other into a corrupted snapshot.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/scrapers/sources/**/*.ts"
+      - "src/scrapers/base/**/*.ts"
+      - "src/scrapers/data/**/*.ts"
+      - "src/lib/blocs.ts"
+      - "src/lib/countries.ts"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (build snapshot but don't commit)"
+        type: boolean
+        default: false
+
+concurrency:
+  group: snapshot-bootstrap
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap-and-snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    if: github.actor != 'visa-data-bot'  # don't re-trigger on the workflow's own commit
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Capture pre-bootstrap snapshot size for diff comparison
+        id: pre
+        run: |
+          if [ -f src/data/pglite-dump.tar.gz ]; then
+            echo "size=$(wc -c < src/data/pglite-dump.tar.gz)" >> "$GITHUB_OUTPUT"
+          else
+            echo "size=0" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run bootstrap (fetches every adapter, ~15 min)
+        run: |
+          rm -rf .pglite
+          npm run bootstrap 2>&1 | tee bootstrap.log
+
+      - name: Build snapshot
+        run: npm run db:snapshot
+
+      - name: Validate snapshot — size must not regress by more than 5%
+        id: validate
+        run: |
+          new_size=$(wc -c < src/data/pglite-dump.tar.gz)
+          old_size=${{ steps.pre.outputs.size }}
+          echo "new_size=$new_size" >> "$GITHUB_OUTPUT"
+          echo "old_size=$old_size" >> "$GITHUB_OUTPUT"
+          # Guard against the partial-bootstrap regression we hit
+          # manually — a snapshot that's >5% smaller than its predecessor
+          # almost always means bootstrap was killed mid-flight.
+          if [ "$old_size" -gt 0 ]; then
+            shrunk=$(( (old_size - new_size) * 100 / old_size ))
+            if [ "$shrunk" -gt 5 ]; then
+              echo "::error::Snapshot shrunk by $shrunk% ($old_size → $new_size bytes). Likely a partial bootstrap. Aborting commit."
+              exit 1
+            fi
+          fi
+          echo "Snapshot size delta acceptable: $old_size → $new_size bytes"
+
+      - name: Run fee sanity static check
+        run: |
+          npx tsx src/scripts/feeSanityStatic.ts
+          # Fail the workflow if any HIGH-severity suspects were introduced.
+          high=$(grep -c "^| .*HIGH" audit/FEE_STATIC_*.md 2>/dev/null || echo 0)
+          if [ "$high" -gt 0 ]; then
+            echo "::error::Fee sanity check introduced $high HIGH-severity suspects. Review audit/FEE_STATIC_*.md before merging."
+            exit 1
+          fi
+
+      - name: Check whether snapshot actually changed
+        id: changed
+        run: |
+          if git diff --quiet HEAD -- src/data/pglite-dump.tar.gz; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Snapshot byte-identical to previous — no commit needed."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git diff --stat HEAD -- src/data/pglite-dump.tar.gz
+          fi
+
+      - name: Commit + push refreshed snapshot
+        if: steps.changed.outputs.changed == 'true' && inputs.dry_run != true
+        run: |
+          git config user.name "visa-data-bot"
+          git config user.email "data@visavu.com"
+          git add src/data/pglite-dump.tar.gz audit/FEE_STATIC_*.md
+          git commit -m "data: snapshot refresh from adapter change (${{ github.sha }})" \
+            -m "Triggered by: ${{ github.event.head_commit.message }}" \
+            -m "Workflow: $GITHUB_RUN_URL"
+          git push
+
+      - name: Upload bootstrap log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bootstrap-log
+          path: bootstrap.log
+          retention-days: 14

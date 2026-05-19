@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { and, desc, eq, isNull, lt, ne, or, sql } from "drizzle-orm";
-import { db, schema } from "@/db/client";
+// Mixed dashboard: loadUserReports queries the userReports table
+// (user-write data → userDb); the other three loaders touch visa data
+// (visaOptions, passports, verificationEvents) → keep using db.
+import { db, userDb, schema } from "@/db/client";
 import { nameFor } from "@/lib/countries";
 import { PURPOSE_LABEL, type Purpose, type VisaStatus } from "@/lib/types";
 
@@ -226,7 +229,9 @@ function RouteList({ rows }: { rows: ReviewRow[] }) {
 }
 
 async function loadUserReports() {
-  return db
+  // User-write table — route via userDb so reports persist across
+  // serverless instance recycles when DATABASE_URL is configured.
+  return userDb
     .select({
       id: schema.userReports.id,
       passportIso2: schema.userReports.passportIso2,

@@ -23,7 +23,11 @@
  */
 import { randomBytes, createHmac } from "node:crypto";
 import { cookies } from "next/headers";
-import { db, schema } from "@/db/client";
+// Auth touches only user-write tables (authTokens, users, sessions,
+// watchlistSubscriptions). Aliased to `db` to keep the rest of this
+// file unchanged; userDb routes to managed Postgres when DATABASE_URL
+// is set so writes persist across serverless instance recycles.
+import { userDb as db, schema } from "@/db/client";
 import { and, eq, gt, isNull } from "drizzle-orm";
 import type { Purpose } from "@/lib/types";
 

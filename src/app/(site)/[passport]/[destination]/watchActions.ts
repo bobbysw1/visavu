@@ -11,7 +11,10 @@ import {
   addWatchlistSubscription,
   removeWatchlistSubscription,
 } from "@/lib/auth";
-import { db, schema } from "@/db/client";
+// Watch actions touch only watchlistSubscriptions (user write table).
+// userDb routes to managed Postgres when DATABASE_URL is set so writes
+// persist across serverless instance recycles.
+import { userDb as db, schema } from "@/db/client";
 import { and, eq } from "drizzle-orm";
 import { isValidPurpose, type Purpose } from "@/lib/types";
 

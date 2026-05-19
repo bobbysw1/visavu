@@ -42,7 +42,10 @@ import { UsReciprocityPanel } from "@/components/UsReciprocityPanel";
 import { WatchRouteButton } from "@/components/WatchRouteButton";
 import { watchRouteAction, unwatchRouteAction } from "./watchActions";
 import { currentUser } from "@/lib/auth";
-import { db, schema } from "@/db/client";
+// Pair page renders mostly visa data (db) but ALSO checks the signed-in
+// user's watchlist subscriptions — that single query needs userDb so
+// the result is consistent with what watchActions wrote.
+import { db, userDb, schema } from "@/db/client";
 import { and, eq } from "drizzle-orm";
 import { COUNTRY_LIST, flagEmoji, issuesPassport, nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
@@ -445,7 +448,9 @@ export default async function Page({
   try {
     signedInUser = await currentUser();
     if (signedInUser) {
-      const rows = await db
+      // userDb routes to managed Postgres when DATABASE_URL is set so
+      // the read sees whatever watchActions just wrote.
+      const rows = await userDb
         .select({ id: schema.watchlistSubscriptions.id })
         .from(schema.watchlistSubscriptions)
         .where(

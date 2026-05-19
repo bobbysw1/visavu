@@ -1,20 +1,48 @@
 /**
- * Drizzle DB client. Dual-mode by design:
+ * Drizzle DB client. Now SPLIT into two routes by data-access pattern:
  *
- *   1. Production / staging — postgres-js connecting to a managed Postgres
- *      (Neon / Supabase / Railway). Activated when DATABASE_URL is set.
+ *   • `db`     → visa catalogue (read-heavy, ships in snapshot). ALWAYS
+ *                PGlite. Vercel cold-start seeds from the 40 MB tarball
+ *                at src/data/pglite-dump.tar.gz; local dev uses the
+ *                filesystem-mode PGlite at ./.pglite/data. No external
+ *                database, instant cold-start, the visa data ships with
+ *                the code so there is no "DB is down" failure mode.
  *
- *   2. Local dev + tests — PGlite (an in-process Postgres compiled to WASM).
- *      Zero external dependencies; data persists to ./.pglite/data.
- *      Activated when DATABASE_URL is unset.
+ *   • `userDb` → user accounts + watchlists + alerts + reports (write-
+ *                heavy, must persist across serverless instance recycles).
+ *                Routes to managed Postgres via DATABASE_URL when set;
+ *                falls back to the same PGlite as `db` when unset (so
+ *                local dev + the public preview still work without
+ *                external services).
  *
- * Both paths register the SAME Drizzle relational schema, so callers use one
- * `db` and Drizzle queries work identically — including nested `db.query.*`
- * relational queries.
+ * THE PROBLEM THIS SPLIT FIXES
+ * ────────────────────────────
+ * Before: a single `db` export. Visa data was always served from the
+ * PGlite snapshot, but user writes (watchlists, accounts) also went
+ * into PGlite — which is in-memory in serverless mode, so writes
+ * disappeared whenever Vercel recycled the function instance. The
+ * /admin/db-status page even acknowledged this: "WRITES DO NOT
+ * PERSIST … User accounts will appear to work mid-session but reset
+ * randomly." That kills user trust on the first encounter.
  *
- * Initialization is async (PGlite imports a WASM module), so this file uses
- * top-level await. That's safe in Next.js 15 server code and in our scripts;
- * client components never import this file (server-only by convention).
+ * After: setting `DATABASE_URL` in Vercel routes the 4 user-touching
+ * tables to a real Postgres while keeping the entire visa catalogue
+ * on the zero-config PGlite snapshot path. No DATABASE_URL = current
+ * behaviour for backwards compatibility; preview deploys + local dev
+ * keep working unchanged.
+ *
+ * TO ACTIVATE
+ * ───────────
+ * 1. Sign up for Neon (https://neon.tech) / Supabase / Vercel Postgres.
+ * 2. Copy the connection string.
+ * 3. Vercel → Project Settings → Environment Variables → add
+ *    `DATABASE_URL` = the connection string. Apply to Production +
+ *    Preview if you want writes to persist on preview branches.
+ * 4. First deploy will auto-run the Drizzle migrations against the new
+ *    DB (see migrate.ts) and create the 4 user tables.
+ * 5. Watchlists + accounts now persist.
+ *
+ * No code changes needed; this file already detects DATABASE_URL.
  */
 import { drizzle as drizzlePg } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
@@ -22,29 +50,13 @@ import * as schema from "./schema";
 
 type DrizzleDb = ReturnType<typeof drizzlePg<typeof schema>>;
 
-async function buildDb(): Promise<DrizzleDb> {
-  const url = process.env.DATABASE_URL;
-  if (url) {
-    const client = postgres(url, { prepare: false });
-    return drizzlePg(client, { schema }) as DrizzleDb;
-  }
+/** True when a managed Postgres is configured for user-data writes. */
+export const hasManagedUserPostgres = !!process.env.DATABASE_URL;
 
-  // No DATABASE_URL → PGlite fallback.
-  //
-  // Two modes:
-  //
-  //  - **Local dev** (no Vercel env): persistent filesystem PGlite at
-  //    ./.pglite/data. Data survives `npm run dev` restarts. Bootstrap is a
-  //    one-time `npm run bootstrap`.
-  //
-  //  - **Vercel / serverless** (VERCEL=1 env): memory-mode PGlite, seeded
-  //    on cold start from the bundled snapshot at src/data/pglite-dump.tar.gz
-  //    (~24 MB compressed, ~96 MB live). This lets the entire site run with
-  //    no external database — all data is committed into the repo via the
-  //    snapshot, generated locally by `npm run bootstrap && npm run db:snapshot`.
-  //
-  //    The snapshot path is referenced via require.resolve so Next.js's file
-  //    tracer includes it in the function bundle.
+async function buildVisaDb(): Promise<DrizzleDb> {
+  // Visa data ALWAYS comes from PGlite — even when DATABASE_URL is set,
+  // we keep visa lookups on the zero-cost snapshot path. The managed
+  // Postgres is reserved for write-heavy user tables only.
   const { PGlite } = await import("@electric-sql/pglite");
   const { drizzle: drizzlePglite } = await import("drizzle-orm/pglite");
 
@@ -54,9 +66,6 @@ async function buildDb(): Promise<DrizzleDb> {
   if (isServerless) {
     const { readFileSync } = await import("node:fs");
     const path = await import("node:path");
-    // The dump path is resolved relative to the running file. Next.js's file
-    // tracer reads `process.cwd()/src/data/...` paths reliably in App-Router
-    // server modules.
     const dumpPath = path.join(process.cwd(), "src/data/pglite-dump.tar.gz");
     try {
       const buf = readFileSync(dumpPath);
@@ -87,6 +96,24 @@ async function buildDb(): Promise<DrizzleDb> {
   return drizzlePglite(pg, { schema }) as unknown as DrizzleDb;
 }
 
-// Top-level await: resolved before any consumer can import `db`.
-export const db: DrizzleDb = await buildDb();
+async function buildUserDb(visaDbFallback: DrizzleDb): Promise<DrizzleDb> {
+  // When a managed Postgres is configured (DATABASE_URL), use it for the
+  // 4 user-touching tables. Writes persist across serverless instance
+  // recycles, which is the core point of this split.
+  const url = process.env.DATABASE_URL;
+  if (url) {
+    const client = postgres(url, { prepare: false });
+    return drizzlePg(client, { schema }) as DrizzleDb;
+  }
+  // No DATABASE_URL → fall back to the same PGlite the visa data uses.
+  // This keeps local dev + preview branches working without forcing
+  // every contributor to provision Postgres credentials. The known
+  // limitation (writes lost on serverless instance recycle) re-applies
+  // here — but that's the existing behaviour, not a regression.
+  return visaDbFallback;
+}
+
+// Top-level await: resolved before any consumer can import these exports.
+export const db: DrizzleDb = await buildVisaDb();
+export const userDb: DrizzleDb = await buildUserDb(db);
 export { schema };

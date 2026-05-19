@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { db, schema } from "@/db/client";
+// User reports write to userReports table — route via userDb so reports
+// persist across serverless instance recycles when DATABASE_URL is set.
+import { userDb as db, schema } from "@/db/client";
 
 const Body = z.object({
   visaOptionId: z.number().int().nullish(),

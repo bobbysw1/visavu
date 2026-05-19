@@ -14,7 +14,10 @@
  * Auth: Bearer CRON_SECRET, same as /api/cron/refresh.
  */
 import type { NextRequest } from "next/server";
-import { db, schema } from "@/db/client";
+// Mixed cron: reads visa_options (visa-data PGlite) AND reads/writes
+// watchlistSubscriptions + notificationEvents (user-data Postgres when
+// DATABASE_URL is set). Import both clients and route per-query.
+import { db, userDb, schema } from "@/db/client";
 import { and, eq, isNull, sql } from "drizzle-orm";
 import type { Purpose } from "@/lib/types";
 
@@ -89,7 +92,9 @@ export async function GET(request: NextRequest) {
         .limit(1);
       if (passport.length === 0) continue;
 
-      const subs = await db
+      // Subscriptions + notifications live in user-data Postgres (userDb)
+      // when DATABASE_URL is set, so writes survive Vercel function recycles.
+      const subs = await userDb
         .select({ id: schema.watchlistSubscriptions.id, userId: schema.watchlistSubscriptions.userId })
         .from(schema.watchlistSubscriptions)
         .where(
@@ -102,7 +107,7 @@ export async function GET(request: NextRequest) {
       summary.matchedSubscriptions += subs.length;
 
       for (const sub of subs) {
-        await db.insert(schema.notificationEvents).values({
+        await userDb.insert(schema.notificationEvents).values({
           userId: sub.userId,
           subscriptionId: sub.id,
           kind: "rule_change",

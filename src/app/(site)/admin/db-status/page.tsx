@@ -38,24 +38,27 @@ async function tryReadWrite(): Promise<{ writable: boolean; message: string }> {
 
 function detectDriver(): { driver: string; persistent: boolean; description: string } {
   const url = process.env.DATABASE_URL;
+  // Dual-DB now: visa data ALWAYS comes from PGlite snapshot; user-write
+  // tables (users / watchlists / alerts / reports) route to managed
+  // Postgres when DATABASE_URL is set, otherwise share the PGlite path.
   if (url) {
     return {
-      driver: "postgres-js → managed Postgres",
+      driver: "PGlite (visa data) + postgres-js (user data)",
       persistent: true,
-      description: `DATABASE_URL is set. User writes persist across function invocations and cold starts. Connection: ${url.replace(/:[^@]+@/, ":***@")}`,
+      description: `Visa catalogue served from snapshot for fast cold-start. User writes routed to managed Postgres at ${url.replace(/:[^@]+@/, ":***@")} — accounts + watchlists persist across function recycles.`,
     };
   }
   if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
     return {
-      driver: "PGlite (memory mode, snapshot-loaded)",
+      driver: "PGlite (memory mode, snapshot-loaded) — no managed Postgres",
       persistent: false,
-      description: "Running on serverless. Reads from src/data/pglite-dump.tar.gz on cold start. WRITES DO NOT PERSIST — they're lost when the function instance recycles. User accounts will appear to work mid-session but reset randomly. See docs/POSTGRES_SETUP.md to fix.",
+      description: "Visa catalogue reads work normally (snapshot). User writes (accounts, watchlists, alerts, reports) DO NOT PERSIST — set DATABASE_URL in Vercel to route those to a managed Postgres (Neon free tier is plenty). The site otherwise functions; only signed-in features need persistence.",
     };
   }
   return {
     driver: "PGlite (filesystem mode, ./.pglite/data)",
     persistent: true,
-    description: "Local development. Writes persist to ./.pglite/data on disk.",
+    description: "Local development. All data persists to ./.pglite/data on disk — no DATABASE_URL needed unless you want to test the managed-Postgres path.",
   };
 }
 

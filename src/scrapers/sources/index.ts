@@ -12,6 +12,9 @@ import { auSubclass601Adapter } from "./au_subclass_601";
 import { australiaEvisitorAdapter } from "./au_evisitor";
 import { caExpressEntryAdapter } from "./ca_express_entry";
 import { canadaEtaAdapter } from "./ca_eta";
+// Closes 6 CA-outbound tourism gaps surfaced by audit/AUDIT_2026-05-19.md
+// (CA → CN/TH/IN/BR/ZA/KR).
+import { canadaOutboundTourismAdapter } from "./ca_outbound_tourism";
 import { schengenShortStayAdapter } from "./schengen_short_stay";
 import { ecowasFreeMovementAdapter } from "./ecowas_free_movement";
 import { caricomCsmeAdapter } from "./caricom_csme";
@@ -121,6 +124,15 @@ import {
   spainVisaCategoriesAdapter,
   germanyVisaCategoriesAdapter,
 } from "./destination_categories_batch2";
+// Batch-3: next round of top destinations with thin coverage.
+import {
+  portugalVisaCategoriesAdapter,
+  canadaVisaCategoriesAdapter,
+  vietnamVisaCategoriesAdapter,
+  newZealandVisaCategoriesAdapter,
+  switzerlandVisaCategoriesAdapter,
+  israelVisaCategoriesAdapter,
+} from "./destination_categories_batch3";
 
 // Central registry. New adapters get appended here and inherit the scheduler,
 // diffing, and confidence pipeline for free.
@@ -138,6 +150,7 @@ export const ADAPTERS: Adapter[] = [
   australiaEvisitorAdapter,
   caExpressEntryAdapter,
   canadaEtaAdapter,
+  canadaOutboundTourismAdapter,
   germanyBlueCardAdapter,
   jpSpecifiedSkilledWorkerAdapter,
   japanShortStayAdapter,
@@ -214,6 +227,12 @@ export const ADAPTERS: Adapter[] = [
   indonesiaVisaCategoriesAdapter,
   spainVisaCategoriesAdapter,
   germanyVisaCategoriesAdapter,
+  portugalVisaCategoriesAdapter,
+  canadaVisaCategoriesAdapter,
+  vietnamVisaCategoriesAdapter,
+  newZealandVisaCategoriesAdapter,
+  switzerlandVisaCategoriesAdapter,
+  israelVisaCategoriesAdapter,
 ];
 
 export function adapterById(id: string): Adapter | undefined {

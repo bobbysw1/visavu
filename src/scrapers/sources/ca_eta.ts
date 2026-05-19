@@ -22,14 +22,36 @@ const CA_ETA_NATIONALITIES: string[] = [
   "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR",
   "HU", "IS", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "NL", "NO", "PL",
   "PT", "RO", "SK", "SI", "ES", "SE", "CH",
-  // Visa-exempt outside EU (PT already listed in EU block above — duplicate
-  // removed). MX: as of 29 February 2024 IRCC reinstated visa requirements
-  // for most Mexican nationals; only Mexicans with a valid US non-immigrant
-  // visa or prior Canadian visa in the past 10 years remain eTA-eligible.
-  // We keep MX in the default-eligible list — the conditional caveat is
-  // surfaced in the record's `notes` field below.
+  // Visa-exempt outside EU. MX: as of 29 February 2024 IRCC reinstated visa
+  // requirements for most Mexican nationals; only Mexicans with a valid US
+  // non-immigrant visa or prior Canadian visa in the past 10 years remain
+  // eTA-eligible. Keep MX in the default-eligible list — the conditional
+  // caveat is surfaced in the record's `notes` field below.
   "AD", "AU", "BS", "BB", "BR", "BN", "CL", "GB", "HK", "IL", "JP", "KR",
   "MX", "MC", "NZ", "PA", "SM", "SG", "VA", "TW", "AE",
+  // ── 2017+ additions to Canada's eTA visa-exempt program ──
+  // (audit/AUDIT_2026-05-19.md flagged MY → CA as embassy_visa, fact-check
+  //  on canada.ca/eta says these countries got eTA-eligible 2017+.)
+  "MY", // Malaysia — added June 2017
+  "AR", // Argentina — added 2017
+  "CR", // Costa Rica — added 2017
+  "AG", // Antigua & Barbuda — added 2018
+  "TT", // Trinidad & Tobago — added 2017
+  "VC", // St. Vincent & the Grenadines — added 2018
+  "LC", // St. Lucia — added 2018
+  "DM", // Dominica — added 2018 (note: CIP-passport-holders excluded — separate condition)
+  "KN", // St. Kitts & Nevis — added 2018 (CIP-passport-holders excluded)
+  "MS", // Montserrat — eligible under British Overseas Territory rules
+  // PH (Philippines) — CONDITIONAL eTA since Sept 2023: requires holder to
+  // also have a valid US non-immigrant visa or prior Canadian visa within
+  // 10 years. Excluded from the unconditional list because most PH applicants
+  // don't meet that condition; they still need a TRV (embassy visa). The
+  // conditional case is surfaced in the CA visa-categories adapter's notes.
+  "GD", // Grenada — added 2024 (CIP-passport-holders excluded)
+  "SR", // Suriname — added 2018
+  "PA", // Panama — already above; kept for clarity
+  // BG + RO + CY were promoted from "conditional eTA" (visa-exempt with US
+  // visa requirement) to full eTA-eligible 2017+, already in EU block above.
 ];
 
 export const canadaEtaAdapter: Adapter = {

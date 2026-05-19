@@ -147,6 +147,86 @@ const CORRECTIONS: Correction[] = [
     notes: "Malaysia is a Visa Waiver Program designated country (designated 1999). $21 ESTA fee. Approval typically within 72 hours; valid 2 years for multiple short visits up to 90 days each. Cannot extend stay or change status while in US.",
     verifiedAt: "2025-04-15",
   },
+  // ─────────── SG → BR ───────────
+  // Wikipedia showed 30 days; verified Singapore-Brazil bilateral grants 90.
+  {
+    passport: "SG",
+    destination: "BR",
+    purpose: "tourism",
+    status: "visa_free",
+    label: "Visa-free",
+    maxStayDays: 90,
+    requirements: [
+      "Singaporean passport valid 6+ months beyond arrival",
+      "Onward / return ticket evidence",
+      "Sufficient funds for the stay",
+      "Yellow Fever vaccination recommended (mandatory for some Brazilian states)",
+    ],
+    applicationUrl: "https://www.gov.br/mre/en-us/consular-portal/visas/",
+    primarySourceUrl: "https://www.gov.br/mre/en-us/consular-portal/visas/",
+    notes: "Singapore-Brazil bilateral visa-exemption agreement grants 90-day stays (signed 2010, current as of 2025). Confirmed via Itamaraty + Embassy of Singapore in Brasília. Wikipedia row of 30 days was stale.",
+    verifiedAt: "2025-05-19",
+  },
+  // ─────────── TR → ZA ───────────
+  // Wikipedia showed 30 days; SA grants 90 days for Turkish passport-holders.
+  {
+    passport: "TR",
+    destination: "ZA",
+    purpose: "tourism",
+    status: "visa_free",
+    label: "Visa-free",
+    maxStayDays: 90,
+    requirements: [
+      "Turkish passport valid 30+ days beyond intended departure, with 2 blank pages",
+      "Onward / return ticket within 90 days",
+      "Sufficient funds for the stay",
+      "Yellow Fever vaccination if travelling from/through an endemic country",
+    ],
+    applicationUrl: "https://www.dha.gov.za/",
+    primarySourceUrl: "https://www.dha.gov.za/",
+    notes: "South Africa grants Turkish citizens 90-day visa-free entry (since 2017 bilateral agreement). Wikipedia row of 30 days was stale.",
+    verifiedAt: "2025-05-19",
+  },
+  // ─────────── ID → CN ───────────
+  // Wikipedia/data shows visa_free but Indonesia is NOT on the standard
+  // China Nov 2024 expansion list (~40 mostly EU + ASEAN+1 countries).
+  // Indonesian citizens need an L visa.
+  {
+    passport: "ID",
+    destination: "CN",
+    purpose: "tourism",
+    status: "embassy_visa",
+    label: "Visa-free",
+    maxStayDays: null,
+    requirements: [
+      "DATA CORRECTION: Indonesia is NOT on China's standard 30-day visa-free list (Nov 2024 expansion covers most EU + select Asia-Pacific, not ID).",
+      "Apply for an L visa at the Chinese embassy in Jakarta or Surabaya consulate",
+    ],
+    applicationUrl: "https://www.fmprc.gov.cn/eng/",
+    primarySourceUrl: "https://www.fmprc.gov.cn/eng/",
+    notes: "Indonesian citizens need a standard L visa for China. The Nov 2024 mutual visa-exemption expansion covered EU member states + Australia + NZ + Japan + Korea + Singapore + UAE etc. — Indonesia not on the list as of 2025. Verified via Chinese MFA.",
+    verifiedAt: "2025-05-19",
+  },
+  // ─────────── ID → ZA ───────────
+  // Wikipedia had no tourism row at all; Indonesia gets 30 days visa-free.
+  {
+    passport: "ID",
+    destination: "ZA",
+    purpose: "tourism",
+    status: "visa_free",
+    label: "Visa-free 30 days — South Africa",
+    maxStayDays: 30,
+    requirements: [
+      "Indonesian passport valid 30+ days beyond intended departure, with 2 blank pages",
+      "Onward / return ticket within 30 days",
+      "Sufficient funds for the stay",
+      "Yellow Fever vaccination if travelling from/through an endemic country",
+    ],
+    applicationUrl: "https://www.dha.gov.za/",
+    primarySourceUrl: "https://www.dha.gov.za/",
+    notes: "South Africa grants Indonesian citizens 30-day visa-free entry. Confirmed via dha.gov.za. Wikipedia tourism row was missing entirely.",
+    verifiedAt: "2025-05-19",
+  },
 ];
 
 export const dataCorrectionsAdapter: Adapter = {

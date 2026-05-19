@@ -8,7 +8,7 @@
  * intentionally text-light so the photos dominate. Per-image attribution
  * still lives on each <PassportCover> via its `title` hover tooltip.
  */
-import { passportCoverIsos, getPassportCover } from "@/lib/passportCovers";
+import { verifiedPassportCoverIsos, getPassportCover } from "@/lib/passportCovers";
 import { PassportCover } from "./PassportCover";
 
 export function PassportCollage({
@@ -18,7 +18,12 @@ export function PassportCollage({
    *  full set. */
   limit?: number;
 }) {
-  const isos = limit ? passportCoverIsos().slice(0, limit) : passportCoverIsos();
+  // verifiedPassportCoverIsos() = manifest entries − collage blocklist −
+  // non-issuing territories. Better to show fewer real passport covers
+  // than a grid where some tiles are entry stamps, peacekeepers, or
+  // unrelated photos. See COLLAGE_BLOCKED_ISOS in lib/passportCovers.
+  const all = verifiedPassportCoverIsos();
+  const isos = limit ? all.slice(0, limit) : all;
   if (isos.length === 0) return null;
 
   return (
@@ -40,5 +45,5 @@ export function PassportCollage({
 /** Number of passports currently in the collage. Use this for honest
  *  count copy ("146 passports", not "every passport in the world"). */
 export function passportCollageCount(): number {
-  return passportCoverIsos().length;
+  return verifiedPassportCoverIsos().length;
 }

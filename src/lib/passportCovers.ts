@@ -52,6 +52,19 @@ function toCover(entry: ManifestEntry): PassportCover {
 }
 
 export function getPassportCover(iso2: string): PassportCover | null {
+  const upper = iso2.toUpperCase();
+  // Blocklisted entries return null so any consumer (collage, rankings,
+  // sidebar, pair-page hero) falls back to the styled flag tile rather
+  // than rendering a non-passport-cover photo. See COLLAGE_BLOCKED_ISOS.
+  if (COLLAGE_BLOCKED_ISOS.has(upper)) return null;
+  const entry = loadManifest()[upper];
+  return entry ? toCover(entry) : null;
+}
+
+/** Same as getPassportCover but bypasses the blocklist — used by the
+ *  /admin/* surfaces that want to see the manifest as-is for audit
+ *  purposes. Public-facing renders should always use getPassportCover. */
+export function getPassportCoverRaw(iso2: string): PassportCover | null {
   const entry = loadManifest()[iso2.toUpperCase()];
   return entry ? toCover(entry) : null;
 }
@@ -61,4 +74,60 @@ export function getPassportCover(iso2: string): PassportCover | null {
  *  predictable order. */
 export function passportCoverIsos(): string[] {
   return Object.keys(loadManifest()).sort();
+}
+
+/**
+ * Manifest entries whose underlying image was confirmed to NOT be a
+ * passport cover — entry/exit stamps, peacekeeper photos, ceremony
+ * shots, random tourist photos that were uploaded to Wikimedia under
+ * a country-name file. Mali was "British Peacekeepers in Mali"; Bhutan
+ * was "Lhotshampa refugees"; Lesotho/Mayotte/Niue/Solomon Is/etc
+ * were entry stamps; Palau was a Royal Navy ship.
+ *
+ * These files still exist (the country page still links to them as a
+ * placeholder hero) but the collage grid filters them out — better to
+ * show fewer real passport covers than a grid where 12% of tiles are
+ * unrelated photos. To restore an iso, replace its file in
+ * public/passports/ with an actual passport cover (rasterised JPEG)
+ * then remove the iso from this set.
+ *
+ * Audited 2026-05-20 by inspecting commonsFile filenames for known
+ * non-passport keywords (stamp / entry / exit / peacekeepers /
+ * refugees / ceremony / kazungula / zanzibar / etc).
+ */
+const COLLAGE_BLOCKED_ISOS: ReadonlySet<string> = new Set([
+  // Definitely-not-passport photos
+  "BT", "BW", "ML", "NR", "PW", "VI", "ZM",
+  // Entry / exit / arrival stamp scans (not the cover)
+  "AW", "BL", "BS", "CW", "FJ", "GF", "GM", "GP", "GQ", "HT", "LS",
+  "MQ", "NC", "NU", "PF", "PM", "RE", "SB", "SR", "TO", "YT",
+  // Non-issuing territories that share their parent's image (Australian
+  // R-series cover reused for Cocos / Christmas / Norfolk; NZ ceremony
+  // photo reused for Cook Islands / Tokelau). Grid should show the
+  // parent (AU/NZ) once, not the dependent territories.
+  "CC", "CX", "NF", "CK", "TK",
+  // Other low-confidence (filename suggests not a real cover)
+  "BZ", // Belize — only a generic "Belize.webp" stub
+]);
+
+/**
+ * ISO2s that show a real passport cover in the homepage / rankings
+ * collage. = (manifest entries) − (blocklist above) − (non-issuing
+ * territories per PARENT_PASSPORT). Used by PassportCollage +
+ * passport-rankings grid; per-passport hero photos elsewhere on the
+ * site still pull from the full manifest (the country page's existing
+ * fallback rendering handles missing/wrong images gracefully).
+ */
+export function verifiedPassportCoverIsos(): string[] {
+  // Inline the non-issuing-territory set to avoid a circular import
+  // through lib/countries. Matches PARENT_PASSPORT keys in countries.ts.
+  const NON_ISSUING = new Set([
+    "AW", "CW", "SX", "BQ", "GP", "MQ", "GF", "RE", "YT", "PM", "WF",
+    "NC", "PF", "BL", "MF", "FO", "GL", "AX", "CC", "CX", "NF", "SJ",
+    "AS", "GU", "MP", "PR", "VI", "CK", "NU", "TK", "PN", "AI", "BM",
+    "KY", "VG", "MS", "TC", "FK", "SH", "JE", "GG", "IM",
+  ]);
+  return Object.keys(loadManifest())
+    .filter((iso) => !COLLAGE_BLOCKED_ISOS.has(iso) && !NON_ISSUING.has(iso))
+    .sort();
 }

@@ -163,4 +163,97 @@ describe("assessDifficulty", () => {
     expect(a.reasons.length).toBeGreaterThan(0);
     expect(a.reasons[0].text).toMatch(/visa-free/i);
   });
+
+  // ── Regression: GB → BZ "Qualified Retired Persons" was scoring 9/10 ──
+  // because every doc-burden modifier stacked on top of a base 6 embassy_visa.
+  // A British retiree on Belize's QRP programme is doing PAPERWORK, not facing
+  // case-by-case consular scrutiny. Should land in medium (5–6), capped at 7.
+  it("does not over-score retirement routes for strong-passport applicants (GB→BZ QRP regression)", () => {
+    const a = assessDifficulty(
+      baseOption({
+        status: "embassy_visa",
+        purpose: "family",
+        label: "Qualified Retired Persons (QRP) Programme — retirement residence",
+        processingTimeDaysMin: 30,
+        processingTimeDaysMax: 90,
+        biometricsRequired: true,
+        proofOfFundsRequired: true,
+        proofOfAccommodationRequired: true,
+        requirements: [
+          "Aged 45+",
+          "Monthly pension/passive income ≥ USD 2,000",
+          "Background check",
+          "Birth certificate",
+          "Marriage certificate (if applicable)",
+          "Medical certificate",
+          "Police clearance",
+          "Application fee",
+        ],
+      }),
+      "visa_free", // GB → BZ tourism baseline
+    );
+    expect(a.score).toBeLessThanOrEqual(7);
+    // 7 is the bottom of "hard" — accepted; the regression was scores at 9–10.
+  });
+
+  it("Spain Non-Lucrative Visa for UK retiree caps at 7", () => {
+    const a = assessDifficulty(
+      baseOption({
+        status: "embassy_visa",
+        purpose: "family",
+        label: "Non-Lucrative Visa (NLV)",
+        processingTimeDaysMax: 90,
+        biometricsRequired: true,
+        proofOfFundsRequired: true,
+        proofOfAccommodationRequired: true,
+        requirements: ["Income proof €30k+", "Health insurance", "Criminal record", "Medical", "Apostille"],
+      }),
+      "visa_free", // GB → ES tourism baseline (post-Brexit ETIAS but still visa-free)
+    );
+    expect(a.score).toBeLessThanOrEqual(7);
+  });
+
+  // Same retirement route but applicant has a weak baseline (e.g. Nigerian to
+  // Spain NLV) — strong-passport cap MUST NOT apply, score legitimately hard.
+  it("retirement route from weak-baseline passport still scores hard", () => {
+    const a = assessDifficulty(
+      baseOption({
+        status: "embassy_visa",
+        purpose: "family",
+        label: "Non-Lucrative Visa (NLV)",
+        processingTimeDaysMax: 90,
+        biometricsRequired: true,
+        proofOfFundsRequired: true,
+        proofOfAccommodationRequired: true,
+        requirements: ["Income proof €30k+", "Health insurance", "Criminal record", "Medical", "Apostille"],
+      }),
+      "embassy_visa", // NG → ES tourism baseline (visa required)
+    );
+    // No strong-passport cap; should score genuinely-hard territory.
+    expect(a.score).toBeGreaterThanOrEqual(6);
+  });
+
+  it("skilled-work route can still hit 8 even for strong-passport applicants", () => {
+    const a = assessDifficulty(
+      baseOption({
+        status: "embassy_visa",
+        purpose: "work",
+        label: "Skilled Worker visa",
+        processingTimeDaysMax: 60,
+        biometricsRequired: true,
+        proofOfFundsRequired: true,
+        requirements: Array(10).fill("doc"),
+        purposeMetadata: {
+          sponsorshipRequired: true,
+          jobOfferRequired: true,
+          salaryThresholdMinor: 38_700_00,
+          salaryCurrency: "GBP",
+          routeToSettlement: true,
+        },
+      }),
+      "visa_free", // strong baseline — but skilled work is still genuinely hard
+    );
+    expect(a.score).toBeGreaterThanOrEqual(6);
+    expect(a.score).toBeLessThanOrEqual(8); // capped at 8 for skilled work
+  });
 });

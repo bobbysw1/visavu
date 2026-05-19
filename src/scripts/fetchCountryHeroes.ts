@@ -25,6 +25,14 @@ import { COUNTRY_LIST, nameFor } from "../lib/countries";
 const HEROES_DIR = path.resolve(process.cwd(), "public/heroes");
 const MANIFEST_PATH = path.resolve(HEROES_DIR, "manifest.json");
 const FORCE = process.argv.includes("--force");
+// --iso=BZ or --iso=BZ,GT,HN  → only fetch listed countries (re-runs the
+// curated query, useful when a single result was wrong).
+const ISO_FILTER: Set<string> | null = (() => {
+  const arg = process.argv.find((a) => a.startsWith("--iso="));
+  if (!arg) return null;
+  const list = arg.slice("--iso=".length).split(",").map((s) => s.trim().toUpperCase()).filter(Boolean);
+  return list.length > 0 ? new Set(list) : null;
+})();
 
 /**
  * Curated landmark queries — each country mapped to its single most-iconic
@@ -59,7 +67,10 @@ const QUERY_OVERRIDES: Record<string, string> = {
   BB: "Bridgetown Garrison Barbados",
   BY: "Mir Castle Belarus",
   BE: "Grand Place Brussels",
-  BZ: "Great Blue Hole Belize",
+  // Pexels' "Great Blue Hole" was returning a generic ship's-porthole photo
+  // because "hole" is a strong keyword. Anchor on Caribbean reef + Belize-
+  // specific terms instead.
+  BZ: "Caye Caulker Belize Caribbean beach",
   BJ: "Royal Palaces Abomey Benin",
   BT: "Tiger's Nest Monastery Bhutan",
   BO: "Salar de Uyuni Bolivia",
@@ -407,7 +418,11 @@ async function main() {
   // plus image-download time.
   const PACE_MS = 220;
   const all = COUNTRY_LIST.map((c) => c.iso2);
-  const todo = FORCE ? all : all.filter((iso) => !manifest[iso]);
+  let todo = FORCE ? all : all.filter((iso) => !manifest[iso]);
+  if (ISO_FILTER) {
+    todo = all.filter((iso) => ISO_FILTER.has(iso));
+    console.log(`--iso filter active: refetching ${todo.join(", ")}`);
+  }
 
   console.log(`Fetching ${todo.length} country heroes (${manifest && Object.keys(manifest).length} already cached)…`);
 

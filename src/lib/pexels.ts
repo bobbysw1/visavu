@@ -62,7 +62,27 @@ function loadManifest(): Manifest {
   }
 }
 
-function entryToPhoto(entry: ManifestEntry): CountryPhoto {
+/** Alt-text patterns that signal Pexels returned a generic / non-landmark
+ *  match (e.g. "Great Blue Hole Belize" returning a ship's-porthole photo).
+ *  When matched we treat the entry as missing — better to show the gradient
+ *  hero than a wrong-country image. The fetcher should be re-run with a
+ *  refined query for the affected ISO via `--iso=BZ`. */
+const BAD_ALT_PATTERNS = [
+  /\bporthole\b/i,
+  /\bship'?s?\s+vent\b/i,
+  /\bmetal\s+hook\b/i,
+  /\bstock\s+image\b/i,
+  /\babstract\b/i,
+  /\bclose[-\s]?up of (a |an )?(metal|industrial|machine)/i,
+];
+
+function isPlausibleLandmark(alt: string): boolean {
+  if (!alt || alt.length < 6) return false;
+  return !BAD_ALT_PATTERNS.some((re) => re.test(alt));
+}
+
+function entryToPhoto(entry: ManifestEntry): CountryPhoto | null {
+  if (!isPlausibleLandmark(entry.alt)) return null;
   return {
     url: entry.file,
     alt: entry.alt,
@@ -82,3 +102,6 @@ export function getCountryPhotoSync(iso2: string): CountryPhoto | null {
   const entry = loadManifest()[iso2.toUpperCase()];
   return entry ? entryToPhoto(entry) : null;
 }
+
+/** Test-only export so we can regression-test the alt-text gate. */
+export const _internal = { isPlausibleLandmark };

@@ -32,21 +32,35 @@ export type DifficultyBucket = "easy" | "medium" | "hard";
 // from scratch under heightened review (more difficulty).
 //
 // `baseline` is the applicant passport's TOURISM access to the destination.
-function baselineDifficultyModifier(baseline: VisaStatus | null): {
-  delta: number;
-  text: string | null;
-} {
+//
+// `purpose` matters: for skilled-work (sponsor required, salary threshold) the
+// passport baseline is a small modifier — the route is hard regardless. For
+// retirement / family / study, the baseline drives most of the friction (a UK
+// retiree going to Belize on the QRP programme is doing PAPERWORK, not facing
+// case-by-case consular scrutiny like an Afghan would).
+function baselineDifficultyModifier(
+  baseline: VisaStatus | null,
+  purpose: ResolvedVisaOption["purpose"],
+): { delta: number; text: string | null } {
   if (!baseline) return { delta: 0, text: null };
+  // Skilled-work routes are gated by the EMPLOYER, not the passport baseline.
+  // Use a smaller modifier so they don't undershoot vs reality.
+  const isSkilledWork = purpose === "work";
   switch (baseline) {
     case "visa_free":
     case "visa_free_with_eta":
     case "visa_on_arrival":
       return {
-        delta: -1,
-        text: "Strong baseline access — visa-free tourism eases the application footprint",
+        delta: isSkilledWork ? -1 : -2,
+        text: isSkilledWork
+          ? "Strong baseline access — visa-free tourism eases the application footprint"
+          : "Strong passport — visa-free tourism baseline materially eases the long-stay process",
       };
     case "e_visa":
-      return { delta: -0.5, text: "Mid-strength baseline — e-Visa eligibility on tourism" };
+      return {
+        delta: isSkilledWork ? -0.5 : -1,
+        text: "Mid-strength baseline — e-Visa eligibility on tourism",
+      };
     case "embassy_visa":
       return { delta: 0, text: null };
     case "restricted":
@@ -60,6 +74,17 @@ function baselineDifficultyModifier(baseline: VisaStatus | null): {
         text: "Entry generally refused at baseline — long-stay routes correspondingly harder",
       };
   }
+}
+
+/** A retirement / passive-income / pensioner / digital-nomad route by label.
+ *  These visas have "proof of funds" + "long requirement list" as TABLE STAKES,
+ *  not as friction signals. Suppressing those penalties keeps a UK→Belize QRP
+ *  route from scoring 9 ("hard") when it's really an admin-heavy 5–6 ("medium"). */
+function isPassiveOrRetirementRoute(option: ResolvedVisaOption): boolean {
+  const label = option.label.toLowerCase();
+  return /\b(retire|retirement|pensionado|pensioner|rentista|rentier|passive\s*income|qualified retired|d7\b|second home|elective residence|non[\s-]?lucrative|nlv\b|financially independent|long[\s-]?stay visitor|digital nomad|nomad residence|welcome stamp|remote\s*work|long[\s-]?term resident|ltr\b|premium visa|mm2h|de rantau|workcation|self[\s-]?sufficient)/i.test(
+    label,
+  );
 }
 
 export type DifficultyAssessment = {
@@ -103,12 +128,17 @@ export function assessDifficulty(
   // (For tourism we already use the matching status as the base; layering the
   // baseline on top would double-count.)
   if (option.purpose !== "tourism") {
-    const mod = baselineDifficultyModifier(baselineTourismStatus);
+    const mod = baselineDifficultyModifier(baselineTourismStatus, option.purpose);
     if (mod.delta !== 0 && mod.text) {
       score += mod.delta;
       reasons.push({ delta: mod.delta, text: mod.text });
     }
   }
+
+  // Retirement / passive-income / digital-nomad routes have proof-of-funds +
+  // long-doc-list as the WHOLE POINT of the route — it's table stakes, not
+  // friction. Mark them so the document-burden penalties below are softened.
+  const isPassive = isPassiveOrRetirementRoute(option);
 
   // Processing time penalty (only applies for non-instant statuses).
   const procMax = option.processingTimeDaysMax;
@@ -125,28 +155,36 @@ export function assessDifficulty(
     }
   }
 
-  // Document burden — each "yes" requirement adds friction.
+  // Document burden — each "yes" requirement adds friction. Suppressed for
+  // passive-income / retirement routes where proof-of-funds + proof-of-
+  // accommodation are table stakes (the whole route purpose), not surprise.
+  const fundsPenalty = isPassive ? 0 : 0.5;
+  const accomPenalty = isPassive ? 0 : 0.5;
   const docPenalties: Array<[boolean | null, string, number]> = [
     [option.onwardTicketRequired, "Onward / return ticket required", 0.25],
-    [option.proofOfFundsRequired, "Proof of funds required", 0.5],
-    [option.proofOfAccommodationRequired, "Proof of accommodation required", 0.5],
+    [option.proofOfFundsRequired, "Proof of funds required", fundsPenalty],
+    [option.proofOfAccommodationRequired, "Proof of accommodation required", accomPenalty],
     [option.biometricsRequired, "Biometrics appointment required", 0.5],
   ];
   for (const [flag, label, delta] of docPenalties) {
-    if (flag) {
+    if (flag && delta > 0) {
       score += delta;
       reasons.push({ delta, text: label });
     }
   }
 
-  // Long requirement lists raise complexity.
+  // Long requirement lists raise complexity — but for retirement / passive-
+  // income routes the long list IS the route, so halve the penalty.
   const reqs = option.requirements?.length ?? 0;
+  const reqMul = isPassive ? 0.5 : 1;
   if (reqs >= 7) {
-    score += 1;
-    reasons.push({ delta: 1, text: `Long documentation list (${reqs} items)` });
+    const d = 1 * reqMul;
+    score += d;
+    reasons.push({ delta: d, text: `Long documentation list (${reqs} items)` });
   } else if (reqs >= 5) {
-    score += 0.5;
-    reasons.push({ delta: 0.5, text: `Moderate documentation list (${reqs} items)` });
+    const d = 0.5 * reqMul;
+    score += d;
+    reasons.push({ delta: d, text: `Moderate documentation list (${reqs} items)` });
   }
 
   // Purpose-specific difficulty modifiers.
@@ -216,6 +254,35 @@ export function assessDifficulty(
   if (option.eta && option.status !== "visa_free_with_eta") {
     score += 0.5;
     reasons.push({ delta: 0.5, text: `Companion ${option.eta.name} also required` });
+  }
+
+  // Strong-passport cap: a UK/AU/NZ/CA/JP applicant doing a routine paperwork
+  // route (retirement, family, study, business) should never score 9–10.
+  // 9–10 means "case-by-case consular scrutiny + high refusal risk" — that's
+  // the lived reality for restricted/refused baselines, NOT for visa-free-
+  // baseline passport holders applying through the destination's published
+  // long-stay programme. Reserve the top 2 cells for the genuinely-hardest
+  // pairings.
+  const strongBaseline =
+    baselineTourismStatus === "visa_free" ||
+    baselineTourismStatus === "visa_free_with_eta" ||
+    baselineTourismStatus === "visa_on_arrival";
+  if (
+    strongBaseline &&
+    option.status !== "restricted" &&
+    option.status !== "refused"
+  ) {
+    // Cap at 8 for skilled-work (sponsor + threshold legitimately hard).
+    // Cap at 7 for retirement / family / study / business (paperwork-bound,
+    // not gatekept by personal background scrutiny).
+    const cap = option.purpose === "work" ? 8 : 7;
+    if (score > cap) {
+      reasons.push({
+        delta: -(score - cap),
+        text: `Strong-passport cap — visa-free baseline keeps this in the paperwork tier (max ${cap}/10)`,
+      });
+      score = cap;
+    }
   }
 
   // Clamp to 1..10 integer.

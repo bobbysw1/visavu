@@ -18,6 +18,8 @@ import { factsFor } from "@/content/countryFacts";
 import { destinationIntroFor } from "@/content/destinationIntros";
 import { countryMythsFor } from "@/content/myths/countries";
 import { VERDICT_LABEL } from "@/content/myths";
+import { Suspense } from "react";
+import { PurposeBlockScroller } from "@/components/PurposeBlockScroller";
 import { destinationPurposeIntro } from "@/content/destinationPurposeIntros";
 import { occupationListFor } from "@/content/skilledOccupations";
 import { generateIntro as generateDestinationIntro } from "@/content/destinationIntroGenerator";
@@ -254,13 +256,18 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
             family: "Family / partner routes for",
           };
           return (
-            <section className="mt-10 space-y-6">
+            <section id="visa-routes-by-purpose" className="mt-10 space-y-6">
               <h2 className="section-h2">Visa routes by purpose</h2>
+              <Suspense fallback={null}>
+                <PurposeBlockScroller />
+              </Suspense>
               <div className="grid gap-5 md:grid-cols-2">
                 {purposeBlocks.map(({ purpose, content }) => (
                   <article
                     key={purpose}
-                    className="ink-card p-5 space-y-2"
+                    id={`purpose-${purpose}`}
+                    data-purpose-block={purpose}
+                    className="ink-card p-5 space-y-2 scroll-mt-24 transition"
                   >
                     <h3 className="kicker text-xs uppercase tracking-wider">
                       {purposeLabels[purpose as "tourism"|"work"|"study"|"family"]} {name}

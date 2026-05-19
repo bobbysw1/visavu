@@ -84,8 +84,54 @@ const GOAL_FILTERS: Record<FinderGoal, GoalFilter> = {
     purposes: ["study"],
   },
   retire: {
+    // Retirement isn't a single visa "purpose" in any country's taxonomy — it's
+    // the user-facing name for "live there off pension / passive income". The
+    // adapters store these under family / work, with the route name signalling
+    // what it actually is. We catch them by label substring so a British retiree
+    // looking for somewhere to land sees Spain NLV, Italy Elective Residence,
+    // Greece FIP, Portugal D7, Belize QRP, Mauritius PV, Thailand LTR, etc.
     purposes: ["work", "family"],
-    labelIncludes: ["retire", "rentista", "passive income", "d7", "pensionado", "qualified retired"],
+    labelIncludes: [
+      // Direct retirement / pension wording
+      "retire",
+      "pensionado",
+      "pensioner",
+      "pension visa",
+      "rentista",
+      "rentier",
+      "qualified retired",
+      "qrp",
+      "retirement",
+      // Passive income / financially independent
+      "passive income",
+      "non-lucrative",
+      "non lucrative",
+      "nlv",
+      "financially independent",
+      "elective residence",
+      "elective resident",
+      "independent means",
+      "self-sufficient",
+      "self sufficient",
+      "residencia rentista",
+      // Country-specific programmes commonly used as retirement routes
+      "d7",
+      "d-7",
+      "mm2h",
+      "my second home",
+      "long-term resident",
+      "long term resident",
+      "ltr",
+      "premium visa",
+      "second home",
+      "golden visa",
+      "permanent residency by investment",
+      "long-stay visitor",
+      "visitor long stay",
+      "long-stay tourist",
+      "visitante",
+      "visa for retirees",
+    ],
   },
   invest: {
     purposes: ["work", "family"],

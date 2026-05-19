@@ -1317,6 +1317,107 @@ const TR_CALISMA_IZNI: FormsEntry = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────
+// ITALY — Lavoro Subordinato + Study + DNV + Family Reunification
+// ─────────────────────────────────────────────────────────────────────────
+const IT_LAVORO_SUBORDINATO: FormsEntry = {
+  destinationIso2: "IT",
+  programmeLabel: "Italy — Lavoro Subordinato (Decreto Flussi employer-sponsored work)",
+  programmeSlug: "/destination/it",
+  applicationPortal: "https://www.esteri.it/en/servizi-consolari-e-visti/",
+  applicableTo: { purposes: ["work"], labelKeywords: ["lavoro subordinato", "decreto flussi", "subordinato"] },
+  forms: [
+    { code: "Nulla Osta", name: "Nulla Osta al Lavoro (work-permit authorisation)", description: "Filed by the Italian employer at the Sportello Unico per l'Immigrazione (SUI) at the Prefettura. Issued only during Decreto Flussi quota windows.", downloadUrl: "https://www.libertaciviliimmigrazione.dlci.interno.gov.it/", filedBy: "employer", stage: "before_applying", notes: "Decreto Flussi quotas open annually; allocation typically exhausted within hours. Employer must pre-register on the ALI portal." },
+    { code: "Visa application form", name: "Italian National Visa Application", description: "Filed at Italian consulate in your country of residence once Nulla Osta is issued. €116 fee.", downloadUrl: "https://www.esteri.it/en/servizi-consolari-e-visti/", filedBy: "applicant", stage: "with_application" },
+    { code: "Permesso di Soggiorno application", name: "Residence permit at Questura within 8 days of arrival", description: "Pick up the application kit at Italian Post Office, return at Questura with photo + tax stamp + medical insurance.", downloadUrl: "https://questure.poliziadistato.it/", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Decreto Flussi work-permit quota is Italy's main employer-sponsored route — heavily oversubscribed. EU Blue Card alternative available for high-skilled roles without the quota system.",
+};
+
+const IT_STUDY: FormsEntry = {
+  destinationIso2: "IT",
+  programmeLabel: "Italy — Visto Studio (Student Visa)",
+  programmeSlug: "/destination/it",
+  applicationPortal: "https://www.esteri.it/en/servizi-consolari-e-visti/",
+  applicableTo: { purposes: ["study"], labelKeywords: ["visto studio", "student visa", "studio"] },
+  forms: [
+    { code: "Pre-iscrizione (Universitaly)", name: "Pre-enrolment at Universitaly portal", description: "Required BEFORE the visa application. Apply via universitaly.it linking your accepted Italian university programme.", downloadUrl: "https://www.universitaly.it/", filedBy: "applicant", stage: "before_applying" },
+    { code: "Visa application form", name: "Italian Student Visa application", description: "Filed at Italian consulate with Universitaly confirmation + proof of funds (€467/month minimum) + accommodation + health insurance. €50 fee.", downloadUrl: "https://www.esteri.it/en/servizi-consolari-e-visti/", filedBy: "applicant", stage: "with_application" },
+    { code: "Permesso di Soggiorno per Studio", name: "Residence permit at Questura within 8 days of arrival", description: "Convert the entry visa to a 1-year residence permit at the local Questura. Renewable annually for course duration.", downloadUrl: "https://questure.poliziadistato.it/", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Italian public universities charge €0-€4,000/year for international students based on family income (ISEE Universitario). Private universities (Bocconi, LUISS, IULM) charge €10-25k/year. Work permitted 20 hrs/week during study.",
+};
+
+const IT_DIGITAL_NOMAD: FormsEntry = {
+  destinationIso2: "IT",
+  programmeLabel: "Italy — Digital Nomad Visa (Visto Nomade Digitale)",
+  programmeSlug: "/destination/it",
+  applicationPortal: "https://www.esteri.it/en/servizi-consolari-e-visti/",
+  applicableTo: { purposes: ["work"], labelKeywords: ["digital nomad", "nomade digitale", "remote worker"] },
+  forms: [
+    { code: "Visa application form", name: "Italian National Visa — Lavoro Autonomo / Nomade Digitale", description: "Filed at Italian consulate. Proof of remote employment / freelance + €28k+ annual income + health insurance. €116 fee.", downloadUrl: "https://www.esteri.it/en/servizi-consolari-e-visti/", filedBy: "applicant", stage: "with_application" },
+    { code: "Permesso di Soggiorno DNV", name: "Residence permit at Questura within 8 days of arrival", description: "Convert visa to 1-year residence permit, renewable annually.", downloadUrl: "https://questure.poliziadistato.it/", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Italian DNV launched April 2024. Income threshold €28,000/year (~3× Italian minimum income). Cannot work for Italian companies, only foreign clients. Tax: opt into the 7% flat-tax regime for new residents in southern Italian municipalities < 20k population (10-year benefit).",
+};
+
+const IT_FAMILY: FormsEntry = {
+  destinationIso2: "IT",
+  programmeLabel: "Italy — Ricongiungimento Familiare (Family Reunification)",
+  programmeSlug: "/destination/it",
+  applicationPortal: "https://www.esteri.it/en/servizi-consolari-e-visti/",
+  applicableTo: { purposes: ["family"], labelKeywords: ["ricongiungimento", "family reunification", "coesione familiare", "spouse"] },
+  forms: [
+    { code: "Nulla Osta al Ricongiungimento", name: "Authorisation for family reunification", description: "Filed by the Italian-resident sponsor at the Sportello Unico per l'Immigrazione (SUI) at the Prefettura. Required BEFORE the foreign family member can apply for a visa.", downloadUrl: "https://www.libertaciviliimmigrazione.dlci.interno.gov.it/", filedBy: "sponsor", stage: "before_applying" },
+    { code: "Visto Ricongiungimento", name: "Family reunification visa at Italian consulate", description: "Foreign family member files at Italian consulate with Nulla Osta + apostilled relationship proofs + sworn Italian translations.", downloadUrl: "https://www.esteri.it/en/servizi-consolari-e-visti/", filedBy: "applicant", stage: "with_application" },
+    { code: "Permesso di Soggiorno Coesione Familiare", name: "Family residence permit at Questura", description: "Within 8 days of arrival, apply at Questura for the 2-year family residence permit.", downloadUrl: "https://questure.poliziadistato.it/", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Italian family reunification is among the EU's most generous — covers spouse, minor children, dependent adult children, dependent parents. Sponsor must show income ≥ Italian social-assistance threshold × family size + adequate housing certified by ASL.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// BRAZIL — VITEM V employment / II business / XI family
+// ─────────────────────────────────────────────────────────────────────────
+const BR_VITEM_V_EMPLOYMENT: FormsEntry = {
+  destinationIso2: "BR",
+  programmeLabel: "Brazil — VITEM V Employment Visa",
+  programmeSlug: "/destination/br",
+  applicationPortal: "https://www.gov.br/mre/en/consular-portal/visas",
+  applicableTo: { purposes: ["work"], labelKeywords: ["vitem v", "employment visa", "trabalho"] },
+  forms: [
+    { code: "Online application (e-Consular)", name: "Brazilian e-Consular system", description: "Online via the e-Consular platform. Filed at the Brazilian consulate AFTER the Ministry of Justice (CONIG) approves the employer's residence-authorisation request.", downloadUrl: "https://www.gov.br/mre/en/consular-portal/visas/work-and-residence-visa-vitem-v", filedBy: "applicant", stage: "with_application" },
+    { code: "Autorização de Residência (CONIG)", name: "Pre-approved residence authorisation", description: "Brazilian employer files at the Ministry of Justice's National Immigration Coordination. Required BEFORE the worker can apply for the consular visa.", downloadUrl: "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/autorizacao-de-residencia", filedBy: "employer", stage: "before_applying" },
+    { code: "CRNM application", name: "Carteira de Registro Nacional Migratório (Federal Police)", description: "Foreign-resident ID card. Apply within 90 days of arrival at the local Polícia Federal office. Replaces the older RNE.", downloadUrl: "https://www.gov.br/pf/pt-br/assuntos/imigracao", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "VITEM V covers employer-sponsored work. Brazil reformed visa categories in 2017 (Lei de Migração) — simplified from 11 to 8. Mercosur nationals get a separate, simpler residency route.",
+};
+
+const BR_VITEM_II_BUSINESS: FormsEntry = {
+  destinationIso2: "BR",
+  programmeLabel: "Brazil — VITEM II Business Visa",
+  programmeSlug: "/destination/br",
+  applicationPortal: "https://www.gov.br/mre/en/consular-portal/visas",
+  applicableTo: { purposes: ["business"], labelKeywords: ["vitem ii", "business visa"] },
+  forms: [
+    { code: "Online application (e-Consular)", name: "Brazilian e-Consular system", description: "Filed online. Brazil reintroduced visa requirements for US/CA/AU in April 2025. Most other major nationalities (EU, UK, JP, KR, AR, CL) remain visa-exempt for business + tourism.", downloadUrl: "https://www.gov.br/mre/en/consular-portal/visas/business-visa-vitem-ii", filedBy: "applicant", stage: "with_application" },
+  ],
+  notes: "Multi-entry 5-year business visa for visa-required nationalities. Up to 90 days per entry, extendable +90 in-country (max 180/year). Cannot work — VITEM V required for paid employment.",
+};
+
+const BR_VITEM_XI_FAMILY: FormsEntry = {
+  destinationIso2: "BR",
+  programmeLabel: "Brazil — VITEM XI Family Reunification",
+  programmeSlug: "/destination/br",
+  applicationPortal: "https://www.gov.br/mre/en/consular-portal/visas",
+  applicableTo: { purposes: ["family"], labelKeywords: ["vitem xi", "family reunification", "reunião familiar"] },
+  forms: [
+    { code: "Autorização de Residência (Family)", name: "Pre-approved family residence authorisation", description: "Filed by the Brazilian-resident sponsor at the Federal Police for the foreign family member. Categories: spouse / stable union (união estável), parent, child, sibling.", downloadUrl: "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/autorizacao-de-residencia", filedBy: "sponsor", stage: "before_applying" },
+    { code: "VITEM XI consular application", name: "Family reunification visa", description: "Foreign family member files at Brazilian consulate after CONIG approval with apostilled relationship documents + Portuguese translations.", downloadUrl: "https://www.gov.br/mre/en/consular-portal/visas/family-reunification-visa-vitem-xi", filedBy: "applicant", stage: "with_application" },
+    { code: "CRNM application", name: "Carteira de Registro Nacional Migratório", description: "Within 90 days of arrival, register at Polícia Federal for the foreign-resident ID card.", downloadUrl: "https://www.gov.br/pf/pt-br/assuntos/imigracao", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Brazilian family reunification is generous — includes stable unions (uniões estáveis) recognised regardless of formal marriage. Permanent residence after 2 years on VITEM XI for spouses of Brazilians; naturalisation after 1 year of permanent residence + Portuguese A2.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
 // Registry export
 // ─────────────────────────────────────────────────────────────────────────
 export const VISA_FORMS: FormsEntry[] = [
@@ -1382,6 +1483,14 @@ export const VISA_FORMS: FormsEntry[] = [
   AR_MERCOSUR,
   ZA_CRITICAL_SKILLS,
   TR_CALISMA_IZNI,
+  // Batch 3 — round out top-20: Italy + Brazil
+  IT_LAVORO_SUBORDINATO,
+  IT_STUDY,
+  IT_DIGITAL_NOMAD,
+  IT_FAMILY,
+  BR_VITEM_V_EMPLOYMENT,
+  BR_VITEM_II_BUSINESS,
+  BR_VITEM_XI_FAMILY,
 ];
 
 /** All distinct destinations that have a forms library. */

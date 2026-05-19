@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 const LINKS: { href: string; label: string; hint?: string }[] = [
   { href: "/finder", label: "Where can I go?", hint: "Filter every destination by your goal" },
+  { href: "/tools", label: "All tools (overview)", hint: "Every Visavu tool on one page" },
   { href: "/find-my-visa", label: "Find my visa", hint: "Answer a few questions, get ranked routes" },
   { href: "/chat", label: "AI visa assistant", hint: "Ask anything — grounded in our verified data" },
   { href: "/documents", label: "Visa forms library", hint: "Form 888, I-130 etc — direct gov download links" },

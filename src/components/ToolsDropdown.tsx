@@ -26,6 +26,11 @@ type ToolLink = {
 
 const TOOL_LINKS: ToolLink[] = [
   {
+    href: "/tools",
+    label: "All tools — overview",
+    description: "Every Visavu tool on one page, with the AI-polish prompt.",
+  },
+  {
     href: "/chat",
     label: "AI visa assistant",
     description: "Ask anything — grounded in our verified visa data.",

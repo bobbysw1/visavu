@@ -7,6 +7,7 @@ import { AlternativesPanel } from "@/components/AlternativesPanel";
 // (single-banner zone) and the inline disclosure on each ResultCard.
 import { EditorialBillboard } from "@/components/EditorialBillboard";
 import { QuickActionsStrip } from "@/components/QuickActionsStrip";
+import { FormsPanel } from "@/components/FormsPanel";
 import { EmptyStateCard } from "@/components/EmptyStateCard";
 // PolicyChangeBanner content now feeds ResultBannerStack — kept available
 // for future inline use via the policyChangesFor() helper.
@@ -808,6 +809,17 @@ export default async function Page({
             <div id="documents" className="scroll-mt-32">
               <PassportApplicantPanel passportIso2={p} />
             </div>
+
+            {/* Curated government-form library for this destination + purpose +
+                visa-label. Returns null when no curated match — keeps the
+                page clean for routes we don't have a forms library for. */}
+            {primary && (
+              <FormsPanel
+                destinationIso2={d}
+                purpose={purpose}
+                visaLabel={primary.label}
+              />
+            )}
 
             {/* ─── Get notified ─── */}
             {options.length > 0 && (

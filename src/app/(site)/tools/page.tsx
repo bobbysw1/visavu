@@ -13,6 +13,7 @@
 import Link from "next/link";
 import { absoluteUrl } from "@/lib/site";
 import { flagEmoji } from "@/lib/countries";
+import { PageHero } from "@/components/PageHero";
 import { VISA_FORMS, destinationsWithForms } from "@/content/visaForms";
 import { MYTHS } from "@/content/myths";
 import { GUIDES } from "@/content/guides";
@@ -411,323 +412,525 @@ export default function ToolsPage() {
   const recentMyths = MYTHS.slice(0, 6);
   const featuredGuides = GUIDES.slice(0, 4);
 
+  // Section anchors used by the in-page nav row + the section IDs
+  // themselves. Keeping the array as the single source-of-truth so
+  // nav + sections can't drift apart.
+  const sections = [
+    { id: "chat", label: "Ask the AI" },
+    { id: "forms", label: "Forms library" },
+    { id: "ai-polish", label: "AI polish" },
+    { id: "find-my-visa", label: "Find my visa" },
+    { id: "myths", label: "Myths" },
+    { id: "guides", label: "Guides" },
+    { id: "how-it-works", label: "Workflow" },
+  ];
+
   return (
-    <div className="mx-auto max-w-5xl px-4 py-12">
-      <header className="mb-12">
-        <p className="kicker">Tools</p>
-        <h1 className="serif-display text-4xl sm:text-5xl mt-2 mb-4">
-          Every Visavu tool, in one place.
-        </h1>
-        <p className="text-[var(--color-ink-muted)] text-lg leading-relaxed max-w-3xl">
-          The AI assistant, the forms library, the myths fact-check, the
-          application guides, the personalised questionnaire, the visa-news
-          digest, and the free-AI-document-polish prompt. Everything you need
-          for an unaided visa application, with no consultant fee.
-        </p>
-      </header>
+    <div>
+      {/* ── HERO ──
+          PageHero banner variant — passport-photo accent on the right
+          gives the page real visual identity instead of starting with
+          a wall of text. PT hero is a familiar editorial shot for the
+          relocation audience. */}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-8 sm:pt-10">
+        <PageHero
+          kicker="Tools"
+          title="Everything you need for an unaided visa application"
+          accent="."
+          subtitle="Eight free tools, all in one place — the AI assistant, the forms library, the per-visa AI-polish prompts, the personalised questionnaire, the myths fact-check, the application guides, the visa-news digest, and the suggested workflow that ties them together."
+          heroIso2="PT"
+          variant="banner"
+        />
 
-      {/* ── 1. AI VISA ASSISTANT ── */}
-      <section id="chat" className="mb-14">
-        <div className="rounded-2xl border border-[var(--color-rule)] bg-gradient-to-br from-[var(--color-paper-elev)] to-[var(--color-muted)]/40 p-6 sm:p-8">
-          <div className="flex items-start justify-between gap-4 flex-wrap mb-3">
-            <div className="min-w-0">
-              <p className="kicker">AI assistant</p>
-              <h2 className="serif-display text-2xl sm:text-3xl mt-1 font-medium">
-                Ask anything — grounded in our verified visa data
-              </h2>
-            </div>
-            <Link
-              href="/chat"
-              className="inline-flex shrink-0 items-center rounded-full bg-[var(--color-ink)] text-[var(--color-paper)] px-5 py-2 text-sm font-semibold hover:opacity-90 transition"
-            >
-              Open chat →
-            </Link>
-          </div>
-          <p className="text-[var(--color-ink-muted)] leading-relaxed mb-3">
-            Vague questions get clarifying questions back, not generic visa
-            lists. Specific questions get specific answers with the visa code,
-            fee in your local currency, processing time, and a link back to
-            our verified destination page. Won&apos;t link to competitors,
-            won&apos;t invent fees, will refuse asylum/criminal-record cases
-            and refer to a regulated adviser.
-          </p>
-          <div className="text-xs text-[var(--color-ink-muted)] flex flex-wrap gap-3">
-            <span>· Powered by Mistral Large</span>
-            <span>· Bilateral-context aware (FTA / Schengen / Mercosur / CPLP)</span>
-            <span>· Links only to visavu.com + official .gov sources</span>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 2. FORMS LIBRARY ── */}
-      <section id="forms" className="mb-14">
-        <div className="flex items-baseline justify-between gap-4 flex-wrap mb-5">
-          <div>
-            <p className="kicker">Forms library</p>
-            <h2 className="serif-display text-2xl sm:text-3xl mt-1 font-medium">
-              {totalForms} government PDFs across {destIsos.length} destinations
-            </h2>
-          </div>
-          <Link
-            href="/documents"
-            className="text-sm font-medium text-[var(--color-ink)] hover:opacity-80 underline-offset-2 hover:underline"
-          >
-            Browse all →
-          </Link>
-        </div>
-        <p className="text-[var(--color-ink-muted)] leading-relaxed mb-5 max-w-3xl">
-          Every entry points at the OFFICIAL government download page — Form
-          888 for Australian partner-visa stat-decs, I-130 for US family
-          immigration, IMM 5532 for Canadian spousal sponsorship, Appendix
-          FM-SE for UK family financials. Skip the consultant fee for
-          &quot;here&apos;s the form&quot;.
-        </p>
-        <ul className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2">
-          {destIsos.map((iso) => {
-            const entries = VISA_FORMS.filter((e) => e.destinationIso2 === iso);
-            const count = entries.reduce((acc, e) => acc + e.forms.length, 0);
-            return (
-              <li key={iso}>
-                <Link
-                  href={`/documents/${iso.toLowerCase()}`}
-                  className="flex items-center gap-2 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-elev)] px-3 py-2 hover:border-[var(--color-ink)] hover:shadow-sm transition text-sm"
+        {/* ── ANCHOR NAV ──
+            Sticky-ish jump-link row. Scrolls the user straight to the
+            relevant section without forcing them to scroll past the
+            earlier ones. */}
+        <nav
+          aria-label="Tools sections"
+          className="
+            sticky top-14 z-20 -mx-4 sm:-mx-6 mb-2 px-4 sm:px-6 py-3
+            border-y border-[var(--color-rule)]
+            bg-[var(--color-paper)]/95 backdrop-blur
+          "
+        >
+          <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm">
+            {sections.map((s) => (
+              <li key={s.id}>
+                <a
+                  href={`#${s.id}`}
+                  className="text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] underline-offset-4 hover:underline transition"
                 >
-                  <span className="text-lg leading-none" aria-hidden>{flagEmoji(iso)}</span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block font-medium text-[var(--color-ink)] truncate">{iso}</span>
-                    <span className="block text-[10px] text-[var(--color-ink-muted)]">{count} forms</span>
-                  </span>
-                </Link>
+                  {s.label}
+                </a>
               </li>
-            );
-          })}
-        </ul>
-      </section>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      {/* ── 1. AI VISA ASSISTANT ──
+          Split layout: left = description + bullet credentials, right
+          = a faux "chat" preview card with example bubbles to show the
+          actual shape of conversation users can have. */}
+      <SectionBand id="chat" tone="paper">
+        <SplitSection
+          left={
+            <>
+              <p className="kicker">01 · AI assistant</p>
+              <h2 className="serif-display text-3xl sm:text-4xl font-medium mt-2 mb-4 leading-tight">
+                Ask anything — grounded in our visa data.
+              </h2>
+              <p className="text-[var(--color-ink)]/85 leading-relaxed mb-4">
+                Vague questions get clarifying questions back, not generic visa
+                lists. Specific questions get specific answers — visa code, fee
+                in your local currency, processing time, link to the verified
+                destination page.
+              </p>
+              <ul className="space-y-2 text-sm text-[var(--color-ink-muted)] mb-6">
+                <li className="flex gap-2"><span aria-hidden>·</span><span>Won&apos;t link to competitors or invent fees.</span></li>
+                <li className="flex gap-2"><span aria-hidden>·</span><span>Refuses asylum / criminal-record cases and refers to a regulated adviser.</span></li>
+                <li className="flex gap-2"><span aria-hidden>·</span><span>Bilateral-context aware — UK-AU FTA, Trans-Tasman, Schengen, Mercosur, CPLP, EU/EFTA.</span></li>
+                <li className="flex gap-2"><span aria-hidden>·</span><span>Rate-limited + token-capped so it stays free + abuse-resistant.</span></li>
+              </ul>
+              <Link
+                href="/chat"
+                className="inline-flex items-center rounded-full bg-[var(--color-ink)] text-[var(--color-paper)] px-5 py-2.5 text-sm font-semibold hover:opacity-90 transition"
+              >
+                Open chat →
+              </Link>
+            </>
+          }
+          right={
+            <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-elev)] p-5 shadow-sm">
+              <p className="text-[10px] uppercase tracking-[0.14em] font-bold text-[var(--color-ink-muted)] mb-3">
+                Example conversation
+              </p>
+              <div className="space-y-3 text-sm">
+                <div className="rounded-2xl rounded-bl-sm bg-[var(--color-muted)]/60 px-4 py-2.5 max-w-[88%] text-[var(--color-ink)]">
+                  My partner&apos;s British. I&apos;m on a Tier 2 in Germany.
+                  Can we move to Australia together?
+                </div>
+                <div className="rounded-2xl rounded-br-sm bg-[var(--color-ink)] text-[var(--color-paper)] px-4 py-2.5 ml-auto max-w-[92%] leading-relaxed">
+                  Yes, two routes worth comparing. If your partner sponsors,
+                  the Subclass 309 (offshore Partner visa) takes about 18-22
+                  months and runs ~AUD 8,850. If your skills qualify, Subclass
+                  189 (Skilled Independent) is points-tested + slower but
+                  doesn&apos;t depend on the relationship. What&apos;s your
+                  occupation and how long have you been together?
+                </div>
+                <p className="text-[10px] text-[var(--color-ink-muted)] italic pt-1">
+                  Mistral Large · grounded in 9,800+ verified visa records ·
+                  not legal advice
+                </p>
+              </div>
+            </div>
+          }
+        />
+      </SectionBand>
+
+      {/* ── 2. FORMS LIBRARY ──
+          Tinted band. Left = stat-led intro. Right = country flag grid
+          linking to /documents/[iso]. */}
+      <SectionBand id="forms" tone="muted">
+        <SplitSection
+          left={
+            <>
+              <p className="kicker">02 · Forms library</p>
+              <h2 className="serif-display text-3xl sm:text-4xl font-medium mt-2 mb-4 leading-tight">
+                {totalForms} government PDFs, direct links.
+              </h2>
+              <p className="text-[var(--color-ink)]/85 leading-relaxed mb-4">
+                Every entry points at the OFFICIAL government download page —
+                Form 888 for Australian partner-visa stat-decs, I-130 for US
+                family immigration, IMM 5532 for Canadian spousal sponsorship,
+                Appendix FM-SE for UK family financials. Skip the consultant
+                fee for &quot;here&apos;s the form.&quot;
+              </p>
+              <p className="text-sm text-[var(--color-ink-muted)] mb-6">
+                {destIsos.length} destinations · re-verified quarterly · A4
+                preview on every form page so you know what you&apos;re
+                downloading.
+              </p>
+              <Link
+                href="/documents"
+                className="inline-flex items-center text-sm font-semibold text-[var(--color-ink)] hover:opacity-80 underline-offset-4 hover:underline"
+              >
+                Browse all destinations →
+              </Link>
+            </>
+          }
+          right={
+            <ul className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+              {destIsos.map((iso) => {
+                const entries = VISA_FORMS.filter((e) => e.destinationIso2 === iso);
+                const count = entries.reduce((acc, e) => acc + e.forms.length, 0);
+                return (
+                  <li key={iso}>
+                    <Link
+                      href={`/documents/${iso.toLowerCase()}`}
+                      className="
+                        flex items-center gap-2 rounded-lg border border-[var(--color-rule)]
+                        bg-[var(--color-paper)] px-3 py-2 hover:border-[var(--color-ink)]
+                        hover:shadow-sm transition text-sm
+                      "
+                    >
+                      <span className="text-lg leading-none" aria-hidden>{flagEmoji(iso)}</span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block font-medium text-[var(--color-ink)] truncate">{iso}</span>
+                        <span className="block text-[10px] text-[var(--color-ink-muted)]">
+                          {count} form{count === 1 ? "" : "s"}
+                        </span>
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          }
+        />
+      </SectionBand>
 
       {/* ── 3. AI-POLISH PROMPT LIBRARY ──
-          Rewritten per user feedback: no amber border / no big callout
-          box / not a single master prompt. Plain-text intro that
-          explains the value, followed by a quiet collapsible library
-          of per-visa prompts — each tuned to the actual evidence
-          requirements + tone caseworkers expect for that specific
-          subclass. Generic "polish my application" prompts are AI
-          slop; partner-visa relationship narratives have completely
-          different requirements from skilled-worker cover letters or
-          Schengen visit declarations. */}
-      <section id="ai-polish" className="mb-14">
-        <p className="kicker">AI polish</p>
-        <h2 className="serif-display text-2xl sm:text-3xl mt-1 mb-3 font-medium">
-          Use AI to tighten your written sections
-        </h2>
-        <p className="text-[var(--color-ink-muted)] leading-relaxed max-w-3xl mb-3">
-          For relatively straightforward cases, you can save thousands on
-          lawyer fees by using AI to polish the prose sections of your
-          application — personal statements, relationship narratives,
-          sponsor declarations, cover letters. Caseworkers read thousands
-          of these; tight, plain prose gets approved, rambling drafts get
-          sent back for more evidence. Any capable AI works —{" "}
-          <a href="https://claude.ai" target="_blank" rel="noopener" className="underline hover:no-underline text-[var(--color-ink)]">Claude</a>,
-          ChatGPT, Gemini, Mistral — all have free tiers.
-        </p>
-        <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed max-w-3xl mb-5">
-          Below are visa-specific prompts. Generic prompts produce generic
-          output — these are written for the actual evidence the named
-          caseworker is looking for.
-        </p>
-
-        <ul className="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
-          {VISA_PROMPTS.map((p) => (
-            <li key={p.id}>
-              <details className="group">
-                <summary className="cursor-pointer py-3 flex items-baseline justify-between gap-3 hover:text-[var(--color-ink)] transition list-none">
-                  <span className="flex items-baseline gap-2 min-w-0">
-                    <span className="text-base leading-none" aria-hidden>
-                      {flagEmoji(p.iso)}
-                    </span>
-                    <span className="text-sm font-medium text-[var(--color-ink)] truncate">
-                      {p.label}
-                    </span>
-                  </span>
-                  <span className="text-xs text-[var(--color-ink-muted)] shrink-0 group-open:hidden">
-                    Show prompt →
-                  </span>
-                  <span className="text-xs text-[var(--color-ink-muted)] shrink-0 hidden group-open:inline">
-                    Hide
-                  </span>
-                </summary>
-                <div className="pb-4 pl-6">
-                  <p className="text-xs text-[var(--color-ink-muted)] mb-2 leading-relaxed">
-                    {p.context}
-                  </p>
-                  <pre className="text-xs leading-relaxed text-[var(--color-ink)] whitespace-pre-wrap font-mono bg-[var(--color-muted)]/40 p-3 rounded">
+          Left = plain-text framing (no border, no amber callout per
+          user feedback). Right = the collapsible per-visa prompt list. */}
+      <SectionBand id="ai-polish" tone="paper">
+        <SplitSection
+          left={
+            <>
+              <p className="kicker">03 · AI polish</p>
+              <h2 className="serif-display text-3xl sm:text-4xl font-medium mt-2 mb-4 leading-tight">
+                Tighten your application — save thousands on lawyer fees.
+              </h2>
+              <p className="text-[var(--color-ink)]/85 leading-relaxed mb-3">
+                For relatively straightforward cases you can use any AI —{" "}
+                <a href="https://claude.ai" target="_blank" rel="noopener" className="underline underline-offset-2 hover:no-underline">Claude</a>,
+                ChatGPT, Gemini, Mistral, all with free tiers — to polish the
+                prose sections of your application. Caseworkers read thousands
+                of these; tight, plain prose gets approved, rambling drafts
+                get sent back for more evidence.
+              </p>
+              <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed mb-3">
+                The prompts on the right are visa-specific. Generic prompts
+                produce generic output; these name the actual statutory tests
+                (Appendix FM-SE, ANZSCO mapping, IMM 5532 cross-reference,
+                Article 32 ties-to-home, etc.) the named caseworker is trained
+                to look for.
+              </p>
+              <p className="text-xs text-[var(--color-ink-muted)] italic">
+                For complex cases — refusal history, criminal record, prior
+                overstay, sham-marriage flags, appeals — hire a regulated
+                adviser. For everything else, documentation quality matters
+                more than legal representation.
+              </p>
+            </>
+          }
+          right={
+            <ul className="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)] bg-[var(--color-paper-elev)] rounded-xl px-4">
+              {VISA_PROMPTS.map((p) => (
+                <li key={p.id}>
+                  <details className="group">
+                    <summary className="cursor-pointer py-3 flex items-baseline justify-between gap-3 hover:text-[var(--color-ink)] transition list-none">
+                      <span className="flex items-baseline gap-2 min-w-0">
+                        <span className="text-base leading-none" aria-hidden>
+                          {flagEmoji(p.iso)}
+                        </span>
+                        <span className="text-sm font-medium text-[var(--color-ink)] truncate">
+                          {p.label}
+                        </span>
+                      </span>
+                      <span className="text-xs text-[var(--color-ink-muted)] shrink-0 group-open:hidden">
+                        Show prompt →
+                      </span>
+                      <span className="text-xs text-[var(--color-ink-muted)] shrink-0 hidden group-open:inline">
+                        Hide
+                      </span>
+                    </summary>
+                    <div className="pb-4 pl-6">
+                      <p className="text-xs text-[var(--color-ink-muted)] mb-2 leading-relaxed">
+                        {p.context}
+                      </p>
+                      <pre className="text-xs leading-relaxed text-[var(--color-ink)] whitespace-pre-wrap font-mono bg-[var(--color-muted)]/40 p-3 rounded">
 {p.prompt}
-                  </pre>
+                      </pre>
+                    </div>
+                  </details>
+                </li>
+              ))}
+            </ul>
+          }
+        />
+      </SectionBand>
+
+      {/* ── 4. FIND MY VISA ──
+          Tinted band. Left = explanation. Right = visualised wizard
+          stepper card so the user sees the shape of what they'll do. */}
+      <SectionBand id="find-my-visa" tone="muted">
+        <SplitSection
+          left={
+            <>
+              <p className="kicker">04 · Personalised questionnaire</p>
+              <h2 className="serif-display text-3xl sm:text-4xl font-medium mt-2 mb-4 leading-tight">
+                Find my visa.
+              </h2>
+              <p className="text-[var(--color-ink)]/85 leading-relaxed mb-4">
+                12-step questionnaire — nationality, destination, goal,
+                education, occupation, income, family, languages, timeline.
+                Smart-skip means short-stay tourists get 5 questions;
+                full-relocation HNWIs get all 12.
+              </p>
+              <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed mb-6">
+                Output: five ranked lists — best pathways, easiest, fastest,
+                cheapest, best PR routes — with the specific visa names and
+                your eligibility for each.
+              </p>
+              <Link
+                href="/find-my-visa"
+                className="inline-flex items-center rounded-full bg-[var(--color-ink)] text-[var(--color-paper)] px-5 py-2.5 text-sm font-semibold hover:opacity-90 transition"
+              >
+                Start the wizard →
+              </Link>
+            </>
+          }
+          right={
+            <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper)] p-5">
+              <p className="text-[10px] uppercase tracking-[0.14em] font-bold text-[var(--color-ink-muted)] mb-3">
+                Five ranked output lists
+              </p>
+              <ul className="space-y-2 text-sm">
+                {[
+                  { label: "Best pathways", note: "Highest-fit matches for your profile" },
+                  { label: "Easiest routes", note: "Lowest-friction visas you'd qualify for" },
+                  { label: "Fastest routes", note: "Sorted by processing time" },
+                  { label: "Cheapest routes", note: "Sorted by total cost in your currency" },
+                  { label: "Best PR opportunities", note: "Shortest path to permanent residence" },
+                ].map((row, i) => (
+                  <li
+                    key={row.label}
+                    className="flex items-baseline gap-3 py-2 border-b border-[var(--color-rule)] last:border-b-0"
+                  >
+                    <span className="font-mono text-xs text-[var(--color-ink-muted)] tabular-nums shrink-0">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-sm font-medium text-[var(--color-ink)]">
+                        {row.label}
+                      </span>
+                      <span className="block text-xs text-[var(--color-ink-muted)] leading-snug">
+                        {row.note}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          }
+        />
+      </SectionBand>
+
+      {/* ── 5. MYTHS ──
+          Left = framing. Right = grid of recent myth cards. */}
+      <SectionBand id="myths" tone="paper">
+        <SplitSection
+          left={
+            <>
+              <p className="kicker">05 · Myths fact-check</p>
+              <h2 className="serif-display text-3xl sm:text-4xl font-medium mt-2 mb-4 leading-tight">
+                Things people get wrong about visas.
+              </h2>
+              <p className="text-[var(--color-ink)]/85 leading-relaxed mb-4">
+                Marriage to a citizen doesn&apos;t automatically grant a visa.
+                Having a baby in a country usually doesn&apos;t grant
+                citizenship. Working remotely on a tourist visa is rarely
+                legal. We address the most common confusions in plain English
+                with country-specific notes + sources.
+              </p>
+              <p className="text-sm text-[var(--color-ink-muted)] mb-6">
+                {MYTHS.length} entries · last-verified dates on every page ·
+                sourced from primary government guidance.
+              </p>
+              <Link
+                href="/myths"
+                className="inline-flex items-center text-sm font-semibold text-[var(--color-ink)] hover:opacity-80 underline-offset-4 hover:underline"
+              >
+                All myths →
+              </Link>
+            </>
+          }
+          right={
+            <ul className="grid sm:grid-cols-2 gap-3">
+              {recentMyths.map((m) => (
+                <li key={m.slug}>
+                  <Link
+                    href={`/myths/${m.slug}`}
+                    className="
+                      block h-full rounded-xl border border-[var(--color-rule)]
+                      bg-[var(--color-paper-elev)] p-4 hover:border-[var(--color-ink)]
+                      hover:shadow-sm transition
+                    "
+                  >
+                    <p className="text-sm font-medium text-[var(--color-ink)] leading-snug">
+                      {m.question}
+                    </p>
+                    <p className="text-xs text-[var(--color-ink-muted)] mt-2 line-clamp-2">
+                      {m.headline}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          }
+        />
+      </SectionBand>
+
+      {/* ── 6. GUIDES ──
+          Tinted band. Left = framing. Right = featured guide cards. */}
+      <SectionBand id="guides" tone="muted">
+        <SplitSection
+          left={
+            <>
+              <p className="kicker">06 · Application guides</p>
+              <h2 className="serif-display text-3xl sm:text-4xl font-medium mt-2 mb-4 leading-tight">
+                Step-by-step walkthroughs.
+              </h2>
+              <p className="text-[var(--color-ink)]/85 leading-relaxed mb-4">
+                Long-form, no-filler guides for the routes that catch people
+                out — UK Spouse financial requirement, AU Partner relationship
+                evidence, US K-1 timeline, Schengen short-stay cover letters,
+                Canada Express Entry LOE structure.
+              </p>
+              <Link
+                href="/guides"
+                className="inline-flex items-center text-sm font-semibold text-[var(--color-ink)] hover:opacity-80 underline-offset-4 hover:underline"
+              >
+                All guides →
+              </Link>
+            </>
+          }
+          right={
+            <ul className="grid sm:grid-cols-2 gap-3">
+              {featuredGuides.map((g) => (
+                <li key={g.frontmatter.slug}>
+                  <Link
+                    href={`/guides/${g.frontmatter.slug}`}
+                    className="
+                      block h-full rounded-xl border border-[var(--color-rule)]
+                      bg-[var(--color-paper)] p-4 hover:border-[var(--color-ink)]
+                      hover:shadow-sm transition
+                    "
+                  >
+                    <p className="text-sm font-semibold text-[var(--color-ink)] leading-snug mb-1">
+                      {g.frontmatter.title}
+                    </p>
+                    <p className="text-xs text-[var(--color-ink-muted)] line-clamp-2">
+                      {g.frontmatter.summary}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          }
+        />
+      </SectionBand>
+
+      {/* ── 7. HOW THIS WORKS — full-width numbered workflow ──
+          Not split — this is the "how it all fits together" closer,
+          best read as a single column the eye runs top-to-bottom. */}
+      <SectionBand id="how-it-works" tone="paper">
+        <div className="mx-auto max-w-3xl">
+          <p className="kicker">07 · Workflow</p>
+          <h2 className="serif-display text-3xl sm:text-4xl font-medium mt-2 mb-6 leading-tight">
+            The order we suggest.
+          </h2>
+          <ol className="space-y-5 text-[var(--color-ink)]/85 leading-relaxed">
+            {[
+              {
+                h: "Start with the chat or the questionnaire.",
+                p: "Chat is faster for specific questions (\"UK passport, 26, what's the easiest way to Australia?\"). The questionnaire is better when you don't know what you're looking for.",
+              },
+              {
+                h: "Read the rules on the destination and pair page.",
+                p: "Every (passport × destination) combination has a dedicated page with difficulty + realism scoring, fee, processing time, and country-specific obstacles surfaced by our adapters.",
+              },
+              {
+                h: "Download the actual forms.",
+                p: "Each visa programme has its specific government forms linked above. We point at the official download page so your version is always current.",
+              },
+              {
+                h: "Use AI to polish your written sections.",
+                p: "Personal statements, relationship narratives, sponsor declarations — paste the draft into Claude / ChatGPT with our visa-specific prompt and iterate. The forms are mechanical; the prose is where most refusals happen.",
+              },
+              {
+                h: "Submit yourself.",
+                p: "For 90%+ of cases this is genuinely all you need. The exceptions — prior refusals, criminal records, complex sham-marriage flags, appeals — need a regulated adviser, not generic advice.",
+              },
+            ].map((step, i) => (
+              <li key={step.h} className="flex gap-4">
+                <span className="shrink-0 w-8 h-8 rounded-full bg-[var(--color-ink)] text-[var(--color-paper)] grid place-items-center text-sm font-bold">
+                  {i + 1}
+                </span>
+                <div>
+                  <p className="font-semibold text-[var(--color-ink)] mb-1">{step.h}</p>
+                  <p className="text-sm">{step.p}</p>
                 </div>
-              </details>
-            </li>
-          ))}
-        </ul>
+              </li>
+            ))}
+          </ol>
 
-        <p className="text-xs text-[var(--color-ink-muted)] italic mt-4 max-w-3xl">
-          For complex cases — refusal history, criminal record, prior
-          overstay, sham-marriage flags, appeals — hire a regulated
-          immigration adviser. For everything else, documentation quality
-          matters more than legal representation.
-        </p>
-      </section>
-
-      {/* ── 4. FIND MY VISA ── */}
-      <section id="find-my-visa" className="mb-14">
-        <div className="flex items-baseline justify-between gap-4 flex-wrap mb-5">
-          <div>
-            <p className="kicker">Personalised questionnaire</p>
-            <h2 className="serif-display text-2xl sm:text-3xl mt-1 font-medium">
-              Find my visa
-            </h2>
+          <div className="mt-10 p-5 rounded-xl bg-[var(--color-muted)]/40 border border-[var(--color-rule)]">
+            <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+              <strong className="text-[var(--color-ink)]">Visavu is information, not advice.</strong>{" "}
+              We don&apos;t represent you, take a cut of your visa fee, or
+              sell &quot;application packages&quot;. We&apos;re the index +
+              the tools. Where regulated representation is genuinely required
+              we refer out (IAA for UK, MARA for AU, CICC for CA, state-bar-
+              admitted attorney for US).
+            </p>
           </div>
-          <Link
-            href="/find-my-visa"
-            className="text-sm font-medium text-[var(--color-ink)] hover:opacity-80 underline-offset-2 hover:underline"
-          >
-            Start the wizard →
-          </Link>
         </div>
-        <p className="text-[var(--color-ink-muted)] leading-relaxed max-w-3xl">
-          12-step questionnaire — nationality, destination, goal, education,
-          occupation, income, family, languages, timeline. Smart-skip means
-          short-stay tourists get 5 questions; full-relocation HNWIs get all
-          12. Output: five ranked lists (best pathways / easiest / fastest /
-          cheapest / best PR routes) with the specific visa names + your
-          eligibility for each.
-        </p>
-      </section>
+      </SectionBand>
+    </div>
+  );
+}
 
-      {/* ── 5. MYTHS ── */}
-      <section id="myths" className="mb-14">
-        <div className="flex items-baseline justify-between gap-4 flex-wrap mb-5">
-          <div>
-            <p className="kicker">Myths fact-check</p>
-            <h2 className="serif-display text-2xl sm:text-3xl mt-1 font-medium">
-              Things people get wrong about visas
-            </h2>
-          </div>
-          <Link
-            href="/myths"
-            className="text-sm font-medium text-[var(--color-ink)] hover:opacity-80 underline-offset-2 hover:underline"
-          >
-            All myths →
-          </Link>
-        </div>
-        <ul className="grid sm:grid-cols-2 gap-3">
-          {recentMyths.map((m) => (
-            <li key={m.slug}>
-              <Link
-                href={`/myths/${m.slug}`}
-                className="block h-full rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper-elev)] p-4 hover:border-[var(--color-ink)] hover:shadow-sm transition"
-              >
-                <p className="text-sm font-medium text-[var(--color-ink)] leading-snug">
-                  {m.question}
-                </p>
-                <p className="text-xs text-[var(--color-ink-muted)] mt-2 line-clamp-2">
-                  {m.headline}
-                </p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+/* ────────────────────────────────────────────────────────────────────
+   Layout helpers — keep the page render tidy by hoisting the
+   alternating-band + split-grid scaffolding into two small components.
+   ──────────────────────────────────────────────────────────────────── */
 
-      {/* ── 6. GUIDES ── */}
-      <section id="guides" className="mb-14">
-        <div className="flex items-baseline justify-between gap-4 flex-wrap mb-5">
-          <div>
-            <p className="kicker">Application guides</p>
-            <h2 className="serif-display text-2xl sm:text-3xl mt-1 font-medium">
-              Step-by-step walkthroughs
-            </h2>
-          </div>
-          <Link
-            href="/guides"
-            className="text-sm font-medium text-[var(--color-ink)] hover:opacity-80 underline-offset-2 hover:underline"
-          >
-            All guides →
-          </Link>
-        </div>
-        <ul className="grid sm:grid-cols-2 gap-3">
-          {featuredGuides.map((g) => (
-            <li key={g.frontmatter.slug}>
-              <Link
-                href={`/guides/${g.frontmatter.slug}`}
-                className="block h-full rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper-elev)] p-4 hover:border-[var(--color-ink)] hover:shadow-sm transition"
-              >
-                <p className="text-sm font-semibold text-[var(--color-ink)] leading-snug mb-1">
-                  {g.frontmatter.title}
-                </p>
-                <p className="text-xs text-[var(--color-ink-muted)] line-clamp-2">
-                  {g.frontmatter.summary}
-                </p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+/** Full-bleed background band so adjacent sections look distinct on
+ *  scroll. Tone "paper" = default page bg; "muted" = subtle tinted bg.
+ *  Inner content is constrained to max-w-6xl. */
+function SectionBand({
+  id,
+  tone = "paper",
+  children,
+}: {
+  id: string;
+  tone?: "paper" | "muted";
+  children: React.ReactNode;
+}) {
+  const bg = tone === "muted" ? "bg-[var(--color-muted)]/40" : "bg-[var(--color-paper)]";
+  return (
+    <section
+      id={id}
+      className={`${bg} border-t border-[var(--color-rule)] py-12 sm:py-16 scroll-mt-32`}
+    >
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">{children}</div>
+    </section>
+  );
+}
 
-      {/* ── 7. HOW THIS WORKS ── */}
-      <section id="how-it-works" className="border-t border-[var(--color-rule)] pt-10">
-        <p className="kicker mb-3">How this works</p>
-        <h2 className="serif-display text-2xl sm:text-3xl mb-5 font-medium">
-          The workflow we suggest
-        </h2>
-        <ol className="space-y-4 text-[var(--color-ink-muted)] leading-relaxed">
-          <li className="flex gap-4">
-            <span className="shrink-0 w-7 h-7 rounded-full bg-[var(--color-ink)] text-[var(--color-paper)] grid place-items-center text-xs font-bold">1</span>
-            <p>
-              <strong className="text-[var(--color-ink)]">Start with the chat or the questionnaire.</strong> The chat is faster for specific questions
-              (&quot;UK passport, 26, what&apos;s the easiest way to Australia?&quot;); the questionnaire is better when you don&apos;t know what you&apos;re looking for.
-            </p>
-          </li>
-          <li className="flex gap-4">
-            <span className="shrink-0 w-7 h-7 rounded-full bg-[var(--color-ink)] text-[var(--color-paper)] grid place-items-center text-xs font-bold">2</span>
-            <p>
-              <strong className="text-[var(--color-ink)]">Read the rules on the destination + pair page.</strong> Every (passport × destination) combination
-              has a dedicated page with the difficulty + realism scoring, fee, processing time, and country-specific
-              obstacles surfaced by our adapters.
-            </p>
-          </li>
-          <li className="flex gap-4">
-            <span className="shrink-0 w-7 h-7 rounded-full bg-[var(--color-ink)] text-[var(--color-paper)] grid place-items-center text-xs font-bold">3</span>
-            <p>
-              <strong className="text-[var(--color-ink)]">Download the actual forms from the forms library.</strong> Each visa programme has its specific
-              government forms linked above. We point at the official download page so your version is always current.
-            </p>
-          </li>
-          <li className="flex gap-4">
-            <span className="shrink-0 w-7 h-7 rounded-full bg-[var(--color-ink)] text-[var(--color-paper)] grid place-items-center text-xs font-bold">4</span>
-            <p>
-              <strong className="text-[var(--color-ink)]">Use Claude (or any AI) to polish your written sections.</strong> Personal statements,
-              relationship narratives, sponsor declarations — paste the draft + our prompt + iterate. The forms
-              themselves are mechanical; the prose is where most refusals happen.
-            </p>
-          </li>
-          <li className="flex gap-4">
-            <span className="shrink-0 w-7 h-7 rounded-full bg-[var(--color-ink)] text-[var(--color-paper)] grid place-items-center text-xs font-bold">5</span>
-            <p>
-              <strong className="text-[var(--color-ink)]">Submit yourself.</strong> For 90%+ of cases this is genuinely all you need. The exceptions:
-              prior refusals, criminal records, complex sham-marriage flags, or appeals — those need a regulated
-              immigration adviser, not generic advice.
-            </p>
-          </li>
-        </ol>
-
-        <div className="mt-8 p-5 rounded-xl bg-[var(--color-muted)]/40 border border-[var(--color-rule)]">
-          <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
-            <strong className="text-[var(--color-ink)]">Visavu is information, not advice.</strong> We don&apos;t
-            represent you, we don&apos;t take a cut of your visa fee, we don&apos;t sell &quot;application packages&quot;.
-            We&apos;re the index + the tools. Where regulated representation is genuinely required we refer out
-            (IAA-registered for UK, MARA for AU, CICC for CA, state-bar-admitted attorney for US).
-          </p>
-        </div>
-      </section>
+/** 2-column split: text + headline on the left, interactive content
+ *  on the right. Collapses to single-column under md so mobile reads
+ *  top-to-bottom. The left column is narrower (5/12) to give the
+ *  content (forms grid, prompt list, etc.) room to breathe on the
+ *  right (7/12). */
+function SplitSection({ left, right }: { left: React.ReactNode; right: React.ReactNode }) {
+  return (
+    <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-start">
+      <div className="md:col-span-5">{left}</div>
+      <div className="md:col-span-7">{right}</div>
     </div>
   );
 }

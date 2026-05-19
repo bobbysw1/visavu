@@ -24,7 +24,11 @@
 import { readFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { writeFileSync, mkdirSync } from "node:fs";
-import { COUNTRY_LIST } from "@/lib/countries";
+// Walk PASSPORT_COUNTRIES (200 actually-issuing sovereign passports),
+// not COUNTRY_LIST (250 — includes uninhabited territories + non-
+// issuing dependencies like Curaçao / Aruba / Mayotte that use a
+// parent country's passport). Auditor flagging those was just noise.
+import { PASSPORT_COUNTRIES } from "@/lib/countries";
 
 type ManifestEntry = {
   file: string;
@@ -79,7 +83,7 @@ function categorise(iso2: string, manifest: Manifest): { category: Category; not
 
 function main() {
   const manifest = loadManifest();
-  const rows: Row[] = COUNTRY_LIST.map((c) => {
+  const rows: Row[] = PASSPORT_COUNTRIES.map((c) => {
     const { category, notes } = categorise(c.iso2, manifest);
     return { iso2: c.iso2, name: c.name, category, notes };
   });

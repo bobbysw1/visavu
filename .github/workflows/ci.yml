@@ -1,0 +1,64 @@
+name: CI
+
+# Fast-feedback gate on every PR + push to main. The big-hitters:
+#
+#   1. Typecheck — catches schema mismatches before deploy
+#   2. Fee sanity (static) — guards against the order-of-magnitude
+#      currency typos that bit us multiple times before the audit
+#      script existed. Any HIGH suspect fails the build.
+#   3. Vitest — runs the 250+ regression tests covering finder,
+#      bilateral context, link allowlist, passport-intro generation,
+#      translation pipeline, US reciprocity, etc.
+#
+# Deliberately NOT in this workflow: bootstrap + snapshot. Those run
+# in snapshot-on-adapter-change.yml when the relevant files change,
+# not on every CI run (15-20 min cost).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Fee sanity (static)
+        # Static analyser — no DB needed, finishes in seconds. Walks every
+        # adapter, regex-extracts fee declarations, converts to USD via
+        # rough rates, flags suspects. HIGH = order-of-magnitude wrong
+        # (10× / 100× typos, sub-$1 fees on non-free routes).
+        run: |
+          npx tsx src/scripts/feeSanityStatic.ts
+          # Fail if any HIGH suspects exist.
+          high=$(grep -c "^| .*HIGH" audit/FEE_STATIC_*.md 2>/dev/null | tail -1 || echo 0)
+          # grep returns the filename:count format under certain conditions; normalise.
+          high_num=$(echo "$high" | awk -F: '{print $NF}' | head -1)
+          if [ "${high_num:-0}" -gt 0 ]; then
+            echo "::error::Fee sanity check introduced ${high_num} HIGH-severity suspects. Review audit/FEE_STATIC_*.md before merging."
+            cat audit/FEE_STATIC_*.md | grep -A1 "^## HIGH"
+            exit 1
+          fi
+          echo "✓ Fee sanity OK — 0 HIGH suspects"
+
+      - name: Tests
+        run: npx vitest run --reporter=dot

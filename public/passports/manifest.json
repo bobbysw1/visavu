@@ -308,7 +308,7 @@
     "fetchedAt": "2026-05-16T09:52:38.627Z"
   },
   "SI": {
-    "file": "/passports/si.svg",
+    "file": "/passports/si.jpg",
     "source": "https://en.wikipedia.org/wiki/Slovenian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Slovenia_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -316,7 +316,7 @@
     "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
     "width": 334,
     "height": 473,
-    "fetchedAt": "2026-05-16T09:52:40.372Z"
+    "fetchedAt": "2026-05-19T09:28:56.814Z"
   },
   "ES": {
     "file": "/passports/es.jpg",
@@ -1012,7 +1012,7 @@
     "fetchedAt": "2026-05-16T09:58:09.405Z"
   },
   "MG": {
-    "file": "/passports/mg.svg",
+    "file": "/passports/mg.jpg",
     "source": "https://en.wikipedia.org/wiki/Malagasy_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Malagasy_Passport_Cover_2013.svg",
     "artist": "CrabeXBug ; Aryanto Andriamanantena",
@@ -1020,7 +1020,7 @@
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "width": 331,
     "height": 472,
-    "fetchedAt": "2026-05-16T09:58:11.824Z"
+    "fetchedAt": "2026-05-19T09:28:50.799Z"
   },
   "MY": {
     "file": "/passports/my.jpg",
@@ -1342,7 +1342,7 @@
     "fetchedAt": "2026-05-19T08:20:16.647Z"
   },
   "RS": {
-    "file": "/passports/rs.svg",
+    "file": "/passports/rs.jpg",
     "source": "https://en.wikipedia.org/wiki/Serbian_passport",
     "commonsFile": "https://commons.wikimedia.org/wiki/File:Serbian_Passport.svg",
     "artist": "มองโกเลีย๔๔",
@@ -1350,7 +1350,7 @@
     "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
     "width": 497,
     "height": 704,
-    "fetchedAt": "2026-05-16T10:00:52.474Z"
+    "fetchedAt": "2026-05-19T09:28:54.191Z"
   },
   "SC": {
     "file": "/passports/sc.jpg",

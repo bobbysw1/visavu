@@ -37,6 +37,35 @@ export default function ConsultationLandingPage() {
         </p>
       </header>
 
+      {/* Honest upfront state — the consultation flow is described
+          below, but we haven't yet onboarded the first cohort of
+          registered advisers. Better to surface that now than have
+          users click Book and hit dead air. The "Get featured" CTA
+          recruits advisers in parallel. */}
+      <section className="rounded-xl border-2 border-dashed border-[var(--color-rule-strong)] bg-[var(--color-muted)]/40 p-5 sm:p-6 space-y-3">
+        <p className="text-[11px] font-bold tracking-[0.16em] uppercase text-[var(--color-ink-muted)]">
+          Coming soon — first cohort opens shortly
+        </p>
+        <p className="text-sm sm:text-base text-[var(--color-ink)] leading-relaxed">
+          Visavu is recruiting the first cohort of vetted IAA-registered
+          (UK), MARA-registered (AU), CICC-registered (CA), and US
+          bar-admitted advisers. Until cohort 1 goes live, the booking
+          form below collects your situation so we can match you to an
+          adviser the moment they&apos;re onboarded.
+        </p>
+        <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+          <strong className="text-[var(--color-ink)]">Are you a registered immigration adviser?</strong>{" "}
+          We&apos;re shortlisting now — registration documents must be
+          current and we verify with the regulator before listing.{" "}
+          <Link
+            href="/contact?subject=featured-listing&slot=uk-immigration-adviser"
+            className="underline underline-offset-2 hover:no-underline text-[var(--color-ink)] font-medium"
+          >
+            Get featured here →
+          </Link>
+        </p>
+      </section>
+
       <section className="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-900/40 p-6 space-y-4">
         <h2 className="text-xl font-semibold">How it&apos;s different</h2>
         <ul className="space-y-3 text-sm text-neutral-800 dark:text-neutral-200">

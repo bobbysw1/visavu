@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { ServiceCategoryIcon } from "@/components/ServiceCategoryIcon";
+import { FeaturedHereCallout } from "@/components/FeaturedHereCallout";
 import { SITE, absoluteUrl } from "@/lib/site";
 import {
   SERVICE_CATEGORIES,
@@ -73,9 +74,10 @@ export default function ServicesIndexPage() {
           <h1 className="billboard mb-5 max-w-2xl">Relocation services<span className="text-[var(--color-accent)]">.</span></h1>
           <p className="text-base sm:text-lg text-[var(--color-ink)]/85 leading-relaxed max-w-2xl">
             Once you know what visa you need, the natural next questions are: insurance, shots,
-            biometrics, medical exam, passport photos, lawyer. Visavu surfaces a curated handful
-            of providers in each category — affiliate cards earn us a small commission to keep
-            the visa tool free.{" "}
+            biometrics, medical exam, passport photos, lawyer. The categories below sit between
+            informational (government / non-profit registries we link directly) and{" "}
+            <strong className="font-medium">sponsored — coming soon</strong> as we shortlist the
+            first cohort of partners. We don&apos;t pad the page with arbitrary names.{" "}
             <Link href="/disclosure" className="underline underline-offset-4 hover:no-underline text-[var(--color-ink)]">
               See our commercial policy
             </Link>
@@ -86,6 +88,7 @@ export default function ServicesIndexPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {SERVICE_CATEGORIES.map((cat) => {
             const meta = CATEGORY_META[cat];
+            const isEmpty = counts[cat] === 0;
             return (
               <Link
                 key={cat}
@@ -99,9 +102,19 @@ export default function ServicesIndexPage() {
                       <h2 className="serif-display text-xl font-medium leading-tight">
                         {meta.label}
                       </h2>
-                      <span className="kicker tabular shrink-0">
-                        {counts[cat]} provider{counts[cat] === 1 ? "" : "s"}
-                      </span>
+                      {/* Empty-affiliate categories get a "Coming soon"
+                          badge instead of a misleading "0 providers"
+                          count. Informational categories with real
+                          gov-source entries show the count as before. */}
+                      {isEmpty ? (
+                        <span className="text-[10px] font-bold uppercase tracking-[0.14em] rounded-full bg-[var(--color-muted)] text-[var(--color-ink-muted)] px-2 py-0.5 shrink-0">
+                          Coming soon
+                        </span>
+                      ) : (
+                        <span className="kicker tabular shrink-0">
+                          {counts[cat]} listed
+                        </span>
+                      )}
                     </div>
                     <p className="text-sm font-medium text-[var(--color-ink)]/85">
                       {meta.tagline}
@@ -112,11 +125,23 @@ export default function ServicesIndexPage() {
                   {meta.description}
                 </p>
                 <p className="mt-3 text-xs font-medium text-[var(--color-ink)] group-hover:translate-x-0.5 transition-transform">
-                  Browse providers →
+                  {isEmpty ? "Get featured here →" : "Browse →"}
                 </p>
               </Link>
             );
           })}
+        </div>
+
+        {/* Single full-width Coming soon / Get featured callout — the
+            generic recruitment pitch for any provider not sure which
+            slot they fit. Each category card above also routes to its
+            own per-slot CTA on the detail page. */}
+        <div className="mt-8">
+          <FeaturedHereCallout
+            slot="services-general"
+            audience="vetted providers across travel insurance, international health insurance, vaccinations clinics, biometrics centres, panel physicians, passport photo studios, and registered immigration advisers"
+            cohortNote="Visavu doesn't pay-for-play and won't accept money to bump rank — listings are editorial selections from a shortlist of providers whose actual policies / processes / regulator status hold up. If you'd like to be considered, get in touch."
+          />
         </div>
 
         <section className="mt-16">

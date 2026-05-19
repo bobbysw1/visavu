@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Breadcrumbs, breadcrumbJsonLd } from "@/components/Breadcrumbs";
 import { ServiceCard } from "@/components/RelocationServicesPanel";
 import { ServiceCategoryIcon } from "@/components/ServiceCategoryIcon";
+import { FeaturedHereCallout } from "@/components/FeaturedHereCallout";
 import { SITE, absoluteUrl } from "@/lib/site";
 import {
   SERVICE_CATEGORIES,
@@ -17,6 +18,42 @@ import { categoryIntroFor } from "@/content/services/categoryIntros";
 const SLUG_TO_CATEGORY: Record<string, ServiceCategory> = Object.fromEntries(
   SERVICE_CATEGORIES.map((c) => [CATEGORY_META[c].slug, c]),
 );
+
+/* Per-category copy for the FeaturedHereCallout — names the kind of
+   provider we'd actually accept into the slot. Generic "providers" is
+   too vague; "FCA-authorised travel insurers" or "MARA-registered
+   migration agents" is a real qualifying signal that filters out the
+   SEO-spam inbound. */
+function featuredAudienceFor(c: ServiceCategory): string {
+  switch (c) {
+    case "travel_insurance":
+      return "FCA-authorised or equivalent travel insurers";
+    case "health_insurance":
+      return "international private medical insurers";
+    case "vaccinations":
+      return "national-health-service travel clinics";
+    case "biometrics":
+      return "official visa application centres";
+    case "medical_checks":
+      return "panel physicians for the major immigration authorities";
+    case "passport_photos":
+      return "biometric-compliant photo studios";
+    case "legal_services":
+      return "registered immigration advisers (IAA / MARA / CICC / bar-admitted attorneys)";
+  }
+}
+
+function featuredCohortNoteFor(c: ServiceCategory): string {
+  switch (c) {
+    case "legal_services":
+      return "We're recruiting the first cohort now — registration documents must be current and we verify with the regulating body before listing.";
+    case "travel_insurance":
+    case "health_insurance":
+      return "We're shortlisting partners whose actual policy terms (medical evacuation cover, pre-existing condition treatment, visa-application acceptance letters) hold up against scrutiny — not the lowest-priced.";
+    default:
+      return "We're shortlisting partners now; entries will go live as agreements complete.";
+  }
+}
 
 export function generateStaticParams() {
   return SERVICE_CATEGORIES.map((c) => ({ category: CATEGORY_META[c].slug }));
@@ -121,9 +158,14 @@ export default async function ServiceCategoryPage({
         </section>
 
         {services.length === 0 ? (
-          <p className="text-sm text-neutral-500 italic">
-            No providers in this category yet. Check back soon.
-          </p>
+          /* No providers in this category yet — explicit "Coming soon /
+             Get featured here" callout instead of the awkward
+             "check back soon" empty state. */
+          <FeaturedHereCallout
+            slot={meta.slug}
+            audience={featuredAudienceFor(category)}
+            cohortNote={featuredCohortNoteFor(category)}
+          />
         ) : (
           <>
             <h2 className="text-lg font-semibold mb-3">Providers we list</h2>
@@ -132,6 +174,19 @@ export default async function ServiceCategoryPage({
                 <ServiceCard key={s.id} service={s} />
               ))}
             </div>
+            {/* Even when we already list informational providers (gov /
+                non-profit), surface a compact "Get featured" CTA for any
+                future sponsored-tier provider that wants on the page. */}
+            {meta.affiliateSafe && (
+              <div className="mt-6">
+                <FeaturedHereCallout
+                  slot={meta.slug}
+                  audience={featuredAudienceFor(category)}
+                  cohortNote={featuredCohortNoteFor(category)}
+                  variant="compact"
+                />
+              </div>
+            )}
           </>
         )}
 

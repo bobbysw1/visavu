@@ -81,12 +81,16 @@ export function RelocationServicesPanel({
           Useful links for travel to {nameFor(destinationIso2)}
         </h3>
         <p className="text-xs text-neutral-600 dark:text-neutral-400">
-          Official government and authority links only. We&apos;ve removed commercial provider
-          listings for travel insurance, health insurance, passport photos and legal services
-          until affiliate-partner agreements are in place — see our{" "}
-          <Link href="/disclosure" className="underline hover:no-underline">
-            commercial policy
-          </Link>.
+          Official government and authority links only. Commercial provider
+          slots (travel insurance, international health insurance, passport
+          photos, registered immigration advisers) are <strong>coming soon</strong>{" "}
+          — we&apos;re shortlisting the first cohort.{" "}
+          <Link
+            href="/contact?subject=featured-listing&slot=services-general"
+            className="underline hover:no-underline text-[var(--color-ink)] font-medium"
+          >
+            Get featured here →
+          </Link>
         </p>
       </header>
 

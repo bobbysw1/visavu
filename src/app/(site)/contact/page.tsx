@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AlertCircle, Mail, FileSearch, Briefcase, Newspaper, Shield } from "lucide-react";
+import { AlertCircle, Mail, FileSearch, Briefcase, Newspaper, Shield, Award } from "lucide-react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { PageHero } from "@/components/PageHero";
 import { SITE, absoluteUrl } from "@/lib/site";
@@ -98,6 +98,23 @@ export default function ContactPage() {
           Working on a story about visa policy, migration trends, or programmatic visa data?
           We&apos;re happy to provide aggregated figures, methodology notes, or quotes. Please
           include your outlet, deadline, and a brief on the angle.
+        </ContactCategory>
+
+        <ContactCategory
+          icon={<Award size={20} aria-hidden="true" />}
+          subject="Get featured: [service category]"
+          title="Get featured on Visavu"
+          tone="emerald"
+        >
+          We&apos;re recruiting the first cohort of vetted providers across
+          travel insurance, international health insurance, vaccinations
+          clinics, biometrics centres, panel physicians, passport photo
+          studios, and registered immigration advisers (IAA / MARA / CICC /
+          bar-admitted). Send your company name, regulator registration
+          number where applicable, and a one-paragraph pitch on why
+          you&apos;d be useful to Visavu users. We don&apos;t accept
+          pay-for-rank; listings are editorial and we verify regulator
+          registration before featuring.
         </ContactCategory>
 
         <ContactCategory

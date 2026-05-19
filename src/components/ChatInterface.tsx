@@ -79,7 +79,7 @@ function linkify(text: string): React.ReactNode[] {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-blue-700 dark:text-blue-300 underline decoration-blue-300/60 hover:decoration-blue-500"
+        className="text-[var(--color-ink)] underline decoration-blue-300/60 hover:decoration-blue-500"
       >
         {url}
       </a>,
@@ -96,7 +96,7 @@ function RoleAvatar({ role }: { role: "user" | "assistant" }) {
     return (
       <div
         aria-hidden="true"
-        className="size-7 shrink-0 rounded-full bg-blue-600 text-white grid place-items-center text-xs font-semibold"
+        className="size-7 shrink-0 rounded-full bg-[var(--color-muted)] border border-[var(--color-rule-strong)] text-[var(--color-ink)] grid place-items-center text-[10px] font-semibold"
       >
         You
       </div>
@@ -105,7 +105,7 @@ function RoleAvatar({ role }: { role: "user" | "assistant" }) {
   return (
     <div
       aria-hidden="true"
-      className="size-7 shrink-0 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 text-white grid place-items-center text-xs font-semibold"
+      className="size-7 shrink-0 rounded-full bg-[var(--color-ink)] text-[var(--color-paper)] grid place-items-center text-xs font-serif italic"
       title="Visavu AI"
     >
       V
@@ -257,17 +257,17 @@ export function ChatInterface() {
       {/* Conversation */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto rounded-xl border border-neutral-200 dark:border-neutral-800 bg-gradient-to-b from-white to-neutral-50 dark:from-neutral-900 dark:to-neutral-950 p-4 sm:p-5 min-h-[320px] max-h-[60vh] shadow-sm"
+        className="flex-1 overflow-y-auto rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper-elev)] p-4 sm:p-5 min-h-[320px] max-h-[60vh] shadow-sm"
       >
         {!hasMessages && (
           <div className="space-y-5">
             <div className="flex items-start gap-3">
               <RoleAvatar role="assistant" />
-              <div className="flex-1 text-sm text-neutral-700 dark:text-neutral-200">
-                <p className="font-medium text-neutral-900 dark:text-neutral-100 mb-1">
+              <div className="flex-1 text-sm text-[var(--color-ink)]">
+                <p className="font-medium mb-1">
                   Hi, I&apos;m Visavu.
                 </p>
-                <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                <p className="text-[var(--color-ink-muted)] leading-relaxed">
                   Ask me anything about visas, work routes, study options, or
                   short-stay rules. I&apos;ll cite my sources and won&apos;t
                   guess — if I don&apos;t know, I&apos;ll say so.
@@ -279,9 +279,9 @@ export function ChatInterface() {
               {SUGGESTION_CATEGORIES.map((cat) => (
                 <div
                   key={cat.label}
-                  className="rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white/60 dark:bg-neutral-900/60 p-3 space-y-2"
+                  className="rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper)] p-3 space-y-2"
                 >
-                  <div className="text-xs font-semibold text-neutral-600 dark:text-neutral-300 uppercase tracking-wide">
+                  <div className="text-xs font-semibold text-[var(--color-ink-muted)] uppercase tracking-wide">
                     <span className="mr-1.5">{cat.emoji}</span>
                     {cat.label}
                   </div>
@@ -291,7 +291,7 @@ export function ChatInterface() {
                         <button
                           type="button"
                           onClick={() => void send(q)}
-                          className="text-left text-sm text-blue-700 dark:text-blue-300 hover:underline decoration-blue-300/60"
+                          className="text-left text-sm text-[var(--color-ink)] underline decoration-[var(--color-rule-strong)] underline-offset-2 hover:decoration-[var(--color-ink)]"
                         >
                           {q}
                         </button>
@@ -313,8 +313,8 @@ export function ChatInterface() {
                   <div
                     className={
                       m.role === "user"
-                        ? "ml-auto max-w-[90%] sm:max-w-[80%] rounded-2xl rounded-tr-md bg-blue-600 text-white px-3.5 py-2.5 text-sm whitespace-pre-wrap break-words shadow-sm"
-                        : "mr-auto max-w-[95%] sm:max-w-[85%] rounded-2xl rounded-tl-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-3.5 py-2.5 text-sm whitespace-pre-wrap break-words shadow-sm"
+                        ? "ml-auto max-w-[90%] sm:max-w-[80%] rounded-2xl rounded-tr-md bg-[var(--color-ink)] text-[var(--color-paper)] px-3.5 py-2.5 text-sm whitespace-pre-wrap break-words shadow-sm"
+                        : "mr-auto max-w-[95%] sm:max-w-[85%] rounded-2xl rounded-tl-md bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] px-3.5 py-2.5 text-sm whitespace-pre-wrap break-words shadow-sm"
                     }
                   >
                     {linkify(m.content)}
@@ -335,7 +335,7 @@ export function ChatInterface() {
             {busy && (
               <div className="flex gap-2.5">
                 <RoleAvatar role="assistant" />
-                <div className="mr-auto rounded-2xl rounded-tl-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-3.5 py-3 text-sm shadow-sm">
+                <div className="mr-auto rounded-2xl rounded-tl-md bg-[var(--color-paper)] border border-[var(--color-rule)] px-3.5 py-3 text-sm shadow-sm">
                   <TypingDots />
                 </div>
               </div>
@@ -347,7 +347,7 @@ export function ChatInterface() {
                     key={q}
                     type="button"
                     onClick={() => void send(q)}
-                    className="text-xs rounded-full border border-neutral-300 dark:border-neutral-700 bg-white/80 dark:bg-neutral-900/60 hover:bg-blue-50 dark:hover:bg-neutral-800 hover:border-blue-300 dark:hover:border-blue-700 text-neutral-700 dark:text-neutral-200 px-3 py-1.5 transition"
+                    className="text-xs rounded-full border border-[var(--color-rule-strong)] bg-[var(--color-paper)] hover:bg-[var(--color-muted)] hover:border-[var(--color-ink)] text-[var(--color-ink)] px-3 py-1.5 transition"
                   >
                     {q}
                   </button>
@@ -364,7 +364,7 @@ export function ChatInterface() {
           e.preventDefault();
           void send(input);
         }}
-        className="flex items-end gap-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20 transition px-2 py-1.5 shadow-sm"
+        className="flex items-end gap-2 rounded-xl border border-[var(--color-rule-strong)] bg-[var(--color-paper-elev)] focus-within:border-[var(--color-ink)] focus-within:ring-2 focus-within:ring-[var(--color-ink)]/10 transition px-2 py-1.5 shadow-sm"
       >
         <textarea
           ref={textareaRef}
@@ -379,12 +379,12 @@ export function ChatInterface() {
           rows={1}
           placeholder="Ask a visa question…  (Shift+Enter for newline)"
           aria-label="Type your question"
-          className="flex-1 min-w-0 bg-transparent px-2 py-2 text-sm outline-none resize-none placeholder:text-neutral-400 max-h-[200px]"
+          className="flex-1 min-w-0 bg-transparent text-[var(--color-ink)] px-2 py-2 text-sm outline-none resize-none placeholder:text-[var(--color-ink-muted)] max-h-[200px]"
         />
         <button
           type="submit"
           disabled={busy || !input.trim()}
-          className="shrink-0 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-neutral-300 dark:disabled:bg-neutral-700 disabled:cursor-not-allowed text-white font-semibold px-4 py-2 text-sm transition"
+          className="shrink-0 rounded-full bg-[var(--color-ink)] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed text-[var(--color-paper)] font-semibold px-4 py-2 text-sm transition"
           aria-label="Send message"
         >
           {busy ? "…" : "Send"}
@@ -392,11 +392,11 @@ export function ChatInterface() {
       </form>
 
       {/* Footer actions */}
-      <div className="flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
+      <div className="flex items-center justify-between text-xs text-[var(--color-ink-muted)]">
         {hasMessages ? (
           <button
             onClick={clear}
-            className="hover:text-neutral-700 dark:hover:text-neutral-200 underline-offset-2 hover:underline"
+            className="hover:text-[var(--color-ink)] underline-offset-2 hover:underline"
           >
             Clear conversation
           </button>
@@ -405,7 +405,7 @@ export function ChatInterface() {
         )}
         <Link
           href="/find-my-visa"
-          className="hover:text-neutral-700 dark:hover:text-neutral-200 underline-offset-2 hover:underline"
+          className="hover:text-[var(--color-ink)] underline-offset-2 hover:underline"
         >
           Want a structured intake instead? →
         </Link>

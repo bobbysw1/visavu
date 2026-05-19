@@ -109,7 +109,7 @@ export function FloatingChatLauncher() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Open Visavu chat assistant"
-        className="fixed bottom-4 right-4 z-40 inline-flex items-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/30 transition px-4 py-3 text-sm font-semibold"
+        className="fixed bottom-4 right-4 z-40 inline-flex items-center gap-2 rounded-full bg-[var(--color-ink)] hover:opacity-90 text-[var(--color-paper)] shadow-lg shadow-black/15 transition px-4 py-3 text-sm font-semibold"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path
@@ -132,17 +132,17 @@ export function FloatingChatLauncher() {
     <div
       role="dialog"
       aria-label="Visavu chat assistant"
-      className="fixed bottom-4 right-4 z-40 w-[calc(100vw-2rem)] sm:w-[380px] max-h-[calc(100vh-2rem)] sm:max-h-[600px] flex flex-col rounded-xl shadow-2xl shadow-black/20 border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 overflow-hidden"
+      className="fixed bottom-4 right-4 z-40 w-[calc(100vw-2rem)] sm:w-[380px] max-h-[calc(100vh-2rem)] sm:max-h-[600px] flex flex-col rounded-xl shadow-2xl shadow-black/15 border border-[var(--color-rule)] bg-[var(--color-paper-elev)] overflow-hidden"
     >
       {/* HEADER */}
-      <div className="shrink-0 flex items-center justify-between gap-2 border-b border-neutral-200 dark:border-neutral-800 px-3 py-2.5 bg-neutral-50 dark:bg-neutral-900">
+      <div className="shrink-0 flex items-center justify-between gap-2 border-b border-[var(--color-rule)] px-3 py-2.5 bg-[var(--color-muted)]">
         <div className="flex items-center gap-2 min-w-0 flex-1">
-          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-          <p className="text-sm font-semibold truncate">Ask Visavu</p>
+          <span className="inline-block w-2 h-2 rounded-full bg-[var(--color-accent)] shrink-0" />
+          <p className="text-sm font-semibold truncate text-[var(--color-ink)]">Ask Visavu</p>
         </div>
         <Link
           href="/chat"
-          className="text-xs text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 hidden sm:inline"
+          className="text-xs text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] hidden sm:inline"
         >
           Open full →
         </Link>
@@ -150,7 +150,7 @@ export function FloatingChatLauncher() {
           type="button"
           onClick={() => setOpen(false)}
           aria-label="Close chat"
-          className="ml-1 p-1 rounded text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
+          className="ml-1 p-1 rounded text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M6 6l12 12M6 18L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -161,10 +161,10 @@ export function FloatingChatLauncher() {
       {/* MESSAGES */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto p-3 space-y-3 bg-neutral-50/40 dark:bg-neutral-900/40 min-h-[200px]"
+        className="flex-1 overflow-y-auto p-3 space-y-3 bg-[var(--color-paper)] min-h-[200px]"
       >
         {messages.length === 0 ? (
-          <div className="text-xs space-y-2 text-neutral-600 dark:text-neutral-400">
+          <div className="text-xs space-y-2 text-[var(--color-ink-muted)]">
             <p>Try asking:</p>
             <ul className="space-y-1.5">
               {SEED_PROMPTS.map((q, i) => (
@@ -172,7 +172,7 @@ export function FloatingChatLauncher() {
                   <button
                     type="button"
                     onClick={() => void send(q)}
-                    className="text-left text-blue-700 dark:text-blue-300 hover:underline"
+                    className="text-left text-[var(--color-ink)] underline decoration-[var(--color-rule-strong)] hover:decoration-[var(--color-ink)] underline-offset-2"
                   >
                     “{q}”
                   </button>
@@ -186,8 +186,8 @@ export function FloatingChatLauncher() {
               key={i}
               className={
                 m.role === "user"
-                  ? "ml-auto max-w-[85%] rounded-lg bg-blue-600 text-white px-3 py-2 text-xs whitespace-pre-wrap"
-                  : "mr-auto max-w-[90%] rounded-lg bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-3 py-2 text-xs whitespace-pre-wrap"
+                  ? "ml-auto max-w-[85%] rounded-lg bg-[var(--color-ink)] text-[var(--color-paper)] px-3 py-2 text-xs whitespace-pre-wrap"
+                  : "mr-auto max-w-[90%] rounded-lg bg-[var(--color-paper-elev)] border border-[var(--color-rule)] px-3 py-2 text-xs whitespace-pre-wrap text-[var(--color-ink)]"
               }
             >
               {m.content}
@@ -195,7 +195,7 @@ export function FloatingChatLauncher() {
           ))
         )}
         {busy && (
-          <div className="mr-auto rounded-lg bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-3 py-2 text-xs text-neutral-500 italic">
+          <div className="mr-auto rounded-lg bg-[var(--color-paper-elev)] border border-[var(--color-rule)] px-3 py-2 text-xs text-[var(--color-ink-muted)] italic">
             Thinking…
           </div>
         )}
@@ -207,7 +207,7 @@ export function FloatingChatLauncher() {
           e.preventDefault();
           void send(input);
         }}
-        className="shrink-0 border-t border-neutral-200 dark:border-neutral-800 p-2.5 bg-white dark:bg-neutral-950"
+        className="shrink-0 border-t border-[var(--color-rule)] p-2.5 bg-[var(--color-paper-elev)]"
       >
         <div className="flex items-end gap-2">
           <textarea
@@ -222,17 +222,17 @@ export function FloatingChatLauncher() {
             rows={1}
             placeholder="Ask a visa question…"
             aria-label="Type your question"
-            className="flex-1 min-w-0 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-2.5 py-1.5 text-xs outline-none focus:border-blue-500 resize-none max-h-24"
+            className="flex-1 min-w-0 rounded-lg border border-[var(--color-rule-strong)] bg-[var(--color-paper)] text-[var(--color-ink)] px-2.5 py-1.5 text-xs outline-none focus:border-[var(--color-ink)] resize-none max-h-24"
           />
           <button
             type="submit"
             disabled={busy || !input.trim()}
-            className="shrink-0 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-neutral-400 text-white font-semibold px-3 py-1.5 text-xs transition"
+            className="shrink-0 rounded-full bg-[var(--color-ink)] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed text-[var(--color-paper)] font-semibold px-3.5 py-1.5 text-xs transition"
           >
             Send
           </button>
         </div>
-        <p className="text-[10px] text-neutral-500 dark:text-neutral-400 mt-1.5">
+        <p className="text-[10px] text-[var(--color-ink-muted)] mt-1.5">
           General information, not legal advice. <Link href="/disclaimer" className="underline">Disclaimer</Link>
         </p>
       </form>

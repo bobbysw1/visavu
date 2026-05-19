@@ -1,16 +1,18 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { CurrencySwitcher } from "./CurrencySwitcher";
-import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MobileMenu } from "./MobileMenu";
 import { ToolsDropdown } from "./ToolsDropdown";
 
-// LocaleSwitcher is now backed by the P29 i18n scaffold registry
-// (src/lib/i18n/locales.ts). Each option labels its translation status
-// (complete / partial / stub) so users see exactly what's translated.
-// Full URL-prefix routing (/(site)/[locale]/*) is the next migration —
-// until then the switcher persists locale via cookie + ?lang= for the
-// strings that already have translations.
+// LocaleSwitcher removed 2026-05-19 — translation coverage was only
+// ~120 strings against a fully English UI, so the switcher implied
+// coverage we didn't actually have. Better to render <html lang="en">
+// honestly and let Chrome / Safari / Edge fire their built-in
+// auto-translate prompt when the user's browser language differs.
+// The i18n machinery (src/i18n/t.ts + per-locale JSON) is kept for
+// future re-enable once full URL-prefix routing + complete string
+// coverage land. See SiteFooter for the user-facing browser-translate
+// hint.
 
 /**
  * SiteHeader — editorial chrome.
@@ -72,9 +74,6 @@ export function SiteHeader() {
               client-side; without a boundary, Next bails out of SSG. */}
           <Suspense fallback={null}>
             <CurrencySwitcher />
-          </Suspense>
-          <Suspense fallback={null}>
-            <LocaleSwitcher />
           </Suspense>
           <MobileMenu />
         </nav>

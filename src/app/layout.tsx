@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Newsreader } from "next/font/google";
-import { headers } from "next/headers";
 import "./globals.css";
 import { SITE, absoluteUrl } from "@/lib/site";
-import { SUPPORTED_LOCALES, DEFAULT_LOCALE, isRtl, resolveLocaleFromAcceptLanguage, type Locale } from "@/i18n/t";
 
 // Inter — the cleanest neutral sans-serif for content sites. Loaded via the
 // Next font system so it's self-hosted, eliminates layout shift, and the
@@ -72,16 +70,13 @@ export const metadata: Metadata = {
     canonical: absoluteUrl("/"),
     // Reciprocal hreflang cluster — every supported locale advertises every
     // other supported locale + an x-default fallback. Right now we resolve
-    // locale via ?lang= query param (URL-routing migration to /[locale]/...
-    // is the larger followup). Google reads ?lang= alternates correctly
-    // when they're stable and reciprocal — every page emits the same set.
+    // Site is currently English-only. Per-locale hreflang alternates
+    // removed alongside the LocaleSwitcher rollback — pointing Google
+    // at ?lang=es pages that aren't actually translated is a worse SEO
+    // signal than just declaring x-default = English. Re-add the
+    // language map when full URL-prefix routing + complete string
+    // coverage land.
     languages: {
-      ...Object.fromEntries(
-        SUPPORTED_LOCALES.map((loc) => [
-          loc,
-          loc === DEFAULT_LOCALE ? absoluteUrl("/") : absoluteUrl(`/?lang=${loc}`),
-        ]),
-      ),
       "x-default": absoluteUrl("/"),
     },
     // RSS feed auto-discovery — browsers + feed-reader extensions surface
@@ -93,28 +88,18 @@ export const metadata: Metadata = {
 };
 
 /**
- * Resolve the visitor's locale on the server BEFORE rendering the html
- * element, so the html lang attribute is correct for the very first byte
- * sent to the browser (matters for screen readers + SEO crawlers that
- * read lang from the opening tag, not after a client-side hydration).
+ * The site is currently English-only. The i18n machinery (per-locale
+ * JSON, t() helper, hreflang clusters) is retained for future re-enable
+ * once full URL-prefix routing + complete string coverage land — but
+ * the html lang attribute is hard-coded to "en" so the user's browser
+ * auto-translate prompt (Chrome / Safari / Edge all support this) fires
+ * when their browser language differs from the page. Telling the
+ * browser the page is Spanish when 95% of strings are English would
+ * suppress that prompt and mislead assistive tech.
  *
- * Resolution order, matching src/i18n/t.ts:
- *   1. ?lang= query param (URL-driven, beats everything for shareability)
- *   2. Accept-Language header (first matching supported locale)
- *   3. DEFAULT_LOCALE = "en"
- *
- * Wrapped in a try because next/headers throws when accessed from a
- * statically-rendered route segment — we silently fall back to default
- * rather than break static generation of the homepage.
+ * See SiteFooter for the user-facing "use your browser's translate
+ * feature" hint.
  */
-async function detectLocale(): Promise<Locale> {
-  try {
-    const h = await headers();
-    return resolveLocaleFromAcceptLanguage(h.get("accept-language"));
-  } catch {
-    return DEFAULT_LOCALE;
-  }
-}
 
 export const viewport: Viewport = {
   themeColor: [
@@ -124,11 +109,10 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const locale = await detectLocale();
   return (
     <html
-      lang={locale}
-      dir={isRtl(locale) ? "rtl" : "ltr"}
+      lang="en"
+      dir="ltr"
       className={`${inter.variable} ${newsreader.variable}`}
     >
       <body className="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen">

@@ -62,6 +62,14 @@ export function SiteFooter() {
       <div className="border-t border-[var(--color-rule)]">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4 text-xs text-[var(--color-ink-muted)] flex flex-wrap items-center justify-between gap-3">
           <span>© {new Date().getFullYear()} {SITE.name}</span>
+          {/* English-only site — Chrome / Safari / Edge auto-translate
+              prompt fires because html lang="en" is hard-coded; this
+              line just confirms the affordance so non-English users
+              know it's there. */}
+          <span className="italic max-w-md text-right">
+            Reading in another language? Your browser&apos;s translate
+            feature (Chrome, Safari, Edge) will translate the page.
+          </span>
         </div>
       </div>
     </footer>

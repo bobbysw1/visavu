@@ -818,6 +818,8 @@ export default async function Page({
                 destinationIso2={d}
                 purpose={purpose}
                 visaLabel={primary.label}
+                passportIso2={p}
+                visaStatus={primary.status}
               />
             )}
 

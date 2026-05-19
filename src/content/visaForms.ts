@@ -1207,6 +1207,45 @@ const MX_TEMPORAL: FormsEntry = {
   notes: "Residente Temporal: 1-year initial, renewable up to 4 years total, then must convert to Residente Permanente. Financial requirement: ~US$4,300/month income for 6 months OR US$72,000 savings for 12 months (varies by consulate). Work authorisation: opt-in for Trabajador subtype.",
 };
 
+const MX_PERMANENTE: FormsEntry = {
+  destinationIso2: "MX",
+  programmeLabel: "Mexico — Residente Permanente (Permanent Residency)",
+  programmeSlug: "/destination/mx",
+  applicationPortal: "https://www.gob.mx/inm",
+  applicableTo: { purposes: ["family"], labelKeywords: ["residente permanente", "permanent resident"] },
+  forms: [
+    { code: "Consular visa application", name: "Solicitud de Visa Mexicana — Residente Permanente", description: "Submit at Mexican consulate. Direct permanent-residency path for: retirees with US$5,750+/month income or US$230k+ savings; spouse/parent/child of Mexican citizen; refugees; investors meeting thresholds.", downloadUrl: "https://consulmex.sre.gob.mx/", filedBy: "applicant", stage: "with_application" },
+    { code: "Canje at INM", name: "In-country conversion to Residente Permanente card", description: "Within 30 days of arrival, file at INM Mexico office. MX$7,400 for the permanent residency card.", downloadUrl: "https://www.gob.mx/inm/acciones-y-programas/tramites-migratorios", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Residente Permanente is granted directly (not converted from Temporal) for retirees, family of Mexicans, and high-net-worth applicants. Indefinite stay, full work authorisation. Naturalisation after 5 years of permanent residency (2 years for Latin American + Spanish nationals).",
+};
+
+const MX_TEMPORAL_ESTUDIANTE: FormsEntry = {
+  destinationIso2: "MX",
+  programmeLabel: "Mexico — Residente Temporal Estudiante (Student)",
+  programmeSlug: "/destination/mx",
+  applicationPortal: "https://www.gob.mx/inm",
+  applicableTo: { purposes: ["study"], labelKeywords: ["estudiante", "student"] },
+  forms: [
+    { code: "Acceptance letter", name: "Acceptance from SEP-accredited Mexican institution", description: "Issued by the Mexican university / institute. SEP-accredited list at sep.gob.mx.", downloadUrl: "https://www.sep.gob.mx/", filedBy: "applicant", stage: "before_applying" },
+    { code: "Consular visa application", name: "Solicitud de Visa Mexicana — Estudiante", description: "Submit at Mexican consulate with acceptance letter, financial proof (~US$400/month), and tuition payment confirmation.", downloadUrl: "https://consulmex.sre.gob.mx/", filedBy: "applicant", stage: "with_application" },
+    { code: "Canje at INM", name: "Estudiante card at INM within 30 days", description: "Convert visa to 1-year Estudiante card at local INM office. Renewable annually for course duration.", downloadUrl: "https://www.gob.mx/inm/acciones-y-programas/tramites-migratorios", filedBy: "applicant", stage: "after_decision" },
+  ],
+  notes: "Estudiante variant of Residente Temporal. Permits 20 hrs/week part-time work with INM authorisation. Mexico's UNAM + Tec de Monterrey + Anáhuac all offer English-medium programmes for international students.",
+};
+
+const MX_VISITOR_FMM: FormsEntry = {
+  destinationIso2: "MX",
+  programmeLabel: "Mexico — Visitor (FMM — Forma Migratoria Múltiple)",
+  programmeSlug: "/destination/mx",
+  applicationPortal: "https://www.gob.mx/inm",
+  applicableTo: { purposes: ["tourism", "business"], labelKeywords: ["fmm", "visitor", "tourist", "business visit"] },
+  forms: [
+    { code: "FMM", name: "Forma Migratoria Múltiple (FMM)", description: "Free at land borders + airports. Issued on entry to all visa-exempt visitors. Pre-fill at INM's online portal to save time on arrival.", downloadUrl: "https://www.inm.gob.mx/fmme/publico/en/solicitud.html", filedBy: "applicant", stage: "with_application", notes: "157 nationalities visa-exempt for tourism + business up to 180 days. The FMM is NOT a visa — it's an entry permit. Pre-fill online to skip the airport queue." },
+  ],
+  notes: "EU / UK / US / CA / AU / NZ / JP / KR + most of Latin America are visa-exempt. The FMM is what an officer hands you on the plane / at the airport. Free, valid up to 180 days, single-entry. For longer stays or work → Residente Temporal / Permanente.",
+};
+
 // ─────────────────────────────────────────────────────────────────────────
 // PHILIPPINES — SRRV + 9(g) + 13(a)
 // ─────────────────────────────────────────────────────────────────────────
@@ -1476,6 +1515,9 @@ export const VISA_FORMS: FormsEntry[] = [
   IN_OCI,
   VN_WORK_PERMIT,
   MX_TEMPORAL,
+  MX_PERMANENTE,
+  MX_TEMPORAL_ESTUDIANTE,
+  MX_VISITOR_FMM,
   PH_SRRV,
   PH_13A_MARRIAGE,
   MY_EP,

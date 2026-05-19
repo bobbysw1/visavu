@@ -1,0 +1,28 @@
+{
+  "generatedAt": "2026-05-19T22:29:29.497Z",
+  "items": {
+    "th-visa-exempt-30days-2026-05": {
+      "id": "th-visa-exempt-30days-2026-05",
+      "sourceUrl": "https://www.nationthailand.com/news/policy/40066405",
+      "checkedAt": "2026-05-19T22:29:29.158Z",
+      "status": "verified",
+      "httpCode": 200,
+      "keywordsExpected": [
+        "thailand",
+        "cuts",
+        "visa",
+        "exempt",
+        "stays",
+        "days"
+      ],
+      "keywordsMatched": [
+        "thailand",
+        "cuts",
+        "visa",
+        "exempt",
+        "stays",
+        "days"
+      ]
+    }
+  }
+}

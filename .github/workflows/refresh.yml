@@ -66,6 +66,15 @@ jobs:
         if: inputs.dry_run != true
         run: npx tsx src/scripts/buildRecentUpdates.ts
 
+      - name: Re-verify hand-curated visa-policy news sources
+        # Nightly check that every sourceUrl in manualPolicyNews.ts
+        # still responds 200 and still mentions the title keywords.
+        # --soft means we never fail the cron over a broken source —
+        # it's logged to src/data/news_verification.json instead and
+        # surfaces on /admin/news where you can fix or remove the item.
+        if: inputs.dry_run != true
+        run: npm run verify-news -- --soft
+
       - name: Commit refreshed fixtures + snapshot
         if: steps.changes.outputs.changed == 'true' && inputs.dry_run != true
         run: |

@@ -26,6 +26,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { flagEmoji, nameFor } from "@/lib/countries";
 import { activePolicyNews, type ManualPolicyNews } from "@/content/manualPolicyNews";
+import { verificationFor, relativeVerificationTime } from "@/lib/newsVerification";
 
 const DISMISSED_KEY = "visavu.news.dismissed";
 const ROTATION_MS = 8_000;
@@ -159,11 +160,39 @@ export function NewsFlashToast() {
           <p className="text-sm font-medium text-[var(--color-ink)] leading-snug group-hover:underline underline-offset-2 decoration-[var(--color-rule-strong)]">
             {item.title}
           </p>
-          {visible.length > 1 && (
-            <p className="text-[10px] text-[var(--color-ink-muted)] mt-1 tabular-nums">
-              {activeIdx + 1}/{visible.length} · auto-rotates
-            </p>
-          )}
+          {(() => {
+            const v = verificationFor(item.id);
+            const verified = v.status === "verified";
+            return (
+              <p className="text-[10px] text-[var(--color-ink-muted)] mt-1 flex items-baseline flex-wrap gap-x-2 gap-y-0.5">
+                {verified ? (
+                  <span className="text-emerald-700 dark:text-emerald-400 font-medium">
+                    ✓ Verified {relativeVerificationTime(v.checkedAt)}
+                  </span>
+                ) : v.status === "unchecked" ? (
+                  <span className="text-[var(--color-ink-muted)]">Verification pending</span>
+                ) : (
+                  <span className="text-amber-700 dark:text-amber-400 font-medium">⚠ Source needs review</span>
+                )}
+                {item.sourceUrl && (
+                  <a
+                    href={item.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="underline hover:no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
+                  >
+                    Source ↗
+                  </a>
+                )}
+                {visible.length > 1 && (
+                  <span className="tabular-nums opacity-70">
+                    {activeIdx + 1}/{visible.length}
+                  </span>
+                )}
+              </p>
+            );
+          })()}
         </div>
         {/* Dismiss — separate hit area so click doesn't navigate. */}
         <button

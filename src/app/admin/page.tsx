@@ -45,6 +45,11 @@ const PAGES = [
     title: "Chat review",
     blurb: "Recent conversations, refusals, top-token spenders. Used to spot bad replies + tune the prompt.",
   },
+  {
+    href: "/admin/news",
+    title: "News review",
+    blurb: "Hand-curated visa-policy news (manualPolicyNews.ts) with verification status from `npm run verify-news` — see which items are credibly sourced + which need attention.",
+  },
 ];
 
 export default function AdminIndexPage() {

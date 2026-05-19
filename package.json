@@ -23,6 +23,7 @@
     "reconcile-wikipedia": "tsx src/scripts/reconcileWikipediaByPassport.ts",
     "check-prod": "tsx src/scripts/checkProductionReadiness.ts",
     "seo-check": "tsx src/scripts/seoCheck.ts",
+    "verify-news": "tsx src/scripts/verifyNews.ts",
     "refresh-rates": "tsx src/scripts/refreshExchangeRates.ts",
     "refresh": "tsx src/scripts/refresh.ts",
     "fetch:heroes": "tsx --env-file=.env src/scripts/fetchCountryHeroes.ts",

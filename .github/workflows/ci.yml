@@ -61,11 +61,28 @@ jobs:
           echo "✓ Fee sanity OK — 0 HIGH suspects"
 
       - name: Tests
-        # Switched from --reporter=dot to --reporter=default so failed-
-        # test names + assertion diffs print to the CI log. Previously
-        # all we saw on failure was a wall of dots + "exit 1" with no
-        # signal as to WHICH test broke.
-        # Also disabled cache + forced no isolation to surface any
-        # cross-test state leak that may explain why CI fails while
-        # all 272 tests pass locally on identical Node 20.
-        run: npx vitest run --reporter=default --no-cache 2>&1
+        # Triple capture so the next failing run leaves us a paper trail:
+        # 1. --reporter=verbose prints full test names + assertion diffs
+        #    to stdout (visible in the CI log on the workflow page)
+        # 2. --reporter=junit writes a structured XML report we upload
+        #    as an artifact (so we can grep / inspect after the fact)
+        # 3. tee into vitest-output.log so the verbose output also
+        #    lands in the uploaded artifact alongside the JUnit XML
+        # Previous --reporter=default still left us blind because
+        # annotations don't capture stdout; only artifacts do.
+        id: tests
+        run: |
+          set -o pipefail
+          npx vitest run --reporter=verbose --reporter=junit --outputFile=vitest-junit.xml --no-cache 2>&1 | tee vitest-output.log
+
+      - name: Upload test output artifact
+        # Always runs so we can grab the verbose output even when
+        # vitest exits non-zero. Retained 14 days, plenty for debug.
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vitest-output
+          path: |
+            vitest-output.log
+            vitest-junit.xml
+          retention-days: 14

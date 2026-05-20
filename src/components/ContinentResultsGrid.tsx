@@ -109,7 +109,6 @@ export function ContinentResultsGrid({
   heading,
   subheading,
 }: ContinentResultsGridProps) {
-  const [tab, setTab] = useState<Continent | "all">("all");
   const [sort, setSort] = useState<SortAxis>("difficulty");
   // Pre-hydration we don't know the user's currency preference, so the
   // initial server-render renders fees in native currency. After hydration
@@ -119,7 +118,7 @@ export function ContinentResultsGrid({
     setUserCurrency(readCurrencyCookie());
   }, []);
 
-  // Bucket items by continent up-front; counts inform tab badges.
+  // Bucket items by continent up-front; counts inform the section summaries.
   const byContinent: Record<Continent | "other", ScoredItem[]> = useMemo(() => {
     const init: Record<Continent | "other", ScoredItem[]> = {
       europe: [],
@@ -139,15 +138,10 @@ export function ContinentResultsGrid({
     return init;
   }, [scored]);
 
-  const visible = useMemo(() => {
-    const base = tab === "all" ? scored : byContinent[tab];
-    return [...base].sort(comparator(sort));
-  }, [tab, sort, scored, byContinent]);
-
   if (scored.length === 0) return null;
 
   return (
-    <section className="mt-10 space-y-5">
+    <section className="mt-10 space-y-4">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h2 className="text-lg font-semibold mb-1">
@@ -175,26 +169,95 @@ export function ContinentResultsGrid({
         </label>
       </header>
 
-      {/* Continent tabs */}
-      <nav className="flex flex-wrap gap-2" role="tablist" aria-label="Continent">
-        <Tab label="All" count={scored.length} on={tab === "all"} onClick={() => setTab("all")} />
-        {CONTINENT_ORDER.map((c) => (
-          <Tab
-            key={c}
-            label={CONTINENT_LABEL[c]}
-            count={byContinent[c].length}
-            on={tab === c}
-            onClick={() => setTab(c)}
-            dim={byContinent[c].length === 0}
+      {/* Collapsible accordion — one section per continent, all closed
+          by default. The previous tab UI defaulted to "All" which
+          materialised every destination card on first paint — visually
+          enormous for strong passports (UK shows 250 cards). Native
+          <details> keeps the markup crawlable for SEO (contents stay
+          in the DOM, just visually hidden via the closed state) while
+          giving the user explicit opt-in for each region. */}
+      <div className="space-y-2">
+        {CONTINENT_ORDER.map((c) => {
+          const items = byContinent[c];
+          if (items.length === 0) return null;
+          const sorted = [...items].sort(comparator(sort));
+          return (
+            <ContinentSection
+              key={c}
+              continent={c}
+              items={sorted}
+              mode={mode}
+              anchorIso2={anchorIso2}
+              sort={sort}
+              userCurrency={userCurrency}
+            />
+          );
+        })}
+        {byContinent.other.length > 0 && (
+          <ContinentSection
+            continent="other"
+            items={[...byContinent.other].sort(comparator(sort))}
+            mode={mode}
+            anchorIso2={anchorIso2}
+            sort={sort}
+            userCurrency={userCurrency}
           />
-        ))}
-      </nav>
+        )}
+      </div>
+    </section>
+  );
+}
 
-      {visible.length === 0 ? (
-        <p className="text-sm text-neutral-500 italic">No results in this continent for this route.</p>
-      ) : (
+/** One collapsible section per continent. Uses native <details>/<summary>
+ *  for: accessibility (keyboard + screen-reader-friendly out of the box),
+ *  zero JS state, and SEO (Google indexes content inside closed details
+ *  elements just fine — the markup is there, just visually collapsed). */
+function ContinentSection({
+  continent,
+  items,
+  mode,
+  anchorIso2,
+  sort,
+  userCurrency,
+}: {
+  continent: Continent | "other";
+  items: ScoredItem[];
+  mode: Mode;
+  anchorIso2: string;
+  sort: SortAxis;
+  userCurrency: string | null;
+}) {
+  const label = continent === "other" ? "Other" : CONTINENT_LABEL[continent];
+  // Tiny status distribution so the user can preview what's behind the
+  // section without opening it — e.g. Europe shows ~all-green for a UK
+  // passport, Africa shows a mix.
+  const statusCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const i of items) {
+      const k = i.status ?? "unknown";
+      counts[k] = (counts[k] ?? 0) + 1;
+    }
+    return counts;
+  }, [items]);
+
+  return (
+    <details className="group rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 open:shadow-sm">
+      <summary className="flex items-center gap-3 px-4 py-3 cursor-pointer select-none list-none hover:bg-neutral-50 dark:hover:bg-neutral-900/60 rounded-lg [&::-webkit-details-marker]:hidden">
+        <span
+          aria-hidden
+          className="text-neutral-400 dark:text-neutral-500 transition-transform group-open:rotate-90 text-sm"
+        >
+          ▶
+        </span>
+        <span className="font-semibold text-sm flex-1">{label}</span>
+        <StatusBar counts={statusCounts} total={items.length} />
+        <span className="text-xs font-mono text-neutral-500 dark:text-neutral-400 tabular-nums w-10 text-right">
+          {items.length}
+        </span>
+      </summary>
+      <div className="px-4 pb-4 pt-1">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
-          {visible.map((item) => (
+          {items.map((item) => (
             <Card
               key={item.otherIso2}
               item={item}
@@ -205,42 +268,39 @@ export function ContinentResultsGrid({
             />
           ))}
         </div>
-      )}
-    </section>
+      </div>
+    </details>
   );
 }
 
-function Tab({
-  label,
-  count,
-  on,
-  onClick,
-  dim,
-}: {
-  label: string;
-  count: number;
-  on: boolean;
-  onClick: () => void;
-  dim?: boolean;
-}) {
+/** Compact stacked-bar preview of visa-status distribution for the
+ *  continent. Lets the user gauge "is this region mostly easy or
+ *  mostly hard for my passport" without opening the section. */
+function StatusBar({ counts, total }: { counts: Record<string, number>; total: number }) {
+  // Order segments by the status hierarchy so green sits first (easy
+  // status visually anchors the left edge).
+  const SEGMENTS: Array<{ key: string; cls: string }> = [
+    { key: "visa_free", cls: "bg-emerald-400 dark:bg-emerald-500" },
+    { key: "visa_free_with_eta", cls: "bg-emerald-300 dark:bg-emerald-600" },
+    { key: "visa_on_arrival", cls: "bg-sky-400 dark:bg-sky-500" },
+    { key: "e_visa", cls: "bg-violet-400 dark:bg-violet-500" },
+    { key: "embassy_visa", cls: "bg-orange-400 dark:bg-orange-500" },
+    { key: "restricted", cls: "bg-red-400 dark:bg-red-500" },
+    { key: "refused", cls: "bg-red-500 dark:bg-red-400" },
+  ];
   return (
-    <button
-      type="button"
-      role="tab"
-      aria-selected={on}
-      disabled={dim && !on}
-      onClick={onClick}
-      className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition inline-flex items-center gap-1.5 ${
-        on
-          ? "bg-neutral-900 text-white border-neutral-900 dark:bg-neutral-100 dark:text-neutral-900 dark:border-neutral-100"
-          : dim
-          ? "bg-transparent text-neutral-400 dark:text-neutral-600 border-neutral-200 dark:border-neutral-800 cursor-not-allowed"
-          : "bg-transparent text-neutral-700 dark:text-neutral-300 border-neutral-300 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-900"
-      }`}
+    <div
+      className="hidden sm:flex h-1.5 w-28 rounded-full overflow-hidden bg-neutral-200 dark:bg-neutral-800"
+      aria-hidden
+      title="Visa-status distribution"
     >
-      {label}
-      <span className="font-mono text-[10px] opacity-70">{count}</span>
-    </button>
+      {SEGMENTS.map((seg) => {
+        const n = counts[seg.key] ?? 0;
+        if (n === 0) return null;
+        const pct = (n / total) * 100;
+        return <span key={seg.key} className={seg.cls} style={{ width: `${pct}%` }} />;
+      })}
+    </div>
   );
 }
 

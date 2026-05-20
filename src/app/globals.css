@@ -130,6 +130,20 @@ h1 { letter-spacing: -0.025em; }
   .ken-burns { animation: none; }
 }
 
+/* Chat message entrance — used by ChatInterface message bubbles. Subtle
+   fade + nudge up so new messages don't pop in jarringly. Respects
+   reduced-motion automatically because the duration is short and the
+   transform is tiny, but we still disable it under the media query for
+   strict-pref users. */
+.chat-msg-in { animation: chatMsgIn 280ms ease-out both; }
+@keyframes chatMsgIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chat-msg-in { animation: none; }
+}
+
 /* Folded <details> chevron rotation. */
 details > summary { list-style: none; cursor: pointer; }
 details > summary::-webkit-details-marker { display: none; }

@@ -77,11 +77,20 @@ const SUGGESTION_CATEGORIES: Array<{
   },
 ];
 
-// Lightweight inline formatter — handles **bold**, *italic*, and URLs.
-// Used inside renderMarkdown() for per-line inline rendering.
+/**
+ * Inline formatter — handles **bold**, *italic*, [markdown links](url),
+ * and bare URLs.
+ *
+ * Link rendering differentiates visavu.com URLs (rendered as pill-style
+ * inline buttons with a → arrow — they're CTAs into our own pages) from
+ * external/government URLs (rendered as subtle underlined links). The
+ * visual difference makes our own internal links feel like clickable
+ * actions rather than reference cruft, which substantially lifts CTR
+ * back into site content from chat answers.
+ */
 function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
-  // Split on a combined pattern: **bold**, *italic*, or URL.
-  const re = /(\*\*[^*\n]+\*\*|\*[^*\n]+\*|https?:\/\/[^\s)\]]+)/g;
+  // Combined pattern: **bold** | *italic* | [label](url) | bare URL
+  const re = /(\*\*[^*\n]+\*\*|\*[^*\n]+\*|\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)|https?:\/\/[^\s)\]]+)/g;
   const parts: React.ReactNode[] = [];
   let last = 0;
   let i = 0;
@@ -90,22 +99,22 @@ function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
     if (idx > last) parts.push(text.slice(last, idx));
     const tok = m[0];
     if (tok.startsWith("**") && tok.endsWith("**")) {
-      parts.push(<strong key={`${keyPrefix}-b${i++}`} className="font-semibold text-[var(--color-ink)]">{tok.slice(2, -2)}</strong>);
-    } else if (tok.startsWith("*") && tok.endsWith("*")) {
-      parts.push(<em key={`${keyPrefix}-i${i++}`}>{tok.slice(1, -1)}</em>);
-    } else {
-      const url = tok.replace(/[.,;)]+$/, "");
       parts.push(
-        <a
-          key={`${keyPrefix}-u${i++}`}
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[var(--color-ink)] underline decoration-blue-300/60 hover:decoration-blue-500"
-        >
-          {url}
-        </a>,
+        <strong key={`${keyPrefix}-b${i++}`} className="font-semibold text-[var(--color-ink)]">
+          {tok.slice(2, -2)}
+        </strong>,
       );
+    } else if (tok.startsWith("*") && tok.endsWith("*") && !tok.startsWith("**")) {
+      parts.push(<em key={`${keyPrefix}-i${i++}`}>{tok.slice(1, -1)}</em>);
+    } else if (tok.startsWith("[")) {
+      // [label](url) — markdown link with custom label
+      const label = m[2];
+      const url = m[3];
+      parts.push(renderLink(url, label, `${keyPrefix}-l${i++}`));
+    } else {
+      // Bare URL
+      const url = tok.replace(/[.,;)]+$/, "");
+      parts.push(renderLink(url, url, `${keyPrefix}-u${i++}`));
     }
     last = idx + tok.length;
   }
@@ -113,10 +122,58 @@ function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
   return parts;
 }
 
-/** Lightweight markdown-ish renderer for the assistant's replies. Handles
- *  ## Headers (rendered as bold block titles), - / * bullets, **bold**,
- *  *italic*, and URLs. Paragraphs separated by blank lines. No HTML, no
- *  external markdown lib. */
+function renderLink(url: string, label: string, key: string): React.ReactNode {
+  // Internal Visavu CTA — render as pill-button (more clickable).
+  // Visible label strips the protocol/domain when the URL was bare; if
+  // the model used [text](url) we trust the chosen label.
+  const isInternal = /^https?:\/\/(www\.)?visavu\.com/i.test(url);
+  if (isInternal) {
+    const cleanLabel =
+      label === url
+        ? url.replace(/^https?:\/\/(www\.)?visavu\.com/i, "visavu.com")
+        : label;
+    return (
+      <Link
+        key={key}
+        href={url.replace(/^https?:\/\/(www\.)?visavu\.com/i, "")}
+        className="inline-flex items-center gap-0.5 align-baseline rounded-md bg-[var(--color-muted)] hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)] border border-[var(--color-rule-strong)] hover:border-[var(--color-ink)] text-[var(--color-ink)] font-medium px-1.5 py-px text-[12.5px] transition mx-0.5"
+      >
+        {cleanLabel}
+        <span aria-hidden className="text-[10px] opacity-70">↗</span>
+      </Link>
+    );
+  }
+  // External / government — subtle underlined link.
+  const visible = label === url ? url.replace(/^https?:\/\//, "") : label;
+  return (
+    <a
+      key={key}
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-[var(--color-ink)] underline decoration-[var(--color-rule-strong)] decoration-1 underline-offset-2 hover:decoration-[var(--color-ink)]"
+    >
+      {visible}
+    </a>
+  );
+}
+
+/**
+ * Markdown-ish renderer for assistant replies.
+ *
+ * Block types supported:
+ *   - ## / ### Headers — rendered with real visual hierarchy
+ *     (bigger, bolder, top spacing). "## 1. Foo" / "## N. Foo" patterns
+ *     get a circular numbered badge prefix so the multi-option overview
+ *     answers look like a structured list rather than a wall of headers.
+ *   - - / * / • bullets — accent-coloured ▸ markers (cleaner than the
+ *     default browser disc, more on-brand).
+ *   - **bold** / *italic* / [label](url) / bare URL via renderInline.
+ *   - Paragraphs separated by blank lines.
+ *
+ * Deliberately NOT supported: tables, code blocks, images. The chat
+ * doesn't generate those (system prompt steers away from them).
+ */
 function renderMarkdown(text: string): React.ReactNode {
   const lines = text.split(/\r?\n/);
   const blocks: React.ReactNode[] = [];
@@ -129,7 +186,9 @@ function renderMarkdown(text: string): React.ReactNode {
     const joined = buf.join(" ").trim();
     if (joined) {
       blocks.push(
-        <p key={`p${key++}`} className="leading-relaxed">{renderInline(joined, `p${key}`)}</p>,
+        <p key={`p${key++}`} className="leading-relaxed text-[var(--color-ink)]/90">
+          {renderInline(joined, `p${key}`)}
+        </p>,
       );
     }
     buf = [];
@@ -137,9 +196,14 @@ function renderMarkdown(text: string): React.ReactNode {
   function flushBullets() {
     if (bullets.length === 0) return;
     blocks.push(
-      <ul key={`u${key++}`} className="my-1.5 ml-4 list-disc space-y-1">
+      <ul key={`u${key++}`} className="my-1 space-y-1.5">
         {bullets.map((b, i) => (
-          <li key={i} className="leading-relaxed pl-0.5">{renderInline(b, `u${key}-${i}`)}</li>
+          <li
+            key={i}
+            className="leading-relaxed text-[var(--color-ink)]/90 pl-5 relative before:content-['▸'] before:absolute before:left-0 before:top-0 before:text-[var(--color-accent)] before:font-bold"
+          >
+            {renderInline(b, `u${key}-${i}`)}
+          </li>
         ))}
       </ul>,
     );
@@ -148,21 +212,56 @@ function renderMarkdown(text: string): React.ReactNode {
 
   for (const rawLine of lines) {
     const line = rawLine.replace(/\s+$/, "");
-    // Blank line — paragraph/list break
     if (!line.trim()) {
       flushParagraph();
       flushBullets();
       continue;
     }
-    // Headers
+    // Headers — capture level (## vs ###) + content
     const h = line.match(/^(#{1,4})\s+(.+)$/);
     if (h) {
       flushParagraph();
       flushBullets();
+      const level = h[1].length;
+      const content = h[2];
+      // Numbered header — "## 1. Foo" / "## 2. Bar" — render with badge
+      const numbered = content.match(/^(\d+)\.\s+(.+)$/);
+      if (numbered && level === 2) {
+        blocks.push(
+          <div
+            key={`h${key++}`}
+            className="flex items-baseline gap-2.5 mt-4 first:mt-0 pb-1 border-b border-[var(--color-rule)]"
+          >
+            <span className="shrink-0 inline-flex items-center justify-center size-5 rounded-full bg-[var(--color-ink)] text-[var(--color-paper)] text-[10.5px] font-bold tabular-nums leading-none translate-y-px">
+              {numbered[1]}
+            </span>
+            <h3 className="text-[15px] font-semibold text-[var(--color-ink)] tracking-tight">
+              {renderInline(numbered[2], `h${key}`)}
+            </h3>
+          </div>,
+        );
+        continue;
+      }
+      // Plain ## header — top-rule + bolder text
+      if (level === 2) {
+        blocks.push(
+          <h3
+            key={`h${key++}`}
+            className="text-[15px] font-semibold text-[var(--color-ink)] mt-4 first:mt-0 pb-1 border-b border-[var(--color-rule)] tracking-tight"
+          >
+            {renderInline(content, `h${key}`)}
+          </h3>,
+        );
+        continue;
+      }
+      // ### header — lighter
       blocks.push(
-        <p key={`h${key++}`} className="font-semibold text-[var(--color-ink)] mt-2 first:mt-0">
-          {renderInline(h[2], `h${key}`)}
-        </p>,
+        <h4
+          key={`h${key++}`}
+          className="text-[13.5px] font-semibold text-[var(--color-ink)] mt-3 first:mt-0 uppercase tracking-wide"
+        >
+          {renderInline(content, `h${key}`)}
+        </h4>,
       );
       continue;
     }
@@ -173,7 +272,6 @@ function renderMarkdown(text: string): React.ReactNode {
       bullets.push(b[1]);
       continue;
     }
-    // Regular text line
     flushBullets();
     buf.push(line);
   }
@@ -197,7 +295,7 @@ function RoleAvatar({ role }: { role: "user" | "assistant" }) {
   return (
     <div
       aria-hidden="true"
-      className="size-7 shrink-0 rounded-full bg-[var(--color-ink)] text-[var(--color-paper)] grid place-items-center text-xs font-serif italic"
+      className="size-8 shrink-0 rounded-full bg-gradient-to-br from-[var(--color-ink)] to-[var(--color-accent)] text-[var(--color-paper)] grid place-items-center text-sm font-serif italic shadow-sm ring-2 ring-[var(--color-paper)]"
       title="Visavu AI"
     >
       V
@@ -406,25 +504,28 @@ export function ChatInterface() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {SUGGESTION_CATEGORIES.map((cat) => (
                 <div
                   key={cat.label}
-                  className="rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper)] p-3 space-y-2"
+                  className="rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper)] p-3.5 space-y-2.5 hover:border-[var(--color-rule-strong)] hover:shadow-sm transition"
                 >
-                  <div className="text-xs font-semibold text-[var(--color-ink-muted)] uppercase tracking-wide">
-                    <span className="mr-1.5">{cat.emoji}</span>
+                  <div className="text-xs font-semibold text-[var(--color-ink)] uppercase tracking-wide flex items-center gap-1.5">
+                    <span className="text-base leading-none">{cat.emoji}</span>
                     {cat.label}
                   </div>
-                  <ul className="space-y-1">
+                  <ul className="space-y-1.5">
                     {cat.examples.map((q) => (
                       <li key={q}>
                         <button
                           type="button"
                           onClick={() => void send(q)}
-                          className="text-left text-sm text-[var(--color-ink)] underline decoration-[var(--color-rule-strong)] underline-offset-2 hover:decoration-[var(--color-ink)]"
+                          className="text-left text-sm text-[var(--color-ink)]/85 hover:text-[var(--color-ink)] hover:translate-x-0.5 transition group flex items-start gap-1.5"
                         >
-                          {q}
+                          <span className="text-[var(--color-accent)] opacity-0 group-hover:opacity-100 transition shrink-0 mt-0.5">→</span>
+                          <span className="underline decoration-[var(--color-rule)] underline-offset-4 group-hover:decoration-[var(--color-ink)]">
+                            {q}
+                          </span>
                         </button>
                       </li>
                     ))}
@@ -436,16 +537,19 @@ export function ChatInterface() {
         )}
 
         {hasMessages && (
-          <div className="space-y-4">
+          <div className="space-y-5">
             {messages.map((m, i) => (
-              <div key={i} className={m.role === "user" ? "flex flex-row-reverse gap-2.5" : "flex gap-2.5"}>
+              <div
+                key={i}
+                className={`${m.role === "user" ? "flex flex-row-reverse gap-2.5" : "flex gap-3"} chat-msg-in`}
+              >
                 <RoleAvatar role={m.role} />
-                <div className="flex-1 min-w-0 space-y-1">
+                <div className="flex-1 min-w-0 space-y-1.5">
                   <div
                     className={
                       m.role === "user"
-                        ? "ml-auto max-w-[90%] sm:max-w-[80%] rounded-2xl rounded-tr-md bg-[var(--color-ink)] text-[var(--color-paper)] px-3.5 py-2.5 text-sm whitespace-pre-wrap break-words shadow-sm"
-                        : "mr-auto max-w-[95%] sm:max-w-[85%] rounded-2xl rounded-tl-md bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] px-4 py-3 text-sm break-words shadow-sm space-y-2"
+                        ? "ml-auto max-w-[90%] sm:max-w-[80%] rounded-2xl rounded-tr-sm bg-[var(--color-ink)] text-[var(--color-paper)] px-4 py-2.5 text-[14px] leading-relaxed whitespace-pre-wrap break-words shadow-sm"
+                        : "mr-auto max-w-full sm:max-w-[92%] rounded-2xl rounded-tl-sm bg-[var(--color-paper-elev)] text-[var(--color-ink)] px-5 py-4 text-[14.5px] break-words space-y-3 ring-1 ring-[var(--color-rule)]/60"
                     }
                   >
                     {m.role === "assistant" ? renderMarkdown(m.content) : m.content}
@@ -490,9 +594,9 @@ export function ChatInterface() {
               </div>
             ))}
             {busy && (
-              <div className="flex gap-2.5">
+              <div className="flex gap-3 chat-msg-in">
                 <RoleAvatar role="assistant" />
-                <div className="mr-auto rounded-2xl rounded-tl-md bg-[var(--color-paper)] border border-[var(--color-rule)] px-3.5 py-3 text-sm shadow-sm">
+                <div className="mr-auto rounded-2xl rounded-tl-sm bg-[var(--color-paper-elev)] ring-1 ring-[var(--color-rule)]/60 px-4 py-3 text-sm">
                   <TypingDots />
                 </div>
               </div>

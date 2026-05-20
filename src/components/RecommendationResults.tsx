@@ -11,7 +11,7 @@
  */
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Compass, Sparkles, Timer, PiggyBank, Home, ArrowRight, CheckCircle2, Scale, Info } from "lucide-react";
+import { Compass, Sparkles, Timer, PiggyBank, Home, ArrowRight, CheckCircle2, Scale, Info, ExternalLink } from "lucide-react";
 import type { Recommendations, RecommendationItem, AdviceTier } from "@/lib/findMyVisa";
 import { Flag } from "./Flag";
 import { PROFILE_META } from "@/lib/profiles";
@@ -91,6 +91,7 @@ export function RecommendationResults({
       {results.advice && <AdviceBand advice={results.advice} />}
 
       <Section
+        id="best-overall"
         title="Best overall pathways"
         subtitle="Top fits for your profile + goal, weighted by route quality and processing window."
         icon={Sparkles}
@@ -151,6 +152,7 @@ export function RecommendationResults({
 }
 
 function Section({
+  id,
   title,
   subtitle,
   icon: Icon,
@@ -159,6 +161,7 @@ function Section({
   passportLower,
   metric,
 }: {
+  id?: string;
   title: string;
   subtitle: string;
   icon: typeof Compass;
@@ -169,14 +172,14 @@ function Section({
 }) {
   if (items.length === 0) {
     return (
-      <section className="mb-8">
+      <section id={id} className="mb-8 scroll-mt-20">
         <Header title={title} subtitle={subtitle} icon={Icon} accent={accent} />
         <p className="mt-3 text-sm text-neutral-500 italic">No matching routes — try adjusting your timeline or goal.</p>
       </section>
     );
   }
   return (
-    <section className="mb-10">
+    <section id={id} className="mb-10 scroll-mt-20">
       <Header title={title} subtitle={subtitle} icon={Icon} accent={accent} />
       <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {items.map((r) => (
@@ -218,6 +221,22 @@ function Header({
   );
 }
 
+/**
+ * Card layout: two distinct CTAs per route.
+ *
+ *   1. "View details" → internal Visavu route page (prep checklist,
+ *      lawyer-vs-DIY triage, personal-statement skeleton, etc.)
+ *   2. "Official portal" → external link straight to the destination
+ *      government's application page (or primary-source info page as a
+ *      fallback). Opens in a new tab.
+ *
+ * Previously the entire card was a single <Link> to the route details
+ * page and the per-route applicationUrl was only used by the top
+ * AdviceBand — meaning users saw one "Apply on the official portal"
+ * CTA at the top of the page, which read as if it applied to every
+ * result. Splitting the CTAs per card fixes that perception AND surfaces
+ * the gov-portal link for every recommended route (not just #1).
+ */
 function CountryCard({
   item,
   passportLower,
@@ -230,21 +249,34 @@ function CountryCard({
   accent: keyof typeof ACCENT;
 }) {
   const tone = ACCENT[accent];
+  const detailsHref = routeHref(passportLower, item.destinationIso2, item.purpose);
+  // Prefer the dedicated application URL; fall back to the primary
+  // government source page if the adapter didn't surface a separate
+  // application link. Either is gov-domain and trustworthy.
+  const officialHref = item.applicationUrl ?? item.primarySourceUrl;
+  const officialLabel = item.applicationUrl ? "Official portal" : "Official source";
+
   return (
-    <Link
-      href={routeHref(passportLower, item.destinationIso2, item.purpose)}
-      prefetch={false}
-      className="block rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 hover:border-blue-400 dark:hover:border-blue-600 transition p-4"
-    >
-      <div className="flex items-start gap-3 mb-2.5">
+    <article className="flex flex-col rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 hover:border-blue-400 dark:hover:border-blue-600 transition p-4">
+      {/* Header — flag + country + visa label. Clickable as the
+          primary "view details" affordance for users who expect the
+          whole card to be clickable. */}
+      <Link
+        href={detailsHref}
+        prefetch={false}
+        className="flex items-start gap-3 mb-2.5 group"
+      >
         <span className="rounded-sm overflow-hidden ring-1 ring-black/10 shrink-0">
           <Flag iso2={item.destinationIso2} size={26} />
         </span>
         <div className="flex-1 min-w-0">
-          <p className="font-semibold text-sm leading-tight truncate">{item.destinationName}</p>
+          <p className="font-semibold text-sm leading-tight truncate group-hover:text-blue-700 dark:group-hover:text-blue-300">
+            {item.destinationName}
+          </p>
           <p className="text-[11px] text-neutral-500 dark:text-neutral-400 truncate">{item.label}</p>
         </div>
-      </div>
+      </Link>
+
       <div className="flex items-center justify-between gap-2">
         <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${tone.chip}`}>
           {item.badge}
@@ -277,10 +309,35 @@ function CountryCard({
         </ul>
       )}
 
-      <p className="mt-2.5 text-xs text-blue-700 dark:text-blue-400 font-medium inline-flex items-center gap-1">
-        Open route <ArrowRight size={11} />
-      </p>
-    </Link>
+      {/* Footer — two distinct CTAs. "View details" is the canonical
+          internal action; "Official portal" is the gov-direct external
+          link surfaced from this route's own applicationUrl (not the
+          generic top-of-page one). The mt-auto on the wrapper keeps
+          the footer pinned to the bottom even when fitNote/caveats
+          make some cards taller than others — keeps the grid aligned. */}
+      <div className="mt-auto pt-3 border-t border-neutral-100 dark:border-neutral-900 flex items-center justify-between gap-2">
+        <Link
+          href={detailsHref}
+          prefetch={false}
+          className="text-xs font-semibold text-blue-700 dark:text-blue-400 hover:underline inline-flex items-center gap-1"
+        >
+          View details <ArrowRight size={11} />
+        </Link>
+        {officialHref ? (
+          <a
+            href={officialHref}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="text-[11px] font-semibold text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 hover:underline inline-flex items-center gap-1"
+            title={officialHref}
+          >
+            {officialLabel} <ExternalLink size={10} />
+          </a>
+        ) : (
+          <span className="text-[11px] text-neutral-400 italic">No direct portal yet</span>
+        )}
+      </div>
+    </article>
   );
 }
 

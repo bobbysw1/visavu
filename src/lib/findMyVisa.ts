@@ -346,10 +346,15 @@ function assessAdvice(
     return {
       tier: "ideal",
       headline: "You can DIY this — save the lawyer fee.",
-      body: "Your top match doesn't need an embassy queue or a sponsor. The destination's official portal is free; fill the form yourself, then paste your personal statement into Claude (or any AI) and ask it to tighten the prose. Typical lawyer fee saved: £500–1,500.",
+      body: "Your top matches don't need an embassy queue or a sponsor. The destination's official portal is free; fill the form yourself, then paste your personal statement into Claude (or any AI) and ask it to tighten the prose. Typical lawyer fee saved: £500–1,500. Each card below has a direct link to its own official portal — open whichever route(s) interest you.",
       reasons,
-      ctaHref: top.applicationUrl ?? top.primarySourceUrl ?? "#",
-      ctaLabel: top.applicationUrl ? "Apply on the official portal →" : "Open primary source →",
+      // Profile-level guidance only — the per-route official portal links
+      // live on each CountryCard now. Linking to the FIRST item's URL
+      // from here was misleading: visually it looks like a global CTA,
+      // but it only ever applied to the top recommendation. Replaced
+      // with a benign anchor that scrolls to the recommendation grid.
+      ctaHref: "#best-overall",
+      ctaLabel: "See your matches ↓",
     };
   }
 
@@ -376,10 +381,11 @@ function assessAdvice(
   return {
     tier: "viable",
     headline: "You're eligible — use the prep checklist before paying for a lawyer.",
-    body: "Your case is workable on the official portal. The application has a few heavy sections (financial proof, sponsor letter, prior-visa history) where a lawyer can help but most applicants get through without one. Run the prep checklist below; if any single section still feels unclear after that, a one-hour paid consultation is usually enough.",
+    body: "Your case is workable on the official portal. The application has a few heavy sections (financial proof, sponsor letter, prior-visa history) where a lawyer can help but most applicants get through without one. Each card below has its own direct link to the official portal — open whichever destination you want and run their prep checklist first; a one-hour paid consultation is usually enough if a single section still feels unclear.",
     reasons,
-    ctaHref: top.applicationUrl ?? "#",
-    ctaLabel: top.applicationUrl ? "Start on the official portal →" : "See the prep checklist →",
+    // See ideal-tier comment: per-route URLs now live on each card.
+    ctaHref: "#best-overall",
+    ctaLabel: "See your matches ↓",
   };
 }
 

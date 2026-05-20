@@ -11,7 +11,7 @@
  */
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Compass, Sparkles, Timer, PiggyBank, Home, ArrowRight, CheckCircle2, Scale, Info, ExternalLink } from "lucide-react";
+import { Compass, Sparkles, Timer, PiggyBank, Home, ArrowRight, CheckCircle2, Scale, Info, ExternalLink, Plane } from "lucide-react";
 import type { Recommendations, RecommendationItem, AdviceTier } from "@/lib/findMyVisa";
 import { Flag } from "./Flag";
 import { PROFILE_META } from "@/lib/profiles";
@@ -42,7 +42,7 @@ export function RecommendationResults({
   passportIso2: string;
   onRestart: () => void;
 }) {
-  const { profile, bestPathways, easiestRoutes, fastestRoutes, cheapestRoutes, prOpportunities } = results;
+  const { profile, bestPathways, easiestRoutes, workingHolidayRoutes, fastestRoutes, cheapestRoutes, prOpportunities } = results;
   const profileMeta = PROFILE_META[profile];
   const userCurrency = useUserCurrency();
 
@@ -112,6 +112,16 @@ export function RecommendationResults({
       />
 
       <Section
+        title="Working Holiday & Youth Mobility"
+        subtitle="Age-gated treaty programmes (typically 18–30 or 18–35). 1–3 years of open work authorisation, change jobs freely — the classic 'try a country before committing' route."
+        icon={Plane}
+        accent="amber"
+        items={workingHolidayRoutes}
+        passportLower={lower}
+        metric={(r) => formatMetric("stay", r, userCurrency)}
+      />
+
+      <Section
         title="Fastest approvals"
         subtitle="Routes with the shortest known processing time."
         icon={Timer}
@@ -165,7 +175,7 @@ function Section({
   title: string;
   subtitle: string;
   icon: typeof Compass;
-  accent: "emerald" | "sky" | "blue" | "violet" | "rose";
+  accent: "emerald" | "sky" | "blue" | "violet" | "rose" | "amber";
   items: RecommendationItem[];
   passportLower: string;
   metric: (r: RecommendationItem) => string;
@@ -196,6 +206,7 @@ const ACCENT: Record<string, { chip: string; ring: string; icon: string }> = {
   blue: { chip: "bg-blue-100 text-blue-900 dark:bg-blue-900/40 dark:text-blue-200", ring: "ring-blue-300 dark:ring-blue-700", icon: "text-blue-700 dark:text-blue-300" },
   violet: { chip: "bg-violet-100 text-violet-900 dark:bg-violet-900/40 dark:text-violet-200", ring: "ring-violet-300 dark:ring-violet-700", icon: "text-violet-700 dark:text-violet-300" },
   rose: { chip: "bg-rose-100 text-rose-900 dark:bg-rose-900/40 dark:text-rose-200", ring: "ring-rose-300 dark:ring-rose-700", icon: "text-rose-700 dark:text-rose-300" },
+  amber: { chip: "bg-amber-100 text-amber-900 dark:bg-amber-900/40 dark:text-amber-200", ring: "ring-amber-300 dark:ring-amber-700", icon: "text-amber-700 dark:text-amber-300" },
 };
 
 function Header({
@@ -435,7 +446,7 @@ function AdviceBand({ advice }: { advice: NonNullable<Recommendations["advice"]>
 }
 
 function formatMetric(
-  kind: "score" | "status" | "processing" | "fee" | "pr",
+  kind: "score" | "status" | "processing" | "fee" | "pr" | "stay",
   r: RecommendationItem,
   userCurrency: string | null,
 ): string {
@@ -448,6 +459,19 @@ function formatMetric(
       if (r.processingTimeDaysMax == null) return "—";
       if (r.processingTimeDaysMax === 0) return "Instant";
       return `≤ ${r.processingTimeDaysMax}d`;
+    case "stay": {
+      // For WHV cards the most-useful single metric is the max stay
+      // duration — UK→AU gets 3 years, most others 1 year. Surface
+      // the longest stay length first.
+      const days = r.maxStayDays;
+      if (days == null) return "—";
+      if (days >= 365) {
+        const years = Math.round((days / 365) * 10) / 10;
+        return `${years}y stay`;
+      }
+      if (days >= 30 && days % 30 === 0) return `${days / 30}mo stay`;
+      return `${days}d stay`;
+    }
     case "fee": {
       if (r.feeAmountMinor == null) return "Fee-free";
       const sourceCurrency = r.feeCurrency ?? "USD";

@@ -64,6 +64,13 @@ export type Recommendations = {
   profile: Profile;
   bestPathways: RecommendationItem[];
   easiestRoutes: RecommendationItem[];
+  /** Working Holiday + Youth Mobility programmes. Surfaced as their own
+   *  section because they're a distinct route shape (age-gated, 1-3 year
+   *  open work authorisation, treaty-bilateral) that doesn't naturally
+   *  surface in "easiest" or "fastest" buckets but is exactly what young
+   *  applicants want to see. Empty when the user's passport has no WHV
+   *  treaties available. */
+  workingHolidayRoutes: RecommendationItem[];
   fastestRoutes: RecommendationItem[];
   cheapestRoutes: RecommendationItem[];
   prOpportunities: RecommendationItem[];
@@ -153,6 +160,20 @@ export async function recommendForAnswers(
     .sort((a, b) => (a.feeAmountMinor ?? 0) - (b.feeAmountMinor ?? 0))
     .slice(0, 6);
 
+  // WORKING HOLIDAY / YOUTH MOBILITY — distinct route shape: age-gated
+  // (typically 18-30 or 18-35), bilateral-treaty, 1-3 year open work
+  // authorisation. Matches the label patterns the finder uses to detect
+  // these programmes — same regex as src/lib/finder.ts so coverage stays
+  // in sync when new translated programme names appear (e.g. France's
+  // "Vacances-Travail", Italy's "Vacanze-Lavoro"). Sorted by max stay
+  // descending — for WHV the most useful single number is "how long
+  // can I be there" (UK→AU gets 3 years; most others get 1).
+  const WHV_LABEL_RE = /\b(working\s*holiday|youth\s*mobility|vacances[\s-]travail|ferias[\s-]trabalho|stagiaires|vacanze[\s-]lavoro|jugendmobilität|whp|whv|subclass\s*4(17|62))\b/i;
+  const workingHolidayRoutes = [...pool]
+    .filter((r) => WHV_LABEL_RE.test(r.label))
+    .sort((a, b) => (b.maxStayDays ?? 0) - (a.maxStayDays ?? 0))
+    .slice(0, 6);
+
   // PR / CITIZENSHIP — destinations with curated PR-year metric, sorted by years asc.
   const prOpportunities = [...pool]
     .filter((r) => {
@@ -193,6 +214,7 @@ export async function recommendForAnswers(
     profile,
     bestPathways: annotate(bestPathways),
     easiestRoutes: annotate(easiestRoutes),
+    workingHolidayRoutes: annotate(workingHolidayRoutes),
     fastestRoutes: annotate(fastestRoutes),
     cheapestRoutes: annotate(cheapestRoutes),
     prOpportunities: annotate(prOpportunities),
@@ -428,6 +450,7 @@ function emptyResult(
     profile,
     bestPathways: [],
     easiestRoutes: [],
+    workingHolidayRoutes: [],
     fastestRoutes: [],
     cheapestRoutes: [],
     prOpportunities: [],

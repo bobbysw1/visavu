@@ -113,6 +113,13 @@ jobs:
 
       - name: Commit + push refreshed snapshot
         if: steps.changed.outputs.changed == 'true' && inputs.dry_run != true
+        # Push race protection: this job takes ~33 minutes, during which
+        # other commits frequently land on main. A naive `git push` rejects
+        # as non-fast-forward and tanks the workflow even though the
+        # snapshot itself built fine. Loop: fetch, rebase our snapshot
+        # commit on top of whatever's on main now, push. The snapshot
+        # commit only touches the tarball + audit md (no source files), so
+        # the rebase is conflict-free in practice.
         run: |
           git config user.name "visa-data-bot"
           git config user.email "data@visavu.com"
@@ -120,7 +127,18 @@ jobs:
           git commit -m "data: snapshot refresh from adapter change (${{ github.sha }})" \
             -m "Triggered by: ${{ github.event.head_commit.message }}" \
             -m "Workflow: $GITHUB_RUN_URL"
-          git push
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort; echo "::error::rebase failed on attempt $attempt"; exit 1; }
+            if git push origin HEAD:main; then
+              echo "Pushed snapshot on attempt $attempt"
+              exit 0
+            fi
+            echo "Push rejected on attempt $attempt — main moved again, retrying"
+            sleep $((attempt * 5))
+          done
+          echo "::error::Failed to push snapshot after 5 attempts"
+          exit 1
 
       - name: Upload bootstrap log on failure
         if: failure()

@@ -12,7 +12,10 @@
  *  - "information" not "advice" — never recommend specific applications
  *  - refuse asylum / deportation / criminal-record / fraud questions
  *  - cite the lastVerifiedAt date and primary source per visa option
- *  - end every response with the disclaimer
+ *  - disclaimer is shown persistently in the chat UI (above the textarea
+ *    on /chat, below the input on FloatingChatLauncher), NOT appended
+ *    to every reply — the latter made every answer feel like a legal
+ *    notice and stretched the prompt budget
  *
  * Cost-floor: if MISTRAL_API_KEY is unset (local dev, preview deploy),
  * we still return a useful fallback that does the DB lookup + renders
@@ -52,10 +55,13 @@ const MISTRAL_API = "https://api.mistral.ai/v1/chat/completions";
 const MISTRAL_MODEL_INTENT = "mistral-small-latest";
 const MISTRAL_MODEL_SYNTHESIS = "mistral-large-latest";
 
-const DISCLAIMER =
-  "This is general information, not legal advice. Visa rules change. " +
-  "Verify with the destination's official immigration authority or " +
-  "book a consultation before acting on this.";
+// Per-message disclaimers were removed in favour of one persistent UI
+// disclaimer (DisclaimerBanner on /chat above the conversation; inline
+// "General information, not legal advice" line under the FloatingChat
+// input box). Stamping a disclaimer paragraph onto every reply made the
+// chat feel like a compliance form rather than a knowledgeable friend —
+// and the legal effect of repeating it is no stronger than displaying
+// it once persistently.
 
 const REFUSAL_PATTERNS = [
   /asylum/i,
@@ -438,14 +444,16 @@ const SYNTHESIS_CORE = `You are Visavu — a knowledgeable, conversational visa 
 
 You MUST respond with valid JSON in one of two shapes:
 
-  (A) When you have enough context to give a specific recommendation:
+  (A) When you have enough context to give a specific recommendation OR
+      when the user asked an OVERVIEW question that doesn't need a clarifier
+      (see "OVERVIEW vs DRILL-DOWN" below):
     {
       "type": "answer",
-      "content": "<your prose answer in markdown, ~200-300 words, with bold visa names, ## headers, - bullets>"
+      "content": "<your prose answer in markdown — ~200-300 words for drill-down replies, ~400-600 words for overview replies. Use ## headers, **bold** visa names, - bullets.>"
     }
 
   (B) When you need ONE specific piece of information to give a useful answer
-      (most commonly: missing nationality, missing destination, missing purpose):
+      (most commonly: missing nationality for a destination drill-down):
     {
       "type": "ask",
       "content": "<a warm, conversational ONE-LINE question — like 'Which passport do you hold? UK rules differ a lot from EU or Indian rules.'>",
@@ -466,9 +474,29 @@ OPTIONS rules:
 
 You must NEVER output prose outside the JSON. The renderer will display content as markdown and (if present) options as clickable pills.
 
-═══ THE CONVERSATION SHAPE ═══
+═══ OVERVIEW vs DRILL-DOWN — DETECT THE INTENT FIRST ═══
 
-Turn 1 — vague query ("what visa for Australia?") → acknowledge the destination, drop one bilateral colour note ("UK-AU FTA + AUKUS makes mobility easy"), ASK ONE FOCUSED QUESTION ("Where are you applying from?"). Don't dump lists.
+Some queries WANT a clarifier first; others WANT a structured overview immediately. Detect which from the user's phrasing:
+
+OVERVIEW intent — answer directly with a structured multi-option breakdown. Do NOT ask "which passport do you hold" first; that's patronising when the user wants the lay of the land. Triggers:
+  - "What are the (best) ways to emigrate / move / relocate to X"
+  - "What are my options for living / working / retiring in X"
+  - "How do people emigrate to X"
+  - "Routes to PR / permanent residency / citizenship in X"
+  - "How does immigration to X work"
+  - Any phrasing that asks for a MENU of paths, not a single recommendation
+  - Use the OVERVIEW worked example below as the format template
+
+DRILL-DOWN intent — single-route recommendation; ask for missing context first if needed. Triggers:
+  - "Can I get visa X" / "Am I eligible for Y"
+  - "I'm a [nationality] and want to [verb] [country]"
+  - "Cheapest / fastest / easiest route from A to B"
+  - Anything where ONE specific answer fits — and where missing nationality / age / purpose blocks a useful answer
+  - Use the DRILL-DOWN worked example below as the format template
+
+═══ THE CONVERSATION SHAPE (DRILL-DOWN ONLY) ═══
+
+Turn 1 — vague drill-down query ("what visa for Australia?") → acknowledge the destination, drop one bilateral colour note ("UK-AU FTA + AUKUS makes mobility easy"), ASK ONE FOCUSED QUESTION ("Where are you applying from?"). Don't dump lists.
 
 Turn 2 — user answers — acknowledge what their passport unlocks, ASK THE NEXT QUESTION that narrows it ("How old are you, and short-term vs permanent?").
 
@@ -510,14 +538,68 @@ Markdown for scannability (UI renders **bold**, ## headers, - bullets):
 
 const SYNTHESIS_WORKED_EXAMPLE = `
 
-═══ FORMATTING — WORKED EXAMPLE (first turn only) ═══
+═══ FORMATTING — WORKED EXAMPLES (first turn only) ═══
+
+──── EXAMPLE 1: OVERVIEW QUERY ────
+
+User asks: "What are the best ways to emigrate to Australia?"
+
+Notice: NO clarifier first. This is an overview query — they want a menu of paths, not a tailored recommendation. Just answer.
+
+✓ GOOD — comprehensive, structured, scannable. Each option gets the same sub-structure (who it's for, requirements, cost, time) so the user can compare across them. Closes with a "what most people do" and concrete next step:
+
+"Australia has five mainstream pathways. Which fits depends on age, profession, and whether you have a job offer or family link — but here's the full menu, ranked roughly by how many people actually use each.
+
+## 1. Skilled Independent Visa (Subclass 189)
+The blue-ribbon route — permanent residency from day one, no employer or state needed.
+- **Who it's for:** professionals under 45 with an occupation on the MLTSSL (Medium and Long-term Strategic Skills List).
+- **Requirements:** 65+ points (age, English, work experience, education), skills assessment from the relevant assessing body, IELTS 6.0+ equivalent.
+- **Cost:** AUD $4,640 main applicant.
+- **Processing:** 6–12 months from invitation.
+
+## 2. Employer-Sponsored Visa (Subclass 482 → 186)
+Most common path for people already working in their field.
+- **Who it's for:** anyone with a job offer from an approved Australian sponsor in an eligible occupation.
+- **Requirements:** **AUD $73,150** minimum salary (TSMIT threshold), 2+ years' experience in the role.
+- **Cost:** AUD $1,495–$3,115 depending on stream; employer usually pays the nomination fee (AUD $540).
+- **Processing:** 2–6 months. After 2 years on a 482 you can transition to PR via the 186.
+
+## 3. Working Holiday Visa (Subclass 417 / 462)
+Best entry route if you're young and want to test the waters.
+- **Who it's for:** **18–35** (UK, Canada, France, Ireland, Italy + others) or 18–30 (most other eligible countries).
+- **Requirements:** AUD $5,000 in funds, no dependants, valid passport.
+- **Cost:** AUD $650.
+- **Processing:** 1–4 weeks. UK applicants get a 3-year max stay; most others get 1 year (extendable to 3 with regional work).
+
+## 4. Skilled Nominated / Regional (Subclass 190 / 491)
+Same idea as 189 but with a state nomination — lower points threshold.
+- **Who it's for:** professionals whose occupation is on a state's list rather than the federal MLTSSL.
+- **Requirements:** 65+ points (incl. 5 from nomination); 491 also requires regional living for 3 years.
+- **Cost:** AUD $4,640.
+- **Processing:** 9–18 months.
+
+## 5. Family & Partner Visas (Subclass 309 / 820 / 143)
+For partners, parents, and dependent children of citizens/PRs.
+- **Cost:** **AUD $9,095** for partner visas (one of the world's most expensive — budget for this).
+- **Processing:** 18–24 months for partner, 5+ years for parents.
+
+## What most people actually do
+Two pragmatic shapes:
+- **Under 35, no job lined up:** start on the 417 Working Holiday, find sponsorship inside Australia, transition to 482 → 186.
+- **30+ with a strong CV:** lodge an Expression of Interest for the 189 directly. If you don't get invited in 6 months, pivot to 482 with a sponsor.
+
+## Best next steps
+1. Run your profile through [Visavu's Find My Visa](https://visavu.com/find-my-visa) — ranks all 5 routes by your odds.
+2. Check if your occupation sits on the MLTSSL: https://immi.homeaffairs.gov.au/visas/working-in-australia/skill-occupation-list
+3. Get a skills assessment from the relevant body (it's the longest-lead-time step — start it before you do anything else).
+
+If you want me to dig into a specific pathway, tell me your nationality and rough age and I'll narrow it to what's actually realistic for you."
+
+──── EXAMPLE 2: DRILL-DOWN ANSWER ────
 
 User asks: "I'm UK, 26. What's my best route to Australia?"
 
-❌ BAD — wall of text, parentheticals, no scanability:
-"For a UK passport holder aged 26 looking to move to Australia, the best route is the Working Holiday Visa (subclass 417, three year max stay for UK applicants, AUD $650 fee (approximately £335), processed within 1-30 days), which lets you live and work for up to three years and explore options for permanent residency through the Skilled Independent visa (subclass 189, points-tested at 65+ points minimum, requires English at IELTS 6.0+, occupation on MLTSSL list, fee AUD $4,640) or sponsored work routes (subclass 482, employer-sponsored, salary threshold AUD $73,150)..."
-
-✓ GOOD — bold, headers, bullets, short paragraphs:
+✓ GOOD — single-route recommendation, much shorter, conversational:
 
 "At 26 with a UK passport, you're in a great spot — Australia is genuinely one of the most accessible long-stay routes you have.
 
@@ -539,15 +621,15 @@ Three realistic PR pathways from there:
 
 Most UK applicants get the 417 approved in under a week. Want me to walk you through the 482 sponsorship process, or focus on what to do in your first 3 months on the WHV?"
 
-Notice: bold keywords, ## headers, bulleted lists for parallel items, short paragraphs, one trailing question. No long parentheticals.`;
+──── KEY DIFFERENCES ────
 
-const SYNTHESIS_CLOSE = `
+Both use the same building blocks (## headers, **bold** facts, bullets). The OVERVIEW version is longer because it has more options to cover; each option gets a parallel sub-structure (who/requirements/cost/processing) so the user can scan across. The DRILL-DOWN version commits to one recommendation, names it confidently, and offers a follow-up.
 
-═══ END WITH ═══
-Always close with the disclaimer on its own line (no header). The disclaimer text: "${DISCLAIMER}"`;
+❌ BAD shape — wall of text, parentheticals everywhere, no scanability:
+"For a UK passport holder aged 26 looking to move to Australia, the best route is the Working Holiday Visa (subclass 417, three year max stay for UK applicants, AUD $650 fee (approximately £335), processed within 1-30 days), which lets you live and work for up to three years and explore options for permanent residency through the Skilled Independent visa (subclass 189, points-tested at 65+ points minimum...)" — never do this.`;
 
-const SYNTHESIS_FIRST_TURN = SYNTHESIS_CORE + SYNTHESIS_WORKED_EXAMPLE + SYNTHESIS_CLOSE;
-const SYNTHESIS_FOLLOWUP = SYNTHESIS_CORE + SYNTHESIS_CLOSE;
+const SYNTHESIS_FIRST_TURN = SYNTHESIS_CORE + SYNTHESIS_WORKED_EXAMPLE;
+const SYNTHESIS_FOLLOWUP = SYNTHESIS_CORE;
 
 /** First incoming user message → full prompt with demo. Otherwise compact. */
 function pickSynthesisSystem(messages: ChatMessage[]): string {
@@ -592,7 +674,7 @@ export async function POST(request: NextRequest) {
   if (!rateLimit.allowed) {
     return NextResponse.json(
       {
-        reply: rateLimit.message + "\n\n" + DISCLAIMER,
+        reply: rateLimit.message,
         type: "rate_limited",
         reason: rateLimit.reason,
       },
@@ -634,8 +716,7 @@ export async function POST(request: NextRequest) {
   // Hard refusal pre-check — don't waste a Mistral call on these.
   if (REFUSAL_PATTERNS.some((p) => p.test(lastUser.content))) {
     const reply =
-      "Questions involving asylum, deportation, criminal records, or how to present an application in a particular way are outside what Visavu's information assistant covers. These need a registered immigration adviser (UK: IAA-registered, AU: MARA, CA: CICC, US: state-bar-admitted attorney or BIA-accredited representative).\n\n" +
-      DISCLAIMER;
+      "Questions involving asylum, deportation, criminal records, or how to present an application in a particular way are outside what Visavu's information assistant covers. These need a registered immigration adviser (UK: IAA-registered, AU: MARA, CA: CICC, US: state-bar-admitted attorney or BIA-accredited representative).";
     await logAssistantReply(reply, { isRefusal: true });
     return NextResponse.json({ reply, type: "refusal", sessionId });
   }
@@ -646,8 +727,7 @@ export async function POST(request: NextRequest) {
 
   if (intent.needs_human_advice) {
     const reply =
-      "This sounds like a situation where a registered immigration adviser would help you more than general information can. Look up an IAA-registered adviser (UK), MARA agent (Australia), or CICC consultant (Canada), or a bar-admitted attorney in your destination jurisdiction.\n\n" +
-      DISCLAIMER;
+      "This sounds like a situation where a registered immigration adviser would help you more than general information can. Look up an IAA-registered adviser (UK), MARA agent (Australia), or CICC consultant (Canada), or a bar-admitted attorney in your destination jurisdiction.";
     await logAssistantReply(reply, { isRefusal: true });
     return NextResponse.json({ reply, type: "refusal", sessionId });
   }
@@ -877,8 +957,6 @@ function buildCleanFallback(intent: ExtractedIntent, userMessage: string): strin
       `- **Country overview:** https://visavu.com/destination/${d.toLowerCase()}`,
       ``,
       `Each route page shows the visa name, fee in your currency, processing time, and source link.`,
-      ``,
-      DISCLAIMER,
     ].join("\n");
   }
 
@@ -889,8 +967,6 @@ function buildCleanFallback(intent: ExtractedIntent, userMessage: string): strin
       `To answer for ${destName} (${purposeLabel}), I need to know which passport you hold — visa rules vary enormously by nationality. Could you tell me your nationality, and I'll give you the specific routes?`,
       ``,
       `If you'd rather browse rather than chat, the [${destName} overview](https://visavu.com/destination/${d.toLowerCase()}) lists every visa category, or [Find my visa](https://visavu.com/find-my-visa) walks you through a 12-question wizard.`,
-      ``,
-      DISCLAIMER,
     ].join("\n");
   }
 
@@ -899,8 +975,6 @@ function buildCleanFallback(intent: ExtractedIntent, userMessage: string): strin
       `Got it — you're a ${nationalityFor(p)} citizen. Which country are you trying to go to, and for what purpose (visit / work / study / family)?`,
       ``,
       `If you want to see every destination at once, [Where can ${nationalityFor(p)} go?](https://visavu.com/passport/${p.toLowerCase()}) is the per-passport overview.`,
-      ``,
-      DISCLAIMER,
     ].join("\n");
   }
 
@@ -916,8 +990,6 @@ function buildCleanFallback(intent: ExtractedIntent, userMessage: string): strin
     `- Why (visit / work / study / family / business)`,
     ``,
     `Or skip the chat entirely and use [Find my visa](https://visavu.com/find-my-visa) — 12 questions and you get five ranked lists of routes that fit your profile.`,
-    ``,
-    DISCLAIMER,
   ].join("\n");
 }
 

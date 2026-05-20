@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ChatInterface } from "@/components/ChatInterface";
-import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 
 export const metadata: Metadata = {
   title: "Ask Visavu — AI visa assistant",
@@ -73,20 +72,9 @@ export default function ChatPage() {
         ))}
       </div>
 
-      <DisclaimerBanner tone="info" />
-
       <Suspense fallback={<div className="text-sm text-[var(--color-ink-muted)]">Loading chat…</div>}>
         <ChatInterface />
       </Suspense>
-
-      <footer className="text-xs text-[var(--color-ink-muted)] border-t border-[var(--color-rule)] pt-4 mt-auto">
-        General information only. Visa rules change. Verify with the
-        destination&apos;s immigration authority before acting on anything here.
-        For an OISC- or OCG-registered adviser, see{" "}
-        <a href="/consultation" className="underline hover:text-[var(--color-ink)]">
-          our consultation form
-        </a>.
-      </footer>
     </div>
   );
 }

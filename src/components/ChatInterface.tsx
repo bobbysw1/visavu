@@ -515,6 +515,17 @@ export function ChatInterface() {
         )}
       </div>
 
+      {/* Single persistent disclaimer line — replaces the per-message
+          disclaimer the API used to stamp on every reply. One line, one
+          place, always visible above the input. */}
+      <p className="text-[11px] text-[var(--color-ink-muted)] text-center -mb-1">
+        General information, not legal advice. Visa rules change — verify with the
+        destination&apos;s immigration authority before acting.{" "}
+        <Link href="/disclaimer" className="underline hover:text-[var(--color-ink)]">
+          More
+        </Link>
+      </p>
+
       {/* Input row */}
       <form
         onSubmit={(e) => {

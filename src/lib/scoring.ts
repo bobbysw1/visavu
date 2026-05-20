@@ -30,6 +30,7 @@ export function scoreDestinationsForPassport(
       processingTimeDaysMax: s.processingTimeDaysMax,
       feeAmountMinor: totalFee?.amount ?? null,
       feeCurrency: totalFee?.currency ?? null,
+      maxStayDays: s.maxStayDays,
     };
   });
 }
@@ -52,6 +53,7 @@ export function scoreOriginsForDestination(
       processingTimeDaysMax: s.processingTimeDaysMax,
       feeAmountMinor: totalFee?.amount ?? null,
       feeCurrency: totalFee?.currency ?? null,
+      maxStayDays: s.maxStayDays,
     };
   });
 }

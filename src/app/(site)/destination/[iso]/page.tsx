@@ -226,8 +226,8 @@ export default async function DestinationIndex({ params }: { params: Promise<Par
             mode="destination"
             anchorIso2={upper}
             scored={scoreOriginsForDestination(upper, summaries)}
-            heading="Origins by continent"
-            subheading={`Tabbed by region. Switch the sort to find the easiest, cheapest, or fastest passports for entry to ${nameFor(upper)}.`}
+            heading={`All ${summaries.length} passports entering ${nameFor(upper)}`}
+            subheading="Filter by region. Sort by stay length, difficulty, fee, or processing time. Each card opens the full route breakdown."
           />
         )}
 

@@ -39,6 +39,12 @@ export type ScoredItem = {
   processingTimeDaysMax?: number | null;
   feeAmountMinor?: number | null;
   feeCurrency?: string | null;
+  /** Max stay length on this route. For strong passports this is the
+   *  one real differentiator across mostly-visa-free destinations (UK
+   *  passport: Schengen 90d, Indonesia 30d, Japan 90d, NZ 90d, etc).
+   *  Without it the continent cards all reduce to "Visa-free / Free /
+   *  Instant" with no variance. */
+  maxStayDays?: number | null;
 };
 
 const ORDER: DifficultyBucket[] = ["easy", "medium", "hard"];

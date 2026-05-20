@@ -285,8 +285,8 @@ export default async function PassportIndex({ params }: { params: Promise<Params
                 mode="passport"
                 anchorIso2={upper}
                 scored={scoreDestinationsForPassport(upper, summaries)}
-                heading="Where you can go, by continent"
-                subheading={`Tabbed by region. Switch the sort to find the easiest, cheapest, or fastest options from ${name}.`}
+                heading={`All ${summaries.length} destinations for a ${name} passport`}
+                subheading="Filter by region. Sort by stay length, difficulty, fee, or processing time. Each card opens the full route breakdown."
               />
             )}
 

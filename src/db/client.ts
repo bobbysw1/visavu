@@ -60,8 +60,21 @@ async function buildVisaDb(): Promise<DrizzleDb> {
   const { PGlite } = await import("@electric-sql/pglite");
   const { drizzle: drizzlePglite } = await import("drizzle-orm/pglite");
 
+  // Snapshot-load path fires whenever we want a fresh in-memory DB
+  // seeded from src/data/pglite-dump.tar.gz rather than a persistent
+  // filesystem dir. That covers:
+  //   - VERCEL serverless functions (no persistent FS)
+  //   - AWS Lambda (same)
+  //   - CI runners (GitHub Actions sets CI=true; no bootstrap step
+  //     has been run on the fresh checkout, but the snapshot IS in
+  //     git so we can use it for tests that touch the DB). Without
+  //     this, src/lib/finder.test.ts fails with `relation "passports"
+  //     does not exist` because the .pglite/data dir doesn't exist
+  //     in CI.
   const isServerless =
-    !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME;
+    !!process.env.VERCEL ||
+    !!process.env.AWS_LAMBDA_FUNCTION_NAME ||
+    !!process.env.CI;
 
   if (isServerless) {
     const { readFileSync } = await import("node:fs");

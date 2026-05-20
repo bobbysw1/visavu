@@ -7,7 +7,7 @@
  * on the left, persistent narrow info-rail on the right.
  */
 import Link from "next/link";
-import { Globe2, MapPin, Users, Banknote, Languages, Phone, ScrollText, TrendingUp, AlertCircle, Plane } from "lucide-react";
+import { Globe2, MapPin, Users, Banknote, Languages, Phone, ScrollText, TrendingUp, AlertCircle } from "lucide-react";
 import { PassportPresenceCard } from "./PassportPresenceCard";
 import { CountrySilhouette } from "./CountrySilhouette";
 import { Flag } from "./Flag";
@@ -29,10 +29,16 @@ export function PassportSidebar({
   iso2,
   coverage,
   summaries,
+  globalRank = null,
+  totalRanked = null,
 }: {
   iso2: string;
   coverage: CoverageSnapshot | null;
   summaries: DestSummary[];
+  /** Pre-computed global rank for this passport (visa-free access rank,
+   *  1 = strongest). Surfaced inside PassportPresenceCard. */
+  globalRank?: number | null;
+  totalRanked?: number | null;
 }) {
   const upper = iso2.toUpperCase();
   const facts = factsFor(upper);
@@ -68,9 +74,15 @@ export function PassportSidebar({
 
   return (
     <aside className="space-y-6">
-      {/* PASSPORT PRESENCE — premium photo-overlaid identity card replacing
-          the previous fake passport-book illustration. */}
-      <PassportPresenceCard iso2={upper} />
+      {/* PASSPORT PRESENCE — the country's real passport cover, framed
+          in an identity card with global mobility ranking surfaced
+          inline. Replaces the old travel-photo backdrop. */}
+      <PassportPresenceCard
+        iso2={upper}
+        globalRank={globalRank}
+        totalRanked={totalRanked}
+        visaFreeCount={mobilityScore}
+      />
 
       {/* COUNTRY OUTLINE — the silhouette cutout you asked for. */}
       <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5">
@@ -94,28 +106,14 @@ export function PassportSidebar({
         </p>
       </div>
 
-      {/* MOBILITY RANKING */}
-      {mobilityScore !== null && (
-        <div className="rounded-2xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/50 dark:bg-emerald-950/20 p-5">
-          <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-emerald-700 dark:text-emerald-300 mb-2 flex items-center gap-1.5">
-            <Plane size={11} aria-hidden="true" />
-            Passport Strength
-          </p>
-          <p className="text-4xl font-bold tabular-nums text-emerald-700 dark:text-emerald-300 leading-none">
-            {mobilityScore}
-          </p>
-          <p className="text-sm text-emerald-900/70 dark:text-emerald-100/70 mt-1">
-            destinations open visa-free or with an eTA
-          </p>
-          <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-3 leading-snug">
-            That puts the {adjective} passport in the{" "}
-            <strong className="text-emerald-700 dark:text-emerald-300">
-              {mobilityScore > 170 ? "top tier" : mobilityScore > 130 ? "upper-middle tier" : mobilityScore > 80 ? "middle tier" : "lower tier"}
-            </strong>{" "}
-            of global mobility.
-          </p>
-        </div>
-      )}
+      {/* (The Passport Strength block previously lived here — visa-free
+          count + tier copy. Both pieces now sit inside the
+          PassportPresenceCard above: the cover image, global rank, and
+          visa-free count form a single coherent identity card rather
+          than two stacked metrics-blocks. The tier-band copy ("top tier
+          / upper-middle / middle / lower") is implied by the rank
+          ordinal — #1 reads as "top tier" without needing to spell it
+          out.) */}
 
       {/* COUNTRY FACTS */}
       {facts && (

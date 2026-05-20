@@ -13,7 +13,7 @@ import { CountrySilhouette } from "@/components/CountrySilhouette";
 import { COUNTRY_LIST, PASSPORT_COUNTRIES, TOP_DESTINATIONS, issuesPassport, nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
 import { SITE, absoluteUrl } from "@/lib/site";
-import { coverageForPassport, destinationSummariesForPassport } from "@/lib/coverage";
+import { coverageForPassport, destinationSummariesForPassport, passportRankings } from "@/lib/coverage";
 import { passportIntroFor } from "@/content/passportIntros";
 import { generateIntro } from "@/content/passportIntroGenerator";
 import { buildPassportFaqs } from "@/content/passportFaqGenerator";
@@ -92,9 +92,20 @@ export default async function PassportIndex({ params }: { params: Promise<Params
 
   let coverage = null;
   let summaries: Awaited<ReturnType<typeof destinationSummariesForPassport>> = [];
+  // Pre-compute the global mobility rank for this passport (1 =
+  // strongest by visa-free access). Surfaced inside the PassportSidebar
+  // → PassportPresenceCard. Same passportRankings() call powers
+  // /passport-rankings so the underlying numbers stay consistent.
+  let globalRank: number | null = null;
+  let totalRanked: number | null = null;
   try {
     coverage = await coverageForPassport(upper);
     summaries = await destinationSummariesForPassport(upper);
+    const rankings = await passportRankings();
+    const sorted = [...rankings].sort((a, b) => b.visaFreeAccess - a.visaFreeAccess);
+    totalRanked = sorted.length;
+    const idx = sorted.findIndex((r) => r.iso2 === upper);
+    if (idx >= 0) globalRank = idx + 1;
   } catch {
     // DB unavailable — render zero state.
   }
@@ -363,7 +374,13 @@ export default async function PassportIndex({ params }: { params: Promise<Params
           {/* SIDEBAR */}
           <div className="lg:col-span-4">
             <div className="sticky top-20">
-              <PassportSidebar iso2={upper} coverage={coverage} summaries={summaries} />
+              <PassportSidebar
+                iso2={upper}
+                coverage={coverage}
+                summaries={summaries}
+                globalRank={globalRank}
+                totalRanked={totalRanked}
+              />
             </div>
           </div>
         </div>

@@ -263,17 +263,7 @@ export function WorldMap({
       </div>
 
       <p className="mt-2 text-[11px] text-neutral-500 dark:text-neutral-400">
-        Map: Natural Earth 110m via{" "}
-        <a
-          href="https://github.com/topojson/world-atlas"
-          target="_blank"
-          rel="noreferrer noopener"
-          className="underline hover:no-underline"
-        >
-          world-atlas
-        </a>
-        . Equal Earth projection. Hover a country for visa + living details; click to open the full
-        route.
+        Hover over a country for visa + living details; click to open the full route.
       </p>
     </section>
   );

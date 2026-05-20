@@ -88,10 +88,49 @@ type ChatRequest = {
   sessionId?: string;
 };
 
+/**
+ * Intent schema used to feed both data-lookup + synthesis.
+ *
+ * Designed around real-world emigration questions, not just "what visa
+ * for X" lookups. Three categories of fields:
+ *
+ *   1. CORE ROUTE — passport_iso2 / destination_iso2 / purpose — the
+ *      classic "what visa do I need" lookup tuple.
+ *   2. MULTI-APPLICANT — spouse_passport_iso2 / is_couple — captures the
+ *      common case where someone is moving WITH a partner whose
+ *      nationality often changes the answer dramatically (e.g. EU
+ *      spouse → EU family-reunification right that completely bypasses
+ *      the work-route ranking). Throwing this away was the single
+ *      biggest source of "useless reply" failures.
+ *   3. CONTEXT — profession / is_open_exploration / is_general_question
+ *      — lets the bot recognise "I'm a doctor, where can we go?" as a
+ *      profession-led open exploration (recommend destinations) rather
+ *      than gating on "you didn't specify a destination, please tell me
+ *      a country".
+ */
 type ExtractedIntent = {
   passport_iso2: string | null;
+  /** Secondary applicant's passport — set when the user mentions a
+   *  spouse / partner / family member with a DIFFERENT nationality.
+   *  Critical for couples: an EU passport in the household unlocks
+   *  family-reunification routes that change every recommendation. */
+  spouse_passport_iso2: string | null;
   destination_iso2: string | null;
   purpose: Purpose | null;
+  /** Occupation in plain English ("doctor", "software engineer", "nurse",
+   *  "teacher", "chef"). Drives skilled-occupation list lookups + the
+   *  PROFESSION-LED synthesis mode. Free text so we don't have to maintain
+   *  an ANZSCO/SOC enum here. */
+  profession: string | null;
+  /** True when the user mentions "we", "my wife", "my husband", "my
+   *  partner" — signals a 2-applicant query even if spouse_passport
+   *  couldn't be pinned to an ISO. */
+  is_couple: boolean;
+  /** True when the user is asking open-ended "where could we go" /
+   *  "what are the best places" / "options for X" — i.e. they want a
+   *  ranked shortlist, NOT a single-destination lookup. Setting this
+   *  bypasses the "ask for destination" gate. */
+  is_open_exploration: boolean;
   is_general_question: boolean;
   needs_human_advice: boolean;
 };
@@ -103,21 +142,24 @@ const EXTRACTION_SYSTEM = `You extract structured visa-query intent from a user'
 
 Return ONLY JSON matching this exact schema:
 {
-  "passport_iso2": "GB" | null,        // ISO 3166-1 alpha-2 of the user's passport (lookup country names → ISO)
-  "destination_iso2": "FR" | null,     // ISO 3166-1 alpha-2 of the destination country
+  "passport_iso2": "GB" | null,             // PRIMARY applicant's passport (ISO 3166-1 alpha-2)
+  "spouse_passport_iso2": "DE" | null,      // Secondary applicant (spouse / partner / family member) if mentioned with a DIFFERENT nationality
+  "destination_iso2": "FR" | null,          // Destination country if specified
   "purpose": "tourism"|"business"|"transit"|"work"|"study"|"family"|"diplomatic"|null,
-  "is_general_question": true|false,   // true if the question is general (no specific country pair)
-  "needs_human_advice": true|false     // true if the question involves: asylum, deportation, criminal records, fraud, ongoing legal cases
+  "profession": "doctor" | null,            // Occupation if mentioned in plain English ("doctor", "software engineer", "nurse", "teacher", "chef", "pharmacist", etc.). Null if not stated.
+  "is_couple": true|false,                  // True when user says "we", "my wife/husband/partner", "us"
+  "is_open_exploration": true|false,        // True when user asks open-ended "where can we go" / "what are the best places" / "what are our options" / "best ways to emigrate" — they want a RANKED SHORTLIST, not a single-destination lookup. NEVER set destination_iso2 for these.
+  "is_general_question": true|false,        // True if the question is purely informational (e.g. "what's the Schengen rule?")
+  "needs_human_advice": true|false          // True only for: asylum, deportation, criminal records, fraud, ongoing legal cases
 }
 
 Rules:
-- Use nationality demonyms ("British" → GB, "American" → US, "Canadian" → CA, "Indian" → IN, etc.)
-- Default purpose to "tourism" if the question is about visiting / travelling
-- "work in" → purpose: "work"
-- "study at" → purpose: "study"
-- "move to" / "live in" / "join my partner in" → purpose: "family" (for partner) or "work" (for general relocation)
-- If the user asks about asylum, deportation, criminal records, lying on applications, or fraud, set needs_human_advice: true
-- If the question is purely informational (e.g. "what's the Schengen rule?") set is_general_question: true and passport_iso2/destination_iso2 to null
+- Demonyms → ISO: "British" → GB, "American" → US, "Canadian" → CA, "Indian" → IN, "German" → DE, "Belarusian" → BY, "Polish" → PL, "Ukrainian" → UA, "Chinese" → CN, "Filipino" → PH, "Brazilian" → BR, "Mexican" → MX, etc.
+- COUPLES — when the user mentions "my wife/husband/partner" with a nationality (e.g. "I'm Belarusian, my wife is German"), put the SPEAKER's nationality in passport_iso2 and the SPOUSE's in spouse_passport_iso2. Set is_couple: true.
+- "we're both doctors" / "I'm a software engineer" → profession field; do NOT also set purpose: "work" unless they ALSO explicitly mention working in a specific country.
+- "where can we go" / "best places to emigrate" / "what are our options" / "what countries should we consider" → is_open_exploration: true. Do NOT guess a destination.
+- Default purpose to "tourism" ONLY if the question is genuinely about visiting / travelling. Do NOT default to tourism for emigration questions — leave purpose null and rely on profession + is_open_exploration.
+- "move to X" / "live in X" / "emigrate to X" → purpose: "work" (or "family" if joining a partner specifically)
 - Return ONLY the JSON object, no prose, no markdown fences`;
 
 async function callMistralJSON(messages: ChatMessage[]): Promise<ExtractedIntent | null> {
@@ -196,7 +238,11 @@ async function callMistralText(messages: ChatMessage[], systemPrompt: string): P
           // shape {type: "answer"|"ask", content: "...", options?: [...]}.
           // See SYNTHESIS_CORE for the schema spec.
           response_format: { type: "json_object" },
-          max_tokens: 1400,
+          // 2200 lets the multi-applicant / open-exploration replies
+          // run to ~800 words with structured 6-option breakdowns
+          // without hitting the cap mid-section (the previous 1400
+          // truncated those answers right around option 4).
+          max_tokens: 2200,
           temperature: 0.4,
         }),
       });
@@ -251,68 +297,132 @@ const NATIONALITY_ALIASES: Record<string, string> = {
   euro: null as unknown as string, european: null as unknown as string,
 };
 
+/** Profession keywords the fallback extractor recognises. Mistral
+ *  (the primary path) is much more flexible — this is just for the
+ *  no-API-key / Mistral-failed case. Keep curated to the common ones;
+ *  the skilled-occupation list lookup catches the long tail. */
+const PROFESSION_KEYWORDS: ReadonlyArray<[RegExp, string]> = [
+  [/\b(doctor|physician|gp|surgeon|medic)\b/i, "doctor"],
+  [/\b(nurse|nursing)\b/i, "nurse"],
+  [/\b(software|web|backend|frontend|fullstack)\s+(engineer|dev(?:eloper)?)\b/i, "software engineer"],
+  [/\b(software engineer|developer|programmer|coder)\b/i, "software engineer"],
+  [/\b(teacher|teaching|educator)\b/i, "teacher"],
+  [/\b(chef|cook)\b/i, "chef"],
+  [/\b(accountant|accounting)\b/i, "accountant"],
+  [/\b(architect)\b/i, "architect"],
+  [/\b(pharmacist|pharmacy)\b/i, "pharmacist"],
+  [/\b(dentist|dentistry)\b/i, "dentist"],
+  [/\b(lawyer|attorney|solicitor|barrister)\b/i, "lawyer"],
+  [/\b(electrician)\b/i, "electrician"],
+  [/\b(plumber)\b/i, "plumber"],
+  [/\b(welder)\b/i, "welder"],
+  [/\b(mechanic)\b/i, "mechanic"],
+  [/\b(veterinarian|vet)\b/i, "veterinarian"],
+  [/\b(midwife)\b/i, "midwife"],
+  [/\b(paramedic)\b/i, "paramedic"],
+  [/\b(physio(?:therapist)?)\b/i, "physiotherapist"],
+  [/\b(scientist|researcher|phd)\b/i, "scientist"],
+];
+
 function fallbackExtract(userMessage: string): ExtractedIntent {
   const text = userMessage.toLowerCase();
   let passport_iso2: string | null = null;
+  let spouse_passport_iso2: string | null = null;
   let destination_iso2: string | null = null;
   let purpose: Purpose | null = null;
 
-  // Match passport country — try the short-form aliases FIRST (uk, us,
-  // aussie, kiwi etc.) because the iso2 those resolve to is more
-  // reliable than partial-demonym matches against COUNTRY_LIST.
+  // Collect every nationality mention up to 2 (primary + spouse).
+  // The FIRST match becomes passport_iso2; if there's a spouse keyword
+  // before/after another nationality, that becomes spouse_passport_iso2.
+  const nationalityMatches: Array<{ iso: string; index: number }> = [];
   for (const [alias, iso] of Object.entries(NATIONALITY_ALIASES)) {
     if (!iso) continue;
-    if (new RegExp(`\\b${alias}\\b`, "i").test(text)) {
-      passport_iso2 = iso;
-      break;
+    const re = new RegExp(`\\b${alias}\\b`, "i");
+    const m = re.exec(text);
+    if (m) nationalityMatches.push({ iso, index: m.index });
+  }
+  for (const c of COUNTRY_LIST) {
+    const demonym = nationalityFor(c.iso2)?.toLowerCase();
+    if (!demonym) continue;
+    const re = new RegExp(`\\b${demonym}\\b`, "i");
+    const m = re.exec(text);
+    if (m && !nationalityMatches.some((n) => n.iso === c.iso2)) {
+      nationalityMatches.push({ iso: c.iso2, index: m.index });
     }
   }
-  // Then full demonyms — only if no alias matched.
-  if (!passport_iso2) {
-    for (const c of COUNTRY_LIST) {
-      const demonym = nationalityFor(c.iso2)?.toLowerCase();
-      if (!demonym) continue;
-      const reD = new RegExp(`\\b${demonym}\\b`, "i");
-      if (reD.test(text)) {
-        passport_iso2 = c.iso2;
-        break;
-      }
-    }
-  }
-  // And "from <country>" as a final fallback for casual phrasing like
-  // "moving to Russia from UK for work" where the alias loop also
-  // catches it but a longer-form country name might be there too.
-  if (!passport_iso2) {
-    for (const c of COUNTRY_LIST) {
-      const name = c.name.toLowerCase();
-      if (new RegExp(`\\bfrom\\s+(the\\s+)?${name}\\b`, "i").test(text)) {
-        passport_iso2 = c.iso2;
-        break;
-      }
-    }
-  }
-
-  // Match destination — look for "to <Country>" or "in <Country>"
+  // "from <country>" as a final signal for casual phrasing
   for (const c of COUNTRY_LIST) {
     const name = c.name.toLowerCase();
-    const re = new RegExp(`\\b(to|in|visit|move to|live in|work in)\\s+(the\\s+)?${name}\\b`, "i");
-    if (re.test(text) && c.iso2 !== passport_iso2) {
+    const re = new RegExp(`\\bfrom\\s+(the\\s+)?${name}\\b`, "i");
+    const m = re.exec(text);
+    if (m && !nationalityMatches.some((n) => n.iso === c.iso2)) {
+      nationalityMatches.push({ iso: c.iso2, index: m.index });
+    }
+  }
+  nationalityMatches.sort((a, b) => a.index - b.index);
+  if (nationalityMatches.length > 0) passport_iso2 = nationalityMatches[0].iso;
+  if (nationalityMatches.length > 1) spouse_passport_iso2 = nationalityMatches[1].iso;
+
+  // Couple detection
+  const is_couple = /\b(my (wife|husband|partner|spouse|fiance[e]?)|we(?:'re| are)?|our|us)\b/i.test(text);
+
+  // Match destination — look for "to <Country>" or "in <Country>" — but
+  // skip if it's a passport or spouse country
+  for (const c of COUNTRY_LIST) {
+    const name = c.name.toLowerCase();
+    const re = new RegExp(`\\b(to|in|visit|move to|live in|work in|emigrate to)\\s+(the\\s+)?${name}\\b`, "i");
+    if (re.test(text) && c.iso2 !== passport_iso2 && c.iso2 !== spouse_passport_iso2) {
       destination_iso2 = c.iso2;
       break;
     }
   }
 
+  // Open-ended exploration phrasing — "where can we go", "best ways to
+  // emigrate", "what are our options", "what countries should we
+  // consider". When this fires we DON'T pretend destination_iso2 is set
+  // — the user wants a recommendation, not a lookup.
+  const is_open_exploration =
+    !destination_iso2 &&
+    /\b(where\s+(can|could|should)\s+(we|i|us)|best\s+(ways?|places?|countr(?:y|ies))\s+to\s+(emigrate|move|live|relocate|go)|what\s+(are\s+)?(our|my)\s+(options|choices)|recommend\s+(a\s+)?countr|which\s+countr(?:y|ies)\s+should)/i.test(
+      text,
+    );
+
+  // Profession detection
+  let profession: string | null = null;
+  for (const [re, label] of PROFESSION_KEYWORDS) {
+    if (re.test(text)) {
+      profession = label;
+      break;
+    }
+  }
+
+  // Purpose — don't default to tourism for clear emigration questions
+  // (those should leave purpose null and rely on profession +
+  // is_open_exploration to drive the synthesis).
+  const isEmigrationQuery =
+    /\b(emigrate|relocate|move (to|abroad|overseas)|live (in|abroad)|life in|long.?term)\b/i.test(text);
   if (/\bwork\b|\bjob\b|\bemploy/.test(text)) purpose = "work";
   else if (/\bstudy\b|\buni|\bcollege|\bschool\b/.test(text)) purpose = "study";
   else if (/\bspouse\b|\bpartner\b|\bmarriage\b|\bfamily\b/.test(text)) purpose = "family";
   else if (/\btransit\b/.test(text)) purpose = "transit";
   else if (/\bbusiness\b|\bmeeting\b/.test(text)) purpose = "business";
+  else if (isEmigrationQuery || is_open_exploration) purpose = null;
   else purpose = "tourism";
 
   const needs_human_advice = REFUSAL_PATTERNS.some((p) => p.test(text));
-  const is_general_question = !passport_iso2 || !destination_iso2;
+  const is_general_question = !passport_iso2 && !destination_iso2;
 
-  return { passport_iso2, destination_iso2, purpose, is_general_question, needs_human_advice };
+  return {
+    passport_iso2,
+    spouse_passport_iso2,
+    destination_iso2,
+    purpose,
+    profession,
+    is_couple,
+    is_open_exploration,
+    is_general_question,
+    needs_human_advice,
+  };
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -325,37 +435,77 @@ function fallbackExtract(userMessage: string): ExtractedIntent {
 function buildGeneralContext(intent: ExtractedIntent): string {
   const known: string[] = [];
   const missing: string[] = [];
-  if (intent.passport_iso2) known.push(`passport=${intent.passport_iso2} (${nationalityFor(intent.passport_iso2)})`);
-  else missing.push("passport / nationality");
+  if (intent.passport_iso2) known.push(`primary passport=${intent.passport_iso2} (${nationalityFor(intent.passport_iso2)})`);
+  else missing.push("primary passport / nationality");
+  if (intent.spouse_passport_iso2) {
+    known.push(`spouse passport=${intent.spouse_passport_iso2} (${nationalityFor(intent.spouse_passport_iso2)})`);
+  }
+  if (intent.is_couple && !intent.spouse_passport_iso2) {
+    known.push(`couple / 2-applicant query (spouse nationality unknown)`);
+  }
+  if (intent.profession) known.push(`profession=${intent.profession}`);
   if (intent.destination_iso2) known.push(`destination=${intent.destination_iso2} (${nameFor(intent.destination_iso2)})`);
-  else missing.push("destination country");
+  else if (intent.is_open_exploration) {
+    known.push(
+      `OPEN EXPLORATION — user wants a ranked shortlist of destinations, NOT a single-country lookup. Do NOT ask "which country are you going to" — they're asking YOU to recommend.`,
+    );
+  } else {
+    missing.push("destination country");
+  }
   if (intent.purpose) known.push(`purpose=${intent.purpose}`);
-  else missing.push("purpose (tourism / work / study / family / business / retirement)");
+  else if (!intent.is_open_exploration) {
+    missing.push("purpose (tourism / work / study / family / business / retirement)");
+  }
 
   const lines = [
-    `No specific Visavu route data fetched — intent was incomplete.`,
-    known.length > 0 ? `Known from user message: ${known.join(", ")}` : `Nothing concrete known from user yet.`,
-    missing.length > 0 ? `Missing (ASK CLARIFYING QUESTIONS to get these before answering): ${missing.join(", ")}` : ``,
+    `No specific Visavu route data fetched — intent was incomplete${intent.is_open_exploration ? " (but this is an open-exploration question — answer it directly with a recommended shortlist)" : ""}.`,
+    known.length > 0 ? `KNOWN FROM USER MESSAGE: ${known.join("; ")}` : `Nothing concrete known from user yet.`,
+    missing.length > 0
+      ? `MISSING (only ask for these if they're truly needed for a useful answer — never re-ask for info already in KNOWN): ${missing.join(", ")}`
+      : ``,
+    ``,
+    `ABSOLUTE RULE: NEVER re-ask the user for information that's already in KNOWN above. They told you their nationality / spouse / profession / question — USE IT. Re-asking is the #1 reason users leave the chat.`,
     ``,
     `If the user's question is purely informational (e.g. "what's the 90/180 Schengen rule?", "what's the Hague Apostille?", "how does the EU Blue Card work?", "what's a Working Holiday visa?"), answer directly from general visa knowledge — you don't need to ask clarifying questions for those.`,
     ``,
-    `VISAVU PAGES YOU CAN LINK (include at least 2 in any answer):`,
+    `VISAVU PAGES YOU CAN LINK (include at least 2 in any substantive answer):`,
     `- /find-my-visa — questionnaire that asks 12 questions and ranks routes`,
     `- /finder — "where can I go?" filter by nationality + goal`,
     `- /myths — fact-checked common immigration rumours`,
-    `- /chat — you are here`,
     `- /destination/{iso} — destination-overview pages for every country`,
     `- /passport/{iso} — passport-overview pages for every nationality`,
     intent.passport_iso2 ? `- /passport/${intent.passport_iso2.toLowerCase()} — overview for the ${nationalityFor(intent.passport_iso2)} passport` : ``,
+    intent.spouse_passport_iso2 ? `- /passport/${intent.spouse_passport_iso2.toLowerCase()} — overview for the ${nationalityFor(intent.spouse_passport_iso2)} passport (spouse)` : ``,
     intent.destination_iso2 ? `- /destination/${intent.destination_iso2.toLowerCase()} — overview for ${nameFor(intent.destination_iso2)}` : ``,
   ].filter((s) => s.length > 0);
 
-  // Per-applicant context if we know nationality.
+  // Per-applicant context for the primary passport.
   if (intent.passport_iso2) {
     const applicantCtx = applicantContextSentence(intent.passport_iso2);
     if (applicantCtx) {
-      lines.push(``, `APPLICANT-SPECIFIC DOCUMENTATION (use this to make answers concrete):`, applicantCtx);
+      lines.push(``, `PRIMARY-APPLICANT DOCUMENTATION (use to make answers concrete):`, applicantCtx);
     }
+  }
+  // And the spouse if their passport differs — surfaces e.g. that an EU
+  // spouse unlocks family-reunification routes anywhere in the EEA.
+  if (intent.spouse_passport_iso2) {
+    const spouseCtx = applicantContextSentence(intent.spouse_passport_iso2);
+    if (spouseCtx) {
+      lines.push(``, `SPOUSE-APPLICANT DOCUMENTATION:`, spouseCtx);
+    }
+    lines.push(
+      ``,
+      `MULTI-APPLICANT NOTE: when one passport in the household is EU/EEA/CH, the other applicant has automatic right to live/work anywhere in the EU/EEA/CH via the Free Movement Directive (2004/38/EC) — usually faster, cheaper, and lower-friction than ANY work-visa route. ALWAYS surface this first when applicable.`,
+    );
+  }
+
+  // Profession anchor — lets the model anchor recommendations on the
+  // shortage-occupation lists rather than generic visa categories.
+  if (intent.profession) {
+    lines.push(
+      ``,
+      `PROFESSION ANCHOR: user is a ${intent.profession}. Anchor recommendations on countries where this occupation is on the shortage/skills-in-demand list. For doctors/nurses/teachers/engineers, the top destinations to recommend are usually: Germany (EU), Australia (Subclass 189/482), Canada (Express Entry), UK (Skilled Worker), New Zealand (Green List), Ireland (Critical Skills). Mention licensing/registration as the actual bottleneck — for medical professions especially, it's never the visa that's hard, it's the medical board registration.`,
+    );
   }
 
   return lines.join("\n");
@@ -474,25 +624,28 @@ OPTIONS rules:
 
 You must NEVER output prose outside the JSON. The renderer will display content as markdown and (if present) options as clickable pills.
 
-═══ OVERVIEW vs DRILL-DOWN — DETECT THE INTENT FIRST ═══
+═══ DETECT THE INTENT FIRST — FOUR CATEGORIES ═══
 
-Some queries WANT a clarifier first; others WANT a structured overview immediately. Detect which from the user's phrasing:
+Real visa questions fall into one of four shapes. Detect which from the user's phrasing AND the CONTEXT block (which surfaces KNOWN intent fields including is_couple, is_open_exploration, profession, spouse_passport).
 
-OVERVIEW intent — answer directly with a structured multi-option breakdown. Do NOT ask "which passport do you hold" first; that's patronising when the user wants the lay of the land. Triggers:
-  - "What are the (best) ways to emigrate / move / relocate to X"
-  - "What are my options for living / working / retiring in X"
-  - "How do people emigrate to X"
-  - "Routes to PR / permanent residency / citizenship in X"
-  - "How does immigration to X work"
-  - Any phrasing that asks for a MENU of paths, not a single recommendation
-  - Use the OVERVIEW worked example below as the format template
+(1) OVERVIEW intent — single applicant, specific destination, wants the full menu of paths.
+  Triggers: "What are the (best) ways to emigrate / move / relocate to X", "options for living/working/retiring in X", "routes to PR/citizenship in X"
+  Action: answer with the OVERVIEW worked example structure. NO clarifier.
 
-DRILL-DOWN intent — single-route recommendation; ask for missing context first if needed. Triggers:
-  - "Can I get visa X" / "Am I eligible for Y"
-  - "I'm a [nationality] and want to [verb] [country]"
-  - "Cheapest / fastest / easiest route from A to B"
-  - Anything where ONE specific answer fits — and where missing nationality / age / purpose blocks a useful answer
-  - Use the DRILL-DOWN worked example below as the format template
+(2) MULTI-APPLICANT / OPEN-EXPLORATION — the user is asking on behalf of a couple/family AND/OR asks "where can we go" without specifying a destination.
+  Triggers: spouse_passport set, is_couple=true, is_open_exploration=true, "where can we go", "what countries should we consider", "best places for us"
+  Action: answer with the COUPLE/EXPLORATION worked example structure. NO clarifier asking for nationality/destination — they've ALREADY told you. Anchor on:
+    - Both passports (the stronger one usually unlocks family-reunification or free-movement routes that change everything)
+    - The profession (use the PROFESSION ANCHOR in CONTEXT to pick destinations where the job is on a shortage list)
+    - Rank 4-6 realistic destinations with parallel sub-structure per destination
+
+(3) PROFESSION-LED — user mentions an occupation but no destination ("I'm a software engineer, where should I move?").
+  Triggers: profession set in CONTEXT, is_open_exploration=true, no destination
+  Action: same shape as (2). Recommend destinations where that profession is shortage-listed. Mention licensing/registration (it's almost always the bottleneck — for doctors/nurses especially, the visa is easy, the medical board is hard).
+
+(4) DRILL-DOWN — single specific question, one applicant, may or may not have a destination.
+  Triggers: "Can I get visa X", "I'm a [nationality] and want to [verb] [country]", "cheapest/fastest route from A to B"
+  Action: if all context present → DRILL-DOWN worked example. If something critical is genuinely missing AND not in CONTEXT.KNOWN → ask ONE focused question.
 
 ═══ THE CONVERSATION SHAPE (DRILL-DOWN ONLY) ═══
 
@@ -595,7 +748,61 @@ Two pragmatic shapes:
 
 If you want me to dig into a specific pathway, tell me your nationality and rough age and I'll narrow it to what's actually realistic for you."
 
-──── EXAMPLE 2: DRILL-DOWN ANSWER ────
+──── EXAMPLE 2: COUPLE / OPEN-EXPLORATION / PROFESSION-LED ────
+
+User asks: "I'm from Belarus, my wife is from Germany, we're both doctors, where can we go?"
+
+Notice: ABSOLUTELY NO clarifier. The user gave you four signals (his nationality, her nationality, profession, open exploration). RE-ASKING any of these is a failure. The correct response uses ALL of them.
+
+✓ GOOD — surfaces the free-movement unlock first (because the German passport changes the entire answer), then a ranked shortlist anchored on doctor-friendly destinations:
+
+"Great context — and your wife's German passport is the most important single fact here. It means the whole EU/EEA/Switzerland is already open to BOTH of you with zero visa, via the EU Free Movement Directive. That's almost always faster, cheaper, and easier than any work-visa route in any other country.
+
+Here's the realistic shortlist for two doctors in your situation.
+
+## 1. Germany (and the rest of the EU/EEA/Switzerland)
+The default starting point — your wife works automatically, you get a **Residence Card for Family Members of EU Citizens** (Aufenthaltskarte) which is essentially rubber-stamped: typically issued in 2-3 months, free, and gives you immediate right to work.
+- **Bottleneck:** German medical recognition (*Approbation*) — state-level, ~6-12 months, requires B2/C1 German + paperwork translation. UK/EU medical degrees are usually recognised automatically; Belarusian degrees may need an equivalency review.
+- **Why it's #1:** zero immigration friction, your wife's home, strongest medical-economy market in continental Europe.
+
+## 2. Other EU/EEA countries (Ireland, Netherlands, Sweden, Austria, etc.)
+Same family-reunification mechanism as Germany. The doctor shortage in Ireland and the Nordics is severe — both actively recruit foreign-trained physicians.
+- **Best for English-speakers:** Ireland (Medical Council registration), Netherlands (BIG registration, but Dutch ~B2 needed for clinical work).
+
+## 3. Australia
+Both of you could apply via skilled migration. Doctors are on the **Medium and Long-term Strategic Skills List (MLTSSL)** — top-tier shortage occupation.
+- **Visas:** Subclass 189 (Skilled Independent, points-tested PR) or Subclass 482 (employer-sponsored, then transition to 186).
+- **Bottleneck:** AHPRA registration via the **Australian Medical Council** — needs IELTS 7.0+ across all bands, then AMC exams unless you qualify under the Competent Authority Pathway (UK/IE/CA/US/NZ-trained only; Belarusian + German degrees would need full AMC route, ~12-18 months).
+
+## 4. Canada
+Doctors are NOC 31102 (Specialists in clinical and laboratory medicine) — heavy priority in **Express Entry**.
+- **Visas:** Federal Skilled Worker (Express Entry) or provincial nominee programs (Quebec specifically welcomes francophone physicians).
+- **Bottleneck:** provincial Medical College + MCC exams. Recognition of EU degrees varies by province; Ontario and BC are the most demanding.
+
+## 5. UK
+Doctors are on the **Shortage Occupation List** → **Skilled Worker visa** with reduced salary threshold (~£32k vs the usual £38k), faster processing.
+- **Visas:** Skilled Worker (5-year route to PR), or the dedicated **Health and Care Worker visa** (cheaper fee, exempt from Immigration Health Surcharge).
+- **Bottleneck:** GMC registration + PLAB exams (or EU-trained recognition for your wife — that's an automatic GMC entry under post-Brexit arrangements).
+
+## 6. New Zealand
+Doctors are on the **Green List Tier 1** — straight-to-residence pathway, fastest in the OECD for medical professionals.
+- **Bottleneck:** MCNZ registration; NZREX exam unless you qualify under a recognised-jurisdiction pathway.
+
+## What I'd actually recommend
+Two pragmatic shapes depending on your priorities:
+
+- **Easiest + fastest:** Move to Germany on free movement, get Approbation, work for 5-10 years, naturalise (your wife already has DE citizenship; you'd be eligible after 3 years of marriage + residence under §9 StAG). You both end up with EU passports — maximum optionality forever.
+- **Highest income + climate change:** Australia or New Zealand on skilled migration. ~18 months from "start AMC/MCNZ" to "registered + working", but median doctor salary is materially higher than Europe and the lifestyle pull is real.
+
+## Best next steps
+1. Tell me your medical specialties — GPs, surgeons, anaesthetists, paediatricians etc. have very different routes and salaries. I can be much more specific.
+2. Check the German Approbation requirements for your specialty: https://www.aerzteblatt.de (Bundesärztekammer maintains the official lists)
+3. If Australia/NZ appeals, get your IELTS booked NOW — it's the longest-lead-time step and 7.0 across all four bands is harder than people expect.
+4. Browse the destination pages: [Germany](https://visavu.com/destination/de), [Australia](https://visavu.com/destination/au), [Canada](https://visavu.com/destination/ca), [UK](https://visavu.com/destination/gb)."
+
+Notice: addresses BOTH applicants by name (you / your wife), uses the German passport as the unlocking insight, anchors every recommendation on doctor-relevant detail (Approbation / AHPRA / GMC / MCNZ), gives concrete name-of-exam bottlenecks, doesn't pretend the visa is the hard part, closes with a real next question (specialty) that actually moves the conversation forward.
+
+──── EXAMPLE 3: DRILL-DOWN ANSWER ────
 
 User asks: "I'm UK, 26. What's my best route to Australia?"
 
@@ -631,10 +838,19 @@ Both use the same building blocks (## headers, **bold** facts, bullets). The OVE
 const SYNTHESIS_FIRST_TURN = SYNTHESIS_CORE + SYNTHESIS_WORKED_EXAMPLE;
 const SYNTHESIS_FOLLOWUP = SYNTHESIS_CORE;
 
-/** First incoming user message → full prompt with demo. Otherwise compact. */
-function pickSynthesisSystem(messages: ChatMessage[]): string {
+/** First turn → full prompt with worked examples. Follow-ups → compact
+ *  (the model has already shown it can produce the right shape). EXCEPT
+ *  when the current turn is a multi-applicant / open-exploration query,
+ *  in which case the full prompt is worth resending because the worked
+ *  example for that mode is what unlocks the comprehensive answer shape.
+ *  Without this branch, follow-up multi-applicant queries would degrade
+ *  to flat one-paragraph answers — the worst-of-both-worlds.
+ */
+function pickSynthesisSystem(messages: ChatMessage[], intent: ExtractedIntent): string {
   const userTurns = messages.filter((m) => m.role === "user").length;
-  return userTurns <= 1 ? SYNTHESIS_FIRST_TURN : SYNTHESIS_FOLLOWUP;
+  const richContext = intent.is_couple || intent.is_open_exploration || intent.spouse_passport_iso2 || intent.profession;
+  if (userTurns <= 1 || richContext) return SYNTHESIS_FIRST_TURN;
+  return SYNTHESIS_FOLLOWUP;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -839,7 +1055,7 @@ export async function POST(request: NextRequest) {
 
   // Pick the right prompt for this turn — first message gets the demo,
   // follow-ups get the compact version (~50% fewer prompt tokens).
-  const synthesised = await callMistralText(enrichedMessages, pickSynthesisSystem(body.messages));
+  const synthesised = await callMistralText(enrichedMessages, pickSynthesisSystem(body.messages, intent));
 
   if (synthesised) {
     // Mistral now responds in structured JSON ({type: answer|ask,
@@ -925,8 +1141,11 @@ function parseStructured(raw: string): { type: "answer" | "ask"; content: string
  *  UI works identically. Returns null when we have a full route — no
  *  clarification needed in that case. */
 function buildFallbackOptions(intent: ExtractedIntent): string[] | null {
-  // Full route — no ask
+  // Full route → no ask
   if (intent.passport_iso2 && intent.destination_iso2) return null;
+  // Open-exploration / couple / profession-led → not a clarifying turn,
+  // the fallback should answer with a shortlist (no pills).
+  if (intent.is_open_exploration || intent.spouse_passport_iso2 || intent.profession) return null;
   // Missing passport — offer the 4 most common nationalities + Other
   if (!intent.passport_iso2) {
     return ["UK / British", "US / American", "Indian", "EU citizen", "Other (I'll type it)"];
@@ -936,16 +1155,31 @@ function buildFallbackOptions(intent: ExtractedIntent): string[] | null {
 }
 
 /** Build a user-facing reply when Mistral synthesis isn't available.
- *  Three cases:
- *    1. We have passport + destination + purpose → direct catalogue
- *       pointer (the data is there, we just can't prose-compose it).
- *    2. We have destination + purpose but no passport → ask for the
- *       single missing piece in plain English.
- *    3. We have nothing concrete → point at the questionnaire. */
+ *  Cases handled (most specific first):
+ *    0. Couple / open-exploration / profession-led → use the rich
+ *       context to write a SHORTLIST starter response, NOT a "what
+ *       country?" clarifier. This was the dumb-fallback failure mode
+ *       for queries like "Belarusian + German doctors, where can we
+ *       go?" — old code threw away the spouse + profession and asked
+ *       "what country?" which is the opposite of helpful.
+ *    1. We have passport + destination → direct catalogue pointer.
+ *    2. We have destination but no passport → ask for nationality.
+ *    3. We have passport but no destination AND no rich context →
+ *       ask for country + purpose.
+ *    4. Nothing concrete → point at the questionnaire. */
 function buildCleanFallback(intent: ExtractedIntent, userMessage: string): string {
   const p = intent.passport_iso2;
+  const sp = intent.spouse_passport_iso2;
   const d = intent.destination_iso2;
   const purpose = intent.purpose ?? "tourism";
+
+  // CASE 0: rich-context queries — write a shortlist response that
+  // ACKNOWLEDGES the context they gave us. Even without Mistral we can
+  // produce something useful by leaning on the static profession +
+  // free-movement rules.
+  if (intent.is_open_exploration || sp || (intent.profession && !d)) {
+    return buildRichContextFallback(intent);
+  }
 
   if (p && d) {
     const purposeLabel = purpose === "tourism" ? "visit" : purpose;
@@ -991,6 +1225,96 @@ function buildCleanFallback(intent: ExtractedIntent, userMessage: string): strin
     ``,
     `Or skip the chat entirely and use [Find my visa](https://visavu.com/find-my-visa) — 12 questions and you get five ranked lists of routes that fit your profile.`,
   ].join("\n");
+}
+
+/** EU/EEA/CH iso2s. Member countries enjoy reciprocal free-movement
+ *  with each other under the EU Free Movement Directive (2004/38/EC)
+ *  and the EEA/Switzerland bilateral. Critically: when ONE applicant
+ *  in a household has one of these passports, the other applicant
+ *  (regardless of their nationality) gets automatic right to live + work
+ *  in all 31 member states via the family-reunification carve-out. This
+ *  changes the answer to "where can we go" so much that it deserves to
+ *  be surfaced first, before any other recommendation. */
+const EU_EEA_CH = new Set([
+  "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR",
+  "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK",
+  "SI", "ES", "SE", "IS", "LI", "NO", "CH",
+]);
+
+function buildRichContextFallback(intent: ExtractedIntent): string {
+  const p = intent.passport_iso2;
+  const sp = intent.spouse_passport_iso2;
+  const profession = intent.profession;
+
+  const lines: string[] = [];
+
+  // Opening sentence — acknowledges everything they told us, in their words.
+  const who: string[] = [];
+  if (p) who.push(`a ${nationalityFor(p)} passport`);
+  if (sp) who.push(`a ${nationalityFor(sp)} passport`);
+  const whoPart = who.length > 0 ? `With ${who.join(" + ")} in the household` : "Open-ended emigration question";
+  const jobPart = profession ? ` and ${intent.is_couple ? "both of you working as " : "working as a "}${profession}${intent.is_couple ? "s" : ""}` : "";
+  lines.push(`${whoPart}${jobPart} — here's the realistic shortlist.`, ``);
+
+  // Free movement unlock — surface FIRST if applicable.
+  const euMember = [p, sp].find((iso) => iso && EU_EEA_CH.has(iso));
+  if (euMember) {
+    const otherIso = euMember === p ? sp : p;
+    lines.push(
+      `## The free-movement unlock`,
+      ``,
+      `Your ${nationalityFor(euMember)} passport opens the entire **EU/EEA/Switzerland** (31 countries) immediately — zero visa, automatic right to live and work anywhere from Portugal to Finland.${
+        otherIso
+          ? ` Your ${nationalityFor(otherIso)} partner gets a **Residence Card for Family Members of EU Citizens** (typically issued in 2-3 months, free, immediate work rights).`
+          : ""
+      } This is almost always faster, cheaper, and lower-friction than any work-visa route.`,
+      ``,
+      `Browse [${nationalityFor(euMember)} passport overview](https://visavu.com/passport/${euMember.toLowerCase()}) for the full picture.`,
+      ``,
+    );
+  }
+
+  // Profession-anchored shortlist.
+  if (profession) {
+    const isMedical = /doctor|nurse|midwife|paramedic|pharmacist|dentist|physio|surgeon/i.test(profession);
+    lines.push(
+      `## Top destinations for ${profession}s`,
+      ``,
+      `These countries actively recruit foreign-trained ${profession}s and have the occupation on their shortage list:`,
+      ``,
+      `- **Germany** — EU. Recognition via ${isMedical ? "*Approbation* (state-level)" : "the relevant chamber"}. [→](https://visavu.com/destination/de)`,
+      `- **Australia** — Subclass 189 (skilled independent PR) or 482 (employer-sponsored). ${isMedical ? "Bottleneck: AHPRA + AMC exams." : "Bottleneck: skills assessment."} [→](https://visavu.com/destination/au)`,
+      `- **Canada** — Express Entry (federal skilled worker) or provincial nominee. ${isMedical ? "Bottleneck: provincial Medical College + MCC." : "Bottleneck: ECA + provincial regulator."} [→](https://visavu.com/destination/ca)`,
+      `- **UK** — Skilled Worker visa with shortage-occupation discount. ${isMedical ? "Bottleneck: GMC registration + PLAB exams (or recognised pathway)." : "Bottleneck: sponsor licence + Certificate of Sponsorship."} [→](https://visavu.com/destination/gb)`,
+      `- **New Zealand** — Green List tier-1 occupations get a straight-to-residence pathway. [→](https://visavu.com/destination/nz)`,
+      `- **Ireland** — Critical Skills Employment Permit, fast-track to PR. [→](https://visavu.com/destination/ie)`,
+      ``,
+    );
+    if (isMedical) {
+      lines.push(
+        `**The real bottleneck for medical professions is NEVER the visa** — it's the medical board registration. Plan your IELTS (7.0+ across all bands for most English-speaking registers) and your equivalency assessment FIRST; the visa application takes weeks, the registration takes months.`,
+        ``,
+      );
+    }
+  } else {
+    // No profession — point at the questionnaire.
+    lines.push(
+      `## What I'd suggest`,
+      ``,
+      `For a personalised ranking based on your situation, run our [Find My Visa](https://visavu.com/find-my-visa) wizard — 12 questions, returns five ranked routes that fit your profile.`,
+      ``,
+    );
+  }
+
+  lines.push(
+    `## Next question`,
+    ``,
+    profession
+      ? `Tell me your ${profession === "doctor" ? "medical specialty (GP, surgeon, anaesthetist, etc.)" : "specific area of expertise"} and I can narrow this dramatically. Different specialties have very different recognition routes.`
+      : `Which 2-3 of these countries interest you most? I can give you the concrete next-step roadmap for each.`,
+  );
+
+  return lines.join("\n");
 }
 
 // ─────────────────────────────────────────────────────────────────────

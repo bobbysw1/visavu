@@ -61,6 +61,11 @@ import {
 } from "@/lib/types";
 import { SITE, absoluteUrl } from "@/lib/site";
 
+// Cache each visa result page for 1 hour. After an hour Vercel quietly
+// rebuilds it in the background while still serving the saved version —
+// so visitors always get a fast response, not a from-scratch rebuild.
+export const revalidate = 3600;
+
 type Params = { passport: string; destination: string };
 type Search = { purpose?: string; lang?: string; currency?: string; profile?: string };
 

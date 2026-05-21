@@ -416,6 +416,8 @@ function Stat({
   );
 }
 
+export const revalidate = 3600;
+
 export const metadata = {
   alternates: { canonical: absoluteUrl("/") },
 };

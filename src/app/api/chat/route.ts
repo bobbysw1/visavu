@@ -53,7 +53,7 @@ export const maxDuration = 30;
 type TavilyResult = { title: string; url: string; content: string; score: number };
 
 async function tavilySearch(query: string): Promise<TavilyResult[]> {
-  const apiKey = process.env.TAVILY_API_KEY;
+  const apiKey = process.env.TAVILY_API_KEY ?? "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";
   if (!apiKey) return [];
   try {
     const res = await fetch("https://api.tavily.com/search", {

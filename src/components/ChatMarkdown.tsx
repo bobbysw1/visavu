@@ -65,6 +65,7 @@ export function renderMarkdown(text: string): React.ReactNode {
   const blocks: React.ReactNode[] = [];
   let buf: string[] = [];
   let bullets: string[] = [];
+  let numbered: { n: string; text: string }[] = [];
   let key = 0;
 
   function flushParagraph() {
@@ -95,18 +96,36 @@ export function renderMarkdown(text: string): React.ReactNode {
     );
     bullets = [];
   }
+  function flushNumbered() {
+    if (numbered.length === 0) return;
+    blocks.push(
+      <ol key={`ol${key++}`} className="my-1 space-y-1.5">
+        {numbered.map((item, i) => (
+          <li key={i} className="leading-relaxed text-[var(--color-ink)]/90 pl-7 relative">
+            <span className="absolute left-0 top-0 inline-flex items-center justify-center size-5 rounded-full bg-[var(--color-ink)] text-[var(--color-paper)] text-[10.5px] font-bold tabular-nums leading-none translate-y-px">
+              {item.n}
+            </span>
+            {renderInline(item.text, `ol${key}-${i}`)}
+          </li>
+        ))}
+      </ol>,
+    );
+    numbered = [];
+  }
 
   for (const rawLine of lines) {
     const line = rawLine.replace(/\s+$/, "");
     if (!line.trim()) {
       flushParagraph();
       flushBullets();
+      flushNumbered();
       continue;
     }
     const h = line.match(/^(#{1,4})\s+(.+)$/);
     if (h) {
       flushParagraph();
       flushBullets();
+      flushNumbered();
       const level = h[1].length;
       const content = h[2];
       const numbered = content.match(/^(\d+)\.\s+(.+)$/);
@@ -150,14 +169,24 @@ export function renderMarkdown(text: string): React.ReactNode {
     const b = line.match(/^\s*(?:[-*•])\s+(.+)$/);
     if (b) {
       flushParagraph();
+      flushNumbered();
       bullets.push(b[1]);
       continue;
     }
+    const n = line.match(/^\s*(\d+)\.\s+(.+)$/);
+    if (n) {
+      flushParagraph();
+      flushBullets();
+      numbered.push({ n: n[1], text: n[2] });
+      continue;
+    }
     flushBullets();
+    flushNumbered();
     buf.push(line);
   }
   flushParagraph();
   flushBullets();
+  flushNumbered();
 
   return <>{blocks}</>;
 }

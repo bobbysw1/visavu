@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { renderMarkdown } from "./ChatMarkdown";
 
 type Message = {
   role: "user" | "assistant";
@@ -51,7 +52,7 @@ export function FloatingChatLauncher() {
   // Load persisted history.
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = sessionStorage.getItem(STORAGE_KEY);
       if (stored) setMessages(JSON.parse(stored) as Message[]);
     } catch { /* ignore */ }
   }, []);
@@ -59,7 +60,7 @@ export function FloatingChatLauncher() {
   // Persist on change.
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
     } catch { /* ignore */ }
   }, [messages]);
 
@@ -95,7 +96,7 @@ export function FloatingChatLauncher() {
       // rate-limit + abuse-review system).
       let sessionId: string | null = null;
       try {
-        sessionId = localStorage.getItem("visavu.chat.session");
+        sessionId = sessionStorage.getItem("visavu.chat.session");
       } catch {
         /* ignore */
       }
@@ -113,7 +114,7 @@ export function FloatingChatLauncher() {
       const reply = data.reply ?? data.error ?? "Sorry — the assistant didn't return a reply.";
       if (data.sessionId) {
         try {
-          localStorage.setItem("visavu.chat.session", data.sessionId);
+          sessionStorage.setItem("visavu.chat.session", data.sessionId);
         } catch {
           /* ignore */
         }
@@ -224,10 +225,10 @@ export function FloatingChatLauncher() {
                 className={
                   m.role === "user"
                     ? "ml-auto max-w-[85%] rounded-lg bg-[var(--color-ink)] text-[var(--color-paper)] px-3 py-2 text-xs whitespace-pre-wrap"
-                    : "mr-auto max-w-[90%] rounded-lg bg-[var(--color-paper-elev)] border border-[var(--color-rule)] px-3 py-2 text-xs whitespace-pre-wrap text-[var(--color-ink)]"
+                    : "mr-auto max-w-[90%] rounded-lg bg-[var(--color-paper-elev)] border border-[var(--color-rule)] px-3 py-2 text-xs space-y-2 text-[var(--color-ink)]"
                 }
               >
-                {m.content}
+                {m.role === "assistant" ? renderMarkdown(m.content) : m.content}
               </div>
               {/* Clarifying pill buttons — click sends the option text
                   as the next user message. Same UX as full /chat page. */}

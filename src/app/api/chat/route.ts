@@ -46,6 +46,64 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Tavily web search — injects live results for current policy/fee questions.
+// Skipped when TAVILY_API_KEY is unset.
+// ─────────────────────────────────────────────────────────────────────────────
+type TavilyResult = { title: string; url: string; content: string; score: number };
+
+async function tavilySearch(query: string): Promise<TavilyResult[]> {
+  const apiKey = process.env.TAVILY_API_KEY;
+  if (!apiKey) return [];
+  try {
+    const res = await fetch("https://api.tavily.com/search", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        api_key: apiKey,
+        query,
+        search_depth: "basic",
+        max_results: 4,
+        // Prefer official government and reputable immigration sources.
+        include_domains: [
+          "gov.uk", "gov.au", "canada.ca", "uscis.gov", "travel.state.gov",
+          "immi.homeaffairs.gov.au", "immigration.govt.nz", "europa.eu",
+          "schengenvisainfo.com", "iatatravelcentre.com",
+        ],
+      }),
+    });
+    if (!res.ok) return [];
+    const data = (await res.json()) as { results?: TavilyResult[] };
+    return data.results ?? [];
+  } catch {
+    return [];
+  }
+}
+
+function buildTavilyQuery(intent: ExtractedIntent, userMessage: string): string {
+  const parts: string[] = [];
+  if (intent.passport_iso2) parts.push(nationalityFor(intent.passport_iso2) ?? intent.passport_iso2);
+  if (intent.destination_iso2) parts.push(nameFor(intent.destination_iso2));
+  if (intent.purpose && intent.purpose !== "tourism") parts.push(intent.purpose);
+  parts.push("visa requirements");
+  const year = new Date().getFullYear();
+  parts.push(String(year));
+  // For very specific questions, include the user's phrasing as-is (truncated).
+  const trimmed = userMessage.slice(0, 120);
+  return parts.length > 3 ? parts.join(" ") : trimmed + ` visa requirements ${year}`;
+}
+
+function formatTavilyResults(results: TavilyResult[]): string {
+  if (results.length === 0) return "";
+  const lines = [
+    "LIVE WEB SEARCH RESULTS (use these to supplement or correct your knowledge on current rules — cite the source URL when you reference them):",
+  ];
+  for (const r of results) {
+    lines.push(`\n[${r.title}](${r.url})\n${r.content.slice(0, 400).trim()}`);
+  }
+  return lines.join("\n");
+}
+
 const MISTRAL_API = "https://api.mistral.ai/v1/chat/completions";
 // Synthesis uses mistral-large-latest for the higher reasoning needed to
 // ask the right clarifying questions, weave applicant context with route
@@ -1044,12 +1102,22 @@ export async function POST(request: NextRequest) {
     }
   }
 
+  // Step 2b: live web search via Tavily — fires in parallel with any
+  // remaining async work above and injects fresh gov-source results so
+  // Mistral can cite current fees / policy changes the DB may not have.
+  const tavilyQuery = buildTavilyQuery(intent, lastUser.content);
+  const webResults = await tavilySearch(tavilyQuery);
+  const webContext = formatTavilyResults(webResults);
+
   // Step 3: synthesise via Mistral, or fall back to the raw context.
   const enrichedMessages: ChatMessage[] = [
     ...body.messages,
     { role: "system", content: `Visavu data for this query:\n${dataContext}` },
     ...(occupationContext
       ? [{ role: "system" as const, content: `Skilled-occupation reference data:\n${occupationContext}` }]
+      : []),
+    ...(webContext
+      ? [{ role: "system" as const, content: webContext }]
       : []),
   ];
 

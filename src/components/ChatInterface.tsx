@@ -17,15 +17,14 @@ type Message = {
 };
 
 const STORAGE_KEY = "visavu.chat.v1";
-/** Conversation/session identifier persisted in localStorage so the
- *  server can stitch follow-up messages onto the same conversation
- *  row for abuse review + token rollup. Not PII — just a UUID. */
+/** Session identifier — sessionStorage so it's wiped automatically
+ *  when the tab or browser closes. Conversation history clears too. */
 const SESSION_KEY = "visavu.chat.session";
 
 /**
  * Visavu chat — client UI talking to /api/chat.
  *
- * Persists conversation to localStorage so refresh doesn't lose it.
+ * Persists conversation to sessionStorage so refresh doesn't lose it.
  * If ?q= is in the URL on first load, auto-submits that as the opening
  * message (used by the homepage ChatBar widget).
  *
@@ -347,7 +346,7 @@ export function ChatInterface() {
   // Load persisted history on mount.
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = sessionStorage.getItem(STORAGE_KEY);
       if (stored) setMessages(JSON.parse(stored) as Message[]);
     } catch {
       /* ignore */
@@ -357,7 +356,7 @@ export function ChatInterface() {
   // Persist on change.
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
     } catch {
       /* ignore */
     }
@@ -405,7 +404,7 @@ export function ChatInterface() {
       // generates one + returns it in the response, and we persist it.
       let sessionId: string | null = null;
       try {
-        sessionId = localStorage.getItem(SESSION_KEY);
+        sessionId = sessionStorage.getItem(SESSION_KEY);
       } catch {
         /* ignore */
       }
@@ -426,7 +425,7 @@ export function ChatInterface() {
       // stitches onto the same conversation row.
       if (data.sessionId) {
         try {
-          localStorage.setItem(SESSION_KEY, data.sessionId);
+          sessionStorage.setItem(SESSION_KEY, data.sessionId);
         } catch {
           /* ignore */
         }
@@ -458,10 +457,10 @@ export function ChatInterface() {
   const clear = () => {
     setMessages([]);
     try {
-      localStorage.removeItem(STORAGE_KEY);
+      sessionStorage.removeItem(STORAGE_KEY);
       // Also drop the session id so the next message starts a fresh
       // conversation row (matches the user's "clear" expectation).
-      localStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem(SESSION_KEY);
     } catch {
       /* ignore */
     }

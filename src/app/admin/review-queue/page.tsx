@@ -208,7 +208,7 @@ function RouteList({ rows }: { rows: ReviewRow[] }) {
       {rows.map((r) => (
         <li key={r.id}>
           <Link
-            href={`/${r.passportIso2.toLowerCase()}/${r.destinationIso2.toLowerCase()}?purpose=${r.purpose}`}
+            href={r.purpose === "tourism" ? `/${r.passportIso2.toLowerCase()}/${r.destinationIso2.toLowerCase()}` : `/${r.passportIso2.toLowerCase()}/${r.destinationIso2.toLowerCase()}/${r.purpose}`}
             className="block p-3 rounded border border-neutral-200 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-600 transition text-sm"
           >
             <p className="font-medium">

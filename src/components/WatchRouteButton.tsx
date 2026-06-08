@@ -80,7 +80,9 @@ export function WatchRouteButton({
     return (
       <Link
         href={`/signin?return=${encodeURIComponent(
-          `/${passportIso2.toLowerCase()}/${destinationIso2.toLowerCase()}?purpose=${purpose}`,
+          purpose === "tourism"
+            ? `/${passportIso2.toLowerCase()}/${destinationIso2.toLowerCase()}`
+            : `/${passportIso2.toLowerCase()}/${destinationIso2.toLowerCase()}/${purpose}`,
         )}`}
         className="inline-flex items-center gap-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-950 px-3 py-1.5 text-xs font-medium hover:bg-neutral-50 dark:hover:bg-neutral-900"
       >

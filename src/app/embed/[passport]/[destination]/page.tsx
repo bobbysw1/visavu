@@ -95,7 +95,7 @@ export default async function EmbedPage({
         <div className="rounded-lg border border-neutral-200 dark:border-neutral-800 p-4 text-sm text-neutral-700 dark:text-neutral-300">
           We don&apos;t yet have verified data for this combination.{" "}
           <a
-            href={absoluteUrl(`/${p.toLowerCase()}/${d.toLowerCase()}?purpose=${purpose}`)}
+            href={absoluteUrl(purpose === "tourism" ? `/${p.toLowerCase()}/${d.toLowerCase()}` : `/${p.toLowerCase()}/${d.toLowerCase()}/${purpose}`)}
             target="_top"
             className="text-blue-700 dark:text-blue-400 underline"
           >
@@ -110,7 +110,7 @@ export default async function EmbedPage({
         <span>
           Data:{" "}
           <a
-            href={absoluteUrl(`/${p.toLowerCase()}/${d.toLowerCase()}?purpose=${purpose}`)}
+            href={absoluteUrl(purpose === "tourism" ? `/${p.toLowerCase()}/${d.toLowerCase()}` : `/${p.toLowerCase()}/${d.toLowerCase()}/${purpose}`)}
             target="_top"
             className="underline hover:no-underline"
           >

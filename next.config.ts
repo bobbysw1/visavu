@@ -15,23 +15,14 @@ const config: NextConfig = {
     "/**/*": ["./src/data/pglite-dump.tar.gz"],
   },
 
-  // Clean share URLs — internally we still render the result page from the
-  // /[passport]/[destination] route reading ?purpose= from the query, but
-  // we expose /[passport]/[destination]/[purpose] as the canonical
-  // shareable URL. Some messaging clients (WhatsApp, FB Messenger, certain
-  // mail clients) strip ?-style query params during URL preview / repost,
-  // which left users sharing 'visavu.com/study' with no country context.
-  // A path-form URL survives every clipboard stack intact.
-  async rewrites() {
-    return [
-      // ALPHA-2 country codes are exactly 2 chars. Purpose values are one of
-      // tourism/business/transit/work/study/family/diplomatic. Match those.
-      {
-        source: "/:passport((?:[A-Za-z]{2}))/:destination((?:[A-Za-z]{2}))/:purpose(tourism|business|transit|work|study|family|diplomatic)",
-        destination: "/:passport/:destination?purpose=:purpose",
-      },
-    ];
-  },
+  // NOTE: purpose path URLs (/[passport]/[destination]/[purpose], e.g.
+  // /us/jp/work) are now served by a REAL Next.js route — see
+  // src/app/(site)/[passport]/[destination]/[purpose]/page.tsx. They used to be
+  // rewritten to /[passport]/[destination]?purpose=work, but reading the purpose
+  // from a query string forced every pair page to re-render on every request
+  // (no ISR caching), which caused 39× function-CPU spikes when crawlers walked
+  // the ~235k-URL sitemap. Driving purpose from the path makes each variant
+  // statically cacheable. No rewrite is needed any more.
 
   // visavu.com was a Vietnamese visa-service WordPress site (2024–early 2025)
   // before this project. Permanent 301 redirects preserve any inbound link

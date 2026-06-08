@@ -10,6 +10,7 @@ import { SITE, absoluteUrl } from "@/lib/site";
 import { destinationsForPassportPurpose } from "@/lib/passportPurpose";
 import { destinationPurposeIntro } from "@/content/destinationPurposeIntros";
 import { assessDifficulty, BUCKET_PALETTE, type DifficultyBucket } from "@/lib/difficulty";
+import { routeHref } from "@/lib/routeHref";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -163,7 +164,7 @@ export default async function PassportPurposePage({ params }: { params: Promise<
       "@type": "ListItem",
       position: i + 1,
       name: `${nameFor(s.destinationIso2)} — ${s.label}`,
-      url: absoluteUrl(`/${upper.toLowerCase()}/${s.destinationIso2.toLowerCase()}?purpose=${purpose}`),
+      url: absoluteUrl(routeHref(upper, s.destinationIso2, purpose)),
     })),
   };
 
@@ -228,7 +229,7 @@ export default async function PassportPurposePage({ params }: { params: Promise<
               </p>
               <p className="text-base leading-relaxed text-[var(--color-ink)]">{sampleIntro}</p>
               <p className="text-xs text-[var(--color-ink-muted)] mt-2">
-                <Link className="underline" href={`/${upper.toLowerCase()}/${sample!.toLowerCase()}?purpose=${purpose}`}>
+                <Link className="underline" href={routeHref(upper, sample!, purpose)}>
                   Full {purposeLabel.toLowerCase()} visa details for {nationalityFor(upper)} citizens visiting {nameFor(sample!)} →
                 </Link>
               </p>
@@ -264,7 +265,7 @@ export default async function PassportPurposePage({ params }: { params: Promise<
                   {buckets[b].map((s) => (
                     <li key={s.destinationIso2}>
                       <Link
-                        href={`/${upper.toLowerCase()}/${s.destinationIso2.toLowerCase()}?purpose=${purpose}`}
+                        href={routeHref(upper, s.destinationIso2, purpose)}
                         className="block rounded-lg border border-neutral-200 dark:border-neutral-800 p-4 hover:border-blue-400 dark:hover:border-blue-600 transition"
                       >
                         <div className="flex items-start justify-between gap-3">

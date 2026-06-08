@@ -43,12 +43,10 @@ import { obstaclesFor } from "@/content/obstacles";
 import { UsReciprocityPanel } from "@/components/UsReciprocityPanel";
 import { WatchRouteButton } from "@/components/WatchRouteButton";
 import { watchRouteAction, unwatchRouteAction } from "./watchActions";
-import { currentUser } from "@/lib/auth";
-// Pair page renders mostly visa data (db) but ALSO checks the signed-in
-// user's watchlist subscriptions — that single query needs userDb so
-// the result is consistent with what watchActions wrote.
-import { db, userDb, schema } from "@/db/client";
-import { and, eq } from "drizzle-orm";
+// NOTE: this page intentionally does NOT import the auth/db helpers. The
+// "Watch this route" button resolves its own per-user state client-side via
+// /api/watch-status so the page stays cookie-free and ISR-cacheable (see the
+// note next to the WatchRouteButton render below).
 import { COUNTRY_LIST, flagEmoji, issuesPassport, nameFor } from "@/lib/countries";
 import { nationalityFor } from "@/lib/nationalities";
 import { resolveRoute } from "@/lib/resolver";
@@ -448,32 +446,13 @@ export default async function Page({
   // currency via the header switcher.
   const locale: Locale = sp.lang && isSupportedLocale(sp.lang) ? sp.lang : "en";
 
-  // Auth + watchlist state for the "Watch this route" button. Anonymous
-  // visitors see a sign-in CTA; signed-in users see the toggle.
-  let signedInUser: { id: number; email: string } | null = null;
-  let alreadyWatching = false;
-  try {
-    signedInUser = await currentUser();
-    if (signedInUser) {
-      // userDb routes to managed Postgres when DATABASE_URL is set so
-      // the read sees whatever watchActions just wrote.
-      const rows = await userDb
-        .select({ id: schema.watchlistSubscriptions.id })
-        .from(schema.watchlistSubscriptions)
-        .where(
-          and(
-            eq(schema.watchlistSubscriptions.userId, signedInUser.id),
-            eq(schema.watchlistSubscriptions.passportIso2, p),
-            eq(schema.watchlistSubscriptions.destinationIso2, d),
-            eq(schema.watchlistSubscriptions.purpose, purpose),
-          ),
-        )
-        .limit(1);
-      alreadyWatching = rows.length > 0;
-    }
-  } catch {
-    // DB unavailable / cookies not parseable — render as anonymous.
-  }
+  // NOTE: the "Watch this route" button's auth + watchlist state is resolved
+  // on the CLIENT (it calls /api/watch-status after hydration). We must NOT
+  // read the login cookie here via currentUser() — doing so opts this page out
+  // of ISR caching and forces a from-scratch rebuild on every request. With
+  // ~235k pair URLs in the sitemap, that turned a single crawl into a 39×
+  // function-CPU spike. Keeping this render cookie-free lets each page be saved
+  // and reused for an hour (see `revalidate` above).
 
   let options: ResolvedVisaOption[] = [];
   let alternatives: Awaited<ReturnType<typeof resolveRoute>>["alternatives"] = [];
@@ -723,8 +702,6 @@ export default async function Page({
                   passportIso2={p}
                   destinationIso2={d}
                   purpose={purpose}
-                  signedIn={signedInUser !== null}
-                  alreadyWatching={alreadyWatching}
                   onWatch={watchRouteAction}
                   onUnwatch={unwatchRouteAction}
                 />

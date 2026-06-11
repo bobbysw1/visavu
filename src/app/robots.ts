@@ -1,21 +1,23 @@
 import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/site";
 
-// AI-training crawlers don't drive search traffic — they just download every
-// page they can find for model training. With ~235k unique URLs on this
-// site, these bots are the most likely cause of runaway bandwidth usage.
-// Blocking them has no SEO impact (Googlebot/Bingbot are untouched below).
+// Bulk AI-training crawlers don't drive any traffic back — they just
+// download every page they can find to build training datasets. With
+// ~235k unique URLs on this site, these bots are the most likely cause
+// of runaway bandwidth usage. Blocking them has no SEO impact
+// (Googlebot/Bingbot are untouched below).
+//
+// Deliberately NOT blocked: OAI-SearchBot, PerplexityBot, Perplexity-User,
+// ChatGPT-User, ClaudeBot. These fetch pages live in response to a user's
+// question, so blocking them would stop AI assistants from citing/
+// referencing this site for visa questions. They're low-volume (one fetch
+// per real question asked), so they're not meaningful bandwidth drivers.
 const AI_SCRAPER_BOTS = [
   "GPTBot",
-  "ChatGPT-User",
-  "OAI-SearchBot",
-  "ClaudeBot",
-  "Claude-Web",
   "anthropic-ai",
+  "Claude-Web",
   "CCBot",
   "Bytespider",
-  "PerplexityBot",
-  "Perplexity-User",
   "Amazonbot",
   "Applebot-Extended",
   "Google-Extended",

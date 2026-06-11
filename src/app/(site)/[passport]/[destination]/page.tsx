@@ -18,7 +18,12 @@ import { buildPairMetadata, PairContent } from "./pairContent";
 // is exactly the behaviour we want. dynamicParams defaults to true, so any
 // passport/destination is generated on demand the first time it's visited.
 export const dynamic = "force-static";
-export const revalidate = 3600;
+// 24h matches the s-maxage CDN cache header in next.config.ts headers().
+// Underlying visa data only refreshes monthly (see cron schedule), so a
+// 1h revalidate (the old value) meant every one of the ~235k pair URLs
+// went stale and re-rendered on the next crawler hit every single hour —
+// the dominant source of origin transfer/ISR reads.
+export const revalidate = 86400;
 
 type Params = { passport: string; destination: string };
 

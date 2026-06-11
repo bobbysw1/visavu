@@ -122,6 +122,15 @@ export async function GET(req: Request) {
         </div>
       </div>
     ),
-    { width: 1200, height: 630 },
+    {
+      width: 1200,
+      height: 630,
+      headers: {
+        // These images are a pure function of the query string, so the CDN
+        // can cache them indefinitely. stale-while-revalidate lets a stale
+        // copy serve instantly while a fresh one regenerates in the background.
+        "Cache-Control": "public, immutable, max-age=31536000, stale-while-revalidate=86400",
+      },
+    },
   );
 }

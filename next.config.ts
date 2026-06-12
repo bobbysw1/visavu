@@ -2,6 +2,17 @@ import type { NextConfig } from "next";
 
 const config: NextConfig = {
   outputFileTracingRoot: __dirname,
+
+  // Disable Vercel's Image Optimization API (/_next/image). All images on
+  // this site are local files (e.g. public/heroes/*.jpg), so the only thing
+  // optimization buys us is on-the-fly resize/format conversion — at the
+  // cost of a serverless function invocation (+ cache write) per unique
+  // size/format. unoptimized:true serves the original files straight from
+  // the CDN as static assets: zero Image Optimization usage, zero related
+  // function invocations.
+  images: {
+    unoptimized: true,
+  },
   // PGlite (used in dev when DATABASE_URL is unset) ships a WASM binary that
   // Webpack mangles. Marking it external keeps Node loading it natively and
   // avoids "path argument must be string... received URL" at runtime.

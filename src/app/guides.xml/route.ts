@@ -1,7 +1,8 @@
 import { guidesByDate } from "@/content/guides";
 import { absoluteUrl, SITE } from "@/lib/site";
 
-export const revalidate = 3600;
+// Static — no periodic ISR regeneration (avoids Vercel Data Cache writes).
+export const revalidate = false;
 
 function xmlEscape(s: string): string {
   return s

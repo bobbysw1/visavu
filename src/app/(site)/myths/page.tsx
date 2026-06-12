@@ -8,7 +8,8 @@ import { nameFor, flagEmoji } from "@/lib/countries";
 import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 
 export const dynamic = "force-static";
-export const revalidate = 86_400;
+// Static — no periodic ISR regeneration (avoids Vercel Data Cache writes).
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: "Immigration myths & rumours — what's actually true",

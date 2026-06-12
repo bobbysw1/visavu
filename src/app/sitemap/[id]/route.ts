@@ -17,7 +17,8 @@ import {
 // fewer, larger sitemaps faster and discovery improved.
 
 export const dynamic = "force-static";
-export const revalidate = 86400;
+// Static — no periodic ISR regeneration (avoids Vercel Data Cache writes).
+export const revalidate = false;
 
 export async function generateStaticParams() {
   // Static-generate every chunk index at build time. Count is derived

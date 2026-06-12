@@ -16,8 +16,10 @@
  *   - Transparency — accuracy claims become checkable when changes
  *     are listed publicly with the underlying commit SHA.
  *
- * Page is statically rendered; ISR-revalidated once a day so cron-
- * driven updates appear within a day of the workflow committing them.
+ * Page is statically rendered with no periodic ISR regeneration (to avoid
+ * recurring Vercel Data Cache writes). The cron workflow commits new
+ * data, which triggers a redeploy, which is when this page picks up
+ * fresh content.
  */
 import Link from "next/link";
 import { flagEmoji } from "@/lib/countries";
@@ -32,7 +34,7 @@ export const metadata = {
   alternates: { canonical: absoluteUrl("/updates") },
 };
 
-export const revalidate = 86400; // 24h ISR
+export const revalidate = false;
 
 type Update = {
   kind: "adapter_change" | "new_adapter" | "fee_correction";

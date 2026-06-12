@@ -416,7 +416,9 @@ function Stat({
   );
 }
 
-export const revalidate = 3600;
+// Static — no periodic ISR regeneration (avoids Vercel Data Cache writes).
+// Content refreshes on the next deploy.
+export const revalidate = false;
 
 export const metadata = {
   alternates: { canonical: absoluteUrl("/") },

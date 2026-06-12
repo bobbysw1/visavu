@@ -8,7 +8,8 @@ import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
-export const revalidate = 86_400;
+// Static — no periodic ISR regeneration (avoids Vercel Data Cache writes).
+export const revalidate = false;
 
 export function generateStaticParams() {
   return allMythSlugs().map((slug) => ({ slug }));

@@ -18,7 +18,8 @@ import {
   type VisaForm,
 } from "@/content/visaForms";
 
-export const revalidate = 86400; // 1d ISR — these pages change rarely
+// Static — no periodic ISR regeneration (avoids Vercel Data Cache writes).
+export const revalidate = false;
 
 export async function generateStaticParams() {
   return destinationsWithForms().map((iso) => ({ destination: iso.toLowerCase() }));

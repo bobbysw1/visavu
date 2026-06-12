@@ -27,11 +27,10 @@ import { buildDestinationFaqs } from "@/content/destinationFaqGenerator";
 import { OBSTACLES } from "@/content/obstacles";
 import { CountrySilhouette } from "@/components/CountrySilhouette";
 
-// Cost optimisation: SSG every destination profile at build time, ISR-revalidate
-// once a day. Same rationale as /passport/[iso] — Googlebot crawls these
-// heavily, and visitors land on them from the homepage popular-destinations
-// chips, so caching them at the edge eliminates the bulk of per-request CPU.
-export const revalidate = 86_400;
+// Cost optimisation: SSG every destination profile at build time, static
+// (no periodic ISR regeneration — that caused recurring Vercel Data Cache
+// writes). Content refreshes on the next deploy.
+export const revalidate = false;
 export const dynamic = "force-static";
 export const dynamicParams = false;
 

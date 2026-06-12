@@ -18,12 +18,13 @@ import { buildPairMetadata, PairContent } from "./pairContent";
 // is exactly the behaviour we want. dynamicParams defaults to true, so any
 // passport/destination is generated on demand the first time it's visited.
 export const dynamic = "force-static";
-// 24h matches the s-maxage CDN cache header in next.config.ts headers().
-// Underlying visa data only refreshes monthly (see cron schedule), so a
-// 1h revalidate (the old value) meant every one of the ~235k pair URLs
-// went stale and re-rendered on the next crawler hit every single hour —
-// the dominant source of origin transfer/ISR reads.
-export const revalidate = 86400;
+// revalidate=false: render once on first request, then cache permanently
+// (until the next deploy). Time-based revalidation (was 86400s) caused a
+// Vercel Data Cache write every time any of the ~235k pair URLs went stale
+// and a crawler hit it — that recurring write volume is what blew through
+// the Vercel usage quota. With revalidate=false each URL is written at most
+// once ever, not once per interval.
+export const revalidate = false;
 
 type Params = { passport: string; destination: string };
 

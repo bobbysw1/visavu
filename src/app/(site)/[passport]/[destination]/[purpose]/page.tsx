@@ -11,17 +11,16 @@ import { buildPairMetadata, PairContent } from "../pairContent";
 // (the old approach) forced every request to rebuild from scratch and was a
 // cause of the function-CPU spikes. See pairContent.tsx for the full story.
 //
-// force-static + revalidate makes each purpose variant render on first request
-// and then cache (ISR), the same as the bare pair page. We don't prebuild
+// force-static makes each purpose variant render on first request and then
+// cache permanently, the same as the bare pair page. We don't prebuild
 // params (there are hundreds of thousands), so dynamicParams stays true
 // (default) and variants are generated on demand the first time they're hit.
 export const dynamic = "force-static";
-// 24h matches the s-maxage CDN cache header in next.config.ts headers().
-// Underlying visa data only refreshes monthly (see cron schedule), so a
-// 1h revalidate (the old value) meant every one of the ~235k pair URLs
-// went stale and re-rendered on the next crawler hit every single hour —
-// the dominant source of origin transfer/ISR reads.
-export const revalidate = 86400;
+// revalidate=false: render once, cache until the next deploy. Time-based
+// revalidation (was 86400s) caused a recurring Vercel Data Cache write for
+// every one of the ~235k pair URLs whenever a crawler hit a stale copy —
+// that's what blew through the Vercel usage quota.
+export const revalidate = false;
 
 type Params = { passport: string; destination: string; purpose: string };
 

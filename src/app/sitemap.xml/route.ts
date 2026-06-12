@@ -10,7 +10,8 @@ import { getSitemapChunkCount } from "@/lib/sitemapUrls";
 // more efficiently and discovery completes faster.
 
 export const dynamic = "force-static";
-export const revalidate = 86400; // 1 day
+// Static — no periodic ISR regeneration (avoids Vercel Data Cache writes).
+export const revalidate = false;
 
 export function GET() {
   const count = getSitemapChunkCount();

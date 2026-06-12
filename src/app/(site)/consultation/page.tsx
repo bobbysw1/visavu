@@ -4,7 +4,8 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SITE, absoluteUrl } from "@/lib/site";
 
 export const dynamic = "force-static";
-export const revalidate = 86_400;
+// Static — no periodic ISR regeneration (avoids Vercel Data Cache writes).
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: "Paid consultation — get real visa advice from a registered adviser",

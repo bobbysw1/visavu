@@ -20,7 +20,8 @@ import { PURPOSE_LABEL } from "@/lib/types";
 import { SITE } from "@/lib/site";
 
 export const dynamic = "force-static";
-export const revalidate = 86400;
+// Static — no periodic ISR regeneration (avoids Vercel Data Cache writes).
+export const revalidate = false;
 
 export function GET() {
   const lines: string[] = [];

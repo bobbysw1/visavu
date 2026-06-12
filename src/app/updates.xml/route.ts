@@ -60,7 +60,8 @@ function rfc822(iso: string): string {
 }
 
 export const dynamic = "force-static";
-export const revalidate = 3600; // 1h cache — feed readers poll hourly typically
+// Static — no periodic ISR regeneration (avoids Vercel Data Cache writes).
+export const revalidate = false;
 
 export function GET() {
   const payload = data as Payload;
